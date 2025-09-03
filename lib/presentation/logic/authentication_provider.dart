@@ -21,7 +21,7 @@ class AuthFormProvider with ChangeNotifier {
   //                                VARIABLES
   //============================================================================
 
-  /// Login form fields
+  /// Login form fields.
   EmailOrPhone _emailOrPhone = EmailOrPhone('');
   Password _password = Password('');
 
