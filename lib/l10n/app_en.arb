@@ -1,0 +1,7 @@
+{
+    "@@locale": "en",
+    "fetchlead_title": "Lead Requests",
+    "fetchlead_search_hint": "Search",
+    "fetchsupport_title": "Support Requests",
+    "fetchsupport_search_hint": "Search"
+}

@@ -1,0 +1,137 @@
+import 'package:go_router/go_router.dart';
+import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/route/app_router_const.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
+class OnBoardingScreen extends StatefulWidget {
+  const OnBoardingScreen({super.key});
+
+  static const routeName = "on_boarding-screen";
+
+  @override
+  State<OnBoardingScreen> createState() => _OnBoardingScreenState();
+}
+
+class _OnBoardingScreenState extends State<OnBoardingScreen> {
+  late PageController _controller;
+  int _currentIndex = 0;
+
+  final List<Map<String, dynamic>> _slides = [
+    {
+      "image": AppAssets.ob1,
+      "title": "Hello Welcome!",
+      "subtitle":
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"
+    },
+    {
+      "image": AppAssets.ob2,
+      "title": "Heading Here",
+      "subtitle":
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"
+    },
+    {
+      "image": AppAssets.ob3,
+      "title": "Heading Here",
+      "subtitle":
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"
+    },
+  ];
+  @override
+  void initState() {
+    super.initState();
+    _controller = PageController();
+
+    _controller.addListener(() {
+      final page = _controller.page?.round() ?? 0;
+      if (page != _currentIndex) {
+        setState(() {
+          _currentIndex = page;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Expanded(
+            child: PageView.builder(
+              controller: _controller,
+              itemCount: _slides.length,
+              itemBuilder: (context, index) {
+                final slide = _slides[index];
+                return Padding(
+                  padding: const EdgeInsets.only(left: 24, right: 24),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Image.asset(
+                        slide["image"],
+                      ),
+                      gap40,
+                      Text(
+                        slide["title"],
+                        style: context.textStyle.s24.indigoBlue.bold,
+                        textAlign: TextAlign.center,
+                      ),
+                      gap16,
+                      SizedBox(
+                        width: context.getSize.width / 1.45,
+                        height: context.getSize.height * 0.1,
+                        child: Text(
+                          slide["subtitle"],
+                          style: context.textStyle.s12,
+                          textAlign: TextAlign.center,
+                          textScaler: const TextScaler.linear(0.9),
+                        ),
+                      ),
+                      gap16
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 30),
+            child: SmoothPageIndicator(
+              controller: _controller,
+              count: _slides.length,
+              effect: const ExpandingDotsEffect(
+                activeDotColor: Colors.deepPurple,
+                dotColor: ColorResources.amber,
+                dotHeight: 10,
+                dotWidth: 10,
+                spacing: 8,
+              ),
+            ),
+          ),
+          gap20,
+          InkWell(
+            onTap: () {
+              // AppRoute.pushNamed(LoginScreen.routeName);
+              context.pushNamed(AppRouterConst.login);
+            },
+            child: Text(
+              _currentIndex == _slides.length - 1 ? "Get Started" : "Skip",
+              style: context.textStyle.s12.indigoBlue
+                  .copyWith(decoration: TextDecoration.underline),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          gap48
+        ],
+      ),
+    );
+  }
+}
