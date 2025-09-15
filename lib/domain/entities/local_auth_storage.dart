@@ -49,4 +49,9 @@ class UserStorage {
       );
     }
   }
+
+  // static Future<void> clearUsers() async {
+  //   final prefs = sl<SharedPreferences>();
+  //   await prefs.remove(_key);
+  // }
 }

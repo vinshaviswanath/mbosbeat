@@ -21,6 +21,14 @@ class AppAssets {
   //SVG
   static const refresh = "$baseDir/refresh.svg";
   static const power = "$baseDir/power.svg";
+  static const userCircle = "$baseDir/userCircle.svg";
+  static const powerSettings = "$baseDir/powerSettings.svg";
+  static const sync = "$baseDir/sync.svg";
+  static const featherEyeOff = "$baseDir/featherEyeOff.svg";
+  static const featherEyeOn = "$baseDir/featherEyeOn.svg";
+  static const alertError = "$baseDir/alertError.svg";
+
+
 
   //Animations
   static const forgot_password = "$baseAnimDir/forgot.json";

@@ -11,7 +11,7 @@ class TestEnv extends Env {
   /// Parameters:
   /// - [env]: The name of the environment.
   TestEnv(String env)
-      : super(domainUrl: 'https://test.bingo.lilacinfotech.com', env: env) {
+      : super(domainUrl: 'http://mposbeat.mnets.in', env: env) {
     Logger.logInfo('App Started In Staging Mode');
   }
 

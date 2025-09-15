@@ -26,8 +26,8 @@ class SignUpScreen extends StatelessWidget {
             bottomSheet: StepperTransition(
               delay: 1200,
               child: Padding(
-                padding:
-                    const EdgeInsetsGeometry.only(left: 16, right: 16, bottom: 24),
+                padding: const EdgeInsetsGeometry.only(
+                    left: 16, right: 16, bottom: 24),
                 child: CustomButton(
                     onTap: () {
                       provider.submitSignUp(context);
@@ -94,7 +94,7 @@ class SignUpScreen extends StatelessWidget {
                           delay: 400,
                           child: CustomTextField(
                             hint: "Enter Mobile Number",
-                            maxLength: 15,
+                            maxLength: 10,
                             backgroundColor: ColorResources.lightGray,
                             autovalidateMode: provider.phoneValidationMode,
                             failure: provider.phoneFailure,

@@ -10,14 +10,13 @@ import 'package:mpos_beat/core/utils/typedefs.dart';
 class RunSafely {
   RunSafely();
 
-  ResultFuture<T> runSafely<T>(
+  ResultFuture<T> call<T>(
     Future<T> Function() action, {
     MainFailure Function(String error)? failure,
   }) async {
     try {
       return right(await action());
     } on CustomException catch (e) {
-      Logger.logError('RunSafely Error : $e');
       return left(
         failure?.call(e.errMsg) ??
             MainFailure.customError(
@@ -25,7 +24,6 @@ class RunSafely {
             ),
       );
     } catch (e) {
-      Logger.logError('RunSafely Error : $e');
       return left(
         failure?.call(
               e.toString(),

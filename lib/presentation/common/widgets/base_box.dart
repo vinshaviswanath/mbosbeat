@@ -1,8 +1,38 @@
 import 'package:mpos_beat/core/utils/imports.dart';
 
+// class BaseBox extends StatelessWidget {
+//   final Widget widgwt;
+//   final double? height;
+//   const BaseBox({
+//     super.key,
+//     required this.widgwt,
+//     this.height,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       width: context.getSize.width - 32,
+//       height: height,
+//       padding: const EdgeInsets.all(36),
+//       decoration: BoxDecoration(
+//           color: ColorResources.white,
+//           borderRadius: BorderRadius.circular(16),
+//           boxShadow: const [
+//             BoxShadow(
+//                 offset: Offset(0, 13),
+//                 blurRadius: 20,
+//                 color: ColorResources.overlayBlack)
+//           ]),
+//       child: widgwt,
+//     );
+//   }
+// }
+
 class BaseBox extends StatelessWidget {
   final Widget widgwt;
   final double? height;
+
   const BaseBox({
     super.key,
     required this.widgwt,
@@ -11,20 +41,28 @@ class BaseBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: context.getSize.width - 32,
-      height: height ?? context.getSize.height * 0.4,
-      padding: const EdgeInsets.all(36),
-      decoration: BoxDecoration(
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        maxWidth: context.getSize.width - 32,
+        minWidth: 0,
+        minHeight: 0,
+        maxHeight: height ?? context.getSize.height * 0.45,
+      ),
+      child: Container(
+        padding: const EdgeInsets.all(36),
+        decoration: BoxDecoration(
           color: ColorResources.white,
           borderRadius: BorderRadius.circular(16),
           boxShadow: const [
             BoxShadow(
-                offset: Offset(0, 13),
-                blurRadius: 20,
-                color: ColorResources.overlayBlack)
-          ]),
-      child: widgwt,
+              offset: Offset(0, 13),
+              blurRadius: 20,
+              color: ColorResources.overlayBlack,
+            )
+          ],
+        ),
+        child: widgwt,
+      ),
     );
   }
 }

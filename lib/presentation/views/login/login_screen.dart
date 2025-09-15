@@ -94,9 +94,16 @@ class LoginScreen extends StatelessWidget {
                                   delay: 200,
                                   child: CustomTextField(
                                     hint: "Mobile / Email ID",
-                                    suffixIcon: const Icon(
-                                      Icons.person_outlined,
-                                      color: Color(0xFF98A6BE),
+                                    // suffixIcon: const Icon(
+                                    //   Icons.person_outlined,
+                                    //   color: Color(0xFF98A6BE),
+                                    // ),
+                                    suffixIcon: Padding(
+                                      padding: const EdgeInsets.all(12),
+                                      child: SvgPicture.asset(
+                                        AppAssets.userCircle,
+                                        height: 18,
+                                      ),
                                     ),
                                     backgroundColor: ColorResources.lightGray,
                                     autovalidateMode:
@@ -124,15 +131,27 @@ class LoginScreen extends StatelessWidget {
                                   delay: 400,
                                   child: CustomTextField(
                                     hint: "Password",
-                                    suffixIcon: IconButton(
-                                      color: const Color(0xFF98A6BE),
-                                      onPressed: () {
-                                        provider.toggleVisibility();
-                                      },
-                                      icon: Icon(
-                                        provider.isVisible
-                                            ? Icons.visibility_outlined
-                                            : Icons.visibility_off_outlined,
+                                    // suffixIcon: IconButton(
+                                    //   color: const Color(0xFF98A6BE),
+                                    //   onPressed: () {
+                                    //     provider.toggleVisibility();
+                                    //   },
+                                    //   icon: Icon(
+                                    //     provider.isVisible
+                                    //         ? Icons.visibility_outlined
+                                    //         : Icons.visibility_off_outlined,
+                                    //   ),
+                                    // ),
+                                    suffixIcon: InkWell(
+                                      onTap: () => provider.toggleVisibility(),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(12),
+                                        child: SvgPicture.asset(
+                                          provider.isVisible
+                                              ? AppAssets.featherEyeOn
+                                              : AppAssets.featherEyeOff,
+                                          height: 18,
+                                        ),
                                       ),
                                     ),
                                     obscureText: !provider.isVisible,
@@ -170,7 +189,8 @@ class LoginScreen extends StatelessWidget {
                                       onPressed: () {
                                         // AppRoute.pushNamed(
                                         //     ForgotPassword.routeName);
-                                        context.pushNamed(AppRouterConst.forgotPassword);
+                                        context.pushNamed(
+                                            AppRouterConst.forgotPassword);
                                       },
                                       child: Text(
                                         "Forgot Password?",

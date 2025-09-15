@@ -6,7 +6,10 @@ class Urls {
 
   static String isPhoneNoAvailableKey = 'isPhoneNoAvailable';
 
-  static var apiUrl = '${Env.instance.domainUrl}/api/';
+  static var apiUrl = '${Env.instance.domainUrl}';
 
-  static const String tokenRefresh = 'token-refresh';
+  // static const String tokenRefresh = 'token-refresh';
+  static const String companyRegistration = '/Registration/Create';
+  static const String otpValidation = "/RegistrationOTP/Create";
+  static const String resendOtp = "/RegistrationOTP/Generate";
 }
