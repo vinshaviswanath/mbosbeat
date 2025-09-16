@@ -1,4 +1,6 @@
+import 'package:flutter_dropdown_alert/model/data_alert.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mpos_beat/core/utils/alert_dialog.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/user_model.dart';
 import 'package:mpos_beat/presentation/common/animations/wheel_spinner.dart';
@@ -112,7 +114,28 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
                                   AppRouterConst.loadingScreen,
                                   extra: () {
                                     Navigator.pop(context);
-                                    provider.submitOtp(context, widget.user);
+                                    provider.submitOtp(
+                                      context,
+                                      widget.user,
+                                      onError: (p0) {},
+                                      onResponse: (response) {
+                                        if (response.status == 1) {
+                                          context.pushNamed(
+                                            AppRouterConst.customRouteScreen,
+                                            extra: NavigationType.success,
+                                          );
+                                          CustomAlertDialog.showCustomDialog(
+                                            title: "OTP Verified Successfully",
+                                            typeAlert: TypeAlert.success,
+                                          );
+                                        } else if (response.status == 0) {
+                                          GoRouter.of(context).pushNamed(
+                                            AppRouterConst.invalidOtp,
+                                            extra: widget.user,
+                                          );
+                                        }
+                                      },
+                                    );
                                   },
                                 );
                               },

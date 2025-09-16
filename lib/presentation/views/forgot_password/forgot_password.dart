@@ -32,29 +32,29 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     super.dispose();
   }
 
-  String? validateEmail(String? value) {
-    if (value == null || value.isEmpty) {
-      return "Email is required";
-    }
-    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-    if (!emailRegex.hasMatch(value)) {
-      return "Enter a valid email";
-    }
-    return null;
-  }
+  // String? validateEmail(String? value) {
+  //   if (value == null || value.isEmpty) {
+  //     return "Email is required";
+  //   }
+  //   final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+  //   if (!emailRegex.hasMatch(value)) {
+  //     return "Enter a valid email";
+  //   }
+  //   return null;
+  // }
 
-  void submit() {
-    if (_formKey.currentState!.validate()) {
-      context.pushNamed(AppRouterConst.mailedScreen);
-    }
-  }
+  // void submit() {
+  //   if (_formKey.currentState!.validate()) {
+  //     context.pushNamed(AppRouterConst.mailedScreen);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<AuthFormProvider>(
       builder: (context, provider, _) {
         return Form(
-          key: _formKey,
+          key: provider.formKey,
           child: BaseScaffold(
             widget: SizedBox(
               height: context.getSize.height,
@@ -106,7 +106,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                       controller: provider.emailController,
                                       validator: provider.validateEmail,
                                       autovalidateMode:
-                                          AutovalidateMode.onUserInteraction,
+                                          provider.loginAutovalidateMode,
                                       keyboardType: TextInputType.emailAddress,
                                       inputFormatters: [
                                         FilteringTextInputFormatter.allow(
@@ -133,7 +133,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 16),
                                   child: CustomButton(
-                                    onTap: submit,
+                                    onTap: () {
+                                      provider.resetPassword(context);
+                                    },
                                     buttonText: "Send",
                                     isborderEnable: false,
                                   ),

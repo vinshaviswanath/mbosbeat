@@ -16,12 +16,13 @@ import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 import '../../data/data_sources/authentication/company_registeration/company_registeration.dart'
     as _i70;
-import '../../data/data_sources/authentication/i_authentication_facad_impl.dart'
-    as _i197;
 import '../../data/data_sources/authentication/otp_validation/otp_validation.dart'
     as _i42;
 import '../../data/data_sources/authentication/resend_otp/resend_otp.dart'
     as _i13;
+import '../../data/data_sources/authentication/reset_password/reset_password.dart'
+    as _i244;
+import '../../data/repositories/i_authentication_facad_impl.dart' as _i823;
 import '../../domain/repositories/i_authentication_facad.dart' as _i590;
 import '../base/run_safely.dart' as _i530;
 import '../serveice/dio_client.dart' as _i841;
@@ -70,10 +71,16 @@ Future<_i174.GetIt> init(
         gh<_i530.RunSafely>(),
         gh<_i460.SharedPreferences>(),
       ));
-  gh.lazySingleton<_i590.IAuthenticationFacad>(() => _i197.IAuthenticationImpl(
+  gh.lazySingleton<_i244.ResetPassword>(() => _i244.ResetPassword(
+        gh<_i841.DioClient>(),
+        gh<_i530.RunSafely>(),
+        gh<_i460.SharedPreferences>(),
+      ));
+  gh.lazySingleton<_i590.IAuthenticationFacad>(() => _i823.IAuthenticationImpl(
         gh<_i70.CompanyRegisteration>(),
         gh<_i42.OtpValidation>(),
         gh<_i13.ResendOtp>(),
+        gh<_i244.ResetPassword>(),
         gh<_i841.DioClient>(),
         gh<_i530.RunSafely>(),
         gh<_i460.SharedPreferences>(),

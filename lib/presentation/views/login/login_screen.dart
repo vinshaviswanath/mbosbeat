@@ -1,6 +1,5 @@
 import 'package:go_router/go_router.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
-import 'package:mpos_beat/domain/entities/local_auth_storage.dart';
 import 'package:mpos_beat/presentation/common/animations/stepper_transition.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_button.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_textField.dart';
@@ -8,11 +7,18 @@ import 'package:mpos_beat/presentation/dialogs/auth_dialogs.dart';
 import 'package:mpos_beat/presentation/logic/authentication_provider.dart';
 import 'package:mpos_beat/route/app_router_const.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   static const routeName = "login-screen";
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -93,6 +99,7 @@ class LoginScreen extends StatelessWidget {
                                 StepperTransition(
                                   delay: 200,
                                   child: CustomTextField(
+                                    controller: emailController,
                                     hint: "Mobile / Email ID",
                                     // suffixIcon: const Icon(
                                     //   Icons.person_outlined,
@@ -107,11 +114,9 @@ class LoginScreen extends StatelessWidget {
                                     ),
                                     backgroundColor: ColorResources.lightGray,
                                     autovalidateMode:
-                                        provider.emailOrPhoneValidationMode,
-                                    failure: provider.emailOrPhoneFailure,
+                                        provider.loginAutovalidateMode,
+                                    failure: provider.emailOrPhone.getFailure,
                                     onChange: provider.updateEmailOrPhone,
-                                    initialValue:
-                                        provider.emailOrPhone.getValue,
                                     inputType: TextInputType.emailAddress,
                                     borderRadius: 12,
                                     hintColor: ColorResources.silverGray,
@@ -130,6 +135,7 @@ class LoginScreen extends StatelessWidget {
                                 StepperTransition(
                                   delay: 400,
                                   child: CustomTextField(
+                                    controller: passwordController,
                                     hint: "Password",
                                     // suffixIcon: IconButton(
                                     //   color: const Color(0xFF98A6BE),
@@ -157,10 +163,10 @@ class LoginScreen extends StatelessWidget {
                                     obscureText: !provider.isVisible,
                                     backgroundColor: ColorResources.lightGray,
                                     autovalidateMode:
-                                        provider.passwordValidationMode,
-                                    failure: provider.passwordFailure,
+                                        provider.loginAutovalidateMode,
+                                    failure: provider.password.getFailure,
                                     onChange: provider.updatePassword,
-                                    initialValue: provider.password.getValue,
+                                    // initialValue: provider.password.getValue,
                                     inputType: TextInputType.visiblePassword,
                                     borderRadius: 12,
                                     hintColor: ColorResources.silverGray,
@@ -187,8 +193,8 @@ class LoginScreen extends StatelessWidget {
                                   children: [
                                     TextButton(
                                       onPressed: () {
-                                        // AppRoute.pushNamed(
-                                        //     ForgotPassword.routeName);
+                                        reset();
+
                                         context.pushNamed(
                                             AppRouterConst.forgotPassword);
                                       },
@@ -215,18 +221,10 @@ class LoginScreen extends StatelessWidget {
                               gap10,
                               InkWell(
                                 onTap: () async {
-                                  FocusScope.of(context)
-                                      .requestFocus(FocusNode());
-                                  final users = await UserStorage.getUsers();
-                                  for (var user in users) {
-                                    Logger.logSuccess(
-                                        "User :: ${user.toJson()}");
-                                  }
-                                  context
-                                      .read<AuthFormProvider>()
-                                      .resetLoginForm();
+                                  reset();
                                   // AppRoute.pushNamed(SignUpScreen.routeName);
-                                  context.pushNamed(AppRouterConst.signup);
+                                  GoRouter.of(context)
+                                      .push(AppRouterConst.signup);
                                 },
                                 child: Text(
                                   "Sign Up",
@@ -250,5 +248,13 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void reset() {
+    FocusScope.of(context).requestFocus(FocusNode());
+    passwordController.clear();
+    emailController.clear();
+
+    context.read<AuthFormProvider>().resetLoginForm();
   }
 }

@@ -12,4 +12,5 @@ class Urls {
   static const String companyRegistration = '/Registration/Create';
   static const String otpValidation = "/RegistrationOTP/Create";
   static const String resendOtp = "/RegistrationOTP/Generate";
+  static const String resetPassword = "/Registration/ResetPassword";
 }

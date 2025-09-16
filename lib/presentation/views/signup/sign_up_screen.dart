@@ -26,8 +26,7 @@ class SignUpScreen extends StatelessWidget {
             bottomSheet: StepperTransition(
               delay: 1200,
               child: Padding(
-                padding: const EdgeInsetsGeometry.only(
-                    left: 16, right: 16, bottom: 24),
+                padding: const EdgeInsets.only(left: 16, right: 16, bottom: 24),
                 child: CustomButton(
                     onTap: () {
                       provider.submitSignUp(context);
@@ -52,7 +51,7 @@ class SignUpScreen extends StatelessWidget {
                 const SliverGap(16),
                 SliverToBoxAdapter(
                   child: Padding(
-                    padding: const EdgeInsetsGeometry.symmetric(
+                    padding: const EdgeInsets.symmetric(
                       horizontal: 16,
                     ),
                     child: Column(
@@ -71,8 +70,8 @@ class SignUpScreen extends StatelessWidget {
                           child: CustomTextField(
                             hint: "Enter Company Name",
                             backgroundColor: ColorResources.lightGray,
-                            autovalidateMode: provider.companyValidationMode,
-                            failure: provider.companyFailure,
+                            autovalidateMode: provider.registerAutovalidateMode,
+                            failure: provider.companyName.getFailure,
                             onChange: provider.updateCompanyName,
                             initialValue: provider.companyName.getValue,
                             inputType: TextInputType.emailAddress,
@@ -96,8 +95,8 @@ class SignUpScreen extends StatelessWidget {
                             hint: "Enter Mobile Number",
                             maxLength: 10,
                             backgroundColor: ColorResources.lightGray,
-                            autovalidateMode: provider.phoneValidationMode,
-                            failure: provider.phoneFailure,
+                            autovalidateMode: provider.registerAutovalidateMode,
+                            failure: provider.phone.getFailure,
                             onChange: provider.updatePhone,
                             initialValue: provider.phone.getValue,
                             inputType: TextInputType.phone,
@@ -123,8 +122,8 @@ class SignUpScreen extends StatelessWidget {
                           child: CustomTextField(
                             hint: "Enter Email",
                             backgroundColor: ColorResources.lightGray,
-                            autovalidateMode: provider.emailValidationMode,
-                            failure: provider.emailFailure,
+                            autovalidateMode: provider.registerAutovalidateMode,
+                            failure: provider.email.getFailure,
                             onChange: provider.updateEmail,
                             initialValue: provider.email.getValue,
                             inputType: TextInputType.emailAddress,
@@ -152,8 +151,8 @@ class SignUpScreen extends StatelessWidget {
                           child: CustomTextField(
                             hint: "Enter Password",
                             backgroundColor: ColorResources.lightGray,
-                            autovalidateMode: provider.passwordValidationMode,
-                            failure: provider.passwordFailure,
+                            autovalidateMode: provider.registerAutovalidateMode,
+                            failure: provider.password.getFailure,
                             onChange: provider.updatePassword,
                             initialValue: provider.password.getValue,
                             inputType: TextInputType.emailAddress,
@@ -176,9 +175,8 @@ class SignUpScreen extends StatelessWidget {
                           child: CustomTextField(
                             hint: "Confirm Password",
                             backgroundColor: ColorResources.lightGray,
-                            autovalidateMode:
-                                provider.confirmPasswordValidationMode,
-                            failure: provider.confirmPasswordFailure,
+                            autovalidateMode: provider.registerAutovalidateMode,
+                            failure: provider.confirmPassword.getFailure,
                             onChange: provider.updateConfirmPassword,
                             initialValue: provider.confirmPassword.getValue,
                             inputType: TextInputType.emailAddress,

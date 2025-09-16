@@ -8,34 +8,33 @@ import 'package:mpos_beat/core/utils/extentions.dart';
 import 'package:mpos_beat/core/utils/logger.dart';
 import 'package:mpos_beat/core/utils/typedefs.dart';
 import 'package:mpos_beat/core/utils/urls.dart';
-import 'package:mpos_beat/data/models/otp_response.dart';
-import 'package:mpos_beat/domain/request/resend_otp_params.dart';
+import 'package:mpos_beat/data/models/response_data.dart';
+import 'package:mpos_beat/domain/request/reset_password_params.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 @lazySingleton
-class ResendOtp {
+class ResetPassword {
   final DioClient dioClient;
   final RunSafely runSafely;
   final SharedPreferences sharedPreferences;
-  ResendOtp(this.dioClient, this.runSafely, this.sharedPreferences);
+  ResetPassword(this.dioClient, this.runSafely, this.sharedPreferences);
 
-  ResultFuture<OtpResponse> call(BaseParams<ResendOtpParams> param) {
+  ResultFuture<ResponseData> call(BaseParams<ResetPasswordParam> param) {
     return runSafely(
       () async {
         final response = await dioClient.post(
-          Urls.resendOtp,
+          Urls.resetPassword,
           data: param.toMap(),
         );
 
         if (response.isOk) {
-          final data = OtpResponse.fromJson(response.data);
+          final data = ResponseData.fromJson(response.data);
           return data;
         }
 
         throw CustomException(errMsg: response.message);
       },
       failure: (error) {
-        Logger.logWarning("Errroooorrrrrr $error");
         if (error.toLowerCase() == 'Invalid Referrel Code!'.toLowerCase()) {
           return InvalidReferralCode(errorMsg: error);
         }

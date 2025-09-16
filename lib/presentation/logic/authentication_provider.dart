@@ -1,26 +1,23 @@
-import 'dart:async';
-
-import 'package:flutter/material.dart';
 import 'package:flutter_dropdown_alert/model/data_alert.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mpos_beat/core/failures/failures.dart';
 import 'package:mpos_beat/core/failures/value_object/value_failure.dart';
 import 'package:mpos_beat/core/failures/value_object/value_object.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
 import 'package:mpos_beat/core/utils/alert_dialog.dart';
-import 'package:mpos_beat/core/utils/enums.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
-import 'package:mpos_beat/core/utils/logger.dart';
 import 'package:mpos_beat/data/models/company_registration_response.dart';
 import 'package:mpos_beat/data/models/data/otp_response_data.dart';
 import 'package:mpos_beat/data/models/otp_response.dart';
+import 'package:mpos_beat/data/models/response_data.dart';
 import 'package:mpos_beat/data/models/user_model.dart';
 import 'package:mpos_beat/domain/entities/local_auth_storage.dart';
 import 'package:mpos_beat/domain/repositories/i_authentication_facad.dart';
 import 'package:mpos_beat/domain/request/company_registration_params.dart';
 import 'package:mpos_beat/domain/request/otp_validation_params.dart';
 import 'package:mpos_beat/domain/request/resend_otp_params.dart';
+import 'package:mpos_beat/domain/request/reset_password_params.dart';
 import 'package:mpos_beat/presentation/dialogs/registration_dialogs.dart';
-import 'package:mpos_beat/presentation/views/otp/otp_authentication.dart';
 import 'package:mpos_beat/route/app_router_const.dart';
 
 /// Provider class that manages authentication-related state and logic.
@@ -30,16 +27,11 @@ class AuthFormProvider with ChangeNotifier {
   final IAuthenticationFacad iAuthenticationFacad;
   AuthFormProvider(this.iAuthenticationFacad);
 
-  //============================================================================
-  //                                VARIABLES
-  //============================================================================
-
   bool _isLoading = false;
   bool get isLoading => _isLoading;
   String? _errorMessage;
   String? get errorMessage => _errorMessage;
 
-  /// Login form fields.
   EmailOrPhone _emailOrPhone = EmailOrPhone('');
   Password _password = Password('');
 
@@ -50,42 +42,31 @@ class AuthFormProvider with ChangeNotifier {
   OtpResponse? get otpResponse => _otpResponse;
   OtpResponseData? _otpResponseData;
   OtpResponseData? get otpResponsData => _otpResponseData;
+  ResponseData? _responseData;
+  ResponseData? get responseData => _responseData;
   String? _otpValue;
   String? get otpValue => _otpValue;
   int? _cusomerId;
   int? get customerId => _cusomerId;
 
-  /// Signup form fields
   CompanyName _companyName = CompanyName('');
   PhoneNumber _phone = PhoneNumber('');
   EmailAddress _email = EmailAddress('');
   ConfirmPassword _confirmPassword = ConfirmPassword('', '');
 
-  /// OTP fields
   String _otp = '';
   String? _otpError;
   int _remainingSeconds = 0;
   Timer? _timer;
   bool _alreadyNavigatedToInvalidOtp = false;
 
-  /// UI state
   bool _isVisible = false;
 
-  /// Form keys & controllers
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
 
-  /// Validation modes for different fields
-  AutovalidateMode _emailOrPhoneValidationMode = AutovalidateMode.disabled;
-  AutovalidateMode _passwordValidationMode = AutovalidateMode.disabled;
-  AutovalidateMode _companyValidationMode = AutovalidateMode.disabled;
-  AutovalidateMode _phoneValidationMode = AutovalidateMode.disabled;
-  AutovalidateMode _emailValidationMode = AutovalidateMode.disabled;
-  AutovalidateMode _confirmPasswordValidationMode = AutovalidateMode.disabled;
-
-  //============================================================================
-  //                              GETTERS
-  //============================================================================
+  AutovalidateMode loginAutovalidateMode = AutovalidateMode.disabled;
+  AutovalidateMode registerAutovalidateMode = AutovalidateMode.disabled;
 
   EmailOrPhone get emailOrPhone => _emailOrPhone;
   Password get password => _password;
@@ -94,23 +75,7 @@ class AuthFormProvider with ChangeNotifier {
   EmailAddress get email => _email;
   ConfirmPassword get confirmPassword => _confirmPassword;
 
-  ValueFailure? get emailOrPhoneFailure => _emailOrPhone.getFailure;
-  ValueFailure? get passwordFailure => _password.getFailure;
-  ValueFailure? get companyFailure => _companyName.getFailure;
-  ValueFailure? get phoneFailure => _phone.getFailure;
-  ValueFailure? get emailFailure => _email.getFailure;
-  ValueFailure? get confirmPasswordFailure => _confirmPassword.getFailure;
-
   bool get isVisible => _isVisible;
-
-  AutovalidateMode get emailOrPhoneValidationMode =>
-      _emailOrPhoneValidationMode;
-  AutovalidateMode get passwordValidationMode => _passwordValidationMode;
-  AutovalidateMode get companyValidationMode => _companyValidationMode;
-  AutovalidateMode get phoneValidationMode => _phoneValidationMode;
-  AutovalidateMode get emailValidationMode => _emailValidationMode;
-  AutovalidateMode get confirmPasswordValidationMode =>
-      _confirmPasswordValidationMode;
 
   //============================================================================
   //                              SETTERS
@@ -118,15 +83,15 @@ class AuthFormProvider with ChangeNotifier {
 
   void updateEmailOrPhone(String input) {
     _emailOrPhone = EmailOrPhone(input);
-    _emailOrPhoneValidationMode =
-        input.isNotEmpty ? AutovalidateMode.always : AutovalidateMode.disabled;
+    // _emailOrPhoneValidationMode =
+    //     input.isNotEmpty ? AutovalidateMode.always : AutovalidateMode.disabled;
     notifyListeners();
   }
 
   void updatePassword(String input) {
     _password = Password(input);
-    _passwordValidationMode =
-        input.isNotEmpty ? AutovalidateMode.always : AutovalidateMode.disabled;
+    // _passwordValidationMode =
+    //     input.isNotEmpty ? AutovalidateMode.always : AutovalidateMode.disabled;
 
     _confirmPassword = ConfirmPassword(
         _confirmPassword.getValue ?? '', _password.getValue ?? '');
@@ -135,29 +100,29 @@ class AuthFormProvider with ChangeNotifier {
 
   void updateConfirmPassword(String input) {
     _confirmPassword = ConfirmPassword(input, _password.getValue ?? '');
-    _confirmPasswordValidationMode =
-        input.isNotEmpty ? AutovalidateMode.always : AutovalidateMode.disabled;
+    // _confirmPasswordValidationMode =
+    //     input.isNotEmpty ? AutovalidateMode.always : AutovalidateMode.disabled;
     notifyListeners();
   }
 
   void updateCompanyName(String input) {
     _companyName = CompanyName(input);
-    _companyValidationMode =
-        input.isNotEmpty ? AutovalidateMode.always : AutovalidateMode.disabled;
+    // _companyValidationMode =
+    //     input.isNotEmpty ? AutovalidateMode.always : AutovalidateMode.disabled;
     notifyListeners();
   }
 
   void updatePhone(String input) {
     _phone = PhoneNumber(input);
-    _phoneValidationMode =
-        input.isNotEmpty ? AutovalidateMode.always : AutovalidateMode.disabled;
+    // _phoneValidationMode =
+    //     input.isNotEmpty ? AutovalidateMode.always : AutovalidateMode.disabled;
     notifyListeners();
   }
 
   void updateEmail(String input) {
     _email = EmailAddress(input);
-    _emailValidationMode =
-        input.isNotEmpty ? AutovalidateMode.always : AutovalidateMode.disabled;
+    // _emailValidationMode =
+    //     input.isNotEmpty ? AutovalidateMode.always : AutovalidateMode.disabled;
     notifyListeners();
   }
 
@@ -260,59 +225,12 @@ class AuthFormProvider with ChangeNotifier {
     _otpError = null;
   }
 
-  /// Submits OTP verification process.
-  // Future<void> submitOtp(BuildContext context, LocalUser user) async {
-  //   if (_remainingSeconds == 0) {
-  //     _otpError = "OTP has expired. Please request a new one.";
-  //     notifyListeners();
-  //     CustomAlertDialog.showCustomDialog(
-  //       title: _otpError!,
-  //       typeAlert: TypeAlert.error,
-  //     );
-  //     return;
-  //   }
-
-  //   if (_otp == "1111") {
-  //     _otpError = null;
-  //     _alreadyNavigatedToInvalidOtp = false;
-
-  //     final verifiedUser = user.copyWith(isOtpVerified: true);
-  //     await UserStorage.updateUser(verifiedUser);
-
-  //     resetSignUpForm();
-  //     resetLoginForm();
-
-  //     final users = await UserStorage.getUsers();
-  //     for (var u in users) {
-  //       Logger.logSuccess("User :: ${u.toJson()}");
-  //     }
-
-  //     notifyListeners();
-
-  //     context.pushNamed(AppRouterConst.customRouteScreen,
-  //         extra: NavigationType.success);
-
-  //     CustomAlertDialog.showCustomDialog(
-  //       title: "OTP Verified Successfully",
-  //       typeAlert: TypeAlert.success,
-  //     );
-  //   } else {
-  //     _otpError = "Please enter valid OTP";
-  //     if (!_alreadyNavigatedToInvalidOtp && _otp.isNotEmpty) {
-  //       _alreadyNavigatedToInvalidOtp = true;
-  //       resetOtpTimer();
-  //       context.pushNamed(AppRouterConst.invalidOtp, extra: user);
-  //     } else {
-  //       CustomAlertDialog.showCustomDialog(
-  //         title: _otpError!,
-  //         typeAlert: TypeAlert.error,
-  //       );
-  //     }
-  //     notifyListeners();
-  //   }
-  // }
-
-  Future<OtpResponse?> submitOtp(BuildContext context, LocalUser user) async {
+  Future<OtpResponse?> submitOtp(
+    BuildContext context,
+    LocalUser user, {
+    required void Function(OtpResponse) onResponse,
+    required void Function(MainFailure) onError,
+  }) async {
     if (_remainingSeconds == 0) {
       _otpError = "OTP has expired. Please request a new one.";
       notifyListeners();
@@ -323,26 +241,22 @@ class AuthFormProvider with ChangeNotifier {
       return null;
     }
 
-    // 🔹 API call
     final result = await iAuthenticationFacad.otpValidation(
       BaseParams(data: OtpParams(id: _cusomerId, otp: _otp)),
     );
 
     result.fold(
-      // 🔴 Failure case
       (failure) {
-        _errorMessage = failure.errorMsg.toString();
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(_errorMessage!)),
-        );
-        Logger.logError("OTP verification failed : $_errorMessage");
+        _errorMessage = failure.errorMsg;
 
         _otpError = "Please enter valid OTP";
         if (!_alreadyNavigatedToInvalidOtp && _otp.isNotEmpty) {
           _alreadyNavigatedToInvalidOtp = true;
           resetOtpTimer();
-          context.pushNamed(AppRouterConst.invalidOtp, extra: user);
+          GoRouter.of(context).pushNamed(
+            AppRouterConst.invalidOtp,
+            extra: user,
+          );
         } else {
           CustomAlertDialog.showCustomDialog(
             title: _otpError!,
@@ -352,8 +266,6 @@ class AuthFormProvider with ChangeNotifier {
 
         notifyListeners();
       },
-
-      // 🟢 Success case
       (response) async {
         _otpResponse = response;
         Logger.logSuccess("OTP verification success : ${response.toJson()}");
@@ -361,43 +273,15 @@ class AuthFormProvider with ChangeNotifier {
         _otpError = null;
         _alreadyNavigatedToInvalidOtp = false;
 
-        // ✅ Update local user as verified
         final verifiedUser = user.copyWith(isOtpVerified: true);
         await UserStorage.updateUser(verifiedUser);
 
         resetSignUpForm();
         resetLoginForm();
 
-        final users = await UserStorage.getUsers();
-        for (var u in users) {
-          Logger.logSuccess("User :: ${u.toJson()}");
-        }
-
         notifyListeners();
 
-        // ✅ Navigation & success alert
-        context.pushNamed(
-          AppRouterConst.customRouteScreen,
-          extra: response.status == 1
-              ? NavigationType.success
-              : NavigationType.failed,
-        );
-
-        CustomAlertDialog.showCustomDialog(
-          title: "OTP Verified Successfully",
-          typeAlert: TypeAlert.success,
-        );
-        // if (response.status == 1) {
-        //   CustomAlertDialog.showCustomDialog(
-        //     title: "OTP Verified Successfully",
-        //     typeAlert: TypeAlert.success,
-        //   );
-        // } else if (response.status == 0) {
-        //   CustomAlertDialog.showCustomDialog(
-        //     title: "OTP Verified Failed",
-        //     typeAlert: TypeAlert.error,
-        //   );
-        // }
+        onResponse.call(response);
       },
     );
 
@@ -468,6 +352,7 @@ class AuthFormProvider with ChangeNotifier {
 
   /// Validates login form fields.
   bool validateLoginForm() {
+    Logger.logInfo("${_emailOrPhone.isValid()}, ${_password.isValid()}");
     return _emailOrPhone.isValid() && _password.isValid();
   }
 
@@ -484,8 +369,8 @@ class AuthFormProvider with ChangeNotifier {
   void resetLoginForm() {
     _emailOrPhone = EmailOrPhone('');
     _password = Password('');
-    _emailOrPhoneValidationMode = AutovalidateMode.disabled;
-    _passwordValidationMode = AutovalidateMode.disabled;
+    loginAutovalidateMode = AutovalidateMode.disabled;
+    registerAutovalidateMode = AutovalidateMode.disabled;
     notifyListeners();
   }
 
@@ -496,11 +381,8 @@ class AuthFormProvider with ChangeNotifier {
     _email = EmailAddress('');
     _confirmPassword = ConfirmPassword('', '');
     _password = Password('');
-    _companyValidationMode = AutovalidateMode.disabled;
-    _phoneValidationMode = AutovalidateMode.disabled;
-    _emailValidationMode = AutovalidateMode.disabled;
-    _confirmPasswordValidationMode = AutovalidateMode.disabled;
-    _passwordValidationMode = AutovalidateMode.disabled;
+    loginAutovalidateMode = AutovalidateMode.disabled;
+    registerAutovalidateMode = AutovalidateMode.disabled;
     notifyListeners();
   }
 
@@ -509,8 +391,7 @@ class AuthFormProvider with ChangeNotifier {
     final isValid = validateLoginForm();
 
     if (!isValid) {
-      _emailOrPhoneValidationMode = AutovalidateMode.always;
-      _passwordValidationMode = AutovalidateMode.always;
+      loginAutovalidateMode = AutovalidateMode.always;
       notifyListeners();
       return;
     }
@@ -543,85 +424,6 @@ class AuthFormProvider with ChangeNotifier {
     }
   }
 
-  /// Handles signup submission and navigation.
-  // Future<CompanyRegistrationResponse?> submitSignUp(BuildContext context) async {
-  //   final isValid = validateSignUpForm();
-
-  //   CompanyRegistrationResponse? companyRegResponse;
-
-  //   if (!isValid) {
-  //     _companyValidationMode = AutovalidateMode.always;
-  //     _phoneValidationMode = AutovalidateMode.always;
-  //     _emailValidationMode = AutovalidateMode.always;
-  //     _passwordValidationMode = AutovalidateMode.always;
-  //     _confirmPasswordValidationMode = AutovalidateMode.always;
-  //     notifyListeners();
-  //     return null;
-  //   }
-
-  //   final existingUser =
-  //       await UserStorage.getUserByPhone(_phone.getValue ?? "");
-  //   final users = await UserStorage.getUsers();
-
-  //   for (var user in users) {
-  //     Logger.logSuccess("User :: ${user.toJson()}");
-  //   }
-
-  //   if (existingUser != null) {
-  //     if (existingUser.isOtpVerified) {
-  //       RegistrationDialogs.completedRegisteredDialog(context, existingUser)
-  //           .then((_) {
-  //         resetSignUpForm();
-  //         context.pushNamed(AppRouterConst.login);
-  //       });
-  //     } else {
-  //       RegistrationDialogs.pendingRegisteredDialog(context, existingUser)
-  //           .then((_) => resetSignUpForm());
-  //     }
-  //   } else {
-  //     final newUser = LocalUser(
-  //       name: _companyName.getValue ?? "",
-  //       email: _email.getValue ?? "",
-  //       phone: _phone.getValue ?? "",
-  //       password: _password.getValue ?? "",
-  //     );
-  //     await UserStorage.saveUser(newUser);
-
-  //      final result = await iAuthenticationFacad.companyRegistration(BaseParams(
-  //         data: CompanyRegistrationParams(
-  //             companyName: companyName.getValue,
-  //             mobile: phone.getValue,
-  //             email: email.getValue,
-  //             adminUsername: email.getValue,
-  //             password: password.getValue)));
-  //     result.fold(
-  //       (failure) {
-  //         _errorMessage = failure.errorMsg.toString();
-  //         ScaffoldMessenger.of(context).showSnackBar(
-  //           SnackBar(content: Text(_errorMessage!)),
-  //         );
-  //         Logger.logError("Login failed : ${failure.toRawJson()}");
-
-  //       },
-  //       (r) {
-  //         companyRegResponse = r;
-  //         Logger.logSuccess("Login success : ${r.toRawJson()}");
-  //       },
-  //     );
-
-  //       startOtpTimer();
-  //     WidgetsBinding.instance.addPostFrameCallback((_) {
-  //       context.pushNamed(AppRouterConst.otpAuth, extra: newUser);
-  //     });
-
-  //     _setLoading(false);
-  //     notifyListeners();
-
-  //     return companyRegResponse;
-
-  //   }
-  // }
-
   Future<CompanyRegistrationResponse?> submitSignUp(
       BuildContext context) async {
     final isValid = validateSignUpForm();
@@ -629,11 +431,8 @@ class AuthFormProvider with ChangeNotifier {
     // CompanyRegistrationResponse? companyRegResponse;
 
     if (!isValid) {
-      _companyValidationMode = AutovalidateMode.always;
-      _phoneValidationMode = AutovalidateMode.always;
-      _emailValidationMode = AutovalidateMode.always;
-      _passwordValidationMode = AutovalidateMode.always;
-      _confirmPasswordValidationMode = AutovalidateMode.always;
+      registerAutovalidateMode = AutovalidateMode.always;
+
       notifyListeners();
       return null;
     }
@@ -684,7 +483,7 @@ class AuthFormProvider with ChangeNotifier {
         }
 
         /// CASE 2: Already registered → pending OTP verification → status == 20
-        else if (response.status == 20) {
+        if (response.status == 20) {
           RegistrationDialogs.pendingRegisteredDialog(context, newUser)
               .then((_) => resetSignUpForm());
         }
@@ -704,6 +503,45 @@ class AuthFormProvider with ChangeNotifier {
     );
 
     return _companyRegistrationResponse;
+  }
+
+  Future<ResponseData?> resetPassword(BuildContext context) async {
+    if (!formKey.currentState!.validate()) {
+      loginAutovalidateMode = AutovalidateMode.onUserInteraction;
+      notifyListeners();
+      return null;
+    }
+
+    _setLoading(true);
+    _errorMessage = null;
+
+    final result = await iAuthenticationFacad.resetPassword(
+      BaseParams(
+        data: ResetPasswordParam(
+          username: emailController.text.trim(),
+        ),
+      ),
+    );
+
+    result.fold(
+      (failure) {
+        _errorMessage = failure.errorMsg.toString();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(_errorMessage!)),
+        );
+        Logger.logError("Reset Password failed : $_errorMessage");
+      },
+      (response) {
+        _responseData = response;
+        Logger.logSuccess("Reset Password success : ${response.toJson()}");
+        submitEmail(context);
+        emailController.clear();
+      },
+    );
+
+    _setLoading(false);
+    notifyListeners();
+    return _responseData;
   }
 
   //============================================================================

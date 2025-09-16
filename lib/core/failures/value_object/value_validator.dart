@@ -1,5 +1,6 @@
 import 'package:mpos_beat/core/failures/value_object/value_failure.dart';
 import 'package:dartz/dartz.dart';
+import 'package:mpos_beat/core/utils/imports.dart';
 
 Either<ValueFailure<String>, String> validatePhoneNumber(String input) {
   if (input.isEmpty) {
@@ -14,6 +15,7 @@ Either<ValueFailure<String>, String> validatePhoneNumber(String input) {
 }
 
 Either<ValueFailure<String>, String> validateEmail(String mail) {
+  Logger.logInfo(mail);
   final RegExp emailRegExp =
       RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
 
@@ -59,7 +61,16 @@ Either<ValueFailure<String>, String> validateEmailOrPhone(String value) {
       const ValueFailure.invalidValue('Please enter your username'),
     );
   }
-  return right(value);
+
+  if (validateEmail(value).isRight()) {
+    return right(value);
+  }
+
+  if (validatePhoneNumber(value).isRight()) {
+    return right(value);
+  }
+
+  return left(const ValueFailure.invalidValue('Invalid email or phonenumber'));
 }
 
 Either<ValueFailure<String>, String> validateCompanyName(String value) {
