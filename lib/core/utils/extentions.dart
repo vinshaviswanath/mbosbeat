@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:mpos_beat/core/theme/colors.dart';
 import 'package:mpos_beat/core/theme/theme/theme_provider.dart';
 import 'package:mpos_beat/core/utils/enums.dart';
@@ -69,3 +72,46 @@ extension BuildContextX on BuildContext {
 extension AppLocalizationsX on BuildContext {
   AppLocalizations get l10n => AppLocalizations.of(this)!;
 }
+
+extension ResponseX on Response {
+  bool get isOk => statusCode == 200 || statusCode == 201;
+
+  dynamic get responseData => data['DATA'];
+
+  String get message {
+    if (data is Map && data is Map && data['message'] != null) {
+      return data['message'].toString();
+    }
+    return data['message']?.toString() ?? '';
+  }
+
+  String get error {
+    if (data is Map && data is Map && data['message'] != null) {
+      return data['message'].toString();
+    }
+    return 'Unknown error';
+  }
+}
+
+
+// extension JsonPrintable<T extends Object> on T {
+//   /// Convert to raw JSON string if object has `toJson`
+//   String toRawJson() {
+//     if (!(this as dynamic).toJson is Function) {
+//       throw UnsupportedError(
+//           "${T.toString()} does not implement toJson()");
+//     }
+//     final map = (this as dynamic).toJson() as Map<String, dynamic>;
+//     return jsonEncode(map);
+//   }
+
+//   /// Pretty print JSON with indentation
+//   String prettyPrint() {
+//     if (!(this as dynamic).toJson is Function) {
+//       throw UnsupportedError(
+//           "${T.toString()} does not implement toJson()");
+//     }
+//     final map = (this as dynamic).toJson() as Map<String, dynamic>;
+//     return const JsonEncoder.withIndent('  ').convert(map);
+//   }
+// }

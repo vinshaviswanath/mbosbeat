@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter_svg/svg.dart';
 import 'package:mpos_beat/core/failures/value_object/value_failure.dart';
 import 'package:mpos_beat/core/theme/text_styles.dart';
 import 'package:mpos_beat/core/utils/app_assets.dart';
@@ -128,12 +129,11 @@ class CustomTextField extends StatelessWidget {
         if (autovalidateMode == AutovalidateMode.always && failure != null)
           Row(
             children: [
-              Image.asset(
-                AppAssets.error,
-                height: 11,
-                width: 11,
+              SvgPicture.asset(
+                AppAssets.alertError,
+                height: 16,
               ),
-              const Gap(10),
+              const Gap(2),
               Text(
                 failure!.errorMsg,
                 style: context.textStyle.s10.roseRed,

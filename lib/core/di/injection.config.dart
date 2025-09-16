@@ -14,6 +14,16 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
+import '../../data/data_sources/authentication/company_registeration/company_registeration.dart'
+    as _i70;
+import '../../data/data_sources/authentication/otp_validation/otp_validation.dart'
+    as _i42;
+import '../../data/data_sources/authentication/resend_otp/resend_otp.dart'
+    as _i13;
+import '../../data/data_sources/authentication/reset_password/reset_password.dart'
+    as _i244;
+import '../../data/repositories/i_authentication_facad_impl.dart' as _i823;
+import '../../domain/repositories/i_authentication_facad.dart' as _i590;
 import '../base/run_safely.dart' as _i530;
 import '../serveice/dio_client.dart' as _i841;
 import 'app_injection_module.dart' as _i975;
@@ -46,6 +56,35 @@ Future<_i174.GetIt> init(
   gh.lazySingleton<_i530.RunSafely>(() => _i530.RunSafely());
   gh.lazySingleton<_i361.Dio>(() => appInjectionModule.dio);
   gh.lazySingleton<_i841.DioClient>(() => _i841.DioClient(gh<_i361.Dio>()));
+  gh.lazySingleton<_i70.CompanyRegisteration>(() => _i70.CompanyRegisteration(
+        gh<_i841.DioClient>(),
+        gh<_i530.RunSafely>(),
+        gh<_i460.SharedPreferences>(),
+      ));
+  gh.lazySingleton<_i42.OtpValidation>(() => _i42.OtpValidation(
+        gh<_i841.DioClient>(),
+        gh<_i530.RunSafely>(),
+        gh<_i460.SharedPreferences>(),
+      ));
+  gh.lazySingleton<_i13.ResendOtp>(() => _i13.ResendOtp(
+        gh<_i841.DioClient>(),
+        gh<_i530.RunSafely>(),
+        gh<_i460.SharedPreferences>(),
+      ));
+  gh.lazySingleton<_i244.ResetPassword>(() => _i244.ResetPassword(
+        gh<_i841.DioClient>(),
+        gh<_i530.RunSafely>(),
+        gh<_i460.SharedPreferences>(),
+      ));
+  gh.lazySingleton<_i590.IAuthenticationFacad>(() => _i823.IAuthenticationImpl(
+        gh<_i70.CompanyRegisteration>(),
+        gh<_i42.OtpValidation>(),
+        gh<_i13.ResendOtp>(),
+        gh<_i244.ResetPassword>(),
+        gh<_i841.DioClient>(),
+        gh<_i530.RunSafely>(),
+        gh<_i460.SharedPreferences>(),
+      ));
   return getIt;
 }
 

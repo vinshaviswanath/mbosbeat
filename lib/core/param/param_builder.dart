@@ -65,32 +65,45 @@ class ParamBuilder {
 
 // Base param ========================================================================
 
-class BaseParams<T extends ToMap> {
-  final APIAction action;
-  final ActionType type;
-  final int? id;
-  final T data;
-  final OptionalParamData? optionalDara;
+// class BaseParams<T extends ToMap> {
+//   final APIAction action;
+//   final ActionType type;
+//   final int? id;
+//   final T data;
+//   final OptionalParamData? optionalDara;
 
-  BaseParams({
-    this.action = APIAction.none,
-    required this.type,
-    required this.data,
-    this.id,
-    this.optionalDara,
-  });
+//   BaseParams({
+//     this.action = APIAction.none,
+//     required this.type,
+//     required this.data,
+//     this.id,
+//     this.optionalDara,
+//   });
+
+//   Map<String, dynamic> toMap() {
+//     final baseParam = <String, dynamic>{
+//       'type': type.name,
+//       'attributes': data.toMap(),
+//     };
+//     if (id != null) {
+//       baseParam['id'] = id;
+//     }
+//     return <String, dynamic>{
+//       'data': baseParam,
+//     };
+//   }
+// }
+
+// abstract class ToMap {
+//   Map<String, dynamic> toMap();
+// }
+
+class BaseParams<T extends ToMap> {
+  final T data;
+  BaseParams({required this.data});
 
   Map<String, dynamic> toMap() {
-    final baseParam = <String, dynamic>{
-      'type': type.name,
-      'attributes': data.toMap(),
-    };
-    if (id != null) {
-      baseParam['id'] = id;
-    }
-    return <String, dynamic>{
-      'data': baseParam,
-    };
+    return data.toMap();
   }
 }
 

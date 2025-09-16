@@ -1,10 +1,13 @@
-
+import 'package:flutter_dropdown_alert/model/data_alert.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mpos_beat/core/utils/alert_dialog.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/user_model.dart';
 import 'package:mpos_beat/presentation/common/animations/wheel_spinner.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_button.dart';
 import 'package:mpos_beat/presentation/logic/authentication_provider.dart';
 import 'package:mpos_beat/presentation/views/otp/widgets/otp_field.dart';
+import 'package:mpos_beat/route/app_router_const.dart';
 
 class InvalidOtp extends StatelessWidget {
   final LocalUser user;
@@ -74,7 +77,28 @@ class InvalidOtp extends StatelessWidget {
                           buttonText: "Submit",
                           isborderEnable: false,
                           onTap: () {
-                            provider.submitOtp(context, user);
+                            provider.submitOtp(
+                              context,
+                              user,
+                              onError: (p0) {},
+                              onResponse: (response) {
+                                if (response.status == 1) {
+                                  context.pushNamed(
+                                    AppRouterConst.customRouteScreen,
+                                    extra: NavigationType.success,
+                                  );
+                                  CustomAlertDialog.showCustomDialog(
+                                    title: "OTP Verified Successfully",
+                                    typeAlert: TypeAlert.success,
+                                  );
+                                } else if (response.status == 0) {
+                                  GoRouter.of(context).pushNamed(
+                                    AppRouterConst.invalidOtp,
+                                    extra: user,
+                                  );
+                                }
+                              },
+                            );
                           },
                         ),
                         gap24,
