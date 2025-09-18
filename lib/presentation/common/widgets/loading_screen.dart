@@ -1,15 +1,13 @@
 import 'package:mpos_beat/core/utils/imports.dart';
 
 class LoadingScreen extends StatelessWidget {
-  final VoidCallback onCompleted;
   static const routeName = "loading-screen";
-  const LoadingScreen({super.key, required this.onCompleted});
+  const LoadingScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 2), () {
-      onCompleted();
-    });
     return Scaffold(
       body: Row(
         mainAxisAlignment: MainAxisAlignment.center,

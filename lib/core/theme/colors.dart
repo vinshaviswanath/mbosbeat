@@ -24,6 +24,6 @@ class ColorResources {
   // Logout icon BG color
   static const rosePink = Color(0xFFF04A99);
   //Linear Gradient colors
-  static const softViolet = Color(0xFF8478DF);
-  static const deepViolet = Color(0xFF5E50C0);
+  static const softViolet = Color(0xFF5FA6FEF);
+  static const deepViolet = Color(0xFF176FDC);
 }

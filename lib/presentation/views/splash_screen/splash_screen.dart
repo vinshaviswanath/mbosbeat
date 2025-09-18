@@ -1,6 +1,8 @@
 import 'package:go_router/go_router.dart';
+import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/route/app_router_const.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -17,8 +19,15 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer(const Duration(seconds: 2), () {
       if (mounted) {
+        final prefs = sl<SharedPreferences>();
+        final isOnboardingCompleted =
+            prefs.getBool("isOnboardingCompleted") ?? false;
         // AppRoute.pushNamed(OnBoardingScreen.routeName);
-        context.pushNamed( AppRouterConst.onboardScreen);
+        if (isOnboardingCompleted == true) {
+          context.pushNamed(AppRouterConst.login);
+        } else {
+          context.pushNamed(AppRouterConst.onboardScreen);
+        }
       }
     });
   }

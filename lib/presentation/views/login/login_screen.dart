@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/domain/request/login_params.dart';
 import 'package:mpos_beat/presentation/common/animations/stepper_transition.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_button.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_textField.dart';
@@ -183,7 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     borderRadius: BorderRadius.circular(45),
                                     onTap: () {
                                       // provider.resetSignUpForm();
-                                      provider.submitLogin(context);
+                                      provider.submitLogin(context,params: LoginParams(username: emailController.text, password: passwordController.text));
                                     },
                                   ),
                                 ),

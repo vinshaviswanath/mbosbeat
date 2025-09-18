@@ -81,3 +81,12 @@ Either<ValueFailure<String>, String> validateCompanyName(String value) {
   }
   return right(value);
 }
+
+Either<ValueFailure<String>, String> validateOtp(String value) {
+  if (value.length < 4) {
+    return left(
+      const ValueFailure.invalidValue('Enter a valid otp'),
+    );
+  }
+  return right(value);
+}

@@ -25,13 +25,13 @@ class AdminHome extends StatelessWidget {
         body: Stack(
           children: [
             Positioned(
-              top: context.getSize.height * 0.025,
-              right: -context.getSize.width * 0.25,
+              top: context.getSize.height * 0.1,
+              right: -context.getSize.width * 0.15,
               child: Image.asset(AppAssets.bgVector),
             ),
             Positioned(
               bottom: -context.getSize.height * 0.09,
-              left: -context.getSize.width * 0.3,
+              left: -context.getSize.width * 0.25,
               child: Image.asset(AppAssets.bgVector),
             ),
             CustomScrollView(
@@ -39,28 +39,24 @@ class AdminHome extends StatelessWidget {
                 SliverToBoxAdapter(
                   child: SizedBox(
                     height: context.getSize.height,
-                    child: Padding(
-                      padding:
-                          EdgeInsets.only(top: context.getSize.height * 0.1),
-                      child: const Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              AdminHomeWidget(
-                                iconData: AppAssets.user,
-                                title: "Manage User",
-                              ),
-                              Gap(52),
-                              AdminHomeWidget(
-                                iconData: AppAssets.company,
-                                title: "Manage Company",
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                    child: const Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            AdminHomeWidget(
+                              iconData: AppAssets.user,
+                              title: "Manage User",
+                            ),
+                            Gap(52),
+                            AdminHomeWidget(
+                              iconData: AppAssets.company,
+                              title: "Manage Company",
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -76,17 +72,21 @@ class AdminHome extends StatelessWidget {
                   height: context.getSize.height * 0.12,
                   child: Column(
                     children: [
-                      CircleAvatar(
-                        radius: 28,
-                        backgroundColor: ColorResources.roseRed,
-                        child: SvgPicture.asset(
-                          AppAssets.power,
-                          colorFilter: const ColorFilter.mode(
-                            ColorResources.white,
-                            BlendMode.srcIn,
-                          ),
-                        ),
+                      Image.asset(
+                        AppAssets.powerButton,
+                        height: 28,
                       ),
+                      // CircleAvatar(
+                      //   radius: 28,
+                      //   backgroundColor: ColorResources.roseRed,
+                      //   child: SvgPicture.asset(
+                      //     AppAssets.power,
+                      //     colorFilter: const ColorFilter.mode(
+                      //       ColorResources.white,
+                      //       BlendMode.srcIn,
+                      //     ),
+                      //   ),
+                      // ),
                       gap4,
                       Text(
                         "Logout",

@@ -1,4 +1,3 @@
-
 import 'package:mpos_beat/core/exception/custom_exception.dart';
 import 'package:mpos_beat/core/failures/value_object/value_failure.dart';
 import 'package:mpos_beat/core/failures/value_object/value_validator.dart';
@@ -76,7 +75,8 @@ class ConfirmPassword extends ValueObjet<String> {
 
   /// Pass both confirm password value and the original password
   factory ConfirmPassword(String confirmValue, String originalPassword) =>
-      ConfirmPassword._(validateConfirmPassword(confirmValue, originalPassword));
+      ConfirmPassword._(
+          validateConfirmPassword(confirmValue, originalPassword));
 
   const ConfirmPassword._(this.value);
 }
@@ -96,9 +96,17 @@ class CompanyName extends ValueObjet<String> {
   @override
   final Either<ValueFailure<String>, String> value;
 
-  factory CompanyName(String value) => CompanyName._(validateCompanyName(value));
+  factory CompanyName(String value) =>
+      CompanyName._(validateCompanyName(value));
 
   const CompanyName._(this.value);
 }
 
+class Otp extends ValueObjet<String> {
+  @override
+  final Either<ValueFailure<String>, String> value;
 
+  factory Otp(String value) => Otp._(validateOtp(value));
+
+  const Otp._(this.value);
+}

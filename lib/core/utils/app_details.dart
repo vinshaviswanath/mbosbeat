@@ -5,7 +5,7 @@ class AppDetails {
   static const env = Environment.test;
   static Size screenSize = const Size(0, 0);
   static const designWidth = 360.0;
-  static const bundleId = 'com.gsl.students';
+  static const bundleId = 'com.example.mpos_beat';
   static const appName = 'GSL Students';
   static final globalNavigatorKey = GlobalKey<NavigatorState>();
   static const tokenKey = 'auth';

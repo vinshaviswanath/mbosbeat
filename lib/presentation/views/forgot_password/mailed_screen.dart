@@ -34,9 +34,10 @@ class MailedScreen extends StatelessWidget {
                         widgwt: Padding(
                           padding: const EdgeInsets.all(16),
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Lottie.asset(AppAssets.mail_send,
-                                  height: context.getSize.height * 0.12),
+                              Image.asset(AppAssets.mailSend,
+                                  height: context.getSize.height * 0.14),
                               gap28,
                               Text(
                                 "We have sent a password recovery instructions to ${provider.maskedEmail}. Kindly verify!",
@@ -44,12 +45,12 @@ class MailedScreen extends StatelessWidget {
                                 textAlign: TextAlign.center,
                                 textScaler: const TextScaler.linear(0.8),
                               ),
-                              const Spacer(),
                               Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 16),
                                 child: CustomButton(
-                                    onTap: () => context.pushNamed(AppRouterConst.login),
+                                    onTap: () =>
+                                        context.pushNamed(AppRouterConst.login),
                                     buttonText: "Login",
                                     isborderEnable: false),
                               )

@@ -2,13 +2,11 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 
 import 'package:injectable/injectable.dart';
-import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/exception/custom_exception.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/core/utils/urls.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 @lazySingleton
 class DioClient {
