@@ -16,6 +16,10 @@ class AppAssets {
   static const ob3 = "$basePngDir/ob3.png";
   static const user = "$basePngDir/user.png";
   static const company = "$basePngDir/company.png";
+  static const forgotPassword = "$basePngDir/forgotPassword.png";
+  static const mailSend = "$basePngDir/mailSend.png";
+  static const registered = "$basePngDir/registered.png";
+  static const powerButton = "$basePngDir/powerButton.png";
 
 
   //SVG

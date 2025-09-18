@@ -1,9 +1,6 @@
-import 'dart:ui';
-
 import 'package:go_router/go_router.dart';
 import 'package:mpos_beat/core/utils/app_details.dart';
 import 'package:mpos_beat/core/utils/enums.dart';
-import 'package:mpos_beat/data/models/user_model.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_route_screen.dart';
 import 'package:mpos_beat/presentation/common/widgets/loading_screen.dart';
 import 'package:mpos_beat/presentation/views/admin_home/admin_home.dart';
@@ -19,93 +16,86 @@ import 'package:mpos_beat/route/app_router_const.dart';
 
 class AppRouter {
   static final router = GoRouter(
-    navigatorKey: AppDetails.globalNavigatorKey,
-    initialLocation: "/", routes: [
-    GoRoute(
-      path: "/",
-      name: AppRouterConst.splashScreen,
-      builder: (context, state) {
-        return const SplashScreen();
-      },
-    ),
-    GoRoute(
-      path: "/onboard",
-      name: AppRouterConst.onboardScreen,
-      builder: (context, state) {
-        return const OnBoardingScreen();
-      },
-    ),
-    GoRoute(
-      path: "/login",
-      name: AppRouterConst.login,
-      builder: (context, state) {
-        return const LoginScreen();
-      },
-    ),
-    GoRoute(
-      path: "/signup",
-      name: AppRouterConst.signup,
-      builder: (context, state) {
-        return const SignUpScreen();
-      },
-    ),
-    GoRoute(
-      path: "/otpAuth",
-      name: AppRouterConst.otpAuth,
-      builder: (context, state) {
-        final user = state.extra as LocalUser;
-        return OtpAuthentication(
-          user: user,
-        );
-      },
-    ),
-    GoRoute(
-      path: "/invalidOtp",
-      name: AppRouterConst.invalidOtp,
-      builder: (context, state) {
-        final user = state.extra as LocalUser;
-        return InvalidOtp(user: user);
-      },
-    ),
-    GoRoute(
-      path: "/customRouteScreen",
-      name: AppRouterConst.customRouteScreen,
-      builder: (context, state) {
-        final status = state.extra as NavigationType;
-        return CustomRouteScreen(status: status);
-      },
-    ),
-    GoRoute(
-      path: "/adminHome",
-      name: AppRouterConst.adminHome,
-      builder: (context, state) {
-        return AdminHome();
-      },
-    ),
-    GoRoute(
-      path: "/forgotPassword",
-      name: AppRouterConst.forgotPassword,
-      builder: (context, state) {
-        return ForgotPassword();
-      },
-    ),
-    GoRoute(
-      path: "/mailedScreen",
-      name: AppRouterConst.mailedScreen,
-      builder: (context, state) {
-        return MailedScreen();
-      },
-    ),
-     GoRoute(
+      navigatorKey: AppDetails.globalNavigatorKey,
+      initialLocation: "/",
+      routes: [
+        GoRoute(
+          path: "/",
+          name: AppRouterConst.splashScreen,
+          builder: (context, state) {
+            return const SplashScreen();
+          },
+        ),
+        GoRoute(
+          path: "/onboard",
+          name: AppRouterConst.onboardScreen,
+          builder: (context, state) {
+            return const OnBoardingScreen();
+          },
+        ),
+        GoRoute(
+          path: "/login",
+          name: AppRouterConst.login,
+          builder: (context, state) {
+            return const LoginScreen();
+          },
+        ),
+        GoRoute(
+          path: "/signup",
+          name: AppRouterConst.signup,
+          builder: (context, state) {
+            return const SignUpScreen();
+          },
+        ),
+        GoRoute(
+          path: "/otpAuth",
+          name: AppRouterConst.otpAuth,
+          builder: (context, state) {
+            return const OtpAuthentication();
+          },
+        ),
+        GoRoute(
+          path: "/invalidOtp",
+          name: AppRouterConst.invalidOtp,
+          builder: (context, state) {
+            return const InvalidOtp();
+          },
+        ),
+        GoRoute(
+          path: "/customRouteScreen",
+          name: AppRouterConst.customRouteScreen,
+          builder: (context, state) {
+            final status = state.extra as NavigationType;
+            return CustomRouteScreen(status: status);
+          },
+        ),
+        GoRoute(
+          path: "/adminHome",
+          name: AppRouterConst.adminHome,
+          builder: (context, state) {
+            return const AdminHome();
+          },
+        ),
+        GoRoute(
+          path: "/forgotPassword",
+          name: AppRouterConst.forgotPassword,
+          builder: (context, state) {
+            return const ForgotPassword();
+          },
+        ),
+        GoRoute(
+          path: "/mailedScreen",
+          name: AppRouterConst.mailedScreen,
+          builder: (context, state) {
+            return const MailedScreen();
+          },
+        ),
+        GoRoute(
           path: "/loadingScreen",
           name: AppRouterConst.loadingScreen,
           builder: (context, state) {
-            final onCompleted = state.extra as VoidCallback;
-
-            return LoadingScreen(
-              onCompleted: onCompleted,
-            );
+            return const LoadingScreen();
           },
         ),
-  ]);
+      ]);
 }

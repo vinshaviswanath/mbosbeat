@@ -4,14 +4,18 @@ import 'package:mpos_beat/core/param/param_builder.dart';
 import 'package:mpos_beat/core/serveice/dio_client.dart';
 import 'package:mpos_beat/core/utils/typedefs.dart';
 import 'package:mpos_beat/data/data_sources/authentication/company_registeration/company_registeration.dart';
+import 'package:mpos_beat/data/data_sources/authentication/login/login_impl.dart';
 import 'package:mpos_beat/data/data_sources/authentication/otp_validation/otp_validation.dart';
 import 'package:mpos_beat/data/data_sources/authentication/resend_otp/resend_otp.dart';
 import 'package:mpos_beat/data/data_sources/authentication/reset_password/reset_password.dart';
 import 'package:mpos_beat/data/models/company_registration_response.dart';
+import 'package:mpos_beat/data/models/data/login_data.dart';
+import 'package:mpos_beat/data/models/login_response.dart';
 import 'package:mpos_beat/data/models/otp_response.dart';
 import 'package:mpos_beat/data/models/response_data.dart';
 import 'package:mpos_beat/domain/repositories/i_authentication_facad.dart';
 import 'package:mpos_beat/domain/request/company_registration_params.dart';
+import 'package:mpos_beat/domain/request/login_params.dart';
 import 'package:mpos_beat/domain/request/otp_validation_params.dart';
 import 'package:mpos_beat/domain/request/resend_otp_params.dart';
 import 'package:mpos_beat/domain/request/reset_password_params.dart';
@@ -22,6 +26,7 @@ class IAuthenticationImpl implements IAuthenticationFacad {
   final CompanyRegisteration companyRegisteration;
   final OtpValidation otpValidate;
   final ResendOtp resendOTP;
+  final LoginImpl loginImpl;
   final ResetPassword resetPass;
   final DioClient dioClient;
   final RunSafely runSafely;
@@ -30,6 +35,7 @@ class IAuthenticationImpl implements IAuthenticationFacad {
     this.companyRegisteration,
     this.otpValidate,
     this.resendOTP,
+    this.loginImpl,
     this.resetPass,
     this.dioClient,
     this.runSafely,
@@ -62,5 +68,12 @@ class IAuthenticationImpl implements IAuthenticationFacad {
     BaseParams<ResetPasswordParam> params,
   ) {
     return resetPass(params);
+  }
+
+    @override
+  ResultFuture<LoginResponse> login(
+    BaseParams<LoginParams> params,
+  ) {
+    return loginImpl(params);
   }
 }

@@ -73,15 +73,17 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         BaseBox(
-                          height: context.getSize.height * 0.44,
+                          height: context.getSize.height * 0.48,
                           widgwt: Padding(
                             padding: const EdgeInsets.only(
-                                left: 16, right: 16, top: 16),
+                              left: 16,
+                              right: 16,
+                            ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Lottie.asset(AppAssets.forgot_password,
-                                    height: 100),
+                                Image.asset(AppAssets.forgotPassword,
+                                    height: context.getSize.height * 0.128),
                                 gap8,
                                 Text(
                                   "Enter the email associated with your account and we will send an email to reset your password.",
@@ -117,8 +119,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                         hintText: "Enter Email",
                                         filled: true,
                                         fillColor: ColorResources.lightGray,
-                                        hintStyle: TextStyle(
-                                            color: ColorResources.silverGray),
+                                        hintStyle: const TextStyle(
+                                          color: ColorResources.silverGray,
+                                        ),
                                         border: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(12),

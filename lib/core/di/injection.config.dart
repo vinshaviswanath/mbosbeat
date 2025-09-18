@@ -16,6 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 import '../../data/data_sources/authentication/company_registeration/company_registeration.dart'
     as _i70;
+import '../../data/data_sources/authentication/login/login_impl.dart' as _i526;
 import '../../data/data_sources/authentication/otp_validation/otp_validation.dart'
     as _i42;
 import '../../data/data_sources/authentication/resend_otp/resend_otp.dart'
@@ -76,10 +77,16 @@ Future<_i174.GetIt> init(
         gh<_i530.RunSafely>(),
         gh<_i460.SharedPreferences>(),
       ));
+  gh.lazySingleton<_i526.LoginImpl>(() => _i526.LoginImpl(
+        gh<_i841.DioClient>(),
+        gh<_i530.RunSafely>(),
+        gh<_i460.SharedPreferences>(),
+      ));
   gh.lazySingleton<_i590.IAuthenticationFacad>(() => _i823.IAuthenticationImpl(
         gh<_i70.CompanyRegisteration>(),
         gh<_i42.OtpValidation>(),
         gh<_i13.ResendOtp>(),
+        gh<_i526.LoginImpl>(),
         gh<_i244.ResetPassword>(),
         gh<_i841.DioClient>(),
         gh<_i530.RunSafely>(),

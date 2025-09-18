@@ -10,10 +10,8 @@ import 'package:mpos_beat/presentation/views/otp/widgets/otp_field.dart';
 import 'package:mpos_beat/route/app_router_const.dart';
 
 class InvalidOtp extends StatelessWidget {
-  final LocalUser user;
-
   static const routeName = "invalid-otp-screen";
-  const InvalidOtp({super.key, required this.user});
+  const InvalidOtp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +54,8 @@ class InvalidOtp extends StatelessWidget {
                           },
                         ),
                         gap16,
-                        if (provider.otpError != null)
+                        if ((provider.otpError != null ||
+                            !provider.otp.isValid()))
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -67,7 +66,7 @@ class InvalidOtp extends StatelessWidget {
                               ),
                               gap10,
                               Text(
-                                "${provider.otpError}",
+                                "${provider.otpError ?? provider.otp.getFailure?.errorMsg}",
                                 style: context.textStyle.s10.roseRed,
                               ),
                             ],
@@ -79,7 +78,6 @@ class InvalidOtp extends StatelessWidget {
                           onTap: () {
                             provider.submitOtp(
                               context,
-                              user,
                               onError: (p0) {},
                               onResponse: (response) {
                                 if (response.status == 1) {
@@ -94,7 +92,6 @@ class InvalidOtp extends StatelessWidget {
                                 } else if (response.status == 0) {
                                   GoRouter.of(context).pushNamed(
                                     AppRouterConst.invalidOtp,
-                                    extra: user,
                                   );
                                 }
                               },
@@ -127,13 +124,18 @@ class InvalidOtp extends StatelessWidget {
                             ),
                             gap8,
                             InkWell(
-                              onTap: () {
-                                provider.startOtpTimer();
-                                wheelKey.currentState?.startSpin();
-                              },
+                              onTap: provider.remainingSeconds > 0
+                                  ? null // disable while timer is active
+                                  : () {
+                                      provider.startOtpTimer();
+                                      provider.resendOtp(context);
+                                      wheelKey.currentState?.startSpin();
+                                    },
                               child: Text(
                                 "Resend OTP",
-                                style: context.textStyle.s12.bold.indigoBlue,
+                                style: provider.remainingSeconds > 0
+                                    ? context.textStyle.s12.bold.bluishGray
+                                    : context.textStyle.s12.bold.indigoBlue,
                               ),
                             ),
                           ],

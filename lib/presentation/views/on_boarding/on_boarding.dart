@@ -1,6 +1,8 @@
 import 'package:go_router/go_router.dart';
+import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/route/app_router_const.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnBoardingScreen extends StatefulWidget {
@@ -120,6 +122,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           InkWell(
             onTap: () {
               // AppRoute.pushNamed(LoginScreen.routeName);
+              final prefs = sl<SharedPreferences>();
+              prefs.setBool("isOnboardingCompleted", true);
               context.pushNamed(AppRouterConst.login);
             },
             child: Text(

@@ -6,6 +6,7 @@ import 'package:mpos_beat/core/theme/text_styles.dart';
 import 'package:mpos_beat/core/utils/app_assets.dart';
 import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/extentions.dart';
+import 'package:mpos_beat/data/models/login_response.dart';
 import 'package:mpos_beat/data/models/user_model.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_button.dart';
 import 'package:mpos_beat/presentation/logic/authentication_provider.dart';
@@ -16,7 +17,10 @@ import 'package:provider/provider.dart';
 
 class RegistrationDialogs {
   static Future<void> pendingRegisteredDialog(
-      BuildContext context, LocalUser existingUser) {
+    BuildContext context,
+    String title, {
+    int? id,
+  }) {
     return CustomDialog.showBottomCustomDialog(
       chid: Consumer<AuthFormProvider>(
         builder: (context, provider, _) {
@@ -39,7 +43,7 @@ class RegistrationDialogs {
                     children: [
                       const TextSpan(text: "Hello "),
                       TextSpan(
-                        text: existingUser.name,
+                        text: title,
                         style: context.textStyle.s12.bluishGray.bold,
                       ),
                       const TextSpan(
@@ -55,11 +59,13 @@ class RegistrationDialogs {
               gap24,
               CustomButton(
                 onTap: () async {
-                  // Navigator.pop(context);
-                  await provider.resendOtp(context, existingUser);
+                  await provider.resendOtp(context, id: id);
                   WidgetsBinding.instance.addPostFrameCallback(
                     (_) {
-                      context.push(AppRouterConst.otpAuth, extra: existingUser);
+                      Navigator.pop(context);
+                      context.push(
+                        AppRouterConst.otpAuth,
+                      );
                     },
                   );
                 },
@@ -78,7 +84,7 @@ class RegistrationDialogs {
   }
 
   static Future<void> completedRegisteredDialog(
-      BuildContext context, LocalUser existingUser) {
+      BuildContext context, String name) {
     return CustomDialog.showBottomCustomDialog(
       chid: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -89,7 +95,7 @@ class RegistrationDialogs {
             style: context.textStyle.s12.w700.indigoBlue,
           ),
           gap16,
-          Lottie.asset(AppAssets.registred,
+          Image.asset(AppAssets.registered,
               height: context.getSize.height * 0.15),
           gap24,
           SizedBox(
@@ -99,7 +105,7 @@ class RegistrationDialogs {
                 children: [
                   const TextSpan(text: "Hello "),
                   TextSpan(
-                    text: existingUser.name,
+                    text: name,
                     style: context.textStyle.s12.bluishGray.bold,
                   ),
                   const TextSpan(

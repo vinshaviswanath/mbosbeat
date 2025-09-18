@@ -11,9 +11,10 @@ import 'package:mpos_beat/presentation/views/otp/widgets/otp_field.dart';
 import 'package:mpos_beat/route/app_router_const.dart';
 
 class OtpAuthentication extends StatefulWidget {
-  final LocalUser user;
   static const routeName = 'otp-auth';
-  const OtpAuthentication({super.key, required this.user});
+  const OtpAuthentication({
+    super.key,
+  });
 
   @override
   State<OtpAuthentication> createState() => _OtpAuthenticationState();
@@ -89,7 +90,10 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
                               },
                             ),
                             gap8,
-                            if (provider.otpError != null)
+                            if ((provider.otpError != null ||
+                                    !provider.otp.isValid()) &&
+                                provider.otpAutovalidateMode ==
+                                    AutovalidateMode.always)
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -100,7 +104,7 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
                                   ),
                                   gap10,
                                   Text(
-                                    "${provider.otpError}",
+                                    "${provider.otpError ?? provider.otp.getFailure?.errorMsg}",
                                     style: context.textStyle.s10.roseRed,
                                   ),
                                 ],
@@ -110,32 +114,25 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
                               buttonText: "Submit",
                               isborderEnable: false,
                               onTap: () {
-                                context.pushNamed(
-                                  AppRouterConst.loadingScreen,
-                                  extra: () {
+                                provider.submitOtp(
+                                  context,
+                                  onError: (p0) {},
+                                  onResponse: (response) {
                                     Navigator.pop(context);
-                                    provider.submitOtp(
-                                      context,
-                                      widget.user,
-                                      onError: (p0) {},
-                                      onResponse: (response) {
-                                        if (response.status == 1) {
-                                          context.pushNamed(
-                                            AppRouterConst.customRouteScreen,
-                                            extra: NavigationType.success,
-                                          );
-                                          CustomAlertDialog.showCustomDialog(
-                                            title: "OTP Verified Successfully",
-                                            typeAlert: TypeAlert.success,
-                                          );
-                                        } else if (response.status == 0) {
-                                          GoRouter.of(context).pushNamed(
-                                            AppRouterConst.invalidOtp,
-                                            extra: widget.user,
-                                          );
-                                        }
-                                      },
-                                    );
+                                    if (response.status == 1) {
+                                      context.pushNamed(
+                                        AppRouterConst.customRouteScreen,
+                                        extra: NavigationType.success,
+                                      );
+                                      CustomAlertDialog.showCustomDialog(
+                                        title: "OTP Verified Successfully",
+                                        typeAlert: TypeAlert.success,
+                                      );
+                                    } else if (response.status == 0) {
+                                      GoRouter.of(context).pushNamed(
+                                        AppRouterConst.invalidOtp,
+                                      );
+                                    }
                                   },
                                 );
                               },
@@ -167,14 +164,18 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
 
                                 gap8,
                                 InkWell(
-                                  onTap: () {
-                                    provider.startOtpTimer();
-                                    wheelKey.currentState?.startSpin();
-                                  },
+                                  onTap: provider.remainingSeconds > 0
+                                      ? null // disable while timer is active
+                                      : () {
+                                          provider.startOtpTimer();
+                                          provider.resendOtp(context);
+                                          wheelKey.currentState?.startSpin();
+                                        },
                                   child: Text(
                                     "Resend OTP",
-                                    style:
-                                        context.textStyle.s12.bold.indigoBlue,
+                                    style: provider.remainingSeconds > 0
+                                        ? context.textStyle.s12.bold.bluishGray
+                                        : context.textStyle.s12.bold.indigoBlue,
                                   ),
                                 ),
                               ],
