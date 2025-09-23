@@ -3,7 +3,7 @@ import 'package:mpos_beat/core/base/run_safely.dart';
 import 'package:mpos_beat/core/exception/custom_exception.dart';
 import 'package:mpos_beat/core/failures/failures.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
-import 'package:mpos_beat/core/serveice/dio_client.dart';
+import 'package:mpos_beat/core/serveice/http_client.dart';
 import 'package:mpos_beat/core/utils/extentions.dart';
 import 'package:mpos_beat/core/utils/logger.dart';
 import 'package:mpos_beat/core/utils/typedefs.dart';
@@ -14,16 +14,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 @lazySingleton
 class CompanyRegisteration {
-  final DioClient dioClient;
+  final HttpClient httpClient;
   final RunSafely runSafely;
   final SharedPreferences sharedPreferences;
-  CompanyRegisteration(this.dioClient, this.runSafely, this.sharedPreferences);
+  CompanyRegisteration(this.httpClient, this.runSafely, this.sharedPreferences);
 
   ResultFuture<CompanyRegistrationResponse> call(
       BaseParams<CompanyRegistrationParams> param) {
     return runSafely(
       () async {
-        final response = await dioClient.post(
+        final response = await httpClient.post(
           Urls.companyRegistration,
           data: param.toMap(),
         );

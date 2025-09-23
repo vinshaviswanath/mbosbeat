@@ -4,12 +4,11 @@ import 'package:ripple_wave/ripple_wave.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 
 class RegisterFailureWidget extends StatelessWidget {
-  const RegisterFailureWidget({
-    super.key,
-  });
+  const RegisterFailureWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final appLocalization = context.l10n;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -22,16 +21,13 @@ class RegisterFailureWidget extends StatelessWidget {
             child: CircleAvatar(
               radius: 60,
               backgroundColor: ColorResources.errorRed,
-              child: Text(
-                "!",
-                style: context.textStyle.s22.white.bold,
-              ),
+              child: Text("!", style: context.textStyle.s22.white.bold),
             ),
           ),
         ),
         const Spacer(),
         Text(
-          "Oops!!\nRegistration Failed!",
+          appLocalization.reg_failed,
           textAlign: TextAlign.center,
           style: context.textStyle.s22.indigoBlue.bold,
         ),
@@ -42,7 +38,7 @@ class RegisterFailureWidget extends StatelessWidget {
             context.pushNamed(AppRouterConst.login);
           },
           child: Text(
-            "Try Again !",
+            appLocalization.try_again,
             textAlign: TextAlign.center,
             style: context.textStyle.s10,
           ),

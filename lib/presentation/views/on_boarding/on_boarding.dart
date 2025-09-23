@@ -18,26 +18,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   late PageController _controller;
   int _currentIndex = 0;
 
-  final List<Map<String, dynamic>> _slides = [
-    {
-      "image": AppAssets.ob1,
-      "title": "Hello Welcome!",
-      "subtitle":
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"
-    },
-    {
-      "image": AppAssets.ob2,
-      "title": "Heading Here",
-      "subtitle":
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"
-    },
-    {
-      "image": AppAssets.ob3,
-      "title": "Heading Here",
-      "subtitle":
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"
-    },
-  ];
   @override
   void initState() {
     super.initState();
@@ -61,6 +41,23 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final List<Map<String, dynamic>> _slides = [
+      {
+        "image": AppAssets.ob1,
+        "title": context.l10n.onboard_heading1,
+        "subtitle": context.l10n.onboard_description,
+      },
+      {
+        "image": AppAssets.ob2,
+        "title": context.l10n.onboard_heading2,
+        "subtitle": context.l10n.onboard_description,
+      },
+      {
+        "image": AppAssets.ob3,
+        "title": context.l10n.onboard_heading2,
+        "subtitle": context.l10n.onboard_description,
+      },
+    ];
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: Column(
@@ -77,9 +74,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Image.asset(
-                        slide["image"],
-                      ),
+                      Image.asset(slide["image"]),
                       gap40,
                       Text(
                         slide["title"],
@@ -88,16 +83,17 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       ),
                       gap16,
                       SizedBox(
-                        width: context.getSize.width / 1.45,
+                        width: context.getSize.width / 1.4,
                         height: context.getSize.height * 0.1,
                         child: Text(
                           slide["subtitle"],
-                          style: context.textStyle.s12,
+                          style: context.textStyle
+                              .copyWith(fontSize: 14)
+                              .bluishGray,
                           textAlign: TextAlign.center,
-                          textScaler: const TextScaler.linear(0.9),
                         ),
                       ),
-                      gap16
+                      gap16,
                     ],
                   ),
                 );
@@ -110,7 +106,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               controller: _controller,
               count: _slides.length,
               effect: const ExpandingDotsEffect(
-                activeDotColor: Colors.deepPurple,
+                activeDotColor: ColorResources.indigoBlue,
                 dotColor: ColorResources.amber,
                 dotHeight: 10,
                 dotWidth: 10,
@@ -127,13 +123,17 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               context.pushNamed(AppRouterConst.login);
             },
             child: Text(
-              _currentIndex == _slides.length - 1 ? "Get Started" : "Skip",
-              style: context.textStyle.s12.indigoBlue
-                  .copyWith(decoration: TextDecoration.underline),
+              _currentIndex == _slides.length - 1
+                  ? context.l10n.get_started
+                  : context.l10n.skip,
+              style: context.textStyle.s12.indigoBlue.copyWith(
+                decoration: TextDecoration.underline,
+                decorationColor: context.textStyle.indigoBlue.color,
+              ),
               textAlign: TextAlign.center,
             ),
           ),
-          gap48
+          gap48,
         ],
       ),
     );

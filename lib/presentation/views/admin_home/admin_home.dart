@@ -10,6 +10,7 @@ class AdminHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appLocalization = context.l10n;
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, result) async {
@@ -39,7 +40,7 @@ class AdminHome extends StatelessWidget {
                 SliverToBoxAdapter(
                   child: SizedBox(
                     height: context.getSize.height,
-                    child: const Column(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Column(
@@ -47,12 +48,20 @@ class AdminHome extends StatelessWidget {
                           children: [
                             AdminHomeWidget(
                               iconData: AppAssets.user,
-                              title: "Manage User",
+                              title: appLocalization.manage_user,
+                              colors: const [
+                                ColorResources.softViolet,
+                                ColorResources.deepViolet,
+                              ],
                             ),
-                            Gap(52),
+                            const Gap(52),
                             AdminHomeWidget(
                               iconData: AppAssets.company,
-                              title: "Manage Company",
+                              title: appLocalization.manage_company,
+                              colors: const [
+                                ColorResources.softpurple,
+                                ColorResources.irisPurple,
+                              ],
                             ),
                           ],
                         ),
@@ -72,10 +81,7 @@ class AdminHome extends StatelessWidget {
                   height: context.getSize.height * 0.12,
                   child: Column(
                     children: [
-                      Image.asset(
-                        AppAssets.powerButton,
-                        height: 28,
-                      ),
+                      Image.asset(AppAssets.powerButton, height: 28),
                       // CircleAvatar(
                       //   radius: 28,
                       //   backgroundColor: ColorResources.roseRed,
@@ -89,15 +95,15 @@ class AdminHome extends StatelessWidget {
                       // ),
                       gap4,
                       Text(
-                        "Logout",
-                        style: context.textStyle.s10.indigoBlue,
+                        appLocalization.log_out,
+                        style: context.textStyle.s10.indigoBlue.raleway,
                       ),
                       gap16,
                     ],
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

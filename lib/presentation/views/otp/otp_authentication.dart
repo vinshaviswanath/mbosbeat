@@ -2,7 +2,6 @@ import 'package:flutter_dropdown_alert/model/data_alert.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mpos_beat/core/utils/alert_dialog.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
-import 'package:mpos_beat/data/models/user_model.dart';
 import 'package:mpos_beat/presentation/common/animations/wheel_spinner.dart';
 import 'package:mpos_beat/presentation/common/widgets/base_scaffold.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_button.dart';
@@ -12,9 +11,7 @@ import 'package:mpos_beat/route/app_router_const.dart';
 
 class OtpAuthentication extends StatefulWidget {
   static const routeName = 'otp-auth';
-  const OtpAuthentication({
-    super.key,
-  });
+  const OtpAuthentication({super.key});
 
   @override
   State<OtpAuthentication> createState() => _OtpAuthenticationState();
@@ -32,6 +29,7 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
   // String formatTime(int seconds) {
   @override
   Widget build(BuildContext context) {
+    final appLocalization = context.l10n;
     final wheelKey = GlobalKey<WheelSpinnerState>();
     return Consumer<AuthFormProvider>(
       builder: (context, provider, _) {
@@ -47,8 +45,8 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Enter OTP here",
-                        style: context.textStyle.s22.white,
+                        appLocalization.enter_otp_here,
+                        style: context.textStyle.s22.white.bold,
                       ),
                     ],
                   ),
@@ -60,26 +58,27 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
                     children: [
                       Container(
                         width: context.getSize.width - 32,
-                        height: context.getSize.height * 0.4,
+                        height: context.getSize.height * 0.38,
                         padding: const EdgeInsets.all(36),
                         decoration: BoxDecoration(
                           color: ColorResources.white,
                           borderRadius: BorderRadius.circular(16),
                           boxShadow: const [
                             BoxShadow(
-                                offset: Offset(0, 13),
-                                blurRadius: 20,
-                                color: ColorResources.overlayBlack)
+                              offset: Offset(0, 13),
+                              blurRadius: 20,
+                              color: ColorResources.overlayBlack,
+                            ),
                           ],
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "We have sent a 4 digit code to your\n ${provider.maskedPhone} mobile number.",
+                              "${appLocalization.sent_4_digit} ${provider.maskedPhone} ${appLocalization.mob_number}",
                               textAlign: TextAlign.center,
-                              style: context.textStyle.s12,
+                              style: context.textStyle.s12.bluishGray.w400,
                             ),
                             gap16,
                             OtpInputField(
@@ -110,42 +109,48 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
                                 ],
                               ),
                             gap8,
-                            CustomButton(
-                              buttonText: "Submit",
-                              isborderEnable: false,
-                              onTap: () {
-                                provider.submitOtp(
-                                  context,
-                                  onError: (p0) {},
-                                  onResponse: (response) {
-                                    Navigator.pop(context);
-                                    if (response.status == 1) {
-                                      context.pushNamed(
-                                        AppRouterConst.customRouteScreen,
-                                        extra: NavigationType.success,
-                                      );
-                                      CustomAlertDialog.showCustomDialog(
-                                        title: "OTP Verified Successfully",
-                                        typeAlert: TypeAlert.success,
-                                      );
-                                    } else if (response.status == 0) {
-                                      GoRouter.of(context).pushNamed(
-                                        AppRouterConst.invalidOtp,
-                                      );
-                                    }
-                                  },
-                                );
-                              },
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                              ),
+                              child: CustomButton(
+                                height: context.getSize.height * 0.05,
+                                buttonText: appLocalization.submit,
+                                isborderEnable: false,
+                                onTap: () {
+                                  provider.submitOtp(
+                                    context,
+                                    onError: (p0) {},
+                                    onResponse: (response) {
+                                      Navigator.pop(context);
+                                      if (response.status == 1) {
+                                        context.pushNamed(
+                                          AppRouterConst.customRouteScreen,
+                                          extra: NavigationType.success,
+                                        );
+                                        CustomAlertDialog.showCustomDialog(
+                                          title: "OTP Verified Successfully",
+                                          typeAlert: TypeAlert.success,
+                                        );
+                                      } else if (response.status == 0) {
+                                        GoRouter.of(
+                                          context,
+                                        ).pushNamed(AppRouterConst.invalidOtp);
+                                      }
+                                    },
+                                  );
+                                },
+                              ),
                             ),
-                            gap40,
+                            gap30,
                             Text(
                               provider.remainingSeconds > 0
-                                  ? "Enter OTP in ${provider.formatTime()} Seconds"
-                                  : "Enter OTP in 00:00 Seconds",
+                                  ? "${appLocalization.enter_otp_in} ${provider.formatTime()} ${appLocalization.seconds}"
+                                  : appLocalization.enter_otp_0,
                               textAlign: TextAlign.center,
-                              style: context.textStyle.s12,
+                              style: context.textStyle.s12.bluishGray.w400,
                             ),
-                            const Spacer(),
+                            gap20,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -172,17 +177,17 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
                                           wheelKey.currentState?.startSpin();
                                         },
                                   child: Text(
-                                    "Resend OTP",
+                                    appLocalization.resend_otp,
                                     style: provider.remainingSeconds > 0
                                         ? context.textStyle.s12.bold.bluishGray
                                         : context.textStyle.s12.bold.indigoBlue,
                                   ),
                                 ),
                               ],
-                            )
+                            ),
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),

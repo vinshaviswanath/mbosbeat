@@ -2,7 +2,6 @@ import 'package:flutter_dropdown_alert/model/data_alert.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mpos_beat/core/utils/alert_dialog.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
-import 'package:mpos_beat/data/models/user_model.dart';
 import 'package:mpos_beat/presentation/common/animations/wheel_spinner.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_button.dart';
 import 'package:mpos_beat/presentation/logic/authentication_provider.dart';
@@ -15,6 +14,7 @@ class InvalidOtp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appLocalization = context.l10n;
     final wheelKey = GlobalKey<WheelSpinnerState>();
     return PopScope(
       canPop: true, // allow normal back navigation
@@ -36,8 +36,8 @@ class InvalidOtp extends StatelessWidget {
                   backgroundColor: ColorResources.transparent,
                   centerTitle: true,
                   title: Text(
-                    "Enter OTP here",
-                    style: context.textStyle.s22.indigoBlue,
+                    appLocalization.enter_otp_here,
+                    style: context.textStyle.s22.indigoBlue.bold,
                   ),
                 ),
                 SliverToBoxAdapter(
@@ -73,7 +73,7 @@ class InvalidOtp extends StatelessWidget {
                           ),
                         gap24,
                         CustomButton(
-                          buttonText: "Submit",
+                          buttonText: appLocalization.submit,
                           isborderEnable: false,
                           onTap: () {
                             provider.submitOtp(
@@ -90,9 +90,9 @@ class InvalidOtp extends StatelessWidget {
                                     typeAlert: TypeAlert.success,
                                   );
                                 } else if (response.status == 0) {
-                                  GoRouter.of(context).pushNamed(
-                                    AppRouterConst.invalidOtp,
-                                  );
+                                  GoRouter.of(
+                                    context,
+                                  ).pushNamed(AppRouterConst.invalidOtp);
                                 }
                               },
                             );
@@ -101,10 +101,10 @@ class InvalidOtp extends StatelessWidget {
                         gap24,
                         Text(
                           provider.remainingSeconds > 0
-                              ? "Enter OTP in ${provider.formatTime()} Seconds"
-                              : "Enter OTP in 00:00 Seconds",
+                              ? "${appLocalization.enter_otp_in} ${provider.formatTime()} ${appLocalization.seconds}"
+                              : appLocalization.enter_otp_0,
                           textAlign: TextAlign.center,
-                          style: context.textStyle.s12,
+                          style: context.textStyle.s12.silverGray.w400,
                         ),
                         gap16,
                         Row(
@@ -132,18 +132,18 @@ class InvalidOtp extends StatelessWidget {
                                       wheelKey.currentState?.startSpin();
                                     },
                               child: Text(
-                                "Resend OTP",
+                                appLocalization.resend_otp,
                                 style: provider.remainingSeconds > 0
                                     ? context.textStyle.s12.bold.bluishGray
                                     : context.textStyle.s12.bold.indigoBlue,
                               ),
                             ),
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),
-                )
+                ),
               ],
             ),
           );

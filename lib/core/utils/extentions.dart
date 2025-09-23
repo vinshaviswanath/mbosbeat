@@ -1,12 +1,11 @@
 import 'dart:convert';
 
-import 'package:dio/dio.dart';
-import 'package:mpos_beat/core/theme/colors.dart';
 import 'package:mpos_beat/core/theme/theme/theme_provider.dart';
 import 'package:mpos_beat/core/utils/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:mpos_beat/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 extension StringCapitalization on String {
   String get capitalize {
@@ -54,15 +53,9 @@ extension BuildContextX on BuildContext {
   TextStyle get textStyle {
     switch (theme) {
       case AppThemeMode.light:
-        return Theme.of(this)
-            .textTheme
-            .bodyMedium!
-            .copyWith(color: ColorResources.bluishGray, fontFamily: 'Roboto');
+        return Theme.of(this).textTheme.bodyMedium!;
       case AppThemeMode.dark:
-        return Theme.of(this)
-            .textTheme
-            .bodyMedium!
-            .copyWith(color: ColorResources.white, fontFamily: 'Roboto');
+        return Theme.of(this).textTheme.bodyMedium!;
     }
   }
 
@@ -73,20 +66,20 @@ extension AppLocalizationsX on BuildContext {
   AppLocalizations get l10n => AppLocalizations.of(this)!;
 }
 
-extension ResponseX on Response {
+extension ResponseX on http.Response {
   bool get isOk => statusCode == 200 || statusCode == 201;
 
-  dynamic get responseData => data['DATA'];
+  dynamic get data => jsonDecode(body);
 
   String get message {
-    if (data is Map && data is Map && data['message'] != null) {
+    if (data is Map && data['message'] != null) {
       return data['message'].toString();
     }
     return data['message']?.toString() ?? '';
   }
 
   String get error {
-    if (data is Map && data is Map && data['message'] != null) {
+    if (data is Map && data['message'] != null) {
       return data['message'].toString();
     }
     return 'Unknown error';

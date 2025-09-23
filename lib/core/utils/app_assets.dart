@@ -31,6 +31,10 @@ class AppAssets {
   static const featherEyeOff = "$baseDir/featherEyeOff.svg";
   static const featherEyeOn = "$baseDir/featherEyeOn.svg";
   static const alertError = "$baseDir/alertError.svg";
+  static const tick = "$baseDir/tick.svg";
+  static const left = "$baseDir/left.svg";
+
+
 
 
 

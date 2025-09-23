@@ -10,38 +10,39 @@ import 'package:gap/gap.dart';
 
 // ignore: must_be_immutable
 class CustomTextField extends StatelessWidget {
-  const CustomTextField(
-      {super.key,
-      this.textInputAction,
-      this.iconData,
-      this.enabled = true,
-      required this.hint,
-      this.suffixIcon,
-      this.onChange,
-      this.obscureText = false,
-      this.controller,
-      this.validater,
-      this.inputType,
-      this.fomeKey,
-      this.inputFormatters,
-      this.backgroundColor,
-      this.borderRadius,
-      this.hintColor,
-      this.initialValue,
-      this.onTap,
-      this.failure,
-      this.autovalidateMode,
-      this.showError = false,
-      this.readOnly = false,
-      this.maxLength,
-      this.prefixIcon,
-      this.borderColor,
-      this.minLines,
-      this.maxLines,
-      this.contentPadding,
-      this.onTapOutside,
-      this.hintTextStyle,
-      this.errorPrefixIcon});
+  const CustomTextField({
+    super.key,
+    this.textInputAction,
+    this.iconData,
+    this.enabled = true,
+    required this.hint,
+    this.suffixIcon,
+    this.onChange,
+    this.obscureText = false,
+    this.controller,
+    this.validater,
+    this.inputType,
+    this.fomeKey,
+    this.inputFormatters,
+    this.backgroundColor,
+    this.borderRadius,
+    this.hintColor,
+    this.initialValue,
+    this.onTap,
+    this.failure,
+    this.autovalidateMode,
+    this.showError = false,
+    this.readOnly = false,
+    this.maxLength,
+    this.prefixIcon,
+    this.borderColor,
+    this.minLines,
+    this.maxLines,
+    this.contentPadding,
+    this.onTapOutside,
+    this.hintTextStyle,
+    this.errorPrefixIcon,
+  });
 
   final GlobalKey<FormState>? fomeKey;
   final Widget? iconData;
@@ -76,11 +77,17 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isError =
+        autovalidateMode == AutovalidateMode.always && failure != null;
     return Column(
       children: [
         Container(
+          height: context.getSize.height * 0.045,
+          // height: 44,
           decoration: BoxDecoration(
-            border: Border.all(color: borderColor ?? Colors.grey),
+            border: Border.all(
+              color: isError ? Colors.red : (borderColor ?? Colors.grey),
+            ),
             color: backgroundColor,
             borderRadius: BorderRadius.circular(borderRadius ?? 0),
           ),
@@ -108,14 +115,9 @@ class CustomTextField extends StatelessWidget {
               prefixIcon: iconData,
               suffixIcon: suffixIcon,
               hintText: hint,
-              hintStyle: hintTextStyle ??
-                  TextStyle(
-                    color: hintColor,
-                    fontSize: 14,
-                    fontFamily: 'Roboto',
-                    fontWeight: FontWeight.w500,
-                  ),
-              contentPadding: contentPadding ??
+              hintStyle: hintTextStyle ?? context.textStyle.s12.silverGray.w300.roboto,
+              contentPadding:
+                  contentPadding ??
                   const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
               border: InputBorder.none,
               disabledBorder: InputBorder.none,
@@ -124,19 +126,15 @@ class CustomTextField extends StatelessWidget {
             ),
           ),
         ),
-        if (autovalidateMode == AutovalidateMode.always && failure != null)
-          const Gap(5),
-        if (autovalidateMode == AutovalidateMode.always && failure != null)
+        if (isError) const Gap(5),
+        if (isError)
           Row(
             children: [
-              SvgPicture.asset(
-                AppAssets.alertError,
-                height: 16,
-              ),
+              SvgPicture.asset(AppAssets.alertError, height: 16),
               const Gap(2),
               Text(
                 failure!.errorMsg,
-                style: context.textStyle.s10.roseRed,
+                style: context.textStyle.s10.w300.roseRed.raleway,
               ),
             ],
           ),

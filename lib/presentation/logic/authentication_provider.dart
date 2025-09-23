@@ -1,7 +1,6 @@
 import 'package:flutter_dropdown_alert/model/data_alert.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mpos_beat/core/failures/failures.dart';
-import 'package:mpos_beat/core/failures/value_object/value_failure.dart';
 import 'package:mpos_beat/core/failures/value_object/value_object.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
 import 'package:mpos_beat/core/utils/alert_dialog.dart';
@@ -12,7 +11,6 @@ import 'package:mpos_beat/data/models/login_response.dart';
 import 'package:mpos_beat/data/models/otp_response.dart';
 import 'package:mpos_beat/data/models/response_data.dart';
 import 'package:mpos_beat/data/models/user_model.dart';
-import 'package:mpos_beat/domain/entities/local_auth_storage.dart';
 import 'package:mpos_beat/domain/repositories/i_authentication_facad.dart';
 import 'package:mpos_beat/domain/request/company_registration_params.dart';
 import 'package:mpos_beat/domain/request/login_params.dart';
@@ -180,7 +178,7 @@ class AuthFormProvider with ChangeNotifier {
   /// Validates email input.
   String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
-      return "Email is required";
+      return "Email is required!";
     }
     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
     if (!emailRegex.hasMatch(value)) {
@@ -468,11 +466,11 @@ class AuthFormProvider with ChangeNotifier {
             response.loginData?.companyName ?? '',
             id: response.loginData?.customerId,
           );
-          // CustomAlertDialog.showCustomDialog(
-          //   title: response.message!,
-          //   typeAlert: TypeAlert.error,
-          // );
         } else {
+          CustomAlertDialog.showCustomDialog(
+            title: response.message!,
+            typeAlert: TypeAlert.error,
+          );
           //  RegistrationDialogs.pendingRegisteredDialog(context, enteredUser)
           // .then((_) => resetSignUpForm());
         }
@@ -605,9 +603,12 @@ class AuthFormProvider with ChangeNotifier {
           submitEmail(context);
           emailController.clear();
         } else {
-          CustomAlertDialog.showCustomDialog(
-            title: response.message!,
-            typeAlert: TypeAlert.error,
+          // CustomAlertDialog.showCustomDialog(
+          //   title: response.message!,
+          //   typeAlert: TypeAlert.error,
+          // );
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(response.message!)),
           );
         }
       },
