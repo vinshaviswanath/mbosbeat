@@ -14,6 +14,8 @@ class ColorResources {
   static const silverGray = Color(0xFFCFCFCF);
   static const transparent = Colors.transparent;
   static const paleBlue = Color(0xFFEDF3FA);
+  static const dustyBlue = Color(0xFF7787AD);
+
 
   //Icon color
   static const navyGray = Color(0xFF42526E);
@@ -23,7 +25,11 @@ class ColorResources {
   static const lightGray = Color(0xFFF4F5F7);
   // Logout icon BG color
   static const rosePink = Color(0xFFF04A99);
-  //Linear Gradient colors
-  static const softViolet = Color(0xFF5FA6FEF);
+  //Linear Gradient colors 1
+  static const softViolet = Color(0xFF5FA6FE);
   static const deepViolet = Color(0xFF176FDC);
+
+  //Linear Gradient colors 2
+  static const softpurple = Color(0xFF8478DF);
+  static const irisPurple = Color(0xFF5E50C0);
 }

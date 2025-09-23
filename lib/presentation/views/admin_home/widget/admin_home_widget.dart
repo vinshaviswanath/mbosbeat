@@ -1,15 +1,16 @@
 import 'package:mpos_beat/core/utils/imports.dart';
-import 'package:mpos_beat/presentation/common/animations/vibrationg_icon.dart';
 
 class AdminHomeWidget extends StatelessWidget {
   const AdminHomeWidget({
     super.key,
     required this.iconData,
     required this.title,
+    required this.colors,
   });
 
   final String iconData;
   final String title;
+  final List<Color> colors;
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +22,8 @@ class AdminHomeWidget extends StatelessWidget {
           width: 150,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            gradient: const LinearGradient(
-              colors: [ColorResources.softViolet, ColorResources.deepViolet],
+            gradient: LinearGradient(
+              colors: colors,
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -31,13 +32,13 @@ class AdminHomeWidget extends StatelessWidget {
                 offset: Offset(0, 1),
                 blurRadius: 1,
                 color: ColorResources.indigoBlue,
-              )
+              ),
             ],
           ),
           child: Center(
-            child: VibratingIconAnimation(
-              icon: iconData,
-              size: 65,
+            child: Image.asset(
+              iconData,
+              height: 65,
               color: ColorResources.white,
             ),
           ),
@@ -45,7 +46,7 @@ class AdminHomeWidget extends StatelessWidget {
         gap10,
         Text(
           title,
-          style: context.textStyle.s22.bluishGray.bold,
+          style: context.textStyle.s22.bluishGray.bold.dustyBlue.gilroy,
         ),
       ],
     );

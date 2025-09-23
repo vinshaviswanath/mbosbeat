@@ -1,12 +1,5 @@
-import 'package:mpos_beat/core/di/env.dart';
-
 class Urls {
-  static String baseURL = Env.instance.domainUrl;
-  static String apiVersionUrl = '$baseURL';
-
-  static String isPhoneNoAvailableKey = 'isPhoneNoAvailable';
-
-  static var apiUrl = '${Env.instance.domainUrl}';
+  static String baseURL = 'http://mposbeat.mnets.in';
 
   // static const String tokenRefresh = 'token-refresh';
   static const String companyRegistration = '/api/Registration/Create';

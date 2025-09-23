@@ -55,51 +55,48 @@ class CustomButton extends StatelessWidget {
           height: height ?? context.getSize.height * 0.06,
           width: width,
           decoration: BoxDecoration(
-              color: color ?? ColorResources.indigoBlue,
-              // gradient: color == null
-              //     ? gradient ?? getButtonColor(provider.themeMode)
-              //     : null,
-              borderRadius: borderRadius ?? BorderRadius.circular(45),
-              border: isborderEnable == true
-                  ? Border.all(color: borderColor ?? ColorResources.indigoBlue)
-                  : null,
-              boxShadow: boxShadow ??
-                  [
-                    const BoxShadow(
-                        offset: Offset(0, 9),
-                        blurRadius: 24,
-                        color: Color(0x20F05C83))
-                  ]),
+            color: color ?? ColorResources.indigoBlue,
+            // gradient: color == null
+            //     ? gradient ?? getButtonColor(provider.themeMode)
+            //     : null,
+            borderRadius: borderRadius ?? BorderRadius.circular(45),
+            border: isborderEnable == true
+                ? Border.all(color: borderColor ?? ColorResources.indigoBlue)
+                : null,
+            boxShadow: boxShadow,
+          ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(45),
             child: CustomMaterialButton(
-                onPressed: () {
-                  onTap?.call();
-                },
-                child: Padding(
-                  padding: padding ?? const EdgeInsets.symmetric(vertical: 8),
-                  child: loadingEnabled
-                      ? const CustomProgressIndicater()
-                      : Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            if (imagePath != null) ...[
-                              SvgPicture.asset(
-                                imagePath!,
-                                colorFilter: colorFilter,
-                                width: 24,
-                              ),
-                              gap4,
-                            ],
-                            Text(
-                              buttonText,
-                              style:
-                                  textStyle ?? context.textStyle.s16.w500.white,
-                            )
+              onPressed: () {
+                onTap?.call();
+              },
+              child: Padding(
+                padding: padding ?? const EdgeInsets.symmetric(vertical: 8),
+                child: loadingEnabled
+                    ? const CustomProgressIndicater()
+                    : Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          if (imagePath != null) ...[
+                            SvgPicture.asset(
+                              imagePath!,
+                              colorFilter: colorFilter,
+                              width: 24,
+                            ),
+                            gap4,
                           ],
-                        ),
-                )),
+                          Text(
+                            buttonText,
+                            style:
+                                textStyle ??
+                                context.textStyle.s16.bold.white.roboto,
+                          ),
+                        ],
+                      ),
+              ),
+            ),
           ),
         );
       },

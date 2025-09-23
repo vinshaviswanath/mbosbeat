@@ -93,35 +93,35 @@ abstract class AppLocalizations {
     Locale('en')
   ];
 
-  /// No description provided for @fetchlead_title.
+  /// No description provided for @onboard_heading1.
   ///
   /// In en, this message translates to:
-  /// **'Lead Requests'**
-  String get fetchlead_title;
+  /// **'Hello Welcome!'**
+  String get onboard_heading1;
 
-  /// No description provided for @fetchlead_search_hint.
+  /// No description provided for @onboard_description.
   ///
   /// In en, this message translates to:
-  /// **'Search'**
-  String get fetchlead_search_hint;
+  /// **'Lorem ipsum dolor sit amet, consectetur\nadipiscing elit, sed do eiusmod tempor incididunt\nut labore'**
+  String get onboard_description;
 
-  /// No description provided for @fetchsupport_title.
+  /// No description provided for @onboard_heading2.
   ///
   /// In en, this message translates to:
-  /// **'Support Requests'**
-  String get fetchsupport_title;
+  /// **'Heading Here'**
+  String get onboard_heading2;
 
-  /// No description provided for @fetchsupport_search_hint.
+  /// No description provided for @skip.
   ///
   /// In en, this message translates to:
-  /// **'Search'**
-  String get fetchsupport_search_hint;
+  /// **'Skip'**
+  String get skip;
 
-  /// No description provided for @greetings.
+  /// No description provided for @get_started.
   ///
   /// In en, this message translates to:
-  /// **'Hi there...'**
-  String get greetings;
+  /// **'Get Started'**
+  String get get_started;
 
   /// No description provided for @login.
   ///
@@ -129,17 +129,269 @@ abstract class AppLocalizations {
   /// **'Login'**
   String get login;
 
-  /// No description provided for @mPos.
-  ///
-  /// In en, this message translates to:
-  /// **'mPos Beat'**
-  String get mPos;
-
   /// No description provided for @welcome_back.
   ///
   /// In en, this message translates to:
   /// **'Welcome back,\nyou\'ve been missed!'**
   String get welcome_back;
+
+  /// No description provided for @email_or_phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Email ID / Mobile Number'**
+  String get email_or_phone;
+
+  /// No description provided for @enter_email_or_phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Email / Mobile'**
+  String get enter_email_or_phone;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// No description provided for @enter_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Password'**
+  String get enter_password;
+
+  /// No description provided for @forgot_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password?'**
+  String get forgot_password;
+
+  /// No description provided for @no_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account?'**
+  String get no_account;
+
+  /// No description provided for @sign_up.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Up'**
+  String get sign_up;
+
+  /// No description provided for @company_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Company Name'**
+  String get company_name;
+
+  /// No description provided for @enter_company_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Company Name'**
+  String get enter_company_name;
+
+  /// No description provided for @mobile_number.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile Number'**
+  String get mobile_number;
+
+  /// No description provided for @enter_mobile_number.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Mobile Number'**
+  String get enter_mobile_number;
+
+  /// No description provided for @email_ID.
+  ///
+  /// In en, this message translates to:
+  /// **'Email ID'**
+  String get email_ID;
+
+  /// No description provided for @enter_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Email'**
+  String get enter_email;
+
+  /// No description provided for @confirm_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get confirm_password;
+
+  /// No description provided for @already_registered.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re Already Registered !'**
+  String get already_registered;
+
+  /// No description provided for @verify_number.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify your mobile number'**
+  String get verify_number;
+
+  /// No description provided for @manage_user.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage User'**
+  String get manage_user;
+
+  /// No description provided for @manage_company.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Company'**
+  String get manage_company;
+
+  /// No description provided for @enter_otp_here.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter OTP here'**
+  String get enter_otp_here;
+
+  /// No description provided for @sent_4_digit.
+  ///
+  /// In en, this message translates to:
+  /// **'We have sent a 4 digit code to your\n'**
+  String get sent_4_digit;
+
+  /// No description provided for @mob_number.
+  ///
+  /// In en, this message translates to:
+  /// **'mobile number.'**
+  String get mob_number;
+
+  /// No description provided for @enter_otp_0.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter OTP in 00:00 Seconds'**
+  String get enter_otp_0;
+
+  /// No description provided for @enter_otp_in.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter OTP in'**
+  String get enter_otp_in;
+
+  /// No description provided for @seconds.
+  ///
+  /// In en, this message translates to:
+  /// **'Seconds'**
+  String get seconds;
+
+  /// No description provided for @submit.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit'**
+  String get submit;
+
+  /// No description provided for @resend_otp.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend OTP'**
+  String get resend_otp;
+
+  /// No description provided for @please_wait.
+  ///
+  /// In en, this message translates to:
+  /// **'Please Wait!'**
+  String get please_wait;
+
+  /// No description provided for @reg_is_under_processing.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration is under processing.'**
+  String get reg_is_under_processing;
+
+  /// No description provided for @reg_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration\nSuccessfully!'**
+  String get reg_success;
+
+  /// No description provided for @successfully_registered_admin.
+  ///
+  /// In en, this message translates to:
+  /// **'You are successfully registered as Admin User'**
+  String get successfully_registered_admin;
+
+  /// No description provided for @go_home.
+  ///
+  /// In en, this message translates to:
+  /// **'Go Home'**
+  String get go_home;
+
+  /// No description provided for @reg_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Oops!!\nRegistration Failed!'**
+  String get reg_failed;
+
+  /// No description provided for @try_again.
+  ///
+  /// In en, this message translates to:
+  /// **'Try Again !'**
+  String get try_again;
+
+  /// No description provided for @forgot_password_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the email associated with your account and we\nwill send an email to reset your password.'**
+  String get forgot_password_description;
+
+  /// No description provided for @email_address.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Address'**
+  String get email_address;
+
+  /// No description provided for @send.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get send;
+
+  /// No description provided for @mail_sent.
+  ///
+  /// In en, this message translates to:
+  /// **'Mail Sent'**
+  String get mail_sent;
+
+  /// No description provided for @sent_mail_to.
+  ///
+  /// In en, this message translates to:
+  /// **'We have sent a password recovery instructions\nto'**
+  String get sent_mail_to;
+
+  /// No description provided for @kindly_verify.
+  ///
+  /// In en, this message translates to:
+  /// **'. Kindly verify!'**
+  String get kindly_verify;
+
+  /// No description provided for @log_out.
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get log_out;
+
+  /// No description provided for @hello.
+  ///
+  /// In en, this message translates to:
+  /// **'Hello '**
+  String get hello;
+
+  /// No description provided for @verify_num_text.
+  ///
+  /// In en, this message translates to:
+  /// **'! you\'re almost ready to start enjoying MPOS Beat. Simply click the button below to verify your mobile number.'**
+  String get verify_num_text;
+
+  /// No description provided for @kindly_login.
+  ///
+  /// In en, this message translates to:
+  /// **' your account details are already registered in our database. Kindly Login to continue!'**
+  String get kindly_login;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

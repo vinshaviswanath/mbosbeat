@@ -4,12 +4,12 @@ import 'package:mpos_beat/core/utils/imports.dart';
 
 Either<ValueFailure<String>, String> validatePhoneNumber(String input) {
   if (input.isEmpty) {
-    return left(const ValueFailure.invalidValue("Enter phone number"));
+    return left(const ValueFailure.invalidValue("Enter phone number!"));
   }
   // final regex = RegExp(r'^[0-9]{10}$');
   // if (!regex.hasMatch(input)) {
   if (input.length <= 7) {
-    return left(const ValueFailure.invalidValue("Enter a valid phone number"));
+    return left(const ValueFailure.invalidValue("Enter a valid phone number!"));
   }
   return right(input);
 }
@@ -21,11 +21,11 @@ Either<ValueFailure<String>, String> validateEmail(String mail) {
 
   if (!emailRegExp.hasMatch(mail)) {
     return left(
-      const ValueFailure.invalidValue('Enter a valid mail'),
+      const ValueFailure.invalidValue('Enter a valid mail!'),
     );
   } else if (mail.isEmpty) {
     return left(
-      const ValueFailure.invalidValue('Enter a valid mail'),
+      const ValueFailure.invalidValue('Enter a valid mail!'),
     );
   }
   return right(mail);
@@ -34,7 +34,7 @@ Either<ValueFailure<String>, String> validateEmail(String mail) {
 Either<ValueFailure<String>, String> validatePassword(String value) {
   if (value.isEmpty || value.length < 3) {
     return left(
-      const ValueFailure.invalidValue('Enter a valid password'),
+      const ValueFailure.invalidValue('Enter a valid password!'),
     );
   }
   return right(value);
@@ -44,12 +44,12 @@ Either<ValueFailure<String>, String> validateConfirmPassword(
     String confirmValue, String originalPassword) {
   if (confirmValue.isEmpty || confirmValue.length < 3) {
     return left(
-      const ValueFailure.invalidValue('Enter a valid password'),
+      const ValueFailure.invalidValue('Enter a valid password!'),
     );
   }
   if (confirmValue != originalPassword) {
     return left(
-      const ValueFailure.invalidValue('Passwords do not match'),
+      const ValueFailure.invalidValue('Passwords do not match!'),
     );
   }
   return right(confirmValue);
@@ -58,7 +58,7 @@ Either<ValueFailure<String>, String> validateConfirmPassword(
 Either<ValueFailure<String>, String> validateEmailOrPhone(String value) {
   if (value.isEmpty) {
     return left(
-      const ValueFailure.invalidValue('Please enter your username'),
+      const ValueFailure.invalidValue('Please enter your username!'),
     );
   }
 
@@ -70,13 +70,13 @@ Either<ValueFailure<String>, String> validateEmailOrPhone(String value) {
     return right(value);
   }
 
-  return left(const ValueFailure.invalidValue('Invalid email or phonenumber'));
+  return left(const ValueFailure.invalidValue('Invalid email or phonenumber!'));
 }
 
 Either<ValueFailure<String>, String> validateCompanyName(String value) {
   if (value.isEmpty) {
     return left(
-      const ValueFailure.invalidValue('Enter a valid name'),
+      const ValueFailure.invalidValue('Enter a valid name!'),
     );
   }
   return right(value);
@@ -85,7 +85,7 @@ Either<ValueFailure<String>, String> validateCompanyName(String value) {
 Either<ValueFailure<String>, String> validateOtp(String value) {
   if (value.length < 4) {
     return left(
-      const ValueFailure.invalidValue('Enter a valid otp'),
+      const ValueFailure.invalidValue('Enter a valid otp!'),
     );
   }
   return right(value);

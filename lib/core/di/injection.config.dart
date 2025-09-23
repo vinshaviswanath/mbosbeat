@@ -9,8 +9,8 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
+import 'package:http/http.dart' as _i519;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
@@ -26,9 +26,8 @@ import '../../data/data_sources/authentication/reset_password/reset_password.dar
 import '../../data/repositories/i_authentication_facad_impl.dart' as _i823;
 import '../../domain/repositories/i_authentication_facad.dart' as _i590;
 import '../base/run_safely.dart' as _i530;
-import '../serveice/dio_client.dart' as _i841;
+import '../serveice/http_client.dart' as _i841;
 import 'app_injection_module.dart' as _i975;
-import 'local_notification_serveice.dart' as _i793;
 
 // initializes the registration of main-scope dependencies inside of GetIt
 Future<_i174.GetIt> init(
@@ -46,39 +45,32 @@ Future<_i174.GetIt> init(
     () => appInjectionModule.pref(),
     preResolve: true,
   );
-  await gh.factoryAsync<_i975.PermissionHandler>(
-    () => appInjectionModule.reqPermission(),
-    preResolve: true,
-  );
-  await gh.factoryAsync<_i793.LocalNotification>(
-    () => appInjectionModule.initLocalNotification(),
-    preResolve: true,
-  );
   gh.lazySingleton<_i530.RunSafely>(() => _i530.RunSafely());
-  gh.lazySingleton<_i361.Dio>(() => appInjectionModule.dio);
-  gh.lazySingleton<_i841.DioClient>(() => _i841.DioClient(gh<_i361.Dio>()));
+  gh.lazySingleton<_i519.Client>(() => appInjectionModule.clent);
+  gh.lazySingleton<_i841.HttpClient>(
+      () => _i841.HttpClient(gh<_i519.Client>()));
   gh.lazySingleton<_i70.CompanyRegisteration>(() => _i70.CompanyRegisteration(
-        gh<_i841.DioClient>(),
-        gh<_i530.RunSafely>(),
-        gh<_i460.SharedPreferences>(),
-      ));
-  gh.lazySingleton<_i42.OtpValidation>(() => _i42.OtpValidation(
-        gh<_i841.DioClient>(),
-        gh<_i530.RunSafely>(),
-        gh<_i460.SharedPreferences>(),
-      ));
-  gh.lazySingleton<_i13.ResendOtp>(() => _i13.ResendOtp(
-        gh<_i841.DioClient>(),
-        gh<_i530.RunSafely>(),
-        gh<_i460.SharedPreferences>(),
-      ));
-  gh.lazySingleton<_i244.ResetPassword>(() => _i244.ResetPassword(
-        gh<_i841.DioClient>(),
+        gh<_i841.HttpClient>(),
         gh<_i530.RunSafely>(),
         gh<_i460.SharedPreferences>(),
       ));
   gh.lazySingleton<_i526.LoginImpl>(() => _i526.LoginImpl(
-        gh<_i841.DioClient>(),
+        gh<_i841.HttpClient>(),
+        gh<_i530.RunSafely>(),
+        gh<_i460.SharedPreferences>(),
+      ));
+  gh.lazySingleton<_i42.OtpValidation>(() => _i42.OtpValidation(
+        gh<_i841.HttpClient>(),
+        gh<_i530.RunSafely>(),
+        gh<_i460.SharedPreferences>(),
+      ));
+  gh.lazySingleton<_i13.ResendOtp>(() => _i13.ResendOtp(
+        gh<_i841.HttpClient>(),
+        gh<_i530.RunSafely>(),
+        gh<_i460.SharedPreferences>(),
+      ));
+  gh.lazySingleton<_i244.ResetPassword>(() => _i244.ResetPassword(
+        gh<_i841.HttpClient>(),
         gh<_i530.RunSafely>(),
         gh<_i460.SharedPreferences>(),
       ));
@@ -88,7 +80,7 @@ Future<_i174.GetIt> init(
         gh<_i13.ResendOtp>(),
         gh<_i526.LoginImpl>(),
         gh<_i244.ResetPassword>(),
-        gh<_i841.DioClient>(),
+        gh<_i841.HttpClient>(),
         gh<_i530.RunSafely>(),
         gh<_i460.SharedPreferences>(),
       ));

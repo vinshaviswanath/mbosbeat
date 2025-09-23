@@ -2,7 +2,6 @@ import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/theme/app_theme.dart';
 import 'package:mpos_beat/core/theme/theme/theme_provider.dart';
 import 'package:mpos_beat/core/utils/app_details.dart';
-import 'package:mpos_beat/core/utils/enums.dart';
 import 'package:mpos_beat/domain/repositories/i_authentication_facad.dart';
 import 'package:mpos_beat/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -29,39 +28,29 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(
+          create: (_) => AuthFormProvider(sl<IAuthenticationFacad>()),
+        ),
       ],
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, _) {
           final themeMode = themeProvider.themeMode;
 
-          return MultiProvider(
-            providers: [
-              ChangeNotifierProvider(
-                create: (_) => AuthFormProvider(sl<IAuthenticationFacad>()),
-              ),
-            ],
-            child: MaterialApp.router(
-              routerConfig: AppRouter.router,
-              // navigatorKey: AppDetails.globalNavigatorKey,
-              debugShowCheckedModeBanner: false,
-              localizationsDelegates: AppLocalizations.localizationsDelegates,
-              supportedLocales: AppLocalizations.supportedLocales,
-              locale: const Locale("en"),
-              title: 'mPOS Beat',
-              // onGenerateRoute: AppRoute.onGenerateRoute,
-              // initialRoute: SplashScreen.routeName,
-              theme: AppTheme.getTheme(AppThemeMode.light),
-              darkTheme: AppTheme.getTheme(AppThemeMode.dark),
-              themeMode: themeMode == AppThemeMode.light
-                  ? ThemeMode.light
-                  : ThemeMode.dark,
-              builder: (context, child) => Stack(
-                children: [
-                  child!,
-                  const DropdownAlert(),
-                ],
-              ),
-            ),
+          return MaterialApp.router(
+            routerConfig: AppRouter.router,
+            // navigatorKey: AppDetails.globalNavigatorKey,
+            debugShowCheckedModeBanner: false,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: const Locale("en"),
+            title: 'mPOS Beat',
+
+            // onGenerateRoute: AppRoute.onGenerateRoute,
+            // initialRoute: SplashScreen.routeName,
+            theme: AppTheme.getTheme(themeMode, context),
+
+            builder: (context, child) =>
+                Stack(children: [child!, const DropdownAlert()]),
           );
         },
       ),

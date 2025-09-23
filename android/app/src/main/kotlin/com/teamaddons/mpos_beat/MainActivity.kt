@@ -1,4 +1,4 @@
-package com.example.mpos_beat
+package com.teamaddons.mpos_beat
 
 import io.flutter.embedding.android.FlutterActivity
 

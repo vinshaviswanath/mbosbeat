@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/l10n/app_localizations.dart';
 import 'package:mpos_beat/presentation/common/widgets/base_box.dart';
 import 'package:mpos_beat/presentation/common/widgets/base_scaffold.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_button.dart';
@@ -14,6 +15,7 @@ class CustomRouteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appLocalization = context.l10n;
     return BaseScaffold(
       widget: SizedBox(
         height: context.getSize.height,
@@ -27,13 +29,9 @@ class CustomRouteScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   if (status == NavigationType.success)
-                    const BaseBox(
-                      widgwt: RegisterSuccessWidget(),
-                    ),
+                    const BaseBox(widgwt: RegisterSuccessWidget()),
                   if (status == NavigationType.failed)
-                    const BaseBox(
-                      widgwt: RegisterFailureWidget(),
-                    )
+                    const BaseBox(widgwt: RegisterFailureWidget()),
                 ],
               ),
             ),
@@ -44,21 +42,23 @@ class CustomRouteScreen extends StatelessWidget {
                         const Spacer(),
                         Padding(
                           padding: EdgeInsets.only(
-                              bottom: context.getSize.height * 0.08,
-                              left: context.getSize.width / 3,
-                              right: context.getSize.width / 3),
+                            bottom: context.getSize.height * 0.08,
+                            left: context.getSize.width / 3,
+                            right: context.getSize.width / 3,
+                          ),
                           child: CustomButton(
-                              onTap: () =>
-                                  // AppRoute.pushNamed(AdminHome.routeName),
-                                  context.pushNamed(AppRouterConst.adminHome),
-                              buttonText: 'Go Home',
-                              textStyle: context.textStyle.s16.white,
-                              isborderEnable: false),
+                            onTap: () =>
+                                // AppRoute.pushNamed(AdminHome.routeName),
+                                context.pushNamed(AppRouterConst.adminHome),
+                            buttonText: appLocalization.go_home,
+                            textStyle: context.textStyle.s16.white,
+                            isborderEnable: false,
+                          ),
                         ),
                       ],
                     )
                   : const SizedBox.shrink(),
-            )
+            ),
           ],
         ),
       ),

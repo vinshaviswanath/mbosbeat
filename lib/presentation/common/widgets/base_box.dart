@@ -32,11 +32,12 @@ import 'package:mpos_beat/core/utils/imports.dart';
 class BaseBox extends StatelessWidget {
   final Widget widgwt;
   final double? height;
-
+  final EdgeInsetsGeometry? padding;
   const BaseBox({
     super.key,
     required this.widgwt,
     this.height,
+    this.padding,
   });
 
   @override
@@ -49,7 +50,7 @@ class BaseBox extends StatelessWidget {
         maxHeight: height ?? context.getSize.height * 0.45,
       ),
       child: Container(
-        padding: const EdgeInsets.all(36),
+        padding: padding ?? EdgeInsets.all(21),
         decoration: BoxDecoration(
           color: ColorResources.white,
           borderRadius: BorderRadius.circular(16),

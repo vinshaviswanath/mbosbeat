@@ -25,6 +25,8 @@ class OtpInputField extends StatelessWidget {
 
     return Pinput(
       length: 4,
+      errorPinTheme: PinTheme(
+          decoration: BoxDecoration(border: Border.all(color: Colors.red))),
       defaultPinTheme: defaultPinTheme,
       focusedPinTheme: defaultPinTheme.copyWith(
         decoration: defaultPinTheme.decoration!.copyWith(

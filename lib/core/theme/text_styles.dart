@@ -1,21 +1,8 @@
 import 'package:mpos_beat/core/theme/colors.dart';
 import 'package:mpos_beat/core/utils/app_details.dart';
-import 'package:mpos_beat/core/utils/enums.dart';
-import 'package:mpos_beat/core/theme/theme/theme_provider.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
-
-const baseTestStyle = TextStyle(fontFamily: 'Roboto');
-// const baseHeadingStyle = TextStyle(fontFamily: 'Jost');
 
 final _scaleWidth = AppDetails.screenSize.width / AppDetails.designWidth;
-
-const premiumTextGradient = LinearGradient(colors: [
-  Color(0xFFFFFFCC),
-  Color(0xFFFFF4B4),
-  Color(0XFFFFD159),
-]);
 
 extension TextStyleX on TextStyle {
   TextStyle get w300 => copyWith(fontWeight: FontWeight.w300);
@@ -40,12 +27,11 @@ extension TextStyleX on TextStyle {
   TextStyle get s28 => copyWith(fontSize: 28 * _scaleWidth);
   TextStyle get s31 => copyWith(fontSize: 31 * _scaleWidth);
 
-  TextStyle get underline => copyWith(
-        decoration: TextDecoration.underline,
-      );
+  TextStyle get underline => copyWith(decoration: TextDecoration.underline);
 
-  TextStyle get raleway => copyWith(fontFamily: 'Roboto');
-  // TextStyle get jost => copyWith(fontFamily: 'Jost');
+  TextStyle get raleway => copyWith(fontFamily: 'Raleway');
+  TextStyle get roboto => copyWith(fontFamily: 'Roboto');
+  TextStyle get gilroy => copyWith(fontFamily: 'Gilroy');
 
   TextStyle get white => copyWith(color: ColorResources.white);
   TextStyle get black => copyWith(color: ColorResources.black);
@@ -53,64 +39,16 @@ extension TextStyleX on TextStyle {
   TextStyle get roseRed => copyWith(color: ColorResources.roseRed);
   TextStyle get indigoBlue => copyWith(color: ColorResources.indigoBlue);
   TextStyle get amber => copyWith(color: ColorResources.amber);
+  TextStyle get silverGray => copyWith(color: ColorResources.silverGray);
+  TextStyle get dustyBlue => copyWith(color: ColorResources.dustyBlue);
 
-
-
-
-  // TextStyle get buttonGradientColor2 =>
-  //     copyWith(color: ColorResources.buttonGradientColor2);
-  // TextStyle get indigoDye => copyWith(color: ColorResources.indigoDye);
-
-}
-
-// class ThemeTextStyles {
-//   static TextStyle getPrimaryTextStyle(BuildContext context) {
-//     final themeMode = context.watch<ThemeCubit>().state.themeMode;
-//     final baseStyle = Theme.of(context).textTheme.titleSmall;
-
-//     switch (themeMode) {
-//       case AppThemeMode.light:
-//         return baseStyle!.deepMaroon;
-//       case AppThemeMode.dark:
-//         return baseStyle!.white;
-//     }
-//   }
-
-//   static TextStyle getSecondaryTextStyle(BuildContext context) {
-//     final themeMode = context.watch<ThemeCubit>().state.themeMode;
-//     final baseStyle = Theme.of(context).textTheme.titleSmall;
-
-//     switch (themeMode) {
-//       case AppThemeMode.light:
-//         return baseStyle!.mauveBrown;
-//       case AppThemeMode.dark:
-//         return baseStyle!.slateGray;
-//     }
-//   }
-// }
-
-class ThemeTextStyles {
-  static TextStyle getPrimaryTextStyle(BuildContext context) {
-    final themeMode = context.watch<ThemeProvider>().themeMode;
-    final baseStyle = Theme.of(context).textTheme.titleSmall;
-
-    switch (themeMode) {
-      case AppThemeMode.light:
-        return baseStyle!.bluishGray;
-      case AppThemeMode.dark:
-        return baseStyle!.white;
-    }
-  }
-
-  static TextStyle getSecondaryTextStyle(BuildContext context) {
-    final themeMode = context.watch<ThemeProvider>().themeMode;
-    final baseStyle = Theme.of(context).textTheme.titleSmall;
-
-    switch (themeMode) {
-      case AppThemeMode.light:
-        return baseStyle!.black;
-      case AppThemeMode.dark:
-        return baseStyle!.white;
-    }
-  }
+  TextStyle get shade100 => copyWith(color: color?.withValues(alpha: 0.1));
+  TextStyle get shade200 => copyWith(color: color?.withValues(alpha: 0.2));
+  TextStyle get shade300 => copyWith(color: color?.withValues(alpha: 0.3));
+  TextStyle get shade400 => copyWith(color: color?.withValues(alpha: 0.4));
+  TextStyle get shade500 => copyWith(color: color?.withValues(alpha: 0.5));
+  TextStyle get shade600 => copyWith(color: color?.withValues(alpha: 0.6));
+  TextStyle get shade700 => copyWith(color: color?.withValues(alpha: 0.7));
+  TextStyle get shade800 => copyWith(color: color?.withValues(alpha: 0.8));
+  TextStyle get shade900 => copyWith(color: color?.withValues(alpha: 0.9));
 }
