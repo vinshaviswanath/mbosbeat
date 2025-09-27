@@ -10,5 +10,6 @@ class AppRouterConst {
   static const forgotPassword = "/forgotPassword";
   static const mailedScreen = "/mailedScreen";
   static const loadingScreen = "/loadingScreen";
-
+  static const customerTransactions = "/customerTransactions";
+  static const transactionDetailpage = "/transactionDetailpage";
 }

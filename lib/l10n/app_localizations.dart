@@ -392,6 +392,168 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **' your account details are already registered in our database. Kindly Login to continue!'**
   String get kindly_login;
+
+  /// No description provided for @customer_transactions_screen_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Transactions'**
+  String get customer_transactions_screen_title;
+
+  /// No description provided for @customer_transactions_screen_search_customer.
+  ///
+  /// In en, this message translates to:
+  /// **'Search Customer'**
+  String get customer_transactions_screen_search_customer;
+
+  /// No description provided for @customer_transaction_detail_check_in_out.
+  ///
+  /// In en, this message translates to:
+  /// **'Check IN-OUT'**
+  String get customer_transaction_detail_check_in_out;
+
+  /// No description provided for @customer_transaction_detail_ContactPerson.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Person'**
+  String get customer_transaction_detail_ContactPerson;
+
+  /// No description provided for @customer_transaction_detail_Mobile.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile'**
+  String get customer_transaction_detail_Mobile;
+
+  /// No description provided for @customer_transaction_detail_GSTno.
+  ///
+  /// In en, this message translates to:
+  /// **'GST No. '**
+  String get customer_transaction_detail_GSTno;
+
+  /// No description provided for @customer_transaction_detail_Address.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get customer_transaction_detail_Address;
+
+  /// No description provided for @customer_transaction_detail_Balance.
+  ///
+  /// In en, this message translates to:
+  /// **'Balance'**
+  String get customer_transaction_detail_Balance;
+
+  /// No description provided for @customer_transaction_detail_Signal.
+  ///
+  /// In en, this message translates to:
+  /// **'Signal Strength '**
+  String get customer_transaction_detail_Signal;
+
+  /// No description provided for @customer_transaction_detail_CheckIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Check In'**
+  String get customer_transaction_detail_CheckIn;
+
+  /// No description provided for @customer_transaction_detail_CheckOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Check Out'**
+  String get customer_transaction_detail_CheckOut;
+
+  /// No description provided for @customer_transaction_detail_Skip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get customer_transaction_detail_Skip;
+
+  /// No description provided for @customer_transaction_detail_ModuleSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Module Summary'**
+  String get customer_transaction_detail_ModuleSummary;
+
+  /// No description provided for @customer_transaction_detail_outstanding_tab_sl_no.
+  ///
+  /// In en, this message translates to:
+  /// **'Sl No.'**
+  String get customer_transaction_detail_outstanding_tab_sl_no;
+
+  /// No description provided for @customer_transaction_detail_outstanding_tab_bill_no.
+  ///
+  /// In en, this message translates to:
+  /// **'Bill No.'**
+  String get customer_transaction_detail_outstanding_tab_bill_no;
+
+  /// No description provided for @customer_transaction_detail_outstanding_tab_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get customer_transaction_detail_outstanding_tab_date;
+
+  /// No description provided for @customer_transaction_detail_outstanding_tab_due_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Due Date'**
+  String get customer_transaction_detail_outstanding_tab_due_date;
+
+  /// No description provided for @customer_transaction_detail_outstanding_tab_amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get customer_transaction_detail_outstanding_tab_amount;
+
+  /// No description provided for @customer_transaction_detail_outstanding_total.
+  ///
+  /// In en, this message translates to:
+  /// **'Total:'**
+  String get customer_transaction_detail_outstanding_total;
+
+  /// No description provided for @customer_transaction_detail_outstanding_on_account.
+  ///
+  /// In en, this message translates to:
+  /// **'On Account:'**
+  String get customer_transaction_detail_outstanding_on_account;
+
+  /// No description provided for @customer_transaction_detail_outstanding_grand_total.
+  ///
+  /// In en, this message translates to:
+  /// **'Grand Total:'**
+  String get customer_transaction_detail_outstanding_grand_total;
+
+  /// No description provided for @customer_transaction_detail_visit_history_heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit History'**
+  String get customer_transaction_detail_visit_history_heading;
+
+  /// No description provided for @customer_transaction_detail_visit_history_transaction_no.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction No.'**
+  String get customer_transaction_detail_visit_history_transaction_no;
+
+  /// No description provided for @customer_transaction_detail_visit_history_type.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get customer_transaction_detail_visit_history_type;
+
+  /// No description provided for @customer_transaction_detail_skip_dilaog_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason for Skip'**
+  String get customer_transaction_detail_skip_dilaog_title;
+
+  /// No description provided for @customer_transaction_detail_skip_dilaog_confirm_skip.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Skip'**
+  String get customer_transaction_detail_skip_dilaog_confirm_skip;
+
+  /// No description provided for @customer_transaction_detail_skip_dilaog_cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get customer_transaction_detail_skip_dilaog_cancel;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

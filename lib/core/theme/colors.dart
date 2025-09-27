@@ -15,7 +15,7 @@ class ColorResources {
   static const transparent = Colors.transparent;
   static const paleBlue = Color(0xFFEDF3FA);
   static const dustyBlue = Color(0xFF7787AD);
-
+  static const freshgreen = Color(0xFF69D282);
 
   //Icon color
   static const navyGray = Color(0xFF42526E);
@@ -32,4 +32,23 @@ class ColorResources {
   //Linear Gradient colors 2
   static const softpurple = Color(0xFF8478DF);
   static const irisPurple = Color(0xFF5E50C0);
+  static const neutralmidgray = Color(0xFF707070);
+
+  static const palegrayblue = Color(0xFFF1F3F7);
+  static const babyblue = Color(0xFFEBF3FF);
+  static const lavendermist = Color(0xFFEFE8FF);
+  static const lavenderblue = Color(0xFFE9EEFF);
+  static const mistyrose = Color(0xFFFFEBE9);
+  static const lightgoldenrod = Color(0xFFFFF4D6);
+  static const paleskyblue = Color(0xFFDCEFFF);
+  static const mintcream = Color(0xFFDDF6E7);
 }
+
+final List<Color> colors = [
+  ColorResources.lavendermist,
+  ColorResources.lavenderblue,
+  ColorResources.mistyrose,
+  ColorResources.lightgoldenrod,
+  ColorResources.paleskyblue,
+  ColorResources.mintcream,
+];

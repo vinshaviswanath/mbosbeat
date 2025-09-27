@@ -37,6 +37,7 @@ dependencies:
   go_router:
   encrypt: ^5.0.3
   http: ^1.5.0
+  popover: ^0.3.1
 
 dev_dependencies:
   flutter_test:

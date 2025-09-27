@@ -115,7 +115,8 @@ class CustomTextField extends StatelessWidget {
               prefixIcon: iconData,
               suffixIcon: suffixIcon,
               hintText: hint,
-              hintStyle: hintTextStyle ?? context.textStyle.s12.silverGray.w300.roboto,
+              hintStyle:
+                  hintTextStyle ?? context.textStyle.s12.silverGray.w300.roboto,
               contentPadding:
                   contentPadding ??
                   const EdgeInsets.symmetric(vertical: 12, horizontal: 16),

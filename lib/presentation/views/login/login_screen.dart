@@ -209,12 +209,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                   borderRadius: BorderRadius.circular(45),
                                   onTap: () {
                                     // provider.resetSignUpForm();
-                                    provider.submitLogin(
-                                      context,
-                                      params: LoginParams(
-                                        username: emailController.text,
-                                        password: passwordController.text,
-                                      ),
+                                    // provider.submitLogin(
+                                    //   context,
+                                    //   params: LoginParams(
+                                    //     username: emailController.text,
+                                    //     password: passwordController.text,
+                                    //   ),
+                                    // );
+                                    context.pushNamed(
+                                      AppRouterConst.customerTransactions,
                                     );
                                   },
                                 ),
