@@ -52,5 +52,6 @@
     "hello": "Hello ",
     "verify_num_text" : "! you're almost ready to start enjoying MPOS Beat. Simply click the button below to verify your mobile number.",
     "verify_number" : "Verify your mobile number",
-    "kindly_login" :  " your account details are already registered in our database. Kindly Login to continue!"
+    "kindly_login" :  " your account details are already registered in our database. Kindly Login to continue!",
+    
 }

@@ -15,6 +15,15 @@ class ColorResources {
   static const transparent = Colors.transparent;
   static const paleBlue = Color(0xFFEDF3FA);
   static const dustyBlue = Color(0xFF7787AD);
+  static const cloudGray = Color(0xFFF1F3F7);
+  static const mintGreen = Color(0xFF69D282);
+  static const peachPink = Color(0xFFFF9B91);
+  static const lavenderBlue = Color(0xFF8FACFF);
+  static const pastelPurple = Color(0xFFAF8EFF);
+  static const amberLight = Color(0xFFFDC832);
+  static const skyBlue = Color(0xFF51ADFF);
+  static const mintGreenAccent = Color(0xFF55D389);
+static const lightBorderGray = Color(0xFFD6D6D6);
 
 
   //Icon color

@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter_svg/svg.dart';
 import 'package:mpos_beat/core/failures/value_object/value_failure.dart';
+import 'package:mpos_beat/core/theme/colors.dart';
 import 'package:mpos_beat/core/theme/text_styles.dart';
 import 'package:mpos_beat/core/utils/app_assets.dart';
 import 'package:mpos_beat/core/utils/extentions.dart';
@@ -45,7 +46,8 @@ class CustomTextField extends StatelessWidget {
   });
 
   final GlobalKey<FormState>? fomeKey;
-  final Widget? iconData;
+  final IconData? iconData;
+
   final String hint;
   final TextInputType? inputType;
   final bool enabled;
@@ -86,10 +88,10 @@ class CustomTextField extends StatelessWidget {
           // height: 44,
           decoration: BoxDecoration(
             border: Border.all(
-              color: isError ? Colors.red : (borderColor ?? Colors.grey),
+              color: isError ? Colors.red : (borderColor ?? Colors.transparent),
             ),
-            color: backgroundColor,
-            borderRadius: BorderRadius.circular(borderRadius ?? 0),
+            color: ColorResources.lightGray,
+            borderRadius: BorderRadius.circular(12),
           ),
           child: TextFormField(
             onTapOutside: (event) {
@@ -112,10 +114,11 @@ class CustomTextField extends StatelessWidget {
             style: context.textStyle.s12,
             decoration: InputDecoration(
               counterText: '',
-              prefixIcon: iconData,
-              suffixIcon: suffixIcon,
+
+              suffixIcon: iconData != null ? Icon(iconData) : null,
               hintText: hint,
-              hintStyle: hintTextStyle ?? context.textStyle.s12.silverGray.w300.roboto,
+              hintStyle:
+                  hintTextStyle ?? context.textStyle.s12.silverGray.w300.roboto,
               contentPadding:
                   contentPadding ??
                   const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
