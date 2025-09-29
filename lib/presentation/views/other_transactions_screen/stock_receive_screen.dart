@@ -1,0 +1,416 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mpos_beat/core/theme/colors.dart';
+import 'package:mpos_beat/core/theme/text_styles.dart';
+import 'package:mpos_beat/core/utils/extentions.dart';
+import 'package:mpos_beat/l10n/app_localizations.dart';
+import 'package:mpos_beat/presentation/common/widgets/custom_textField.dart';
+
+class StockReceiveScreen extends StatefulWidget {
+  const StockReceiveScreen({super.key});
+
+  @override
+  State<StockReceiveScreen> createState() => _StockReceiveScreenState();
+}
+
+class _StockReceiveScreenState extends State<StockReceiveScreen> {
+  @override
+  Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme;
+    final local = AppLocalizations.of(context);
+    final texttheme = Theme.of(context).textTheme;
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            context.pop();
+          },
+          icon: Icon(
+            Icons.arrow_back_ios_rounded,
+            color: ColorResources.dustyBlue,
+            size: 15,
+          ),
+        ),
+        backgroundColor: ColorResources.cloudGray,
+        title: Text(
+          "Stock Receive",
+          style: context.textStyle.s22.dustyBlue.bold.roboto,
+        ),
+        centerTitle: true,
+      ),
+      body: Column(
+        children: [
+          SizedBox(height: height * 0.02),
+          Padding(
+            padding: const EdgeInsets.only(left: 15, right: 15),
+            child: Row(
+              children: [
+                Text(
+                  "Alackal Stores, Kuruppamthara",
+                  style: context.textStyle.s14.roboto.bold.indigoBlue,
+                ),
+                Spacer(),
+                GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: ColorResources.rosePink,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    height: 25,
+                    width: width * 0.220,
+                    child: Center(
+                      child: Text(
+                        "+ Add Item",
+                        style: texttheme.labelSmall!.copyWith(
+                          color: color.onPrimary,
+                          fontSize: 10,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: height * 0.01),
+          Padding(
+            padding: const EdgeInsets.only(left: 15, right: 20),
+            child: Row(
+              children: [
+                Text("GST No.", style: context.textStyle.s09.roboto.dustyBlue),
+                Spacer(),
+                Text(
+                  "29-07-2024",
+                  style: context.textStyle.s09.roboto.dustyBlue,
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: height * 0.002),
+          Padding(
+            padding: const EdgeInsets.only(left: 15, right: 20),
+            child: Row(
+              children: [
+                Text(
+                  "Voucher No.",
+                  style: context.textStyle.s09.roboto.dustyBlue,
+                ),
+                Spacer(),
+                Text("Balance", style: context.textStyle.s10.roboto.dustyBlue),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 15, right: 20),
+            child: Row(
+              children: [
+                Text(
+                  "Price List",
+                  style: context.textStyle.s09.roboto.dustyBlue,
+                ),
+                SizedBox(width: 10),
+                SizedBox(
+                  width: width * 0.500,
+                  height: height * 0.0450,
+                  child: CustomTextField(hint: "pricelist"),
+                ),
+                Spacer(),
+                Text(
+                  "56,874.00 Cr",
+                  style: context.textStyle.s14.roboto.bold.indigoBlue,
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 10),
+          Divider(
+            color: ColorResources.cloudGray,
+            height: 3,
+            thickness: 1.4,
+            indent: 20,
+            endIndent: 18,
+          ),
+          SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.only(left: 20),
+            child: Row(
+              children: [
+                Text("Sl No.", style: context.textStyle.s12.roboto.dustyBlue),
+                SizedBox(width: width * 0.0250),
+                Text(
+                  "Voucher No.",
+                  style: context.textStyle.s10.roboto.dustyBlue,
+                ),
+                SizedBox(width: width * 0.110),
+                Text("Date", style: context.textStyle.s10.roboto.dustyBlue),
+                SizedBox(width: width * 0.150),
+                Text(
+                  "Item Count",
+                  style: context.textStyle.s10.roboto.dustyBlue,
+                ),
+              ],
+            ),
+          ),
+          Container(
+            height: height * 0.550,
+            width: width * 0.920,
+            child: ListView.builder(
+              itemCount: 4,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(6),
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Column(
+                      children: [
+                        Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "${index + 1}",
+                                    style:
+                                        context.textStyle.s11.roboto.dustyBlue,
+                                  ),
+                                  SizedBox(width: width * 0.0750),
+                                  Text(
+                                    "HJIL2468725924",
+                                    style:
+                                        context.textStyle.s11.roboto.dustyBlue,
+                                  ),
+                                  SizedBox(width: width * 0.0400),
+                                  Text(
+                                    "22-Mar-2024",
+                                    style:
+                                        context.textStyle.s11.roboto.dustyBlue,
+                                  ),
+                                  SizedBox(width: width * 0.0800),
+                                  Text(
+                                    "100",
+                                    style:
+                                        context.textStyle.s11.roboto.dustyBlue,
+                                  ),
+                                  Spacer(),
+                                  GestureDetector(
+                                    onTap: () {
+                                      _showDialog();
+                                    },
+                                    child: Container(
+                                      child: Center(
+                                        child: Text(
+                                          "View",
+                                          style: context
+                                              .textStyle
+                                              .s10
+                                              .roboto
+                                              .white,
+                                        ),
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: ColorResources.bluishGray,
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      height: height * 0.0280,
+                                      width: width * 0.120,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 5),
+                        Divider(
+                          color: ColorResources.cloudGray,
+                          height: 3,
+                          thickness: 1.4,
+                          indent: 20,
+                          endIndent: 18,
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+          SizedBox(height: height * 0.02),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: () {},
+                child: Container(
+                  child: Center(
+                    child: Text(
+                      "Update Approved Stock",
+                      style: context.textStyle.roboto.s12.white,
+                    ),
+                  ),
+                  height: height * 0.0620,
+                  width: width * 0.430,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: ColorResources.indigoBlue,
+                  ),
+                ),
+              ),
+              SizedBox(width: width * 0.06),
+              GestureDetector(
+                onTap: () {},
+                child: Container(
+                  child: Center(
+                    child: Text(
+                      "Reject Approved Stock",
+                      style: context.textStyle.roboto.s12.white,
+                    ),
+                  ),
+                  height: height * 0.0620,
+                  width: width * 0.430,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: ColorResources.indigoBlue,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showDialog() {
+    final color = Theme.of(context).colorScheme;
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Theme.of(context).colorScheme.onPrimary,
+          content: Container(
+            width: width * 0.9,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        "Sl No.",
+                        style: context.textStyle.s12.roboto.dustyBlue,
+                      ),
+                      SizedBox(width: width * 0.060),
+                      Text(
+                        "Item Name",
+                        style: context.textStyle.s12.roboto.dustyBlue,
+                      ),
+                      Spacer(),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 16),
+                        child: Text(
+                          "Quantity",
+                          style: context.textStyle.s12.roboto.dustyBlue,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    color: ColorResources.cloudGray,
+                    height: 3,
+                    thickness: 1.4,
+                  ),
+                  Container(
+                    height: height * 0.400,
+                    width: width * 0.920,
+                    child: ListView.builder(
+                      itemCount: 5,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(6),
+                          child: GestureDetector(
+                            onTap: () {},
+                            child: Column(
+                              children: [
+                                Column(
+                                  children: [
+                                    Padding(
+                                      
+                                     
+                                      padding: const EdgeInsets.only(top: 10),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "${index + 1}",
+                                            style: context
+                                                .textStyle
+                                                .s12
+                                                .roboto
+                                                .dustyBlue,
+                                          ),
+                                          SizedBox(width: width * 0.150),
+                                          Text(
+                                            "item name${index + 1}",
+                                            style: context
+                                                .textStyle
+                                                .s12
+                                                .roboto
+                                                .dustyBlue,
+                                          ),
+                                          Spacer(),
+                                          Text(
+                                            "10 Packet",
+                                            style: context
+                                                .textStyle
+                                                .s12
+                                                .roboto
+                                                .dustyBlue,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Divider(
+                                  color: ColorResources.cloudGray,
+                                  height: 3,
+                                  thickness: 1.4,
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          actions: <Widget>[
+            Center(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: ColorResources.indigoBlue,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  minimumSize: Size(width * 0.400, height * 0.055),
+                ),
+                child: Text("Close", style: context.textStyle.s12.roboto.white),
+                onPressed: () {
+                  context.pop();
+                },
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}

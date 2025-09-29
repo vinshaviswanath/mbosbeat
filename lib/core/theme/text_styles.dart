@@ -25,6 +25,7 @@ extension TextStyleX on TextStyle {
   TextStyle get s24 => copyWith(fontSize: 24 * _scaleWidth);
   TextStyle get s26 => copyWith(fontSize: 26 * _scaleWidth);
   TextStyle get s28 => copyWith(fontSize: 28 * _scaleWidth);
+  TextStyle get s30 => copyWith(fontSize: 30 * _scaleWidth);
   TextStyle get s31 => copyWith(fontSize: 31 * _scaleWidth);
 
   TextStyle get underline => copyWith(decoration: TextDecoration.underline);
