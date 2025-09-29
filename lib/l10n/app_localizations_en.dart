@@ -157,4 +157,85 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get kindly_login => ' your account details are already registered in our database. Kindly Login to continue!';
+
+  @override
+  String get customer_transactions_screen_title => 'Customer Transactions';
+
+  @override
+  String get customer_transactions_screen_search_customer => 'Search Customer';
+
+  @override
+  String get customer_transaction_detail_check_in_out => 'Check IN-OUT';
+
+  @override
+  String get customer_transaction_detail_ContactPerson => 'Contact Person';
+
+  @override
+  String get customer_transaction_detail_Mobile => 'Mobile';
+
+  @override
+  String get customer_transaction_detail_GSTno => 'GST No. ';
+
+  @override
+  String get customer_transaction_detail_Address => 'Address';
+
+  @override
+  String get customer_transaction_detail_Balance => 'Balance';
+
+  @override
+  String get customer_transaction_detail_Signal => 'Signal Strength ';
+
+  @override
+  String get customer_transaction_detail_CheckIn => 'Check In';
+
+  @override
+  String get customer_transaction_detail_CheckOut => 'Check Out';
+
+  @override
+  String get customer_transaction_detail_Skip => 'Skip';
+
+  @override
+  String get customer_transaction_detail_ModuleSummary => 'Module Summary';
+
+  @override
+  String get customer_transaction_detail_outstanding_tab_sl_no => 'Sl No.';
+
+  @override
+  String get customer_transaction_detail_outstanding_tab_bill_no => 'Bill No.';
+
+  @override
+  String get customer_transaction_detail_outstanding_tab_date => 'Date';
+
+  @override
+  String get customer_transaction_detail_outstanding_tab_due_date => 'Due Date';
+
+  @override
+  String get customer_transaction_detail_outstanding_tab_amount => 'Amount';
+
+  @override
+  String get customer_transaction_detail_outstanding_total => 'Total:';
+
+  @override
+  String get customer_transaction_detail_outstanding_on_account => 'On Account:';
+
+  @override
+  String get customer_transaction_detail_outstanding_grand_total => 'Grand Total:';
+
+  @override
+  String get customer_transaction_detail_visit_history_heading => 'Visit History';
+
+  @override
+  String get customer_transaction_detail_visit_history_transaction_no => 'Transaction No.';
+
+  @override
+  String get customer_transaction_detail_visit_history_type => 'Type';
+
+  @override
+  String get customer_transaction_detail_skip_dilaog_title => 'Reason for Skip';
+
+  @override
+  String get customer_transaction_detail_skip_dilaog_confirm_skip => 'Confirm Skip';
+
+  @override
+  String get customer_transaction_detail_skip_dilaog_cancel => 'Cancel';
 }

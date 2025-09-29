@@ -1,0 +1,372 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mpos_beat/core/utils/custom_dialogs.dart';
+import 'package:mpos_beat/core/utils/extentions.dart';
+import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/presentation/views/customer_transactions/tabs/tab1_transactions.dart';
+import 'package:mpos_beat/presentation/views/customer_transactions/tabs/tab2_outstanding.dart';
+import 'package:mpos_beat/presentation/views/customer_transactions/tabs/tab3_visit_history.dart';
+import 'package:mpos_beat/presentation/views/customer_transactions/transaction_detail_page/skip_dialog.dart';
+
+class TransactionDetailpage extends StatefulWidget {
+  const TransactionDetailpage({super.key});
+
+  @override
+  State<TransactionDetailpage> createState() => _TransactionDetailpageState();
+}
+
+class _TransactionDetailpageState extends State<TransactionDetailpage>
+    with SingleTickerProviderStateMixin {
+  String? checkInTime;
+  String? checkOutTime;
+
+  late TabController _tabController;
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+    _tabController.addListener(() {
+      setState(() {}); // Forces widget rebuild to update colors
+    });
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  String _getCurrentTime() {
+    final now = DateTime.now();
+    return "${now.hour}:${now.minute.toString().padLeft(2, '0')}";
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final applocalization = context.l10n;
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    final color = Theme.of(context).colorScheme;
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(applocalization.customer_transaction_detail_check_in_out),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, size: 18),
+          onPressed: () {
+            context.pop();
+          },
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.edit_note_outlined,
+              //color: Appcolor.primary,
+              size: 22,
+            ),
+            onPressed: () {},
+          ),
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Alackal Stores, Kuruppamthara",
+                      style: context.textStyle.s14.roboto.indigoBlue.w600,
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.002,
+                    ),
+                    //gst no.....
+                    Text(
+                      "${applocalization.customer_transaction_detail_GSTno}JDGSJ2468246572",
+                      style: context.textStyle.s09.roboto.dustyBlue,
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.002,
+                    ),
+                    //contact person.....
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.person,
+                          color: ColorResources.dustyBlue,
+                          size: 11,
+                        ),
+                        Text(
+                          "${applocalization.customer_transaction_detail_ContactPerson}: Gopakumar",
+
+                          style: context.textStyle.s09.roboto.dustyBlue,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.002,
+                    ),
+                    //mobile......
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.phone_android,
+                          color: ColorResources.dustyBlue,
+                          size: 11,
+                        ),
+                        Text(
+                          "${applocalization.customer_transaction_detail_Mobile} 9876543215",
+                          style: context.textStyle.s09.roboto.dustyBlue,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.002,
+                    ),
+                    //address....
+                    Text(
+                      "${applocalization.customer_transaction_detail_Address}: Kuruppamthara, Kerala",
+                      style: context.textStyle.s09.roboto.dustyBlue,
+                    ),
+                  ],
+                ),
+                Spacer(),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      applocalization.customer_transaction_detail_Balance,
+                      style: context.textStyle.s10.roboto.dustyBlue,
+                    ),
+
+                    //balance....
+                    Text(
+                      "56,874.00 Cr",
+                      style: context.textStyle.s14.roboto.indigoBlue.w600,
+                    ),
+
+                    //signal strength.....
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          applocalization.customer_transaction_detail_Signal,
+                          style: context.textStyle.s09.roboto.dustyBlue,
+                        ),
+                        const Icon(
+                          Icons.signal_cellular_alt_sharp,
+                          color: ColorResources.freshgreen,
+                          size: 20,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.004,
+                    ),
+                    //checkin and skip button.....
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              if (checkInTime == null) {
+                                // First time clicking check-in
+                                checkInTime = _getCurrentTime();
+                                checkOutTime = null; // reset checkout
+                              }
+                            });
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(11),
+                              color: ColorResources.rosePink,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 2,
+                              ),
+                              child: Text(
+                                checkInTime ??
+                                    applocalization
+                                        .customer_transaction_detail_CheckIn,
+                                style: context.textStyle.s11.roboto.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.01,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              if (checkInTime != null && checkOutTime == null) {
+                                // If already checked in, allow checkout
+                                checkOutTime = _getCurrentTime();
+                                checkInTime = null; // reset checkin button
+                              } else if (checkInTime == null &&
+                                  checkOutTime == null) {
+                                skipDialog(context);
+                              }
+                            });
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(11),
+                              color:
+                                  (checkInTime != null && checkOutTime == null)
+                                  ? ColorResources.errorRed
+                                  : checkOutTime != null
+                                  ? ColorResources.rosePink
+                                  : ColorResources.bluishGray,
+                            ),
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 2,
+                                ),
+                                child: Text(
+                                  checkInTime != null && checkOutTime == null
+                                      ? applocalization
+                                            .customer_transaction_detail_CheckOut
+                                      : checkOutTime ??
+                                            applocalization
+                                                .customer_transaction_detail_Skip,
+                                  style: context.textStyle.s11.roboto.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+            Divider(
+              height: 2,
+              thickness: 0.8,
+              color: ColorResources.palegrayblue,
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+            Text(
+              applocalization.customer_transaction_detail_ModuleSummary,
+              style: context.textStyle.s14.roboto.indigoBlue.bold,
+            ),
+
+            //tabs....
+            TabBar(
+              labelPadding: EdgeInsets.only(right: 10),
+              tabAlignment: TabAlignment.start,
+              isScrollable: true,
+              dividerColor: Colors.transparent,
+              indicatorColor: Colors.transparent,
+              controller: _tabController,
+              tabs: [
+                Tab(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: _tabController.index == 0
+                          ? ColorResources.indigoBlue
+                          : ColorResources.babyblue,
+                    ),
+
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 9,
+                      ),
+                      child: Text(
+                        'Transactions',
+                        style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                          color: _tabController.index == 0
+                              ? ColorResources.white
+                              : ColorResources.dustyBlue,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Tab(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: _tabController.index == 1
+                          ? ColorResources.indigoBlue
+                          : ColorResources.babyblue,
+                    ),
+
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 9,
+                      ),
+                      child: Text(
+                        'Outstanding',
+                        style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                          color: _tabController.index == 1
+                              ? ColorResources.white
+                              : ColorResources.dustyBlue,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Tab(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: _tabController.index == 2
+                          ? ColorResources.indigoBlue
+                          : ColorResources.babyblue,
+                    ),
+
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 9,
+                      ),
+                      child: Text(
+                        'VisitHistory',
+                        style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                          color: _tabController.index == 2
+                              ? ColorResources.white
+                              : ColorResources.dustyBlue,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            //pages....
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  Tab1Transactions(),
+                  Tab2Outstanding(),
+                  Tab3VisitHistory(),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

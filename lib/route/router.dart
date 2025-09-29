@@ -4,6 +4,8 @@ import 'package:mpos_beat/core/utils/enums.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_route_screen.dart';
 import 'package:mpos_beat/presentation/common/widgets/loading_screen.dart';
 import 'package:mpos_beat/presentation/views/admin_home/admin_home.dart';
+import 'package:mpos_beat/presentation/views/customer_transactions/customer_transactions.dart';
+import 'package:mpos_beat/presentation/views/customer_transactions/transaction_detail_page/transaction_detail_page.dart';
 import 'package:mpos_beat/presentation/views/forgot_password/forgot_password.dart';
 import 'package:mpos_beat/presentation/views/forgot_password/mailed_screen.dart';
 import 'package:mpos_beat/presentation/views/home_screen/home_screen.dart';
@@ -102,7 +104,7 @@ class AppRouter {
           return const LoadingScreen();
         },
       ),
-      GoRoute(
+GoRoute(
         path: "/homescreen",
         name: AppRouterConst.homeScreen,
         builder: (context, state) {
@@ -135,6 +137,23 @@ class AppRouter {
         name: "expenseentry",
         builder: (context, state) {
           return ExpenseEntryScreen();
+        },
+      ),
+    ],
+  );
+ GoRoute(
+        path: "/customerTransactions",
+        name: AppRouterConst.customerTransactions,
+        builder: (context, state) {
+          return const CustomerTransactions();
+        },
+      ),
+
+      GoRoute(
+        path: "/transactionDetailpage",
+        name: AppRouterConst.transactionDetailpage,
+        builder: (context, state) {
+          return const TransactionDetailpage();
         },
       ),
     ],
