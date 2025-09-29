@@ -104,7 +104,7 @@ class AppRouter {
           return const LoadingScreen();
         },
       ),
-GoRoute(
+      GoRoute(
         path: "/homescreen",
         name: AppRouterConst.homeScreen,
         builder: (context, state) {
@@ -139,9 +139,7 @@ GoRoute(
           return ExpenseEntryScreen();
         },
       ),
-    ],
-  );
- GoRoute(
+      GoRoute(
         path: "/customerTransactions",
         name: AppRouterConst.customerTransactions,
         builder: (context, state) {
@@ -158,4 +156,7 @@ GoRoute(
       ),
     ],
   );
+
+  //   ],
+  // );
 }

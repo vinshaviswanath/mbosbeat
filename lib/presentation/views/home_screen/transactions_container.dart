@@ -10,7 +10,6 @@ class TransactionsContainers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final items = [
       TransactionItem(
         title: "Customer",
@@ -21,7 +20,7 @@ class TransactionsContainers extends StatelessWidget {
         ],
         avatarColor: const Color.fromARGB(255, 117, 188, 247),
         icon: Icons.person_pin_outlined,
-        routeName: "customertransaction",
+        routeName: AppRouterConst.customerTransactions,
       ),
       TransactionItem(
         title: "Other",
