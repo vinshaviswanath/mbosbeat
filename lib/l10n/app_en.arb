@@ -53,6 +53,7 @@
     "verify_num_text" : "! you're almost ready to start enjoying MPOS Beat. Simply click the button below to verify your mobile number.",
     "verify_number" : "Verify your mobile number",
     "kindly_login" :  " your account details are already registered in our database. Kindly Login to continue!",
+
     "customer_transactions_screen_title" : "Customer Transactions",
     "customer_transactions_screen_search_customer" :"Search Customer",
     "customer_transaction_detail_check_in_out" : "Check IN-OUT",
@@ -66,6 +67,7 @@
     "customer_transaction_detail_CheckOut": "Check Out",
     "customer_transaction_detail_Skip": "Skip",
     "customer_transaction_detail_ModuleSummary": "Module Summary",
+
     "customer_transaction_detail_outstanding_tab_sl_no":"Sl No.",
     "customer_transaction_detail_outstanding_tab_bill_no":"Bill No.",
     "customer_transaction_detail_outstanding_tab_date":"Date",
@@ -74,12 +76,15 @@
     "customer_transaction_detail_outstanding_total":"Total:",
     "customer_transaction_detail_outstanding_on_account":"On Account:",
     "customer_transaction_detail_outstanding_grand_total":"Grand Total:",
+
     "customer_transaction_detail_visit_history_heading":"Visit History",
     "customer_transaction_detail_visit_history_transaction_no":"Transaction No.",
     "customer_transaction_detail_visit_history_type":"Type",
+
     "customer_transaction_detail_skip_dilaog_title":"Reason for Skip",
     "customer_transaction_detail_skip_dilaog_confirm_skip":"Confirm Skip",
     "customer_transaction_detail_skip_dilaog_cancel":"Cancel",
+
     "other_transactions_stockTransfer_Togodown":"TO GODOWN / VAN",
     "other_transactions_stockTransfer_additem":"+ Add Item",
     "other_transactions_stockTransfer_productname":"Product Name",
@@ -87,6 +92,7 @@
     "other_transactions_stockTransfer_Unit":"Units",
     "other_transactions_stockTransfer_ItemCount":"Item Count",
     "other_transactions_stockTransfer_saveButton":"Save",
+
     "other_transactions_stockReceive_view":"View",
     "other_transactions_stockReceive_update_button":"Update Approved Stock",
     "other_transactions_stockReceive_reject_button":"Reject Approved Stock",
@@ -95,6 +101,7 @@
     "other_transactions_stockReceive_vocherNo":"Voucher No",
     "other_transactions_stockReceive_date":"Date",
     "other_transactions_stockReceive_pricelist_text":"Price List",
+
     "expense_title":"Petty Expense",
     "expense_oustanding":"Outstanding",
     "expense_meter_reading":"Meter Reading",
@@ -103,5 +110,19 @@
     "expense_amount":"Amount",
     "expense_remarks":"Remarks",
     "expense_saveButton":"Save Petty Expense",
-    "expense_cancelButton":"Cancel"
+    "expense_cancelButton":"Cancel",
+
+    "transaction_detail_order_booking_title":"Order Booking",
+    "transaction_detail_order_booking_rate":"Rate",
+    "transaction_detail_order_booking_discount":"Discount",
+    "transaction_detail_order_booking_sub_total":"Sub Total",
+
+    "transaction_detail_order_booking_add_item_search_product":"Search Product",
+    "transaction_detail_order_booking_add_item_select_by_group":"Select by Group",
+    "transaction_detail_order_booking_add_item_select_by_category":"Select by Category",
+    "transaction_detail_order_booking_add_item_select_group":"Select Group",
+    "transaction_detail_order_booking_add_item_seleable_stock":"Saleable Stock :",
+    "transaction_detail_order_booking_add_item_group":"Group",
+    "transaction_detail_order_booking_add_order_qty":"Order Qty"
+ 
 }
