@@ -15,6 +15,7 @@ class CustomTextField extends StatelessWidget {
     super.key,
     this.textInputAction,
     this.iconData,
+    this.iconColor,
     this.enabled = true,
     required this.hint,
     this.suffixIcon,
@@ -47,7 +48,7 @@ class CustomTextField extends StatelessWidget {
 
   final GlobalKey<FormState>? fomeKey;
   final IconData? iconData;
-
+  final Color? iconColor;
   final String hint;
   final TextInputType? inputType;
   final bool enabled;
@@ -115,7 +116,9 @@ class CustomTextField extends StatelessWidget {
             decoration: InputDecoration(
               counterText: '',
 
-              suffixIcon: iconData != null ? Icon(iconData) : null,
+              suffixIcon: iconData != null
+                  ? Icon(iconData, color: ColorResources.bluishGray)
+                  : null,
               hintText: hint,
               hintStyle:
                   hintTextStyle ?? context.textStyle.s12.silverGray.w300.roboto,

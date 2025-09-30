@@ -11,6 +11,7 @@ import 'package:mpos_beat/presentation/views/forgot_password/mailed_screen.dart'
 import 'package:mpos_beat/presentation/views/home_screen/home_screen.dart';
 import 'package:mpos_beat/presentation/views/login/login_screen.dart';
 import 'package:mpos_beat/presentation/views/on_boarding/on_boarding.dart';
+import 'package:mpos_beat/presentation/views/other_transactions_screen/add%20_items.dart';
 import 'package:mpos_beat/presentation/views/other_transactions_screen/expense_entry_screen.dart';
 import 'package:mpos_beat/presentation/views/other_transactions_screen/other_transactions_screen.dart';
 import 'package:mpos_beat/presentation/views/other_transactions_screen/stock_journal_screen.dart';
@@ -126,6 +127,13 @@ class AppRouter {
         },
       ),
       GoRoute(
+        path: "/additem",
+        name: "additem",
+        builder: (context, state) {
+          return AddItems();
+        },
+      ),
+      GoRoute(
         path: "/stockreceivescreen",
         name: "stockreceive",
         builder: (context, state) {
@@ -156,7 +164,4 @@ class AppRouter {
       ),
     ],
   );
-
-  //   ],
-  // );
 }

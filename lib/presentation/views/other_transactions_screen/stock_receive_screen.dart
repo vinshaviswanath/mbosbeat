@@ -63,7 +63,7 @@ class _StockReceiveScreenState extends State<StockReceiveScreen> {
                     width: width * 0.220,
                     child: Center(
                       child: Text(
-                        "+ Add Item",
+                        local!.other_transactions_stockTransfer_additem,
                         style: texttheme.labelSmall!.copyWith(
                           color: color.onPrimary,
                           fontSize: 10,
@@ -80,7 +80,10 @@ class _StockReceiveScreenState extends State<StockReceiveScreen> {
             padding: const EdgeInsets.only(left: 15, right: 20),
             child: Row(
               children: [
-                Text("GST No.", style: context.textStyle.s09.roboto.dustyBlue),
+                Text(
+                  local.other_transactions_stockReceive_SlNo,
+                  style: context.textStyle.s09.roboto.dustyBlue,
+                ),
                 Spacer(),
                 Text(
                   "29-07-2024",
@@ -95,11 +98,14 @@ class _StockReceiveScreenState extends State<StockReceiveScreen> {
             child: Row(
               children: [
                 Text(
-                  "Voucher No.",
+                  local.other_transactions_stockReceive_vocherNo,
                   style: context.textStyle.s09.roboto.dustyBlue,
                 ),
                 Spacer(),
-                Text("Balance", style: context.textStyle.s10.roboto.dustyBlue),
+                Text(
+                  local.other_transactions_stockReceive_Balance_text,
+                  style: context.textStyle.s10.roboto.dustyBlue,
+                ),
               ],
             ),
           ),
@@ -108,7 +114,7 @@ class _StockReceiveScreenState extends State<StockReceiveScreen> {
             child: Row(
               children: [
                 Text(
-                  "Price List",
+                  local.other_transactions_stockReceive_pricelist_text,
                   style: context.textStyle.s09.roboto.dustyBlue,
                 ),
                 SizedBox(width: 10),
@@ -138,17 +144,23 @@ class _StockReceiveScreenState extends State<StockReceiveScreen> {
             padding: const EdgeInsets.only(left: 20),
             child: Row(
               children: [
-                Text("Sl No.", style: context.textStyle.s12.roboto.dustyBlue),
+                Text(
+                  local.other_transactions_stockReceive_SlNo,
+                  style: context.textStyle.s12.roboto.dustyBlue,
+                ),
                 SizedBox(width: width * 0.0250),
                 Text(
-                  "Voucher No.",
+                  local.other_transactions_stockReceive_vocherNo,
                   style: context.textStyle.s10.roboto.dustyBlue,
                 ),
                 SizedBox(width: width * 0.110),
-                Text("Date", style: context.textStyle.s10.roboto.dustyBlue),
+                Text(
+                  local.other_transactions_stockReceive_date,
+                  style: context.textStyle.s10.roboto.dustyBlue,
+                ),
                 SizedBox(width: width * 0.150),
                 Text(
-                  "Item Count",
+                  local.other_transactions_stockTransfer_ItemCount,
                   style: context.textStyle.s10.roboto.dustyBlue,
                 ),
               ],
@@ -203,7 +215,8 @@ class _StockReceiveScreenState extends State<StockReceiveScreen> {
                                     child: Container(
                                       child: Center(
                                         child: Text(
-                                          "View",
+                                          local
+                                              .other_transactions_stockReceive_view,
                                           style: context
                                               .textStyle
                                               .s10
@@ -248,7 +261,7 @@ class _StockReceiveScreenState extends State<StockReceiveScreen> {
                 child: Container(
                   child: Center(
                     child: Text(
-                      "Update Approved Stock",
+                      local.other_transactions_stockReceive_update_button,
                       style: context.textStyle.roboto.s12.white,
                     ),
                   ),
@@ -266,7 +279,7 @@ class _StockReceiveScreenState extends State<StockReceiveScreen> {
                 child: Container(
                   child: Center(
                     child: Text(
-                      "Reject Approved Stock",
+                      local.other_transactions_stockReceive_reject_button,
                       style: context.textStyle.roboto.s12.white,
                     ),
                   ),
@@ -340,8 +353,6 @@ class _StockReceiveScreenState extends State<StockReceiveScreen> {
                                 Column(
                                   children: [
                                     Padding(
-                                      
-                                     
                                       padding: const EdgeInsets.only(top: 10),
                                       child: Row(
                                         children: [

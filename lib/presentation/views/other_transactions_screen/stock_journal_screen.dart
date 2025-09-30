@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/l10n/app_localizations.dart';
@@ -77,22 +76,17 @@ class _StockJournalScreenState extends State<StockJournalScreen> {
                       ),
                       SizedBox(height: 3),
                       if (heading == "Stock Unload")
-                        GestureDetector(
-                          onTap: () {
-                            context.pushNamed("additem");
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: ColorResources.rosePink,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            height: 25,
-                            width: width * 0.220,
-                            child: Center(
-                              child: Text(
-                                "+ Unload All",
-                                style: context.textStyle.roboto.white.s11,
-                              ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: ColorResources.rosePink,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          height: 25,
+                          width: width * 0.220,
+                          child: Center(
+                            child: Text(
+                              "+ Unload All",
+                              style: context.textStyle.roboto.white.s11,
                             ),
                           ),
                         ),
@@ -126,7 +120,7 @@ class _StockJournalScreenState extends State<StockJournalScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: Center(
                         child: Text(
-                          "+ Add Item",
+                          local!.other_transactions_stockTransfer_additem,
                           style: context.textStyle.roboto.white.s11,
                         ),
                       ),
@@ -149,16 +143,19 @@ class _StockJournalScreenState extends State<StockJournalScreen> {
               child: Row(
                 children: [
                   Text(
-                    "Product Name",
+                    local.other_transactions_stockTransfer_productname,
                     style: context.textStyle.s12.dustyBlue.roboto,
                   ),
                   Spacer(),
                   Text(
-                    "Quantity",
+                    local.other_transactions_stockTransfer_Quantity,
                     style: context.textStyle.s12.dustyBlue.roboto,
                   ),
                   SizedBox(width: width * 0.05),
-                  Text("Units", style: context.textStyle.s12.dustyBlue.roboto),
+                  Text(
+                    local.other_transactions_stockTransfer_Unit,
+                    style: context.textStyle.s12.dustyBlue.roboto,
+                  ),
                 ],
               ),
             ),
@@ -323,7 +320,7 @@ class _StockJournalScreenState extends State<StockJournalScreen> {
             ),
             SizedBox(height: height * 0.02),
             Text(
-              "Item Count : 8",
+              local.other_transactions_stockTransfer_ItemCount,
               style: context.textStyle.s12.roboto.dustyBlue,
             ),
             SizedBox(height: height * 0.01),
@@ -337,7 +334,7 @@ class _StockJournalScreenState extends State<StockJournalScreen> {
               ),
               onPressed: () {},
               child: Text(
-                "Save",
+                local.other_transactions_stockTransfer_saveButton,
                 style: context.textStyle.s14.roboto.white.bold,
               ),
             ),
