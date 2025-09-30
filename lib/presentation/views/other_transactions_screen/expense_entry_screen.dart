@@ -37,7 +37,7 @@ class _ExpenseEntryScreenState extends State<ExpenseEntryScreen> {
         ),
         backgroundColor: ColorResources.cloudGray,
         title: Text(
-          "Petty Expense",
+          local!.expense_title,
           style: context.textStyle.s22.dustyBlue.bold.roboto,
         ),
         centerTitle: true,
@@ -71,7 +71,7 @@ class _ExpenseEntryScreenState extends State<ExpenseEntryScreen> {
                   ),
                   Spacer(),
                   Text(
-                    "Outstanding",
+                    local.expense_oustanding,
                     style: context.textStyle.s09.roboto.dustyBlue,
                   ),
                 ],
@@ -136,10 +136,10 @@ class _ExpenseEntryScreenState extends State<ExpenseEntryScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Meter Reading",
+                          local.expense_meter_reading,
                           style: context.textStyle.s14.bluishGray.roboto,
                         ),
-                        CustomTextField(hint: "Meter Reading"),
+                        CustomTextField(hint: local.expense_meter_reading),
                       ],
                     ),
                   ),
@@ -149,23 +149,23 @@ class _ExpenseEntryScreenState extends State<ExpenseEntryScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Fuel Quantity",
+                          local.expense_fuel_quantity,
                           style: context.textStyle.s14.bluishGray.roboto,
                         ),
-                        CustomTextField(hint: "Fuel Quantity"),
+                        CustomTextField(hint:  local.expense_fuel_quantity),
                       ],
                     ),
                   ),
                 ],
               ),
               SizedBox(height: height * 0.010),
-              Text("Place", style: context.textStyle.s14.bluishGray.roboto),
-              CustomTextField(hint: "Place"),
+              Text( local.expense_place, style: context.textStyle.s14.bluishGray.roboto),
+              CustomTextField(hint:local.expense_place),
               SizedBox(height: height * 0.010),
-              Text("Amount", style: context.textStyle.s14.bluishGray.roboto),
-              CustomTextField(hint: "Amount"),
+              Text(local.expense_amount, style: context.textStyle.s14.bluishGray.roboto),
+              CustomTextField(hint: local.expense_amount),
               SizedBox(height: height * 0.1),
-              Text("Remarks", style: context.textStyle.s14.bluishGray.roboto),
+              Text(local.expense_remarks, style: context.textStyle.s14.bluishGray.roboto),
               Container(
                 child: TextField(
                   cursorHeight: 13,
@@ -194,7 +194,7 @@ class _ExpenseEntryScreenState extends State<ExpenseEntryScreen> {
                     child: Container(
                       child: Center(
                         child: Text(
-                          "Save Petty Expense",
+                          local.expense_saveButton,
                           style: context.textStyle.roboto.s12.white,
                         ),
                       ),
@@ -212,7 +212,7 @@ class _ExpenseEntryScreenState extends State<ExpenseEntryScreen> {
                     child: Container(
                       child: Center(
                         child: Text(
-                          "Cancel",
+                          local.expense_cancelButton,
                           style: context.textStyle.roboto.s12.white,
                         ),
                       ),

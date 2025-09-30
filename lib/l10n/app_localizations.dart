@@ -61,7 +61,8 @@ import 'app_localizations_en.dart';
 /// be consistent with the languages listed in the AppLocalizations.supportedLocales
 /// property.
 abstract class AppLocalizations {
-  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AppLocalizations(String locale)
+    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -69,7 +70,8 @@ abstract class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate =
+      _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -81,17 +83,16 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
-    delegate,
-    GlobalMaterialLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-  ];
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
+        delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[
-    Locale('en')
-  ];
+  static const List<Locale> supportedLocales = <Locale>[Locale('en')];
 
   /// No description provided for @onboard_heading1.
   ///
@@ -554,9 +555,154 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancel'**
   String get customer_transaction_detail_skip_dilaog_cancel;
+
+  /// No description provided for @other_transactions_stockTransfer_Togodown.
+  ///
+  /// In en, this message translates to:
+  /// **'TO GODOWN / VAN'**
+  String get other_transactions_stockTransfer_Togodown;
+
+  /// No description provided for @other_transactions_stockTransfer_additem.
+  ///
+  /// In en, this message translates to:
+  /// **'+ Add Item'**
+  String get other_transactions_stockTransfer_additem;
+
+  /// No description provided for @other_transactions_stockTransfer_productname.
+  ///
+  /// In en, this message translates to:
+  /// **'Product Name'**
+  String get other_transactions_stockTransfer_productname;
+
+  /// No description provided for @other_transactions_stockTransfer_Quantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity'**
+  String get other_transactions_stockTransfer_Quantity;
+
+  /// No description provided for @other_transactions_stockTransfer_Unit.
+  ///
+  /// In en, this message translates to:
+  /// **'Units'**
+  String get other_transactions_stockTransfer_Unit;
+
+  /// No description provided for @other_transactions_stockTransfer_ItemCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Item Count'**
+  String get other_transactions_stockTransfer_ItemCount;
+
+  /// No description provided for @other_transactions_stockTransfer_saveButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get other_transactions_stockTransfer_saveButton;
+
+  /// No description provided for @other_transactions_stockReceive_view.
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get other_transactions_stockReceive_view;
+
+  /// No description provided for @other_transactions_stockReceive_update_button.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Approved Stock'**
+  String get other_transactions_stockReceive_update_button;
+
+  /// No description provided for @other_transactions_stockReceive_reject_button.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject Approved Stock'**
+  String get other_transactions_stockReceive_reject_button;
+
+  /// No description provided for @other_transactions_stockReceive_Balance_text.
+  ///
+  /// In en, this message translates to:
+  /// **'Balance'**
+  String get other_transactions_stockReceive_Balance_text;
+
+  /// No description provided for @other_transactions_stockReceive_SlNo.
+  ///
+  /// In en, this message translates to:
+  /// **'Sl No'**
+  String get other_transactions_stockReceive_SlNo;
+
+  /// No description provided for @other_transactions_stockReceive_vocherNo.
+  ///
+  /// In en, this message translates to:
+  /// **'Voucher No'**
+  String get other_transactions_stockReceive_vocherNo;
+
+  /// No description provided for @other_transactions_stockReceive_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get other_transactions_stockReceive_date;
+
+  /// No description provided for @other_transactions_stockReceive_pricelist_text.
+  ///
+  /// In en, this message translates to:
+  /// **'Price List'**
+  String get other_transactions_stockReceive_pricelist_text;
+
+  /// No description provided for @expense_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Petty Expense'**
+  String get expense_title;
+
+  /// No description provided for @expense_oustanding.
+  ///
+  /// In en, this message translates to:
+  /// **'Outstanding'**
+  String get expense_oustanding;
+
+  /// No description provided for @expense_meter_reading.
+  ///
+  /// In en, this message translates to:
+  /// **'Meter Reading'**
+  String get expense_meter_reading;
+
+  /// No description provided for @expense_fuel_quantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Fuel Quantity'**
+  String get expense_fuel_quantity;
+
+  /// No description provided for @expense_place.
+  ///
+  /// In en, this message translates to:
+  /// **'Place'**
+  String get expense_place;
+
+  /// No description provided for @expense_amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get expense_amount;
+
+  /// No description provided for @expense_remarks.
+  ///
+  /// In en, this message translates to:
+  /// **'Remarks'**
+  String get expense_remarks;
+
+  /// No description provided for @expense_saveButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Petty Expense'**
+  String get expense_saveButton;
+
+  /// No description provided for @expense_cancelButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get expense_cancelButton;
 }
 
-class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate
+    extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
@@ -565,24 +711,24 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['en'].contains(locale.languageCode);
+  bool isSupported(Locale locale) =>
+      <String>['en'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
 }
 
 AppLocalizations lookupAppLocalizations(Locale locale) {
-
-
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'en': return AppLocalizationsEn();
+    case 'en':
+      return AppLocalizationsEn();
   }
 
   throw FlutterError(
     'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
     'an issue with the localizations generation tool. Please file an issue '
     'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.'
+    'that was used.',
   );
 }

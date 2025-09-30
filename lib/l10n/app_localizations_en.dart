@@ -12,7 +12,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onboard_heading1 => 'Hello Welcome!';
 
   @override
-  String get onboard_description => 'Lorem ipsum dolor sit amet, consectetur\nadipiscing elit, sed do eiusmod tempor incididunt\nut labore';
+  String get onboard_description =>
+      'Lorem ipsum dolor sit amet, consectetur\nadipiscing elit, sed do eiusmod tempor incididunt\nut labore';
 
   @override
   String get onboard_heading2 => 'Heading Here';
@@ -117,7 +118,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reg_success => 'Registration\nSuccessfully!';
 
   @override
-  String get successfully_registered_admin => 'You are successfully registered as Admin User';
+  String get successfully_registered_admin =>
+      'You are successfully registered as Admin User';
 
   @override
   String get go_home => 'Go Home';
@@ -129,7 +131,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get try_again => 'Try Again !';
 
   @override
-  String get forgot_password_description => 'Enter the email associated with your account and we\nwill send an email to reset your password.';
+  String get forgot_password_description =>
+      'Enter the email associated with your account and we\nwill send an email to reset your password.';
 
   @override
   String get email_address => 'Email Address';
@@ -141,7 +144,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mail_sent => 'Mail Sent';
 
   @override
-  String get sent_mail_to => 'We have sent a password recovery instructions\nto';
+  String get sent_mail_to =>
+      'We have sent a password recovery instructions\nto';
 
   @override
   String get kindly_verify => '. Kindly verify!';
@@ -153,10 +157,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hello => 'Hello ';
 
   @override
-  String get verify_num_text => '! you\'re almost ready to start enjoying MPOS Beat. Simply click the button below to verify your mobile number.';
+  String get verify_num_text =>
+      '! you\'re almost ready to start enjoying MPOS Beat. Simply click the button below to verify your mobile number.';
 
   @override
-  String get kindly_login => ' your account details are already registered in our database. Kindly Login to continue!';
+  String get kindly_login =>
+      ' your account details are already registered in our database. Kindly Login to continue!';
 
   @override
   String get customer_transactions_screen_title => 'Customer Transactions';
@@ -216,16 +222,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get customer_transaction_detail_outstanding_total => 'Total:';
 
   @override
-  String get customer_transaction_detail_outstanding_on_account => 'On Account:';
+  String get customer_transaction_detail_outstanding_on_account =>
+      'On Account:';
 
   @override
-  String get customer_transaction_detail_outstanding_grand_total => 'Grand Total:';
+  String get customer_transaction_detail_outstanding_grand_total =>
+      'Grand Total:';
 
   @override
-  String get customer_transaction_detail_visit_history_heading => 'Visit History';
+  String get customer_transaction_detail_visit_history_heading =>
+      'Visit History';
 
   @override
-  String get customer_transaction_detail_visit_history_transaction_no => 'Transaction No.';
+  String get customer_transaction_detail_visit_history_transaction_no =>
+      'Transaction No.';
 
   @override
   String get customer_transaction_detail_visit_history_type => 'Type';
@@ -234,8 +244,83 @@ class AppLocalizationsEn extends AppLocalizations {
   String get customer_transaction_detail_skip_dilaog_title => 'Reason for Skip';
 
   @override
-  String get customer_transaction_detail_skip_dilaog_confirm_skip => 'Confirm Skip';
+  String get customer_transaction_detail_skip_dilaog_confirm_skip =>
+      'Confirm Skip';
 
   @override
   String get customer_transaction_detail_skip_dilaog_cancel => 'Cancel';
+
+  @override
+  String get other_transactions_stockTransfer_Togodown => 'TO GODOWN / VAN';
+
+  @override
+  String get other_transactions_stockTransfer_additem => '+ Add Item';
+
+  @override
+  String get other_transactions_stockTransfer_productname => 'Product Name';
+
+  @override
+  String get other_transactions_stockTransfer_Quantity => 'Quantity';
+
+  @override
+  String get other_transactions_stockTransfer_Unit => 'Units';
+
+  @override
+  String get other_transactions_stockTransfer_ItemCount => 'Item Count';
+
+  @override
+  String get other_transactions_stockTransfer_saveButton => 'Save';
+
+  @override
+  String get other_transactions_stockReceive_view => 'View';
+
+  @override
+  String get other_transactions_stockReceive_update_button =>
+      'Update Approved Stock';
+
+  @override
+  String get other_transactions_stockReceive_reject_button =>
+      'Reject Approved Stock';
+
+  @override
+  String get other_transactions_stockReceive_Balance_text => 'Balance';
+
+  @override
+  String get other_transactions_stockReceive_SlNo => 'Sl No';
+
+  @override
+  String get other_transactions_stockReceive_vocherNo => 'Voucher No';
+
+  @override
+  String get other_transactions_stockReceive_date => 'Date';
+
+  @override
+  String get other_transactions_stockReceive_pricelist_text => 'Price List';
+
+  @override
+  String get expense_title => 'Petty Expense';
+
+  @override
+  String get expense_oustanding => 'Outstanding';
+
+  @override
+  String get expense_meter_reading => 'Meter Reading';
+
+  @override
+  String get expense_fuel_quantity => 'Fuel Quantity';
+
+  @override
+  String get expense_place => 'Place';
+
+  @override
+  String get expense_amount => 'Amount';
+
+  @override
+  String get expense_remarks => 'Remarks';
+
+  @override
+  String get expense_saveButton => 'Save Petty Expense';
+
+  @override
+  String get expense_cancelButton => 'Cancel';
 }

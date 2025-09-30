@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/l10n/app_localizations.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_textField.dart';
 
@@ -13,9 +14,10 @@ class AddItems extends StatefulWidget {
 class _AddItemsState extends State<AddItems> {
   int? selectUnits;
   int? selectQuantitys;
-  bool recent = false;
+  bool items = false;
   @override
   Widget build(BuildContext context) {
+    final args = GoRouterState.of(context).extra as Map<String, dynamic>?;
     final color = Theme.of(context).colorScheme;
     final local = AppLocalizations.of(context);
     final texttheme = Theme.of(context).textTheme;
@@ -29,70 +31,104 @@ class _AddItemsState extends State<AddItems> {
           },
           icon: Icon(
             Icons.arrow_back_ios_rounded,
-            color: color.onSecondary,
+            color: ColorResources.dustyBlue,
             size: 15,
           ),
         ),
-        backgroundColor: color.onTertiaryContainer,
-        title: Text("Add Items"),
+        backgroundColor: ColorResources.cloudGray,
+
+        title: Text(
+          "Add Items",
+          style: context.textStyle.s22.dustyBlue.bold.roboto,
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
+            SizedBox(height: height * 0.02),
             Padding(
               padding: const EdgeInsets.only(left: 23),
               child: Row(
                 children: [
                   Text(
                     "# : M1ST-002/22/23",
-                    style: texttheme.displayMedium!.copyWith(
-                      color: color.primary,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: context.textStyle.s14.roboto.bold.indigoBlue,
                   ),
                   Spacer(),
-                  Text(
-                    "Recent Items",
-                    style: texttheme.labelSmall!.copyWith(
-                      color: color.onSecondary,
-                    ),
-                  ),
-                  Transform.scale(
-                    scale: 0.6,
-                    child: Switch(
-                      inactiveThumbColor: color.secondary,
-                      activeColor: color.onPrimary,
-                      inactiveTrackColor: color.onPrimary,
-                      activeTrackColor: color.primary,
-                      value: recent,
-                      onChanged: (value) {
-                        setState(() {
-                          recent = value;
-                        });
-                      },
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Expanded(
+                      child: Row(
+                        children: [
+                          Text(
+                            "Recent Items",
+                            style: context.textStyle.s12.roboto.dustyBlue,
+                          ),
+                          Transform.scale(
+                            scale: 0.6,
+                            child: Switch(
+                              value: items,
+                              onChanged: (value) {
+                                setState(() => items = value);
+                              },
+                              activeColor: ColorResources.indigoBlue,
+                              inactiveThumbColor: ColorResources.bluishGray,
+                              inactiveTrackColor: Colors.white,
+                              activeTrackColor: Colors.white,
+                              trackOutlineColor:
+                                  MaterialStateProperty.resolveWith<Color?>((
+                                    states,
+                                  ) {
+                                    if (states.contains(
+                                      MaterialState.selected,
+                                    )) {
+                                      return ColorResources.indigoBlue;
+                                    }
+                                    return ColorResources.bluishGray;
+                                  }),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
             Divider(
-              color: Theme.of(context).colorScheme.onTertiaryContainer,
+              color: ColorResources.cloudGray,
               height: 3,
               thickness: 1.4,
+              indent: 20,
+              endIndent: 18,
             ),
-            Container(
-              height: height * 0.08,
-              width: width * 0.930,
-              child: CustomTextField(
-                iconData: Icons.search,
-                hint: "Search Product",
+            SizedBox(height: 8),
+
+            Padding(
+              padding: const EdgeInsets.only(left: 20, right: 10),
+              child: Row(
+                crossAxisAlignment:
+                    CrossAxisAlignment.center, // Ensures vertical alignment
+                children: [
+                  Expanded(
+                    // Takes available space
+                    child: CustomTextField(
+                      hint: "Search product",
+                      iconData: Icons.search,
+                      iconColor: ColorResources.bluishGray,
+                    ),
+                  ),
+                ],
               ),
             ),
+            SizedBox(height: 8),
             Divider(
-              color: Theme.of(context).colorScheme.onTertiaryContainer,
+              color: ColorResources.cloudGray,
               height: 3,
               thickness: 1.4,
+              indent: 20,
+              endIndent: 18,
             ),
             SizedBox(height: height * 0.0150),
             Padding(
@@ -101,29 +137,20 @@ class _AddItemsState extends State<AddItems> {
                 children: [
                   Text(
                     "Product Name",
-                    style: texttheme.labelSmall!.copyWith(
-                      color: color.onSecondary,
-                    ),
+                    style: context.textStyle.s12.dustyBlue.roboto,
                   ),
                   Spacer(),
                   Text(
                     "Quantity",
-                    style: texttheme.labelSmall!.copyWith(
-                      color: color.onSecondary,
-                    ),
+                    style: context.textStyle.s12.dustyBlue.roboto,
                   ),
                   SizedBox(width: width * 0.05),
-                  Text(
-                    "Units",
-                    style: texttheme.labelSmall!.copyWith(
-                      color: color.onSecondary,
-                    ),
-                  ),
+                  Text("Units", style: context.textStyle.s12.dustyBlue.roboto),
                 ],
               ),
             ),
             Divider(
-              color: Theme.of(context).colorScheme.onTertiaryContainer,
+              color: ColorResources.cloudGray,
               height: 3,
               thickness: 1.4,
               indent: 20,
@@ -145,23 +172,25 @@ class _AddItemsState extends State<AddItems> {
                             height: height * 0.05,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              color: color.onSecondaryFixed,
+                              color: ColorResources.lightGray,
                             ),
                             child: Column(
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.only(top: 10),
+                                  padding: const EdgeInsets.only(
+                                    top: 10,
+                                    left: 10,
+                                  ),
                                   child: Row(
                                     children: [
                                       Text(
                                         "Bisleri Mountan 1 ltr",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelMedium!
-                                            .copyWith(
-                                              fontWeight: FontWeight.w600,
-                                              color: color.onSecondary,
-                                            ),
+                                        style: context
+                                            .textStyle
+                                            .roboto
+                                            .w600
+                                            .dustyBlue
+                                            .s14,
                                       ),
                                       Spacer(),
 
@@ -181,7 +210,7 @@ class _AddItemsState extends State<AddItems> {
                                         ),
                                         decoration: BoxDecoration(
                                           border: Border.all(
-                                            color: color.onSecondary,
+                                            color: ColorResources.dustyBlue,
                                           ),
                                           borderRadius: BorderRadius.circular(
                                             15,
@@ -191,6 +220,7 @@ class _AddItemsState extends State<AddItems> {
                                         width: width * 0.150,
                                       ),
                                       SizedBox(width: width * 0.0230),
+
                                       //Unit select button
                                       Container(
                                         child: Row(
@@ -222,12 +252,11 @@ class _AddItemsState extends State<AddItems> {
                                                         ),
                                                     child: Text(
                                                       (index + 1).toString(),
-                                                      style: texttheme
-                                                          .labelSmall!
-                                                          .copyWith(
-                                                            color: color
-                                                                .onSecondary,
-                                                          ),
+                                                      style: context
+                                                          .textStyle
+                                                          .shade100
+                                                          .roboto
+                                                          .dustyBlue,
                                                     ),
                                                   ),
                                                 ),
@@ -244,7 +273,7 @@ class _AddItemsState extends State<AddItems> {
                                         ),
                                         decoration: BoxDecoration(
                                           border: Border.all(
-                                            color: color.onSecondary,
+                                            color: ColorResources.dustyBlue,
                                           ),
                                           borderRadius: BorderRadius.circular(
                                             15,
@@ -256,7 +285,7 @@ class _AddItemsState extends State<AddItems> {
                                       SizedBox(width: width * 0.01),
                                       Icon(
                                         Icons.delete,
-                                        color: color.onSecondary,
+                                        color: ColorResources.dustyBlue,
                                         size: 19,
                                       ),
                                     ],
@@ -266,11 +295,11 @@ class _AddItemsState extends State<AddItems> {
                             ),
                           ),
                           Divider(
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.onTertiaryContainer,
+                            color: ColorResources.cloudGray,
                             height: 3,
                             thickness: 1.4,
+                            indent: 20,
+                            endIndent: 18,
                           ),
                         ],
                       ),
@@ -281,19 +310,23 @@ class _AddItemsState extends State<AddItems> {
             ),
             SizedBox(height: height * 0.02),
             Text(
-              "${"Item Count:"}8",
-              style: texttheme.labelSmall!.copyWith(color: color.onSecondary),
+              "Item Count : 8",
+              style: context.textStyle.s12.roboto.dustyBlue,
             ),
             SizedBox(height: height * 0.01),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
+                backgroundColor: ColorResources.indigoBlue,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
                 ),
                 minimumSize: Size(width * 0.5, height * 0.0500),
               ),
               onPressed: () {},
-              child: Text("Save"),
+              child: Text(
+                "Save",
+                style: context.textStyle.s14.roboto.white.bold,
+              ),
             ),
           ],
         ),
