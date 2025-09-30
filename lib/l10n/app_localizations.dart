@@ -699,6 +699,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancel'**
   String get expense_cancelButton;
+
+  /// No description provided for @transaction_detail_order_booking_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Booking'**
+  String get transaction_detail_order_booking_title;
+
+  /// No description provided for @transaction_detail_order_booking_rate.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate'**
+  String get transaction_detail_order_booking_rate;
+
+  /// No description provided for @transaction_detail_order_booking_discount.
+  ///
+  /// In en, this message translates to:
+  /// **'Discount'**
+  String get transaction_detail_order_booking_discount;
+
+  /// No description provided for @transaction_detail_order_booking_sub_total.
+  ///
+  /// In en, this message translates to:
+  /// **'Sub Total'**
+  String get transaction_detail_order_booking_sub_total;
+
+  /// No description provided for @transaction_detail_order_booking_add_item_search_product.
+  ///
+  /// In en, this message translates to:
+  /// **'Search Product'**
+  String get transaction_detail_order_booking_add_item_search_product;
+
+  /// No description provided for @transaction_detail_order_booking_add_item_select_by_group.
+  ///
+  /// In en, this message translates to:
+  /// **'Select by Group'**
+  String get transaction_detail_order_booking_add_item_select_by_group;
+
+  /// No description provided for @transaction_detail_order_booking_add_item_select_by_category.
+  ///
+  /// In en, this message translates to:
+  /// **'Select by Category'**
+  String get transaction_detail_order_booking_add_item_select_by_category;
+
+  /// No description provided for @transaction_detail_order_booking_add_item_select_group.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Group'**
+  String get transaction_detail_order_booking_add_item_select_group;
+
+  /// No description provided for @transaction_detail_order_booking_add_item_seleable_stock.
+  ///
+  /// In en, this message translates to:
+  /// **'Saleable Stock :'**
+  String get transaction_detail_order_booking_add_item_seleable_stock;
+
+  /// No description provided for @transaction_detail_order_booking_add_item_group.
+  ///
+  /// In en, this message translates to:
+  /// **'Group'**
+  String get transaction_detail_order_booking_add_item_group;
+
+  /// No description provided for @transaction_detail_order_booking_add_order_qty.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Qty'**
+  String get transaction_detail_order_booking_add_order_qty;
 }
 
 class _AppLocalizationsDelegate

@@ -5,6 +5,8 @@ import 'package:mpos_beat/presentation/common/widgets/custom_route_screen.dart';
 import 'package:mpos_beat/presentation/common/widgets/loading_screen.dart';
 import 'package:mpos_beat/presentation/views/admin_home/admin_home.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/customer_transactions.dart';
+import 'package:mpos_beat/presentation/views/customer_transactions/transaction_detail_page/order_booking/order_booking.dart';
+import 'package:mpos_beat/presentation/views/customer_transactions/transaction_detail_page/order_booking/order_booking_item.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/transaction_detail_page/transaction_detail_page.dart';
 import 'package:mpos_beat/presentation/views/forgot_password/forgot_password.dart';
 import 'package:mpos_beat/presentation/views/forgot_password/mailed_screen.dart';
@@ -160,6 +162,22 @@ class AppRouter {
         name: AppRouterConst.transactionDetailpage,
         builder: (context, state) {
           return const TransactionDetailpage();
+        },
+      ),
+
+      GoRoute(
+        path: "/orderbookingpage",
+        name: AppRouterConst.orderbooking,
+        builder: (context, state) {
+          return const OrderBooking();
+        },
+      ),
+
+      GoRoute(
+        path: "/orderbookingitemsscreen",
+        name: AppRouterConst.orderbookingitems,
+        builder: (context, state) {
+          return const OrderBookingItems();
         },
       ),
     ],

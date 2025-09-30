@@ -323,4 +323,42 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get expense_cancelButton => 'Cancel';
+
+  @override
+  String get transaction_detail_order_booking_title => 'Order Booking';
+
+  @override
+  String get transaction_detail_order_booking_rate => 'Rate';
+
+  @override
+  String get transaction_detail_order_booking_discount => 'Discount';
+
+  @override
+  String get transaction_detail_order_booking_sub_total => 'Sub Total';
+
+  @override
+  String get transaction_detail_order_booking_add_item_search_product =>
+      'Search Product';
+
+  @override
+  String get transaction_detail_order_booking_add_item_select_by_group =>
+      'Select by Group';
+
+  @override
+  String get transaction_detail_order_booking_add_item_select_by_category =>
+      'Select by Category';
+
+  @override
+  String get transaction_detail_order_booking_add_item_select_group =>
+      'Select Group';
+
+  @override
+  String get transaction_detail_order_booking_add_item_seleable_stock =>
+      'Saleable Stock :';
+
+  @override
+  String get transaction_detail_order_booking_add_item_group => 'Group';
+
+  @override
+  String get transaction_detail_order_booking_add_order_qty => 'Order Qty';
 }

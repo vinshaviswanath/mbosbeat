@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mpos_beat/core/theme/colors.dart';
+import 'package:mpos_beat/route/app_router_const.dart';
 
 class Tab1Transactions extends StatefulWidget {
   const Tab1Transactions({super.key});
@@ -11,7 +12,7 @@ class Tab1Transactions extends StatefulWidget {
 
 class _Tab1TransactionsState extends State<Tab1Transactions> {
   List<String> transactionOptions = [
-    "orderbooking",
+    AppRouterConst.orderbooking,
     "telephonicorder",
     "sales",
     "salesreturn",

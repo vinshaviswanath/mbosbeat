@@ -23,8 +23,8 @@ class ColorResources {
   static const amberLight = Color(0xFFFDC832);
   static const skyBlue = Color(0xFF51ADFF);
   static const mintGreenAccent = Color(0xFF55D389);
-static const lightBorderGray = Color(0xFFD6D6D6);
-static const freshgreen = Color(0xFF69D282);
+  static const lightBorderGray = Color(0xFFD6D6D6);
+  static const freshgreen = Color(0xFF69D282);
 
   //Icon color
   static const navyGray = Color(0xFF42526E);
@@ -51,6 +51,7 @@ static const freshgreen = Color(0xFF69D282);
   static const lightgoldenrod = Color(0xFFFFF4D6);
   static const paleskyblue = Color(0xFFDCEFFF);
   static const mintcream = Color(0xFFDDF6E7);
+  static const lightgreen = Color(0xFF54A959);
 }
 
 final List<Color> colors = [
