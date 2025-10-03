@@ -1,8 +1,8 @@
 import 'package:flutter/services.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
-import 'package:mpos_beat/presentation/common/widgets/custom_button.dart';
-import 'package:mpos_beat/presentation/common/widgets/custom_textField.dart';
+import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 import 'package:mpos_beat/presentation/logic/authentication_provider.dart';
+import 'package:mpos_beat/presentation/views/otp/otp_authentication.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const routeName = "signup-screen";
@@ -22,26 +22,41 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     final appLocalization = context.l10n;
+    final noEmojiFormatter = FilteringTextInputFormatter.allow(
+      RegExp(r'[a-zA-Z0-9\s!@#\$%^&*(),.?":{}|<>_\-+=~`\[\]\\;\/]*'),
+    );
     return Consumer<AuthFormProvider>(
       builder: (context, provider, _) {
         return PopScope(
-          canPop: true, // allow normal back navigation
+          canPop: true,
           onPopInvokedWithResult: (didPop, result) {
             if (didPop) {
-              // reset invalid OTP flag when leaving OTP screen
               context.read<AuthFormProvider>().resetSignUpForm();
             }
           },
           child: Scaffold(
-            bottomSheet: Padding(
-              padding: const EdgeInsets.only(left: 16, right: 16, bottom: 24),
-              child: CustomButton(
-                onTap: () {
-                  provider.submitSignUp(context);
-                },
-                buttonText: appLocalization.sign_up,
-                textStyle: context.textStyle.s16.white.bold.roboto,
-                isborderEnable: false,
+            bottomNavigationBar: Padding(
+              padding: MediaQuery.of(context).viewInsets,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 16, right: 16, bottom: 24),
+                child: CustomButton(
+                  onTap: () async {
+                    FocusScope.of(context).unfocus();
+
+                    final response = await provider.submitSignUp(context);
+
+                    if (response != null && response.status == 1) {
+                      compnyController.clear();
+                      phoneController.clear();
+                      emailController.clear();
+                      passwordController.clear();
+                      confirmPasswordController.clear();
+                    }
+                  },
+                  buttonText: appLocalization.sign_up,
+                  textStyle: context.textStyle.s16.white.bold.roboto,
+                  isborderEnable: false,
+                ),
               ),
             ),
             body: CustomScrollView(
@@ -57,7 +72,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     style: context.textStyle.s22.indigoBlue.bold.roboto,
                   ),
                 ),
-                const SliverGap(16),
+                const SliverSpace(diamention: h16),
                 SliverToBoxAdapter(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -65,29 +80,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          appLocalization.company_name,
+                          appLocalization.sign_up_company_name,
                           style: context.textStyle.s12.bluishGray.w400.roboto,
                         ),
-                        gap4,
+                        h4,
                         CustomTextField(
-                          hint: appLocalization.enter_company_name,
+                          hint: appLocalization.sign_up_enter_company_name,
                           controller: compnyController,
                           backgroundColor: ColorResources.lightGray,
                           autovalidateMode: provider.registerAutovalidateMode,
                           failure: provider.companyName.getFailure,
+                          inputFormatters: [noEmojiFormatter],
                           onChange: provider.updateCompanyName,
-                          // initialValue: provider.companyName.getValue,
                           inputType: TextInputType.emailAddress,
                           borderRadius: 12,
                           hintColor: ColorResources.silverGray,
                           borderColor: ColorResources.transparent,
                         ),
-                        gap20,
+                        h20,
                         Text(
                           appLocalization.mobile_number,
                           style: context.textStyle.s12.bluishGray.w400.roboto,
                         ),
-                        gap4,
+                        h4,
                         CustomTextField(
                           hint: appLocalization.enter_mobile_number,
                           controller: phoneController,
@@ -96,21 +111,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           autovalidateMode: provider.registerAutovalidateMode,
                           failure: provider.phone.getFailure,
                           onChange: provider.updatePhone,
-                          // initialValue: provider.phone.getValue,
                           inputType: TextInputType.phone,
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
+                            noEmojiFormatter,
                           ],
                           borderRadius: 12,
                           hintColor: ColorResources.silverGray,
                           borderColor: ColorResources.transparent,
                         ),
-                        gap20,
+                        h20,
                         Text(
                           appLocalization.email_ID,
                           style: context.textStyle.s12.bluishGray.w400.roboto,
                         ),
-                        gap4,
+                        h4,
                         CustomTextField(
                           hint: appLocalization.enter_email,
                           controller: emailController,
@@ -118,59 +133,57 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           autovalidateMode: provider.registerAutovalidateMode,
                           failure: provider.email.getFailure,
                           onChange: provider.updateEmail,
-                          // initialValue: provider.email.getValue,
                           inputType: TextInputType.emailAddress,
                           inputFormatters: [
                             FilteringTextInputFormatter.allow(
                               RegExp(r"[a-zA-Z0-9@._-]"),
                             ),
+                            noEmojiFormatter,
                           ],
                           borderRadius: 12,
                           hintColor: ColorResources.silverGray,
                           borderColor: ColorResources.transparent,
                         ),
-                        gap20,
+                        h20,
                         Text(
                           appLocalization.password,
                           style: context.textStyle.s12.bluishGray.w400.roboto,
                         ),
-                        gap4,
+                        h4,
                         CustomTextField(
                           hint: appLocalization.enter_password,
                           controller: passwordController,
                           backgroundColor: ColorResources.lightGray,
                           autovalidateMode: provider.registerAutovalidateMode,
                           failure: provider.password.getFailure,
+                          inputFormatters: [noEmojiFormatter],
                           onChange: provider.updatePassword,
-                          // initialValue: provider.password.getValue,
                           inputType: TextInputType.emailAddress,
                           borderRadius: 12,
                           hintColor: ColorResources.silverGray,
                           borderColor: ColorResources.transparent,
                         ),
-                        gap20,
+                        h20,
                         Text(
                           appLocalization.confirm_password,
                           style: context.textStyle.s12.bluishGray.w400.roboto,
                         ),
-                        gap4,
+                        h4,
                         CustomTextField(
                           hint: appLocalization.confirm_password,
                           controller: confirmPasswordController,
                           backgroundColor: ColorResources.lightGray,
                           autovalidateMode: provider.registerAutovalidateMode,
                           failure: provider.confirmPassword.getFailure,
+                          inputFormatters: [noEmojiFormatter],
                           onChange: provider.updateConfirmPassword,
-                          // initialValue: provider.confirmPassword.getValue,
                           inputType: TextInputType.emailAddress,
                           borderRadius: 12,
                           hintColor: ColorResources.silverGray,
                           borderColor: ColorResources.transparent,
                         ),
-                        gap20,
-                        //enable it while keyboard is enabled
-                        if (MediaQuery.of(context).viewInsets.bottom > 0)
-                          const Gap(200),
+                        h20,
+                        if (MediaQuery.of(context).viewInsets.bottom > 0) h200,
                       ],
                     ),
                   ),

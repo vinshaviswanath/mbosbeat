@@ -1,13 +1,10 @@
 import 'package:flutter_dropdown_alert/model/data_alert.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mpos_beat/core/utils/alert_dialog.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/presentation/common/animations/wheel_spinner.dart';
 import 'package:mpos_beat/presentation/common/widgets/base_scaffold.dart';
-import 'package:mpos_beat/presentation/common/widgets/custom_button.dart';
 import 'package:mpos_beat/presentation/logic/authentication_provider.dart';
 import 'package:mpos_beat/presentation/views/otp/widgets/otp_field.dart';
-import 'package:mpos_beat/route/app_router_const.dart';
 
 class OtpAuthentication extends StatefulWidget {
   static const routeName = 'otp-auth';
@@ -20,13 +17,11 @@ class OtpAuthentication extends StatefulWidget {
 class _OtpAuthenticationState extends State<OtpAuthentication> {
   @override
   void initState() {
-    // TODO: implement initState
     final provider = Provider.of<AuthFormProvider>(context, listen: false);
     provider.startOtpTimer();
     super.initState();
   }
 
-  // String formatTime(int seconds) {
   @override
   Widget build(BuildContext context) {
     final appLocalization = context.l10n;
@@ -39,19 +34,19 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
             width: context.getSize.width,
             child: CustomScrollView(
               slivers: [
-                const SliverGap(60),
+                const SliverSpace(diamention: h60),
                 SliverToBoxAdapter(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        appLocalization.enter_otp_here,
+                        appLocalization.otp_auth_enter_otp_here,
                         style: context.textStyle.s22.white.bold,
                       ),
                     ],
                   ),
                 ),
-                const SliverGap(28),
+                const SliverSpace(diamention: h28),
                 SliverToBoxAdapter(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -76,11 +71,11 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "${appLocalization.sent_4_digit} ${provider.maskedPhone} ${appLocalization.mob_number}",
+                              "${appLocalization.otp_auth_sent_4_digit} ${provider.maskedPhone} ${appLocalization.otp_auth_mob_number}",
                               textAlign: TextAlign.center,
                               style: context.textStyle.s12.bluishGray.w400,
                             ),
-                            gap16,
+                            h16,
                             OtpInputField(
                               borderColor: ColorResources.indigoBlue,
                               onCompleted: (otp) {
@@ -88,7 +83,7 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
                                 provider.updateOtp(otp);
                               },
                             ),
-                            gap8,
+                            h8,
                             if ((provider.otpError != null ||
                                     !provider.otp.isValid()) &&
                                 provider.otpAutovalidateMode ==
@@ -101,14 +96,14 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
                                     height: 11,
                                     width: 11,
                                   ),
-                                  gap10,
+                                  w10,
                                   Text(
                                     "${provider.otpError ?? provider.otp.getFailure?.errorMsg}",
                                     style: context.textStyle.s10.roseRed,
                                   ),
                                 ],
                               ),
-                            gap8,
+                            h8,
                             Padding(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 16,
@@ -126,7 +121,7 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
                                       if (response.status == 1) {
                                         context.pushNamed(
                                           AppRouterConst.customRouteScreen,
-                                          extra: NavigationType.success,
+                                          extra: NavigationType.failed,
                                         );
                                         CustomAlertDialog.showCustomDialog(
                                           title: "OTP Verified Successfully",
@@ -142,24 +137,18 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
                                 },
                               ),
                             ),
-                            gap30,
+                            h30,
                             Text(
                               provider.remainingSeconds > 0
-                                  ? "${appLocalization.enter_otp_in} ${provider.formatTime()} ${appLocalization.seconds}"
-                                  : appLocalization.enter_otp_0,
+                                  ? "${appLocalization.otp_auth_enter_otp_in} ${provider.formatTime()} ${appLocalization.otp_auth_seconds}"
+                                  : appLocalization.otp_auth_enter_otp_0,
                               textAlign: TextAlign.center,
                               style: context.textStyle.s12.bluishGray.w400,
                             ),
-                            gap20,
+                            h20,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                // SvgPicture.asset(
-                                //   AppAssets.refresh,
-                                //   height: 22,
-                                //   colorFilter: const ColorFilter.mode(
-                                //       ColorResources.amber, BlendMode.srcIn),
-                                // ),
                                 WheelSpinner(
                                   key: wheelKey,
                                   path: AppAssets.refresh,
@@ -167,17 +156,17 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
                                   height: 22,
                                 ),
 
-                                gap8,
+                                w8,
                                 InkWell(
                                   onTap: provider.remainingSeconds > 0
-                                      ? null // disable while timer is active
+                                      ? null
                                       : () {
                                           provider.startOtpTimer();
                                           provider.resendOtp(context);
                                           wheelKey.currentState?.startSpin();
                                         },
                                   child: Text(
-                                    appLocalization.resend_otp,
+                                    appLocalization.otp_auth_resend_otp,
                                     style: provider.remainingSeconds > 0
                                         ? context.textStyle.s12.bold.bluishGray
                                         : context.textStyle.s12.bold.indigoBlue,
@@ -197,5 +186,15 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
         );
       },
     );
+  }
+}
+
+class SliverSpace extends StatelessWidget {
+  const SliverSpace({super.key, required this.diamention});
+  final Widget diamention;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(child: diamention);
   }
 }

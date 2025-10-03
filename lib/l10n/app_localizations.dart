@@ -111,17 +111,17 @@ abstract class AppLocalizations {
   /// **'Heading Here'**
   String get onboard_heading2;
 
-  /// No description provided for @skip.
+  /// No description provided for @onboard_skip.
   ///
   /// In en, this message translates to:
   /// **'Skip'**
-  String get skip;
+  String get onboard_skip;
 
-  /// No description provided for @get_started.
+  /// No description provided for @onboard_get_started.
   ///
   /// In en, this message translates to:
   /// **'Get Started'**
-  String get get_started;
+  String get onboard_get_started;
 
   /// No description provided for @login.
   ///
@@ -129,17 +129,17 @@ abstract class AppLocalizations {
   /// **'Login'**
   String get login;
 
-  /// No description provided for @welcome_back.
+  /// No description provided for @login_welcome_back.
   ///
   /// In en, this message translates to:
   /// **'Welcome back,\nyou\'ve been missed!'**
-  String get welcome_back;
+  String get login_welcome_back;
 
-  /// No description provided for @email_or_phone.
+  /// No description provided for @login_email_or_phone.
   ///
   /// In en, this message translates to:
   /// **'Email ID / Mobile Number'**
-  String get email_or_phone;
+  String get login_email_or_phone;
 
   /// No description provided for @enter_email_or_phone.
   ///
@@ -159,17 +159,17 @@ abstract class AppLocalizations {
   /// **'Enter Password'**
   String get enter_password;
 
-  /// No description provided for @forgot_password.
+  /// No description provided for @login_forgot_password.
   ///
   /// In en, this message translates to:
   /// **'Forgot Password?'**
-  String get forgot_password;
+  String get login_forgot_password;
 
-  /// No description provided for @no_account.
+  /// No description provided for @login_no_account.
   ///
   /// In en, this message translates to:
   /// **'Don\'t have an account?'**
-  String get no_account;
+  String get login_no_account;
 
   /// No description provided for @sign_up.
   ///
@@ -177,17 +177,17 @@ abstract class AppLocalizations {
   /// **'Sign Up'**
   String get sign_up;
 
-  /// No description provided for @company_name.
+  /// No description provided for @sign_up_company_name.
   ///
   /// In en, this message translates to:
   /// **'Company Name'**
-  String get company_name;
+  String get sign_up_company_name;
 
-  /// No description provided for @enter_company_name.
+  /// No description provided for @sign_up_enter_company_name.
   ///
   /// In en, this message translates to:
   /// **'Enter Company Name'**
-  String get enter_company_name;
+  String get sign_up_enter_company_name;
 
   /// No description provided for @mobile_number.
   ///
@@ -219,65 +219,65 @@ abstract class AppLocalizations {
   /// **'Confirm Password'**
   String get confirm_password;
 
-  /// No description provided for @already_registered.
+  /// No description provided for @registration_dialogs_already_registered.
   ///
   /// In en, this message translates to:
   /// **'You\'re Already Registered !'**
-  String get already_registered;
+  String get registration_dialogs_already_registered;
 
-  /// No description provided for @verify_number.
+  /// No description provided for @sign_up_verify_number.
   ///
   /// In en, this message translates to:
   /// **'Verify your mobile number'**
-  String get verify_number;
+  String get sign_up_verify_number;
 
-  /// No description provided for @manage_user.
+  /// No description provided for @admin_home_manage_user.
   ///
   /// In en, this message translates to:
   /// **'Manage User'**
-  String get manage_user;
+  String get admin_home_manage_user;
 
-  /// No description provided for @manage_company.
+  /// No description provided for @admin_home_manage_company.
   ///
   /// In en, this message translates to:
   /// **'Manage Company'**
-  String get manage_company;
+  String get admin_home_manage_company;
 
-  /// No description provided for @enter_otp_here.
+  /// No description provided for @otp_auth_enter_otp_here.
   ///
   /// In en, this message translates to:
   /// **'Enter OTP here'**
-  String get enter_otp_here;
+  String get otp_auth_enter_otp_here;
 
-  /// No description provided for @sent_4_digit.
+  /// No description provided for @otp_auth_sent_4_digit.
   ///
   /// In en, this message translates to:
   /// **'We have sent a 4 digit code to your\n'**
-  String get sent_4_digit;
+  String get otp_auth_sent_4_digit;
 
-  /// No description provided for @mob_number.
+  /// No description provided for @otp_auth_mob_number.
   ///
   /// In en, this message translates to:
   /// **'mobile number.'**
-  String get mob_number;
+  String get otp_auth_mob_number;
 
-  /// No description provided for @enter_otp_0.
+  /// No description provided for @otp_auth_enter_otp_0.
   ///
   /// In en, this message translates to:
   /// **'Enter OTP in 00:00 Seconds'**
-  String get enter_otp_0;
+  String get otp_auth_enter_otp_0;
 
-  /// No description provided for @enter_otp_in.
+  /// No description provided for @otp_auth_enter_otp_in.
   ///
   /// In en, this message translates to:
   /// **'Enter OTP in'**
-  String get enter_otp_in;
+  String get otp_auth_enter_otp_in;
 
-  /// No description provided for @seconds.
+  /// No description provided for @otp_auth_seconds.
   ///
   /// In en, this message translates to:
   /// **'Seconds'**
-  String get seconds;
+  String get otp_auth_seconds;
 
   /// No description provided for @submit.
   ///
@@ -285,53 +285,59 @@ abstract class AppLocalizations {
   /// **'Submit'**
   String get submit;
 
-  /// No description provided for @resend_otp.
+  /// No description provided for @otp_auth_resend_otp.
   ///
   /// In en, this message translates to:
   /// **'Resend OTP'**
-  String get resend_otp;
+  String get otp_auth_resend_otp;
 
-  /// No description provided for @please_wait.
+  /// No description provided for @loading_screen_please_wait.
   ///
   /// In en, this message translates to:
   /// **'Please Wait!'**
-  String get please_wait;
+  String get loading_screen_please_wait;
 
-  /// No description provided for @reg_is_under_processing.
+  /// No description provided for @loading_screen_reg_is_under_processing.
   ///
   /// In en, this message translates to:
   /// **'Registration is under processing.'**
-  String get reg_is_under_processing;
+  String get loading_screen_reg_is_under_processing;
 
-  /// No description provided for @reg_success.
+  /// No description provided for @reg_success_widget_reg_success.
   ///
   /// In en, this message translates to:
   /// **'Registration\nSuccessfully!'**
-  String get reg_success;
+  String get reg_success_widget_reg_success;
 
-  /// No description provided for @successfully_registered_admin.
+  /// No description provided for @reg_success_widget_successfully_registered_admin.
   ///
   /// In en, this message translates to:
   /// **'You are successfully registered as Admin User'**
-  String get successfully_registered_admin;
+  String get reg_success_widget_successfully_registered_admin;
 
-  /// No description provided for @go_home.
+  /// No description provided for @custom_route_screen_go_home.
   ///
   /// In en, this message translates to:
   /// **'Go Home'**
-  String get go_home;
+  String get custom_route_screen_go_home;
 
-  /// No description provided for @reg_failed.
+  /// No description provided for @reg_failure_widget_reg_failed.
   ///
   /// In en, this message translates to:
   /// **'Oops!!\nRegistration Failed!'**
-  String get reg_failed;
+  String get reg_failure_widget_reg_failed;
 
-  /// No description provided for @try_again.
+  /// No description provided for @reg_failure_widget_try_again.
   ///
   /// In en, this message translates to:
   /// **'Try Again !'**
-  String get try_again;
+  String get reg_failure_widget_try_again;
+
+  /// No description provided for @forgot_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password?'**
+  String get forgot_password;
 
   /// No description provided for @forgot_password_description.
   ///
@@ -357,41 +363,437 @@ abstract class AppLocalizations {
   /// **'Mail Sent'**
   String get mail_sent;
 
-  /// No description provided for @sent_mail_to.
+  /// No description provided for @mail_sent_screen_sent_mail_to.
   ///
   /// In en, this message translates to:
   /// **'We have sent a password recovery instructions\nto'**
-  String get sent_mail_to;
+  String get mail_sent_screen_sent_mail_to;
 
-  /// No description provided for @kindly_verify.
+  /// No description provided for @mail_sent_screen_kindly_verify.
   ///
   /// In en, this message translates to:
   /// **'. Kindly verify!'**
-  String get kindly_verify;
+  String get mail_sent_screen_kindly_verify;
 
-  /// No description provided for @log_out.
+  /// No description provided for @admin_home_log_out.
   ///
   /// In en, this message translates to:
   /// **'Logout'**
-  String get log_out;
+  String get admin_home_log_out;
 
-  /// No description provided for @hello.
+  /// No description provided for @registration_dialogs_hello.
   ///
   /// In en, this message translates to:
   /// **'Hello '**
-  String get hello;
+  String get registration_dialogs_hello;
 
-  /// No description provided for @verify_num_text.
+  /// No description provided for @registration_dialogs_verify_num_text.
   ///
   /// In en, this message translates to:
   /// **'! you\'re almost ready to start enjoying MPOS Beat. Simply click the button below to verify your mobile number.'**
-  String get verify_num_text;
+  String get registration_dialogs_verify_num_text;
 
-  /// No description provided for @kindly_login.
+  /// No description provided for @registration_dialogs_verify_number.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify your mobile number'**
+  String get registration_dialogs_verify_number;
+
+  /// No description provided for @registration_dialogs_kindly_login.
   ///
   /// In en, this message translates to:
   /// **' your account details are already registered in our database. Kindly Login to continue!'**
-  String get kindly_login;
+  String get registration_dialogs_kindly_login;
+
+  /// No description provided for @user_management_user.
+  ///
+  /// In en, this message translates to:
+  /// **'User'**
+  String get user_management_user;
+
+  /// No description provided for @user_management_user_designation.
+  ///
+  /// In en, this message translates to:
+  /// **'User Designation'**
+  String get user_management_user_designation;
+
+  /// No description provided for @user_settings_screen_user_settings.
+  ///
+  /// In en, this message translates to:
+  /// **'User Settings'**
+  String get user_settings_screen_user_settings;
+
+  /// No description provided for @user_settings_screen_sales.
+  ///
+  /// In en, this message translates to:
+  /// **'Sales'**
+  String get user_settings_screen_sales;
+
+  /// No description provided for @user_settings_screen_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean congueso dales ante, vel tristique felis pharetra nec. Sed ullamcorper gravida urnsem per neqeuismod, Nam maximus dui vel blandit convallis. Cras sceleris quee nim sit amet nunc posuere, rhoncus eros lacinia.'**
+  String get user_settings_screen_description;
+
+  /// No description provided for @user_settings_screen_sales_return.
+  ///
+  /// In en, this message translates to:
+  /// **'Sales Return'**
+  String get user_settings_screen_sales_return;
+
+  /// No description provided for @user_settings_screen_payment.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment'**
+  String get user_settings_screen_payment;
+
+  /// No description provided for @user_settings_screen_edit_rate.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Rate'**
+  String get user_settings_screen_edit_rate;
+
+  /// No description provided for @user_settings_screen_block_zero_rate_item.
+  ///
+  /// In en, this message translates to:
+  /// **'Block Zero rate item'**
+  String get user_settings_screen_block_zero_rate_item;
+
+  /// No description provided for @user_settings_screen_company_switching.
+  ///
+  /// In en, this message translates to:
+  /// **'Company Switching'**
+  String get user_settings_screen_company_switching;
+
+  /// No description provided for @user_settings_screen_edit_transaction.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Transaction'**
+  String get user_settings_screen_edit_transaction;
+
+  /// No description provided for @user_settings_screen_sales_order.
+  ///
+  /// In en, this message translates to:
+  /// **'Sales Order'**
+  String get user_settings_screen_sales_order;
+
+  /// No description provided for @user_settings_screen_receipt.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt'**
+  String get user_settings_screen_receipt;
+
+  /// No description provided for @user_settings_screen_stock_transfer.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock Transfer'**
+  String get user_settings_screen_stock_transfer;
+
+  /// No description provided for @user_settings_screen_edit_discount.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Discount'**
+  String get user_settings_screen_edit_discount;
+
+  /// No description provided for @user_settings_screen_party_creation.
+  ///
+  /// In en, this message translates to:
+  /// **'Party Creation'**
+  String get user_settings_screen_party_creation;
+
+  /// No description provided for @user_settings_screen_change_price_list.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Price List'**
+  String get user_settings_screen_change_price_list;
+
+  /// No description provided for @user_settings_screen_change_voucher_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Voucher Date'**
+  String get user_settings_screen_change_voucher_date;
+
+  /// No description provided for @user_settings_screen_edit_party_details.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Party Details'**
+  String get user_settings_screen_edit_party_details;
+
+  /// No description provided for @block_user_widget_block_user.
+  ///
+  /// In en, this message translates to:
+  /// **'Block User'**
+  String get block_user_widget_block_user;
+
+  /// No description provided for @block_user_widget_are_you_sure.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure want to block this User?'**
+  String get block_user_widget_are_you_sure;
+
+  /// No description provided for @block_user_widget_you_have_blocked.
+  ///
+  /// In en, this message translates to:
+  /// **'You have blocked this user.'**
+  String get block_user_widget_you_have_blocked;
+
+  /// No description provided for @block_user_widget_block.
+  ///
+  /// In en, this message translates to:
+  /// **'Block'**
+  String get block_user_widget_block;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @no_user_widget_no_user.
+  ///
+  /// In en, this message translates to:
+  /// **'No user listing found!\nKindly create one.'**
+  String get no_user_widget_no_user;
+
+  /// No description provided for @no_user_widget_add_user.
+  ///
+  /// In en, this message translates to:
+  /// **'Add User'**
+  String get no_user_widget_add_user;
+
+  /// No description provided for @unblock_user_widget_unblock_user.
+  ///
+  /// In en, this message translates to:
+  /// **'Unblock User'**
+  String get unblock_user_widget_unblock_user;
+
+  /// No description provided for @unblock_user_widget_are_you_sure.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure want to unblock this User?'**
+  String get unblock_user_widget_are_you_sure;
+
+  /// No description provided for @unblock_user_widget_unblocked_this_user.
+  ///
+  /// In en, this message translates to:
+  /// **'You have unblocked this user.'**
+  String get unblock_user_widget_unblocked_this_user;
+
+  /// No description provided for @unblock_user_widget_unblock.
+  ///
+  /// In en, this message translates to:
+  /// **'Unblock'**
+  String get unblock_user_widget_unblock;
+
+  /// No description provided for @manage_user_screen_manage_user.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Users'**
+  String get manage_user_screen_manage_user;
+
+  /// No description provided for @manage_user_screen_search_user.
+  ///
+  /// In en, this message translates to:
+  /// **'Search User'**
+  String get manage_user_screen_search_user;
+
+  /// No description provided for @manage_user_screen_edit_user.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit User'**
+  String get manage_user_screen_edit_user;
+
+  /// No description provided for @manage_user_screen_reset_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Password'**
+  String get manage_user_screen_reset_password;
+
+  /// No description provided for @manage_user_screen_block_user.
+  ///
+  /// In en, this message translates to:
+  /// **'Block User'**
+  String get manage_user_screen_block_user;
+
+  /// No description provided for @manage_user_screen_user_settings.
+  ///
+  /// In en, this message translates to:
+  /// **'User Settings'**
+  String get manage_user_screen_user_settings;
+
+  /// No description provided for @activate_user_designation_widget_activate_user.
+  ///
+  /// In en, this message translates to:
+  /// **'Activate User'**
+  String get activate_user_designation_widget_activate_user;
+
+  /// No description provided for @activate_user_designation_widget_are_you_sure.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure want to activate Executive1?'**
+  String get activate_user_designation_widget_are_you_sure;
+
+  /// No description provided for @activate_user_designation_widget_user_activated.
+  ///
+  /// In en, this message translates to:
+  /// **'The user have been Activated successfully!'**
+  String get activate_user_designation_widget_user_activated;
+
+  /// No description provided for @activate_user_designation_widget_activate.
+  ///
+  /// In en, this message translates to:
+  /// **'Activate'**
+  String get activate_user_designation_widget_activate;
+
+  /// No description provided for @deactivate_user_designation_widget_deactivate_designation.
+  ///
+  /// In en, this message translates to:
+  /// **'Deactivate Designation'**
+  String get deactivate_user_designation_widget_deactivate_designation;
+
+  /// No description provided for @deactivate_user_designation_widget_are_you_sure.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure want to deactivate Executive1?'**
+  String get deactivate_user_designation_widget_are_you_sure;
+
+  /// No description provided for @deactivate_user_designation_widget_user_deactivated.
+  ///
+  /// In en, this message translates to:
+  /// **'The user have been deactivated successfully!'**
+  String get deactivate_user_designation_widget_user_deactivated;
+
+  /// No description provided for @deactivate_user_designation_widget_deactivate.
+  ///
+  /// In en, this message translates to:
+  /// **'Deactivate'**
+  String get deactivate_user_designation_widget_deactivate;
+
+  /// No description provided for @delete_user_designation_widget_delete_designation.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Designation'**
+  String get delete_user_designation_widget_delete_designation;
+
+  /// No description provided for @delete_user_designation_widget_are_you_sure.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure want to delete Executive1?'**
+  String get delete_user_designation_widget_are_you_sure;
+
+  /// No description provided for @delete_user_designation_widget_designation_removed.
+  ///
+  /// In en, this message translates to:
+  /// **'The user have been removed successfully.'**
+  String get delete_user_designation_widget_designation_removed;
+
+  /// No description provided for @delete_user_designation_widget_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete_user_designation_widget_delete;
+
+  /// No description provided for @user_designation_screen_all_designation.
+  ///
+  /// In en, this message translates to:
+  /// **'All Designations'**
+  String get user_designation_screen_all_designation;
+
+  /// No description provided for @user_designation_screen_no_designation_added.
+  ///
+  /// In en, this message translates to:
+  /// **'No designations added yet'**
+  String get user_designation_screen_no_designation_added;
+
+  /// No description provided for @user_designation_screen_edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get user_designation_screen_edit;
+
+  /// No description provided for @user_designation_screen_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get user_designation_screen_delete;
+
+  /// No description provided for @user_designation_screen_deactivate.
+  ///
+  /// In en, this message translates to:
+  /// **'Deactivate'**
+  String get user_designation_screen_deactivate;
+
+  /// No description provided for @user_creation_screen_user_creation.
+  ///
+  /// In en, this message translates to:
+  /// **'User Creation'**
+  String get user_creation_screen_user_creation;
+
+  /// No description provided for @user_creation_screen_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get user_creation_screen_name;
+
+  /// No description provided for @user_creation_screen_enter_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Name'**
+  String get user_creation_screen_enter_name;
+
+  /// No description provided for @user_creation_screen_whatsapp_number.
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp Number'**
+  String get user_creation_screen_whatsapp_number;
+
+  /// No description provided for @user_creation_screen_enter_whatsapp_number.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter WhatsApp Number'**
+  String get user_creation_screen_enter_whatsapp_number;
+
+  /// No description provided for @user_creation_screen_designation.
+  ///
+  /// In en, this message translates to:
+  /// **'Designation'**
+  String get user_creation_screen_designation;
+
+  /// No description provided for @user_creation_screen_select_designation.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Designation'**
+  String get user_creation_screen_select_designation;
+
+  /// No description provided for @user_creation_screen_reporting_to.
+  ///
+  /// In en, this message translates to:
+  /// **'Reporting to'**
+  String get user_creation_screen_reporting_to;
+
+  /// No description provided for @user_creation_screen_choose_reporting_person.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Reporting person'**
+  String get user_creation_screen_choose_reporting_person;
+
+  /// No description provided for @help.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get help;
+
+  /// No description provided for @update.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get update;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

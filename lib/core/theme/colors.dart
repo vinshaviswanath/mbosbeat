@@ -15,6 +15,10 @@ class ColorResources {
   static const transparent = Colors.transparent;
   static const paleBlue = Color(0xFFEDF3FA);
   static const dustyBlue = Color(0xFF7787AD);
+  static const cloudGray = Color(0xFFF1F3F7);
+  static const coolGray = Color(0xFFC8D1DE);
+  static const snowBlue = Color(0xFFF6FBFF);
+  static const oceanBlue = Color(0xFF1676BF);
 
 
   //Icon color

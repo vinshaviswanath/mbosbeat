@@ -85,7 +85,7 @@ class CustomButton extends StatelessWidget {
                               colorFilter: colorFilter,
                               width: 24,
                             ),
-                            gap4,
+                            w4,
                           ],
                           Text(
                             buttonText,

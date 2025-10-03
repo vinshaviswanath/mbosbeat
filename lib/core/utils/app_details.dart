@@ -19,4 +19,6 @@ class AppDetails {
       'https://play.google.com/store/apps/details?id=com.app.bingo';
 
   static const appstoreLink = '';
+  static final rootScaffoldMessengerKey =
+    GlobalKey<ScaffoldMessengerState>();
 }

@@ -1,5 +1,5 @@
+import 'package:fpdart/fpdart.dart';
 import 'package:mpos_beat/core/failures/failures.dart';
-import 'package:dartz/dartz.dart';
 
 /// A type alias for an `Either` type that can hold a `MainFailure` or a value of type `T`.
 ///

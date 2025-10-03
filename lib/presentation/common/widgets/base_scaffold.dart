@@ -7,11 +7,7 @@ class BaseScaffold extends StatelessWidget {
   final Widget? bottomSheet;
   static const routeName = 'base-scaffold';
 
-  const BaseScaffold({
-    super.key,
-    required this.widget,
-    this.bottomSheet,
-  });
+  const BaseScaffold({super.key, required this.widget, this.bottomSheet});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +30,7 @@ class BaseScaffold extends StatelessWidget {
               ),
             ],
           ),
-          Positioned(top: 0, child: widget)
+          Positioned(top: 0, child: widget),
         ],
       ),
     );

@@ -21,14 +21,14 @@ class LoadingScreen extends StatelessWidget {
                 ),
                 child: Lottie.asset(AppAssets.loading_anim),
               ),
-              gap28,
+              h28,
               Text(
-                appLocalization.please_wait,
+                appLocalization.loading_screen_please_wait,
                 style: context.textStyle.s22.indigoBlue.bold,
               ),
-              gap10,
+              h10,
               Text(
-                appLocalization.reg_is_under_processing,
+                appLocalization.loading_screen_reg_is_under_processing,
                 style: context.textStyle.s10,
               ),
             ],

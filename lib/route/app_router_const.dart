@@ -10,5 +10,12 @@ class AppRouterConst {
   static const forgotPassword = "/forgotPassword";
   static const mailedScreen = "/mailedScreen";
   static const loadingScreen = "/loadingScreen";
+  static const userManagement = "userManagement";
+  static const manageUser = "/manageUser";
+  static const userCreation = "userCreation";
+  static const resetPassword = "/resetPassword";
+  static const userSettings = "userSettings";
+  static const addCompany = "/addCompany";
+  static const userDesignation = "/userDesignation";
 
 }

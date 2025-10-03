@@ -18,19 +18,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onboard_heading2 => 'Heading Here';
 
   @override
-  String get skip => 'Skip';
+  String get onboard_skip => 'Skip';
 
   @override
-  String get get_started => 'Get Started';
+  String get onboard_get_started => 'Get Started';
 
   @override
   String get login => 'Login';
 
   @override
-  String get welcome_back => 'Welcome back,\nyou\'ve been missed!';
+  String get login_welcome_back => 'Welcome back,\nyou\'ve been missed!';
 
   @override
-  String get email_or_phone => 'Email ID / Mobile Number';
+  String get login_email_or_phone => 'Email ID / Mobile Number';
 
   @override
   String get enter_email_or_phone => 'Enter Email / Mobile';
@@ -42,19 +42,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enter_password => 'Enter Password';
 
   @override
-  String get forgot_password => 'Forgot Password?';
+  String get login_forgot_password => 'Forgot Password?';
 
   @override
-  String get no_account => 'Don\'t have an account?';
+  String get login_no_account => 'Don\'t have an account?';
 
   @override
   String get sign_up => 'Sign Up';
 
   @override
-  String get company_name => 'Company Name';
+  String get sign_up_company_name => 'Company Name';
 
   @override
-  String get enter_company_name => 'Enter Company Name';
+  String get sign_up_enter_company_name => 'Enter Company Name';
 
   @override
   String get mobile_number => 'Mobile Number';
@@ -72,61 +72,64 @@ class AppLocalizationsEn extends AppLocalizations {
   String get confirm_password => 'Confirm Password';
 
   @override
-  String get already_registered => 'You\'re Already Registered !';
+  String get registration_dialogs_already_registered => 'You\'re Already Registered !';
 
   @override
-  String get verify_number => 'Verify your mobile number';
+  String get sign_up_verify_number => 'Verify your mobile number';
 
   @override
-  String get manage_user => 'Manage User';
+  String get admin_home_manage_user => 'Manage User';
 
   @override
-  String get manage_company => 'Manage Company';
+  String get admin_home_manage_company => 'Manage Company';
 
   @override
-  String get enter_otp_here => 'Enter OTP here';
+  String get otp_auth_enter_otp_here => 'Enter OTP here';
 
   @override
-  String get sent_4_digit => 'We have sent a 4 digit code to your\n';
+  String get otp_auth_sent_4_digit => 'We have sent a 4 digit code to your\n';
 
   @override
-  String get mob_number => 'mobile number.';
+  String get otp_auth_mob_number => 'mobile number.';
 
   @override
-  String get enter_otp_0 => 'Enter OTP in 00:00 Seconds';
+  String get otp_auth_enter_otp_0 => 'Enter OTP in 00:00 Seconds';
 
   @override
-  String get enter_otp_in => 'Enter OTP in';
+  String get otp_auth_enter_otp_in => 'Enter OTP in';
 
   @override
-  String get seconds => 'Seconds';
+  String get otp_auth_seconds => 'Seconds';
 
   @override
   String get submit => 'Submit';
 
   @override
-  String get resend_otp => 'Resend OTP';
+  String get otp_auth_resend_otp => 'Resend OTP';
 
   @override
-  String get please_wait => 'Please Wait!';
+  String get loading_screen_please_wait => 'Please Wait!';
 
   @override
-  String get reg_is_under_processing => 'Registration is under processing.';
+  String get loading_screen_reg_is_under_processing => 'Registration is under processing.';
 
   @override
-  String get reg_success => 'Registration\nSuccessfully!';
+  String get reg_success_widget_reg_success => 'Registration\nSuccessfully!';
 
   @override
-  String get successfully_registered_admin => 'You are successfully registered as Admin User';
+  String get reg_success_widget_successfully_registered_admin => 'You are successfully registered as Admin User';
 
   @override
-  String get go_home => 'Go Home';
+  String get custom_route_screen_go_home => 'Go Home';
 
   @override
-  String get reg_failed => 'Oops!!\nRegistration Failed!';
+  String get reg_failure_widget_reg_failed => 'Oops!!\nRegistration Failed!';
 
   @override
-  String get try_again => 'Try Again !';
+  String get reg_failure_widget_try_again => 'Try Again !';
+
+  @override
+  String get forgot_password => 'Forgot Password?';
 
   @override
   String get forgot_password_description => 'Enter the email associated with your account and we\nwill send an email to reset your password.';
@@ -141,20 +144,218 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mail_sent => 'Mail Sent';
 
   @override
-  String get sent_mail_to => 'We have sent a password recovery instructions\nto';
+  String get mail_sent_screen_sent_mail_to => 'We have sent a password recovery instructions\nto';
 
   @override
-  String get kindly_verify => '. Kindly verify!';
+  String get mail_sent_screen_kindly_verify => '. Kindly verify!';
 
   @override
-  String get log_out => 'Logout';
+  String get admin_home_log_out => 'Logout';
 
   @override
-  String get hello => 'Hello ';
+  String get registration_dialogs_hello => 'Hello ';
 
   @override
-  String get verify_num_text => '! you\'re almost ready to start enjoying MPOS Beat. Simply click the button below to verify your mobile number.';
+  String get registration_dialogs_verify_num_text => '! you\'re almost ready to start enjoying MPOS Beat. Simply click the button below to verify your mobile number.';
 
   @override
-  String get kindly_login => ' your account details are already registered in our database. Kindly Login to continue!';
+  String get registration_dialogs_verify_number => 'Verify your mobile number';
+
+  @override
+  String get registration_dialogs_kindly_login => ' your account details are already registered in our database. Kindly Login to continue!';
+
+  @override
+  String get user_management_user => 'User';
+
+  @override
+  String get user_management_user_designation => 'User Designation';
+
+  @override
+  String get user_settings_screen_user_settings => 'User Settings';
+
+  @override
+  String get user_settings_screen_sales => 'Sales';
+
+  @override
+  String get user_settings_screen_description => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean congueso dales ante, vel tristique felis pharetra nec. Sed ullamcorper gravida urnsem per neqeuismod, Nam maximus dui vel blandit convallis. Cras sceleris quee nim sit amet nunc posuere, rhoncus eros lacinia.';
+
+  @override
+  String get user_settings_screen_sales_return => 'Sales Return';
+
+  @override
+  String get user_settings_screen_payment => 'Payment';
+
+  @override
+  String get user_settings_screen_edit_rate => 'Edit Rate';
+
+  @override
+  String get user_settings_screen_block_zero_rate_item => 'Block Zero rate item';
+
+  @override
+  String get user_settings_screen_company_switching => 'Company Switching';
+
+  @override
+  String get user_settings_screen_edit_transaction => 'Edit Transaction';
+
+  @override
+  String get user_settings_screen_sales_order => 'Sales Order';
+
+  @override
+  String get user_settings_screen_receipt => 'Receipt';
+
+  @override
+  String get user_settings_screen_stock_transfer => 'Stock Transfer';
+
+  @override
+  String get user_settings_screen_edit_discount => 'Edit Discount';
+
+  @override
+  String get user_settings_screen_party_creation => 'Party Creation';
+
+  @override
+  String get user_settings_screen_change_price_list => 'Change Price List';
+
+  @override
+  String get user_settings_screen_change_voucher_date => 'Change Voucher Date';
+
+  @override
+  String get user_settings_screen_edit_party_details => 'Edit Party Details';
+
+  @override
+  String get block_user_widget_block_user => 'Block User';
+
+  @override
+  String get block_user_widget_are_you_sure => 'Are you sure want to block this User?';
+
+  @override
+  String get block_user_widget_you_have_blocked => 'You have blocked this user.';
+
+  @override
+  String get block_user_widget_block => 'Block';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get no_user_widget_no_user => 'No user listing found!\nKindly create one.';
+
+  @override
+  String get no_user_widget_add_user => 'Add User';
+
+  @override
+  String get unblock_user_widget_unblock_user => 'Unblock User';
+
+  @override
+  String get unblock_user_widget_are_you_sure => 'Are you sure want to unblock this User?';
+
+  @override
+  String get unblock_user_widget_unblocked_this_user => 'You have unblocked this user.';
+
+  @override
+  String get unblock_user_widget_unblock => 'Unblock';
+
+  @override
+  String get manage_user_screen_manage_user => 'Manage Users';
+
+  @override
+  String get manage_user_screen_search_user => 'Search User';
+
+  @override
+  String get manage_user_screen_edit_user => 'Edit User';
+
+  @override
+  String get manage_user_screen_reset_password => 'Reset Password';
+
+  @override
+  String get manage_user_screen_block_user => 'Block User';
+
+  @override
+  String get manage_user_screen_user_settings => 'User Settings';
+
+  @override
+  String get activate_user_designation_widget_activate_user => 'Activate User';
+
+  @override
+  String get activate_user_designation_widget_are_you_sure => 'Are you sure want to activate Executive1?';
+
+  @override
+  String get activate_user_designation_widget_user_activated => 'The user have been Activated successfully!';
+
+  @override
+  String get activate_user_designation_widget_activate => 'Activate';
+
+  @override
+  String get deactivate_user_designation_widget_deactivate_designation => 'Deactivate Designation';
+
+  @override
+  String get deactivate_user_designation_widget_are_you_sure => 'Are you sure want to deactivate Executive1?';
+
+  @override
+  String get deactivate_user_designation_widget_user_deactivated => 'The user have been deactivated successfully!';
+
+  @override
+  String get deactivate_user_designation_widget_deactivate => 'Deactivate';
+
+  @override
+  String get delete_user_designation_widget_delete_designation => 'Delete Designation';
+
+  @override
+  String get delete_user_designation_widget_are_you_sure => 'Are you sure want to delete Executive1?';
+
+  @override
+  String get delete_user_designation_widget_designation_removed => 'The user have been removed successfully.';
+
+  @override
+  String get delete_user_designation_widget_delete => 'Delete';
+
+  @override
+  String get user_designation_screen_all_designation => 'All Designations';
+
+  @override
+  String get user_designation_screen_no_designation_added => 'No designations added yet';
+
+  @override
+  String get user_designation_screen_edit => 'Edit';
+
+  @override
+  String get user_designation_screen_delete => 'Delete';
+
+  @override
+  String get user_designation_screen_deactivate => 'Deactivate';
+
+  @override
+  String get user_creation_screen_user_creation => 'User Creation';
+
+  @override
+  String get user_creation_screen_name => 'Name';
+
+  @override
+  String get user_creation_screen_enter_name => 'Enter Name';
+
+  @override
+  String get user_creation_screen_whatsapp_number => 'WhatsApp Number';
+
+  @override
+  String get user_creation_screen_enter_whatsapp_number => 'Enter WhatsApp Number';
+
+  @override
+  String get user_creation_screen_designation => 'Designation';
+
+  @override
+  String get user_creation_screen_select_designation => 'Select Designation';
+
+  @override
+  String get user_creation_screen_reporting_to => 'Reporting to';
+
+  @override
+  String get user_creation_screen_choose_reporting_person => 'Choose Reporting person';
+
+  @override
+  String get help => 'Help';
+
+  @override
+  String get update => 'Update';
+
+  @override
+  String get save => 'Save';
 }

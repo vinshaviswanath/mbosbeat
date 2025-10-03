@@ -97,7 +97,9 @@ class AuthFormProvider with ChangeNotifier {
     //     input.isNotEmpty ? AutovalidateMode.always : AutovalidateMode.disabled;
 
     _confirmPassword = ConfirmPassword(
-        _confirmPassword.getValue ?? '', _password.getValue ?? '');
+      _confirmPassword.getValue ?? '',
+      _password.getValue ?? '',
+    );
     notifyListeners();
   }
 
@@ -159,11 +161,13 @@ class AuthFormProvider with ChangeNotifier {
     if (domainParts.isEmpty) return value;
 
     final domainName = domainParts.first;
-    final domainExtension =
-        domainParts.length > 1 ? ".${domainParts.sublist(1).join(".")}" : "";
+    final domainExtension = domainParts.length > 1
+        ? ".${domainParts.sublist(1).join(".")}"
+        : "";
 
-    final maskedUsername =
-        username.isNotEmpty ? username[0] + "*" * (username.length - 1) : "";
+    final maskedUsername = username.isNotEmpty
+        ? username[0] + "*" * (username.length - 1)
+        : "";
     final maskedDomain = domainName.isNotEmpty
         ? domainName[0] + "*" * (domainName.length - 1)
         : "";
@@ -250,12 +254,12 @@ class AuthFormProvider with ChangeNotifier {
       return null;
     }
 
-    context.pushNamed(
-      AppRouterConst.loadingScreen,
-    );
+    context.pushNamed(AppRouterConst.loadingScreen);
 
     final result = await iAuthenticationFacad.otpValidation(
-      BaseParams(data: OtpParams(id: _cusomerId, otp: _otp.getValue)),
+      BaseParams(
+        data: OtpParams(id: _cusomerId, otp: _otp.getValue),
+      ),
     );
 
     result.fold(
@@ -267,9 +271,7 @@ class AuthFormProvider with ChangeNotifier {
         if (!_alreadyNavigatedToInvalidOtp && _otp.isValid()) {
           _alreadyNavigatedToInvalidOtp = true;
           startOtpTimer();
-          GoRouter.of(context).pushNamed(
-            AppRouterConst.invalidOtp,
-          );
+          GoRouter.of(context).pushNamed(AppRouterConst.invalidOtp);
         } else {
           CustomAlertDialog.showCustomDialog(
             title: _otpError!,
@@ -306,9 +308,9 @@ class AuthFormProvider with ChangeNotifier {
     return _otpResponse;
   }
 
-//============================================================================
-//                           RESEND OTP
-//============================================================================
+  //============================================================================
+  //                           RESEND OTP
+  //============================================================================
 
   Future<OtpResponse?> resendOtp(BuildContext context, {int? id}) async {
     final result = await iAuthenticationFacad.resendOtp(
@@ -319,27 +321,30 @@ class AuthFormProvider with ChangeNotifier {
       ),
     );
 
-    result.fold((failure) {
-      _errorMessage = failure.errorMsg.toString();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(_errorMessage!)),
-      );
-      Logger.logError("Resend OTP failed : $_errorMessage");
-      // _setLoading(false);
-      notifyListeners();
-    }, (response) {
-      _otpResponse = response;
-      _otpValue = response.message;
-      _cusomerId = response.id;
-      Logger.logSuccess("Resend OTP success : ${response.toJson()}");
-      // Navigator.push(
-      //                 context,
-      //                 MaterialPageRoute(
-      //                   builder: (context) =>
-      //                       OtpAuthentication(user: existingUser),
-      //                 ),
-      //               );
-    });
+    result.fold(
+      (failure) {
+        _errorMessage = failure.errorMsg.toString();
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
+        Logger.logError("Resend OTP failed : $_errorMessage");
+        // _setLoading(false);
+        notifyListeners();
+      },
+      (response) {
+        _otpResponse = response;
+        _otpValue = response.message;
+        _cusomerId = response.id;
+        Logger.logSuccess("Resend OTP success : ${response.toJson()}");
+        // Navigator.push(
+        //                 context,
+        //                 MaterialPageRoute(
+        //                   builder: (context) =>
+        //                       OtpAuthentication(user: existingUser),
+        //                 ),
+        //               );
+      },
+    );
 
     return _otpResponse;
   }
@@ -445,9 +450,9 @@ class AuthFormProvider with ChangeNotifier {
     result.fold(
       (failure) {
         _errorMessage = failure.errorMsg.toString();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(_errorMessage!)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
         Logger.logError("Login failed : $_errorMessage");
         _setLoading(false);
         notifyListeners();
@@ -457,7 +462,7 @@ class AuthFormProvider with ChangeNotifier {
         _setLoading(false);
         notifyListeners();
 
-        if (response.status == 20) {
+        if (response.status == 20 || response.status == 1) {
           context.pushNamed(AppRouterConst.adminHome);
         } else if (response.status == 10) {
           Logger.logInfo(response.message);
@@ -487,7 +492,8 @@ class AuthFormProvider with ChangeNotifier {
   }
 
   Future<CompanyRegistrationResponse?> submitSignUp(
-      BuildContext context) async {
+    BuildContext context,
+  ) async {
     final isValid = validateSignUpForm();
 
     // CompanyRegistrationResponse? companyRegResponse;
@@ -524,9 +530,9 @@ class AuthFormProvider with ChangeNotifier {
     result.fold(
       (failure) {
         _errorMessage = failure.errorMsg.toString();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(_errorMessage!)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
         Logger.logError("Registration failed : $_errorMessage");
         _setLoading(false);
         notifyListeners();
@@ -547,8 +553,9 @@ class AuthFormProvider with ChangeNotifier {
         /// CASE 2: Already registered → pending OTP verification → status == 20
         if (response.status == 20) {
           RegistrationDialogs.pendingRegisteredDialog(
-                  context, companyName.getValue ?? '')
-              .then((_) => resetSignUpForm());
+            context,
+            companyName.getValue ?? '',
+          ).then((_) => resetSignUpForm());
         }
 
         /// CASE 3: Already registered and OTP verified → completed registration
@@ -582,18 +589,16 @@ class AuthFormProvider with ChangeNotifier {
 
     final result = await iAuthenticationFacad.resetPassword(
       BaseParams(
-        data: ResetPasswordParam(
-          username: emailController.text.trim(),
-        ),
+        data: ResetPasswordParam(username: emailController.text.trim()),
       ),
     );
 
     result.fold(
       (failure) {
         _errorMessage = failure.errorMsg.toString();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(_errorMessage!)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
         Logger.logError("Reset Password failed : $_errorMessage");
       },
       (response) {
@@ -607,9 +612,9 @@ class AuthFormProvider with ChangeNotifier {
           //   title: response.message!,
           //   typeAlert: TypeAlert.error,
           // );
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(response.message!)),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(response.message!)));
         }
       },
     );

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dropdown_alert/dropdown_alert.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mpos_beat/presentation/logic/authentication_provider.dart';
+import 'package:mpos_beat/presentation/logic/user_management_provider.dart';
 import 'package:mpos_beat/route/router.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +22,6 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     AppDetails.screenSize = MediaQuery.sizeOf(context);
@@ -31,24 +31,22 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => AuthFormProvider(sl<IAuthenticationFacad>()),
         ),
+        ChangeNotifierProvider(create: (_) => UserManagementProvider()),
       ],
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, _) {
           final themeMode = themeProvider.themeMode;
 
           return MaterialApp.router(
+            scaffoldMessengerKey: AppDetails.rootScaffoldMessengerKey,
             routerConfig: AppRouter.router,
-            // navigatorKey: AppDetails.globalNavigatorKey,
             debugShowCheckedModeBanner: false,
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             locale: const Locale("en"),
             title: 'mPOS Beat',
 
-            // onGenerateRoute: AppRoute.onGenerateRoute,
-            // initialRoute: SplashScreen.routeName,
             theme: AppTheme.getTheme(themeMode, context),
-
             builder: (context, child) =>
                 Stack(children: [child!, const DropdownAlert()]),
           );

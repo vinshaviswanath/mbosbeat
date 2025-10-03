@@ -1,14 +1,13 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter_svg/svg.dart';
 import 'package:mpos_beat/core/failures/value_object/value_failure.dart';
+import 'package:mpos_beat/core/theme/diamentions.dart';
 import 'package:mpos_beat/core/theme/text_styles.dart';
 import 'package:mpos_beat/core/utils/app_assets.dart';
 import 'package:mpos_beat/core/utils/extentions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gap/gap.dart';
+// import 'package:gap/gap.dart';
 
-// ignore: must_be_immutable
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
     super.key,
@@ -82,7 +81,7 @@ class CustomTextField extends StatelessWidget {
     return Column(
       children: [
         Container(
-          height: context.getSize.height * 0.045,
+          // height: context.getSize.height * 0.055,
           // height: 44,
           decoration: BoxDecoration(
             border: Border.all(
@@ -115,10 +114,11 @@ class CustomTextField extends StatelessWidget {
               prefixIcon: iconData,
               suffixIcon: suffixIcon,
               hintText: hint,
-              hintStyle: hintTextStyle ?? context.textStyle.s12.silverGray.w300.roboto,
+              hintStyle:
+                  hintTextStyle ?? context.textStyle.s12.silverGray.w300.roboto,
               contentPadding:
                   contentPadding ??
-                  const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                  const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
               border: InputBorder.none,
               disabledBorder: InputBorder.none,
               enabledBorder: InputBorder.none,
@@ -126,12 +126,12 @@ class CustomTextField extends StatelessWidget {
             ),
           ),
         ),
-        if (isError) const Gap(5),
+        if (isError) h5,
         if (isError)
           Row(
             children: [
               SvgPicture.asset(AppAssets.alertError, height: 16),
-              const Gap(2),
+              w2,
               Text(
                 failure!.errorMsg,
                 style: context.textStyle.s10.w300.roseRed.raleway,
