@@ -358,4 +358,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get save => 'Save';
+
+  @override
+  String get transaction_order_booking_screen_order_booking => 'Order Booking';
 }

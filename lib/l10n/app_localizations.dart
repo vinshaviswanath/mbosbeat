@@ -794,6 +794,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Save'**
   String get save;
+
+  /// No description provided for @transaction_order_booking_screen_order_booking.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Booking'**
+  String get transaction_order_booking_screen_order_booking;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

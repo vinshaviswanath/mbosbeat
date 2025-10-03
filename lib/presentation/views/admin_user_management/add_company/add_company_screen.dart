@@ -1,5 +1,5 @@
 import 'package:mpos_beat/core/utils/imports.dart';
-import 'package:mpos_beat/presentation/views/add_company/widgets/add_company_widget.dart';
+import 'package:mpos_beat/presentation/views/admin_user_management/add_company/widgets/add_company_widget.dart';
 
 class AddCompanyScreen extends StatefulWidget {
   const AddCompanyScreen({

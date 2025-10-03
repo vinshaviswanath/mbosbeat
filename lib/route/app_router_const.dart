@@ -17,5 +17,10 @@ class AppRouterConst {
   static const userSettings = "userSettings";
   static const addCompany = "/addCompany";
   static const userDesignation = "/userDesignation";
+  static const transactionOrderBooking = "/transactionOrderBooking";
+  static const orderBookingAddItemScreen = "/orderBookingAddItemScreen";
+  static const telephonicOrderScreen = "/telephonicOrderScreen";
+  static const salesScreen = "/salesScreen";
+  static const salesReturnScreen = "/salesReturnScreen";
 
 }

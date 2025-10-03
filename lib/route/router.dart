@@ -3,7 +3,7 @@ import 'package:mpos_beat/core/utils/app_details.dart';
 import 'package:mpos_beat/core/utils/enums.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_route_screen.dart';
 import 'package:mpos_beat/presentation/common/widgets/loading_screen.dart';
-import 'package:mpos_beat/presentation/views/add_company/add_company_screen.dart';
+import 'package:mpos_beat/presentation/views/admin_user_management/add_company/add_company_screen.dart';
 import 'package:mpos_beat/presentation/views/admin_home/admin_home.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_create/user_creation_screen.dart';
 import 'package:mpos_beat/presentation/views/forgot_password/forgot_password.dart';
@@ -19,6 +19,11 @@ import 'package:mpos_beat/presentation/views/admin_user_management/user_manage/m
 import 'package:mpos_beat/presentation/views/admin_user_management/user_designation/user_designation_screen.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_management/user_management.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_settings/user_settings_screen.dart';
+import 'package:mpos_beat/presentation/views/transactions/sales/sales_screen.dart';
+import 'package:mpos_beat/presentation/views/transactions/sales_return/sales_return.dart';
+import 'package:mpos_beat/presentation/views/transactions/telephonic_order/telephonic_order.dart';
+import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/order_booking_add_item_screen.dart';
+import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/transaction_order_booking_screen.dart';
 import 'package:mpos_beat/route/app_navigation_observer.dart';
 import 'package:mpos_beat/route/app_router_const.dart';
 
@@ -161,6 +166,41 @@ class AppRouter {
         name: AppRouterConst.userDesignation,
         builder: (context, state) {
           return const UserDesignationScreen();
+        },
+      ),
+      GoRoute(
+        path: "/transactionOrderBooking",
+        name: AppRouterConst.transactionOrderBooking,
+        builder: (context, state) {
+          return const TransactionOrderBookingScreen();
+        },
+      ),
+      GoRoute(
+        path: "/orderBookingAddItemScreen",
+        name: AppRouterConst.orderBookingAddItemScreen,
+        builder: (context, state) {
+          return const OrderBookingAddItemScreen();
+        },
+      ),
+      GoRoute(
+        path: "/telephonicOrderScreen",
+        name: AppRouterConst.telephonicOrderScreen,
+        builder: (context, state) {
+          return const TelephonicOrderScreen();
+        },
+      ),
+      GoRoute(
+        path: "/salesScreen",
+        name: AppRouterConst.salesScreen,
+        builder: (context, state) {
+          return const SalesScreen();
+        },
+      ),
+       GoRoute(
+        path: "/salesReturnScreen",
+        name: AppRouterConst.salesReturnScreen,
+        builder: (context, state) {
+          return const SalesReturnScreen();
         },
       ),
     ],

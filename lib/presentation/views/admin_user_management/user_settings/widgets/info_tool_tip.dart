@@ -131,8 +131,16 @@ class _InfoTooltipState extends State<InfoTooltip> {
 class CustomSwitch extends StatefulWidget {
   final bool value;
   final ValueChanged<bool> onChanged;
+  final Color? borderColor;
+  final Color? thumbColor;
 
-  const CustomSwitch({super.key, required this.value, required this.onChanged});
+  const CustomSwitch({
+    super.key,
+    required this.value,
+    required this.onChanged,
+    this.borderColor,
+    this.thumbColor,
+  });
 
   @override
   State<CustomSwitch> createState() => _CustomSwitchState();
@@ -163,19 +171,25 @@ class _CustomSwitchState extends State<CustomSwitch>
         duration: const Duration(milliseconds: 250),
         width: 40,
         height: 22,
-        padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 4),
+        padding: const EdgeInsets.symmetric(vertical: 4),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: _value ? ColorResources.indigoBlue : Colors.grey.shade300,
+          border: Border.all(
+            color: widget.borderColor ?? ColorResources.transparent,
+          ),
+          color: _value ? ColorResources.indigoBlue : ColorResources.white,
         ),
         child: AnimatedAlign(
           duration: const Duration(milliseconds: 250),
           alignment: _value ? Alignment.centerRight : Alignment.centerLeft,
           child: Container(
-            width: 20,
-            height: 20,
-            decoration: const BoxDecoration(
-              color: Colors.white,
+            width: 18,
+            height: 18,
+            decoration: BoxDecoration(
+              color: _value
+                  ? Colors.white
+                  : widget.thumbColor ?? ColorResources.white,
+
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(

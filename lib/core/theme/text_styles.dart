@@ -43,8 +43,8 @@ extension TextStyleX on TextStyle {
   TextStyle get dustyBlue => copyWith(color: ColorResources.dustyBlue);
   TextStyle get coolGray => copyWith(color: ColorResources.coolGray);
   TextStyle get oceanBlue => copyWith(color: ColorResources.oceanBlue);
-
-
+  TextStyle get rosePink => copyWith(color: ColorResources.rosePink);
+  TextStyle get leafGreen => copyWith(color: ColorResources.leafGreen);
 
 
   TextStyle get shade100 => copyWith(color: color?.withValues(alpha: 0.1));

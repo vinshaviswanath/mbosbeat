@@ -26,6 +26,9 @@ class CustomButton extends StatelessWidget {
   final Color? borderColor;
   final EdgeInsetsGeometry? buttonPadding;
   final BorderRadiusGeometry? borderRadius;
+  final IconData? icon;
+  final double? iconSize;
+  final Color? iconColor;
   const CustomButton({
     super.key,
     this.onTap,
@@ -44,6 +47,9 @@ class CustomButton extends StatelessWidget {
     this.loadingEnabled = false,
     this.buttonPadding,
     this.borderRadius,
+    this.icon,
+    this.iconSize,
+    this.iconColor,
   });
 
   @override
@@ -79,6 +85,10 @@ class CustomButton extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          if (icon != null) ...[
+                            Icon(icon, color: iconColor, size: iconSize),
+                            w4,
+                          ],
                           if (imagePath != null) ...[
                             SvgPicture.asset(
                               imagePath!,

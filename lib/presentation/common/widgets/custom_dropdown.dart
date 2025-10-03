@@ -2,7 +2,7 @@ import 'package:mpos_beat/core/failures/value_object/value_failure.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 
 class CustomDropdown extends StatefulWidget {
-  final String label;
+  final String? label;
   final String hintText;
   final List<String> items;
   final ValueChanged<String?> onChanged;
@@ -14,10 +14,15 @@ class CustomDropdown extends StatefulWidget {
   final Color? backgroundColor;
   final Color? borderColor;
   final double? borderRadius;
+  final double? height;
+  final double? width;
+  final TextStyle? labelTextStyle;
+  final TextStyle? hintTextStyle;
+  final double? arrowSize;
 
   const CustomDropdown({
     super.key,
-    required this.label,
+    this.label,
     required this.hintText,
     required this.items,
     required this.onChanged,
@@ -27,6 +32,11 @@ class CustomDropdown extends StatefulWidget {
     this.backgroundColor,
     this.borderColor,
     this.borderRadius,
+    this.height,
+    this.width,
+    this.labelTextStyle,
+    this.hintTextStyle,
+    this.arrowSize,
   });
 
   @override
@@ -52,11 +62,20 @@ class _CustomDropdownState extends State<CustomDropdown> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Label
-        Text(widget.label, style: context.textStyle.s12.bluishGray.w400.roboto),
-        h6,
+        if (widget.label != null) ...[
+          Text(
+            widget.label!,
+            style:
+                widget.labelTextStyle ??
+                context.textStyle.s12.bluishGray.w400.roboto,
+          ),
+          h6,
+        ],
 
         // Dropdown container
         Container(
+          height: widget.height,
+          width: widget.width,
           decoration: BoxDecoration(
             border: Border.all(
               color: isError
@@ -73,11 +92,14 @@ class _CustomDropdownState extends State<CustomDropdown> {
               isExpanded: true,
               hint: Text(
                 widget.hintText,
-                style: context.textStyle.s12.silverGray.w300.roboto,
+                style:
+                    widget.hintTextStyle ??
+                    context.textStyle.s12.silverGray.w300.roboto,
               ),
-              icon: const Icon(
+              icon: Icon(
                 Icons.keyboard_arrow_down,
                 color: ColorResources.indigoBlue,
+                size: widget.arrowSize,
               ),
               items: widget.items.map((String value) {
                 return DropdownMenuItem<String>(
@@ -98,7 +120,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
           ),
         ),
 
-        if (isError)  h5,
+        if (isError) h5,
         if (isError)
           Row(
             children: [

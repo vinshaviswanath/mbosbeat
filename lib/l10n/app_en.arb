@@ -117,5 +117,6 @@
     "user_creation_screen_choose_reporting_person": "Choose Reporting person",
     "help":"Help",
     "update": "Update",
-    "save": "Save"
+    "save": "Save",
+    "transaction_order_booking_screen_order_booking": "Order Booking"
 }
