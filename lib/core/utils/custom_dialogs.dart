@@ -93,6 +93,7 @@ class CustomDialog {
     MainAxisAlignment? mainAxisAlignment,
     bool blure = false,
     bool canPop = true,
+    EdgeInsetsGeometry? padding
   }) {
     return showDialog<T>(
       barrierDismissible: canPop,
@@ -113,7 +114,7 @@ class CustomDialog {
                   Container(
                     width: double.infinity,
                     margin: EdgeInsets.all(margin ?? 16),
-                    padding: const EdgeInsets.all(16),
+                    padding: padding ?? const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       border: Border.all(color: ColorResources.transparent),
                       color: ColorResources.white,

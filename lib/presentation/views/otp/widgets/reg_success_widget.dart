@@ -1,4 +1,4 @@
-import 'package:ripple_wave/ripple_wave.dart';
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 
 class RegisterSuccessWidget extends StatelessWidget {
@@ -12,26 +12,29 @@ class RegisterSuccessWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.all(32),
-          child: RippleWave(
-            color: ColorResources.amber,
+          padding: const EdgeInsets.all(32),
+          child: AvatarGlow(
+            glowColor: ColorResources.amber,
+            glowShape: BoxShape.circle,
+            glowRadiusFactor: 0.3,
+            animate: true,
             repeat: true,
             child: SvgPicture.asset(AppAssets.tick, height: 144),
           ),
         ),
         const Spacer(),
         Text(
-          appLocalization.reg_success,
+          appLocalization.reg_success_widget_reg_success,
           textAlign: TextAlign.center,
           style: context.textStyle.s22.indigoBlue.bold,
         ),
-        gap8,
+        h8,
         Text(
-          appLocalization.successfully_registered_admin,
+          appLocalization.reg_success_widget_successfully_registered_admin,
           textAlign: TextAlign.center,
           style: context.textStyle.s12.silverGray,
         ),
-        gap12,
+        h12,
       ],
     );
   }

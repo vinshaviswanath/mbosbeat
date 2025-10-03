@@ -1,11 +1,10 @@
-import 'package:go_router/go_router.dart';
+import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/domain/request/login_params.dart';
-import 'package:mpos_beat/presentation/common/widgets/custom_button.dart';
-import 'package:mpos_beat/presentation/common/widgets/custom_textField.dart';
+import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 import 'package:mpos_beat/presentation/dialogs/auth_dialogs.dart';
 import 'package:mpos_beat/presentation/logic/authentication_provider.dart';
-import 'package:mpos_beat/route/app_router_const.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -21,7 +20,11 @@ class _LoginScreenState extends State<LoginScreen> {
   final passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final pref = sl<SharedPreferences>();
+    final token = pref.getString("token");
     Logger.logInfo(context.textStyle.s22.w700.white.fontFamily);
+    Logger.logSuccess("TOKEN : $token");
+
     final appLocalization = context.l10n;
     return PopScope(
       canPop: false,
@@ -37,7 +40,6 @@ class _LoginScreenState extends State<LoginScreen> {
             return LayoutBuilder(
               builder: (context, constraints) {
                 return SingleChildScrollView(
-                  // padding: const EdgeInsets.only(bottom: 16),
                   child: ConstrainedBox(
                     constraints: BoxConstraints(
                       minHeight: constraints.maxHeight,
@@ -45,7 +47,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: IntrinsicHeight(
                       child: Column(
                         children: [
-                          // Top header
                           Stack(
                             children: [
                               Container(
@@ -71,9 +72,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                           .white
                                           .roboto,
                                     ),
-                                    gap24,
+                                    h24,
                                     Text(
-                                      context.l10n.welcome_back,
+                                      context.l10n.login_welcome_back,
                                       style: context
                                           .textStyle
                                           .s18
@@ -83,13 +84,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                           .roboto,
                                       textAlign: TextAlign.center,
                                     ),
-                                    gap24,
+                                    h24,
                                   ],
                                 ),
                               ),
                               Positioned(
-                                top: -context.getSize.height * 0.045,
-                                right: -context.getSize.width * 0.2,
+                                top: -context.getSize.height * 0.075,
+                                right: -context.getSize.width * 0.24,
                                 child: Image.asset(
                                   AppAssets.bgVector,
                                   height: 300,
@@ -97,16 +98,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ],
                           ),
-
-                          // Form section
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 16),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                gap32,
+                                h32,
                                 Text(
-                                  context.l10n.email_or_phone,
+                                  context.l10n.login_email_or_phone,
                                   style: context
                                       .textStyle
                                       .s12
@@ -114,25 +113,21 @@ class _LoginScreenState extends State<LoginScreen> {
                                       .w400
                                       .roboto,
                                 ),
-                                gap4,
+                                h4,
                                 CustomTextField(
                                   controller: emailController,
-                                  hint: appLocalization.email_or_phone,
+                                  hint: appLocalization.enter_email_or_phone,
                                   hintTextStyle: context
                                       .textStyle
                                       .s12
                                       .w300
                                       .silverGray
                                       .roboto,
-                                  // suffixIcon: const Icon(
-                                  //   Icons.person_outlined,
-                                  //   color: Color(0xFF98A6BE),
-                                  // ),
                                   suffixIcon: Padding(
                                     padding: const EdgeInsets.all(12),
                                     child: SvgPicture.asset(
                                       AppAssets.userCircle,
-                                      height: 18,
+                                      height: context.getSize.height * 0.02,
                                     ),
                                   ),
                                   backgroundColor: ColorResources.lightGray,
@@ -145,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   hintColor: ColorResources.silverGray,
                                   borderColor: ColorResources.transparent,
                                 ),
-                                gap20,
+                                h20,
                                 Text(
                                   appLocalization.password,
                                   style: context
@@ -155,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       .w400
                                       .roboto,
                                 ),
-                                gap4,
+                                h4,
                                 CustomTextField(
                                   controller: passwordController,
                                   hint: appLocalization.enter_password,
@@ -165,17 +160,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                       .w300
                                       .silverGray
                                       .roboto,
-                                  // suffixIcon: IconButton(
-                                  //   color: const Color(0xFF98A6BE),
-                                  //   onPressed: () {
-                                  //     provider.toggleVisibility();
-                                  //   },
-                                  //   icon: Icon(
-                                  //     provider.isVisible
-                                  //         ? Icons.visibility_outlined
-                                  //         : Icons.visibility_off_outlined,
-                                  //   ),
-                                  // ),
                                   suffixIcon: InkWell(
                                     onTap: () => provider.toggleVisibility(),
                                     child: Padding(
@@ -184,7 +168,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         provider.isVisible
                                             ? AppAssets.featherEyeOn
                                             : AppAssets.featherEyeOff,
-                                        height: 18,
+                                        height: context.getSize.height * 0.02,
                                       ),
                                     ),
                                   ),
@@ -194,13 +178,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                       provider.loginAutovalidateMode,
                                   failure: provider.password.getFailure,
                                   onChange: provider.updatePassword,
-                                  // initialValue: provider.password.getValue,
                                   inputType: TextInputType.visiblePassword,
                                   borderRadius: 12,
                                   hintColor: ColorResources.silverGray,
                                   borderColor: ColorResources.transparent,
                                 ),
-                                gap26,
+                                h26,
                                 CustomButton(
                                   buttonText: appLocalization.login,
                                   isborderEnable: false,
@@ -218,10 +201,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                     // );
                                     context.pushNamed(
                                       AppRouterConst.customerTransactions,
+                                    provider.submitLogin(
+                                      context,
+                                      params: LoginParams(
+                                        username: emailController.text,
+                                        password: passwordController.text,
+                                      ),
                                     );
                                   },
                                 ),
-                                gap10,
+                                h10,
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
@@ -249,13 +238,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           const Spacer(),
-
-                          // Footer
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                appLocalization.no_account,
+                                appLocalization.login_no_account,
                                 style: context
                                     .textStyle
                                     .s12
@@ -263,11 +250,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                     .w400
                                     .roboto,
                               ),
-                              gap10,
+                              w10,
                               InkWell(
                                 onTap: () async {
                                   reset();
-                                  // AppRoute.pushNamed(SignUpScreen.routeName);
                                   GoRouter.of(
                                     context,
                                   ).push(AppRouterConst.signup);
@@ -285,7 +271,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ],
                           ),
-                          gap48,
+                          h48,
                         ],
                       ),
                     ),

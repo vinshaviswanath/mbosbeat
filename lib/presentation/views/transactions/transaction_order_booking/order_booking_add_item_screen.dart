@@ -1,0 +1,676 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:mpos_beat/core/theme/colors.dart';
+import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/presentation/common/widgets/custom_dropdown.dart';
+import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
+
+class OrderBookingAddItemScreen extends StatefulWidget {
+  const OrderBookingAddItemScreen({super.key});
+
+  @override
+  State<OrderBookingAddItemScreen> createState() =>
+      _OrderBookingAddItemScreenState();
+}
+
+class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
+  final List<Map<String, dynamic>> items = [
+    {
+      "name": "Black & Broken Rice",
+      "category": "Category Name",
+      "stock": 0,
+      "mrp": 2000.0,
+      "tax": 18.0,
+      "inclRate": 1800.0,
+    },
+    {
+      "name": "Premium Rice",
+      "category": "Category A",
+      "stock": 12,
+      "mrp": 2500.0,
+      "tax": 12.0,
+      "inclRate": 2300.0,
+    },
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final appLocalizations = context.l10n;
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: ColorResources.cloudGray,
+        surfaceTintColor: ColorResources.cloudGray,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.keyboard_arrow_left,
+            color: ColorResources.indigoBlue,
+          ),
+        ),
+        title: Column(
+          children: [
+            Text(
+              "Alackal Stores",
+              style: context.textStyle.s20.indigoBlue.bold.roboto,
+            ),
+            Text(
+              "Order Value : 18000.00",
+              style: context.textStyle.s12.dustyBlue.w500.roboto,
+            ),
+            h4,
+          ],
+        ),
+        centerTitle: true,
+        actions: [
+          SvgPicture.asset(
+            AppAssets.refresh,
+            height: 22,
+            colorFilter: const ColorFilter.mode(
+              ColorResources.indigoBlue,
+              BlendMode.srcIn,
+            ),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.qr_code,
+              size: 22,
+              color: ColorResources.indigoBlue,
+            ),
+          ),
+        ],
+        toolbarHeight: 65,
+      ),
+      body: CustomScrollView(
+        physics: const NeverScrollableScrollPhysics(),
+        slivers: [
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                children: [
+                  h10,
+                  CustomTextField(
+                    // controller: searchController,
+                    hint: appLocalizations.manage_user_screen_search_user,
+                    suffixIcon: const Padding(
+                      padding: EdgeInsets.all(12),
+                      child: Icon(
+                        Icons.search,
+                        color: ColorResources.bluishGray,
+                        size: 24,
+                      ),
+                    ),
+                    backgroundColor: ColorResources.lightGray,
+                    borderRadius: 12,
+                    hintColor: ColorResources.silverGray,
+                    borderColor: ColorResources.transparent,
+                  ),
+                  h6,
+                  Divider(
+                    thickness: 1,
+                    color: ColorResources.bluishGray.withValues(alpha: 0.2),
+                  ),
+                  h6,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CustomDropdown(
+                          height: 32,
+                          arrowSize: 16,
+                          label: "Select by Group",
+                          labelTextStyle:
+                              context.textStyle.dustyBlue.s10.w400.roboto,
+                          hintText: "Select Group",
+                          hintTextStyle:
+                              context.textStyle.bluishGray.s09.w300.roboto,
+                          items: [],
+                          onChanged: (value) {},
+                        ),
+                      ),
+                      w5,
+                      Expanded(
+                        child: CustomDropdown(
+                          height: 32,
+                          arrowSize: 16,
+                          label: "Select by Category",
+                          labelTextStyle:
+                              context.textStyle.dustyBlue.s10.w400.roboto,
+                          hintText: "Select Category",
+                          hintTextStyle:
+                              context.textStyle.bluishGray.s09.w300.roboto,
+                          items: [],
+                          onChanged: (value) {},
+                        ),
+                      ),
+                    ],
+                  ),
+                  h6,
+                  Divider(
+                    thickness: 1,
+                    color: ColorResources.bluishGray.withValues(alpha: 0.2),
+                  ),
+                  h6,
+                ],
+              ),
+            ),
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) {
+              final item = items[index];
+              return StockCard(
+                name: item["name"],
+                stock: item["stock"],
+                mrp: item["mrp"],
+                tax: item["tax"],
+                inclRate: item["inclRate"],
+              );
+            }, childCount: items.length),
+          ),
+          SliverFillRemaining(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  const Spacer(),
+                  Divider(
+                    thickness: 1,
+                    color: ColorResources.bluishGray.withValues(alpha: 0.2),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Grand Total",
+                            style: context.textStyle.indigoBlue.s12.w500.roboto,
+                          ),
+                          Text(
+                            "72000.00",
+                            style: context.textStyle.indigoBlue.s20.bold.roboto,
+                          ),
+                        ],
+                      ),
+                      CustomButton(
+                        buttonText: "",
+                        isborderEnable: false,
+                        width: context.getSize.width / 2.5,
+                        borderRadius: BorderRadius.circular(16),
+                        icon: Icons.shopping_cart,
+                        iconSize: 30,
+                        iconColor: ColorResources.white,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class StockCard extends StatefulWidget {
+  final String name;
+  final int stock;
+  final double mrp;
+  final double tax;
+  final double inclRate;
+
+  const StockCard({
+    super.key,
+    required this.name,
+    required this.stock,
+    required this.mrp,
+    required this.tax,
+    required this.inclRate,
+  });
+
+  @override
+  State<StockCard> createState() => _StockCardState();
+}
+
+class _StockCardState extends State<StockCard> {
+  bool _showDetails = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(
+        color: ColorResources.cloudGray.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.name,
+                      style: context.textStyle.dustyBlue.s12.w500.roboto,
+                    ),
+                    h4,
+                    Text(
+                      "Group :",
+                      style: context.textStyle.dustyBlue.s09.w400.roboto,
+                    ),
+                    Text(
+                      "Category Name",
+                      style: context.textStyle.dustyBlue.s09.w400.roboto,
+                    ),
+                  ],
+                ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Saleable Stock : ${widget.stock} Qls",
+                    style: context.textStyle.indigoBlue.s12.bold.roboto,
+                  ),
+                  Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "MRP",
+                            style: context.textStyle.rosePink.s09.w400.roboto,
+                          ),
+                          Text(
+                            widget.mrp.toStringAsFixed(0),
+                            style: context.textStyle.rosePink.s09.w400.roboto,
+                          ),
+                        ],
+                      ),
+                      w18,
+
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Tax %",
+                            style: context.textStyle.rosePink.s09.w400.roboto,
+                          ),
+                          Text(
+                            "${widget.tax.toStringAsFixed(0)}%",
+                            style: context.textStyle.rosePink.s09.w400.roboto,
+                          ),
+                        ],
+                      ),
+                      w16,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Incl. Rate",
+                            style: context.textStyle.rosePink.s09.w400.roboto,
+                          ),
+                          Text(
+                            widget.inclRate.toStringAsFixed(2),
+                            style: context.textStyle.rosePink.s09.w400.roboto,
+                          ),
+                        ],
+                      ),
+                      w13,
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _showDetails = !_showDetails;
+                          });
+                        },
+                        child: CircleAvatar(
+                          radius: 10,
+                          backgroundColor: ColorResources.indigoBlue,
+                          child: Icon(
+                            _showDetails
+                                ? Icons.keyboard_arrow_up_rounded
+                                : Icons.keyboard_arrow_down_rounded,
+                            color: ColorResources.white,
+                            size: 16,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+          if (_showDetails) const OrderDetailsWidget(),
+          h3,
+          Divider(
+            thickness: 1,
+            color: ColorResources.bluishGray.withValues(alpha: 0.2),
+          ),
+          h3,
+        ],
+      ),
+    );
+  }
+}
+
+class OrderDetailsWidget extends StatelessWidget {
+  const OrderDetailsWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(color: Colors.white),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Order Qty",
+                    style: context.textStyle.s10.w400.indigoBlue.roboto
+                        .copyWith(
+                          decoration: TextDecoration.underline,
+                          decorationColor: context.textStyle.indigoBlue.color,
+                        ),
+                  ),
+                  const SizedBox(height: 4),
+                  Row(
+                    children: [
+                      Container(
+                        width: 60,
+                        padding: const EdgeInsets.symmetric(vertical: 6),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: ColorResources.mistGray),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "5",
+                            style: context.textStyle.s10.w500.dustyBlue.roboto,
+                          ),
+                        ),
+                      ),
+                      w6,
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6,
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: ColorResources.mistGray),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          children: [
+                            Text(
+                              "Nos",
+                              style:
+                                  context.textStyle.s10.w300.dustyBlue.roboto,
+                            ),
+                            w4,
+                            const Icon(
+                              Icons.keyboard_arrow_down_rounded,
+                              color: ColorResources.dustyBlue,
+                              size: 16,
+                            ),
+                          ],
+                        ),
+                      ),
+                      w6,
+                      Column(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 5,
+                              vertical: 2,
+                            ),
+                            decoration: BoxDecoration(
+                              color: ColorResources.bluishGray,
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                            child: const Center(
+                              child: Icon(
+                                Icons.remove,
+                                color: ColorResources.white,
+                                size: 14,
+                              ),
+                            ),
+                          ),
+                          h4,
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 5,
+                              vertical: 2,
+                            ),
+                            decoration: BoxDecoration(
+                              color: ColorResources.bluishGray,
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                            child: const Center(
+                              child: Icon(
+                                Icons.add,
+                                color: ColorResources.white,
+                                size: 14,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Rate",
+                    style: context.textStyle.s10.w400.indigoBlue.roboto
+                        .copyWith(
+                          decoration: TextDecoration.underline,
+                          decorationColor: context.textStyle.indigoBlue.color,
+                        ),
+                  ),
+                  h4,
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: ColorResources.mistGray),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      "5000",
+                      style: context.textStyle.s10.w500.dustyBlue.roboto,
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Discount",
+                    style: context.textStyle.s10.w400.indigoBlue.roboto
+                        .copyWith(
+                          decoration: TextDecoration.underline,
+                          decorationColor: context.textStyle.indigoBlue.color,
+                        ),
+                  ),
+                  h4,
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: ColorResources.mistGray),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      "5%",
+                      style: context.textStyle.s10.w500.dustyBlue.roboto,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          h12,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Free Qty",
+                    style: context.textStyle.s10.w400.indigoBlue.roboto
+                        .copyWith(
+                          decoration: TextDecoration.underline,
+                          decorationColor: context.textStyle.indigoBlue.color,
+                        ),
+                  ),
+                  h4,
+                  Row(
+                    children: [
+                      Container(
+                        width: 60,
+                        padding: const EdgeInsets.symmetric(vertical: 6),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: ColorResources.mistGray),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "5",
+                            style: context.textStyle.s10.w500.dustyBlue.roboto,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6,
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: ColorResources.mistGray),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          children: [
+                            Text(
+                              "Nos",
+                              style:
+                                  context.textStyle.s10.w300.dustyBlue.roboto,
+                            ),
+                            w4,
+                            const Icon(
+                              Icons.keyboard_arrow_down_rounded,
+                              color: ColorResources.dustyBlue,
+                              size: 16,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+
+              /// Total
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Total: ",
+                    style: context.textStyle.s10.w400.indigoBlue.roboto,
+                  ),
+                  Text(
+                    "9000.00",
+                    style: context.textStyle.s14.bold.dustyBlue.roboto,
+                  ),
+                ],
+              ),
+
+              /// Delete button
+              IconButton(
+                icon: const Icon(
+                  Icons.delete,
+                  color: ColorResources.crimsonRed,
+                ),
+                onPressed: () {},
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// class SliverListExample extends StatelessWidget {
+//   const SliverListExample({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final items = [
+//       {
+//         "name": "Black & Broken Rice",
+//         "category": "Category Name",
+//         "stock": 0,
+//         "mrp": 2000.0,
+//         "tax": 18.0,
+//         "inclRate": 1800.0,
+//       },
+//       {
+//         "name": "Premium Rice",
+//         "category": "Category A",
+//         "stock": 12,
+//         "mrp": 2500.0,
+//         "tax": 12.0,
+//         "inclRate": 2300.0,
+//       },
+//     ];
+
+//     return Scaffold(
+//       body: CustomScrollView(
+//         slivers: [
+//           const SliverAppBar(
+//             floating: true,
+//             pinned: true,
+//             title: Text("Stocks"),
+//           ),
+//           SliverList(
+//             delegate: SliverChildBuilderDelegate((context, index) {
+//               final item = items[index];
+//               return StockCard(
+//                 name: item["name"] as String,
+//                 category: item["category"] as String,
+//                 stock: item["stock"] as int,
+//                 mrp: item["mrp"] as double,
+//                 tax: item["tax"] as double,
+//                 inclRate: item["inclRate"] as double,
+//               );
+//             }, childCount: items.length),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }

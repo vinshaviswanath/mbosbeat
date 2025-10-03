@@ -1,7 +1,7 @@
+import 'package:fpdart/fpdart.dart';
 import 'package:mpos_beat/core/exception/custom_exception.dart';
 import 'package:mpos_beat/core/failures/value_object/value_failure.dart';
 import 'package:mpos_beat/core/failures/value_object/value_validator.dart';
-import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
@@ -17,12 +17,14 @@ abstract class ValueObjet<T> extends Equatable {
   T getOrCrash() {
     // id = identity same as writeing (right) => right
     return value.fold(
-        (l) => throw CustomException(errMsg: 'Unexpected value at $T'), id);
+      (l) => throw CustomException(errMsg: 'Unexpected value at $T'),
+      (r) => r,
+    );
   }
 
-  ValueFailure? get getFailure => value.fold(id, (r) => null);
+  ValueFailure? get getFailure => value.fold((l) => l, (r) => null);
 
-  T? get getValue => value.fold((l) => null, id);
+  T? get getValue => value.fold((l) => null, (value) => value);
 
   @override
   List<Object> get props => [value];
@@ -76,7 +78,8 @@ class ConfirmPassword extends ValueObjet<String> {
   /// Pass both confirm password value and the original password
   factory ConfirmPassword(String confirmValue, String originalPassword) =>
       ConfirmPassword._(
-          validateConfirmPassword(confirmValue, originalPassword));
+        validateConfirmPassword(confirmValue, originalPassword),
+      );
 
   const ConfirmPassword._(this.value);
 }
@@ -109,4 +112,40 @@ class Otp extends ValueObjet<String> {
   factory Otp(String value) => Otp._(validateOtp(value));
 
   const Otp._(this.value);
+}
+
+class UserName extends ValueObjet<String> {
+  @override
+  final Either<ValueFailure<String>, String> value;
+
+  factory UserName(String value) => UserName._(validateUserName(value));
+
+  const UserName._(this.value);
+}
+
+class WhatsAppNumber extends ValueObjet<String> {
+  @override
+  final Either<ValueFailure<String>, String> value;
+
+  factory WhatsAppNumber(String value) => WhatsAppNumber._(validateUserName(value));
+
+  const WhatsAppNumber._(this.value);
+}
+
+class Designation extends ValueObjet<String> {
+  @override
+  final Either<ValueFailure<String>, String> value;
+
+  factory Designation(String value) => Designation._(validateUserName(value));
+
+  const Designation._(this.value);
+}
+
+class ReportingTo extends ValueObjet<String> {
+  @override
+  final Either<ValueFailure<String>, String> value;
+
+  factory ReportingTo(String value) => ReportingTo._(validateReportingTo(value));
+
+  const ReportingTo._(this.value);
 }

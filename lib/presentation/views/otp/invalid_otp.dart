@@ -1,12 +1,9 @@
 import 'package:flutter_dropdown_alert/model/data_alert.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mpos_beat/core/utils/alert_dialog.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/presentation/common/animations/wheel_spinner.dart';
-import 'package:mpos_beat/presentation/common/widgets/custom_button.dart';
 import 'package:mpos_beat/presentation/logic/authentication_provider.dart';
 import 'package:mpos_beat/presentation/views/otp/widgets/otp_field.dart';
-import 'package:mpos_beat/route/app_router_const.dart';
 
 class InvalidOtp extends StatelessWidget {
   static const routeName = "invalid-otp-screen";
@@ -17,10 +14,9 @@ class InvalidOtp extends StatelessWidget {
     final appLocalization = context.l10n;
     final wheelKey = GlobalKey<WheelSpinnerState>();
     return PopScope(
-      canPop: true, // allow normal back navigation
+      canPop: true,
       onPopInvokedWithResult: (didPop, result) {
         if (didPop) {
-          // reset invalid OTP flag when leaving OTP screen
           context.read<AuthFormProvider>().resetInvalidOtpFlag(false);
         }
       },
@@ -36,7 +32,7 @@ class InvalidOtp extends StatelessWidget {
                   backgroundColor: ColorResources.transparent,
                   centerTitle: true,
                   title: Text(
-                    appLocalization.enter_otp_here,
+                    appLocalization.otp_auth_enter_otp_here,
                     style: context.textStyle.s22.indigoBlue.bold,
                   ),
                 ),
@@ -45,7 +41,7 @@ class InvalidOtp extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
                       children: [
-                        gap60,
+                        h60,
                         OtpInputField(
                           borderColor: ColorResources.roseRed,
                           onCompleted: (otp) {
@@ -53,7 +49,7 @@ class InvalidOtp extends StatelessWidget {
                             provider.updateOtp(otp);
                           },
                         ),
-                        gap16,
+                        h16,
                         if ((provider.otpError != null ||
                             !provider.otp.isValid()))
                           Row(
@@ -64,14 +60,14 @@ class InvalidOtp extends StatelessWidget {
                                 height: 11,
                                 width: 11,
                               ),
-                              gap10,
+                              w10,
                               Text(
                                 "${provider.otpError ?? provider.otp.getFailure?.errorMsg}",
                                 style: context.textStyle.s10.roseRed,
                               ),
                             ],
                           ),
-                        gap24,
+                        h24,
                         CustomButton(
                           buttonText: appLocalization.submit,
                           isborderEnable: false,
@@ -98,41 +94,35 @@ class InvalidOtp extends StatelessWidget {
                             );
                           },
                         ),
-                        gap24,
+                        h24,
                         Text(
                           provider.remainingSeconds > 0
-                              ? "${appLocalization.enter_otp_in} ${provider.formatTime()} ${appLocalization.seconds}"
-                              : appLocalization.enter_otp_0,
+                              ? "${appLocalization.otp_auth_enter_otp_in} ${provider.formatTime()} ${appLocalization.otp_auth_seconds}"
+                              : appLocalization.otp_auth_enter_otp_0,
                           textAlign: TextAlign.center,
                           style: context.textStyle.s12.silverGray.w400,
                         ),
-                        gap16,
+                        h16,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            // SvgPicture.asset(
-                            //   AppAssets.refresh,
-                            //   height: 22,
-                            //   colorFilter: ColorFilter.mode(
-                            //       ColorResources.amber, BlendMode.srcIn),
-                            // ),
                             WheelSpinner(
                               key: wheelKey,
                               path: AppAssets.refresh,
                               imageType: ImageType.svg,
                               height: 22,
                             ),
-                            gap8,
+                            w8,
                             InkWell(
                               onTap: provider.remainingSeconds > 0
-                                  ? null // disable while timer is active
+                                  ? null
                                   : () {
                                       provider.startOtpTimer();
                                       provider.resendOtp(context);
                                       wheelKey.currentState?.startSpin();
                                     },
                               child: Text(
-                                appLocalization.resend_otp,
+                                appLocalization.otp_auth_resend_otp,
                                 style: provider.remainingSeconds > 0
                                     ? context.textStyle.s12.bold.bluishGray
                                     : context.textStyle.s12.bold.indigoBlue,

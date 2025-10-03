@@ -75,13 +75,13 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Image.asset(slide["image"]),
-                      gap40,
+                      h40,
                       Text(
                         slide["title"],
                         style: context.textStyle.s24.indigoBlue.bold,
                         textAlign: TextAlign.center,
                       ),
-                      gap16,
+                      h16,
                       SizedBox(
                         width: context.getSize.width / 1.4,
                         height: context.getSize.height * 0.1,
@@ -93,7 +93,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                           textAlign: TextAlign.center,
                         ),
                       ),
-                      gap16,
+                      h16,
                     ],
                   ),
                 );
@@ -114,18 +114,17 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               ),
             ),
           ),
-          gap20,
+          h20,
           InkWell(
             onTap: () {
-              // AppRoute.pushNamed(LoginScreen.routeName);
               final prefs = sl<SharedPreferences>();
               prefs.setBool("isOnboardingCompleted", true);
               context.pushNamed(AppRouterConst.login);
             },
             child: Text(
               _currentIndex == _slides.length - 1
-                  ? context.l10n.get_started
-                  : context.l10n.skip,
+                  ? context.l10n.onboard_get_started
+                  : context.l10n.onboard_skip,
               style: context.textStyle.s12.indigoBlue.copyWith(
                 decoration: TextDecoration.underline,
                 decorationColor: context.textStyle.indigoBlue.color,
@@ -133,7 +132,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               textAlign: TextAlign.center,
             ),
           ),
-          gap48,
+          h48,
         ],
       ),
     );

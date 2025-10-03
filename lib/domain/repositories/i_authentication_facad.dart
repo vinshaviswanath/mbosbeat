@@ -1,7 +1,6 @@
 import 'package:mpos_beat/core/param/param_builder.dart';
 import 'package:mpos_beat/core/utils/typedefs.dart';
 import 'package:mpos_beat/data/models/company_registration_response.dart';
-import 'package:mpos_beat/data/models/data/login_data.dart';
 import 'package:mpos_beat/data/models/login_response.dart';
 import 'package:mpos_beat/data/models/otp_response.dart';
 import 'package:mpos_beat/data/models/response_data.dart';
@@ -13,7 +12,8 @@ import 'package:mpos_beat/domain/request/reset_password_params.dart';
 
 interface class IAuthenticationFacad {
   ResultFuture<CompanyRegistrationResponse> companyRegistration(
-      BaseParams<CompanyRegistrationParams> params) {
+    BaseParams<CompanyRegistrationParams> params,
+  ) {
     throw UnimplementedError();
   }
 
@@ -26,12 +26,12 @@ interface class IAuthenticationFacad {
   }
 
   ResultFuture<ResponseData> resetPassword(
-      BaseParams<ResetPasswordParam> params) {
+    BaseParams<ResetPasswordParam> params,
+  ) {
     throw UnimplementedError();
   }
 
-  ResultFuture<LoginResponse> login(
-      BaseParams<LoginParams> params) {
+  ResultFuture<LoginResponse> login(BaseParams<LoginParams> params) {
     throw UnimplementedError();
   }
 }

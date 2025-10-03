@@ -5,7 +5,6 @@ import 'package:mpos_beat/core/theme/text_styles.dart';
 import 'package:mpos_beat/core/utils/app_assets.dart';
 import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/extentions.dart';
-import 'package:mpos_beat/l10n/app_localizations.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_button.dart';
 import 'package:mpos_beat/presentation/logic/authentication_provider.dart';
 import 'package:mpos_beat/presentation/views/login/login_screen.dart';
@@ -25,35 +24,40 @@ class RegistrationDialogs {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              gap20,
+              h20,
               Text(
-                appLocalization.already_registered,
+                appLocalization.registration_dialogs_already_registered,
                 style: context.textStyle.s12.w700.indigoBlue,
               ),
-              gap16,
+              h16,
               Image.asset(
                 AppAssets.mailSend,
                 height: context.getSize.height * 0.15,
               ),
-              gap24,
+              h24,
               SizedBox(
                 width: context.getSize.width * 0.8,
                 child: Text.rich(
                   TextSpan(
                     children: [
-                      TextSpan(text: appLocalization.hello),
+                      TextSpan(
+                        text: appLocalization.registration_dialogs_hello,
+                      ),
                       TextSpan(
                         text: title,
                         style: context.textStyle.s12.bluishGray.bold,
                       ),
-                      TextSpan(text: appLocalization.verify_num_text),
+                      TextSpan(
+                        text: appLocalization
+                            .registration_dialogs_verify_num_text,
+                      ),
                     ],
                     style: context.textStyle.s12.bluishGray,
                   ),
                   textAlign: TextAlign.center,
                 ),
               ),
-              gap24,
+              h24,
               CustomButton(
                 onTap: () async {
                   await provider.resendOtp(context, id: id);
@@ -62,13 +66,13 @@ class RegistrationDialogs {
                     context.push(AppRouterConst.otpAuth);
                   });
                 },
-                buttonText: appLocalization.verify_number,
+                buttonText: appLocalization.registration_dialogs_verify_number,
                 textStyle: context.textStyle.s12.white.bold,
                 isborderEnable: false,
                 borderRadius: BorderRadius.circular(16),
                 width: context.getSize.width / 2,
               ),
-              gap28,
+              h28,
             ],
           );
         },
@@ -86,35 +90,37 @@ class RegistrationDialogs {
       chid: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          gap20,
+          h20,
           Text(
-            appLocalization.already_registered,
+            appLocalization.registration_dialogs_already_registered,
             style: context.textStyle.s12.w700.indigoBlue,
           ),
-          gap16,
+          h16,
           Image.asset(
             AppAssets.registered,
             height: context.getSize.height * 0.15,
           ),
-          gap24,
+          h24,
           SizedBox(
             width: context.getSize.width * 0.8,
             child: Text.rich(
               TextSpan(
                 children: [
-                  TextSpan(text: appLocalization.hello),
+                  TextSpan(text: appLocalization.registration_dialogs_hello),
                   TextSpan(
                     text: name,
                     style: context.textStyle.s12.bluishGray.bold,
                   ),
-                  TextSpan(text: appLocalization.kindly_login),
+                  TextSpan(
+                    text: appLocalization.registration_dialogs_kindly_login,
+                  ),
                 ],
                 style: context.textStyle.s12.bluishGray,
               ),
               textAlign: TextAlign.center,
             ),
           ),
-          gap24,
+          h24,
           CustomButton(
             onTap: () {
               Navigator.pop(context);
@@ -129,7 +135,7 @@ class RegistrationDialogs {
             borderRadius: BorderRadius.circular(16),
             width: context.getSize.width / 2,
           ),
-          gap28,
+          h28,
         ],
       ),
     );

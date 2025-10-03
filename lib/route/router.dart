@@ -3,11 +3,13 @@ import 'package:mpos_beat/core/utils/app_details.dart';
 import 'package:mpos_beat/core/utils/enums.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_route_screen.dart';
 import 'package:mpos_beat/presentation/common/widgets/loading_screen.dart';
+import 'package:mpos_beat/presentation/views/admin_user_management/add_company/add_company_screen.dart';
 import 'package:mpos_beat/presentation/views/admin_home/admin_home.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/customer_transactions.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/transaction_detail_page/order_booking/order_booking.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/transaction_detail_page/order_booking/order_booking_item.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/transaction_detail_page/transaction_detail_page.dart';
+import 'package:mpos_beat/presentation/views/admin_user_management/user_create/user_creation_screen.dart';
 import 'package:mpos_beat/presentation/views/forgot_password/forgot_password.dart';
 import 'package:mpos_beat/presentation/views/forgot_password/mailed_screen.dart';
 import 'package:mpos_beat/presentation/views/home_screen/home_screen.dart';
@@ -20,12 +22,24 @@ import 'package:mpos_beat/presentation/views/other_transactions_screen/stock_jou
 import 'package:mpos_beat/presentation/views/other_transactions_screen/stock_receive_screen.dart';
 import 'package:mpos_beat/presentation/views/otp/invalid_otp.dart';
 import 'package:mpos_beat/presentation/views/otp/otp_authentication.dart';
+import 'package:mpos_beat/presentation/views/reset_password/reset_password_screen.dart';
 import 'package:mpos_beat/presentation/views/signup/sign_up_screen.dart';
 import 'package:mpos_beat/presentation/views/splash_screen/splash_screen.dart';
+import 'package:mpos_beat/presentation/views/admin_user_management/user_manage/manage_user_screen.dart';
+import 'package:mpos_beat/presentation/views/admin_user_management/user_designation/user_designation_screen.dart';
+import 'package:mpos_beat/presentation/views/admin_user_management/user_management/user_management.dart';
+import 'package:mpos_beat/presentation/views/admin_user_management/user_settings/user_settings_screen.dart';
+import 'package:mpos_beat/presentation/views/transactions/sales/sales_screen.dart';
+import 'package:mpos_beat/presentation/views/transactions/sales_return/sales_return.dart';
+import 'package:mpos_beat/presentation/views/transactions/telephonic_order/telephonic_order.dart';
+import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/order_booking_add_item_screen.dart';
+import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/transaction_order_booking_screen.dart';
+import 'package:mpos_beat/route/app_navigation_observer.dart';
 import 'package:mpos_beat/route/app_router_const.dart';
 
 class AppRouter {
   static final router = GoRouter(
+    observers: [AppNavigationObserver()],
     navigatorKey: AppDetails.globalNavigatorKey,
     initialLocation: "/",
     routes: [
@@ -178,6 +192,100 @@ class AppRouter {
         name: AppRouterConst.orderbookingitems,
         builder: (context, state) {
           return const OrderBookingItems();
+        },
+      ),
+    ],
+  );
+      GoRoute(
+        path: "/userManagement",
+        name: AppRouterConst.userManagement,
+        builder: (context, state) {
+          return const UserManagement();
+        },
+      ),
+      GoRoute(
+        path: "/manageUser",
+        name: AppRouterConst.manageUser,
+        builder: (context, state) {
+          return const ManageUserScreen();
+        },
+      ),
+      GoRoute(
+        path: "/userCreation",
+        name: AppRouterConst.userCreation,
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>? ?? {};
+          final isEdit = extra["isEdit"] as bool? ?? false;
+          final user = extra["user"] as UserModel?;
+
+          return UserCreationScreen(isUpdate: isEdit, user: user);
+        },
+      ),
+
+      GoRoute(
+        path: "/resetPassword",
+        name: AppRouterConst.resetPassword,
+        builder: (context, state) {
+          return const ResetPasswordScreen();
+        },
+      ),
+      GoRoute(
+        path: "/userSettings",
+        name: AppRouterConst.userSettings,
+        builder: (context, state) {
+          return const UserSettingsScreen();
+        },
+      ),
+      GoRoute(
+        path: "/addCompany",
+        name: AppRouterConst.addCompany,
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>;
+          final name = extra["name"] as String;
+          final companyName = extra["companyName"] as String;
+          return AddCompanyScreen(name: name, companyName: companyName);
+        },
+      ),
+      GoRoute(
+        path: "/userDesignation",
+        name: AppRouterConst.userDesignation,
+        builder: (context, state) {
+          return const UserDesignationScreen();
+        },
+      ),
+      GoRoute(
+        path: "/transactionOrderBooking",
+        name: AppRouterConst.transactionOrderBooking,
+        builder: (context, state) {
+          return const TransactionOrderBookingScreen();
+        },
+      ),
+      GoRoute(
+        path: "/orderBookingAddItemScreen",
+        name: AppRouterConst.orderBookingAddItemScreen,
+        builder: (context, state) {
+          return const OrderBookingAddItemScreen();
+        },
+      ),
+      GoRoute(
+        path: "/telephonicOrderScreen",
+        name: AppRouterConst.telephonicOrderScreen,
+        builder: (context, state) {
+          return const TelephonicOrderScreen();
+        },
+      ),
+      GoRoute(
+        path: "/salesScreen",
+        name: AppRouterConst.salesScreen,
+        builder: (context, state) {
+          return const SalesScreen();
+        },
+      ),
+       GoRoute(
+        path: "/salesReturnScreen",
+        name: AppRouterConst.salesReturnScreen,
+        builder: (context, state) {
+          return const SalesReturnScreen();
         },
       ),
     ],

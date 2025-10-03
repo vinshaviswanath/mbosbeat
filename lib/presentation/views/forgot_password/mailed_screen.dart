@@ -1,10 +1,7 @@
-import 'package:go_router/go_router.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/presentation/common/widgets/base_box.dart';
 import 'package:mpos_beat/presentation/common/widgets/base_scaffold.dart';
-import 'package:mpos_beat/presentation/common/widgets/custom_button.dart';
 import 'package:mpos_beat/presentation/logic/authentication_provider.dart';
-import 'package:mpos_beat/route/app_router_const.dart';
 
 class MailedScreen extends StatelessWidget {
   static const routeName = "mailed-screen";
@@ -31,7 +28,7 @@ class MailedScreen extends StatelessWidget {
                   ),
                   centerTitle: true,
                 ),
-                const SliverGap(24),
+                const SliverToBoxAdapter(child: h24),
                 SliverToBoxAdapter(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -47,13 +44,18 @@ class MailedScreen extends StatelessWidget {
                                 AppAssets.mailSend,
                                 height: context.getSize.height * 0.14,
                               ),
-                              gap28,
+                              h28,
                               Text(
-                                "${appLocalization.sent_mail_to} ${provider.maskedEmail}${appLocalization.kindly_verify}",
-                                style: context.textStyle.s12.w400.bluishGray.roboto,
+                                "${appLocalization.mail_sent_screen_sent_mail_to} ${provider.maskedEmail}${appLocalization.mail_sent_screen_kindly_verify}",
+                                style: context
+                                    .textStyle
+                                    .s12
+                                    .w400
+                                    .bluishGray
+                                    .roboto,
                                 textAlign: TextAlign.center,
                               ),
-                              gap16,
+                              h16,
                               Padding(
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 16,
@@ -65,7 +67,7 @@ class MailedScreen extends StatelessWidget {
                                   isborderEnable: false,
                                 ),
                               ),
-                              gap8,
+                              h8,
                             ],
                           ),
                         ),

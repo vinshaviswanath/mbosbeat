@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mpos_beat/core/exception/custom_exception.dart';
 import 'package:mpos_beat/core/failures/failures.dart';
@@ -18,20 +18,13 @@ class RunSafely {
     } on CustomException catch (e, s) {
       Logger.logError("RunSafely CustomException: $e,  \n StackTrace $s");
       return left(
-        failure?.call(e.errMsg) ??
-            MainFailure.customError(
-              errorMsg: e.errMsg,
-            ),
+        failure?.call(e.errMsg) ?? MainFailure.customError(errorMsg: e.errMsg),
       );
     } catch (e, s) {
       Logger.logError("RunSafely Error: $e,  \n StackTrace $s");
       return left(
-        failure?.call(
-              e.toString(),
-            ) ??
-            MainFailure.genericError(
-              errorMsg: e.toString(),
-            ),
+        failure?.call(e.toString()) ??
+            MainFailure.genericError(errorMsg: e.toString()),
       );
     }
   }

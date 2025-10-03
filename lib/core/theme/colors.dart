@@ -10,6 +10,7 @@ class ColorResources {
   static const indigoBlue = Color(0xFF36489B);
   static const amber = Color(0xFFFDC32D);
   static const errorRed = Color(0xFFFF1F1F);
+  static const crimsonRed = Color(0xFFDB0E11);
   static const overlayBlack = Color(0x17000000);
   static const silverGray = Color(0xFFCFCFCF);
   static const transparent = Colors.transparent;
@@ -25,6 +26,13 @@ class ColorResources {
   static const mintGreenAccent = Color(0xFF55D389);
   static const lightBorderGray = Color(0xFFD6D6D6);
   static const freshgreen = Color(0xFF69D282);
+  static const cloudGray = Color(0xFFF1F3F7);
+  static const coolGray = Color(0xFFC8D1DE);
+  static const mistGray = Color(0xFFDDDEDF);
+  static const snowBlue = Color(0xFFF6FBFF);
+  static const oceanBlue = Color(0xFF1676BF);
+  static const ashGray = Color(0xFFD6D6D6);
+  static const leafGreen = Color(0xFF54A959);
 
   //Icon color
   static const navyGray = Color(0xFF42526E);

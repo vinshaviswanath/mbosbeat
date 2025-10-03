@@ -16,4 +16,17 @@ class AppRouterConst {
   static const transactionDetailpage = "/transactionDetail";
   static const orderbooking = "/orderbooking";
   static const orderbookingitems = "orderbookingitems";
+  static const userManagement = "userManagement";
+  static const manageUser = "/manageUser";
+  static const userCreation = "userCreation";
+  static const resetPassword = "/resetPassword";
+  static const userSettings = "userSettings";
+  static const addCompany = "/addCompany";
+  static const userDesignation = "/userDesignation";
+  static const transactionOrderBooking = "/transactionOrderBooking";
+  static const orderBookingAddItemScreen = "/orderBookingAddItemScreen";
+  static const telephonicOrderScreen = "/telephonicOrderScreen";
+  static const salesScreen = "/salesScreen";
+  static const salesReturnScreen = "/salesReturnScreen";
+
 }

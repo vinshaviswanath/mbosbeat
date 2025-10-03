@@ -2,7 +2,6 @@ import 'package:flutter/services.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/presentation/common/widgets/base_box.dart';
 import 'package:mpos_beat/presentation/common/widgets/base_scaffold.dart';
-import 'package:mpos_beat/presentation/common/widgets/custom_button.dart';
 import 'package:mpos_beat/presentation/logic/authentication_provider.dart';
 
 class ForgotPassword extends StatefulWidget {
@@ -14,38 +13,6 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
-  // final _formKey = GlobalKey<FormState>();
-  // late TextEditingController emailController;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   emailController = TextEditingController();
-  // }
-
-  // @override
-  // void dispose() {
-  //   emailController.dispose();
-  //   super.dispose();
-  // }
-
-  // String? validateEmail(String? value) {
-  //   if (value == null || value.isEmpty) {
-  //     return "Email is required";
-  //   }
-  //   final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-  //   if (!emailRegex.hasMatch(value)) {
-  //     return "Enter a valid email";
-  //   }
-  //   return null;
-  // }
-
-  // void submit() {
-  //   if (_formKey.currentState!.validate()) {
-  //     context.pushNamed(AppRouterConst.mailedScreen);
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     final appLocalization = context.l10n;
@@ -67,16 +34,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 width: context.getSize.width,
                 child: CustomScrollView(
                   slivers: [
-                    // CustomSliverAppBar(
-                    //   title: "Forgot Password",
-                    //   onPressed: () {
-                    //     Navigator.pop(context);
-                    //   },
-                    //   leading: Icon(
-                    //     Icons.keyboard_arrow_right,
-                    //     size: 20,
-                    //   ),
-                    // ),
                     SliverAppBar(
                       foregroundColor: ColorResources.transparent,
                       surfaceTintColor: ColorResources.transparent,
@@ -97,7 +54,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             children: [
                               SvgPicture.asset(
                                 AppAssets.left,
-                                colorFilter: ColorFilter.mode(
+                                colorFilter: const ColorFilter.mode(
                                   ColorResources.white,
                                   BlendMode.srcIn,
                                 ),
@@ -107,7 +64,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         ),
                       ),
                     ),
-                    const SliverGap(24),
+                    const SliverToBoxAdapter(
+                      child: h24,
+                    ),
                     SliverToBoxAdapter(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -121,13 +80,13 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                   AppAssets.forgotPassword,
                                   height: context.getSize.height * 0.14,
                                 ),
-                                gap8,
+                                h8,
                                 Text(
                                   appLocalization.forgot_password_description,
                                   style: context.textStyle.s12.w400.bluishGray,
                                   textAlign: TextAlign.center,
                                 ),
-                                gap24,
+                                h24,
                                 Row(
                                   children: [
                                     Text(
@@ -136,7 +95,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                     ),
                                   ],
                                 ),
-                                gap4,
+                                h4,
                                 Row(
                                   children: [
                                     Expanded(
@@ -162,7 +121,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                                 onChanged: (value) {
                                                   field.didChange(
                                                     value,
-                                                  ); // notify the parent form
+                                                  );
                                                 },
                                                 decoration: InputDecoration(
                                                   hintText: appLocalization
@@ -255,7 +214,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                     ),
                                   ],
                                 ),
-                                gap16,
+                                h16,
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 16,
@@ -268,7 +227,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                     isborderEnable: false,
                                   ),
                                 ),
-                                gap16,
+                                h16,
                               ],
                             ),
                           ),
