@@ -29,6 +29,11 @@ import 'package:mpos_beat/presentation/views/admin_user_management/user_manage/m
 import 'package:mpos_beat/presentation/views/admin_user_management/user_designation/user_designation_screen.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_management/user_management.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_settings/user_settings_screen.dart';
+import 'package:mpos_beat/presentation/views/transactions/payment/payment_screen.dart';
+import 'package:mpos_beat/presentation/views/transactions/purchase/purchase_screen.dart';
+import 'package:mpos_beat/presentation/views/transactions/purchase_return/purchase_return_screen.dart';
+import 'package:mpos_beat/presentation/views/transactions/receipt_screen/receipt_screen.dart';
+import 'package:mpos_beat/presentation/views/transactions/replacement/replacement_screen.dart';
 import 'package:mpos_beat/presentation/views/transactions/sales/sales_screen.dart';
 import 'package:mpos_beat/presentation/views/transactions/sales_return/sales_return.dart';
 import 'package:mpos_beat/presentation/views/transactions/telephonic_order/telephonic_order.dart';
@@ -132,35 +137,35 @@ class AppRouter {
         path: "/othertransactions",
         name: AppRouterConst.otherTransaction,
         builder: (context, state) {
-          return OtherTransOptionsScreen();
+          return const OtherTransOptionsScreen();
         },
       ),
       GoRoute(
         path: "/stockjournalscreen",
         name: "stockjournal",
         builder: (context, state) {
-          return StockJournalScreen();
+          return const StockJournalScreen();
         },
       ),
       GoRoute(
         path: "/additem",
         name: "additem",
         builder: (context, state) {
-          return AddItems();
+          return const AddItems();
         },
       ),
       GoRoute(
         path: "/stockreceivescreen",
         name: "stockreceive",
         builder: (context, state) {
-          return StockReceiveScreen();
+          return const StockReceiveScreen();
         },
       ),
       GoRoute(
         path: "/expenseentryscreen",
         name: "expenseentry",
         builder: (context, state) {
-          return ExpenseEntryScreen();
+          return const ExpenseEntryScreen();
         },
       ),
       GoRoute(
@@ -194,8 +199,6 @@ class AppRouter {
           return const OrderBookingItems();
         },
       ),
-    ],
-  );
       GoRoute(
         path: "/userManagement",
         name: AppRouterConst.userManagement,
@@ -281,11 +284,46 @@ class AppRouter {
           return const SalesScreen();
         },
       ),
-       GoRoute(
+      GoRoute(
         path: "/salesReturnScreen",
         name: AppRouterConst.salesReturnScreen,
         builder: (context, state) {
           return const SalesReturnScreen();
+        },
+      ),
+       GoRoute(
+        path: "/purchaseReturnSCreen",
+        name: AppRouterConst.purchaseReturnSCreen,
+        builder: (context, state) {
+          return const PurchaseReturnScreen();
+        },
+      ),
+      GoRoute(
+        path: "/purchaseScreen",
+        name: AppRouterConst.purchaseScreen,
+        builder: (context, state) {
+          return const PurchaseScreen();
+        },
+      ),
+      GoRoute(
+        path: "/receiptScreen",
+        name: AppRouterConst.receiptScreen,
+        builder: (context, state) {
+          return const ReceiptScreen();
+        },
+      ),
+      GoRoute(
+        path: "/paymentScreen",
+        name: AppRouterConst.paymentScreen,
+        builder: (context, state) {
+          return const PaymentScreen();
+        },
+      ),
+      GoRoute(
+        path: "/replacementScreen",
+        name: AppRouterConst.replacementScreen,
+        builder: (context, state) {
+          return const ReplacementScreen();
         },
       ),
     ],

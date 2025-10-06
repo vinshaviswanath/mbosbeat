@@ -153,6 +153,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         CustomTextField(
                           hint: appLocalization.enter_password,
                           controller: passwordController,
+                          obscureText: !provider.isVisible,
+
+                          suffixIcon: InkWell(
+                            onTap: () => provider.toggleVisibility(),
+                            child: Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: SvgPicture.asset(
+                                provider.isVisible
+                                    ? AppAssets.featherEyeOn
+                                    : AppAssets.featherEyeOff,
+                                height: context.getSize.height * 0.02,
+                              ),
+                            ),
+                          ),
                           backgroundColor: ColorResources.lightGray,
                           autovalidateMode: provider.registerAutovalidateMode,
                           failure: provider.password.getFailure,
@@ -172,6 +186,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         CustomTextField(
                           hint: appLocalization.confirm_password,
                           controller: confirmPasswordController,
+                          obscureText: !provider.isVisible,
                           backgroundColor: ColorResources.lightGray,
                           autovalidateMode: provider.registerAutovalidateMode,
                           failure: provider.confirmPassword.getFailure,

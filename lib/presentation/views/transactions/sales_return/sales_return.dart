@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
-import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/transaction_order_booking_screen.dart';
+import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/widgets/end_to_end_text_widget.dart';
 
 class SalesReturnScreen extends StatefulWidget {
   const SalesReturnScreen({super.key});
@@ -63,13 +62,14 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: const Icon(
+          icon: Icon(
             Icons.keyboard_arrow_left,
             color: ColorResources.indigoBlue,
+            size: context.getSize.height * 0.024,
           ),
         ),
         title: Text(
-          "Sales Return",
+          appLocalizations.sales_return_screen_sales_return,
           style: context.textStyle.s20.indigoBlue.bold.roboto,
         ),
         centerTitle: true,
@@ -94,6 +94,7 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
         // toolbarHeight: 65,
       ),
       body: CustomScrollView(
+        physics: const NeverScrollableScrollPhysics(),
         slivers: [
           const SliverToBoxAdapter(child: h16),
           SliverToBoxAdapter(
@@ -125,7 +126,7 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
                           ),
                           child: Center(
                             child: Text(
-                              "+ Add Item",
+                              appLocalizations.add_item,
                               style: context.textStyle.s10.white.w400,
                             ),
                           ),
@@ -158,21 +159,21 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
                       Expanded(
                         flex: 3,
                         child: Text(
-                          "Product Name",
+                          appLocalizations.product_name,
                           style: context.textStyle.s09.w500.dustyBlue.roboto,
                         ),
                       ),
                       Expanded(
                         flex: 2,
                         child: Text(
-                          "Qty",
+                          appLocalizations.qty,
                           style: context.textStyle.s09.w500.dustyBlue.roboto,
                         ),
                       ),
                       Expanded(
                         flex: 2,
                         child: Text(
-                          "Rate",
+                          appLocalizations.rate,
                           style: context.textStyle.s09.w500.dustyBlue.roboto,
                         ),
                       ),
@@ -186,7 +187,7 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
                       Expanded(
                         flex: 1,
                         child: Text(
-                          "Amount",
+                          appLocalizations.amount,
                           style: context.textStyle.s09.w500.dustyBlue.roboto,
                         ),
                       ),
@@ -218,15 +219,12 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
                           right: 8,
                         ),
                         decoration: BoxDecoration(
-                          color: ColorResources.cloudGray.withValues(
-                            alpha: 0.1,
-                          ),
+                          color: ColorResources.lightGray,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            // Product + Sub Info
                             Expanded(
                               flex: 3,
                               child: Column(
@@ -317,7 +315,7 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
                       Divider(
                         thickness: 1,
                         color: ColorResources.bluishGray.withValues(alpha: 0.2),
-                      ), // separator
+                      ),
                     ],
                   ),
                 );
@@ -346,7 +344,7 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
 
                           children: [
                             Text(
-                              "CGST",
+                              appLocalizations.cgst,
                               style:
                                   context.textStyle.s10.w400.dustyBlue.roboto,
                             ),
@@ -373,7 +371,7 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
 
                           children: [
                             Text(
-                              "SGST",
+                              appLocalizations.sgst,
                               style:
                                   context.textStyle.s10.w400.dustyBlue.roboto,
                             ),
@@ -400,7 +398,7 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
 
                           children: [
                             Text(
-                              "CESS",
+                              appLocalizations.cess,
                               style:
                                   context.textStyle.s10.w400.dustyBlue.roboto,
                             ),
@@ -427,7 +425,7 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
 
                           children: [
                             Text(
-                              "Grand Total",
+                              appLocalizations.grand_total,
                               style:
                                   context.textStyle.s12.w500.indigoBlue.roboto,
                             ),
@@ -444,7 +442,7 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
                   ),
                   h12,
                   Text(
-                    "Remarks:",
+                    appLocalizations.remarks,
                     style: context.textStyle.s10.w400.dustyBlue.roboto,
                   ),
                   h13,

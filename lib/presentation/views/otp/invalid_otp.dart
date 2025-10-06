@@ -1,5 +1,3 @@
-import 'package:flutter_dropdown_alert/model/data_alert.dart';
-import 'package:mpos_beat/core/utils/alert_dialog.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/presentation/common/animations/wheel_spinner.dart';
 import 'package:mpos_beat/presentation/logic/authentication_provider.dart';
@@ -81,9 +79,25 @@ class InvalidOtp extends StatelessWidget {
                                     AppRouterConst.customRouteScreen,
                                     extra: NavigationType.success,
                                   );
-                                  CustomAlertDialog.showCustomDialog(
-                                    title: "OTP Verified Successfully",
-                                    typeAlert: TypeAlert.success,
+                                  // CustomAlertDialog.showCustomDialog(
+                                  //   title: "OTP Verified Successfully",
+                                  //   typeAlert: TypeAlert.success,
+                                  // );
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: const Text(
+                                        "OTP Verified Successfully",
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      behavior: SnackBarBehavior.floating,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(16),
+                                      ),
+                                      margin: const EdgeInsets.symmetric(
+                                        horizontal: 16,
+                                        vertical: 8,
+                                      ),
+                                    ),
                                   );
                                 } else if (response.status == 0) {
                                   GoRouter.of(

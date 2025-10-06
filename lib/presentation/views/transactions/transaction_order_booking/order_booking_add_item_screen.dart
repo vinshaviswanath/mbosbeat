@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:mpos_beat/core/theme/colors.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_dropdown.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
+import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/widgets/stock_card.dart';
 
 class OrderBookingAddItemScreen extends StatefulWidget {
   const OrderBookingAddItemScreen({super.key});
@@ -44,9 +42,10 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: const Icon(
+          icon: Icon(
             Icons.keyboard_arrow_left,
             color: ColorResources.indigoBlue,
+            size: context.getSize.height * 0.024,
           ),
         ),
         title: Column(
@@ -120,10 +119,12 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
                         child: CustomDropdown(
                           height: 32,
                           arrowSize: 16,
-                          label: "Select by Group",
+                          label: appLocalizations
+                              .order_booking_add_item_select_by_group,
                           labelTextStyle:
                               context.textStyle.dustyBlue.s10.w400.roboto,
-                          hintText: "Select Group",
+                          hintText: appLocalizations
+                              .order_booking_add_item_select_group,
                           hintTextStyle:
                               context.textStyle.bluishGray.s09.w300.roboto,
                           items: [],
@@ -135,10 +136,12 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
                         child: CustomDropdown(
                           height: 32,
                           arrowSize: 16,
-                          label: "Select by Category",
+                          label: appLocalizations
+                              .order_booking_add_item_select_by_category,
                           labelTextStyle:
                               context.textStyle.dustyBlue.s10.w400.roboto,
-                          hintText: "Select Category",
+                          hintText: appLocalizations
+                              .order_booking_add_item_select_category,
                           hintTextStyle:
                               context.textStyle.bluishGray.s09.w300.roboto,
                           items: [],
@@ -160,12 +163,22 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
           SliverList(
             delegate: SliverChildBuilderDelegate((context, index) {
               final item = items[index];
-              return StockCard(
-                name: item["name"],
-                stock: item["stock"],
-                mrp: item["mrp"],
-                tax: item["tax"],
-                inclRate: item["inclRate"],
+              return Column(
+                children: [
+                  StockCard(
+                    name: item["name"],
+                    stock: item["stock"],
+                    mrp: item["mrp"],
+                    tax: item["tax"],
+                    inclRate: item["inclRate"],
+                  ),
+                  h3,
+                  Divider(
+                    thickness: 1,
+                    color: ColorResources.bluishGray.withValues(alpha: 0.2),
+                  ),
+                  h3,
+                ],
               );
             }, childCount: items.length),
           ),
@@ -186,7 +199,7 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Grand Total",
+                            appLocalizations.grand_total,
                             style: context.textStyle.indigoBlue.s12.w500.roboto,
                           ),
                           Text(
@@ -216,413 +229,9 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
   }
 }
 
-class StockCard extends StatefulWidget {
-  final String name;
-  final int stock;
-  final double mrp;
-  final double tax;
-  final double inclRate;
 
-  const StockCard({
-    super.key,
-    required this.name,
-    required this.stock,
-    required this.mrp,
-    required this.tax,
-    required this.inclRate,
-  });
 
-  @override
-  State<StockCard> createState() => _StockCardState();
-}
 
-class _StockCardState extends State<StockCard> {
-  bool _showDetails = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 12),
-      decoration: BoxDecoration(
-        color: ColorResources.cloudGray.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.name,
-                      style: context.textStyle.dustyBlue.s12.w500.roboto,
-                    ),
-                    h4,
-                    Text(
-                      "Group :",
-                      style: context.textStyle.dustyBlue.s09.w400.roboto,
-                    ),
-                    Text(
-                      "Category Name",
-                      style: context.textStyle.dustyBlue.s09.w400.roboto,
-                    ),
-                  ],
-                ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Saleable Stock : ${widget.stock} Qls",
-                    style: context.textStyle.indigoBlue.s12.bold.roboto,
-                  ),
-                  Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "MRP",
-                            style: context.textStyle.rosePink.s09.w400.roboto,
-                          ),
-                          Text(
-                            widget.mrp.toStringAsFixed(0),
-                            style: context.textStyle.rosePink.s09.w400.roboto,
-                          ),
-                        ],
-                      ),
-                      w18,
-
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Tax %",
-                            style: context.textStyle.rosePink.s09.w400.roboto,
-                          ),
-                          Text(
-                            "${widget.tax.toStringAsFixed(0)}%",
-                            style: context.textStyle.rosePink.s09.w400.roboto,
-                          ),
-                        ],
-                      ),
-                      w16,
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Incl. Rate",
-                            style: context.textStyle.rosePink.s09.w400.roboto,
-                          ),
-                          Text(
-                            widget.inclRate.toStringAsFixed(2),
-                            style: context.textStyle.rosePink.s09.w400.roboto,
-                          ),
-                        ],
-                      ),
-                      w13,
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _showDetails = !_showDetails;
-                          });
-                        },
-                        child: CircleAvatar(
-                          radius: 10,
-                          backgroundColor: ColorResources.indigoBlue,
-                          child: Icon(
-                            _showDetails
-                                ? Icons.keyboard_arrow_up_rounded
-                                : Icons.keyboard_arrow_down_rounded,
-                            color: ColorResources.white,
-                            size: 16,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          ),
-          if (_showDetails) const OrderDetailsWidget(),
-          h3,
-          Divider(
-            thickness: 1,
-            color: ColorResources.bluishGray.withValues(alpha: 0.2),
-          ),
-          h3,
-        ],
-      ),
-    );
-  }
-}
-
-class OrderDetailsWidget extends StatelessWidget {
-  const OrderDetailsWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(color: Colors.white),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Order Qty",
-                    style: context.textStyle.s10.w400.indigoBlue.roboto
-                        .copyWith(
-                          decoration: TextDecoration.underline,
-                          decorationColor: context.textStyle.indigoBlue.color,
-                        ),
-                  ),
-                  const SizedBox(height: 4),
-                  Row(
-                    children: [
-                      Container(
-                        width: 60,
-                        padding: const EdgeInsets.symmetric(vertical: 6),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: ColorResources.mistGray),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "5",
-                            style: context.textStyle.s10.w500.dustyBlue.roboto,
-                          ),
-                        ),
-                      ),
-                      w6,
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 6,
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: ColorResources.mistGray),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Row(
-                          children: [
-                            Text(
-                              "Nos",
-                              style:
-                                  context.textStyle.s10.w300.dustyBlue.roboto,
-                            ),
-                            w4,
-                            const Icon(
-                              Icons.keyboard_arrow_down_rounded,
-                              color: ColorResources.dustyBlue,
-                              size: 16,
-                            ),
-                          ],
-                        ),
-                      ),
-                      w6,
-                      Column(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 5,
-                              vertical: 2,
-                            ),
-                            decoration: BoxDecoration(
-                              color: ColorResources.bluishGray,
-                              borderRadius: BorderRadius.circular(3),
-                            ),
-                            child: const Center(
-                              child: Icon(
-                                Icons.remove,
-                                color: ColorResources.white,
-                                size: 14,
-                              ),
-                            ),
-                          ),
-                          h4,
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 5,
-                              vertical: 2,
-                            ),
-                            decoration: BoxDecoration(
-                              color: ColorResources.bluishGray,
-                              borderRadius: BorderRadius.circular(3),
-                            ),
-                            child: const Center(
-                              child: Icon(
-                                Icons.add,
-                                color: ColorResources.white,
-                                size: 14,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Rate",
-                    style: context.textStyle.s10.w400.indigoBlue.roboto
-                        .copyWith(
-                          decoration: TextDecoration.underline,
-                          decorationColor: context.textStyle.indigoBlue.color,
-                        ),
-                  ),
-                  h4,
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: ColorResources.mistGray),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Text(
-                      "5000",
-                      style: context.textStyle.s10.w500.dustyBlue.roboto,
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Discount",
-                    style: context.textStyle.s10.w400.indigoBlue.roboto
-                        .copyWith(
-                          decoration: TextDecoration.underline,
-                          decorationColor: context.textStyle.indigoBlue.color,
-                        ),
-                  ),
-                  h4,
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: ColorResources.mistGray),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Text(
-                      "5%",
-                      style: context.textStyle.s10.w500.dustyBlue.roboto,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          h12,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Free Qty",
-                    style: context.textStyle.s10.w400.indigoBlue.roboto
-                        .copyWith(
-                          decoration: TextDecoration.underline,
-                          decorationColor: context.textStyle.indigoBlue.color,
-                        ),
-                  ),
-                  h4,
-                  Row(
-                    children: [
-                      Container(
-                        width: 60,
-                        padding: const EdgeInsets.symmetric(vertical: 6),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: ColorResources.mistGray),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "5",
-                            style: context.textStyle.s10.w500.dustyBlue.roboto,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 6),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 6,
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: ColorResources.mistGray),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Row(
-                          children: [
-                            Text(
-                              "Nos",
-                              style:
-                                  context.textStyle.s10.w300.dustyBlue.roboto,
-                            ),
-                            w4,
-                            const Icon(
-                              Icons.keyboard_arrow_down_rounded,
-                              color: ColorResources.dustyBlue,
-                              size: 16,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-
-              /// Total
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Total: ",
-                    style: context.textStyle.s10.w400.indigoBlue.roboto,
-                  ),
-                  Text(
-                    "9000.00",
-                    style: context.textStyle.s14.bold.dustyBlue.roboto,
-                  ),
-                ],
-              ),
-
-              /// Delete button
-              IconButton(
-                icon: const Icon(
-                  Icons.delete,
-                  color: ColorResources.crimsonRed,
-                ),
-                onPressed: () {},
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 // class SliverListExample extends StatelessWidget {
 //   const SliverListExample({super.key});

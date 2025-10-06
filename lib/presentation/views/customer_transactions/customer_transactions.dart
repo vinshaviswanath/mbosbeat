@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/l10n/app_localizations.dart';
-import 'package:mpos_beat/presentation/common/widgets/custom_textField.dart';
+import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_user_appbar.dart';
 import 'package:mpos_beat/route/app_router_const.dart';
 import 'package:mpos_beat/route/router.dart';

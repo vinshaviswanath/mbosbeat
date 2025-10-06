@@ -199,8 +199,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                     //     password: passwordController.text,
                                     //   ),
                                     // );
-                                    context.pushNamed(
-                                      AppRouterConst.customerTransactions,
+                                    // context.pushNamed(
+                                    //   AppRouterConst.customerTransactions,);
                                     provider.submitLogin(
                                       context,
                                       params: LoginParams(

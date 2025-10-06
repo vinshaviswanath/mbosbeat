@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mpos_beat/core/theme/text_styles.dart';
 import 'package:mpos_beat/core/utils/extentions.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
-import 'package:mpos_beat/presentation/common/widgets/custom_textField.dart';
+import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 
 class OrderBookingItems extends StatefulWidget {
   const OrderBookingItems({super.key});

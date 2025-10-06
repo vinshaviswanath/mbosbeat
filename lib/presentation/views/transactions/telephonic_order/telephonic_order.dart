@@ -1,7 +1,9 @@
+import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_settings/widgets/info_tool_tip.dart';
-import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/transaction_order_booking_screen.dart';
+import 'package:mpos_beat/presentation/views/transactions/purchase/widgets/discount_alert_widget.dart';
+import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/widgets/end_to_end_text_widget.dart';
 
 class TelephonicOrderScreen extends StatelessWidget {
   const TelephonicOrderScreen({super.key});
@@ -17,13 +19,14 @@ class TelephonicOrderScreen extends StatelessWidget {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: const Icon(
+          icon: Icon(
             Icons.keyboard_arrow_left,
             color: ColorResources.indigoBlue,
+            size: context.getSize.height * 0.024,
           ),
         ),
         title: Text(
-          "Telephonic Order",
+          appLocalizations.telephonic_order_screen_telephonic_order,
           style: context.textStyle.s20.indigoBlue.bold.roboto,
         ),
         centerTitle: true,
@@ -48,6 +51,7 @@ class TelephonicOrderScreen extends StatelessWidget {
         // toolbarHeight: 65,
       ),
       body: CustomScrollView(
+        physics: const NeverScrollableScrollPhysics(),
         slivers: [
           const SliverToBoxAdapter(child: h16),
           SliverToBoxAdapter(
@@ -89,28 +93,28 @@ class TelephonicOrderScreen extends StatelessWidget {
                       Expanded(
                         flex: 2,
                         child: Text(
-                          "Product Name",
+                          appLocalizations.product_name,
                           style: context.textStyle.s10.w500.dustyBlue.roboto,
                         ),
                       ),
                       Expanded(
                         flex: 1,
                         child: Text(
-                          "Order Qty",
+                          appLocalizations.telephonic_order_screen_order_qty,
                           style: context.textStyle.s10.w500.dustyBlue.roboto,
                         ),
                       ),
                       Expanded(
                         flex: 1,
                         child: Text(
-                          "Rate",
+                          appLocalizations.rate,
                           style: context.textStyle.s10.w500.dustyBlue.roboto,
                         ),
                       ),
                       Expanded(
                         flex: 1,
                         child: Text(
-                          "Amount",
+                          appLocalizations.amount,
                           style: context.textStyle.s10.w500.dustyBlue.roboto,
                         ),
                       ),
@@ -207,7 +211,7 @@ class TelephonicOrderScreen extends StatelessWidget {
 
                     children: [
                       Text(
-                        "CGST",
+                        appLocalizations.cgst,
                         style: context.textStyle.s10.w400.dustyBlue.roboto,
                       ),
                       w60,
@@ -224,7 +228,7 @@ class TelephonicOrderScreen extends StatelessWidget {
 
                     children: [
                       Text(
-                        "SGST",
+                        appLocalizations.sgst,
                         style: context.textStyle.s10.w400.dustyBlue.roboto,
                       ),
                       w60,
@@ -240,7 +244,7 @@ class TelephonicOrderScreen extends StatelessWidget {
 
                     children: [
                       Text(
-                        "CESS",
+                        appLocalizations.cess,
                         style: context.textStyle.s10.w400.dustyBlue.roboto,
                       ),
                       w60,
@@ -256,7 +260,7 @@ class TelephonicOrderScreen extends StatelessWidget {
 
                     children: [
                       Text(
-                        "Grand Total",
+                        appLocalizations.grand_total,
                         style: context.textStyle.s12.w500.indigoBlue.roboto,
                       ),
                       w60,
@@ -271,20 +275,26 @@ class TelephonicOrderScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Discount (+/-)",
+                        appLocalizations.discount_add_minus,
                         style: context.textStyle.s12.w500.indigoBlue.roboto,
                       ),
                       CustomSwitch(
                         borderColor: ColorResources.bluishGray,
                         thumbColor: ColorResources.bluishGray,
                         value: false,
-                        onChanged: (value) {},
+                        onChanged: (value) {
+                          value == true
+                              ? CustomDialog.showBottomCustomDialog(
+                                  chid: const DiscountAlertWidget(),
+                                )
+                              : null;
+                        },
                       ),
                     ],
                   ),
                   h12,
                   Text(
-                    "Remarks:",
+                    appLocalizations.remarks,
                     style: context.textStyle.s10.w400.dustyBlue.roboto,
                   ),
                   h13,

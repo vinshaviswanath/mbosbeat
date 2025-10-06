@@ -26,7 +26,6 @@ class ColorResources {
   static const mintGreenAccent = Color(0xFF55D389);
   static const lightBorderGray = Color(0xFFD6D6D6);
   static const freshgreen = Color(0xFF69D282);
-  static const cloudGray = Color(0xFFF1F3F7);
   static const coolGray = Color(0xFFC8D1DE);
   static const mistGray = Color(0xFFDDDEDF);
   static const snowBlue = Color(0xFFF6FBFF);

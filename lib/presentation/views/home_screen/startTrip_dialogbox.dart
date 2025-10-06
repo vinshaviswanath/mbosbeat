@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mpos_beat/core/theme/colors.dart';
 import 'package:mpos_beat/core/theme/text_styles.dart';
 import 'package:mpos_beat/core/utils/extentions.dart';
-import 'package:mpos_beat/presentation/common/widgets/custom_textField.dart';
+import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 
 void showStartTripDialog(BuildContext context) {
   TextEditingController routecontroller = TextEditingController();
@@ -33,7 +33,7 @@ void showStartTripDialog(BuildContext context) {
               CustomTextField(
                 hint: "Select Route",
                 controller: routecontroller,
-                iconData: Icons.arrow_drop_down,
+                // iconData: Icons.arrow_drop_down,
               ),
               SizedBox(height: 10),
               Text(
@@ -43,7 +43,7 @@ void showStartTripDialog(BuildContext context) {
               CustomTextField(
                 hint: "Select Vehicle",
                 controller: vehiclecontroller,
-                iconData: Icons.arrow_drop_down,
+                // iconData: Icons.arrow_drop_down,
               ),
               SizedBox(height: 15),
               Row(

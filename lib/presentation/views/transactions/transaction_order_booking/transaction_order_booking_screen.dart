@@ -1,5 +1,6 @@
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
+import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/widgets/end_to_end_text_widget.dart';
 
 class TransactionOrderBookingScreen extends StatefulWidget {
   const TransactionOrderBookingScreen({super.key});
@@ -62,9 +63,10 @@ class _TransactionOrderBookingScreenState
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: const Icon(
+          icon: Icon(
             Icons.keyboard_arrow_left,
             color: ColorResources.indigoBlue,
+            size: context.getSize.height * 0.024,
           ),
         ),
         title: Text(
@@ -93,6 +95,7 @@ class _TransactionOrderBookingScreenState
         // toolbarHeight: 65,
       ),
       body: CustomScrollView(
+        physics: const NeverScrollableScrollPhysics(),
         slivers: [
           const SliverToBoxAdapter(child: h16),
           SliverToBoxAdapter(
@@ -107,19 +110,26 @@ class _TransactionOrderBookingScreenState
                         "Alackal Stores, Kuruppamthara",
                         style: context.textStyle.s12.w500.indigoBlue.roboto,
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 15,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: ColorResources.rosePink,
-                        ),
-                        child: Center(
-                          child: Text(
-                            "+ Add Item",
-                            style: context.textStyle.s10.white.w400,
+                      GestureDetector(
+                        onTap: () {
+                          context.pushNamed(
+                            AppRouterConst.orderBookingAddItemScreen,
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 15,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: ColorResources.rosePink,
+                          ),
+                          child: Center(
+                            child: Text(
+                              appLocalizations.add_item,
+                              style: context.textStyle.s10.white.w400,
+                            ),
                           ),
                         ),
                       ),
@@ -131,9 +141,9 @@ class _TransactionOrderBookingScreenState
                     text2: "29-07-2024",
                   ),
                   h4,
-                  const EndToEndTextWidget(
-                    text1: "Voucher No.",
-                    text2: "Balance",
+                  EndToEndTextWidget(
+                    text1: appLocalizations.order_booking_voucher_no,
+                    text2: appLocalizations.order_booking_balance,
                   ),
                   h4,
                   Row(
@@ -141,11 +151,11 @@ class _TransactionOrderBookingScreenState
                     children: [
                       Row(
                         children: [
-                          const Text(
-                            "Price List",
+                          Text(
+                            appLocalizations.order_booking_price_list,
                             style: TextStyle(fontSize: 10, color: Colors.grey),
                           ),
-                          const SizedBox(width: 8),
+                          w8,
                           Container(
                             height: 22,
                             padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -215,35 +225,35 @@ class _TransactionOrderBookingScreenState
                       Expanded(
                         flex: 2,
                         child: Text(
-                          "Product Name",
+                          appLocalizations.product_name,
                           style: context.textStyle.s10.w500.dustyBlue.roboto,
                         ),
                       ),
                       Expanded(
                         flex: 1,
                         child: Text(
-                          "Quantity",
+                          appLocalizations.order_booking_quantity,
                           style: context.textStyle.s10.w500.dustyBlue.roboto,
                         ),
                       ),
                       Expanded(
                         flex: 1,
                         child: Text(
-                          "Rate",
+                          appLocalizations.rate,
                           style: context.textStyle.s10.w500.dustyBlue.roboto,
                         ),
                       ),
                       Expanded(
                         flex: 1,
                         child: Text(
-                          "Discount",
+                          appLocalizations.discount,
                           style: context.textStyle.s10.w500.dustyBlue.roboto,
                         ),
                       ),
                       Expanded(
                         flex: 1,
                         child: Text(
-                          "Amount",
+                          appLocalizations.amount,
                           style: context.textStyle.s10.w500.dustyBlue.roboto,
                         ),
                       ),
@@ -275,7 +285,7 @@ class _TransactionOrderBookingScreenState
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        "Sub Total",
+                        appLocalizations.order_booking_sub_total,
                         style: context.textStyle.s12.w500.indigoBlue.roboto,
                       ),
                       w60,
@@ -291,7 +301,7 @@ class _TransactionOrderBookingScreenState
 
                     children: [
                       Text(
-                        "CGST",
+                        appLocalizations.cgst,
                         style: context.textStyle.s10.w400.dustyBlue.roboto,
                       ),
                       w60,
@@ -308,7 +318,7 @@ class _TransactionOrderBookingScreenState
 
                     children: [
                       Text(
-                        "SGST",
+                        appLocalizations.sgst,
                         style: context.textStyle.s10.w400.dustyBlue.roboto,
                       ),
                       w60,
@@ -325,7 +335,7 @@ class _TransactionOrderBookingScreenState
 
                     children: [
                       Text(
-                        "CESS",
+                        appLocalizations.cess,
                         style: context.textStyle.s10.w400.dustyBlue.roboto,
                       ),
                       w60,
@@ -341,7 +351,7 @@ class _TransactionOrderBookingScreenState
 
                     children: [
                       Text(
-                        "Grand Total",
+                        appLocalizations.grand_total,
                         style: context.textStyle.s12.w500.indigoBlue.roboto,
                       ),
                       w60,
@@ -353,7 +363,7 @@ class _TransactionOrderBookingScreenState
                   ),
                   h21,
                   Text(
-                    "Remarks:",
+                    appLocalizations.remarks,
                     style: context.textStyle.s10.w400.dustyBlue.roboto,
                   ),
                   h13,
@@ -397,23 +407,4 @@ class _TransactionOrderBookingScreenState
   }
 }
 
-class EndToEndTextWidget extends StatelessWidget {
-  const EndToEndTextWidget({
-    super.key,
-    required this.text1,
-    required this.text2,
-  });
-  final String text1;
-  final String text2;
 
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(text1, style: context.textStyle.s09.w400.dustyBlue.roboto),
-        Text(text2, style: context.textStyle.s09.w400.dustyBlue.roboto),
-      ],
-    );
-  }
-}

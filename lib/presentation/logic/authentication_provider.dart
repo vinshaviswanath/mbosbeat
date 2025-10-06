@@ -1,9 +1,6 @@
-import 'package:flutter_dropdown_alert/model/data_alert.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mpos_beat/core/failures/failures.dart';
 import 'package:mpos_beat/core/failures/value_object/value_object.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
-import 'package:mpos_beat/core/utils/alert_dialog.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/company_registration_response.dart';
 import 'package:mpos_beat/data/models/data/otp_response_data.dart';
@@ -18,7 +15,6 @@ import 'package:mpos_beat/domain/request/otp_validation_params.dart';
 import 'package:mpos_beat/domain/request/resend_otp_params.dart';
 import 'package:mpos_beat/domain/request/reset_password_params.dart';
 import 'package:mpos_beat/presentation/dialogs/registration_dialogs.dart';
-import 'package:mpos_beat/route/app_router_const.dart';
 
 /// Provider class that manages authentication-related state and logic.
 /// Handles Login, Signup, OTP verification, masked fields, form validation,
@@ -247,15 +243,25 @@ class AuthFormProvider with ChangeNotifier {
     if (_remainingSeconds == 0) {
       _otpError = "OTP has expired. Please request a new one.";
       notifyListeners();
-      CustomAlertDialog.showCustomDialog(
-        title: _otpError!,
-        typeAlert: TypeAlert.error,
+      // CustomAlertDialog.showCustomDialog(
+      //   title: _otpError!,
+      //   typeAlert: TypeAlert.error,
+      // );
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(_otpError!, textAlign: TextAlign.center),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        ),
       );
       return null;
     }
 
     context.pushNamed(AppRouterConst.loadingScreen);
-
+    Logger.logSuccess("Customer ID : $_cusomerId");
     final result = await iAuthenticationFacad.otpValidation(
       BaseParams(
         data: OtpParams(id: _cusomerId, otp: _otp.getValue),
@@ -273,9 +279,19 @@ class AuthFormProvider with ChangeNotifier {
           startOtpTimer();
           GoRouter.of(context).pushNamed(AppRouterConst.invalidOtp);
         } else {
-          CustomAlertDialog.showCustomDialog(
-            title: _otpError!,
-            typeAlert: TypeAlert.error,
+          // CustomAlertDialog.showCustomDialog(
+          //   title: _otpError!,
+          //   typeAlert: TypeAlert.error,
+          // );
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(_otpError!, textAlign: TextAlign.center),
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            ),
           );
         }
 
@@ -314,11 +330,7 @@ class AuthFormProvider with ChangeNotifier {
 
   Future<OtpResponse?> resendOtp(BuildContext context, {int? id}) async {
     final result = await iAuthenticationFacad.resendOtp(
-      BaseParams(
-        data: ResendOtpParams(
-          userId: id ?? _companyRegistrationResponse?.id ?? 0,
-        ),
-      ),
+      BaseParams(data: ResendOtpParams(userId: id ?? _cusomerId ?? 0)),
     );
 
     result.fold(
@@ -459,10 +471,15 @@ class AuthFormProvider with ChangeNotifier {
       },
       (response) {
         Logger.logSuccess("Login success : ${response.toJson()}");
+        Logger.logSuccess(
+          "Customer ID : ${response.loginData?.customerId}, Status : ${response.status}",
+        );
+
         _setLoading(false);
         notifyListeners();
 
         if (response.status == 20 || response.status == 1) {
+          _cusomerId = response.loginData?.customerId;
           context.pushNamed(AppRouterConst.adminHome);
         } else if (response.status == 10) {
           Logger.logInfo(response.message);
@@ -472,9 +489,19 @@ class AuthFormProvider with ChangeNotifier {
             id: response.loginData?.customerId,
           );
         } else {
-          CustomAlertDialog.showCustomDialog(
-            title: response.message!,
-            typeAlert: TypeAlert.error,
+          // CustomAlertDialog.showCustomDialog( 7819
+          //   title: response.message!,
+          //   typeAlert: TypeAlert.error,
+          // );
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(response.message!, textAlign: TextAlign.center),
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            ),
           );
           //  RegistrationDialogs.pendingRegisteredDialog(context, enteredUser)
           // .then((_) => resetSignUpForm());
@@ -555,6 +582,7 @@ class AuthFormProvider with ChangeNotifier {
           RegistrationDialogs.pendingRegisteredDialog(
             context,
             companyName.getValue ?? '',
+            id: response.id,
           ).then((_) => resetSignUpForm());
         }
 
