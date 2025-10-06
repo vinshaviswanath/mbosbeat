@@ -26,9 +26,9 @@ class _SplashScreenState extends State<SplashScreen> {
         final isOnboardingCompleted =
             prefs.getBool("isOnboardingCompleted") ?? false;
         if (isOnboardingCompleted == true) {
-          context.pushNamed(AppRouterConst.homeScreen);
+          context.pushNamed(AppRouterConst.login);
           if (token.isEmpty) {
-            context.pushNamed(AppRouterConst.salesReturnScreen);
+            context.pushNamed(AppRouterConst.login);
           } else {
             context.pushNamed(AppRouterConst.adminHome);
           }

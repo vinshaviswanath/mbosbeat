@@ -28,5 +28,10 @@ class AppRouterConst {
   static const telephonicOrderScreen = "/telephonicOrderScreen";
   static const salesScreen = "/salesScreen";
   static const salesReturnScreen = "/salesReturnScreen";
+  static const purchaseReturnSCreen = "/purchaseReturnSCreen";
+  static const purchaseScreen = "/purchaseScreen";
+  static const receiptScreen = "/receiptScreen";
+  static const paymentScreen = "/paymentScreen";
+  static const replacementScreen = "/replacementScreen";
 
 }

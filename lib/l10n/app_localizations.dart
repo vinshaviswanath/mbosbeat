@@ -364,6 +364,420 @@ abstract class AppLocalizations {
   /// **'Mail Sent'**
   String get mail_sent;
 
+  /// No description provided for @sent_mail_to.
+  ///
+  /// In en, this message translates to:
+  /// **'We have sent a password recovery instructions\nto'**
+  String get sent_mail_to;
+
+  /// No description provided for @kindly_verify.
+  ///
+  /// In en, this message translates to:
+  /// **'. Kindly verify!'**
+  String get kindly_verify;
+
+  /// No description provided for @log_out.
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get log_out;
+
+  /// No description provided for @hello.
+  ///
+  /// In en, this message translates to:
+  /// **'Hello '**
+  String get hello;
+
+  /// No description provided for @verify_num_text.
+  ///
+  /// In en, this message translates to:
+  /// **'! you\'re almost ready to start enjoying MPOS Beat. Simply click the button below to verify your mobile number.'**
+  String get verify_num_text;
+
+  /// No description provided for @verify_number.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify your mobile number'**
+  String get verify_number;
+
+  /// No description provided for @kindly_login.
+  ///
+  /// In en, this message translates to:
+  /// **' your account details are already registered in our database. Kindly Login to continue!'**
+  String get kindly_login;
+
+  /// No description provided for @customer_transactions_screen_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Transactions'**
+  String get customer_transactions_screen_title;
+
+  /// No description provided for @customer_transactions_screen_search_customer.
+  ///
+  /// In en, this message translates to:
+  /// **'Search Customer'**
+  String get customer_transactions_screen_search_customer;
+
+  /// No description provided for @customer_transaction_detail_check_in_out.
+  ///
+  /// In en, this message translates to:
+  /// **'Check IN-OUT'**
+  String get customer_transaction_detail_check_in_out;
+
+  /// No description provided for @customer_transaction_detail_ContactPerson.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Person'**
+  String get customer_transaction_detail_ContactPerson;
+
+  /// No description provided for @customer_transaction_detail_Mobile.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile'**
+  String get customer_transaction_detail_Mobile;
+
+  /// No description provided for @customer_transaction_detail_GSTno.
+  ///
+  /// In en, this message translates to:
+  /// **'GST No. '**
+  String get customer_transaction_detail_GSTno;
+
+  /// No description provided for @customer_transaction_detail_Address.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get customer_transaction_detail_Address;
+
+  /// No description provided for @customer_transaction_detail_Balance.
+  ///
+  /// In en, this message translates to:
+  /// **'Balance'**
+  String get customer_transaction_detail_Balance;
+
+  /// No description provided for @customer_transaction_detail_Signal.
+  ///
+  /// In en, this message translates to:
+  /// **'Signal Strength '**
+  String get customer_transaction_detail_Signal;
+
+  /// No description provided for @customer_transaction_detail_CheckIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Check In'**
+  String get customer_transaction_detail_CheckIn;
+
+  /// No description provided for @customer_transaction_detail_CheckOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Check Out'**
+  String get customer_transaction_detail_CheckOut;
+
+  /// No description provided for @customer_transaction_detail_Skip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get customer_transaction_detail_Skip;
+
+  /// No description provided for @customer_transaction_detail_ModuleSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Module Summary'**
+  String get customer_transaction_detail_ModuleSummary;
+
+  /// No description provided for @customer_transaction_detail_outstanding_tab_sl_no.
+  ///
+  /// In en, this message translates to:
+  /// **'Sl No.'**
+  String get customer_transaction_detail_outstanding_tab_sl_no;
+
+  /// No description provided for @customer_transaction_detail_outstanding_tab_bill_no.
+  ///
+  /// In en, this message translates to:
+  /// **'Bill No.'**
+  String get customer_transaction_detail_outstanding_tab_bill_no;
+
+  /// No description provided for @customer_transaction_detail_outstanding_tab_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get customer_transaction_detail_outstanding_tab_date;
+
+  /// No description provided for @customer_transaction_detail_outstanding_tab_due_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Due Date'**
+  String get customer_transaction_detail_outstanding_tab_due_date;
+
+  /// No description provided for @customer_transaction_detail_outstanding_tab_amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get customer_transaction_detail_outstanding_tab_amount;
+
+  /// No description provided for @customer_transaction_detail_outstanding_total.
+  ///
+  /// In en, this message translates to:
+  /// **'Total:'**
+  String get customer_transaction_detail_outstanding_total;
+
+  /// No description provided for @customer_transaction_detail_outstanding_on_account.
+  ///
+  /// In en, this message translates to:
+  /// **'On Account:'**
+  String get customer_transaction_detail_outstanding_on_account;
+
+  /// No description provided for @customer_transaction_detail_outstanding_grand_total.
+  ///
+  /// In en, this message translates to:
+  /// **'Grand Total:'**
+  String get customer_transaction_detail_outstanding_grand_total;
+
+  /// No description provided for @customer_transaction_detail_visit_history_heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit History'**
+  String get customer_transaction_detail_visit_history_heading;
+
+  /// No description provided for @customer_transaction_detail_visit_history_transaction_no.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction No.'**
+  String get customer_transaction_detail_visit_history_transaction_no;
+
+  /// No description provided for @customer_transaction_detail_visit_history_type.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get customer_transaction_detail_visit_history_type;
+
+  /// No description provided for @customer_transaction_detail_skip_dilaog_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason for Skip'**
+  String get customer_transaction_detail_skip_dilaog_title;
+
+  /// No description provided for @customer_transaction_detail_skip_dilaog_confirm_skip.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Skip'**
+  String get customer_transaction_detail_skip_dilaog_confirm_skip;
+
+  /// No description provided for @customer_transaction_detail_skip_dilaog_cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get customer_transaction_detail_skip_dilaog_cancel;
+
+  /// No description provided for @other_transactions_stockTransfer_Togodown.
+  ///
+  /// In en, this message translates to:
+  /// **'TO GODOWN / VAN'**
+  String get other_transactions_stockTransfer_Togodown;
+
+  /// No description provided for @other_transactions_stockTransfer_additem.
+  ///
+  /// In en, this message translates to:
+  /// **'+ Add Item'**
+  String get other_transactions_stockTransfer_additem;
+
+  /// No description provided for @other_transactions_stockTransfer_productname.
+  ///
+  /// In en, this message translates to:
+  /// **'Product Name'**
+  String get other_transactions_stockTransfer_productname;
+
+  /// No description provided for @other_transactions_stockTransfer_Quantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity'**
+  String get other_transactions_stockTransfer_Quantity;
+
+  /// No description provided for @other_transactions_stockTransfer_Unit.
+  ///
+  /// In en, this message translates to:
+  /// **'Units'**
+  String get other_transactions_stockTransfer_Unit;
+
+  /// No description provided for @other_transactions_stockTransfer_ItemCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Item Count'**
+  String get other_transactions_stockTransfer_ItemCount;
+
+  /// No description provided for @other_transactions_stockTransfer_saveButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get other_transactions_stockTransfer_saveButton;
+
+  /// No description provided for @other_transactions_stockReceive_view.
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get other_transactions_stockReceive_view;
+
+  /// No description provided for @other_transactions_stockReceive_update_button.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Approved Stock'**
+  String get other_transactions_stockReceive_update_button;
+
+  /// No description provided for @other_transactions_stockReceive_reject_button.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject Approved Stock'**
+  String get other_transactions_stockReceive_reject_button;
+
+  /// No description provided for @other_transactions_stockReceive_Balance_text.
+  ///
+  /// In en, this message translates to:
+  /// **'Balance'**
+  String get other_transactions_stockReceive_Balance_text;
+
+  /// No description provided for @other_transactions_stockReceive_SlNo.
+  ///
+  /// In en, this message translates to:
+  /// **'Sl No'**
+  String get other_transactions_stockReceive_SlNo;
+
+  /// No description provided for @other_transactions_stockReceive_vocherNo.
+  ///
+  /// In en, this message translates to:
+  /// **'Voucher No'**
+  String get other_transactions_stockReceive_vocherNo;
+
+  /// No description provided for @other_transactions_stockReceive_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get other_transactions_stockReceive_date;
+
+  /// No description provided for @other_transactions_stockReceive_pricelist_text.
+  ///
+  /// In en, this message translates to:
+  /// **'Price List'**
+  String get other_transactions_stockReceive_pricelist_text;
+
+  /// No description provided for @expense_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Petty Expense'**
+  String get expense_title;
+
+  /// No description provided for @expense_oustanding.
+  ///
+  /// In en, this message translates to:
+  /// **'Outstanding'**
+  String get expense_oustanding;
+
+  /// No description provided for @expense_meter_reading.
+  ///
+  /// In en, this message translates to:
+  /// **'Meter Reading'**
+  String get expense_meter_reading;
+
+  /// No description provided for @expense_fuel_quantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Fuel Quantity'**
+  String get expense_fuel_quantity;
+
+  /// No description provided for @expense_place.
+  ///
+  /// In en, this message translates to:
+  /// **'Place'**
+  String get expense_place;
+
+  /// No description provided for @expense_amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get expense_amount;
+
+  /// No description provided for @expense_remarks.
+  ///
+  /// In en, this message translates to:
+  /// **'Remarks'**
+  String get expense_remarks;
+
+  /// No description provided for @expense_saveButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Petty Expense'**
+  String get expense_saveButton;
+
+  /// No description provided for @expense_cancelButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get expense_cancelButton;
+
+  /// No description provided for @transaction_detail_order_booking_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Booking'**
+  String get transaction_detail_order_booking_title;
+
+  /// No description provided for @transaction_detail_order_booking_rate.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate'**
+  String get transaction_detail_order_booking_rate;
+
+  /// No description provided for @transaction_detail_order_booking_discount.
+  ///
+  /// In en, this message translates to:
+  /// **'Discount'**
+  String get transaction_detail_order_booking_discount;
+
+  /// No description provided for @transaction_detail_order_booking_sub_total.
+  ///
+  /// In en, this message translates to:
+  /// **'Sub Total'**
+  String get transaction_detail_order_booking_sub_total;
+
+  /// No description provided for @transaction_detail_order_booking_add_item_search_product.
+  ///
+  /// In en, this message translates to:
+  /// **'Search Product'**
+  String get transaction_detail_order_booking_add_item_search_product;
+
+  /// No description provided for @transaction_detail_order_booking_add_item_select_by_group.
+  ///
+  /// In en, this message translates to:
+  /// **'Select by Group'**
+  String get transaction_detail_order_booking_add_item_select_by_group;
+
+  /// No description provided for @transaction_detail_order_booking_add_item_select_by_category.
+  ///
+  /// In en, this message translates to:
+  /// **'Select by Category'**
+  String get transaction_detail_order_booking_add_item_select_by_category;
+
+  /// No description provided for @transaction_detail_order_booking_add_item_select_group.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Group'**
+  String get transaction_detail_order_booking_add_item_select_group;
+
+  /// No description provided for @transaction_detail_order_booking_add_item_seleable_stock.
+  ///
+  /// In en, this message translates to:
+  /// **'Saleable Stock :'**
+  String get transaction_detail_order_booking_add_item_seleable_stock;
+
+  /// No description provided for @transaction_detail_order_booking_add_item_group.
+  ///
+  /// In en, this message translates to:
+  /// **'Group'**
+  String get transaction_detail_order_booking_add_item_group;
+
+  /// No description provided for @transaction_detail_order_booking_add_order_qty.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Qty'**
+  String get transaction_detail_order_booking_add_order_qty;
+
   /// No description provided for @mail_sent_screen_sent_mail_to.
   ///
   /// In en, this message translates to:
@@ -802,377 +1216,485 @@ abstract class AppLocalizations {
   /// **'Order Booking'**
   String get transaction_order_booking_screen_order_booking;
 
-  /// No description provided for @customer_transactions_screen_title.
+  /// No description provided for @transaction_payment_screen_payment.
   ///
   /// In en, this message translates to:
-  /// **'Customer Transactions'**
-  String get customer_transactions_screen_title;
+  /// **'Payment'**
+  String get transaction_payment_screen_payment;
 
-  /// No description provided for @customer_transactions_screen_search_customer.
-  ///
-  /// In en, this message translates to:
-  /// **'Search Customer'**
-  String get customer_transactions_screen_search_customer;
-
-  /// No description provided for @customer_transaction_detail_check_in_out.
-  ///
-  /// In en, this message translates to:
-  /// **'Check IN-OUT'**
-  String get customer_transaction_detail_check_in_out;
-
-  /// No description provided for @customer_transaction_detail_ContactPerson.
-  ///
-  /// In en, this message translates to:
-  /// **'Contact Person'**
-  String get customer_transaction_detail_ContactPerson;
-
-  /// No description provided for @customer_transaction_detail_Mobile.
-  ///
-  /// In en, this message translates to:
-  /// **'Mobile'**
-  String get customer_transaction_detail_Mobile;
-
-  /// No description provided for @customer_transaction_detail_GSTno.
-  ///
-  /// In en, this message translates to:
-  /// **'GST No. '**
-  String get customer_transaction_detail_GSTno;
-
-  /// No description provided for @customer_transaction_detail_Address.
-  ///
-  /// In en, this message translates to:
-  /// **'Address'**
-  String get customer_transaction_detail_Address;
-
-  /// No description provided for @customer_transaction_detail_Balance.
-  ///
-  /// In en, this message translates to:
-  /// **'Balance'**
-  String get customer_transaction_detail_Balance;
-
-  /// No description provided for @customer_transaction_detail_Signal.
-  ///
-  /// In en, this message translates to:
-  /// **'Signal Strength '**
-  String get customer_transaction_detail_Signal;
-
-  /// No description provided for @customer_transaction_detail_CheckIn.
-  ///
-  /// In en, this message translates to:
-  /// **'Check In'**
-  String get customer_transaction_detail_CheckIn;
-
-  /// No description provided for @customer_transaction_detail_CheckOut.
-  ///
-  /// In en, this message translates to:
-  /// **'Check Out'**
-  String get customer_transaction_detail_CheckOut;
-
-  /// No description provided for @customer_transaction_detail_Skip.
-  ///
-  /// In en, this message translates to:
-  /// **'Skip'**
-  String get customer_transaction_detail_Skip;
-
-  /// No description provided for @customer_transaction_detail_ModuleSummary.
-  ///
-  /// In en, this message translates to:
-  /// **'Module Summary'**
-  String get customer_transaction_detail_ModuleSummary;
-
-  /// No description provided for @customer_transaction_detail_outstanding_tab_sl_no.
-  ///
-  /// In en, this message translates to:
-  /// **'Sl No.'**
-  String get customer_transaction_detail_outstanding_tab_sl_no;
-
-  /// No description provided for @customer_transaction_detail_outstanding_tab_bill_no.
-  ///
-  /// In en, this message translates to:
-  /// **'Bill No.'**
-  String get customer_transaction_detail_outstanding_tab_bill_no;
-
-  /// No description provided for @customer_transaction_detail_outstanding_tab_date.
-  ///
-  /// In en, this message translates to:
-  /// **'Date'**
-  String get customer_transaction_detail_outstanding_tab_date;
-
-  /// No description provided for @customer_transaction_detail_outstanding_tab_due_date.
-  ///
-  /// In en, this message translates to:
-  /// **'Due Date'**
-  String get customer_transaction_detail_outstanding_tab_due_date;
-
-  /// No description provided for @customer_transaction_detail_outstanding_tab_amount.
-  ///
-  /// In en, this message translates to:
-  /// **'Amount'**
-  String get customer_transaction_detail_outstanding_tab_amount;
-
-  /// No description provided for @customer_transaction_detail_outstanding_total.
-  ///
-  /// In en, this message translates to:
-  /// **'Total:'**
-  String get customer_transaction_detail_outstanding_total;
-
-  /// No description provided for @customer_transaction_detail_outstanding_on_account.
-  ///
-  /// In en, this message translates to:
-  /// **'On Account:'**
-  String get customer_transaction_detail_outstanding_on_account;
-
-  /// No description provided for @customer_transaction_detail_outstanding_grand_total.
-  ///
-  /// In en, this message translates to:
-  /// **'Grand Total:'**
-  String get customer_transaction_detail_outstanding_grand_total;
-
-  /// No description provided for @customer_transaction_detail_visit_history_heading.
-  ///
-  /// In en, this message translates to:
-  /// **'Visit History'**
-  String get customer_transaction_detail_visit_history_heading;
-
-  /// No description provided for @customer_transaction_detail_visit_history_transaction_no.
-  ///
-  /// In en, this message translates to:
-  /// **'Transaction No.'**
-  String get customer_transaction_detail_visit_history_transaction_no;
-
-  /// No description provided for @customer_transaction_detail_visit_history_type.
-  ///
-  /// In en, this message translates to:
-  /// **'Type'**
-  String get customer_transaction_detail_visit_history_type;
-
-  /// No description provided for @customer_transaction_detail_skip_dilaog_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Reason for Skip'**
-  String get customer_transaction_detail_skip_dilaog_title;
-
-  /// No description provided for @customer_transaction_detail_skip_dilaog_confirm_skip.
-  ///
-  /// In en, this message translates to:
-  /// **'Confirm Skip'**
-  String get customer_transaction_detail_skip_dilaog_confirm_skip;
-
-  /// No description provided for @customer_transaction_detail_skip_dilaog_cancel.
-  ///
-  /// In en, this message translates to:
-  /// **'Cancel'**
-  String get customer_transaction_detail_skip_dilaog_cancel;
-
-  /// No description provided for @other_transactions_stockTransfer_Togodown.
-  ///
-  /// In en, this message translates to:
-  /// **'TO GODOWN / VAN'**
-  String get other_transactions_stockTransfer_Togodown;
-
-  /// No description provided for @other_transactions_stockTransfer_additem.
-  ///
-  /// In en, this message translates to:
-  /// **'+ Add Item'**
-  String get other_transactions_stockTransfer_additem;
-
-  /// No description provided for @other_transactions_stockTransfer_productname.
-  ///
-  /// In en, this message translates to:
-  /// **'Product Name'**
-  String get other_transactions_stockTransfer_productname;
-
-  /// No description provided for @other_transactions_stockTransfer_Quantity.
-  ///
-  /// In en, this message translates to:
-  /// **'Quantity'**
-  String get other_transactions_stockTransfer_Quantity;
-
-  /// No description provided for @other_transactions_stockTransfer_Unit.
-  ///
-  /// In en, this message translates to:
-  /// **'Units'**
-  String get other_transactions_stockTransfer_Unit;
-
-  /// No description provided for @other_transactions_stockTransfer_ItemCount.
-  ///
-  /// In en, this message translates to:
-  /// **'Item Count'**
-  String get other_transactions_stockTransfer_ItemCount;
-
-  /// No description provided for @other_transactions_stockTransfer_saveButton.
-  ///
-  /// In en, this message translates to:
-  /// **'Save'**
-  String get other_transactions_stockTransfer_saveButton;
-
-  /// No description provided for @other_transactions_stockReceive_view.
-  ///
-  /// In en, this message translates to:
-  /// **'View'**
-  String get other_transactions_stockReceive_view;
-
-  /// No description provided for @other_transactions_stockReceive_update_button.
-  ///
-  /// In en, this message translates to:
-  /// **'Update Approved Stock'**
-  String get other_transactions_stockReceive_update_button;
-
-  /// No description provided for @other_transactions_stockReceive_reject_button.
-  ///
-  /// In en, this message translates to:
-  /// **'Reject Approved Stock'**
-  String get other_transactions_stockReceive_reject_button;
-
-  /// No description provided for @other_transactions_stockReceive_Balance_text.
-  ///
-  /// In en, this message translates to:
-  /// **'Balance'**
-  String get other_transactions_stockReceive_Balance_text;
-
-  /// No description provided for @other_transactions_stockReceive_SlNo.
-  ///
-  /// In en, this message translates to:
-  /// **'Sl No'**
-  String get other_transactions_stockReceive_SlNo;
-
-  /// No description provided for @other_transactions_stockReceive_vocherNo.
-  ///
-  /// In en, this message translates to:
-  /// **'Voucher No'**
-  String get other_transactions_stockReceive_vocherNo;
-
-  /// No description provided for @other_transactions_stockReceive_date.
-  ///
-  /// In en, this message translates to:
-  /// **'Date'**
-  String get other_transactions_stockReceive_date;
-
-  /// No description provided for @other_transactions_stockReceive_pricelist_text.
-  ///
-  /// In en, this message translates to:
-  /// **'Price List'**
-  String get other_transactions_stockReceive_pricelist_text;
-
-  /// No description provided for @expense_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Petty Expense'**
-  String get expense_title;
-
-  /// No description provided for @expense_oustanding.
+  /// No description provided for @transaction_payment_screen_outstanding.
   ///
   /// In en, this message translates to:
   /// **'Outstanding'**
-  String get expense_oustanding;
+  String get transaction_payment_screen_outstanding;
 
-  /// No description provided for @expense_meter_reading.
+  /// No description provided for @transaction_payment_screen_payment_entry.
   ///
   /// In en, this message translates to:
-  /// **'Meter Reading'**
-  String get expense_meter_reading;
+  /// **'Payment Entry'**
+  String get transaction_payment_screen_payment_entry;
 
-  /// No description provided for @expense_fuel_quantity.
+  /// No description provided for @transaction_payment_screen_payment_no.
   ///
   /// In en, this message translates to:
-  /// **'Fuel Quantity'**
-  String get expense_fuel_quantity;
+  /// **'Payment No. :'**
+  String get transaction_payment_screen_payment_no;
 
-  /// No description provided for @expense_place.
+  /// No description provided for @transaction_payment_screen_amount.
   ///
   /// In en, this message translates to:
-  /// **'Place'**
-  String get expense_place;
+  /// **'Amount :'**
+  String get transaction_payment_screen_amount;
 
-  /// No description provided for @expense_amount.
+  /// No description provided for @transaction_payment_screen_r_mode.
+  ///
+  /// In en, this message translates to:
+  /// **'R Mode : '**
+  String get transaction_payment_screen_r_mode;
+
+  /// No description provided for @transaction_payment_screen_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get transaction_payment_screen_account;
+
+  /// No description provided for @transaction_payment_screen_cheque_no.
+  ///
+  /// In en, this message translates to:
+  /// **'Cheque Number :'**
+  String get transaction_payment_screen_cheque_no;
+
+  /// No description provided for @transaction_payment_screen_cheque_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Cheque Date :'**
+  String get transaction_payment_screen_cheque_date;
+
+  /// No description provided for @transaction_payment_screen_bank_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank Name :'**
+  String get transaction_payment_screen_bank_name;
+
+  /// No description provided for @transaction_payment_screen_branch_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Branch Name :'**
+  String get transaction_payment_screen_branch_name;
+
+  /// No description provided for @transaction_payment_screen_narration.
+  ///
+  /// In en, this message translates to:
+  /// **'Narration :'**
+  String get transaction_payment_screen_narration;
+
+  /// No description provided for @transaction_payment_screen_add_bills.
+  ///
+  /// In en, this message translates to:
+  /// **'+ Add Bills'**
+  String get transaction_payment_screen_add_bills;
+
+  /// No description provided for @transaction_payment_screen_advance.
+  ///
+  /// In en, this message translates to:
+  /// **'Advance :'**
+  String get transaction_payment_screen_advance;
+
+  /// No description provided for @amount.
   ///
   /// In en, this message translates to:
   /// **'Amount'**
-  String get expense_amount;
+  String get amount;
 
-  /// No description provided for @expense_remarks.
+  /// No description provided for @name.
   ///
   /// In en, this message translates to:
-  /// **'Remarks'**
-  String get expense_remarks;
+  /// **'Name'**
+  String get name;
 
-  /// No description provided for @expense_saveButton.
+  /// No description provided for @date.
   ///
   /// In en, this message translates to:
-  /// **'Save Petty Expense'**
-  String get expense_saveButton;
+  /// **'Date'**
+  String get date;
 
-  /// No description provided for @expense_cancelButton.
+  /// No description provided for @bill_type.
   ///
   /// In en, this message translates to:
-  /// **'Cancel'**
-  String get expense_cancelButton;
+  /// **'Bill Type'**
+  String get bill_type;
 
-  /// No description provided for @transaction_detail_order_booking_title.
+  /// No description provided for @purchase_screen_purchase.
   ///
   /// In en, this message translates to:
-  /// **'Order Booking'**
-  String get transaction_detail_order_booking_title;
+  /// **'Purchase'**
+  String get purchase_screen_purchase;
 
-  /// No description provided for @transaction_detail_order_booking_rate.
+  /// No description provided for @billing_mode.
+  ///
+  /// In en, this message translates to:
+  /// **'Billing Mode : '**
+  String get billing_mode;
+
+  /// No description provided for @b2b.
+  ///
+  /// In en, this message translates to:
+  /// **'B2B'**
+  String get b2b;
+
+  /// No description provided for @b2c.
+  ///
+  /// In en, this message translates to:
+  /// **'B2C'**
+  String get b2c;
+
+  /// No description provided for @product_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Product Name'**
+  String get product_name;
+
+  /// No description provided for @qty.
+  ///
+  /// In en, this message translates to:
+  /// **'Qty'**
+  String get qty;
+
+  /// No description provided for @rate.
   ///
   /// In en, this message translates to:
   /// **'Rate'**
-  String get transaction_detail_order_booking_rate;
+  String get rate;
 
-  /// No description provided for @transaction_detail_order_booking_discount.
+  /// No description provided for @disc_percentage.
+  ///
+  /// In en, this message translates to:
+  /// **'Disc. %'**
+  String get disc_percentage;
+
+  /// No description provided for @free_qty.
+  ///
+  /// In en, this message translates to:
+  /// **'Free Qty:'**
+  String get free_qty;
+
+  /// No description provided for @cgst.
+  ///
+  /// In en, this message translates to:
+  /// **'CGST'**
+  String get cgst;
+
+  /// No description provided for @sgst.
+  ///
+  /// In en, this message translates to:
+  /// **'SGST'**
+  String get sgst;
+
+  /// No description provided for @grand_total.
+  ///
+  /// In en, this message translates to:
+  /// **'Grand Total'**
+  String get grand_total;
+
+  /// No description provided for @discount_add_minus.
+  ///
+  /// In en, this message translates to:
+  /// **'Discount (+/-)'**
+  String get discount_add_minus;
+
+  /// No description provided for @remarks.
+  ///
+  /// In en, this message translates to:
+  /// **'Remarks:'**
+  String get remarks;
+
+  /// No description provided for @purchase_return_screen_purchase_return.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase Return'**
+  String get purchase_return_screen_purchase_return;
+
+  /// No description provided for @receipt_screen_receipt.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt'**
+  String get receipt_screen_receipt;
+
+  /// No description provided for @receipt_screen_receipt_entry.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt Entry'**
+  String get receipt_screen_receipt_entry;
+
+  /// No description provided for @receipt_screen_receipt_no.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt No. :'**
+  String get receipt_screen_receipt_no;
+
+  /// No description provided for @receipt_screen_Amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount :'**
+  String get receipt_screen_Amount;
+
+  /// No description provided for @replacement_screen_replacemant.
+  ///
+  /// In en, this message translates to:
+  /// **'Replacement'**
+  String get replacement_screen_replacemant;
+
+  /// No description provided for @replacement_screen_inc_rate.
+  ///
+  /// In en, this message translates to:
+  /// **'Incl. Rate'**
+  String get replacement_screen_inc_rate;
+
+  /// No description provided for @replacement_screen_return_products.
+  ///
+  /// In en, this message translates to:
+  /// **'Return Products'**
+  String get replacement_screen_return_products;
+
+  /// No description provided for @add_item.
+  ///
+  /// In en, this message translates to:
+  /// **'+ Add Item'**
+  String get add_item;
+
+  /// No description provided for @replacement_screen_save_replacement.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Replacement'**
+  String get replacement_screen_save_replacement;
+
+  /// No description provided for @sales_screen_sales.
+  ///
+  /// In en, this message translates to:
+  /// **'Sales'**
+  String get sales_screen_sales;
+
+  /// No description provided for @sales_screen_coupon_discount.
+  ///
+  /// In en, this message translates to:
+  /// **'Coupon Discount (+/-)'**
+  String get sales_screen_coupon_discount;
+
+  /// No description provided for @sales_screen_auto_receipt_req.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto Receipt Required'**
+  String get sales_screen_auto_receipt_req;
+
+  /// No description provided for @discount_alert_discount_type.
+  ///
+  /// In en, this message translates to:
+  /// **'Discount Type'**
+  String get discount_alert_discount_type;
+
+  /// No description provided for @percentage.
+  ///
+  /// In en, this message translates to:
+  /// **'Percentage'**
+  String get percentage;
+
+  /// No description provided for @discount.
   ///
   /// In en, this message translates to:
   /// **'Discount'**
-  String get transaction_detail_order_booking_discount;
+  String get discount;
 
-  /// No description provided for @transaction_detail_order_booking_sub_total.
+  /// No description provided for @discount_alert_apply_discount.
   ///
   /// In en, this message translates to:
-  /// **'Sub Total'**
-  String get transaction_detail_order_booking_sub_total;
+  /// **'Apply Discount'**
+  String get discount_alert_apply_discount;
 
-  /// No description provided for @transaction_detail_order_booking_add_item_search_product.
+  /// No description provided for @cash_alert_mode_of_receipt.
   ///
   /// In en, this message translates to:
-  /// **'Search Product'**
-  String get transaction_detail_order_booking_add_item_search_product;
+  /// **'Mode of Receipt :'**
+  String get cash_alert_mode_of_receipt;
 
-  /// No description provided for @transaction_detail_order_booking_add_item_select_by_group.
+  /// No description provided for @cash.
   ///
   /// In en, this message translates to:
-  /// **'Select by Group'**
-  String get transaction_detail_order_booking_add_item_select_by_group;
+  /// **'Cash'**
+  String get cash;
 
-  /// No description provided for @transaction_detail_order_booking_add_item_select_by_category.
+  /// No description provided for @bank.
   ///
   /// In en, this message translates to:
-  /// **'Select by Category'**
-  String get transaction_detail_order_booking_add_item_select_by_category;
+  /// **'Bank'**
+  String get bank;
 
-  /// No description provided for @transaction_detail_order_booking_add_item_select_group.
+  /// No description provided for @cheque_alert_instrument_no.
   ///
   /// In en, this message translates to:
-  /// **'Select Group'**
-  String get transaction_detail_order_booking_add_item_select_group;
+  /// **'Instrument No.'**
+  String get cheque_alert_instrument_no;
 
-  /// No description provided for @transaction_detail_order_booking_add_item_seleable_stock.
+  /// No description provided for @cheque_alert_instrument_date.
   ///
   /// In en, this message translates to:
-  /// **'Saleable Stock :'**
-  String get transaction_detail_order_booking_add_item_seleable_stock;
+  /// **'Instrument Date'**
+  String get cheque_alert_instrument_date;
 
-  /// No description provided for @transaction_detail_order_booking_add_item_group.
+  /// No description provided for @payment_mode_alert_select_payment_mode.
   ///
   /// In en, this message translates to:
-  /// **'Group'**
-  String get transaction_detail_order_booking_add_item_group;
+  /// **'Select Payment Mode'**
+  String get payment_mode_alert_select_payment_mode;
 
-  /// No description provided for @transaction_detail_order_booking_add_order_qty.
+  /// No description provided for @upi.
+  ///
+  /// In en, this message translates to:
+  /// **'UPI'**
+  String get upi;
+
+  /// No description provided for @cheque.
+  ///
+  /// In en, this message translates to:
+  /// **'Cheque'**
+  String get cheque;
+
+  /// No description provided for @sales_return_screen_sales_return.
+  ///
+  /// In en, this message translates to:
+  /// **'Sales Return'**
+  String get sales_return_screen_sales_return;
+
+  /// No description provided for @cess.
+  ///
+  /// In en, this message translates to:
+  /// **'CESS'**
+  String get cess;
+
+  /// No description provided for @telephonic_order_screen_telephonic_order.
+  ///
+  /// In en, this message translates to:
+  /// **'Telephonic Order'**
+  String get telephonic_order_screen_telephonic_order;
+
+  /// No description provided for @telephonic_order_screen_order_qty.
   ///
   /// In en, this message translates to:
   /// **'Order Qty'**
-  String get transaction_detail_order_booking_add_order_qty;
+  String get telephonic_order_screen_order_qty;
+
+  /// No description provided for @order_booking_voucher_no.
+  ///
+  /// In en, this message translates to:
+  /// **'Voucher No.'**
+  String get order_booking_voucher_no;
+
+  /// No description provided for @order_booking_balance.
+  ///
+  /// In en, this message translates to:
+  /// **'Balance'**
+  String get order_booking_balance;
+
+  /// No description provided for @order_booking_price_list.
+  ///
+  /// In en, this message translates to:
+  /// **'Price List'**
+  String get order_booking_price_list;
+
+  /// No description provided for @order_booking_quantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity'**
+  String get order_booking_quantity;
+
+  /// No description provided for @order_booking_sub_total.
+  ///
+  /// In en, this message translates to:
+  /// **'Sub Total'**
+  String get order_booking_sub_total;
+
+  /// No description provided for @order_booking_add_item_select_by_group.
+  ///
+  /// In en, this message translates to:
+  /// **'Select by Group'**
+  String get order_booking_add_item_select_by_group;
+
+  /// No description provided for @order_booking_add_item_select_group.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Group'**
+  String get order_booking_add_item_select_group;
+
+  /// No description provided for @order_booking_add_item_select_by_category.
+  ///
+  /// In en, this message translates to:
+  /// **'Select by Category'**
+  String get order_booking_add_item_select_by_category;
+
+  /// No description provided for @order_booking_add_item_select_category.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Category'**
+  String get order_booking_add_item_select_category;
+
+  /// No description provided for @stock_card_group.
+  ///
+  /// In en, this message translates to:
+  /// **'Group :'**
+  String get stock_card_group;
+
+  /// No description provided for @stock_card_category_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Category Name'**
+  String get stock_card_category_name;
+
+  /// No description provided for @stock_card_sealable_stock.
+  ///
+  /// In en, this message translates to:
+  /// **'Saleable Stock :'**
+  String get stock_card_sealable_stock;
+
+  /// No description provided for @stock_card_qls.
+  ///
+  /// In en, this message translates to:
+  /// **'Qls'**
+  String get stock_card_qls;
+
+  /// No description provided for @stock_card_mrp.
+  ///
+  /// In en, this message translates to:
+  /// **'MRP'**
+  String get stock_card_mrp;
+
+  /// No description provided for @stock_card_tax_percentage.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax %'**
+  String get stock_card_tax_percentage;
+
+  /// No description provided for @stock_card_inc_rate.
+  ///
+  /// In en, this message translates to:
+  /// **'Incl. Rate'**
+  String get stock_card_inc_rate;
+
+  /// No description provided for @order_detail_widget_order_qty.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Qty'**
+  String get order_detail_widget_order_qty;
+
+  /// No description provided for @order_detail_widget_nos.
+  ///
+  /// In en, this message translates to:
+  /// **'Nos'**
+  String get order_detail_widget_nos;
+
+  /// No description provided for @order_detail_widget_total.
+  ///
+  /// In en, this message translates to:
+  /// **'Total: '**
+  String get order_detail_widget_total;
 }
 
 class _AppLocalizationsDelegate

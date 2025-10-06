@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/l10n/app_localizations.dart';
-import 'package:mpos_beat/presentation/common/widgets/custom_textField.dart';
+import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 
 class AddItems extends StatefulWidget {
   const AddItems({super.key});
@@ -115,8 +115,8 @@ class _AddItemsState extends State<AddItems> {
                     // Takes available space
                     child: CustomTextField(
                       hint: "Search product",
-                      iconData: Icons.search,
-                      iconColor: ColorResources.bluishGray,
+                      // iconData: Icons.search,
+                      // iconColor: ColorResources.bluishGray,
                     ),
                   ),
                 ],

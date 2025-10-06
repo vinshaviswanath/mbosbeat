@@ -2,17 +2,17 @@ import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_settings/widgets/info_tool_tip.dart';
-import 'package:mpos_beat/presentation/views/transactions/sales/widgets/payment_mode_alert_widget.dart';
+import 'package:mpos_beat/presentation/views/transactions/purchase/widgets/discount_alert_widget.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/widgets/end_to_end_text_widget.dart';
 
-class SalesScreen extends StatefulWidget {
-  const SalesScreen({super.key});
+class PurchaseReturnScreen extends StatefulWidget {
+  const PurchaseReturnScreen({super.key});
 
   @override
-  State<SalesScreen> createState() => _SalesScreenState();
+  State<PurchaseReturnScreen> createState() => _PurchaseReturnScreenState();
 }
 
-class _SalesScreenState extends State<SalesScreen> {
+class _PurchaseReturnScreenState extends State<PurchaseReturnScreen> {
   String _selectedMode = "B2C";
 
   final products = [
@@ -20,6 +20,7 @@ class _SalesScreenState extends State<SalesScreen> {
       "name": "ASD 16 Rice 10Kg",
       "qty": "0.0 Qls",
       "rate": "3900.00 Qls",
+      "discount": "0.00",
       "amount": "0.00",
       "freeQty": "1.0 Qls",
     },
@@ -28,7 +29,6 @@ class _SalesScreenState extends State<SalesScreen> {
   Widget build(BuildContext context) {
     final appLocalizations = context.l10n;
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: ColorResources.cloudGray,
         surfaceTintColor: ColorResources.cloudGray,
@@ -43,7 +43,7 @@ class _SalesScreenState extends State<SalesScreen> {
           ),
         ),
         title: Text(
-          appLocalizations.sales_screen_sales,
+          appLocalizations.purchase_return_screen_purchase_return,
           style: context.textStyle.s20.indigoBlue.bold.roboto,
         ),
         centerTitle: true,
@@ -83,42 +83,25 @@ class _SalesScreenState extends State<SalesScreen> {
                         "Alackal Stores, Kuruppamthara",
                         style: context.textStyle.s12.w500.indigoBlue.roboto,
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 15,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: ColorResources.rosePink,
-                        ),
-                        child: Center(
-                          child: Text(
-                            appLocalizations.add_item,
-                            style: context.textStyle.s10.white.w400,
-                          ),
-                        ),
-                      ),
                     ],
                   ),
-                  h4,
+                  h6,
                   const EndToEndTextWidget(
                     text1: "T23-24/D-AM120",
                     text2: "29-07-2024",
                   ),
-                  h4,
+                  h12,
                   Row(
                     // crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                       Text(
                         appLocalizations.billing_mode,
-                        style: const TextStyle(
-                          color: Colors.blueGrey,
-                          fontWeight: FontWeight.w500,
-                        ),
+                        style: context.textStyle.s10.w500.dustyBlue.roboto,
                       ),
-                      w10,
+                      const SizedBox(width: 10),
+
+                      /// B2B option
                       GestureDetector(
                         onTap: () {
                           setState(() {
@@ -134,8 +117,8 @@ class _SalesScreenState extends State<SalesScreen> {
                                 shape: BoxShape.circle,
                                 border: Border.all(
                                   color: _selectedMode == "B2B"
-                                      ? Colors.blue
-                                      : Colors.grey,
+                                      ? ColorResources.oceanBlue
+                                      : ColorResources.bluishGray,
                                   width: 2,
                                 ),
                               ),
@@ -146,16 +129,16 @@ class _SalesScreenState extends State<SalesScreen> {
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: _selectedMode == "B2B"
-                                        ? Colors.orange
-                                        : Colors.grey,
+                                        ? ColorResources.amber
+                                        : ColorResources.bluishGray,
                                   ),
                                 ),
                               ),
                             ),
                             w6,
-                            Text(
+                             Text(
                               appLocalizations.b2b,
-                              style: const TextStyle(color: Colors.blueGrey),
+                              style:context.textStyle.s10.w500.dustyBlue.roboto,
                             ),
                           ],
                         ),
@@ -176,8 +159,8 @@ class _SalesScreenState extends State<SalesScreen> {
                                 shape: BoxShape.circle,
                                 border: Border.all(
                                   color: _selectedMode == "B2C"
-                                      ? Colors.blue
-                                      : Colors.grey,
+                                      ? ColorResources.oceanBlue
+                                      : ColorResources.bluishGray,
                                   width: 2,
                                 ),
                               ),
@@ -188,17 +171,16 @@ class _SalesScreenState extends State<SalesScreen> {
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: _selectedMode == "B2C"
-                                        ? Colors.orange
-                                        : Colors.grey,
+                                        ? ColorResources.amber
+                                        : ColorResources.bluishGray,
                                   ),
                                 ),
                               ),
                             ),
-                           w6,
-                            Text(
-                              appLocalizations.b2c,
-
-                              style: const TextStyle(color: Colors.blueGrey),
+                            w6,
+                             Text(
+                              "B2C",
+                              style: context.textStyle.s10.w500.dustyBlue.roboto,
                             ),
                           ],
                         ),
@@ -225,21 +207,21 @@ class _SalesScreenState extends State<SalesScreen> {
                   Row(
                     children: [
                       Expanded(
-                        flex: 4,
+                        flex: 2,
                         child: Text(
                           appLocalizations.product_name,
                           style: context.textStyle.s10.w500.dustyBlue.roboto,
                         ),
                       ),
                       Expanded(
-                        flex: 2,
+                        flex: 1,
                         child: Text(
                           appLocalizations.qty,
                           style: context.textStyle.s10.w500.dustyBlue.roboto,
                         ),
                       ),
                       Expanded(
-                        flex: 2,
+                        flex: 1,
                         child: Text(
                           appLocalizations.rate,
                           style: context.textStyle.s10.w500.dustyBlue.roboto,
@@ -247,6 +229,13 @@ class _SalesScreenState extends State<SalesScreen> {
                       ),
                       Expanded(
                         flex: 1,
+                        child: Text(
+                          appLocalizations.disc_percentage,
+                          style: context.textStyle.s10.w500.dustyBlue.roboto,
+                        ),
+                      ),
+                      Expanded(
+                        flex: 0,
                         child: Text(
                           appLocalizations.amount,
                           style: context.textStyle.s10.w500.dustyBlue.roboto,
@@ -297,6 +286,14 @@ class _SalesScreenState extends State<SalesScreen> {
                           flex: 2,
                           child: Text(
                             product["rate"]!,
+                            textAlign: TextAlign.center,
+                            style: context.textStyle.s09.w400.dustyBlue.roboto,
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Text(
+                            product["discount"]!,
                             textAlign: TextAlign.center,
                             style: context.textStyle.s09.w400.dustyBlue.roboto,
                           ),
@@ -383,7 +380,7 @@ class _SalesScreenState extends State<SalesScreen> {
                       ),
                     ],
                   ),
-                  h32,
+                  h100,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -395,49 +392,17 @@ class _SalesScreenState extends State<SalesScreen> {
                         borderColor: ColorResources.bluishGray,
                         thumbColor: ColorResources.bluishGray,
                         value: false,
-                        onChanged: (value) {},
-                      ),
-                    ],
-                  ),
-                  h16,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        appLocalizations.sales_screen_coupon_discount,
-                        style: context.textStyle.s12.w500.indigoBlue.roboto,
-                      ),
-                      CustomSwitch(
-                        borderColor: ColorResources.bluishGray,
-                        thumbColor: ColorResources.bluishGray,
-                        value: false,
-                        onChanged: (value) {},
-                      ),
-                    ],
-                  ),
-                  h16,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        appLocalizations.sales_screen_auto_receipt_req,
-                        style: context.textStyle.s12.w500.indigoBlue.roboto,
-                      ),
-                      CustomSwitch(
-                        borderColor: ColorResources.bluishGray,
-                        thumbColor: ColorResources.bluishGray,
-                        value: false,
                         onChanged: (value) {
-                          if (value == true) {
-                            CustomDialog.showBottomCustomDialog(
-                              chid: const PaymentModeAlertWidget(),
-                            );
-                          }
+                           value == true
+                              ? CustomDialog.showBottomCustomDialog(
+                                  chid: const DiscountAlertWidget(),
+                                )
+                              : null;
                         },
                       ),
                     ],
                   ),
-                  h12,
+                  h16,
                   Text(
                     appLocalizations.remarks,
                     style: context.textStyle.s10.w400.dustyBlue.roboto,

@@ -29,7 +29,7 @@ class LoginImpl {
         if (response.isOk) {
           final data = LoginResponse.fromJson(response.data);
           final token = data.loginData?.token;
-          if (token != null && token.isNotEmpty) {
+          if (token != null && token.isNotEmpty && data.status != 10) {
             await sharedPreferences.setString("token", token);
           }
           return data;

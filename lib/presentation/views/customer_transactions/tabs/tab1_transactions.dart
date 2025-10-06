@@ -12,11 +12,15 @@ class Tab1Transactions extends StatefulWidget {
 
 class _Tab1TransactionsState extends State<Tab1Transactions> {
   List<String> transactionOptions = [
-    AppRouterConst.orderbooking,
-    "telephonicorder",
-    "sales",
-    "salesreturn",
-    "receipt",
+    AppRouterConst.transactionOrderBooking,
+    AppRouterConst.telephonicOrderScreen,
+    AppRouterConst.salesScreen,
+    AppRouterConst.salesReturnScreen,
+    AppRouterConst.receiptScreen,
+    AppRouterConst.replacementScreen,
+    AppRouterConst.purchaseScreen,
+    AppRouterConst.purchaseReturnSCreen,
+    AppRouterConst.paymentScreen,
   ];
   List<String> images = [
     "assets/images/pngs/icon-1.png",
@@ -33,7 +37,7 @@ class _Tab1TransactionsState extends State<Tab1Transactions> {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         childAspectRatio: 2,
         mainAxisSpacing: 3,

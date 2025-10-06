@@ -1,5 +1,3 @@
-import 'package:flutter_dropdown_alert/model/data_alert.dart';
-import 'package:mpos_beat/core/utils/alert_dialog.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/presentation/common/animations/wheel_spinner.dart';
 import 'package:mpos_beat/presentation/common/widgets/base_scaffold.dart';
@@ -123,9 +121,28 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
                                           AppRouterConst.customRouteScreen,
                                           extra: NavigationType.failed,
                                         );
-                                        CustomAlertDialog.showCustomDialog(
-                                          title: "OTP Verified Successfully",
-                                          typeAlert: TypeAlert.success,
+                                        // CustomAlertDialog.showCustomDialog(
+                                        //   title: "OTP Verified Successfully",
+                                        //   typeAlert: TypeAlert.success,
+                                        // );
+                                        ScaffoldMessenger.of(
+                                          context,
+                                        ).showSnackBar(
+                                          SnackBar(
+                                            content: const Text(
+                                              "OTP Verified Successfully",
+                                              textAlign: TextAlign.center,
+                                            ),
+                                            behavior: SnackBarBehavior.floating,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(16),
+                                            ),
+                                            margin: const EdgeInsets.symmetric(
+                                              horizontal: 16,
+                                              vertical: 8,
+                                            ),
+                                          ),
                                         );
                                       } else if (response.status == 0) {
                                         GoRouter.of(
@@ -162,7 +179,10 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
                                       ? null
                                       : () {
                                           provider.startOtpTimer();
-                                          provider.resendOtp(context);
+                                          provider.resendOtp(
+                                            context,
+                                            id: provider.customerId,
+                                          );
                                           wheelKey.currentState?.startSpin();
                                         },
                                   child: Text(
