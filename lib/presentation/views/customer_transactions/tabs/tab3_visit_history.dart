@@ -29,7 +29,7 @@ class _Tab3VisitHistoryState extends State<Tab3VisitHistory> {
               Text(
                 applocalization
                     .customer_transaction_detail_visit_history_heading,
-                style: context.textStyle.s14.indigoBlue.bold,
+                style: context.textStyle.s12.indigoBlue.bold,
               ),
               Spacer(),
               Transform.rotate(
@@ -62,30 +62,30 @@ class _Tab3VisitHistoryState extends State<Tab3VisitHistory> {
               Text(
                 applocalization
                     .customer_transaction_detail_outstanding_tab_sl_no,
-                style: context.textStyle.s12.roboto.dustyBlue,
+                style: context.textStyle.s10.roboto.dustyBlue,
               ),
               SizedBox(width: width * 0.0200),
               Text(
                 applocalization
                     .customer_transaction_detail_visit_history_transaction_no,
-                style: context.textStyle.s12.roboto.dustyBlue,
+                style: context.textStyle.s10.roboto.dustyBlue,
               ),
               SizedBox(width: width * 0.04),
               Text(
                 applocalization
                     .customer_transaction_detail_outstanding_tab_date,
-                style: context.textStyle.s12.roboto.dustyBlue,
+                style: context.textStyle.s10.roboto.dustyBlue,
               ),
               SizedBox(width: width * 0.170),
               Text(
                 applocalization.customer_transaction_detail_visit_history_type,
-                style: context.textStyle.s12.roboto.dustyBlue,
+                style: context.textStyle.s10.roboto.dustyBlue,
               ),
               Spacer(),
               Text(
                 applocalization
                     .customer_transaction_detail_outstanding_tab_amount,
-                style: context.textStyle.s12.roboto.dustyBlue,
+                style: context.textStyle.s10.roboto.dustyBlue,
               ),
             ],
           ),
@@ -112,14 +112,14 @@ class _Tab3VisitHistoryState extends State<Tab3VisitHistory> {
                             //sl no.....
                             Text(
                               "${index + 1}",
-                              style: context.textStyle.s11.roboto.dustyBlue,
+                              style: context.textStyle.s10.roboto.dustyBlue,
                             ),
                             SizedBox(width: width * 0.0820),
 
                             // transaction no.......
                             Text(
                               "HJIL2468725924",
-                              style: context.textStyle.s11.roboto.dustyBlue,
+                              style: context.textStyle.s10.roboto.dustyBlue,
                             ),
                             SizedBox(width: width * 0.0280),
                             Column(
@@ -128,13 +128,13 @@ class _Tab3VisitHistoryState extends State<Tab3VisitHistory> {
                                 //date.......
                                 Text(
                                   "22-Mar-2024",
-                                  style: context.textStyle.s11.roboto.dustyBlue,
+                                  style: context.textStyle.s10.roboto.dustyBlue,
                                 ),
 
                                 //time.....
                                 Text(
                                   "09:30 AM 03:30PM",
-                                  style: context.textStyle.s11.roboto.dustyBlue,
+                                  style: context.textStyle.s07.roboto.dustyBlue,
                                 ),
                               ],
                             ),
@@ -145,7 +145,7 @@ class _Tab3VisitHistoryState extends State<Tab3VisitHistory> {
                               flex: 1,
                               child: Text(
                                 "Salesorder",
-                                style: context.textStyle.s11.roboto.dustyBlue,
+                                style: context.textStyle.s10.roboto.dustyBlue,
                               ),
                             ),
                             Spacer(),
@@ -153,7 +153,7 @@ class _Tab3VisitHistoryState extends State<Tab3VisitHistory> {
                             //amount.....
                             Text(
                               "17852.00",
-                              style: context.textStyle.s11.roboto.dustyBlue,
+                              style: context.textStyle.s10.roboto.dustyBlue,
                             ),
                           ],
                         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mpos_beat/core/theme/colors.dart';
+import 'package:mpos_beat/core/theme/diamentions.dart';
 import 'package:mpos_beat/core/theme/text_styles.dart';
 import 'package:mpos_beat/core/utils/extentions.dart';
 import 'package:mpos_beat/l10n/app_localizations.dart';
@@ -98,7 +99,12 @@ class _ExpenseEntryScreenState extends State<ExpenseEntryScreen> {
               ),
               SizedBox(
                 width: width * 0.98,
-                child: CustomTextField(hint: 'FOOD EXPENSES'),
+                child: CustomTextField(
+                  hint: 'FOOD EXPENSES',
+                  backgroundColor: ColorResources.lightGray,
+                  borderRadius: 12,
+                  borderColor: ColorResources.transparent,
+                ),
               ),
               Row(
                 children: [
@@ -139,11 +145,16 @@ class _ExpenseEntryScreenState extends State<ExpenseEntryScreen> {
                           local.expense_meter_reading,
                           style: context.textStyle.s14.bluishGray.roboto,
                         ),
-                        CustomTextField(hint: local.expense_meter_reading),
+                        CustomTextField(
+                          hint: local.expense_meter_reading,
+                          backgroundColor: ColorResources.lightGray,
+                          borderRadius: 12,
+                          borderColor: ColorResources.transparent,
+                        ),
                       ],
                     ),
                   ),
-                  SizedBox(width: 20),
+                  w20,
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -152,20 +163,44 @@ class _ExpenseEntryScreenState extends State<ExpenseEntryScreen> {
                           local.expense_fuel_quantity,
                           style: context.textStyle.s14.bluishGray.roboto,
                         ),
-                        CustomTextField(hint:  local.expense_fuel_quantity),
+                        CustomTextField(
+                          hint: local.expense_fuel_quantity,
+                          backgroundColor: ColorResources.lightGray,
+                          borderRadius: 12,
+                          borderColor: ColorResources.transparent,
+                        ),
                       ],
                     ),
                   ),
                 ],
               ),
               SizedBox(height: height * 0.010),
-              Text( local.expense_place, style: context.textStyle.s14.bluishGray.roboto),
-              CustomTextField(hint:local.expense_place),
+              Text(
+                local.expense_place,
+                style: context.textStyle.s14.bluishGray.roboto,
+              ),
+              CustomTextField(
+                hint: local.expense_place,
+                backgroundColor: ColorResources.lightGray,
+                borderRadius: 12,
+                borderColor: ColorResources.transparent,
+              ),
               SizedBox(height: height * 0.010),
-              Text(local.expense_amount, style: context.textStyle.s14.bluishGray.roboto),
-              CustomTextField(hint: local.expense_amount),
+              Text(
+                local.expense_amount,
+                style: context.textStyle.s14.bluishGray.roboto,
+              ),
+              CustomTextField(
+                hint: local.expense_amount,
+                backgroundColor: ColorResources.lightGray,
+                borderRadius: 12,
+                borderColor: ColorResources.transparent,
+              ),
               SizedBox(height: height * 0.1),
-              Text(local.expense_remarks, style: context.textStyle.s14.bluishGray.roboto),
+              Text(
+                local.expense_remarks,
+                style: context.textStyle.s14.bluishGray.roboto,
+              ),
               Container(
                 child: TextField(
                   cursorHeight: 13,

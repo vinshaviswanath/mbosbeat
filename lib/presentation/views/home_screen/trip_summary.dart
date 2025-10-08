@@ -65,12 +65,12 @@ class SummaryCard extends StatelessWidget {
         children: [
           Text(
             item.value,
-            style: context.textStyle.s24.copyWith(color: item.textColor).bold,
+            style: context.textStyle.s22.copyWith(color: item.textColor).bold,
           ),
           Text(
             item.label,
             textAlign: TextAlign.center,
-            style: context.textStyle.s12.copyWith(color: item.textColor),
+            style: context.textStyle.s10.copyWith(color: item.textColor),
           ),
         ],
       ),

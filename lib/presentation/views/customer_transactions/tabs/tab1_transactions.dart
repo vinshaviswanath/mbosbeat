@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mpos_beat/core/theme/colors.dart';
+import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/route/app_router_const.dart';
 
 class Tab1Transactions extends StatefulWidget {
@@ -34,6 +35,18 @@ class _Tab1TransactionsState extends State<Tab1Transactions> {
     "assets/images/pngs/icon-9.png",
     "assets/images/pngs/icon-10.png",
   ];
+  List<String> text = [
+    "ORDER BOOKING",
+    "TELEPHONIC ORDER",
+    "SALES",
+    "SALES RETURN",
+    "RECEIPT",
+    "REPLACEMENT",
+    "PURCHASE",
+    "PURCHASE RETURN",
+    "PAYMENT",
+    "FEEDBACK",
+  ];
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
@@ -58,7 +71,17 @@ class _Tab1TransactionsState extends State<Tab1Transactions> {
                 color: colors[index % colors.length],
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: Image.asset(images[index], height: 10, width: 20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(images[index], height: 21, width: 24),
+                  SizedBox(height: 8),
+                  Text(
+                    text[index],
+                    style: context.textStyle.dustyBlue.roboto.s12.w300,
+                  ),
+                ],
+              ),
             ),
           ),
         );

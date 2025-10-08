@@ -12,7 +12,8 @@ extension TextStyleX on TextStyle {
   TextStyle get w700 => copyWith(fontWeight: FontWeight.w700);
   TextStyle get w800 => copyWith(fontWeight: FontWeight.w800);
   TextStyle get bold => copyWith(fontWeight: FontWeight.bold);
-
+  TextStyle get s07 => copyWith(fontSize: 7 * _scaleWidth);
+  TextStyle get s08 => copyWith(fontSize: 8 * _scaleWidth);
   TextStyle get s09 => copyWith(fontSize: 9 * _scaleWidth);
   TextStyle get s10 => copyWith(fontSize: 10 * _scaleWidth);
   TextStyle get s11 => copyWith(fontSize: 11 * _scaleWidth);

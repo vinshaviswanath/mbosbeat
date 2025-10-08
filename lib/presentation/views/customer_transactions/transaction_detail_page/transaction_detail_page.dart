@@ -50,7 +50,10 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(applocalization.customer_transaction_detail_check_in_out),
+        title: Text(
+          applocalization.customer_transaction_detail_check_in_out,
+          style: context.textStyle.roboto.s20.bold.indigoBlue,
+        ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, size: 18),
           onPressed: () {
@@ -80,7 +83,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
                   children: [
                     Text(
                       "Alackal Stores, Kuruppamthara",
-                      style: context.textStyle.s14.roboto.indigoBlue.w600,
+                      style: context.textStyle.s12.roboto.indigoBlue.w600,
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.002,
@@ -88,7 +91,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
                     //gst no.....
                     Text(
                       "${applocalization.customer_transaction_detail_GSTno}JDGSJ2468246572",
-                      style: context.textStyle.s09.roboto.dustyBlue,
+                      style: context.textStyle.s08.roboto.dustyBlue,
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.002,
@@ -104,7 +107,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
                         Text(
                           "${applocalization.customer_transaction_detail_ContactPerson}: Gopakumar",
 
-                          style: context.textStyle.s09.roboto.dustyBlue,
+                          style: context.textStyle.s08.roboto.dustyBlue,
                         ),
                       ],
                     ),
@@ -121,7 +124,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
                         ),
                         Text(
                           "${applocalization.customer_transaction_detail_Mobile} 9876543215",
-                          style: context.textStyle.s09.roboto.dustyBlue,
+                          style: context.textStyle.s08.roboto.dustyBlue,
                         ),
                       ],
                     ),
@@ -131,7 +134,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
                     //address....
                     Text(
                       "${applocalization.customer_transaction_detail_Address}: Kuruppamthara, Kerala",
-                      style: context.textStyle.s09.roboto.dustyBlue,
+                      style: context.textStyle.s08.roboto.dustyBlue,
                     ),
                   ],
                 ),
@@ -141,7 +144,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
                   children: [
                     Text(
                       applocalization.customer_transaction_detail_Balance,
-                      style: context.textStyle.s10.roboto.dustyBlue,
+                      style: context.textStyle.s09.roboto.dustyBlue,
                     ),
 
                     //balance....
@@ -156,7 +159,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
                       children: [
                         Text(
                           applocalization.customer_transaction_detail_Signal,
-                          style: context.textStyle.s09.roboto.dustyBlue,
+                          style: context.textStyle.s08.roboto.dustyBlue,
                         ),
                         const Icon(
                           Icons.signal_cellular_alt_sharp,
@@ -195,7 +198,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
                                 checkInTime ??
                                     applocalization
                                         .customer_transaction_detail_CheckIn,
-                                style: context.textStyle.s11.roboto.white,
+                                style: context.textStyle.s09.roboto.white,
                               ),
                             ),
                           ),

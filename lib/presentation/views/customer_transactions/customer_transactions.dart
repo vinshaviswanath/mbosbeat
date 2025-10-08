@@ -26,13 +26,24 @@ class _CustomerTransactionsState extends State<CustomerTransactions> {
     return Scaffold(
       backgroundColor: ColorResources.white,
       appBar: AppBar(
-        title: Text(appLocalization.customer_transactions_screen_title),
+        title: Text(
+          appLocalization.customer_transactions_screen_title,
+          style: context.textStyle.roboto.s20.bold.indigoBlue,
+        ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_new_rounded),
           onPressed: () {
             context.pop();
           },
         ),
+        actions: [
+          CircleAvatar(
+            backgroundColor: ColorResources.indigoBlue,
+            child: Icon(Icons.add, size: 18, color: Colors.white),
+            radius: 11,
+          ),
+          w18,
+        ],
       ),
 
       body: Column(
@@ -90,7 +101,7 @@ class _CustomerTransactionsState extends State<CustomerTransactions> {
                                         "Alackal Stores, Kuruppamthara",
                                         style: context
                                             .textStyle
-                                            .s14
+                                            .s12
                                             .w600
                                             .indigoBlue
                                             .roboto,
@@ -100,7 +111,7 @@ class _CustomerTransactionsState extends State<CustomerTransactions> {
                                         "Balance",
                                         style: context
                                             .textStyle
-                                            .s10
+                                            .s09
                                             .dustyBlue
                                             .roboto,
                                       ),
@@ -120,7 +131,7 @@ class _CustomerTransactionsState extends State<CustomerTransactions> {
                                         "Contact Person : Gopakumar",
                                         style: context
                                             .textStyle
-                                            .s09
+                                            .s08
                                             .dustyBlue
                                             .roboto,
                                       ),
@@ -129,7 +140,7 @@ class _CustomerTransactionsState extends State<CustomerTransactions> {
                                         "26,500.00 Cr",
                                         style: context
                                             .textStyle
-                                            .s14
+                                            .s12
                                             .rosePink
                                             .roboto
                                             .w600,
@@ -149,7 +160,7 @@ class _CustomerTransactionsState extends State<CustomerTransactions> {
                                         "Mobile : 9876543215",
                                         style: context
                                             .textStyle
-                                            .s09
+                                            .s08
                                             .dustyBlue
                                             .roboto,
                                       ),

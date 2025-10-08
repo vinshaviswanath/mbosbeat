@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         title: Text(
           "Home",
-          style: context.textStyle.s24.indigoBlue.bold.roboto,
+          style: context.textStyle.s20.indigoBlue.bold.roboto,
         ),
         leading: IconButton(
           icon: Icon(
@@ -105,17 +105,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Text(
                         "Dashboard",
-                        style: context.textStyle.s16.dustyBlue.w300.roboto,
+                        style: context.textStyle.s14.dustyBlue.w300.roboto,
                       ),
                       Row(
                         children: [
                           Text(
                             "Day : ",
-                            style: context.textStyle.s12.dustyBlue.roboto,
+                            style: context.textStyle.s10.dustyBlue.roboto,
                           ),
                           Text(
                             "15-july-2024",
-                            style: context.textStyle.s12.dustyBlue.roboto,
+                            style: context.textStyle.s10.dustyBlue.roboto,
                           ),
                           SizedBox(width: 5),
                           CircleAvatar(
@@ -166,17 +166,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Text(
                         'Manvish!',
-                        style: context.textStyle.s22.indigoBlue.bold.roboto,
+                        style: context.textStyle.s28.indigoBlue.bold.roboto,
                       ),
                       Row(
                         children: [
                           Text(
                             "Route : ",
-                            style: context.textStyle.s12.dustyBlue.roboto,
+                            style: context.textStyle.s10.dustyBlue.roboto,
                           ),
                           Text(
                             " Start",
-                            style: context.textStyle.s12.dustyBlue.roboto,
+                            style: context.textStyle.s10.dustyBlue.roboto,
                           ),
                           SizedBox(width: 5),
                           CircleAvatar(
@@ -234,14 +234,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Text(
                         "Territory Executive",
-                        style: context.textStyle.s12.dustyBlue.roboto,
+                        style: context.textStyle.s10.dustyBlue.roboto,
                       ),
                     ],
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                   Text(
                     "Trip Summary",
-                    style: context.textStyle.s16.dustyBlue.roboto,
+                    style: context.textStyle.s14.dustyBlue.roboto,
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                   TripSummary(items: summaryItems),
