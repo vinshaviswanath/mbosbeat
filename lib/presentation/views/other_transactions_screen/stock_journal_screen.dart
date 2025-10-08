@@ -28,7 +28,7 @@ class _StockJournalScreenState extends State<StockJournalScreen> {
           onPressed: () {
             context.pop();
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios_rounded,
             color: ColorResources.dustyBlue,
             size: 15,
@@ -38,7 +38,7 @@ class _StockJournalScreenState extends State<StockJournalScreen> {
 
         title: Text(
           heading.replaceAll("\n", " "),
-          style: context.textStyle.s22.dustyBlue.bold.roboto,
+          style: context.textStyle.s20.dustyBlue.bold.roboto,
         ),
         centerTitle: true,
       ),
@@ -52,7 +52,7 @@ class _StockJournalScreenState extends State<StockJournalScreen> {
                 children: [
                   Text(
                     "# : M1ST-002/22/23",
-                    style: context.textStyle.s14.roboto.bold.indigoBlue,
+                    style: context.textStyle.s12.roboto.bold.indigoBlue,
                   ),
                 ],
               ),
@@ -64,17 +64,17 @@ class _StockJournalScreenState extends State<StockJournalScreen> {
                 children: [
                   Text(
                     "TO GODOWN / VAN",
-                    style: context.textStyle.s12.roboto.dustyBlue,
+                    style: context.textStyle.s10.roboto.dustyBlue,
                   ),
-                  Spacer(),
+                  const Spacer(),
 
                   Column(
                     children: [
                       Text(
                         "01-08-2024",
-                        style: context.textStyle.s09.roboto.dustyBlue,
+                        style: context.textStyle.s08.roboto.dustyBlue,
                       ),
-                      SizedBox(height: 3),
+                      const SizedBox(height: 3),
                       if (heading == "Stock Unload")
                         Container(
                           decoration: BoxDecoration(
@@ -98,12 +98,15 @@ class _StockJournalScreenState extends State<StockJournalScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 10),
               child: Row(
-                crossAxisAlignment:
-                    CrossAxisAlignment.center, // Ensures vertical alignment
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Expanded(
-                    // Takes available space
-                    child: CustomTextField(hint: "Enter"),
+                  const Expanded(
+                    child: CustomTextField(
+                      hint: "Enter",
+                      backgroundColor: ColorResources.lightGray,
+                      borderRadius: 12,
+                      borderColor: ColorResources.transparent,
+                    ),
                   ),
                   const SizedBox(width: 10),
                   GestureDetector(
@@ -121,7 +124,7 @@ class _StockJournalScreenState extends State<StockJournalScreen> {
                       child: Center(
                         child: Text(
                           local!.other_transactions_stockTransfer_additem,
-                          style: context.textStyle.roboto.white.s11,
+                          style: context.textStyle.roboto.white.s10,
                         ),
                       ),
                     ),
@@ -129,8 +132,8 @@ class _StockJournalScreenState extends State<StockJournalScreen> {
                 ],
               ),
             ),
-            SizedBox(height: 8),
-            Divider(
+            const SizedBox(height: 8),
+            const Divider(
               color: ColorResources.cloudGray,
               height: 3,
               thickness: 1.4,
@@ -144,22 +147,22 @@ class _StockJournalScreenState extends State<StockJournalScreen> {
                 children: [
                   Text(
                     local.other_transactions_stockTransfer_productname,
-                    style: context.textStyle.s12.dustyBlue.roboto,
+                    style: context.textStyle.s10.dustyBlue.roboto,
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Text(
                     local.other_transactions_stockTransfer_Quantity,
-                    style: context.textStyle.s12.dustyBlue.roboto,
+                    style: context.textStyle.s10.dustyBlue.roboto,
                   ),
                   SizedBox(width: width * 0.05),
                   Text(
                     local.other_transactions_stockTransfer_Unit,
-                    style: context.textStyle.s12.dustyBlue.roboto,
+                    style: context.textStyle.s10.dustyBlue.roboto,
                   ),
                 ],
               ),
             ),
-            Divider(
+            const Divider(
               color: ColorResources.cloudGray,
               height: 3,
               thickness: 1.4,
@@ -200,9 +203,9 @@ class _StockJournalScreenState extends State<StockJournalScreen> {
                                             .roboto
                                             .w600
                                             .dustyBlue
-                                            .s14,
+                                            .s12,
                                       ),
-                                      Spacer(),
+                                      const Spacer(),
 
                                       //Quantity select
                                       Container(
@@ -212,7 +215,7 @@ class _StockJournalScreenState extends State<StockJournalScreen> {
                                             fontSize: 15,
                                             color: color.onSecondary,
                                           ),
-                                          decoration: InputDecoration(
+                                          decoration: const InputDecoration(
                                             border: InputBorder
                                                 .none, // Removes the underline
                                             contentPadding: EdgeInsets.all(10),
@@ -235,18 +238,18 @@ class _StockJournalScreenState extends State<StockJournalScreen> {
                                       Container(
                                         child: Row(
                                           children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
+                                            const Padding(
+                                              padding: EdgeInsets.only(
                                                 left: 10,
                                               ),
                                             ),
-                                            Spacer(),
+                                            const Spacer(),
                                             DropdownButton<int>(
                                               borderRadius:
                                                   BorderRadius.circular(10),
                                               dropdownColor: color.onPrimary,
                                               value: selectUnits,
-                                              icon: Icon(
+                                              icon: const Icon(
                                                 Icons
                                                     .keyboard_arrow_down_rounded,
                                                 size: 20,
@@ -277,7 +280,7 @@ class _StockJournalScreenState extends State<StockJournalScreen> {
                                                 });
                                               },
                                               underline:
-                                                  SizedBox(), // Removes the underline if needed
+                                                  const SizedBox(), // Removes the underline if needed
                                             ),
                                           ],
                                         ),
@@ -293,7 +296,7 @@ class _StockJournalScreenState extends State<StockJournalScreen> {
                                         width: width * 0.150,
                                       ),
                                       SizedBox(width: width * 0.01),
-                                      Icon(
+                                      const Icon(
                                         Icons.delete,
                                         color: ColorResources.dustyBlue,
                                         size: 19,
@@ -304,7 +307,7 @@ class _StockJournalScreenState extends State<StockJournalScreen> {
                               ],
                             ),
                           ),
-                          Divider(
+                          const Divider(
                             color: ColorResources.cloudGray,
                             height: 3,
                             thickness: 1.4,
@@ -321,7 +324,7 @@ class _StockJournalScreenState extends State<StockJournalScreen> {
             SizedBox(height: height * 0.02),
             Text(
               local.other_transactions_stockTransfer_ItemCount,
-              style: context.textStyle.s12.roboto.dustyBlue,
+              style: context.textStyle.s10.roboto.dustyBlue,
             ),
             SizedBox(height: height * 0.01),
             ElevatedButton(
@@ -335,7 +338,7 @@ class _StockJournalScreenState extends State<StockJournalScreen> {
               onPressed: () {},
               child: Text(
                 local.other_transactions_stockTransfer_saveButton,
-                style: context.textStyle.s14.roboto.white.bold,
+                style: context.textStyle.s12.roboto.white.bold,
               ),
             ),
           ],

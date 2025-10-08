@@ -24,36 +24,31 @@ class _Tab2OutstandingState extends State<Tab2Outstanding> {
               Text(
                 applocalization
                     .customer_transaction_detail_outstanding_tab_sl_no,
-                style: context.textStyle.s12.roboto.dustyBlue,
-                // texttheme.labelSmall!.copyWith(
-                //   fontSize: 11.5,
-                //   color: color.onSecondary,
-                //   fontWeight: FontWeight.bold,
-                // ),
+                style: context.textStyle.s10.roboto.dustyBlue,
               ),
               SizedBox(width: width * 0.0200),
               Text(
                 applocalization
                     .customer_transaction_detail_outstanding_tab_bill_no,
-                style: context.textStyle.s12.roboto.dustyBlue,
+                style: context.textStyle.s10.roboto.dustyBlue,
               ),
               SizedBox(width: width * 0.165),
               Text(
                 applocalization
                     .customer_transaction_detail_outstanding_tab_date,
-                style: context.textStyle.s12.roboto.dustyBlue,
+                style: context.textStyle.s10.roboto.dustyBlue,
               ),
               SizedBox(width: width * 0.138),
               Text(
                 applocalization
                     .customer_transaction_detail_outstanding_tab_due_date,
-                style: context.textStyle.s12.roboto.dustyBlue,
+                style: context.textStyle.s10.roboto.dustyBlue,
               ),
               Spacer(),
               Text(
                 applocalization
                     .customer_transaction_detail_outstanding_tab_amount,
-                style: context.textStyle.s12.roboto.dustyBlue,
+                style: context.textStyle.s10.roboto.dustyBlue,
               ),
             ],
           ),
@@ -80,7 +75,7 @@ class _Tab2OutstandingState extends State<Tab2Outstanding> {
                               //sl no......
                               Text(
                                 "${index + 1}",
-                                style: context.textStyle.s11.roboto.dustyBlue,
+                                style: context.textStyle.s10.roboto.dustyBlue,
                               ),
                               SizedBox(width: width * 0.0820),
 
@@ -88,28 +83,28 @@ class _Tab2OutstandingState extends State<Tab2Outstanding> {
                               Text(
                                 "HJIL2468725924",
 
-                                style: context.textStyle.s11.roboto.dustyBlue,
+                                style: context.textStyle.s10.roboto.dustyBlue,
                               ),
                               SizedBox(width: width * 0.0280),
 
                               //date......
                               Text(
                                 "22-Mar-2024",
-                                style: context.textStyle.s11.roboto.dustyBlue,
+                                style: context.textStyle.s10.roboto.dustyBlue,
                               ),
                               SizedBox(width: width * 0.0250),
 
                               //due date.....
                               Text(
                                 "31-Mar-2024",
-                                style: context.textStyle.s11.roboto.dustyBlue,
+                                style: context.textStyle.s10.roboto.dustyBlue,
                               ),
                               Spacer(),
 
                               //amount......
                               Text(
                                 "7852.00",
-                                style: context.textStyle.s11.roboto.dustyBlue,
+                                style: context.textStyle.s10.roboto.dustyBlue,
                               ),
                             ],
                           ),
@@ -133,12 +128,12 @@ class _Tab2OutstandingState extends State<Tab2Outstanding> {
                           Text(
                             applocalization
                                 .customer_transaction_detail_outstanding_total,
-                            style: context.textStyle.s14.indigoBlue.bold,
+                            style: context.textStyle.s12.indigoBlue.bold,
                           ),
                           SizedBox(width: width * 0.0750),
                           Text(
                             "24,378.00",
-                            style: context.textStyle.s14.indigoBlue.bold,
+                            style: context.textStyle.s12.indigoBlue.bold,
                           ),
                         ],
                       ),
@@ -150,12 +145,12 @@ class _Tab2OutstandingState extends State<Tab2Outstanding> {
                           Text(
                             applocalization
                                 .customer_transaction_detail_outstanding_on_account,
-                            style: context.textStyle.s14.indigoBlue.bold,
+                            style: context.textStyle.s12.indigoBlue.bold,
                           ),
                           SizedBox(width: width * 0.0750),
                           Text(
                             "14,378.00",
-                            style: context.textStyle.s14.indigoBlue.bold,
+                            style: context.textStyle.s12.indigoBlue.bold,
                           ),
                         ],
                       ),
@@ -167,12 +162,12 @@ class _Tab2OutstandingState extends State<Tab2Outstanding> {
                           Text(
                             applocalization
                                 .customer_transaction_detail_outstanding_grand_total,
-                            style: context.textStyle.s14.indigoBlue.bold,
+                            style: context.textStyle.s12.indigoBlue.bold,
                           ),
                           SizedBox(width: width * 0.0750),
                           Text(
                             "56,378.00",
-                            style: context.textStyle.s14.indigoBlue.bold,
+                            style: context.textStyle.s12.indigoBlue.bold,
                           ),
                         ],
                       ),

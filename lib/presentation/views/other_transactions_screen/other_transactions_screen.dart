@@ -66,7 +66,7 @@ class _OtherTransOptionsScreenState extends State<OtherTransOptionsScreen> {
         backgroundColor: ColorResources.cloudGray,
         title: Text(
           "Other Transactions",
-          style: context.textStyle.s22.roboto.bold.dustyBlue,
+          style: context.textStyle.s20.roboto.bold.dustyBlue,
         ),
       ),
       body: Container(
@@ -127,7 +127,7 @@ class _OtherTransOptionsScreenState extends State<OtherTransOptionsScreen> {
                                         detail[index],
                                         style: context
                                             .textStyle
-                                            .s16
+                                            .s14
                                             .roboto
                                             .dustyBlue,
                                       ),

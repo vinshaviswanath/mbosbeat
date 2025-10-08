@@ -27,7 +27,7 @@ class _StockReceiveScreenState extends State<StockReceiveScreen> {
           onPressed: () {
             context.pop();
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios_rounded,
             color: ColorResources.dustyBlue,
             size: 15,
@@ -36,7 +36,7 @@ class _StockReceiveScreenState extends State<StockReceiveScreen> {
         backgroundColor: ColorResources.cloudGray,
         title: Text(
           "Stock Receive",
-          style: context.textStyle.s22.dustyBlue.bold.roboto,
+          style: context.textStyle.s20.dustyBlue.bold.roboto,
         ),
         centerTitle: true,
       ),
@@ -49,9 +49,9 @@ class _StockReceiveScreenState extends State<StockReceiveScreen> {
               children: [
                 Text(
                   "Alackal Stores, Kuruppamthara",
-                  style: context.textStyle.s14.roboto.bold.indigoBlue,
+                  style: context.textStyle.s12.roboto.bold.indigoBlue,
                 ),
-                Spacer(),
+                const Spacer(),
                 GestureDetector(
                   onTap: () {},
                   child: Container(
@@ -82,12 +82,12 @@ class _StockReceiveScreenState extends State<StockReceiveScreen> {
               children: [
                 Text(
                   local.other_transactions_stockReceive_SlNo,
-                  style: context.textStyle.s09.roboto.dustyBlue,
+                  style: context.textStyle.s08.roboto.dustyBlue,
                 ),
-                Spacer(),
+                const Spacer(),
                 Text(
                   "29-07-2024",
-                  style: context.textStyle.s09.roboto.dustyBlue,
+                  style: context.textStyle.s08.roboto.dustyBlue,
                 ),
               ],
             ),
@@ -99,12 +99,12 @@ class _StockReceiveScreenState extends State<StockReceiveScreen> {
               children: [
                 Text(
                   local.other_transactions_stockReceive_vocherNo,
-                  style: context.textStyle.s09.roboto.dustyBlue,
+                  style: context.textStyle.s08.roboto.dustyBlue,
                 ),
-                Spacer(),
+                const Spacer(),
                 Text(
                   local.other_transactions_stockReceive_Balance_text,
-                  style: context.textStyle.s10.roboto.dustyBlue,
+                  style: context.textStyle.s09.roboto.dustyBlue,
                 ),
               ],
             ),
@@ -115,53 +115,56 @@ class _StockReceiveScreenState extends State<StockReceiveScreen> {
               children: [
                 Text(
                   local.other_transactions_stockReceive_pricelist_text,
-                  style: context.textStyle.s09.roboto.dustyBlue,
+                  style: context.textStyle.s08.roboto.dustyBlue,
                 ),
-                SizedBox(width: 10),
-                SizedBox(
-                  width: width * 0.500,
-                  height: height * 0.0450,
-                  child: CustomTextField(hint: "pricelist"),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: const CustomTextField(
+                    hint: "pricelist",
+                    backgroundColor: ColorResources.lightGray,
+                    borderRadius: 12,
+                    borderColor: ColorResources.transparent,
+                  ),
                 ),
-                Spacer(),
+                const SizedBox(width: 10),
                 Text(
                   "56,874.00 Cr",
-                  style: context.textStyle.s14.roboto.bold.indigoBlue,
+                  style: context.textStyle.s12.roboto.bold.indigoBlue,
                 ),
               ],
             ),
           ),
-          SizedBox(height: 10),
-          Divider(
+          const SizedBox(height: 10),
+          const Divider(
             color: ColorResources.cloudGray,
             height: 3,
             thickness: 1.4,
             indent: 20,
             endIndent: 18,
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.only(left: 20),
             child: Row(
               children: [
                 Text(
                   local.other_transactions_stockReceive_SlNo,
-                  style: context.textStyle.s12.roboto.dustyBlue,
+                  style: context.textStyle.s10.roboto.dustyBlue,
                 ),
                 SizedBox(width: width * 0.0250),
                 Text(
                   local.other_transactions_stockReceive_vocherNo,
-                  style: context.textStyle.s10.roboto.dustyBlue,
+                  style: context.textStyle.s09.roboto.dustyBlue,
                 ),
                 SizedBox(width: width * 0.110),
                 Text(
                   local.other_transactions_stockReceive_date,
-                  style: context.textStyle.s10.roboto.dustyBlue,
+                  style: context.textStyle.s09.roboto.dustyBlue,
                 ),
                 SizedBox(width: width * 0.150),
                 Text(
                   local.other_transactions_stockTransfer_ItemCount,
-                  style: context.textStyle.s10.roboto.dustyBlue,
+                  style: context.textStyle.s09.roboto.dustyBlue,
                 ),
               ],
             ),
@@ -187,27 +190,27 @@ class _StockReceiveScreenState extends State<StockReceiveScreen> {
                                   Text(
                                     "${index + 1}",
                                     style:
-                                        context.textStyle.s11.roboto.dustyBlue,
+                                        context.textStyle.s10.roboto.dustyBlue,
                                   ),
                                   SizedBox(width: width * 0.0750),
                                   Text(
                                     "HJIL2468725924",
                                     style:
-                                        context.textStyle.s11.roboto.dustyBlue,
+                                        context.textStyle.s10.roboto.dustyBlue,
                                   ),
                                   SizedBox(width: width * 0.0400),
                                   Text(
                                     "22-Mar-2024",
                                     style:
-                                        context.textStyle.s11.roboto.dustyBlue,
+                                        context.textStyle.s10.roboto.dustyBlue,
                                   ),
                                   SizedBox(width: width * 0.0800),
                                   Text(
                                     "100",
                                     style:
-                                        context.textStyle.s11.roboto.dustyBlue,
+                                        context.textStyle.s10.roboto.dustyBlue,
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   GestureDetector(
                                     onTap: () {
                                       _showDialog();
@@ -219,7 +222,7 @@ class _StockReceiveScreenState extends State<StockReceiveScreen> {
                                               .other_transactions_stockReceive_view,
                                           style: context
                                               .textStyle
-                                              .s10
+                                              .s09
                                               .roboto
                                               .white,
                                         ),
@@ -237,8 +240,8 @@ class _StockReceiveScreenState extends State<StockReceiveScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 5),
-                        Divider(
+                        const SizedBox(height: 5),
+                        const Divider(
                           color: ColorResources.cloudGray,
                           height: 3,
                           thickness: 1.4,
@@ -262,7 +265,7 @@ class _StockReceiveScreenState extends State<StockReceiveScreen> {
                   child: Center(
                     child: Text(
                       local.other_transactions_stockReceive_update_button,
-                      style: context.textStyle.roboto.s12.white,
+                      style: context.textStyle.roboto.s10.white,
                     ),
                   ),
                   height: height * 0.0620,
@@ -280,7 +283,7 @@ class _StockReceiveScreenState extends State<StockReceiveScreen> {
                   child: Center(
                     child: Text(
                       local.other_transactions_stockReceive_reject_button,
-                      style: context.textStyle.roboto.s12.white,
+                      style: context.textStyle.roboto.s10.white,
                     ),
                   ),
                   height: height * 0.0620,
@@ -323,7 +326,7 @@ class _StockReceiveScreenState extends State<StockReceiveScreen> {
                         "Item Name",
                         style: context.textStyle.s12.roboto.dustyBlue,
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Padding(
                         padding: const EdgeInsets.only(right: 16),
                         child: Text(
@@ -333,7 +336,7 @@ class _StockReceiveScreenState extends State<StockReceiveScreen> {
                       ),
                     ],
                   ),
-                  Divider(
+                  const Divider(
                     color: ColorResources.cloudGray,
                     height: 3,
                     thickness: 1.4,
@@ -373,7 +376,7 @@ class _StockReceiveScreenState extends State<StockReceiveScreen> {
                                                 .roboto
                                                 .dustyBlue,
                                           ),
-                                          Spacer(),
+                                          const Spacer(),
                                           Text(
                                             "10 Packet",
                                             style: context
@@ -387,7 +390,7 @@ class _StockReceiveScreenState extends State<StockReceiveScreen> {
                                     ),
                                   ],
                                 ),
-                                Divider(
+                                const Divider(
                                   color: ColorResources.cloudGray,
                                   height: 3,
                                   thickness: 1.4,

@@ -60,7 +60,7 @@ class TransactionsContainers extends StatelessWidget {
       children: [
         Text(
           "Transactions & Reports",
-          style: context.textStyle.s16.dustyBlue.w400.roboto,
+          style: context.textStyle.s14.dustyBlue.w400.roboto,
         ),
         SizedBox(height: MediaQuery.of(context).size.height * 0.010),
 
@@ -127,7 +127,7 @@ class TransactionCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(item.title, style: context.textStyle.s16.white.roboto),
+                  Text(item.title, style: context.textStyle.s14.white.roboto),
                   if (item.subtitle.isNotEmpty)
                     Text(
                       item.subtitle,
