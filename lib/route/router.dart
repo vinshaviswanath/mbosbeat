@@ -5,11 +5,12 @@ import 'package:mpos_beat/presentation/common/widgets/custom_route_screen.dart';
 import 'package:mpos_beat/presentation/common/widgets/loading_screen.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/add_company/add_company_screen.dart';
 import 'package:mpos_beat/presentation/views/admin_home/admin_home.dart';
+import 'package:mpos_beat/presentation/views/admin_user_management/user_create/user_creation_screen.dart';
+import 'package:mpos_beat/presentation/views/company_creation/company_creation_screen.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/customer_transactions.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/transaction_detail_page/order_booking/order_booking.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/transaction_detail_page/order_booking/order_booking_item.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/transaction_detail_page/transaction_detail_page.dart';
-import 'package:mpos_beat/presentation/views/admin_user_management/user_create/user_creation_screen.dart';
 import 'package:mpos_beat/presentation/views/forgot_password/forgot_password.dart';
 import 'package:mpos_beat/presentation/views/forgot_password/mailed_screen.dart';
 import 'package:mpos_beat/presentation/views/home_screen/home_screen.dart';
@@ -124,79 +125,6 @@ class AppRouter {
         name: AppRouterConst.loadingScreen,
         builder: (context, state) {
           return const LoadingScreen();
-        },
-      ),
-      GoRoute(
-        path: "/homescreen",
-        name: AppRouterConst.homeScreen,
-        builder: (context, state) {
-          return const HomeScreen();
-        },
-      ),
-      GoRoute(
-        path: "/othertransactions",
-        name: AppRouterConst.otherTransaction,
-        builder: (context, state) {
-          return const OtherTransOptionsScreen();
-        },
-      ),
-      GoRoute(
-        path: "/stockjournalscreen",
-        name: "stockjournal",
-        builder: (context, state) {
-          return const StockJournalScreen();
-        },
-      ),
-      GoRoute(
-        path: "/additem",
-        name: "additem",
-        builder: (context, state) {
-          return const AddItems();
-        },
-      ),
-      GoRoute(
-        path: "/stockreceivescreen",
-        name: "stockreceive",
-        builder: (context, state) {
-          return const StockReceiveScreen();
-        },
-      ),
-      GoRoute(
-        path: "/expenseentryscreen",
-        name: "expenseentry",
-        builder: (context, state) {
-          return const ExpenseEntryScreen();
-        },
-      ),
-      GoRoute(
-        path: "/customerTransactions",
-        name: AppRouterConst.customerTransactions,
-        builder: (context, state) {
-          return const CustomerTransactions();
-        },
-      ),
-
-      GoRoute(
-        path: "/transactionDetailpage",
-        name: AppRouterConst.transactionDetailpage,
-        builder: (context, state) {
-          return const TransactionDetailpage();
-        },
-      ),
-
-      GoRoute(
-        path: "/orderbookingpage",
-        name: AppRouterConst.orderbooking,
-        builder: (context, state) {
-          return const OrderBooking();
-        },
-      ),
-
-      GoRoute(
-        path: "/orderbookingitemsscreen",
-        name: AppRouterConst.orderbookingitems,
-        builder: (context, state) {
-          return const OrderBookingItems();
         },
       ),
       GoRoute(
@@ -324,6 +252,89 @@ class AppRouter {
         name: AppRouterConst.replacementScreen,
         builder: (context, state) {
           return const ReplacementScreen();
+        },
+      ),
+
+      //anver
+      GoRoute(
+        path: "/homescreen",
+        name: AppRouterConst.homeScreen,
+        builder: (context, state) {
+          return const HomeScreen();
+        },
+      ),
+      GoRoute(
+        path: "/othertransactions",
+        name: AppRouterConst.otherTransaction,
+        builder: (context, state) {
+          return const OtherTransOptionsScreen();
+        },
+      ),
+      GoRoute(
+        path: "/stockjournalscreen",
+        name: "stockjournal",
+        builder: (context, state) {
+          return const StockJournalScreen();
+        },
+      ),
+      GoRoute(
+        path: "/additem",
+        name: "additem",
+        builder: (context, state) {
+          return const AddItems();
+        },
+      ),
+      GoRoute(
+        path: "/stockreceivescreen",
+        name: "stockreceive",
+        builder: (context, state) {
+          return const StockReceiveScreen();
+        },
+      ),
+      GoRoute(
+        path: "/expenseentryscreen",
+        name: "expenseentry",
+        builder: (context, state) {
+          return const ExpenseEntryScreen();
+        },
+      ),
+      GoRoute(
+        path: "/customerTransactions",
+        name: AppRouterConst.customerTransactions,
+        builder: (context, state) {
+          return const CustomerTransactions();
+        },
+      ),
+
+      GoRoute(
+        path: "/transactionDetailpage",
+        name: AppRouterConst.transactionDetailpage,
+        builder: (context, state) {
+          return const TransactionDetailpage();
+        },
+      ),
+
+      GoRoute(
+        path: "/orderbookingpage",
+        name: AppRouterConst.orderbooking,
+        builder: (context, state) {
+          return const OrderBooking();
+        },
+      ),
+
+      GoRoute(
+        path: "/orderbookingitemsscreen",
+        name: AppRouterConst.orderbookingitems,
+        builder: (context, state) {
+          return const OrderBookingItems();
+        },
+      ),
+
+      GoRoute(
+        path: "/companyCreationScreen",
+        name: AppRouterConst.companyCreationScreen,
+        builder: (context, state) {
+          return const CompanyCreationScreen();
         },
       ),
     ],

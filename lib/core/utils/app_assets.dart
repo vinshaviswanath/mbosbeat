@@ -20,6 +20,7 @@ class AppAssets {
   static const mailSend = "$basePngDir/mailSend.png";
   static const registered = "$basePngDir/registered.png";
   static const powerButton = "$basePngDir/powerButton.png";
+  static const alreadyRegistered = "$basePngDir/already_registered.png";
 
 
   //SVG

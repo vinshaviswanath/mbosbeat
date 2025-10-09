@@ -59,6 +59,8 @@ class AuthFormProvider with ChangeNotifier {
   bool _alreadyNavigatedToInvalidOtp = false;
 
   bool _isVisible = false;
+  bool _isVisibleSignupPassword = false;
+  bool _isVisibleSignupConfirmPassword = false;
 
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
@@ -75,6 +77,8 @@ class AuthFormProvider with ChangeNotifier {
   ConfirmPassword get confirmPassword => _confirmPassword;
 
   bool get isVisible => _isVisible;
+  bool get isVisibleSignupPassword => _isVisibleSignupPassword;
+  bool get isVisibleSignupConfirmPassword => _isVisibleSignupConfirmPassword;
 
   //============================================================================
   //                              SETTERS
@@ -341,6 +345,7 @@ class AuthFormProvider with ChangeNotifier {
         ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
         Logger.logError("Resend OTP failed : $_errorMessage");
         // _setLoading(false);
+        resetOtpTimer();
         notifyListeners();
       },
       (response) {
@@ -348,6 +353,8 @@ class AuthFormProvider with ChangeNotifier {
         _otpValue = response.message;
         _cusomerId = response.id;
         Logger.logSuccess("Resend OTP success : ${response.toJson()}");
+        Logger.logSuccess("Resend OTP ID : $_cusomerId");
+
         // Navigator.push(
         //                 context,
         //                 MaterialPageRoute(
@@ -614,6 +621,7 @@ class AuthFormProvider with ChangeNotifier {
 
     _setLoading(true);
     _errorMessage = null;
+    Logger.logSuccess("Email : ${emailController.text}");
 
     final result = await iAuthenticationFacad.resetPassword(
       BaseParams(
@@ -634,7 +642,8 @@ class AuthFormProvider with ChangeNotifier {
         Logger.logSuccess("Reset Password success : ${response.toJson()}");
         if (response.status != 0) {
           submitEmail(context);
-          emailController.clear();
+
+          // emailController.clear();
         } else {
           // CustomAlertDialog.showCustomDialog(
           //   title: response.message!,
@@ -659,6 +668,16 @@ class AuthFormProvider with ChangeNotifier {
   /// Toggles password visibility.
   void toggleVisibility() {
     _isVisible = !_isVisible;
+    notifyListeners();
+  }
+
+  void toggleVisibilitySignUpPassword() {
+    _isVisibleSignupPassword = !_isVisibleSignupPassword;
+    notifyListeners();
+  }
+
+  void toggleVisibilitySignUpConfirmPassword() {
+    _isVisibleSignupConfirmPassword = !_isVisibleSignupConfirmPassword;
     notifyListeners();
   }
 

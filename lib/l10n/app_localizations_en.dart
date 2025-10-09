@@ -127,6 +127,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get custom_route_screen_go_home => 'Go Home';
 
   @override
+  String get custom_route_screen_create_company => 'Create Company';
+
+  @override
   String get reg_failure_widget_reg_failed => 'Oops!!\nRegistration Failed!';
 
   @override

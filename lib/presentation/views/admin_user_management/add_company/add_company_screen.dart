@@ -62,17 +62,17 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
           SliverToBoxAdapter(
             child: Column(
               children: [
-                const SizedBox(height: 12),
+                h12,
                 Text(
                   widget.name,
                   style: context.textStyle.s12.w500.indigoBlue.roboto,
                 ),
-                const SizedBox(height: 4),
+                h4,
                 Text(
                   widget.companyName,
                   style: context.textStyle.s10.w400.dustyBlue.roboto,
                 ),
-                const SizedBox(height: 12),
+                h12,
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: TextField(
@@ -98,9 +98,9 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
                     onChanged: (value) => setState(() {}),
                   ),
                 ),
-                const SizedBox(height: 10),
+                h10,
                 Divider(thickness: 1, color: Colors.grey.shade200),
-                const SizedBox(height: 5),
+                h5,
               ],
             ),
           ),

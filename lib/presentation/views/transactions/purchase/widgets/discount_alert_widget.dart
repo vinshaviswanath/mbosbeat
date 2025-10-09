@@ -45,8 +45,8 @@ class _DiscountAlertWidgetState extends State<DiscountAlertWidget> {
               child: Row(
                 children: [
                   Container(
-                    width: 20,
-                    height: 20,
+                    width: context.getSize.width * 0.045,
+                    height: context.getSize.height * 0.022,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
@@ -58,8 +58,8 @@ class _DiscountAlertWidgetState extends State<DiscountAlertWidget> {
                     ),
                     child: Center(
                       child: Container(
-                        width: 10,
-                        height: 10,
+                        width: context.getSize.width * 0.0225,
+                        height: context.getSize.height * 0.01,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: selectedType == "Amount"
@@ -86,8 +86,8 @@ class _DiscountAlertWidgetState extends State<DiscountAlertWidget> {
               child: Row(
                 children: [
                   Container(
-                    width: 20,
-                    height: 20,
+                    width: context.getSize.width * 0.045,
+                    height: context.getSize.height * 0.022,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
@@ -99,8 +99,8 @@ class _DiscountAlertWidgetState extends State<DiscountAlertWidget> {
                     ),
                     child: Center(
                       child: Container(
-                        width: 10,
-                        height: 10,
+                        width: context.getSize.width * 0.0225,
+                        height: context.getSize.height * 0.01,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: selectedType == "Percentage"

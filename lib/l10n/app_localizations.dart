@@ -322,6 +322,12 @@ abstract class AppLocalizations {
   /// **'Go Home'**
   String get custom_route_screen_go_home;
 
+  /// No description provided for @custom_route_screen_create_company.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Company'**
+  String get custom_route_screen_create_company;
+
   /// No description provided for @reg_failure_widget_reg_failed.
   ///
   /// In en, this message translates to:

@@ -17,6 +17,14 @@ class ColorResources {
   static const paleBlue = Color(0xFFEDF3FA);
   static const dustyBlue = Color(0xFF7787AD);
   static const cloudGray = Color(0xFFF1F3F7);
+  static const coolGray = Color(0xFFC8D1DE);
+  static const mistGray = Color(0xFFDDDEDF);
+  static const snowBlue = Color(0xFFF6FBFF);
+  static const oceanBlue = Color(0xFF1676BF);
+  static const ashGray = Color(0xFFD6D6D6);
+  static const leafGreen = Color(0xFF54A959);
+
+  //anver
   static const mintGreen = Color(0xFF69D282);
   static const peachPink = Color(0xFFFF9B91);
   static const lavenderBlue = Color(0xFF8FACFF);
@@ -26,15 +34,7 @@ class ColorResources {
   static const mintGreenAccent = Color(0xFF55D389);
   static const lightBorderGray = Color(0xFFD6D6D6);
   static const freshgreen = Color(0xFF69D282);
-  static const coolGray = Color(0xFFC8D1DE);
-  static const mistGray = Color(0xFFDDDEDF);
-  static const snowBlue = Color(0xFFF6FBFF);
-  static const oceanBlue = Color(0xFF1676BF);
-  static const ashGray = Color(0xFFD6D6D6);
-  static const leafGreen = Color(0xFF54A959);
-
-  //Icon color
-  static const navyGray = Color(0xFF42526E);
+    static const navyGray = Color(0xFF42526E);
   // For OTP field border and error messages
   static const roseRed = Color(0xFFFF5D5D);
   // OTP field fill color
@@ -59,13 +59,5 @@ class ColorResources {
   static const paleskyblue = Color(0xFFDCEFFF);
   static const mintcream = Color(0xFFDDF6E7);
   static const lightgreen = Color(0xFF54A959);
-}
 
-final List<Color> colors = [
-  ColorResources.lavendermist,
-  ColorResources.lavenderblue,
-  ColorResources.mistyrose,
-  ColorResources.lightgoldenrod,
-  ColorResources.paleskyblue,
-  ColorResources.mintcream,
-];
+}

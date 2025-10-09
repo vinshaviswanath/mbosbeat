@@ -13,7 +13,7 @@ class PurchaseReturnScreen extends StatefulWidget {
 }
 
 class _PurchaseReturnScreenState extends State<PurchaseReturnScreen> {
-  String _selectedMode = "B2C";
+  String? _selectedMode;
 
   final products = [
     {
@@ -30,8 +30,6 @@ class _PurchaseReturnScreenState extends State<PurchaseReturnScreen> {
     final appLocalizations = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: ColorResources.cloudGray,
-        surfaceTintColor: ColorResources.cloudGray,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -58,11 +56,7 @@ class _PurchaseReturnScreenState extends State<PurchaseReturnScreen> {
           ),
           IconButton(
             onPressed: () {},
-            icon: const Icon(
-              Icons.qr_code,
-              size: 22,
-              color: ColorResources.indigoBlue,
-            ),
+            icon: Icon(Icons.qr_code, size: context.getSize.height * 0.022),
           ),
         ],
         // toolbarHeight: 65,
@@ -95,7 +89,7 @@ class _PurchaseReturnScreenState extends State<PurchaseReturnScreen> {
                     // crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                       Text(
+                      Text(
                         appLocalizations.billing_mode,
                         style: context.textStyle.s10.w500.dustyBlue.roboto,
                       ),
@@ -111,8 +105,8 @@ class _PurchaseReturnScreenState extends State<PurchaseReturnScreen> {
                         child: Row(
                           children: [
                             Container(
-                              width: 20,
-                              height: 20,
+                              width: context.getSize.width * 0.045,
+                              height: context.getSize.height * 0.022,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 border: Border.all(
@@ -124,8 +118,8 @@ class _PurchaseReturnScreenState extends State<PurchaseReturnScreen> {
                               ),
                               child: Center(
                                 child: Container(
-                                  width: 10,
-                                  height: 10,
+                                  width: context.getSize.width * 0.0225,
+                                  height: context.getSize.height * 0.01,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: _selectedMode == "B2B"
@@ -136,9 +130,10 @@ class _PurchaseReturnScreenState extends State<PurchaseReturnScreen> {
                               ),
                             ),
                             w6,
-                             Text(
+                            Text(
                               appLocalizations.b2b,
-                              style:context.textStyle.s10.w500.dustyBlue.roboto,
+                              style:
+                                  context.textStyle.s10.w500.dustyBlue.roboto,
                             ),
                           ],
                         ),
@@ -153,8 +148,8 @@ class _PurchaseReturnScreenState extends State<PurchaseReturnScreen> {
                         child: Row(
                           children: [
                             Container(
-                              width: 20,
-                              height: 20,
+                              width: context.getSize.width * 0.045,
+                              height: context.getSize.height * 0.022,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 border: Border.all(
@@ -166,8 +161,8 @@ class _PurchaseReturnScreenState extends State<PurchaseReturnScreen> {
                               ),
                               child: Center(
                                 child: Container(
-                                  width: 10,
-                                  height: 10,
+                                  width: context.getSize.width * 0.0225,
+                                  height: context.getSize.height * 0.01,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: _selectedMode == "B2C"
@@ -178,9 +173,10 @@ class _PurchaseReturnScreenState extends State<PurchaseReturnScreen> {
                               ),
                             ),
                             w6,
-                             Text(
+                            Text(
                               "B2C",
-                              style: context.textStyle.s10.w500.dustyBlue.roboto,
+                              style:
+                                  context.textStyle.s10.w500.dustyBlue.roboto,
                             ),
                           ],
                         ),
@@ -393,7 +389,7 @@ class _PurchaseReturnScreenState extends State<PurchaseReturnScreen> {
                         thumbColor: ColorResources.bluishGray,
                         value: false,
                         onChanged: (value) {
-                           value == true
+                          value == true
                               ? CustomDialog.showBottomCustomDialog(
                                   chid: const DiscountAlertWidget(),
                                 )

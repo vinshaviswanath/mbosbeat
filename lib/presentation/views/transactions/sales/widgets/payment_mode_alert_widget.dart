@@ -19,13 +19,12 @@ class PaymentModeAlertWidget extends StatelessWidget {
           h20,
           Row(
             children: [
-              SizedBox(
-                width: 60,
-                child: Text(
-                  appLocalizations.cash,
-                  style: context.textStyle.s10.w400.indigoBlue.roboto,
-                ),
+              Text(
+                appLocalizations.cash,
+                style: context.textStyle.s10.w400.indigoBlue.roboto,
               ),
+              w16,
+
               Expanded(
                 child: TextField(
                   style: context.textStyle.s09.w400.dustyBlue.roboto,
@@ -60,13 +59,12 @@ class PaymentModeAlertWidget extends StatelessWidget {
                 ),
               ),
               w16,
-              SizedBox(
-                width: 40,
-                child: Text(
-                  appLocalizations.upi,
-                  style: context.textStyle.s10.w400.indigoBlue.roboto,
-                ),
+              Text(
+                appLocalizations.upi,
+                style: context.textStyle.s10.w400.indigoBlue.roboto,
               ),
+              w16,
+
               Expanded(
                 child: TextField(
                   style: context.textStyle.s09.w400.dustyBlue.roboto,
@@ -102,13 +100,11 @@ class PaymentModeAlertWidget extends StatelessWidget {
           h16,
           Row(
             children: [
-              SizedBox(
-                width: 60,
-                child: Text(
-                  appLocalizations.cheque,
-                  style: context.textStyle.s10.w400.indigoBlue.roboto,
-                ),
+              Text(
+                appLocalizations.cheque,
+                style: context.textStyle.s10.w400.indigoBlue.roboto,
               ),
+              w16,
               Expanded(
                 child: TextField(
                   style: context.textStyle.s09.w400.dustyBlue.roboto,

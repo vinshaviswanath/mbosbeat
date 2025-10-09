@@ -33,9 +33,15 @@ class CustomRouteScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     if (status == NavigationType.success)
-                      const BaseBox(widgwt: RegisterSuccessWidget()),
+                      BaseBox(
+                        width: context.getSize.width - 16,
+                        widgwt: const RegisterSuccessWidget(),
+                      ),
                     if (status == NavigationType.failed)
-                      const BaseBox(widgwt: RegisterFailureWidget()),
+                      BaseBox(
+                        width: context.getSize.width - 16,
+                        widgwt: const RegisterFailureWidget(),
+                      ),
                   ],
                 ),
               ),
@@ -54,8 +60,8 @@ class CustomRouteScreen extends StatelessWidget {
                               onTap: () =>
                                   // AppRoute.pushNamed(AdminHome.routeName),
                                   context.pushNamed(AppRouterConst.adminHome),
-                              buttonText:
-                                  appLocalization.custom_route_screen_go_home,
+                              buttonText: appLocalization
+                                  .custom_route_screen_create_company,
                               textStyle: context.textStyle.s16.white,
                               isborderEnable: false,
                             ),

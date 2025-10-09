@@ -13,6 +13,7 @@ extension TextStyleX on TextStyle {
   TextStyle get w800 => copyWith(fontWeight: FontWeight.w800);
   TextStyle get bold => copyWith(fontWeight: FontWeight.bold);
 
+  TextStyle get s08 => copyWith(fontSize: 8 * _scaleWidth);
   TextStyle get s09 => copyWith(fontSize: 9 * _scaleWidth);
   TextStyle get s10 => copyWith(fontSize: 10 * _scaleWidth);
   TextStyle get s11 => copyWith(fontSize: 11 * _scaleWidth);
@@ -25,7 +26,6 @@ extension TextStyleX on TextStyle {
   TextStyle get s24 => copyWith(fontSize: 24 * _scaleWidth);
   TextStyle get s26 => copyWith(fontSize: 26 * _scaleWidth);
   TextStyle get s28 => copyWith(fontSize: 28 * _scaleWidth);
-  TextStyle get s30 => copyWith(fontSize: 30 * _scaleWidth);
   TextStyle get s31 => copyWith(fontSize: 31 * _scaleWidth);
 
   TextStyle get underline => copyWith(decoration: TextDecoration.underline);
@@ -42,11 +42,13 @@ extension TextStyleX on TextStyle {
   TextStyle get amber => copyWith(color: ColorResources.amber);
   TextStyle get silverGray => copyWith(color: ColorResources.silverGray);
   TextStyle get dustyBlue => copyWith(color: ColorResources.dustyBlue);
-  TextStyle get rosePink => copyWith(color: ColorResources.rosePink);
-  TextStyle get lightgreen => copyWith(color: ColorResources.lightgreen);
   TextStyle get coolGray => copyWith(color: ColorResources.coolGray);
   TextStyle get oceanBlue => copyWith(color: ColorResources.oceanBlue);
+  TextStyle get rosePink => copyWith(color: ColorResources.rosePink);
   TextStyle get leafGreen => copyWith(color: ColorResources.leafGreen);
+  TextStyle get lightgreen => copyWith(color: ColorResources.lightgreen);
+
+
 
   TextStyle get shade100 => copyWith(color: color?.withValues(alpha: 0.1));
   TextStyle get shade200 => copyWith(color: color?.withValues(alpha: 0.2));

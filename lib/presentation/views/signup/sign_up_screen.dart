@@ -153,14 +153,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         CustomTextField(
                           hint: appLocalization.enter_password,
                           controller: passwordController,
-                          obscureText: !provider.isVisible,
+                          obscureText: !provider.isVisibleSignupPassword,
 
                           suffixIcon: InkWell(
-                            onTap: () => provider.toggleVisibility(),
+                            onTap: () =>
+                                provider.toggleVisibilitySignUpPassword(),
                             child: Padding(
                               padding: const EdgeInsets.all(12),
                               child: SvgPicture.asset(
-                                provider.isVisible
+                                provider.isVisibleSignupPassword
                                     ? AppAssets.featherEyeOn
                                     : AppAssets.featherEyeOff,
                                 height: context.getSize.height * 0.02,
@@ -186,7 +187,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         CustomTextField(
                           hint: appLocalization.confirm_password,
                           controller: confirmPasswordController,
-                          obscureText: !provider.isVisible,
+                          suffixIcon: InkWell(
+                            onTap: () => provider
+                                .toggleVisibilitySignUpConfirmPassword(),
+                            child: Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: SvgPicture.asset(
+                                provider.isVisibleSignupConfirmPassword
+                                    ? AppAssets.featherEyeOn
+                                    : AppAssets.featherEyeOff,
+                                height: context.getSize.height * 0.02,
+                              ),
+                            ),
+                          ),
+                          obscureText: !provider.isVisibleSignupConfirmPassword,
                           backgroundColor: ColorResources.lightGray,
                           autovalidateMode: provider.registerAutovalidateMode,
                           failure: provider.confirmPassword.getFailure,

@@ -1,5 +1,4 @@
 import 'package:mpos_beat/core/utils/imports.dart';
-import 'package:mpos_beat/l10n/app_localizations.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_settings/widgets/info_tool_tip.dart';
 
 class UserSettingsScreen extends StatelessWidget {

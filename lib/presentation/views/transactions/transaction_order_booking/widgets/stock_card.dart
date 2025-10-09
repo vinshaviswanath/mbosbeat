@@ -119,14 +119,14 @@ class _StockCardState extends State<StockCard> {
                           });
                         },
                         child: CircleAvatar(
-                          radius: 10,
+                          radius: context.getSize.height * 0.010,
                           backgroundColor: ColorResources.indigoBlue,
                           child: Icon(
                             _showDetails
                                 ? Icons.keyboard_arrow_up_rounded
                                 : Icons.keyboard_arrow_down_rounded,
                             color: ColorResources.white,
-                            size: 16,
+                            size: context.getSize.height * 0.016,
                           ),
                         ),
                       ),

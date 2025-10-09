@@ -33,8 +33,8 @@ class _ReceiptCashAlertWidgetState extends State<ReceiptCashAlertWidget> {
                 child: Row(
                   children: [
                     Container(
-                      width: 20,
-                      height: 20,
+                      width: context.getSize.width * 0.045,
+                      height: context.getSize.height * 0.022,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
@@ -45,8 +45,8 @@ class _ReceiptCashAlertWidgetState extends State<ReceiptCashAlertWidget> {
                       child: _mode == "Cash"
                           ? Center(
                               child: Container(
-                                width: 10,
-                                height: 10,
+                                width: context.getSize.width * 0.0225,
+                                height: context.getSize.height * 0.01,
                                 decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
                                   color: Colors.orange,
@@ -55,8 +55,8 @@ class _ReceiptCashAlertWidgetState extends State<ReceiptCashAlertWidget> {
                             )
                           : Center(
                               child: Container(
-                                width: 10,
-                                height: 10,
+                                width: context.getSize.width * 0.0225,
+                                height: context.getSize.height * 0.01,
                                 decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
                                   color: ColorResources.dustyBlue,
@@ -83,8 +83,8 @@ class _ReceiptCashAlertWidgetState extends State<ReceiptCashAlertWidget> {
                 child: Row(
                   children: [
                     Container(
-                      width: 20,
-                      height: 20,
+                      width: context.getSize.width * 0.045,
+                      height: context.getSize.height * 0.022,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
@@ -97,8 +97,8 @@ class _ReceiptCashAlertWidgetState extends State<ReceiptCashAlertWidget> {
                       child: _mode == "Bank"
                           ? Center(
                               child: Container(
-                                width: 10,
-                                height: 10,
+                                width: context.getSize.width * 0.0225,
+                                height: context.getSize.height * 0.01,
                                 decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
                                   color: ColorResources.amber,
@@ -107,8 +107,8 @@ class _ReceiptCashAlertWidgetState extends State<ReceiptCashAlertWidget> {
                             )
                           : Center(
                               child: Container(
-                                width: 10,
-                                height: 10,
+                                width: context.getSize.width * 0.0225,
+                                height: context.getSize.height * 0.01,
                                 decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
                                   color: ColorResources.dustyBlue,

@@ -49,8 +49,6 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
     final appLocalizations = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: ColorResources.cloudGray,
-        surfaceTintColor: ColorResources.cloudGray,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -69,7 +67,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
         actions: [
           SvgPicture.asset(
             AppAssets.refresh,
-            height: 22,
+            height: context.getSize.height * 0.022,
             colorFilter: const ColorFilter.mode(
               ColorResources.indigoBlue,
               BlendMode.srcIn,
@@ -77,11 +75,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
           ),
           IconButton(
             onPressed: () {},
-            icon: const Icon(
-              Icons.qr_code,
-              size: 22,
-              color: ColorResources.indigoBlue,
-            ),
+            icon: Icon(Icons.qr_code, size: context.getSize.height * 0.022),
           ),
         ],
         // toolbarHeight: 65,
@@ -200,8 +194,8 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                               child: Row(
                                 children: [
                                   Container(
-                                    width: 20,
-                                    height: 20,
+                                    width: context.getSize.width * 0.045,
+                                    height: context.getSize.height * 0.022,
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       border: Border.all(
@@ -213,8 +207,8 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                                     ),
                                     child: Center(
                                       child: Container(
-                                        width: 10,
-                                        height: 10,
+                                        width: context.getSize.width * 0.0225,
+                                        height: context.getSize.height * 0.01,
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
                                           color: isSelected
@@ -227,11 +221,12 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                                   w6,
                                   Text(
                                     option,
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.blueGrey.shade400,
-                                    ),
+                                    style: context
+                                        .textStyle
+                                        .s12
+                                        .w400
+                                        .bluishGray
+                                        .roboto,
                                   ),
                                   w40,
                                 ],

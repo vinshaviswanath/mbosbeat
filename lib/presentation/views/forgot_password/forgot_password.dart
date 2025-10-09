@@ -19,12 +19,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     return Consumer<AuthFormProvider>(
       builder: (context, provider, _) {
         return PopScope(
-          canPop: false,
-          onPopInvokedWithResult: (didPop, result) async {
-            if (didPop) return;
-
-            provider.emailController.clear();
-            Navigator.pop(context, result);
+          canPop: true,
+          onPopInvokedWithResult: (didPop, result) {
+            if (didPop) {
+              context.read<AuthFormProvider>().resetSignUpForm();
+            }
           },
           child: Form(
             key: provider.formKey,
@@ -64,15 +63,15 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         ),
                       ),
                     ),
-                    const SliverToBoxAdapter(
-                      child: h24,
-                    ),
+                    const SliverToBoxAdapter(child: h24),
                     SliverToBoxAdapter(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           BaseBox(
+                            width: context.getSize.width - 32,
                             height: context.getSize.height * 0.48,
+                            padding: const EdgeInsets.all(16),
                             widgwt: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -96,123 +95,96 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                   ],
                                 ),
                                 h4,
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: FormField<String>(
-                                        validator: provider.validateEmail,
-                                        autovalidateMode:
-                                            provider.loginAutovalidateMode,
-                                        builder: (field) {
-                                          return Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              TextFormField(
-                                                controller:
-                                                    provider.emailController,
-                                                keyboardType:
-                                                    TextInputType.emailAddress,
-                                                inputFormatters: [
-                                                  FilteringTextInputFormatter.allow(
-                                                    RegExp(r"[a-zA-Z0-9@._-]"),
-                                                  ),
-                                                ],
-                                                onChanged: (value) {
-                                                  field.didChange(
-                                                    value,
-                                                  );
-                                                },
-                                                decoration: InputDecoration(
-                                                  hintText: appLocalization
-                                                      .enter_email,
+                                FormField<String>(
+                                  validator: provider.validateEmail,
+                                  autovalidateMode:
+                                      provider.loginAutovalidateMode,
+                                  builder: (field) {
+                                    return Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        TextFormField(
+                                          controller: provider.emailController,
+                                          keyboardType:
+                                              TextInputType.emailAddress,
+                                          inputFormatters: [
+                                            FilteringTextInputFormatter.allow(
+                                              RegExp(r"[a-zA-Z0-9@._-]"),
+                                            ),
+                                          ],
+                                          onChanged: (value) {
+                                            field.didChange(value);
+                                          },
+                                          decoration: InputDecoration(
+                                            hintText:
+                                                appLocalization.enter_email,
 
-                                                  filled: true,
-                                                  fillColor:
-                                                      ColorResources.lightGray,
-                                                  hintStyle: context
-                                                      .textStyle
-                                                      .s12
-                                                      .w300
-                                                      .silverGray,
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                              12,
-                                                            ),
-                                                        borderSide:
-                                                            BorderSide.none,
-                                                      ),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                              12,
-                                                            ),
-                                                        borderSide:
-                                                            const BorderSide(
-                                                              color: Colors
-                                                                  .transparent,
-                                                            ),
-                                                      ),
-
-                                                  errorBorder: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                          12,
-                                                        ),
-                                                    borderSide:
-                                                        const BorderSide(
-                                                          color: ColorResources
-                                                              .roseRed,
-                                                        ),
-                                                  ),
-                                                  focusedErrorBorder:
-                                                      OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                              12,
-                                                            ),
-                                                        borderSide:
-                                                            const BorderSide(
-                                                              color: Colors.red,
-                                                            ),
-                                                      ),
-                                                ),
+                                            filled: true,
+                                            fillColor: ColorResources.lightGray,
+                                            hintStyle: context
+                                                .textStyle
+                                                .s12
+                                                .w300
+                                                .silverGray,
+                                            enabledBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              borderSide: BorderSide.none,
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              borderSide: const BorderSide(
+                                                color: Colors.transparent,
                                               ),
-                                              if (field.hasError)
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                        left: 4,
-                                                        top: 4,
-                                                      ),
-                                                  child: Row(
-                                                    children: [
-                                                      SvgPicture.asset(
-                                                        AppAssets.alertError,
-                                                        height: 16,
-                                                      ),
-                                                      const SizedBox(width: 4),
-                                                      Text(
-                                                        field.errorText ?? "",
-                                                        style: context
-                                                            .textStyle
-                                                            .s10
-                                                            .w400
-                                                            .roseRed
-                                                            .raleway,
-                                                      ),
-                                                    ],
+                                            ),
+
+                                            errorBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              borderSide: const BorderSide(
+                                                color: ColorResources.roseRed,
+                                              ),
+                                            ),
+                                            focusedErrorBorder:
+                                                OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                  borderSide: const BorderSide(
+                                                    color: Colors.red,
                                                   ),
                                                 ),
-                                            ],
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ],
+                                          ),
+                                        ),
+                                        if (field.hasError)
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 4,
+                                              top: 4,
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                SvgPicture.asset(
+                                                  AppAssets.alertError,
+                                                  height: 16,
+                                                ),
+                                                w4,
+                                                Text(
+                                                  field.errorText ?? "",
+                                                  style: context
+                                                      .textStyle
+                                                      .s10
+                                                      .w400
+                                                      .roseRed
+                                                      .raleway,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                      ],
+                                    );
+                                  },
                                 ),
                                 h16,
                                 Padding(

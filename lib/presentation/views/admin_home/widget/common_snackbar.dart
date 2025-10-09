@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:mpos_beat/core/utils/imports.dart';
 
 class CommonSnackBar {
   static void show(
@@ -11,20 +10,21 @@ class CommonSnackBar {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         elevation: 3,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         behavior: SnackBarBehavior.floating,
         duration: duration,
         backgroundColor: backgroundColor,
         content: Text(
           message,
           maxLines: 2,
-          style: GoogleFonts.raleway(
-            fontWeight: FontWeight.w600,
-            fontSize: 13,
+          style: context.textStyle.s12.w600.raleway.copyWith(
             color: Theme.of(context).colorScheme.onPrimary,
           ),
+          // GoogleFonts.raleway(
+          //   fontWeight: FontWeight.w600,
+          //   fontSize: 13,
+          //   color: Theme.of(context).colorScheme.onPrimary,
+          // ),
         ),
       ),
     );

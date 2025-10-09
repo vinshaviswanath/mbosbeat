@@ -6,6 +6,7 @@
 // dart run build_runner build --delete-conflicting-outputs
 
    import 'package:flutter/material.dart';
+import 'package:mpos_beat/core/theme/colors.dart';
 
 final List<String> optionTitles = [
     "Edit User",
@@ -22,3 +23,12 @@ final List<String> optionTitles = [
     Icons.settings,
     Icons.add_circle,
   ];
+
+  final List<Color> colors = [
+  ColorResources.lavendermist,
+  ColorResources.lavenderblue,
+  ColorResources.mistyrose,
+  ColorResources.lightgoldenrod,
+  ColorResources.paleskyblue,
+  ColorResources.mintcream,
+];

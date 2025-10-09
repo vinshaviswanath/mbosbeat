@@ -243,7 +243,7 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                               provider.userCreateAutovalidateMode ==
                                       AutovalidateMode.disabled
                                   ? h10
-                                  : const SizedBox(height: 34),
+                                  : h32,
                             ],
                           ),
                         ],

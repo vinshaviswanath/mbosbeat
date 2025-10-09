@@ -38,6 +38,7 @@
     "reg_success_widget_reg_success" : "Registration\nSuccessfully!",
     "reg_success_widget_successfully_registered_admin" : "You are successfully registered as Admin User",
     "custom_route_screen_go_home" : "Go Home",
+    "custom_route_screen_create_company" : "Create Company",
     "reg_failure_widget_reg_failed" : "Oops!!\nRegistration Failed!",
     "reg_failure_widget_try_again" : "Try Again !",
     "forgot_password" : "Forgot Password?",

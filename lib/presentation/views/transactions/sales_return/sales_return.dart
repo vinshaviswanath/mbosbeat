@@ -56,8 +56,6 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
     final appLocalizations = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: ColorResources.cloudGray,
-        surfaceTintColor: ColorResources.cloudGray,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -76,7 +74,7 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
         actions: [
           SvgPicture.asset(
             AppAssets.refresh,
-            height: 22,
+            height: context.getSize.height * 0.022,
             colorFilter: const ColorFilter.mode(
               ColorResources.indigoBlue,
               BlendMode.srcIn,
@@ -84,14 +82,12 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
           ),
           IconButton(
             onPressed: () {},
-            icon: const Icon(
+            icon:  Icon(
               Icons.qr_code,
-              size: 22,
-              color: ColorResources.indigoBlue,
+              size: context.getSize.height * 0.022,
             ),
           ),
         ],
-        // toolbarHeight: 65,
       ),
       body: CustomScrollView(
         physics: const NeverScrollableScrollPhysics(),

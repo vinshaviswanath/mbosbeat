@@ -21,10 +21,7 @@ class LoginImpl {
   ResultFuture<LoginResponse> call(BaseParams<LoginParams> param) {
     return runSafely(
       () async {
-        final response = await httpClient.post(
-          Urls.login,
-          data: param.toMap(),
-        );
+        final response = await httpClient.post(Urls.login, data: param.toMap());
 
         if (response.isOk) {
           final data = LoginResponse.fromJson(response.data);

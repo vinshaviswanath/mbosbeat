@@ -49,7 +49,7 @@ class ListCard extends StatelessWidget {
             "${index + 1}",
             style: context.textStyle.s12.w500.copyWith(color: textColor),
           ),
-          const SizedBox(width: 12),
+          w12,
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +58,7 @@ class ListCard extends StatelessWidget {
                   item.name,
                   style: context.textStyle.s12.w500.copyWith(color: textColor),
                 ),
-                const SizedBox(height: 4),
+                h4,
                 Text(
                   item.designation,
                   style: context.textStyle.s10.w400.copyWith(
