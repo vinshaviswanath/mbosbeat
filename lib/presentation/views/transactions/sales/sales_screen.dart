@@ -30,8 +30,6 @@ class _SalesScreenState extends State<SalesScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: ColorResources.cloudGray,
-        surfaceTintColor: ColorResources.cloudGray,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -50,7 +48,7 @@ class _SalesScreenState extends State<SalesScreen> {
         actions: [
           SvgPicture.asset(
             AppAssets.refresh,
-            height: 22,
+            height: context.getSize.height * 0.022,
             colorFilter: const ColorFilter.mode(
               ColorResources.indigoBlue,
               BlendMode.srcIn,
@@ -58,11 +56,7 @@ class _SalesScreenState extends State<SalesScreen> {
           ),
           IconButton(
             onPressed: () {},
-            icon: const Icon(
-              Icons.qr_code,
-              size: 22,
-              color: ColorResources.indigoBlue,
-            ),
+            icon: Icon(Icons.qr_code, size: context.getSize.height * 0.022),
           ),
         ],
         // toolbarHeight: 65,
@@ -128,8 +122,8 @@ class _SalesScreenState extends State<SalesScreen> {
                         child: Row(
                           children: [
                             Container(
-                              width: 20,
-                              height: 20,
+                              width: context.getSize.width * 0.045,
+                              height: context.getSize.height * 0.022,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 border: Border.all(
@@ -141,8 +135,8 @@ class _SalesScreenState extends State<SalesScreen> {
                               ),
                               child: Center(
                                 child: Container(
-                                  width: 10,
-                                  height: 10,
+                                  width: context.getSize.width * 0.0225,
+                                  height: context.getSize.height * 0.01,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: _selectedMode == "B2B"
@@ -170,8 +164,8 @@ class _SalesScreenState extends State<SalesScreen> {
                         child: Row(
                           children: [
                             Container(
-                              width: 20,
-                              height: 20,
+                              width: context.getSize.width * 0.045,
+                                    height: context.getSize.height * 0.022,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 border: Border.all(
@@ -183,8 +177,8 @@ class _SalesScreenState extends State<SalesScreen> {
                               ),
                               child: Center(
                                 child: Container(
-                                  width: 10,
-                                  height: 10,
+                                  width: context.getSize.width * 0.0225,
+                                  height: context.getSize.height * 0.01,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: _selectedMode == "B2C"
@@ -194,7 +188,7 @@ class _SalesScreenState extends State<SalesScreen> {
                                 ),
                               ),
                             ),
-                           w6,
+                            w6,
                             Text(
                               appLocalizations.b2c,
 

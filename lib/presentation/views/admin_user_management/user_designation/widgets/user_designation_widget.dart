@@ -43,7 +43,7 @@ class UserDesignationWidget extends StatelessWidget {
                   )
                 : context.textStyle.s12.w500.indigoBlue.roboto,
           ),
-          const SizedBox(width: 12),
+          w12,
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,7 +56,7 @@ class UserDesignationWidget extends StatelessWidget {
                         : ColorResources.indigoBlue,
                   ),
                 ),
-                const SizedBox(height: 4),
+                h4,
                 Text(
                   item.status,
                   style: context.textStyle.s10.w400.roboto.copyWith(

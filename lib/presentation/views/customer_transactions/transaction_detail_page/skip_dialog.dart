@@ -39,10 +39,10 @@ void skipDialog(BuildContext context) {
                         fillColor: WidgetStatePropertyAll(
                           ColorResources.indigoBlue,
                         ),
-                        side: const BorderSide(
-                          color: ColorResources.bluishGray,
-                          width: 2,
-                        ),
+                        // side: const BorderSide(
+                        //   color: ColorResources.bluishGray,
+                        //   width: 2,
+                        // ),
                         value: index,
                         groupValue: _selectedValue,
                         onChanged: (value) {

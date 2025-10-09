@@ -31,31 +31,26 @@ class RegistrationDialogs {
               ),
               h16,
               Image.asset(
-                AppAssets.mailSend,
+                AppAssets.alreadyRegistered,
                 height: context.getSize.height * 0.15,
               ),
               h24,
-              SizedBox(
-                width: context.getSize.width * 0.8,
-                child: Text.rich(
-                  TextSpan(
-                    children: [
-                      TextSpan(
-                        text: appLocalization.registration_dialogs_hello,
-                      ),
-                      TextSpan(
-                        text: title,
-                        style: context.textStyle.s12.bluishGray.bold,
-                      ),
-                      TextSpan(
-                        text: appLocalization
-                            .registration_dialogs_verify_num_text,
-                      ),
-                    ],
-                    style: context.textStyle.s12.bluishGray,
-                  ),
-                  textAlign: TextAlign.center,
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(text: appLocalization.registration_dialogs_hello),
+                    TextSpan(
+                      text: title,
+                      style: context.textStyle.s12.bluishGray.bold,
+                    ),
+                    TextSpan(
+                      text:
+                          appLocalization.registration_dialogs_verify_num_text,
+                    ),
+                  ],
+                  style: context.textStyle.s12.bluishGray,
                 ),
+                textAlign: TextAlign.center,
               ),
               h24,
               CustomButton(

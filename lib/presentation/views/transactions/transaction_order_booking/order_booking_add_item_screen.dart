@@ -35,9 +35,8 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
   Widget build(BuildContext context) {
     final appLocalizations = context.l10n;
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        backgroundColor: ColorResources.cloudGray,
-        surfaceTintColor: ColorResources.cloudGray,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -65,7 +64,7 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
         actions: [
           SvgPicture.asset(
             AppAssets.refresh,
-            height: 22,
+            height: context.getSize.height * 0.022,
             colorFilter: const ColorFilter.mode(
               ColorResources.indigoBlue,
               BlendMode.srcIn,
@@ -73,11 +72,7 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
           ),
           IconButton(
             onPressed: () {},
-            icon: const Icon(
-              Icons.qr_code,
-              size: 22,
-              color: ColorResources.indigoBlue,
-            ),
+            icon: Icon(Icons.qr_code, size: context.getSize.height * 0.022),
           ),
         ],
         toolbarHeight: 65,
@@ -94,12 +89,12 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
                   CustomTextField(
                     // controller: searchController,
                     hint: appLocalizations.manage_user_screen_search_user,
-                    suffixIcon: const Padding(
-                      padding: EdgeInsets.all(12),
+                    suffixIcon: Padding(
+                      padding: const EdgeInsets.all(12),
                       child: Icon(
                         Icons.search,
                         color: ColorResources.bluishGray,
-                        size: 24,
+                        size: context.getSize.height * 0.024,
                       ),
                     ),
                     backgroundColor: ColorResources.lightGray,
@@ -117,8 +112,8 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
                     children: [
                       Expanded(
                         child: CustomDropdown(
-                          height: 32,
-                          arrowSize: 16,
+                          height: context.getSize.height * 0.032,
+                          arrowSize: context.getSize.height * 0.016,
                           label: appLocalizations
                               .order_booking_add_item_select_by_group,
                           labelTextStyle:
@@ -134,8 +129,8 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
                       w5,
                       Expanded(
                         child: CustomDropdown(
-                          height: 32,
-                          arrowSize: 16,
+                          height: context.getSize.height * 0.032,
+                          arrowSize: context.getSize.height * 0.016,
                           label: appLocalizations
                               .order_booking_add_item_select_by_category,
                           labelTextStyle:
@@ -183,11 +178,12 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
             }, childCount: items.length),
           ),
           SliverFillRemaining(
+            hasScrollBody: false,
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  const Spacer(),
                   Divider(
                     thickness: 1,
                     color: ColorResources.bluishGray.withValues(alpha: 0.2),
@@ -228,10 +224,6 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
     );
   }
 }
-
-
-
-
 
 // class SliverListExample extends StatelessWidget {
 //   const SliverListExample({super.key});

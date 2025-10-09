@@ -57,8 +57,6 @@ class _TransactionOrderBookingScreenState
     final appLocalizations = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: ColorResources.cloudGray,
-        surfaceTintColor: ColorResources.cloudGray,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -77,7 +75,7 @@ class _TransactionOrderBookingScreenState
         actions: [
           SvgPicture.asset(
             AppAssets.refresh,
-            height: 22,
+            height: context.getSize.height * 0.022,
             colorFilter: const ColorFilter.mode(
               ColorResources.indigoBlue,
               BlendMode.srcIn,
@@ -85,14 +83,9 @@ class _TransactionOrderBookingScreenState
           ),
           IconButton(
             onPressed: () {},
-            icon: const Icon(
-              Icons.qr_code,
-              size: 22,
-              color: ColorResources.indigoBlue,
-            ),
+            icon: Icon(Icons.qr_code, size: context.getSize.height * 0.022),
           ),
         ],
-        // toolbarHeight: 65,
       ),
       body: CustomScrollView(
         physics: const NeverScrollableScrollPhysics(),
@@ -153,11 +146,11 @@ class _TransactionOrderBookingScreenState
                         children: [
                           Text(
                             appLocalizations.order_booking_price_list,
-                            style: TextStyle(fontSize: 10, color: Colors.grey),
+                            style: context.textStyle.s09.w400.dustyBlue.roboto,
                           ),
                           w8,
                           Container(
-                            height: 22,
+                            height: context.getSize.height * 0.022,
                             padding: const EdgeInsets.symmetric(horizontal: 8),
                             decoration: BoxDecoration(
                               color: ColorResources.lightGray,
@@ -166,18 +159,16 @@ class _TransactionOrderBookingScreenState
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton<String>(
                                 value: selectedValue,
-                                icon: const Padding(
-                                  padding: EdgeInsets.only(left: 80),
+                                icon: Padding(
+                                  padding: const EdgeInsets.only(left: 80),
                                   child: Icon(
                                     Icons.keyboard_arrow_down,
-                                    size: 16,
+                                    size: context.getSize.height * 0.016,
                                     color: ColorResources.indigoBlue,
                                   ),
                                 ),
-                                style: const TextStyle(
-                                  fontSize: 10,
-                                  color: Colors.black54,
-                                ),
+                                style:
+                                    context.textStyle.s09.w300.dustyBlue.roboto,
                                 items: priceOptions
                                     .map(
                                       (e) => DropdownMenuItem(
@@ -406,5 +397,3 @@ class _TransactionOrderBookingScreenState
     );
   }
 }
-
-

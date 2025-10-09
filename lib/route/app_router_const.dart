@@ -10,12 +10,6 @@ class AppRouterConst {
   static const forgotPassword = "/forgotPassword";
   static const mailedScreen = "/mailedScreen";
   static const loadingScreen = "/loadingScreen";
-  static const homeScreen = "/homescreen";
-  static const otherTransaction = "/othertransactions";
-  static const customerTransactions = "/customerTransactions";
-  static const transactionDetailpage = "/transactionDetail";
-  static const orderbooking = "/orderbooking";
-  static const orderbookingitems = "orderbookingitems";
   static const userManagement = "userManagement";
   static const manageUser = "/manageUser";
   static const userCreation = "userCreation";
@@ -33,5 +27,13 @@ class AppRouterConst {
   static const receiptScreen = "/receiptScreen";
   static const paymentScreen = "/paymentScreen";
   static const replacementScreen = "/replacementScreen";
+  static const companyCreationScreen = "/companyCreationScreen";
 
+  // anver
+    static const homeScreen = "/homescreen";
+  static const otherTransaction = "/othertransactions";
+  static const customerTransactions = "/customerTransactions";
+  static const transactionDetailpage = "/transactionDetail";
+  static const orderbooking = "/orderbooking";
+  static const orderbookingitems = "orderbookingitems";
 }

@@ -1,6 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:mpos_beat/core/theme/colors.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 
 void CommonLogoutDialog(context) {
@@ -26,7 +23,7 @@ void CommonLogoutDialog(context) {
                 'Are you sure to want to Logout?',
                 style: context.textStyle.s14.roboto.bold.dustyBlue,
               ),
-              SizedBox(height: 20),
+              h20,
               Row(
                 children: [
                   Expanded(
@@ -45,7 +42,7 @@ void CommonLogoutDialog(context) {
                       ),
                     ),
                   ),
-                  SizedBox(width: 10),
+                  w10,
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {

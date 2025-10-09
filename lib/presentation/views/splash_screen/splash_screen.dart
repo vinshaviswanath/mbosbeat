@@ -41,6 +41,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Logger.logInfo("localized text: ${context.l10n.onboard_skip}");
+
     return Scaffold(
       body: Stack(
         children: [

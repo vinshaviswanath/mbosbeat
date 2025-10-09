@@ -208,6 +208,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         password: passwordController.text,
                                       ),
                                     );
+                                    reset();
                                   },
                                 ),
                                 h10,

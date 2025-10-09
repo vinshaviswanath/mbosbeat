@@ -139,7 +139,7 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
                                                   children: [
-                                                    const SizedBox(width: 24),
+                                                    w24,
                                                     Column(
                                                       children: [
                                                         Text(
@@ -151,9 +151,7 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
                                                               .roboto
                                                               .indigoBlue,
                                                         ),
-                                                        const SizedBox(
-                                                          height: 4,
-                                                        ),
+                                                        h4,
                                                         Text(
                                                           item.status,
                                                           style: context
@@ -183,7 +181,7 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
                                                   ],
                                                 ),
                                               ),
-                                              const SizedBox(height: 20),
+                                              h20,
                                               OptionItem(
                                                 index: 0,
                                                 selectedIndex: optionIndex,

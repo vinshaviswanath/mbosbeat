@@ -33,14 +33,14 @@ class UserManageDialog {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(width: 24),
+                      w24,
                       Column(
                         children: [
                           Text(
                             items[selectedIndex].name,
                             style: context.textStyle.s12.w500.roboto.indigoBlue,
                           ),
-                          const SizedBox(height: 4),
+                          h4,
                           Text(
                             items[selectedIndex].designation,
                             style: context.textStyle.s10.w400.roboto.dustyBlue,
@@ -61,7 +61,7 @@ class UserManageDialog {
                     ],
                   ),
                 ),
-                const SizedBox(height: 20),
+                h20,
                 ...List.generate(optionActions.length, (i) {
                   return Column(
                     children: [

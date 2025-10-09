@@ -1,11 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
-import 'package:mpos_beat/l10n/app_localizations.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
-import 'package:mpos_beat/presentation/common/widgets/custom_user_appbar.dart';
-import 'package:mpos_beat/route/app_router_const.dart';
-import 'package:mpos_beat/route/router.dart';
 
 class CustomerTransactions extends StatefulWidget {
   const CustomerTransactions({super.key});
@@ -31,7 +25,7 @@ class _CustomerTransactionsState extends State<CustomerTransactions> {
           style: context.textStyle.roboto.s20.bold.indigoBlue,
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded),
+          icon: const Icon(Icons.arrow_back_ios_new_rounded),
           onPressed: () {
             context.pop();
           },

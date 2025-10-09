@@ -119,7 +119,7 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
                                       if (response.status == 1) {
                                         context.pushNamed(
                                           AppRouterConst.customRouteScreen,
-                                          extra: NavigationType.failed,
+                                          extra: NavigationType.success,
                                         );
                                         // CustomAlertDialog.showCustomDialog(
                                         //   title: "OTP Verified Successfully",

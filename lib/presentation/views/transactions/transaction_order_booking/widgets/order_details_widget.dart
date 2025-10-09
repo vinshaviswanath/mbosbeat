@@ -1,4 +1,5 @@
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/presentation/logic/customer_transaction_provider.dart';
 
 class OrderDetailsWidget extends StatelessWidget {
   const OrderDetailsWidget({super.key});
@@ -6,6 +7,7 @@ class OrderDetailsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appLocalization = context.l10n;
+    final provider = context.watch<CustomerTransactionProvider>();
     return Container(
       decoration: const BoxDecoration(color: ColorResources.lightGray),
       child: Column(
@@ -25,11 +27,11 @@ class OrderDetailsWidget extends StatelessWidget {
                           decorationColor: context.textStyle.indigoBlue.color,
                         ),
                   ),
-                 h4,
+                  h4,
                   Row(
                     children: [
                       Container(
-                        width: 60,
+                        width: context.getSize.width * 0.13,
                         padding: const EdgeInsets.symmetric(vertical: 6),
                         decoration: BoxDecoration(
                           border: Border.all(color: ColorResources.mistGray),
@@ -37,7 +39,7 @@ class OrderDetailsWidget extends StatelessWidget {
                         ),
                         child: Center(
                           child: Text(
-                            "5",
+                            provider.orderQty.toString(),
                             style: context.textStyle.s10.w500.dustyBlue.roboto,
                           ),
                         ),
@@ -60,10 +62,10 @@ class OrderDetailsWidget extends StatelessWidget {
                                   context.textStyle.s10.w300.dustyBlue.roboto,
                             ),
                             w4,
-                            const Icon(
+                            Icon(
                               Icons.keyboard_arrow_down_rounded,
                               color: ColorResources.dustyBlue,
-                              size: 16,
+                              size: context.getSize.height * 0.016,
                             ),
                           ],
                         ),
@@ -71,38 +73,44 @@ class OrderDetailsWidget extends StatelessWidget {
                       w6,
                       Column(
                         children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 5,
-                              vertical: 2,
-                            ),
-                            decoration: BoxDecoration(
-                              color: ColorResources.bluishGray,
-                              borderRadius: BorderRadius.circular(3),
-                            ),
-                            child: const Center(
-                              child: Icon(
-                                Icons.remove,
-                                color: ColorResources.white,
-                                size: 14,
+                          GestureDetector(
+                            onTap: provider.decrementQty,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 5,
+                                vertical: 2,
+                              ),
+                              decoration: BoxDecoration(
+                                color: ColorResources.bluishGray,
+                                borderRadius: BorderRadius.circular(3),
+                              ),
+                              child: const Center(
+                                child: Icon(
+                                  Icons.remove,
+                                  color: ColorResources.white,
+                                  size: 14,
+                                ),
                               ),
                             ),
                           ),
                           h4,
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 5,
-                              vertical: 2,
-                            ),
-                            decoration: BoxDecoration(
-                              color: ColorResources.bluishGray,
-                              borderRadius: BorderRadius.circular(3),
-                            ),
-                            child: const Center(
-                              child: Icon(
-                                Icons.add,
-                                color: ColorResources.white,
-                                size: 14,
+                          GestureDetector(
+                            onTap: provider.incrementQty,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 5,
+                                vertical: 2,
+                              ),
+                              decoration: BoxDecoration(
+                                color: ColorResources.bluishGray,
+                                borderRadius: BorderRadius.circular(3),
+                              ),
+                              child: const Center(
+                                child: Icon(
+                                  Icons.add,
+                                  color: ColorResources.white,
+                                  size: 14,
+                                ),
                               ),
                             ),
                           ),
@@ -188,21 +196,44 @@ class OrderDetailsWidget extends StatelessWidget {
                   h4,
                   Row(
                     children: [
+                      // Container(
+                      //   width: context.getSize.width * 0.13,
+                      //   // width: 60,
+                      //   padding: const EdgeInsets.symmetric(vertical: 6),
+                      //   decoration: BoxDecoration(
+                      //     border: Border.all(color: ColorResources.mistGray),
+                      //     borderRadius: BorderRadius.circular(20),
+                      //   ),
+                      //   child: Center(
+                      //     child: Text(
+                      //       "5",
+                      //       style: context.textStyle.s10.w500.dustyBlue.roboto,
+                      //     ),
+                      //   ),
+                      // ),
                       Container(
-                        width: 60,
-                        padding: const EdgeInsets.symmetric(vertical: 6),
+                        width: context.getSize.width * 0.13,
+                        padding: const EdgeInsets.symmetric(vertical: 2),
                         decoration: BoxDecoration(
                           border: Border.all(color: ColorResources.mistGray),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Center(
-                          child: Text(
-                            "5",
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            keyboardType: TextInputType.number,
                             style: context.textStyle.s10.w500.dustyBlue.roboto,
+                            // maxLength: 2,
+                            decoration: const InputDecoration(
+                              isCollapsed: true,
+                              contentPadding: EdgeInsets.symmetric(vertical: 4),
+                              border: InputBorder.none,
+                            ),
                           ),
                         ),
                       ),
-                      const SizedBox(width: 6),
+
+                      w6,
                       Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 12,
@@ -220,10 +251,10 @@ class OrderDetailsWidget extends StatelessWidget {
                                   context.textStyle.s10.w300.dustyBlue.roboto,
                             ),
                             w4,
-                            const Icon(
+                            Icon(
                               Icons.keyboard_arrow_down_rounded,
                               color: ColorResources.dustyBlue,
-                              size: 16,
+                              size: context.getSize.height * 0.016,
                             ),
                           ],
                         ),
