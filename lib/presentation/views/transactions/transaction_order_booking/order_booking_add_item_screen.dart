@@ -85,6 +85,7 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
       body: CustomScrollView(
         physics: const NeverScrollableScrollPhysics(),
         slivers: [
+          
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -228,10 +229,6 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
     );
   }
 }
-
-
-
-
 
 // class SliverListExample extends StatelessWidget {
 //   const SliverListExample({super.key});

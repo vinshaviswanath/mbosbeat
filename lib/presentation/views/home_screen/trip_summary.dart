@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mpos_beat/core/theme/colors.dart';
 import 'package:mpos_beat/core/theme/text_styles.dart';
 import 'package:mpos_beat/core/utils/extentions.dart';
-import 'package:mpos_beat/l10n/app_localizations.dart';
 
 class TripSummary extends StatelessWidget {
   final List<SummaryItem> items;
