@@ -28,6 +28,11 @@ class AppRouterConst {
   static const paymentScreen = "/paymentScreen";
   static const replacementScreen = "/replacementScreen";
   static const companyCreationScreen = "/companyCreationScreen";
+  static const adminDashboard = "/adminDashboard";
+  static const godownWiseScreen = "/godownWiseScreen";
+  static const routeWiseScreen = "/routeWiseScreen";
+  static const godownRouteVoucherScreen = "/godownRouteVoucherScreen";
+
 
   // anver
     static const homeScreen = "/homescreen";

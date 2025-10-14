@@ -23,10 +23,11 @@ import '../../data/data_sources/authentication/resend_otp/resend_otp.dart'
     as _i13;
 import '../../data/data_sources/authentication/reset_password/reset_password.dart'
     as _i244;
+import '../../data/local_db/app_db.dart' as _i264;
 import '../../data/repositories/i_authentication_facad_impl.dart' as _i823;
 import '../../domain/repositories/i_authentication_facad.dart' as _i590;
 import '../base/run_safely.dart' as _i530;
-import '../serveice/http_client.dart' as _i841;
+import '../serveice/http_client.dart' as _i816;
 import 'app_injection_module.dart' as _i975;
 
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -35,55 +36,66 @@ Future<_i174.GetIt> init(
   String? environment,
   _i526.EnvironmentFilter? environmentFilter,
 }) async {
-  final gh = _i526.GetItHelper(
-    getIt,
-    environment,
-    environmentFilter,
-  );
+  final gh = _i526.GetItHelper(getIt, environment, environmentFilter);
   final appInjectionModule = _$AppInjectionModule();
   await gh.factoryAsync<_i460.SharedPreferences>(
     () => appInjectionModule.pref(),
     preResolve: true,
   );
+  gh.singleton<_i264.AppDb>(() => _i264.AppDb());
   gh.lazySingleton<_i530.RunSafely>(() => _i530.RunSafely());
   gh.lazySingleton<_i519.Client>(() => appInjectionModule.clent);
-  gh.lazySingleton<_i841.HttpClient>(
-      () => _i841.HttpClient(gh<_i519.Client>()));
-  gh.lazySingleton<_i70.CompanyRegisteration>(() => _i70.CompanyRegisteration(
-        gh<_i841.HttpClient>(),
-        gh<_i530.RunSafely>(),
-        gh<_i460.SharedPreferences>(),
-      ));
-  gh.lazySingleton<_i526.LoginImpl>(() => _i526.LoginImpl(
-        gh<_i841.HttpClient>(),
-        gh<_i530.RunSafely>(),
-        gh<_i460.SharedPreferences>(),
-      ));
-  gh.lazySingleton<_i42.OtpValidation>(() => _i42.OtpValidation(
-        gh<_i841.HttpClient>(),
-        gh<_i530.RunSafely>(),
-        gh<_i460.SharedPreferences>(),
-      ));
-  gh.lazySingleton<_i13.ResendOtp>(() => _i13.ResendOtp(
-        gh<_i841.HttpClient>(),
-        gh<_i530.RunSafely>(),
-        gh<_i460.SharedPreferences>(),
-      ));
-  gh.lazySingleton<_i244.ResetPassword>(() => _i244.ResetPassword(
-        gh<_i841.HttpClient>(),
-        gh<_i530.RunSafely>(),
-        gh<_i460.SharedPreferences>(),
-      ));
-  gh.lazySingleton<_i590.IAuthenticationFacad>(() => _i823.IAuthenticationImpl(
-        gh<_i70.CompanyRegisteration>(),
-        gh<_i42.OtpValidation>(),
-        gh<_i13.ResendOtp>(),
-        gh<_i526.LoginImpl>(),
-        gh<_i244.ResetPassword>(),
-        gh<_i841.HttpClient>(),
-        gh<_i530.RunSafely>(),
-        gh<_i460.SharedPreferences>(),
-      ));
+  gh.lazySingleton<_i816.HttpClient>(
+    () => _i816.HttpClient(gh<_i519.Client>()),
+  );
+  gh.lazySingleton<_i526.LoginImpl>(
+    () => _i526.LoginImpl(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+      gh<_i264.AppDb>(),
+    ),
+  );
+  gh.lazySingleton<_i70.CompanyRegisteration>(
+    () => _i70.CompanyRegisteration(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i42.OtpValidation>(
+    () => _i42.OtpValidation(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i13.ResendOtp>(
+    () => _i13.ResendOtp(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i244.ResetPassword>(
+    () => _i244.ResetPassword(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i590.IAuthenticationFacad>(
+    () => _i823.IAuthenticationImpl(
+      gh<_i70.CompanyRegisteration>(),
+      gh<_i42.OtpValidation>(),
+      gh<_i13.ResendOtp>(),
+      gh<_i526.LoginImpl>(),
+      gh<_i244.ResetPassword>(),
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
   return getIt;
 }
 

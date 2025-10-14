@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dropdown_alert/dropdown_alert.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mpos_beat/presentation/logic/authentication_provider.dart';
+import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/presentation/logic/customer_transaction_provider.dart';
 import 'package:mpos_beat/presentation/logic/user_management_provider.dart';
 import 'package:mpos_beat/route/router.dart';
@@ -34,6 +35,8 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(create: (_) => UserManagementProvider()),
         ChangeNotifierProvider(create: (_) => CustomerTransactionProvider()),
+        ChangeNotifierProvider(create: (_) => CompanyCreationProvider()),
+
       ],
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, _) {

@@ -1,6 +1,7 @@
 import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/presentation/common/widgets/add_designation_widget.dart';
+import 'package:mpos_beat/presentation/common/widgets/custom_divider.dart';
 import 'package:mpos_beat/presentation/logic/user_management_provider.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_designation/widgets/activate_user_designation_widget.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_designation/widgets/deactivate_user_designation_widget.dart';
@@ -215,7 +216,7 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
                                                   );
                                                 },
                                               ),
-                                              buildDivider(),
+                                              const CustomDivider(),
                                               OptionItem(
                                                 index: 1,
                                                 selectedIndex: optionIndex,
@@ -246,7 +247,7 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
                                                   );
                                                 },
                                               ),
-                                              buildDivider(),
+                                              const CustomDivider(),
                                               OptionItem(
                                                 index: 2,
                                                 selectedIndex: optionIndex,

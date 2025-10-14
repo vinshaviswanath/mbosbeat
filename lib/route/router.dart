@@ -3,6 +3,10 @@ import 'package:mpos_beat/core/utils/app_details.dart';
 import 'package:mpos_beat/core/utils/enums.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_route_screen.dart';
 import 'package:mpos_beat/presentation/common/widgets/loading_screen.dart';
+import 'package:mpos_beat/presentation/views/admin_home/admin_dashboard.dart';
+import 'package:mpos_beat/presentation/views/godown_route_voucher_screen/godown_route_voucher_screen.dart';
+import 'package:mpos_beat/presentation/views/godown_wise_screen/godown_wise_screen.dart';
+import 'package:mpos_beat/presentation/views/route_wise_screen/route_wise_screen.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/add_company/add_company_screen.dart';
 import 'package:mpos_beat/presentation/views/admin_home/admin_home.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_create/user_creation_screen.dart';
@@ -219,7 +223,7 @@ class AppRouter {
           return const SalesReturnScreen();
         },
       ),
-       GoRoute(
+      GoRoute(
         path: "/purchaseReturnSCreen",
         name: AppRouterConst.purchaseReturnSCreen,
         builder: (context, state) {
@@ -331,10 +335,39 @@ class AppRouter {
       ),
 
       GoRoute(
-        path: "/companyCreationScreen",
         name: AppRouterConst.companyCreationScreen,
+        path: '/companyCreationScreen',
         builder: (context, state) {
-          return const CompanyCreationScreen();
+          final tabIndex = state.extra as int? ?? 0;
+          return CompanyCreationScreen(initialTabIndex: tabIndex);
+        },
+      ),
+      GoRoute(
+        path: "/adminDashboard",
+        name: AppRouterConst.adminDashboard,
+        builder: (context, state) {
+          return const AdminDashboard();
+        },
+      ),
+      GoRoute(
+        path: "/godownWiseScreen",
+        name: AppRouterConst.godownWiseScreen,
+        builder: (context, state) {
+          return const GodownWiseScreen();
+        },
+      ),
+      GoRoute(
+        path: "/routeWiseScreen",
+        name: AppRouterConst.routeWiseScreen,
+        builder: (context, state) {
+          return const RouteWiseScreen();
+        },
+      ),
+      GoRoute(
+        path: "/godownRouteVoucherScreen",
+        name: AppRouterConst.godownRouteVoucherScreen,
+        builder: (context, state) {
+          return const GodownRouteVoucherScreen();
         },
       ),
     ],

@@ -4,7 +4,7 @@ class OptionItem extends StatelessWidget {
   final int index;
   final int? selectedIndex;
   final String title;
-  final IconData icon;
+  final IconData? icon;
   final Function(int) onTap;
 
   const OptionItem({
@@ -12,7 +12,7 @@ class OptionItem extends StatelessWidget {
     required this.index,
     required this.selectedIndex,
     required this.title,
-    required this.icon,
+     this.icon,
     required this.onTap,
   });
 

@@ -1,5 +1,6 @@
 import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/presentation/common/widgets/custom_divider.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 import 'package:mpos_beat/presentation/logic/user_management_provider.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_manage/widgets/block_user_widget.dart';
@@ -209,7 +210,7 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
                                                   );
                                                 },
                                               ),
-                                              buildDivider(),
+                                              const CustomDivider(),
                                               OptionItem(
                                                 index: 1,
                                                 selectedIndex: optionIndex,
@@ -224,7 +225,7 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
                                                   );
                                                 },
                                               ),
-                                              buildDivider(),
+                                              const CustomDivider(),
                                               OptionItem(
                                                 index: 2,
                                                 selectedIndex: optionIndex,
@@ -248,7 +249,7 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
                                                   );
                                                 },
                                               ),
-                                              buildDivider(),
+                                              const CustomDivider(),
                                               OptionItem(
                                                 index: 3,
                                                 selectedIndex: optionIndex,
@@ -302,9 +303,11 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
   }
 }
 
-Widget buildDivider() {
-  return const Divider(height: 1, color: Color(0xFFE0E0E0));
-}
+// Widget buildDivider() {
+//   return CustomDivider();
+// }
+
+
 
 class UserModel {
   String id;
