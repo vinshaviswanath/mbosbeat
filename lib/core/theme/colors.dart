@@ -23,6 +23,13 @@ class ColorResources {
   static const oceanBlue = Color(0xFF1676BF);
   static const ashGray = Color(0xFFD6D6D6);
   static const leafGreen = Color(0xFF54A959);
+  static const aquaGreen = Color(0xFF7DCFA3);
+  static const tealGreen = Color(0xFF64C290);
+  static const lavenderGray = Color(0xFFCBD0E5);
+  static const offWhite = Color(0xFFEAEAEA);
+  static const darkBlue = Color(0xFF2F3A6B);
+  static const lightBlue = Color(0xFF4F9AF6);
+  static const royalBlue = Color(0xFF324DA1);
 
   //anver
   static const mintGreen = Color(0xFF69D282);
@@ -34,7 +41,9 @@ class ColorResources {
   static const mintGreenAccent = Color(0xFF55D389);
   static const lightBorderGray = Color(0xFFD6D6D6);
   static const freshgreen = Color(0xFF69D282);
-    static const navyGray = Color(0xFF42526E);
+  static const navyGray = Color(0xFF42526E);
+
+
   // For OTP field border and error messages
   static const roseRed = Color(0xFFFF5D5D);
   // OTP field fill color
@@ -59,5 +68,5 @@ class ColorResources {
   static const paleskyblue = Color(0xFFDCEFFF);
   static const mintcream = Color(0xFFDDF6E7);
   static const lightgreen = Color(0xFF54A959);
-
+  static const cloudWhite = Color(0xFFF8FAFF);
 }

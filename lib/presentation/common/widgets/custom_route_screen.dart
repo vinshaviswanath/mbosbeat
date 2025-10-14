@@ -34,7 +34,8 @@ class CustomRouteScreen extends StatelessWidget {
                   children: [
                     if (status == NavigationType.success)
                       BaseBox(
-                        width: context.getSize.width - 16,
+                        width: context.getSize.width - 8,
+                        padding: const EdgeInsets.symmetric(horizontal: 32),
                         widgwt: const RegisterSuccessWidget(),
                       ),
                     if (status == NavigationType.failed)
@@ -53,16 +54,18 @@ class CustomRouteScreen extends StatelessWidget {
                           Padding(
                             padding: EdgeInsets.only(
                               bottom: context.getSize.height * 0.08,
-                              left: context.getSize.width / 3,
-                              right: context.getSize.width / 3,
+                              left: context.getSize.width / 3.6,
+                              right: context.getSize.width / 3.6,
                             ),
                             child: CustomButton(
                               onTap: () =>
                                   // AppRoute.pushNamed(AdminHome.routeName),
-                                  context.pushNamed(AppRouterConst.adminHome),
+                                  context.pushNamed(
+                                    AppRouterConst.companyCreationScreen,
+                                  ),
                               buttonText: appLocalization
                                   .custom_route_screen_create_company,
-                              textStyle: context.textStyle.s16.white,
+                              textStyle: context.textStyle.s16.white.bold,
                               isborderEnable: false,
                             ),
                           ),

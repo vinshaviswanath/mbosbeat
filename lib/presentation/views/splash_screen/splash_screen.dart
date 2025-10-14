@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
           if (token.isEmpty) {
             context.pushNamed(AppRouterConst.login);
           } else {
-            context.pushNamed(AppRouterConst.adminHome);
+            context.pushNamed(AppRouterConst.adminDashboard);
           }
         } else {
           context.pushNamed(AppRouterConst.onboardScreen);

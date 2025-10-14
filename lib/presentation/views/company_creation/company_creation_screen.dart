@@ -1,7 +1,13 @@
-import 'package:flutter/material.dart';
+import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
+import 'package:mpos_beat/presentation/views/company_creation/widget/company_info_widget.dart';
+import 'package:mpos_beat/presentation/views/company_creation/widget/integration_widget.dart';
+import 'package:mpos_beat/presentation/views/company_creation/widget/voucher_type_widget.dart';
 
 class CompanyCreationScreen extends StatefulWidget {
-  const CompanyCreationScreen({super.key});
+  const CompanyCreationScreen({super.key, required this.initialTabIndex});
+
+  final int initialTabIndex;
 
   @override
   State<CompanyCreationScreen> createState() => _CompanyCreationScreenState();
@@ -10,377 +16,123 @@ class CompanyCreationScreen extends StatefulWidget {
 class _CompanyCreationScreenState extends State<CompanyCreationScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  final Color _activeColor = ColorResources.indigoBlue;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(
+      length: 3,
+      vsync: this,
+      initialIndex: widget.initialTabIndex,
+    );
+    _tabController.addListener(() {
+      if (mounted) setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<CompanyCreationProvider>(context);
+    final appLocalizations = context.l10n;
+
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FC),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        title: const Text(
-          "Company Creation",
-          style: TextStyle(
-            color: Color(0xFF3E63DD),
-            fontWeight: FontWeight.w700,
-            fontSize: 18,
-          ),
+        automaticallyImplyLeading: false,
+        title: Text(
+          appLocalizations.company_creation,
+          style: context.textStyle.s22.bold.indigoBlue.roboto,
         ),
       ),
       body: Column(
         children: [
-          // ─── Tab Bar ──────────────────────────────────────────────
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.getSize.width / 6,
+              vertical: 6,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildCircle(context, provider, index: 0),
+                _buildLine(provider, index: 1),
+                _buildCircle(context, provider, index: 1),
+                _buildLine(provider, index: 2),
+                _buildCircle(context, provider, index: 2),
+              ],
+            ),
+          ),
           Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
               border: Border(bottom: BorderSide(color: Colors.grey.shade300)),
             ),
             child: TabBar(
+              // onTap: (index) {
+              //   if (!provider.canGoToStage(index)) {
+              //     Future.delayed(Duration.zero, () {
+              //       _tabController.animateTo(
+              //         provider.stageCompleted.indexOf(false).clamp(0, 2),
+              //       );
+              //     });
+              //   }
+              // },
               controller: _tabController,
-              labelColor: const Color(0xFF3E63DD),
-              unselectedLabelColor: Colors.grey,
-              indicatorColor: const Color(0xFF3E63DD),
-              tabs: const [
-                Tab(text: "Company Info"),
-                Tab(text: "Voucher Type"),
-                Tab(text: "Integration Type"),
+              labelColor: _activeColor,
+              unselectedLabelColor: ColorResources.bluishGray,
+              indicatorColor: _activeColor,
+              unselectedLabelStyle:
+                  context.textStyle.s12.w500.bluishGray.roboto,
+              labelStyle: context.textStyle.s12.w500.indigoBlue.roboto,
+              tabs: [
+                Tab(text: appLocalizations.company_creation_company_info),
+                Tab(text: appLocalizations.company_creation_voucher_type),
+                Tab(text: appLocalizations.company_creation_Integrastion_type),
               ],
             ),
           ),
-
-          // ─── Tab Views ─────────────────────────────────────────────
           Expanded(
             child: TabBarView(
               controller: _tabController,
+              physics: const NeverScrollableScrollPhysics(),
               children: [
-                // ────────────── Company Info Tab ──────────────
-                CustomScrollView(
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 20),
-                        child: Column(
-                          children: [
-                            // Company Name
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 16),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  labelText: "Company Name",
-                                  hintText: "Enter Company Name",
-                                  labelStyle: const TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color(0xFF6A6A8B)),
-                                  hintStyle:
-                                      const TextStyle(color: Colors.grey),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: const BorderSide(
-                                        color: Color(0xFFE6E6EF)),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: const BorderSide(
-                                        color: Color(0xFF3E63DD)),
-                                  ),
-                                ),
-                              ),
-                            ),
-
-                            // Display Name
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 16),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  labelText: "Display Name",
-                                  hintText: "Enter display name",
-                                  labelStyle: const TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color(0xFF6A6A8B)),
-                                  hintStyle:
-                                      const TextStyle(color: Colors.grey),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: const BorderSide(
-                                        color: Color(0xFFE6E6EF)),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: const BorderSide(
-                                        color: Color(0xFF3E63DD)),
-                                  ),
-                                ),
-                              ),
-                            ),
-
-                            // Address 1
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 16),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  labelText: "Address 1",
-                                  hintText: "Enter address",
-                                  labelStyle: const TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color(0xFF6A6A8B)),
-                                  hintStyle:
-                                      const TextStyle(color: Colors.grey),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: const BorderSide(
-                                        color: Color(0xFFE6E6EF)),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: const BorderSide(
-                                        color: Color(0xFF3E63DD)),
-                                  ),
-                                ),
-                              ),
-                            ),
-
-                            // Address 2
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 16),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  labelText: "Address 2",
-                                  hintText: "Enter address",
-                                  labelStyle: const TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color(0xFF6A6A8B)),
-                                  hintStyle:
-                                      const TextStyle(color: Colors.grey),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: const BorderSide(
-                                        color: Color(0xFFE6E6EF)),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: const BorderSide(
-                                        color: Color(0xFF3E63DD)),
-                                  ),
-                                ),
-                              ),
-                            ),
-
-                            // Address 3
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 16),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  labelText: "Address 3",
-                                  hintText: "Enter address",
-                                  labelStyle: const TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color(0xFF6A6A8B)),
-                                  hintStyle:
-                                      const TextStyle(color: Colors.grey),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: const BorderSide(
-                                        color: Color(0xFFE6E6EF)),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: const BorderSide(
-                                        color: Color(0xFF3E63DD)),
-                                  ),
-                                ),
-                              ),
-                            ),
-
-                            // Pincode
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 16),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  labelText: "Pincode",
-                                  hintText: "Enter Pin code",
-                                  labelStyle: const TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color(0xFF6A6A8B)),
-                                  hintStyle:
-                                      const TextStyle(color: Colors.grey),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: const BorderSide(
-                                        color: Color(0xFFE6E6EF)),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: const BorderSide(
-                                        color: Color(0xFF3E63DD)),
-                                  ),
-                                ),
-                              ),
-                            ),
-
-                            // Country & State in a Row
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(bottom: 16),
-                                    child: TextField(
-                                      decoration: InputDecoration(
-                                        labelText: "Country",
-                                        hintText: "Enter Country",
-                                        labelStyle: const TextStyle(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w500,
-                                            color: Color(0xFF6A6A8B)),
-                                        hintStyle: const TextStyle(
-                                            color: Colors.grey),
-                                        filled: true,
-                                        fillColor: Colors.white,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                          borderSide: const BorderSide(
-                                              color: Color(0xFFE6E6EF)),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                          borderSide: const BorderSide(
-                                              color: Color(0xFF3E63DD)),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 12),
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(bottom: 16),
-                                    child: TextField(
-                                      decoration: InputDecoration(
-                                        labelText: "State",
-                                        hintText: "Enter State",
-                                        labelStyle: const TextStyle(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w500,
-                                            color: Color(0xFF6A6A8B)),
-                                        hintStyle: const TextStyle(
-                                            color: Colors.grey),
-                                        filled: true,
-                                        fillColor: Colors.white,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                          borderSide: const BorderSide(
-                                              color: Color(0xFFE6E6EF)),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                          borderSide: const BorderSide(
-                                              color: Color(0xFF3E63DD)),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-
-                            // Registration Type
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 16),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  labelText: "Registration Type",
-                                  hintText: "Enter registration type",
-                                  labelStyle: const TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color(0xFF6A6A8B)),
-                                  hintStyle:
-                                      const TextStyle(color: Colors.grey),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: const BorderSide(
-                                        color: Color(0xFFE6E6EF)),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: const BorderSide(
-                                        color: Color(0xFF3E63DD)),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
+                CompanyInfoWidget(
+                  onTap: () {
+                    provider.markStageCompleted(0);
+                    if (0 < 2) {
+                      _tabController.animateTo(1);
+                    }
+                  },
                 ),
-
-                // ────────────── Voucher Type Tab ──────────────
-                CustomScrollView(
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(24.0),
-                          child: Text(
-                            "Voucher Type Content",
-                            style:
-                                TextStyle(fontSize: 16, color: Colors.grey[600]),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                VoucherTypeWidget(
+                  onTap: () {
+                    if (provider.canGoToStage(1)) {
+                      provider.markStageCompleted(1);
+                      if (provider.isStageCompleted(1)) {
+                        _tabController.animateTo(2);
+                      }
+                    }
+                  },
                 ),
-
-                // ────────────── Integration Type Tab ──────────────
-                CustomScrollView(
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(24.0),
-                          child: Text(
-                            "Integration Type Content",
-                            style:
-                                TextStyle(fontSize: 16, color: Colors.grey[600]),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                IntegrationWidget(
+                  onTap: () {
+                    if (provider.canGoToStage(2)) {
+                      provider.markStageCompleted(2);
+                      context.pushNamed(AppRouterConst.adminDashboard);
+                    }
+                    // if (0 < 2) {
+                    // _tabController.animateTo( 1);
+                    // }
+                  },
                 ),
               ],
             ),
@@ -389,4 +141,87 @@ class _CompanyCreationScreenState extends State<CompanyCreationScreen>
       ),
     );
   }
+
+  Widget _buildCircle(
+    BuildContext context,
+    CompanyCreationProvider provider, {
+    required int index,
+  }) {
+    bool isActive = _tabController.index == index;
+    bool isCompleted = provider.isStageCompleted(index);
+
+    Color fillColor;
+    Color borderColor;
+    Color textColor;
+
+    if (isCompleted) {
+      fillColor = ColorResources.aquaGreen;
+      borderColor = ColorResources.tealGreen;
+      textColor = Colors.white;
+    } else if (isActive) {
+      fillColor = ColorResources.white;
+      borderColor = ColorResources.indigoBlue;
+      textColor = ColorResources.indigoBlue;
+    } else {
+      fillColor = ColorResources.white;
+      borderColor = ColorResources.lavenderGray;
+      textColor = ColorResources.lavenderGray;
+    }
+
+    return GestureDetector(
+      onTap: () => _tabController.animateTo(index),
+      child: Container(
+        height: 24,
+        width: 24,
+        decoration: BoxDecoration(
+          color: fillColor,
+          shape: BoxShape.circle,
+          border: Border.all(color: borderColor, width: 2),
+        ),
+        alignment: Alignment.center,
+        child: Text(
+          '${index + 1}',
+          style: context.textStyle.s09.w400.roboto.copyWith(color: textColor),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLine(CompanyCreationProvider provider, {required int index}) {
+    final isCompleted = provider.isStageCompleted(index - 1);
+    return Expanded(
+      child: Container(
+        height: 2,
+        margin: const EdgeInsets.symmetric(horizontal: 8),
+        color: isCompleted ? ColorResources.tealGreen : const Color(0xFFE6E6EF),
+      ),
+    );
+  }
+
+  //   Widget _buildTabPage(
+  //     BuildContext context,
+  //     CompanyCreationProvider provider,
+  //     int index,
+  //     Widget child,
+  //   ) {
+  //     return Column(
+  //       children: [
+  //         Expanded(child: child),
+  //         Padding(
+  //           padding: const EdgeInsets.all(16.0),
+  //           child: CustomButton(
+  //             buttonText: index == 2 ? "Finish" : "Next",
+  //             isborderEnable: false,
+  //             onTap: () {
+  //               provider.markStageCompleted(index);
+  //               if (index < 2) {
+  //                 _tabController.animateTo(index + 1);
+  //               }
+  //             },
+  //           ),
+  //         ),
+  //       ],
+  //     );
+  //   }
+  // }
 }

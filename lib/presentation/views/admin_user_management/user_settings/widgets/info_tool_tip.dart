@@ -1,4 +1,5 @@
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/presentation/common/widgets/custom_switch.dart';
 
 class InfoTooltip extends StatefulWidget {
   final String title;
@@ -107,6 +108,12 @@ class _InfoTooltipState extends State<InfoTooltip> {
           ),
           CustomSwitch(
             value: _isOn,
+            thumbColor: !_isOn
+                ? ColorResources.bluishGray
+                : ColorResources.white,
+            borderColor: !_isOn
+                ? ColorResources.neutralmidgray
+                : ColorResources.transparent,
             onChanged: (val) {
               setState(() => _isOn = val);
               debugPrint("Switch is now: $val");
@@ -123,84 +130,6 @@ class _InfoTooltipState extends State<InfoTooltip> {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class CustomSwitch extends StatefulWidget {
-  final bool value;
-  final ValueChanged<bool> onChanged;
-  final Color? borderColor;
-  final Color? thumbColor;
-
-  const CustomSwitch({
-    super.key,
-    required this.value,
-    required this.onChanged,
-    this.borderColor,
-    this.thumbColor,
-  });
-
-  @override
-  State<CustomSwitch> createState() => _CustomSwitchState();
-}
-
-class _CustomSwitchState extends State<CustomSwitch>
-    with SingleTickerProviderStateMixin {
-  late bool _value;
-
-  @override
-  void initState() {
-    super.initState();
-    _value = widget.value;
-  }
-
-  void _toggleSwitch() {
-    setState(() {
-      _value = !_value;
-      widget.onChanged(_value);
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: _toggleSwitch,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 250),
-        width: 40,
-        height: 22,
-        padding: const EdgeInsets.symmetric(vertical: 4),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: widget.borderColor ?? ColorResources.transparent,
-          ),
-          color: _value ? ColorResources.indigoBlue : ColorResources.white,
-        ),
-        child: AnimatedAlign(
-          duration: const Duration(milliseconds: 250),
-          alignment: _value ? Alignment.centerRight : Alignment.centerLeft,
-          child: Container(
-            width: 18,
-            height: 18,
-            decoration: BoxDecoration(
-              color: _value
-                  ? Colors.white
-                  : widget.thumbColor ?? ColorResources.white,
-
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 4,
-                  offset: Offset(0, 2),
-                ),
-              ],
-            ),
-          ),
-        ),
       ),
     );
   }

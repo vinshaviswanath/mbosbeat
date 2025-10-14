@@ -21,7 +21,7 @@ class AppAssets {
   static const registered = "$basePngDir/registered.png";
   static const powerButton = "$basePngDir/powerButton.png";
   static const alreadyRegistered = "$basePngDir/already_registered.png";
-
+  static const companyImage = "$basePngDir/companyImage.png";
 
   //SVG
   static const refresh = "$baseDir/refresh.svg";
@@ -34,15 +34,16 @@ class AppAssets {
   static const alertError = "$baseDir/alertError.svg";
   static const tick = "$baseDir/tick.svg";
   static const left = "$baseDir/left.svg";
-
-
-
-
+  static const roundArrowRight = "$baseDir/round_arrow_right.svg";
+  static const edit = "$baseDir/edit.svg";
+  static const verified = "$baseDir/verified.svg";
+  static const locationPin = "$baseDir/locationPin.svg";
+  static const settings = "$baseDir/settings.svg";
+  static const arrowToRight = "$baseDir/arrowToRight.svg";
 
   //Animations
   static const forgot_password = "$baseAnimDir/forgot.json";
   static const mail_send = "$baseAnimDir/mail_send.json";
   static const loading_anim = "$baseAnimDir/loading_anim.json";
   static const registred = "$baseAnimDir/registred.json";
-
 }

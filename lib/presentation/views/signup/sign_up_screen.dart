@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
+import 'package:mpos_beat/presentation/common/widgets/sliverSpace.dart';
 import 'package:mpos_beat/presentation/logic/authentication_provider.dart';
 import 'package:mpos_beat/presentation/views/otp/otp_authentication.dart';
 
@@ -23,7 +24,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     final appLocalization = context.l10n;
     final noEmojiFormatter = FilteringTextInputFormatter.allow(
-      RegExp(r'[a-zA-Z0-9\s!@#\$%^&*(),.?":{}|<>_\-+=~`\[\]\\;\/]*'),
+      RegExp(r'[a-zA-Z0-9\s!@#\$%^&*(),?":{}|<>_\-+=~`\[\]\\;\/]*'),
     );
     return Consumer<AuthFormProvider>(
       builder: (context, provider, _) {
@@ -35,34 +36,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
             }
           },
           child: Scaffold(
-            bottomNavigationBar: Padding(
-              padding: MediaQuery.of(context).viewInsets,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 16, right: 16, bottom: 24),
-                child: CustomButton(
-                  onTap: () async {
-                    FocusScope.of(context).unfocus();
-
-                    final response = await provider.submitSignUp(context);
-
-                    if (response != null && response.status == 1) {
-                      compnyController.clear();
-                      phoneController.clear();
-                      emailController.clear();
-                      passwordController.clear();
-                      confirmPasswordController.clear();
-                    }
-                  },
-                  buttonText: appLocalization.sign_up,
-                  textStyle: context.textStyle.s16.white.bold.roboto,
-                  isborderEnable: false,
-                ),
-              ),
-            ),
+            resizeToAvoidBottomInset: true,
             body: CustomScrollView(
               slivers: [
                 SliverAppBar(
-                  pinned: true,
+                  pinned: false,
                   foregroundColor: ColorResources.transparent,
                   surfaceTintColor: ColorResources.transparent,
                   backgroundColor: ColorResources.transparent,
@@ -138,7 +116,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             FilteringTextInputFormatter.allow(
                               RegExp(r"[a-zA-Z0-9@._-]"),
                             ),
-                            noEmojiFormatter,
+                            // noEmojiFormatter,
                           ],
                           borderRadius: 12,
                           hintColor: ColorResources.silverGray,
@@ -215,6 +193,42 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         if (MediaQuery.of(context).viewInsets.bottom > 0) h200,
                       ],
                     ),
+                  ),
+                ),
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 16,
+                          right: 16,
+                          bottom: 24,
+                        ),
+                        child: CustomButton(
+                          onTap: () async {
+                            FocusScope.of(context).unfocus();
+
+                            final response = await provider.submitSignUp(
+                              context,
+                            );
+
+                            if (response != null && response.status == 1) {
+                              compnyController.clear();
+                              phoneController.clear();
+                              emailController.clear();
+                              passwordController.clear();
+                              confirmPasswordController.clear();
+                              // provider.resetSignUpForm();
+                            }
+                          },
+                          buttonText: appLocalization.sign_up,
+                          textStyle: context.textStyle.s16.white.bold.roboto,
+                          isborderEnable: false,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],

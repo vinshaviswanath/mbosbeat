@@ -136,7 +136,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reg_failure_widget_try_again => 'Try Again !';
 
   @override
-  String get forgot_password => 'Forgot Password?';
+  String get forgot_password => 'Forgot Password';
 
   @override
   String get forgot_password_description =>
@@ -852,4 +852,279 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get order_detail_widget_total => 'Total: ';
+
+  @override
+  String get admin_dashboard_home => 'Home';
+
+  @override
+  String get admin_dashboard_address => 'Address : ';
+
+  @override
+  String get admin_dashboard_summary => 'Sales Summary';
+
+  @override
+  String get admin_dashboard_cash_sales => 'Cash Sales';
+
+  @override
+  String get admin_dashboard_credit_sales => 'Credit Sales';
+
+  @override
+  String get admin_dashboard_total_sites_visits => 'Total Site Visits';
+
+  @override
+  String get custom_drawer_mob => 'Mob:';
+
+  @override
+  String get custom_drawer_email => 'Email:';
+
+  @override
+  String get custom_drawer_note =>
+      'You are currently using free version of MPOS app. Kindly upgrade to premium version to get access to settings.';
+
+  @override
+  String get custom_drawer_upgrade_To_premium => 'Upgrade to Premium';
+
+  @override
+  String get custom_drawer_complete_company_profile =>
+      'Complete the steps for your company profile';
+
+  @override
+  String get custom_drawer_completed => 'Completed';
+
+  @override
+  String get custom_drawer_menu => 'Menu';
+
+  @override
+  String get custom_drawer_settings => 'Settings';
+
+  @override
+  String get custom_drawer_logout => 'Logout';
+
+  @override
+  String get popover_body_godown_wise => 'Godown Wise';
+
+  @override
+  String get popover_body_route_wise => 'Route Wise';
+
+  @override
+  String get company_creation => 'Company Creation';
+
+  @override
+  String get company_creation_company_info => 'Company Info';
+
+  @override
+  String get company_creation_voucher_type => 'Voucher Type';
+
+  @override
+  String get company_creation_Integrastion_type => 'Integration Type';
+
+  @override
+  String get company_info_widget_display_name => 'Display Name';
+
+  @override
+  String get company_info_widget_enter_display_name => 'Enter display name';
+
+  @override
+  String get company_info_widget_address_1 => 'Address 1';
+
+  @override
+  String get company_info_widget_enter_address => 'Enter address';
+
+  @override
+  String get company_info_widget_address_2 => 'Address 2';
+
+  @override
+  String get company_info_widget_address_3 => 'Address 3';
+
+  @override
+  String get company_info_widget_pincode => 'Pincode';
+
+  @override
+  String get company_info_widget_enter_pincode => 'Enter Pin code';
+
+  @override
+  String get company_info_widget_country => 'Country';
+
+  @override
+  String get company_info_widget_enter_country => 'Enter Country';
+
+  @override
+  String get company_info_widget_state => 'State';
+
+  @override
+  String get company_info_widget_enter_state => 'Enter State';
+
+  @override
+  String get company_info_widget_registration_type => 'Registration Type';
+
+  @override
+  String get company_info_widget_enter_registration_type =>
+      'Enter registration type';
+
+  @override
+  String get company_info_widget_next => 'Next';
+
+  @override
+  String get voucher_type_voucher_type_activation => 'Voucher Type Activation';
+
+  @override
+  String get voucher_type_tile_prefix => 'Prefix: ';
+
+  @override
+  String get voucher_type_tile_sufix => 'Sufix: ';
+
+  @override
+  String get voucher_type_tile_width => 'Width: ';
+
+  @override
+  String get integration_type_statnd_alone => 'Stand Alone';
+
+  @override
+  String get integration_type_statnd_alone_description =>
+      'Lorem ipsum dolor sitamet, consectetur adipiscing elitrae sem laoret libereou luctus facilisis. Maecen tortorx.';
+
+  @override
+  String get integration_type_tally => 'MPOS Retail';
+
+  @override
+  String get integration_type_finish => 'Finish';
+
+  @override
+  String get voucher_card_tally_serial_no => 'Tally Serial No.';
+
+  @override
+  String get voucher_card_tally_enter_serial_no => 'Enter Serial Number';
+
+  @override
+  String get voucher_card_tally_maintain_stocks => 'Maintain Stock in Cloud';
+
+  @override
+  String get voucher_card_tally_help => 'Help';
+
+  @override
+  String get voucher_card_activated => 'Activated';
+
+  @override
+  String get voucher_card_activat => 'Activate';
+
+  @override
+  String get voucher_card_yes => 'Yes';
+
+  @override
+  String get voucher_card_no => 'No';
+
+  @override
+  String get voucher_card_logo_here => 'Logo Here';
+
+  @override
+  String get godown_route_voucher_route_name => 'Route Name:';
+
+  @override
+  String get godown_route_voucher_enter_route_name => 'Enter Route Name';
+
+  @override
+  String get godown_route_voucher_series_settings => 'Voucher Series Settings:';
+
+  @override
+  String get godown_route_voucher_serires => 'Voucher Series Settings:';
+
+  @override
+  String get godown_wise_screen_vehicle => 'Vehicle';
+
+  @override
+  String get godown_wise_screen_no_vehicle => 'No vehicles added yet';
+
+  @override
+  String get add_vehicle_screen_edit_vehicle => 'Edit Vehicle';
+
+  @override
+  String get add_vehicle_screen_add_vehicle => 'Add Vehicle';
+
+  @override
+  String get add_vehicle_screen_vehicle_name => 'Vehicle Name';
+
+  @override
+  String get add_vehicle_screen_vehicle_code => 'Vehicle Code';
+
+  @override
+  String get add_route_screen_edit_route => 'Edit Route';
+
+  @override
+  String get add_route_screen_add_route => 'Add Route';
+
+  @override
+  String get add_route_screen_route_name => 'Route Name';
+
+  @override
+  String get add_route_screen_route_code => 'Route Code';
+
+  @override
+  String get route_wise_screen_voucher_type_settings => 'Voucher Type Settings';
+
+  @override
+  String get activate_vehicle_widget_activate_vehicle => 'Activate Vehicle';
+
+  @override
+  String get activate_vehicle_widget_are_you_sure =>
+      'Are you sure want to activate vehicle?';
+
+  @override
+  String get activate_vehicle_widget_vehicle_activated =>
+      'The vehicle have been Activated successfully!';
+
+  @override
+  String get deactivate_vehicle_widget_deactivate_vehicle =>
+      'Deactivate Vehicle';
+
+  @override
+  String get deactivate_vehicle_widget_are_you_sure =>
+      'Are you sure want to deactivate Vehicle?';
+
+  @override
+  String get deactivate_vehicle_widget_vehicle_deactivated =>
+      'The vehicle have been deactivated successfully!';
+
+  @override
+  String get delete_vehicle_widget_delete_vehicle => 'Delete Vehicle';
+
+  @override
+  String get delete_vehicle_widget_are_you_sure =>
+      'Are you sure want to delete Vehicle?';
+
+  @override
+  String get delete_vehicle_widget_vehicle_removed =>
+      'The vehicle have been removed successfully.';
+
+  @override
+  String get activate_route_widget_activate_route => 'Activate Route';
+
+  @override
+  String get activate_route_widget_are_you_sure =>
+      'Are you sure want to activate route?';
+
+  @override
+  String get activate_route_widget_route_activated =>
+      'The route have been Activated successfully!';
+
+  @override
+  String get deactivate_route_widget_deactivate_route => 'Deactivate Route';
+
+  @override
+  String get deactivate_route_widget_are_you_sure =>
+      'Are you sure want to deactivate Route?';
+
+  @override
+  String get deactivate_route_widget_route_deactivated =>
+      'The route have been deactivated successfully!';
+
+  @override
+  String get delete_route_widget_delete_route => 'Delete Route';
+
+  @override
+  String get delete_route_widget_are_you_sure =>
+      'Are you sure want to delete Route?';
+
+  @override
+  String get delete_route_widget_route_removed =>
+      'The route have been removed successfully.';
 }

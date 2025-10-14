@@ -38,7 +38,9 @@ Either<ValueFailure<String>, String> validateEmail(String mail) {
 Either<ValueFailure<String>, String> validatePassword(String value) {
   if (value.isEmpty || value.length < 3) {
     return left(
-      const ValueFailure.invalidValue('Password must be at least 3 characters!'),
+      const ValueFailure.invalidValue(
+        'Password must be at least 3 characters!',
+      ),
     );
   }
 
@@ -46,7 +48,9 @@ Either<ValueFailure<String>, String> validatePassword(String value) {
   final hasAlphabet = RegExp(r'[a-zA-Z]').hasMatch(value);
   if (!hasAlphabet) {
     return left(
-      const ValueFailure.invalidValue('Password must contain at least one alphabet!'),
+      const ValueFailure.invalidValue(
+        'Password must contain at least one alphabet!',
+      ),
     );
   }
 
@@ -62,9 +66,6 @@ Either<ValueFailure<String>, String> validatePassword(String value) {
 
   return right(value.trim());
 }
-
-
-
 
 Either<ValueFailure<String>, String> validateConfirmPassword(
   String confirmValue,
@@ -161,6 +162,34 @@ Either<ValueFailure<String>, String> validateDesignation(String value) {
 Either<ValueFailure<String>, String> validateReportingTo(String value) {
   if (value.isEmpty) {
     return left(const ValueFailure.invalidValue('Selet a valid name!'));
+  }
+  return right(value);
+}
+
+Either<ValueFailure<String>, String> validateVehicleName(String value) {
+  if (value.isEmpty) {
+    return left(const ValueFailure.invalidValue('Select a valid name!'));
+  }
+  return right(value);
+}
+
+Either<ValueFailure<String>, String> validateVehicleCode(String value) {
+  if (value.isEmpty) {
+    return left(const ValueFailure.invalidValue('Select a valid code!'));
+  }
+  return right(value);
+}
+
+Either<ValueFailure<String>, String> validateRouteName(String value) {
+  if (value.isEmpty) {
+    return left(const ValueFailure.invalidValue('Select a valid name!'));
+  }
+  return right(value);
+}
+
+Either<ValueFailure<String>, String> validateRouteCode(String value) {
+  if (value.isEmpty) {
+    return left(const ValueFailure.invalidValue('Select a valid code!'));
   }
   return right(value);
 }

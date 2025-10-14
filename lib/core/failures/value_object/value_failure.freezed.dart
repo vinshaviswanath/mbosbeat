@@ -12,7 +12,8 @@ part of 'value_failure.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$ValueFailure<T> {
@@ -20,35 +21,29 @@ mixin _$ValueFailure<T> {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String errorMsg) invalidValue,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String errorMsg)? invalidValue,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String errorMsg)? invalidValue,
     required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(InvalidValue<T> value) invalidValue,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(InvalidValue<T> value)? invalidValue,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(InvalidValue<T> value)? invalidValue,
     required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
 
   /// Create a copy of ValueFailure
   /// with the given fields replaced by the non-null parameter values.
@@ -60,8 +55,9 @@ mixin _$ValueFailure<T> {
 /// @nodoc
 abstract class $ValueFailureCopyWith<T, $Res> {
   factory $ValueFailureCopyWith(
-          ValueFailure<T> value, $Res Function(ValueFailure<T>) then) =
-      _$ValueFailureCopyWithImpl<T, $Res, ValueFailure<T>>;
+    ValueFailure<T> value,
+    $Res Function(ValueFailure<T>) then,
+  ) = _$ValueFailureCopyWithImpl<T, $Res, ValueFailure<T>>;
   @useResult
   $Res call({String errorMsg});
 }
@@ -80,24 +76,26 @@ class _$ValueFailureCopyWithImpl<T, $Res, $Val extends ValueFailure<T>>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? errorMsg = null,
-  }) {
-    return _then(_value.copyWith(
-      errorMsg: null == errorMsg
-          ? _value.errorMsg
-          : errorMsg // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
+  $Res call({Object? errorMsg = null}) {
+    return _then(
+      _value.copyWith(
+            errorMsg: null == errorMsg
+                ? _value.errorMsg
+                : errorMsg // ignore: cast_nullable_to_non_nullable
+                      as String,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$InvalidValueImplCopyWith<T, $Res>
     implements $ValueFailureCopyWith<T, $Res> {
-  factory _$$InvalidValueImplCopyWith(_$InvalidValueImpl<T> value,
-          $Res Function(_$InvalidValueImpl<T>) then) =
-      __$$InvalidValueImplCopyWithImpl<T, $Res>;
+  factory _$$InvalidValueImplCopyWith(
+    _$InvalidValueImpl<T> value,
+    $Res Function(_$InvalidValueImpl<T>) then,
+  ) = __$$InvalidValueImplCopyWithImpl<T, $Res>;
   @override
   @useResult
   $Res call({String errorMsg});
@@ -108,22 +106,23 @@ class __$$InvalidValueImplCopyWithImpl<T, $Res>
     extends _$ValueFailureCopyWithImpl<T, $Res, _$InvalidValueImpl<T>>
     implements _$$InvalidValueImplCopyWith<T, $Res> {
   __$$InvalidValueImplCopyWithImpl(
-      _$InvalidValueImpl<T> _value, $Res Function(_$InvalidValueImpl<T>) _then)
-      : super(_value, _then);
+    _$InvalidValueImpl<T> _value,
+    $Res Function(_$InvalidValueImpl<T>) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of ValueFailure
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? errorMsg = null,
-  }) {
-    return _then(_$InvalidValueImpl<T>(
-      null == errorMsg
-          ? _value.errorMsg
-          : errorMsg // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+  $Res call({Object? errorMsg = null}) {
+    return _then(
+      _$InvalidValueImpl<T>(
+        null == errorMsg
+            ? _value.errorMsg
+            : errorMsg // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
   }
 }
 
@@ -159,7 +158,9 @@ class _$InvalidValueImpl<T> implements InvalidValue<T> {
   @pragma('vm:prefer-inline')
   _$$InvalidValueImplCopyWith<T, _$InvalidValueImpl<T>> get copyWith =>
       __$$InvalidValueImplCopyWithImpl<T, _$InvalidValueImpl<T>>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 
   @override
   @optionalTypeArgs

@@ -46,13 +46,13 @@ class BaseBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return ConstrainedBox(
       constraints: BoxConstraints(
-        maxWidth: width ?? context.getSize.width - 8,
+        maxWidth: width ?? context.getSize.width - 16,
         minWidth: 0,
         minHeight: 0,
         maxHeight: height ?? context.getSize.height * 0.42,
       ),
       child: Container(
-        padding: padding ?? const EdgeInsets.all(32),
+        padding: padding ?? const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: ColorResources.white,
           borderRadius: BorderRadius.circular(16),

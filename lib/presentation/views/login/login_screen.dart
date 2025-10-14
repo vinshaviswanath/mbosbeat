@@ -190,7 +190,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   textStyle:
                                       context.textStyle.s16.white.bold.roboto,
                                   borderRadius: BorderRadius.circular(45),
-                                  onTap: () {
+                                  onTap: () async {
                                     // provider.resetSignUpForm();
                                     // provider.submitLogin(
                                     //   context,
@@ -201,14 +201,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                     // );
                                     // context.pushNamed(
                                     //   AppRouterConst.customerTransactions,);
-                                    provider.submitLogin(
+                                    await provider.submitLogin(
                                       context,
                                       params: LoginParams(
                                         username: emailController.text,
                                         password: passwordController.text,
                                       ),
                                     );
-                                    reset();
                                   },
                                 ),
                                 h10,
@@ -224,7 +223,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         );
                                       },
                                       child: Text(
-                                        appLocalization.forgot_password,
+                                        appLocalization.login_forgot_password,
                                         style: context
                                             .textStyle
                                             .s12

@@ -12,7 +12,7 @@ class RegisterSuccessWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.all(32),
+          padding: EdgeInsets.only(left: 32, top: 32, right: 32),
           child: AvatarGlow(
             glowColor: ColorResources.amber,
             glowShape: BoxShape.circle,
