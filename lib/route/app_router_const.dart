@@ -32,10 +32,10 @@ class AppRouterConst {
   static const godownWiseScreen = "/godownWiseScreen";
   static const routeWiseScreen = "/routeWiseScreen";
   static const godownRouteVoucherScreen = "/godownRouteVoucherScreen";
-
+  static const companySettingsScreen = "/companySettingsScreen";
 
   // anver
-    static const homeScreen = "/homescreen";
+  static const homeScreen = "/homescreen";
   static const otherTransaction = "/othertransactions";
   static const customerTransactions = "/customerTransactions";
   static const transactionDetailpage = "/transactionDetail";

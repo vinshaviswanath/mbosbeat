@@ -2,7 +2,6 @@ import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_switch.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
-import 'package:mpos_beat/presentation/views/admin_user_management/user_settings/widgets/info_tool_tip.dart';
 import 'package:mpos_beat/presentation/views/transactions/sales/widgets/payment_mode_alert_widget.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/widgets/end_to_end_text_widget.dart';
 
@@ -108,10 +107,7 @@ class _SalesScreenState extends State<SalesScreen> {
                     children: [
                       Text(
                         appLocalizations.billing_mode,
-                        style: const TextStyle(
-                          color: Colors.blueGrey,
-                          fontWeight: FontWeight.w500,
-                        ),
+                        style: context.textStyle.s10.w500.dustyBlue.roboto,
                       ),
                       w10,
                       GestureDetector(
@@ -150,7 +146,8 @@ class _SalesScreenState extends State<SalesScreen> {
                             w6,
                             Text(
                               appLocalizations.b2b,
-                              style: const TextStyle(color: Colors.blueGrey),
+                              style:
+                                  context.textStyle.s10.w500.dustyBlue.roboto,
                             ),
                           ],
                         ),
@@ -166,7 +163,7 @@ class _SalesScreenState extends State<SalesScreen> {
                           children: [
                             Container(
                               width: context.getSize.width * 0.045,
-                                    height: context.getSize.height * 0.022,
+                              height: context.getSize.height * 0.022,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 border: Border.all(
@@ -193,7 +190,8 @@ class _SalesScreenState extends State<SalesScreen> {
                             Text(
                               appLocalizations.b2c,
 
-                              style: const TextStyle(color: Colors.blueGrey),
+                              style:
+                                  context.textStyle.s10.w500.dustyBlue.roboto,
                             ),
                           ],
                         ),

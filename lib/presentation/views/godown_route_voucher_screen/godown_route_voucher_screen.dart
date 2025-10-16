@@ -4,7 +4,10 @@ import 'package:mpos_beat/presentation/common/widgets/custom_divider.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_dropdown.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_switch.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
+import 'package:mpos_beat/presentation/views/godown_route_voucher_screen/widgets/B2bAndB2cPrefixSuffix.dart';
+import 'package:mpos_beat/presentation/views/godown_route_voucher_screen/widgets/SingleCompanyPrefixSuffix.dart';
 import 'package:mpos_beat/presentation/views/godown_route_voucher_screen/widgets/custom_dropdown_widget.dart';
+import 'package:mpos_beat/presentation/views/godown_wise_screen/widgets/add_vehicle.dart';
 import 'package:mpos_beat/presentation/views/route_wise_screen/widgets/add_route.dart';
 
 class GodownRouteVoucherScreen extends StatefulWidget {
@@ -18,14 +21,6 @@ class GodownRouteVoucherScreen extends StatefulWidget {
 class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
   bool isGodownWise = true;
   final TextEditingController routeController = TextEditingController();
-
-  final TextEditingController prefixController = TextEditingController();
-  final TextEditingController suffixController = TextEditingController();
-  final TextEditingController widthController = TextEditingController();
-  final TextEditingController startController = TextEditingController();
-
-  DateTime? selectedDate;
-  String? selectedType;
 
   final List<String> voucherTitles = [
     'Sales Order B2B',
@@ -93,8 +88,10 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
                                   context.textStyle.s12.bold.indigoBlue.roboto,
                             ),
                             SelectionSwitch(
-                              value: false,
-                              onChanged: (value) {},
+                              value: !provider.isGodown,
+                              onChanged: (value) {
+                                provider.toggleVoucher();
+                              },
                             ),
                             Text(
                               appLocalizations.popover_body_route_wise,
@@ -109,13 +106,19 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            appLocalizations.godown_route_voucher_route_name,
+                            provider.isGodown
+                                ? appLocalizations
+                                      .godown_route_voucher_godown_name
+                                : appLocalizations
+                                      .godown_route_voucher_route_name,
                             style: context.textStyle.s12.w400.bluishGray.roboto,
                           ),
                           GestureDetector(
                             onTap: () {
                               CustomDialog.showBottomCustomDialog(
-                                chid: const AddRoute(isEdit: true),
+                                chid: provider.isGodown
+                                    ? const AddVehicle(isEdit: true)
+                                    : const AddRoute(isEdit: true),
                               );
                             },
                             child: CircleAvatar(
@@ -139,8 +142,11 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
                         children: [
                           Expanded(
                             child: CustomDropdown(
-                              hintText: appLocalizations
-                                  .godown_route_voucher_enter_route_name,
+                              hintText: provider.isGodown
+                                  ? appLocalizations
+                                        .godown_route_voucher_enter_godown_name
+                                  : appLocalizations
+                                        .godown_route_voucher_enter_route_name,
                               items: provider.routes
                                   .map((e) => e.routeName)
                                   .toList(),
@@ -151,385 +157,9 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
                           GestureDetector(
                             onTap: () {
                               CustomDialog.showBottomCustomDialog(
-                                chid: const AddRoute(),
-                                // Container(
-                                //   constraints: const BoxConstraints(maxWidth: 400),
-                                //   child: CustomScrollView(
-                                //     shrinkWrap: true,
-                                //     slivers: [
-                                //       SliverToBoxAdapter(
-                                //         child: Column(
-                                //           crossAxisAlignment:
-                                //               CrossAxisAlignment.start,
-                                //           children: [
-                                //             // Title Row
-                                //             Row(
-                                //               mainAxisAlignment:
-                                //                   MainAxisAlignment.end,
-                                //               children: [
-                                //                 GestureDetector(
-                                //                   onTap: () {
-                                //                     Navigator.pop(context);
-                                //                   },
-                                //                   child: CircleAvatar(
-                                //                     radius: 12,
-                                //                     child: Icon(
-                                //                       Icons.close,
-                                //                       color:
-                                //                           ColorResources.bluishGray,
-                                //                       size: 16,
-                                //                     ),
-                                //                   ),
-                                //                 ),
-                                //               ],
-                                //             ),
-                                //             Row(
-                                //               mainAxisAlignment:
-                                //                   MainAxisAlignment.center,
-                                //               children: [
-                                //                 Text(
-                                //                   appLocalizations
-                                //                       .godown_route_voucher_serires,
-                                //                   style: context
-                                //                       .textStyle
-                                //                       .s14
-                                //                       .w500
-                                //                       .dustyBlue
-                                //                       .roboto,
-                                //                 ),
-                                //               ],
-                                //             ),
-                                //             const SizedBox(height: 12),
-
-                                //             Text(
-                                //               "Sales Order B2B:",
-                                //               style: context
-                                //                   .textStyle
-                                //                   .s12
-                                //                   .w400
-                                //                   .bluishGray
-                                //                   .roboto,
-                                //             ),
-                                //             const SizedBox(height: 12),
-
-                                //             Text(
-                                //               "Applicable From",
-                                //               style: context
-                                //                   .textStyle
-                                //                   .s09
-                                //                   .w300
-                                //                   .bluishGray
-                                //                   .roboto,
-                                //             ),
-                                //             const SizedBox(height: 4),
-
-                                //             // Date Picker
-                                //             InkWell(
-                                //               onTap: () async {
-                                //                 final picked = await showDatePicker(
-                                //                   context: context,
-                                //                   firstDate: DateTime(2000),
-                                //                   lastDate: DateTime(2100),
-                                //                   initialDate: DateTime.now(),
-                                //                 );
-                                //                 if (picked != null) {
-                                //                   setState(
-                                //                     () => selectedDate = picked,
-                                //                   );
-                                //                 }
-                                //               },
-                                //               child: Container(
-                                //                 padding: const EdgeInsets.symmetric(
-                                //                   vertical: 12,
-                                //                   horizontal: 12,
-                                //                 ),
-                                //                 decoration: BoxDecoration(
-                                //                   color: ColorResources.lightGray
-                                //                       .withValues(alpha: 0.65),
-
-                                //                   borderRadius:
-                                //                       BorderRadius.circular(15),
-                                //                 ),
-                                //                 child: Row(
-                                //                   mainAxisAlignment:
-                                //                       MainAxisAlignment
-                                //                           .spaceBetween,
-                                //                   children: [
-                                //                     Text(
-                                //                       selectedDate == null
-                                //                           ? "Select Date"
-                                //                           : "${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}",
-                                //                       style: context
-                                //                           .textStyle
-                                //                           .s11
-                                //                           .w400
-                                //                           .bluishGray
-                                //                           .roboto,
-                                //                     ),
-                                //                     const Icon(
-                                //                       Icons.calendar_today_outlined,
-                                //                       size: 18,
-                                //                       color:
-                                //                           ColorResources.bluishGray,
-                                //                     ),
-                                //                   ],
-                                //                 ),
-                                //               ),
-                                //             ),
-                                //             const SizedBox(height: 12),
-
-                                //             Text(
-                                //               "Voucher Type",
-                                //               style: context
-                                //                   .textStyle
-                                //                   .s12
-                                //                   .w400
-                                //                   .bluishGray
-                                //                   .roboto,
-                                //             ),
-                                //             const SizedBox(height: 4),
-
-                                //             // Dropdown
-                                //             Container(
-                                //               decoration: BoxDecoration(
-                                //                 color: ColorResources.lightGray
-                                //                     .withValues(alpha: 0.65),
-
-                                //                 borderRadius: BorderRadius.circular(
-                                //                   12,
-                                //                 ),
-                                //               ),
-                                //               padding: const EdgeInsets.symmetric(
-                                //                 horizontal: 12,
-                                //               ),
-                                //               child: DropdownButtonHideUnderline(
-                                //                 child: DropdownButton<String>(
-                                //                   value: selectedType,
-                                //                   hint: Text(
-                                //                     "Voucher Type",
-                                //                     style: context
-                                //                         .textStyle
-                                //                         .s11
-                                //                         .w400
-                                //                         .bluishGray
-                                //                         .roboto,
-                                //                   ),
-                                //                   isExpanded: true,
-                                //                   icon: const Icon(
-                                //                     Icons
-                                //                         .keyboard_arrow_down_rounded,
-                                //                   ),
-                                //                   items: const [
-                                //                     // DropdownMenuItem(
-                                //                     //   value: "Type A",
-                                //                     //   child: Text("Type A"),
-                                //                     // ),
-                                //                     // DropdownMenuItem(
-                                //                     //   value: "Type B",
-                                //                     //   child: Text("Type B"),
-                                //                     // ),
-                                //                   ],
-                                //                   onChanged: (value) {
-                                //                     setState(
-                                //                       () => selectedType = value,
-                                //                     );
-                                //                   },
-                                //                 ),
-                                //               ),
-                                //             ),
-                                //             const SizedBox(height: 12),
-
-                                //             Text(
-                                //               "Prefix",
-                                //               style: context
-                                //                   .textStyle
-                                //                   .s12
-                                //                   .w400
-                                //                   .bluishGray
-                                //                   .roboto,
-                                //             ),
-                                //             const SizedBox(height: 4),
-                                //             TextField(
-                                //               controller: prefixController,
-                                //               decoration: InputDecoration(
-                                //                 filled: true,
-                                //                 fillColor: ColorResources.lightGray
-                                //                     .withValues(alpha: 0.65),
-                                //                 contentPadding:
-                                //                     const EdgeInsets.symmetric(
-                                //                       vertical: 12,
-                                //                       horizontal: 12,
-                                //                     ),
-                                //                 border: OutlineInputBorder(
-                                //                   borderRadius:
-                                //                       BorderRadius.circular(12),
-                                //                   borderSide: BorderSide.none,
-                                //                 ),
-                                //                 enabledBorder: OutlineInputBorder(
-                                //                   borderRadius:
-                                //                       BorderRadius.circular(12),
-                                //                   borderSide: BorderSide.none,
-                                //                 ),
-                                //                 focusedBorder: OutlineInputBorder(
-                                //                   borderRadius:
-                                //                       BorderRadius.circular(12),
-                                //                   borderSide: BorderSide.none,
-                                //                 ),
-                                //               ),
-                                //             ),
-                                //             const SizedBox(height: 12),
-
-                                //             Text(
-                                //               "Suffix",
-                                //               style: context
-                                //                   .textStyle
-                                //                   .s12
-                                //                   .w400
-                                //                   .bluishGray
-                                //                   .roboto,
-                                //             ),
-                                //             const SizedBox(height: 4),
-                                //             TextField(
-                                //               controller: suffixController,
-                                //               decoration: InputDecoration(
-                                //                 filled: true,
-                                //                 fillColor: ColorResources.lightGray
-                                //                     .withValues(alpha: 0.65),
-                                //                 contentPadding:
-                                //                     const EdgeInsets.symmetric(
-                                //                       vertical: 12,
-                                //                       horizontal: 12,
-                                //                     ),
-                                //                 border: OutlineInputBorder(
-                                //                   borderRadius:
-                                //                       BorderRadius.circular(12),
-                                //                   borderSide: BorderSide.none,
-                                //                 ),
-                                //                 enabledBorder: OutlineInputBorder(
-                                //                   borderRadius:
-                                //                       BorderRadius.circular(12),
-                                //                   borderSide: BorderSide.none,
-                                //                 ),
-                                //                 focusedBorder: OutlineInputBorder(
-                                //                   borderRadius:
-                                //                       BorderRadius.circular(12),
-                                //                   borderSide: BorderSide.none,
-                                //                 ),
-                                //               ),
-                                //             ),
-                                //             const SizedBox(height: 12),
-
-                                //             Text(
-                                //               "Width",
-                                //               style: context
-                                //                   .textStyle
-                                //                   .s12
-                                //                   .w400
-                                //                   .bluishGray
-                                //                   .roboto,
-                                //             ),
-                                //             const SizedBox(height: 4),
-                                //             TextField(
-                                //               controller: widthController,
-                                //               keyboardType: TextInputType.number,
-                                //               decoration: InputDecoration(
-                                //                 filled: true,
-                                //                 fillColor: ColorResources.lightGray
-                                //                     .withValues(alpha: 0.65),
-                                //                 contentPadding:
-                                //                     const EdgeInsets.symmetric(
-                                //                       vertical: 12,
-                                //                       horizontal: 12,
-                                //                     ),
-                                //                 border: OutlineInputBorder(
-                                //                   borderRadius:
-                                //                       BorderRadius.circular(12),
-                                //                   borderSide: BorderSide.none,
-                                //                 ),
-                                //                 enabledBorder: OutlineInputBorder(
-                                //                   borderRadius:
-                                //                       BorderRadius.circular(12),
-                                //                   borderSide: BorderSide.none,
-                                //                 ),
-                                //                 focusedBorder: OutlineInputBorder(
-                                //                   borderRadius:
-                                //                       BorderRadius.circular(12),
-                                //                   borderSide: BorderSide.none,
-                                //                 ),
-                                //               ),
-                                //             ),
-                                //             const SizedBox(height: 12),
-
-                                //             Text(
-                                //               "Starts From",
-                                //               style: context
-                                //                   .textStyle
-                                //                   .s12
-                                //                   .w400
-                                //                   .bluishGray
-                                //                   .roboto,
-                                //             ),
-                                //             const SizedBox(height: 4),
-                                //             TextField(
-                                //               controller: startController,
-                                //               keyboardType: TextInputType.number,
-                                //               decoration: InputDecoration(
-                                //                 filled: true,
-                                //                 fillColor: ColorResources.lightGray
-                                //                     .withValues(alpha: 0.65),
-                                //                 contentPadding:
-                                //                     const EdgeInsets.symmetric(
-                                //                       vertical: 12,
-                                //                       horizontal: 12,
-                                //                     ),
-                                //                 border: OutlineInputBorder(
-                                //                   borderRadius:
-                                //                       BorderRadius.circular(12),
-                                //                   borderSide: BorderSide.none,
-                                //                 ),
-                                //                 enabledBorder: OutlineInputBorder(
-                                //                   borderRadius:
-                                //                       BorderRadius.circular(12),
-                                //                   borderSide: BorderSide.none,
-                                //                 ),
-                                //                 focusedBorder: OutlineInputBorder(
-                                //                   borderRadius:
-                                //                       BorderRadius.circular(12),
-                                //                   borderSide: BorderSide.none,
-                                //                 ),
-                                //               ),
-                                //             ),
-                                //             const SizedBox(height: 24),
-
-                                //             Center(
-                                //               child: Padding(
-                                //                 padding: EdgeInsets.symmetric(
-                                //                   horizontal:
-                                //                       context.getSize.width / 3.5,
-                                //                 ),
-                                //                 child: CustomButton(
-                                //                   buttonText: "Save",
-                                //                   borderRadius:
-                                //                       BorderRadius.circular(16),
-                                //                   textStyle: context
-                                //                       .textStyle
-                                //                       .s12
-                                //                       .w500
-                                //                       .white,
-                                //                   isborderEnable: false,
-                                //                   onTap: () {
-                                //                     Navigator.pop(context);
-                                //                   },
-                                //                 ),
-                                //               ),
-                                //             ),
-                                //             const SizedBox(height: 12),
-                                //           ],
-                                //         ),
-                                //       ),
-                                //     ],
-                                //   ),
-                                // ),
+                                chid: provider.isGodown
+                                    ? const AddVehicle()
+                                    : const AddRoute(),
                               );
                             },
                             child: Container(
@@ -633,6 +263,9 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
                   child: Column(
                     children: [
                       CustomButton(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
                         buttonText: "Save",
                         textStyle: context.textStyle.s16.bold.white.roboto,
                         isborderEnable: false,
@@ -645,191 +278,6 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
           ),
         );
       },
-    );
-  }
-}
-
-class B2bAndB2cPrefixSuffix extends StatelessWidget {
-  const B2bAndB2cPrefixSuffix({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text("B2B", style: context.textStyle.s10.w400.indigoBlue.roboto),
-            GestureDetector(
-              onTap: () {},
-              child: Container(
-                padding: const EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: ColorResources.bluishGray.withValues(alpha: 0.3),
-                ),
-                child: const Icon(
-                  Icons.edit,
-                  size: 10,
-                  color: ColorResources.indigoBlue,
-                ),
-              ),
-            ),
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.only(right: 32),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    "Prefix: ",
-                    style: context.textStyle.s12.w400.bluishGray.roboto,
-                  ),
-                  Text(
-                    "xxxxx",
-                    style: context.textStyle.s12.w400.bluishGray.roboto,
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Text(
-                    "Suffix: ",
-                    style: context.textStyle.s12.w400.bluishGray.roboto,
-                  ),
-                  Text(
-                    "xxxxx",
-                    style: context.textStyle.s12.w400.bluishGray.roboto,
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Text(
-                    "Width: ",
-                    style: context.textStyle.s12.w400.bluishGray.roboto,
-                  ),
-                  Text(
-                    "xxxxx",
-                    style: context.textStyle.s12.w400.bluishGray.roboto,
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        h12,
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text("B2C", style: context.textStyle.s10.w400.indigoBlue.roboto),
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.only(right: 32),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    "Prefix: ",
-                    style: context.textStyle.s12.w400.bluishGray.roboto,
-                  ),
-                  Text(
-                    "xxxxx",
-                    style: context.textStyle.s12.w400.bluishGray.roboto,
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Text(
-                    "Suffix: ",
-                    style: context.textStyle.s12.w400.bluishGray.roboto,
-                  ),
-                  Text(
-                    "xxxxx",
-                    style: context.textStyle.s12.w400.bluishGray.roboto,
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Text(
-                    "Width: ",
-                    style: context.textStyle.s12.w400.bluishGray.roboto,
-                  ),
-                  Text(
-                    "xxxxx",
-                    style: context.textStyle.s12.w400.bluishGray.roboto,
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class SingleCompanyPrefixSuffix extends StatelessWidget {
-  const SingleCompanyPrefixSuffix({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            Text(
-              "Prefix: ",
-              style: context.textStyle.s12.w400.bluishGray.roboto,
-            ),
-            Text("xxxxx", style: context.textStyle.s12.w400.bluishGray.roboto),
-          ],
-        ),
-        Row(
-          children: [
-            Text(
-              "Suffix: ",
-              style: context.textStyle.s12.w400.bluishGray.roboto,
-            ),
-            Text("xxxxx", style: context.textStyle.s12.w400.bluishGray.roboto),
-          ],
-        ),
-        Row(
-          children: [
-            Text(
-              "Width: ",
-              style: context.textStyle.s12.w400.bluishGray.roboto,
-            ),
-            Text("xxxxx", style: context.textStyle.s12.w400.bluishGray.roboto),
-            w16,
-            GestureDetector(
-              onTap: () {},
-              child: Container(
-                padding: const EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: ColorResources.bluishGray.withValues(alpha: 0.3),
-                ),
-                child: const Icon(
-                  Icons.edit,
-                  size: 10,
-                  color: ColorResources.indigoBlue,
-                ),
-              ),
-            ),
-            w8,
-          ],
-        ),
-      ],
     );
   }
 }

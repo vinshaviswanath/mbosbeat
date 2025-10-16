@@ -80,9 +80,38 @@ class _CustomDrawerState extends State<CustomDrawer>
   Widget build(BuildContext context) {
     final applocalizations = context.l10n;
     return Scaffold(
+      backgroundColor: ColorResources.paleBlue,
       body: Stack(
         children: [
           widget.child,
+          AnimatedBuilder(
+            animation: _controller,
+            builder: (context, _) {
+              return Positioned(
+                // : const Duration(milliseconds: 400),
+                left: context.getSize.width * 0.03,
+                top: context.getSize.height * 0.062,
+                child: GestureDetector(
+                  onTap: toggleDrawer,
+                  onHorizontalDragUpdate: _onDragUpdate,
+                  onHorizontalDragEnd: _onDragEnd,
+                  child: const Icon(
+                    Icons.menu,
+                    size: 32,
+                    color: ColorResources.white,
+                  ),
+                ),
+              );
+            },
+          ),
+
+          if (_isDrawerOpen)
+            GestureDetector(
+              onTap: toggleDrawer,
+              child: Container(
+                color: Colors.black.withOpacity(0.3), // translucent backdrop
+              ),
+            ),
 
           /// Custom drawer
           AnimatedBuilder(
@@ -130,27 +159,27 @@ class _CustomDrawerState extends State<CustomDrawer>
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 16),
+                              h16,
                               Text(
                                 "Manvish Info Solutions Pvt Ltd.",
                                 style: context.textStyle.s14.bold.white.roboto,
                               ),
-                              const SizedBox(height: 4),
+                              h4,
                               Row(
                                 children: [
                                   Text(
                                     "Bank Road, Aluva",
-                                    style: TextStyle(
-                                      color: Colors.white70,
-                                      fontSize: 12,
-                                    ),
+                                    style: context
+                                        .textStyle
+                                        .s10
+                                        .w400
+                                        .bluishGray
+                                        .roboto,
                                   ),
                                   w16,
                                   SvgPicture.asset(AppAssets.edit, height: 10),
                                 ],
                               ),
-
-                              /// Contact Info
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
@@ -225,7 +254,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                                       context.textStyle.s10.w500.white.roboto,
                                 ),
                               ),
-                              const SizedBox(height: 16),
+                              h16,
                               Divider(
                                 color: ColorResources.white.withValues(
                                   alpha: 0.2,
@@ -239,19 +268,16 @@ class _CustomDrawerState extends State<CustomDrawer>
                                     .custom_drawer_complete_company_profile,
                                 style: context.textStyle.s10.w400.bluishGray,
                               ),
-                              const SizedBox(height: 8),
+                              h8,
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
-                                      const Text(
+                                       Text(
                                         "38% ",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 12,
-                                        ),
+                                        style: context.textStyle.s10.w500.amber.roboto,
                                       ),
                                       Text(
                                         applocalizations
@@ -264,12 +290,9 @@ class _CustomDrawerState extends State<CustomDrawer>
                                       ),
                                     ],
                                   ),
-                                  const Text(
+                                   Text(
                                     "100%",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 12,
-                                    ),
+                                   style: context.textStyle.s10.w500.white.roboto,
                                   ),
                                 ],
                               ),
@@ -285,7 +308,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 16),
+                              h16,
                               Divider(
                                 color: ColorResources.white.withValues(
                                   alpha: 0.2,
@@ -445,41 +468,6 @@ class _CustomDrawerState extends State<CustomDrawer>
                           ),
                         ),
                       ],
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
-
-          /// Drawer Control Button
-          AnimatedBuilder(
-            animation: _controller,
-            builder: (context, _) {
-              return Positioned(
-                // : const Duration(milliseconds: 400),
-                left: _controller.value * _drawerWidth,
-                top: MediaQuery.of(context).size.height / 2 - 25,
-                child: GestureDetector(
-                  onTap: toggleDrawer,
-                  onHorizontalDragUpdate: _onDragUpdate,
-                  onHorizontalDragEnd: _onDragEnd,
-                  child: Container(
-                    height: 50,
-                    width: 20,
-                    decoration: const BoxDecoration(
-                      color: ColorResources.lightBlue,
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(8),
-                        bottomRight: Radius.circular(8),
-                      ),
-                    ),
-                    child: Icon(
-                      _isDrawerOpen
-                          ? Icons.keyboard_arrow_left
-                          : Icons.keyboard_arrow_right,
-                      color: Colors.white,
-                      size: 20,
                     ),
                   ),
                 ),

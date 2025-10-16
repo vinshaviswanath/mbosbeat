@@ -5,10 +5,7 @@ import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/presentation/common/widgets/activate_widget.dart';
 import 'package:mpos_beat/presentation/common/widgets/deactivate_widget.dart';
 import 'package:mpos_beat/presentation/common/widgets/delete_widget.dart';
-import 'package:mpos_beat/presentation/views/route_wise_screen/widgets/activate_route_widget.dart';
 import 'package:mpos_beat/presentation/views/route_wise_screen/widgets/add_route.dart';
-import 'package:mpos_beat/presentation/views/route_wise_screen/widgets/deactivate_route_widget.dart';
-import 'package:mpos_beat/presentation/views/route_wise_screen/widgets/delete_route_widget.dart';
 import 'package:mpos_beat/presentation/views/route_wise_screen/widgets/route_widget.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_manage/widgets/option_item.dart';
 
@@ -66,7 +63,7 @@ class _RouteWiseScreenState extends State<RouteWiseScreen> {
               ? Center(
                   child: Text(
                     "No routes added yet",
-                    style: TextStyle(color: Colors.grey),
+                    style:context.textStyle.s12.w500.roboto,
                   ),
                 )
               : CustomScrollView(

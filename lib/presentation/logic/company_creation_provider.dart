@@ -30,6 +30,15 @@ class CompanyCreationProvider extends ChangeNotifier {
     "Feedbacks": false,
   };
 
+  bool _isGodown = true;
+
+  bool get isGodown => _isGodown;
+
+  void toggleVoucher() {
+    _isGodown = !_isGodown;
+    notifyListeners();
+  }
+
   Map<String, bool> get voucherStates => _voucherStates;
 
   bool getValue(String title) => _voucherStates[title] ?? false;

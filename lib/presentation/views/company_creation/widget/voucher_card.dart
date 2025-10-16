@@ -59,7 +59,7 @@ class _VoucherCardState extends State<VoucherCard> {
                           style: context.textStyle.s12.w400.white.roboto,
                         ),
                         if (isActive) ...[
-                          const SizedBox(width: 4),
+                          w4,
                           const CircleAvatar(
                             radius: 8,
                             backgroundColor: ColorResources.tealGreen,
@@ -98,7 +98,7 @@ class _VoucherCardState extends State<VoucherCard> {
                     appLocalization.voucher_card_tally_serial_no,
                     style: context.textStyle.s12.white.w400.roboto,
                   ),
-                  const SizedBox(height: 4),
+                  h4,
                   CustomTextField(
                     hint: appLocalization.voucher_card_tally_enter_serial_no,
                     hintTextStyle: context.textStyle.w500.dustyBlue.roboto,

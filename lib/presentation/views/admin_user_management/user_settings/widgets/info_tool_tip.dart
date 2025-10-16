@@ -6,6 +6,11 @@ class InfoTooltip extends StatefulWidget {
   final String description;
   final bool initialValue;
   final ValueChanged<bool>? onToggle;
+  final Widget? child;
+  final bool ispremium;
+  final TextStyle? style;
+  final EdgeInsetsGeometry? padding;
+  final Color? backgroundColor;
 
   const InfoTooltip({
     super.key,
@@ -13,6 +18,11 @@ class InfoTooltip extends StatefulWidget {
     required this.description,
     this.initialValue = false,
     this.onToggle,
+    this.child,
+    this.ispremium = false,
+    this.style,
+    this.padding,
+    this.backgroundColor,
   });
 
   @override
@@ -46,17 +56,17 @@ class _InfoTooltipState extends State<InfoTooltip> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(16),
-                    boxShadow: const [
+                    boxShadow: [
                       BoxShadow(
-                        offset: Offset(0, 8),
-                        color: Color(0x0000000D),
+                        offset: const Offset(0, 8),
+                        color: ColorResources.black.withValues(alpha: 0.2),
                         blurRadius: 13,
                       ),
                     ],
                   ),
                   child: Text(
                     widget.description,
-                    style: const TextStyle(color: Colors.black87, fontSize: 13),
+                    style: context.textStyle.s09.w300.dustyBlue.roboto,
                   ),
                 ),
               ),
@@ -93,42 +103,71 @@ class _InfoTooltipState extends State<InfoTooltip> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 16),
+      padding:
+          widget.padding ??
+          const EdgeInsets.symmetric(horizontal: 9, vertical: 16),
       decoration: BoxDecoration(
-        color: ColorResources.indigoBlue.withValues(alpha: 0.06),
+        color:
+            widget.backgroundColor ??
+            ColorResources.indigoBlue.withValues(alpha: 0.06),
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Row(
+      child: Column(
         children: [
-          Expanded(
-            child: Text(
-              widget.title,
-              style: context.textStyle.s12.w400.bluishGray.roboto,
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  widget.title,
+                  style:
+                      widget.style ??
+                      context.textStyle.s12.w400.bluishGray.roboto,
+                ),
+              ),
+              if (widget.ispremium == true) ...[
+                const CircleAvatar(
+                  radius: 10,
+                  backgroundColor: ColorResources.amber,
+                  child: Icon(
+                    Icons.currency_rupee_outlined,
+                    size: 14,
+                    color: ColorResources.white,
+                  ),
+                ),
+                w8,
+              ],
+              CustomSwitch(
+                value: _isOn,
+                thumbColor: !_isOn
+                    ? ColorResources.bluishGray
+                    : ColorResources.white,
+                borderColor: !_isOn
+                    ? ColorResources.neutralmidgray
+                    : ColorResources.transparent,
+                onChanged: (val) {
+                  setState(() => _isOn = val);
+                  debugPrint("Switch is now: $val");
+                },
+              ),
+              w8,
+              GestureDetector(
+                key: _iconKey,
+                onTap: _toggleTooltip,
+                child: const Icon(
+                  Icons.info_outline,
+                  color: ColorResources.indigoBlue,
+                  size: 16,
+                ),
+              ),
+            ],
+          ),
+          if (widget.child != null) ...[
+            h8,
+            Padding(
+              padding: const EdgeInsets.only(left: 16),
+              child: widget.child,
             ),
-          ),
-          CustomSwitch(
-            value: _isOn,
-            thumbColor: !_isOn
-                ? ColorResources.bluishGray
-                : ColorResources.white,
-            borderColor: !_isOn
-                ? ColorResources.neutralmidgray
-                : ColorResources.transparent,
-            onChanged: (val) {
-              setState(() => _isOn = val);
-              debugPrint("Switch is now: $val");
-            },
-          ),
-          w8,
-          GestureDetector(
-            key: _iconKey,
-            onTap: _toggleTooltip,
-            child: const Icon(
-              Icons.info_outline,
-              color: ColorResources.indigoBlue,
-              size: 16,
-            ),
-          ),
+          ],
         ],
       ),
     );

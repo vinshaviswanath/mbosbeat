@@ -37,7 +37,7 @@ class LoginImpl {
           if (token != null && token.isNotEmpty && data.status != 10) {
             await sharedPreferences.setString("token", token);
           }
-          await appDb.into(appDb.users).insert(User.fromJson(response.data));
+          // await appDb.into(appDb.users).insert(User.fromJson(response.data));
           // appDb.select(appDb.users).watch();
           return data;
         }
