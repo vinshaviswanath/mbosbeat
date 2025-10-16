@@ -19,16 +19,20 @@ class _AddRouteState extends State<AddRoute> {
   @override
   void initState() {
     super.initState();
-     final provider = context.read<CompanyCreationProvider>();
+    final provider = context.read<CompanyCreationProvider>();
     routeNameController = TextEditingController(
       text: widget.isEdit && widget.index != null
           ? provider.routes[widget.index!].routeName
+          : widget.isEdit == true && widget.index == null
+          ? "ROUTE 1"
           : '',
     );
 
     routeCodeController = TextEditingController(
       text: widget.isEdit && widget.index != null
           ? provider.routes[widget.index!].routeCode
+          : widget.isEdit == true && widget.index == null
+          ? "ROU07"
           : '',
     );
   }

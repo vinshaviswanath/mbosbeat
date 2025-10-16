@@ -1020,7 +1020,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get godown_route_voucher_route_name => 'Route Name:';
 
   @override
+  String get godown_route_voucher_godown_name => 'Godown Name:';
+
+  @override
   String get godown_route_voucher_enter_route_name => 'Enter Route Name';
+
+  @override
+  String get godown_route_voucher_enter_godown_name => 'Enter Godown Name';
 
   @override
   String get godown_route_voucher_series_settings => 'Voucher Series Settings:';

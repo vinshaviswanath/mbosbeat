@@ -5,6 +5,7 @@ class OptionItem extends StatelessWidget {
   final int? selectedIndex;
   final String title;
   final IconData? icon;
+  final TextStyle? style;
   final Function(int) onTap;
 
   const OptionItem({
@@ -12,8 +13,9 @@ class OptionItem extends StatelessWidget {
     required this.index,
     required this.selectedIndex,
     required this.title,
-     this.icon,
+    this.icon,
     required this.onTap,
+    this.style,
   });
 
   @override
@@ -28,9 +30,11 @@ class OptionItem extends StatelessWidget {
           children: [
             Text(
               title,
-              style: isSelected
-                  ? context.textStyle.s12.w500.indigoBlue.roboto
-                  : context.textStyle.s12.dustyBlue.w500.roboto,
+              style:
+                  style ??
+                  (isSelected
+                      ? context.textStyle.s12.w500.indigoBlue.roboto
+                      : context.textStyle.s10.dustyBlue.w500.roboto),
             ),
             Icon(
               icon,

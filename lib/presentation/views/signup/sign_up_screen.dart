@@ -3,7 +3,6 @@ import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 import 'package:mpos_beat/presentation/common/widgets/sliverSpace.dart';
 import 'package:mpos_beat/presentation/logic/authentication_provider.dart';
-import 'package:mpos_beat/presentation/views/otp/otp_authentication.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const routeName = "signup-screen";

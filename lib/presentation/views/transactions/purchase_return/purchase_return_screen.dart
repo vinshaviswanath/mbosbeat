@@ -2,7 +2,6 @@ import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_switch.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
-import 'package:mpos_beat/presentation/views/admin_user_management/user_settings/widgets/info_tool_tip.dart';
 import 'package:mpos_beat/presentation/views/transactions/purchase/widgets/discount_alert_widget.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/widgets/end_to_end_text_widget.dart';
 

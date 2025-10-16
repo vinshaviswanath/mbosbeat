@@ -26,7 +26,7 @@ void showEndTripDialog(BuildContext context) {
                 'Are you sure to want to end the trip?',
                 style: context.textStyle.s14.roboto.bold.dustyBlue,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Row(
                 children: [
                   Expanded(
@@ -34,20 +34,20 @@ void showEndTripDialog(BuildContext context) {
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: Text(
-                        'Confirm',
-                        style: context.textStyle.s14.roboto.white,
-                      ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: ColorResources.indigoBlue,
-                        minimumSize: Size(150, 50),
+                        minimumSize: const Size(150, 50),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
                       ),
+                      child: Text(
+                        'Confirm',
+                        style: context.textStyle.s14.roboto.white,
+                      ),
                     ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
@@ -59,7 +59,7 @@ void showEndTripDialog(BuildContext context) {
                       ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: ColorResources.indigoBlue,
-                        minimumSize: Size(150, 50),
+                        minimumSize: const Size(150, 50),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),

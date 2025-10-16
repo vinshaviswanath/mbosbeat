@@ -23,12 +23,16 @@ class _AddVehicleState extends State<AddVehicle> {
     vehicleNameController = TextEditingController(
       text: widget.isEdit && widget.index != null
           ? provider.vehicles[widget.index!].vehicleName
+          : widget.isEdit == true && widget.index == null
+          ? "VEHICLE 1"
           : '',
     );
 
     vehicleCodeController = TextEditingController(
       text: widget.isEdit && widget.index != null
           ? provider.vehicles[widget.index!].vehicleCode
+          : widget.isEdit == true && widget.index == null
+          ? "VEH264"
           : '',
     );
   }

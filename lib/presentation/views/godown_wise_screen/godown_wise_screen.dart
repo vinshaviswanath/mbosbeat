@@ -7,8 +7,6 @@ import 'package:mpos_beat/presentation/views/godown_wise_screen/widgets/add_vehi
 import 'package:mpos_beat/presentation/common/widgets/deactivate_widget.dart';
 import 'package:mpos_beat/presentation/common/widgets/delete_widget.dart';
 import 'package:mpos_beat/presentation/views/godown_wise_screen/widgets/vehicle_widget.dart';
-import 'package:mpos_beat/presentation/views/admin_user_management/user_designation/widgets/activate_user_designation_widget.dart';
-import 'package:mpos_beat/presentation/views/admin_user_management/user_designation/widgets/user_designation_widget.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_manage/widgets/option_item.dart';
 
 class GodownWiseScreen extends StatefulWidget {
@@ -65,7 +63,7 @@ class _GodownWiseScreenState extends State<GodownWiseScreen> {
               ? Center(
                   child: Text(
                     appLocalization.godown_wise_screen_no_vehicle,
-                    style: TextStyle(color: Colors.grey),
+                    style: context.textStyle.s12.w500.dustyBlue.roboto,
                   ),
                 )
               : CustomScrollView(
@@ -296,11 +294,11 @@ class _GodownWiseScreenState extends State<GodownWiseScreen> {
                                                 title: "Voucher Type Settings",
                                                 // icon: Icons.pan_tool,
                                                 onTap: (i) {
-                                                   context.pushNamed(
-                                                                  AppRouterConst
-                                                                      .companyCreationScreen,
-                                                                  extra: 1,
-                                                                );
+                                                  context.pushNamed(
+                                                    AppRouterConst
+                                                        .companyCreationScreen,
+                                                    extra: 1,
+                                                  );
 
                                                   // setStateDialog(
                                                   //   () => optionIndex = i,

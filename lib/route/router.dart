@@ -4,6 +4,7 @@ import 'package:mpos_beat/core/utils/enums.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_route_screen.dart';
 import 'package:mpos_beat/presentation/common/widgets/loading_screen.dart';
 import 'package:mpos_beat/presentation/views/admin_home/admin_dashboard.dart';
+import 'package:mpos_beat/presentation/views/company_settings/company_settings.dart';
 import 'package:mpos_beat/presentation/views/godown_route_voucher_screen/godown_route_voucher_screen.dart';
 import 'package:mpos_beat/presentation/views/godown_wise_screen/godown_wise_screen.dart';
 import 'package:mpos_beat/presentation/views/route_wise_screen/route_wise_screen.dart';
@@ -368,6 +369,13 @@ class AppRouter {
         name: AppRouterConst.godownRouteVoucherScreen,
         builder: (context, state) {
           return const GodownRouteVoucherScreen();
+        },
+      ),
+      GoRoute(
+        path: "/companySettingsScreen",
+        name: AppRouterConst.companySettingsScreen,
+        builder: (context, state) {
+          return const CompanySettingsScreen();
         },
       ),
     ],
