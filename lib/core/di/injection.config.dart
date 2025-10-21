@@ -23,9 +23,13 @@ import '../../data/data_sources/authentication/resend_otp/resend_otp.dart'
     as _i13;
 import '../../data/data_sources/authentication/reset_password/reset_password.dart'
     as _i244;
+import '../../data/data_sources/company_creation/company_creation.dart'
+    as _i587;
 import '../../data/local_db/app_db.dart' as _i264;
 import '../../data/repositories/i_authentication_facad_impl.dart' as _i823;
+import '../../data/repositories/i_companycreation_facad_impl.dart' as _i872;
 import '../../domain/repositories/i_authentication_facad.dart' as _i590;
+import '../../domain/repositories/i_companyCreation_facad.dart' as _i170;
 import '../base/run_safely.dart' as _i530;
 import '../serveice/http_client.dart' as _i816;
 import 'app_injection_module.dart' as _i975;
@@ -84,6 +88,13 @@ Future<_i174.GetIt> init(
       gh<_i460.SharedPreferences>(),
     ),
   );
+  gh.lazySingleton<_i587.CompanyCreation>(
+    () => _i587.CompanyCreation(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
   gh.lazySingleton<_i590.IAuthenticationFacad>(
     () => _i823.IAuthenticationImpl(
       gh<_i70.CompanyRegisteration>(),
@@ -91,6 +102,14 @@ Future<_i174.GetIt> init(
       gh<_i13.ResendOtp>(),
       gh<_i526.LoginImpl>(),
       gh<_i244.ResetPassword>(),
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i170.ICompanyCreationFacad>(
+    () => _i872.ICompanyCreationImpl(
+      gh<_i587.CompanyCreation>(),
       gh<_i816.HttpClient>(),
       gh<_i530.RunSafely>(),
       gh<_i460.SharedPreferences>(),

@@ -6,6 +6,7 @@ import 'package:mpos_beat/domain/repositories/i_authentication_facad.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dropdown_alert/dropdown_alert.dart';
 import 'package:injectable/injectable.dart';
+import 'package:mpos_beat/domain/repositories/i_companyCreation_facad.dart';
 import 'package:mpos_beat/l10n/generated/app_localizations.dart';
 import 'package:mpos_beat/presentation/logic/authentication_provider.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
@@ -30,13 +31,14 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
-        ChangeNotifierProvider( 
+        ChangeNotifierProvider(
           create: (_) => AuthFormProvider(sl<IAuthenticationFacad>()),
         ),
         ChangeNotifierProvider(create: (_) => UserManagementProvider()),
         ChangeNotifierProvider(create: (_) => CustomerTransactionProvider()),
-        ChangeNotifierProvider(create: (_) => CompanyCreationProvider()),
-
+        ChangeNotifierProvider(
+          create: (_) => CompanyCreationProvider(sl<ICompanyCreationFacad>()),
+        ),
       ],
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, _) {

@@ -1,26 +1,30 @@
+// To parse this JSON data, do
+//
+//     final createCompanyvochertype = createCompanyvochertypeFromJson(jsonString);
+
 import 'dart:convert';
 
-CompanyCreationDtos createCompanyFromJson(String str) =>
-    CompanyCreationDtos.fromJson(json.decode(str));
+CreateCompanyvochertypeDtos createCompanyvochertypeFromJson(String str) =>
+    CreateCompanyvochertypeDtos.fromJson(json.decode(str));
 
-String createCompanyToJson(CompanyCreationDtos data) =>
+String createCompanyvochertypeToJson(CreateCompanyvochertypeDtos data) =>
     json.encode(data.toJson());
 
-class CompanyCreationDtos {
+class CreateCompanyvochertypeDtos {
   List<dynamic> companyList;
   int id;
   int status;
   String message;
 
-  CompanyCreationDtos({
+  CreateCompanyvochertypeDtos({
     required this.companyList,
     required this.id,
     required this.status,
     required this.message,
   });
 
-  factory CompanyCreationDtos.fromJson(Map<String, dynamic> json) =>
-      CompanyCreationDtos(
+  factory CreateCompanyvochertypeDtos.fromJson(Map<String, dynamic> json) =>
+      CreateCompanyvochertypeDtos(
         companyList: List<dynamic>.from(json["companyList"].map((x) => x)),
         id: json["id"],
         status: json["status"],

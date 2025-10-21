@@ -3,11 +3,17 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/failures/value_object/value_object.dart';
+import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/models/get_company_voucher_model.dart';
+import 'package:mpos_beat/data/models/data/company_voucher_data.dart';
+import 'package:mpos_beat/domain/repositories/i_companyCreation_facad.dart';
 import 'package:mpos_beat/presentation/views/godown_wise_screen/godown_wise_screen.dart';
 import 'package:mpos_beat/presentation/views/route_wise_screen/route_wise_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CompanyCreationProvider extends ChangeNotifier {
+  final ICompanyCreationFacad companyCreationFacad;
+  CompanyCreationProvider(this.companyCreationFacad);
   String? _activePlan;
 
   String? get activePlan => _activePlan;
@@ -15,20 +21,14 @@ class CompanyCreationProvider extends ChangeNotifier {
   final Set<int> _completedStages = {};
 
   Set<int> get completedStages => _completedStages;
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+  String? _errorMessage;
+  String? get errorMessage => _errorMessage;
 
   final List<bool> stageCompleted = [false, false, false];
 
-  final Map<String, bool> _voucherStates = {
-    "Sales Order": false,
-    "Sales": false,
-    "Sales Return": false,
-    "Receipt": false,
-    "Payment": false,
-    "Purchase": false,
-    "Purchase Return": false,
-    "Expenses": false,
-    "Feedbacks": false,
-  };
+
 
   bool _isGodown = true;
 
@@ -318,4 +318,91 @@ class CompanyCreationProvider extends ChangeNotifier {
     _saveRoutes();
     notifyListeners();
   }
+
+  //get companyvuchertypelist
+  List<CompanyVoucherTypesListData> _voucherTypes = [];
+  List<CompanyVoucherTypesListData> get voucherTypes => _voucherTypes;
+  CompanyvouchertypeslistDtos? _companyvouchertypeslistDtos;
+  CompanyvouchertypeslistDtos? get companyvouchertypeslistDtos =>
+      _companyvouchertypeslistDtos;
+  Future<CompanyvouchertypeslistDtos?> fetchVoucherTypes(
+    BuildContext context,
+    int companyID,
+  ) async {
+    _setLoading(true);
+
+    final result = await companyCreationFacad.getVoucherType(companyID);
+    result.fold(
+      (failure) {
+        _errorMessage = failure.errorMsg.toString();
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
+        Logger.logError("Fetch Voucher Types failed: $_errorMessage");
+      },
+
+      (response) {
+        if (response.status == 1) {
+          _errorMessage = null;
+          _companyvouchertypeslistDtos = response;
+
+          _voucherTypes = response.companyVoucherTypesList;
+          // Logger.logSuccess(
+          //   "Voucher Types fetched successfully: $_voucherTypes",
+          // );
+
+          notifyListeners();
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   const SnackBar(content: Text("Voucher Types fetched successfully")),
+          // );
+        } else {
+          _errorMessage = "Unexpected status: ${response.status}";
+        }
+      },
+    );
+
+    _setLoading(false);
+    notifyListeners();
+    return _companyvouchertypeslistDtos;
+  }
+
+  void _setLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // final Map<String, bool> _voucherStates = {
+  //   "Sales Order": false,
+  //   "Sales": false,
+  //   "Sales Return": false,
+  //   "Receipt": false,
+  //   "Payment": false,
+  //   "Purchase": false,
+  //   "Purchase Return": false,
+  //   "Expenses": false,
+  //   "Feedbacks": false,
+  // };
+
+  // Map<String, bool> get voucherStates => _voucherStates;
+
+  // bool getValue(String title) => _voucherStates[title] ?? false;
+
+  // void toggleValue(String title, bool? value) {
+  //   _voucherStates[title] = value ?? false;
+  //   notifyListeners();
+  // }
