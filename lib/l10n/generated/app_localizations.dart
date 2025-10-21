@@ -2026,11 +2026,23 @@ abstract class AppLocalizations {
   /// **'Route Name:'**
   String get godown_route_voucher_route_name;
 
+  /// No description provided for @godown_route_voucher_godown_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Godown Name:'**
+  String get godown_route_voucher_godown_name;
+
   /// No description provided for @godown_route_voucher_enter_route_name.
   ///
   /// In en, this message translates to:
   /// **'Enter Route Name'**
   String get godown_route_voucher_enter_route_name;
+
+  /// No description provided for @godown_route_voucher_enter_godown_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Godown Name'**
+  String get godown_route_voucher_enter_godown_name;
 
   /// No description provided for @godown_route_voucher_series_settings.
   ///
