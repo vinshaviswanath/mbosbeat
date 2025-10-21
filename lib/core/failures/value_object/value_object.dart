@@ -127,7 +127,8 @@ class WhatsAppNumber extends ValueObjet<String> {
   @override
   final Either<ValueFailure<String>, String> value;
 
-  factory WhatsAppNumber(String value) => WhatsAppNumber._(validateWhatsAppNumber(value));
+  factory WhatsAppNumber(String value) =>
+      WhatsAppNumber._(validateWhatsAppNumber(value));
 
   const WhatsAppNumber._(this.value);
 }
@@ -136,7 +137,8 @@ class Designation extends ValueObjet<String> {
   @override
   final Either<ValueFailure<String>, String> value;
 
-  factory Designation(String value) => Designation._(validateDesignation(value));
+  factory Designation(String value) =>
+      Designation._(validateDesignation(value));
 
   const Designation._(this.value);
 }
@@ -145,7 +147,8 @@ class ReportingTo extends ValueObjet<String> {
   @override
   final Either<ValueFailure<String>, String> value;
 
-  factory ReportingTo(String value) => ReportingTo._(validateReportingTo(value));
+  factory ReportingTo(String value) =>
+      ReportingTo._(validateReportingTo(value));
 
   const ReportingTo._(this.value);
 }
@@ -154,7 +157,8 @@ class VehicleName extends ValueObjet<String> {
   @override
   final Either<ValueFailure<String>, String> value;
 
-  factory VehicleName(String value) => VehicleName._(validateVehicleName(value));
+  factory VehicleName(String value) =>
+      VehicleName._(validateVehicleName(value));
 
   const VehicleName._(this.value);
 }
@@ -163,7 +167,8 @@ class VehicleCode extends ValueObjet<String> {
   @override
   final Either<ValueFailure<String>, String> value;
 
-  factory VehicleCode(String value) => VehicleCode._(validateVehicleCode(value));
+  factory VehicleCode(String value) =>
+      VehicleCode._(validateVehicleCode(value));
 
   const VehicleCode._(this.value);
 }
@@ -184,4 +189,60 @@ class RouteCode extends ValueObjet<String> {
   factory RouteCode(String value) => RouteCode._(validateRouteCode(value));
 
   const RouteCode._(this.value);
+}
+
+class DisplayName extends ValueObjet<String> {
+  @override
+  final Either<ValueFailure<String>, String> value;
+
+  factory DisplayName(String value) =>
+      DisplayName._(validateDisplayName(value));
+
+  const DisplayName._(this.value);
+}
+
+class Address1 extends ValueObjet<String> {
+  @override
+  final Either<ValueFailure<String>, String> value;
+
+  factory Address1(String value) => Address1._(validateAddress(value));
+
+  const Address1._(this.value);
+}
+
+class Pincode extends ValueObjet<String> {
+  @override
+  final Either<ValueFailure<String>, String> value;
+
+  factory Pincode(String value) => Pincode._(validatePinocde(value));
+
+  const Pincode._(this.value);
+}
+
+class Country extends ValueObjet<String> {
+  @override
+  final Either<ValueFailure<String>, String> value;
+
+  factory Country(String value) => Country._(validateCountry(value));
+
+  const Country._(this.value);
+}
+
+class CountryState extends ValueObjet<String> {
+  @override
+  final Either<ValueFailure<String>, String> value;
+
+  factory CountryState(String value) => CountryState._(validateState(value));
+
+  const CountryState._(this.value);
+}
+
+class RegistrationType extends ValueObjet<String> {
+  @override
+  final Either<ValueFailure<String>, String> value;
+
+  factory RegistrationType(String value) =>
+      RegistrationType._(validateRegistrationType(value));
+
+  const RegistrationType._(this.value);
 }

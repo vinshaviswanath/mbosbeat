@@ -395,7 +395,9 @@ class AuthFormProvider with ChangeNotifier {
 
   /// Validates login form fields.
   bool validateLoginForm() {
-    Logger.logInfo("Validation :${_emailOrPhone.isValid()}, ${_password.isValid()}");
+    Logger.logInfo(
+      "Validation :${_emailOrPhone.isValid()}, ${_password.isValid()}",
+    );
     return _emailOrPhone.isValid() && _password.isValid();
   }
 

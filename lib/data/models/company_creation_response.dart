@@ -1,26 +1,25 @@
 import 'dart:convert';
 
-CompanyCreationResponse createCompanyFromJson(String str) =>
-    CompanyCreationResponse.fromJson(json.decode(str));
+CompanyInfoDtos createCompanyFromJson(String str) =>
+    CompanyInfoDtos.fromJson(json.decode(str));
 
-String createCompanyToJson(CompanyCreationResponse data) =>
-    json.encode(data.toJson());
+String createCompanyToJson(CompanyInfoDtos data) => json.encode(data.toJson());
 
-class CompanyCreationResponse {
+class CompanyInfoDtos {
   List<dynamic> companyList;
   int id;
   int status;
   String message;
 
-  CompanyCreationResponse({
+  CompanyInfoDtos({
     required this.companyList,
     required this.id,
     required this.status,
     required this.message,
   });
 
-  factory CompanyCreationResponse.fromJson(Map<String, dynamic> json) =>
-      CompanyCreationResponse(
+  factory CompanyInfoDtos.fromJson(Map<String, dynamic> json) =>
+      CompanyInfoDtos(
         companyList: List<dynamic>.from(json["companyList"].map((x) => x)),
         id: json["id"],
         status: json["status"],

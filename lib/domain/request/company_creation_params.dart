@@ -1,7 +1,8 @@
 import 'package:mpos_beat/core/param/param_builder.dart';
 
-class CompanyCreationParams extends ToMap {
+class CompanyInfoParams extends ToMap {
   int id;
+  String? companyCode;
   String? companyName;
   String? displayName;
   String? address1;
@@ -12,8 +13,9 @@ class CompanyCreationParams extends ToMap {
   String? stateId;
   String? regType;
 
-  CompanyCreationParams({
+  CompanyInfoParams({
     required this.id,
+    required this.companyCode,
     required this.companyName,
     required this.displayName,
     required this.address1,
@@ -28,6 +30,7 @@ class CompanyCreationParams extends ToMap {
   @override
   Map<String, dynamic> toMap() => {
     "ID": id,
+    "CompanyCode": companyCode,
     "CompanyName": companyName,
     "DisplayName": displayName,
     "Address1": address1,

@@ -193,3 +193,48 @@ Either<ValueFailure<String>, String> validateRouteCode(String value) {
   }
   return right(value);
 }
+
+Either<ValueFailure<String>, String> validateDisplayName(String value) {
+  if (value.isEmpty) {
+    return left(const ValueFailure.invalidValue('Select a valid Displayname!'));
+  }
+  return right(value);
+}
+
+Either<ValueFailure<String>, String> validateAddress(String value) {
+  if (value.isEmpty) {
+    return left(const ValueFailure.invalidValue('Select a valid Address!'));
+  }
+  return right(value);
+}
+//
+
+Either<ValueFailure<String>, String> validatePinocde(String value) {
+  if (value.isEmpty) {
+    return left(const ValueFailure.invalidValue('Select a valid Pincode!'));
+  }
+  return right(value);
+}
+
+Either<ValueFailure<String>, String> validateCountry(String value) {
+  if (value.isEmpty) {
+    return left(const ValueFailure.invalidValue('Select a valid Country!'));
+  }
+  return right(value);
+}
+
+Either<ValueFailure<String>, String> validateState(String value) {
+  if (value.isEmpty) {
+    return left(const ValueFailure.invalidValue('Select a valid State!'));
+  }
+  return right(value);
+}
+
+Either<ValueFailure<String>, String> validateRegistrationType(String value) {
+  if (value.isEmpty) {
+    return left(
+      const ValueFailure.invalidValue('Select a valid RegistrationType!'),
+    );
+  }
+  return right(value);
+}
