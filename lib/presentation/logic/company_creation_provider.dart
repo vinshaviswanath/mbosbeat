@@ -7,7 +7,6 @@ import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/create_company_voucher_model.dart';
 import 'package:mpos_beat/data/models/get_company_voucher_model.dart';
 import 'package:mpos_beat/data/models/data/company_voucher_data.dart';
-import 'package:mpos_beat/domain/repositories/i_companyCreation_facad.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
 import 'package:mpos_beat/core/utils/logger.dart';
 import 'package:mpos_beat/data/models/company_creation_response.dart';
@@ -24,11 +23,10 @@ import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CompanyCreationProvider extends ChangeNotifier {
-
   final ICompanyCreationFacad iCompanyCreationFacad;
   CompanyCreationProvider(this.iCompanyCreationFacad);
 
-String? _activePlan;
+  String? _activePlan;
 
   String? get activePlan => _activePlan;
 
@@ -42,8 +40,6 @@ String? _activePlan;
 
   final List<bool> stageCompleted = [false, false, false];
 
-
-
   bool _isGodown = true;
 
   bool get isGodown => _isGodown;
@@ -53,21 +49,7 @@ String? _activePlan;
     notifyListeners();
   }
 
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
-  String? _errorMessage;
-  String? get errorMessage => _errorMessage;
-
   final formKey = GlobalKey<FormState>();
-
-  Map<String, bool> get voucherStates => _voucherStates;
-
-  bool getValue(String title) => _voucherStates[title] ?? false;
-
-  void toggleValue(String title, bool? value) {
-    _voucherStates[title] = value ?? false;
-    notifyListeners();
-  }
 
   void activatePlan(String planTitle) {
     _activePlan = planTitle;
@@ -314,6 +296,102 @@ String? _activePlan;
     notifyListeners();
   }
 
+  //get companyvuchertypelist
+  List<CompanyVoucherTypesListData> _voucherTypes = [];
+  List<CompanyVoucherTypesListData> get voucherTypes => _voucherTypes;
+  CompanyvouchertypeslistDtos? _companyvouchertypeslistDtos;
+  CompanyvouchertypeslistDtos? get companyvouchertypeslistDtos =>
+      _companyvouchertypeslistDtos;
+  Future<CompanyvouchertypeslistDtos?> fetchVoucherTypes(
+    BuildContext context,
+    int companyID,
+  ) async {
+    _setLoading(true);
+
+    final result = await iCompanyCreationFacad.getVoucherType(companyID);
+    result.fold(
+      (failure) {
+        _errorMessage = failure.errorMsg.toString();
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
+        Logger.logError("Fetch Voucher Types failed: $_errorMessage");
+      },
+
+      (response) {
+        if (response.status == 1) {
+          _errorMessage = null;
+          _companyvouchertypeslistDtos = response;
+
+          _voucherTypes = response.companyVoucherTypesList;
+          // Logger.logSuccess(
+          //   "Voucher Types fetched successfully: $_voucherTypes",
+          // );
+
+          notifyListeners();
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   const SnackBar(content: Text("Voucher Types fetched successfully")),
+          // );
+        } else {
+          _errorMessage = "Unexpected status: ${response.status}";
+        }
+      },
+    );
+
+    _setLoading(false);
+    notifyListeners();
+    return _companyvouchertypeslistDtos;
+  }
+
+  void _setLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  }
+
+  //CREATE COMPANY VOUCHER TYPE
+  Future<CreateCompanyvochertypeDtos?> createCompanyVoucherTypes(
+    BuildContext context, {
+    required CreateCompanyVocherParams request,
+  }) async {
+    _setLoading(true);
+
+    final result = await iCompanyCreationFacad.createCompanyVoucher(
+      BaseParams(data: request),
+    );
+    CreateCompanyvochertypeDtos? createdVouchers;
+    result.fold(
+      (failure) {
+        _errorMessage = failure.errorMsg.toString();
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
+        Logger.logError("Create Voucher Types failed: $_errorMessage");
+      },
+
+      (response) {
+        if (response.status == 1) {
+          _errorMessage = null;
+          createdVouchers = response;
+
+          Logger.logSuccess(
+            "Voucher Types created successfully: $createdVouchers",
+          );
+
+          notifyListeners();
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Voucher Types created successfully")),
+          );
+        } else {
+          _errorMessage = "Unexpected status: ${response.status}";
+        }
+      },
+    );
+
+    _setLoading(false);
+    notifyListeners();
+    return createdVouchers;
+  }
+
   // ======================================================================
   //                           VEHICLE MANAGEMENT (DDD)
   // ======================================================================
@@ -554,106 +632,6 @@ String? _activePlan;
     );
     _saveRoutes();
     notifyListeners();
-  }
-//get companyvuchertypelist
-  List<CompanyVoucherTypesListData> _voucherTypes = [];
-  List<CompanyVoucherTypesListData> get voucherTypes => _voucherTypes;
-  CompanyvouchertypeslistDtos? _companyvouchertypeslistDtos;
-  CompanyvouchertypeslistDtos? get companyvouchertypeslistDtos =>
-      _companyvouchertypeslistDtos;
-  Future<CompanyvouchertypeslistDtos?> fetchVoucherTypes(
-    BuildContext context,
-    int companyID,
-  ) async {
-    _setLoading(true);
-
-    final result = await companyCreationFacad.getVoucherType(companyID);
-    result.fold(
-      (failure) {
-        _errorMessage = failure.errorMsg.toString();
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
-        Logger.logError("Fetch Voucher Types failed: $_errorMessage");
-      },
-
-      (response) {
-        if (response.status == 1) {
-          _errorMessage = null;
-          _companyvouchertypeslistDtos = response;
-
-          _voucherTypes = response.companyVoucherTypesList;
-          // Logger.logSuccess(
-          //   "Voucher Types fetched successfully: $_voucherTypes",
-          // );
-
-          notifyListeners();
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //   const SnackBar(content: Text("Voucher Types fetched successfully")),
-          // );
-        } else {
-          _errorMessage = "Unexpected status: ${response.status}";
-        }
-      },
-    );
-
-    _setLoading(false);
-    notifyListeners();
-    return _companyvouchertypeslistDtos;
-  }
-
-  void _setLoading(bool value) {
-    _isLoading = value;
-    notifyListeners();
-  }
-}
- void _setLoading(bool value) {
-    _isLoading = value;
-    notifyListeners();
-  }
-
-  //CREATE COMPANY VOUCHER TYPE
-  Future<CreateCompanyvochertypeDtos?> createCompanyVoucherTypes(
-    BuildContext context, {
-    required CreateCompanyVocherParams request,
-  }) async {
-    _setLoading(true);
-
-    final result = await companyCreationFacad.createCompanyVoucher(
-      BaseParams(data: request),
-    );
-    CreateCompanyvochertypeDtos? createdVouchers;
-    result.fold(
-      (failure) {
-        _errorMessage = failure.errorMsg.toString();
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
-        Logger.logError("Create Voucher Types failed: $_errorMessage");
-      },
-
-      (response) {
-        if (response.status == 1) {
-          _errorMessage = null;
-          createdVouchers = response;
-
-          Logger.logSuccess(
-            "Voucher Types created successfully: $createdVouchers",
-          );
-
-          notifyListeners();
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Voucher Types created successfully")),
-          );
-        } else {
-          _errorMessage = "Unexpected status: ${response.status}";
-        }
-      },
-    );
-
-    _setLoading(false);
-    notifyListeners();
-    return createdVouchers;
   }
 }
 

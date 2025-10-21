@@ -2,8 +2,11 @@ import 'package:mpos_beat/core/param/param_builder.dart';
 import 'package:mpos_beat/core/utils/typedefs.dart';
 import 'package:mpos_beat/data/models/company_creation_response.dart';
 import 'package:mpos_beat/data/models/country_list_response.dart';
+import 'package:mpos_beat/data/models/create_company_voucher_model.dart';
+import 'package:mpos_beat/data/models/get_company_voucher_model.dart';
 import 'package:mpos_beat/data/models/state_list_response.dart';
 import 'package:mpos_beat/domain/request/company_creation_params.dart';
+import 'package:mpos_beat/domain/request/create_company_voucher_request.dart';
 
 interface class ICompanyCreationFacad {
   ResultFuture<CompanyInfoDtos> companyInfo(
@@ -17,6 +20,15 @@ interface class ICompanyCreationFacad {
   }
 
   ResultFuture<StateListDtos> stateList(int countryId) {
+    throw UnimplementedError();
+  }
+   ResultFuture<CompanyvouchertypeslistDtos> getVoucherType(int companyID) {
+    throw UnimplementedError();
+  }
+
+  ResultFuture<CreateCompanyvochertypeDtos> createCompanyVoucher(
+    BaseParams<CreateCompanyVocherParams> param,
+  ) {
     throw UnimplementedError();
   }
 }

@@ -4,11 +4,10 @@ import 'package:mpos_beat/core/theme/theme/theme_provider.dart';
 import 'package:mpos_beat/core/utils/app_details.dart';
 import 'package:mpos_beat/domain/repositories/i_authentication_facad.dart';
 import 'package:mpos_beat/domain/repositories/i_company_creation_facad.dart';
-import 'package:mpos_beat/l10n/app_localizations.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dropdown_alert/dropdown_alert.dart';
 import 'package:injectable/injectable.dart';
-import 'package:mpos_beat/domain/repositories/i_companyCreation_facad.dart';
 import 'package:mpos_beat/l10n/generated/app_localizations.dart';
 import 'package:mpos_beat/presentation/logic/authentication_provider.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
