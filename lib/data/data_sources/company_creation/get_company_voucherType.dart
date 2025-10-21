@@ -11,16 +11,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mpos_beat/core/serveice/http_client.dart';
 
 @lazySingleton
-class CompanyCreation {
+class GetCompanyvoucherTypeListDatasource {
   final HttpClient httpClient;
   final RunSafely runSafely;
   final SharedPreferences sharedPreferences;
 
-  CompanyCreation(this.httpClient, this.runSafely, this.sharedPreferences);
+  GetCompanyvoucherTypeListDatasource(
+    this.httpClient,
+    this.runSafely,
+    this.sharedPreferences,
+  );
 
-  ResultFuture<CompanyvouchertypeslistDtos> getCompanyvouchertypeList(
-    int companyID,
-  ) {
+  ResultFuture<CompanyvouchertypeslistDtos> call(int companyID) {
     return runSafely(
       () async {
         final url = '${Urls.getCompanyvouchertypeList}$companyID';

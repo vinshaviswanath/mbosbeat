@@ -25,6 +25,10 @@ import '../../data/data_sources/authentication/reset_password/reset_password.dar
     as _i244;
 import '../../data/data_sources/company_creation/company_creation.dart'
     as _i587;
+import '../../data/data_sources/company_creation/create_company_voucherType.dart'
+    as _i1051;
+import '../../data/data_sources/company_creation/get_company_voucherType.dart'
+    as _i1001;
 import '../../data/local_db/app_db.dart' as _i264;
 import '../../data/repositories/i_authentication_facad_impl.dart' as _i823;
 import '../../data/repositories/i_companycreation_facad_impl.dart' as _i872;
@@ -95,13 +99,15 @@ Future<_i174.GetIt> init(
       gh<_i460.SharedPreferences>(),
     ),
   );
-  gh.lazySingleton<_i590.IAuthenticationFacad>(
-    () => _i823.IAuthenticationImpl(
-      gh<_i70.CompanyRegisteration>(),
-      gh<_i42.OtpValidation>(),
-      gh<_i13.ResendOtp>(),
-      gh<_i526.LoginImpl>(),
-      gh<_i244.ResetPassword>(),
+  gh.lazySingleton<_i1051.CreateCompanyVouchertypeDatasource>(
+    () => _i1051.CreateCompanyVouchertypeDatasource(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i1001.GetCompanyvoucherTypeListDatasource>(
+    () => _i1001.GetCompanyvoucherTypeListDatasource(
       gh<_i816.HttpClient>(),
       gh<_i530.RunSafely>(),
       gh<_i460.SharedPreferences>(),
@@ -110,6 +116,20 @@ Future<_i174.GetIt> init(
   gh.lazySingleton<_i170.ICompanyCreationFacad>(
     () => _i872.ICompanyCreationImpl(
       gh<_i587.CompanyCreation>(),
+      gh<_i1001.GetCompanyvoucherTypeListDatasource>(),
+      gh<_i1051.CreateCompanyVouchertypeDatasource>(),
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i590.IAuthenticationFacad>(
+    () => _i823.IAuthenticationImpl(
+      gh<_i70.CompanyRegisteration>(),
+      gh<_i42.OtpValidation>(),
+      gh<_i13.ResendOtp>(),
+      gh<_i526.LoginImpl>(),
+      gh<_i244.ResetPassword>(),
       gh<_i816.HttpClient>(),
       gh<_i530.RunSafely>(),
       gh<_i460.SharedPreferences>(),

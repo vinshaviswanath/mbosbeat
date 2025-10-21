@@ -3,10 +3,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/failures/value_object/value_object.dart';
+import 'package:mpos_beat/core/param/param_builder.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/models/create_company_voucher_model.dart';
 import 'package:mpos_beat/data/models/get_company_voucher_model.dart';
 import 'package:mpos_beat/data/models/data/company_voucher_data.dart';
 import 'package:mpos_beat/domain/repositories/i_companyCreation_facad.dart';
+import 'package:mpos_beat/domain/request/create_company_voucher_request.dart';
 import 'package:mpos_beat/presentation/views/godown_wise_screen/godown_wise_screen.dart';
 import 'package:mpos_beat/presentation/views/route_wise_screen/route_wise_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -349,6 +352,50 @@ class CompanyCreationProvider extends ChangeNotifier {
   void _setLoading(bool value) {
     _isLoading = value;
     notifyListeners();
+  }
+
+  //CREATE COMPANY VOUCHER TYPE
+  Future<CreateCompanyvochertypeDtos?> createCompanyVoucherTypes(
+    BuildContext context, {
+    required CreateCompanyVocherParams request,
+  }) async {
+    _setLoading(true);
+
+    final result = await companyCreationFacad.createCompanyVoucher(
+      BaseParams(data: request),
+    );
+    CreateCompanyvochertypeDtos? createdVouchers;
+    result.fold(
+      (failure) {
+        _errorMessage = failure.errorMsg.toString();
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
+        Logger.logError("Create Voucher Types failed: $_errorMessage");
+      },
+
+      (response) {
+        if (response.status == 1) {
+          _errorMessage = null;
+          createdVouchers = response;
+
+          Logger.logSuccess(
+            "Voucher Types created successfully: $createdVouchers",
+          );
+
+          notifyListeners();
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Voucher Types created successfully")),
+          );
+        } else {
+          _errorMessage = "Unexpected status: ${response.status}";
+        }
+      },
+    );
+
+    _setLoading(false);
+    notifyListeners();
+    return createdVouchers;
   }
 }
 
