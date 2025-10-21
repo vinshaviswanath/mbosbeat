@@ -14,6 +14,12 @@ import 'package:http/http.dart' as _i519;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
+import '../../data/data_sources/authentication/company_creation/company_info.dart'
+    as _i158;
+import '../../data/data_sources/authentication/company_creation/country_list.dart'
+    as _i821;
+import '../../data/data_sources/authentication/company_creation/state_list.dart'
+    as _i94;
 import '../../data/data_sources/authentication/company_registeration/company_registeration.dart'
     as _i70;
 import '../../data/data_sources/authentication/login/login_impl.dart' as _i526;
@@ -30,6 +36,9 @@ import '../../data/repositories/i_authentication_facad_impl.dart' as _i823;
 import '../../data/repositories/i_companycreation_facad_impl.dart' as _i872;
 import '../../domain/repositories/i_authentication_facad.dart' as _i590;
 import '../../domain/repositories/i_companyCreation_facad.dart' as _i170;
+import '../../data/repositories/i_company_creation_facad_impl.dart' as _i322;
+import '../../domain/repositories/i_authentication_facad.dart' as _i590;
+import '../../domain/repositories/i_company_creation_facad.dart' as _i483;
 import '../base/run_safely.dart' as _i530;
 import '../serveice/http_client.dart' as _i816;
 import 'app_injection_module.dart' as _i975;
@@ -88,14 +97,45 @@ Future<_i174.GetIt> init(
       gh<_i460.SharedPreferences>(),
     ),
   );
-  gh.lazySingleton<_i587.CompanyCreation>(
+  gh.lazySingleton<_i158.CompanyInfo>(
+    () => _i158.CompanyInfo(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+ gh.lazySingleton<_i587.CompanyCreation>(
     () => _i587.CompanyCreation(
       gh<_i816.HttpClient>(),
       gh<_i530.RunSafely>(),
       gh<_i460.SharedPreferences>(),
     ),
   );
-  gh.lazySingleton<_i590.IAuthenticationFacad>(
+gh.lazySingleton<_i821.CountryList>(
+    () => _i821.CountryList(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i94.StateList>(
+    () => _i94.StateList(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i483.ICompanyCreationFacad>(
+    () => _i322.ICompanyCreationFacadImpl(
+      gh<_i158.CompanyInfo>(),
+      gh<_i821.CountryList>(),
+      gh<_i94.StateList>(),
+      gh<_i530.RunSafely>(),
+      gh<_i816.HttpClient>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+gh.lazySingleton<_i590.IAuthenticationFacad>(
     () => _i823.IAuthenticationImpl(
       gh<_i70.CompanyRegisteration>(),
       gh<_i42.OtpValidation>(),

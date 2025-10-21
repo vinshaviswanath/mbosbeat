@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/failures/value_object/value_object.dart';
@@ -7,14 +6,26 @@ import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/get_company_voucher_model.dart';
 import 'package:mpos_beat/data/models/data/company_voucher_data.dart';
 import 'package:mpos_beat/domain/repositories/i_companyCreation_facad.dart';
+import 'package:mpos_beat/core/param/param_builder.dart';
+import 'package:mpos_beat/core/utils/logger.dart';
+import 'package:mpos_beat/data/models/company_creation_response.dart';
+import 'package:mpos_beat/data/models/country_list_response.dart';
+import 'package:mpos_beat/data/models/data/country_list_data.dart';
+import 'package:mpos_beat/data/models/data/state_list_data.dart';
+import 'package:mpos_beat/data/models/state_list_response.dart';
+import 'package:mpos_beat/domain/repositories/i_company_creation_facad.dart';
+import 'package:mpos_beat/domain/request/company_creation_params.dart';
 import 'package:mpos_beat/presentation/views/godown_wise_screen/godown_wise_screen.dart';
 import 'package:mpos_beat/presentation/views/route_wise_screen/route_wise_screen.dart';
+import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CompanyCreationProvider extends ChangeNotifier {
-  final ICompanyCreationFacad companyCreationFacad;
-  CompanyCreationProvider(this.companyCreationFacad);
-  String? _activePlan;
+
+  final ICompanyCreationFacad iCompanyCreationFacad;
+  CompanyCreationProvider(this.iCompanyCreationFacad);
+
+String? _activePlan;
 
   String? get activePlan => _activePlan;
 
@@ -38,6 +49,13 @@ class CompanyCreationProvider extends ChangeNotifier {
     _isGodown = !_isGodown;
     notifyListeners();
   }
+
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+  String? _errorMessage;
+  String? get errorMessage => _errorMessage;
+
+  final formKey = GlobalKey<FormState>();
 
   Map<String, bool> get voucherStates => _voucherStates;
 
@@ -76,6 +94,222 @@ class CompanyCreationProvider extends ChangeNotifier {
   }
 
   bool isStageCompleted(int index) => stageCompleted[index];
+
+  // ======================================================================
+  //                         Company Creation (DDD)
+  // ======================================================================
+  CompanyInfoDtos? _companyCreationDtos;
+  CompanyInfoDtos? get companyCreationDtos => _companyCreationDtos;
+
+  CompanyName _companyName = CompanyName('');
+  DisplayName _displayName = DisplayName("");
+  Address1 _address1 = Address1("");
+  Pincode _pincode = Pincode("");
+  Country _country = Country("");
+  CountryState _countryState = CountryState("");
+  RegistrationType _registrationType = RegistrationType("");
+
+  AutovalidateMode companyinfoAutovalidateMode = AutovalidateMode.disabled;
+  CompanyName get companyName => _companyName;
+  DisplayName get displayName => _displayName;
+  Address1 get address1 => _address1;
+  Pincode get pincode => _pincode;
+  Country get country => _country;
+  CountryState get countryState => _countryState;
+  RegistrationType get registrationType => _registrationType;
+
+  bool validateCompanyInfoFields() {
+    return _companyName.isValid() & _displayName.isValid() &&
+        _address1.isValid() &&
+        _pincode.isValid() &&
+        _country.isValid() &&
+        _countryState.isValid() &&
+        _registrationType.isValid();
+  }
+
+  void updateCompanyName(String input) {
+    _companyName = CompanyName(input);
+    notifyListeners();
+  }
+
+  void updateDisplayName(String input) {
+    _displayName = DisplayName(input);
+
+    notifyListeners();
+  }
+
+  void updateAddress1(String input) {
+    _address1 = Address1(input);
+    notifyListeners();
+  }
+
+  void updatePincode(String input) {
+    _pincode = Pincode(input);
+    notifyListeners();
+  }
+
+  void updateCountry(String input) {
+    _country = Country(input);
+    notifyListeners();
+  }
+
+  void updateCountryState(String input) {
+    _countryState = CountryState(input);
+    notifyListeners();
+  }
+
+  void updateRegType(String input) {
+    _registrationType = RegistrationType(input);
+    notifyListeners();
+  }
+
+  //CompanyInformations....
+  Future<CompanyInfoDtos?> companyinfo(
+    BuildContext context, {
+    required CompanyInfoParams params,
+    VoidCallback? onSuccess,
+  }) async {
+    final isValid = validateCompanyInfoFields();
+    if (!isValid) {
+      companyinfoAutovalidateMode = AutovalidateMode.always;
+      notifyListeners();
+      return null;
+    }
+
+    final result = await iCompanyCreationFacad.companyInfo(
+      BaseParams(data: params),
+    );
+
+    result.fold(
+      (failure) {
+        _errorMessage = failure.errorMsg.toString();
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
+        Logger.logError("Company info failed : $_errorMessage");
+        _setLoading(false);
+        notifyListeners();
+      },
+      (response) {
+        Logger.logSuccess("Comapany Info success : ${response.toJson()}");
+        Logger.logSuccess("Status : ${response.status}");
+
+        _setLoading(false);
+        notifyListeners();
+
+        if (response.status == 1) {
+          _companyCreationDtos = response;
+          markStageCompleted(0);
+          onSuccess?.call();
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(response.message, textAlign: TextAlign.center),
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            ),
+          );
+        }
+      },
+    );
+    return _companyCreationDtos;
+  }
+
+  //fetchCountryList........
+  CountryListDtos? _countryListDtos;
+  CountryListDtos? get coountryListdtos => _countryListDtos;
+
+  List<CountryListData> _countries = [];
+  List<CountryListData> get countries => _countries;
+
+  CountryListData? _selectedCountry;
+  CountryListData? get selectedCountry => _selectedCountry;
+
+  Future<CountryListDtos?> fectchCountryList(BuildContext context) async {
+    final result = await iCompanyCreationFacad.countryList();
+
+    result.fold(
+      (failure) {
+        _errorMessage = failure.errorMsg.toString();
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
+        Logger.logError("Fetch Country List Failed : $_errorMessage");
+        _setLoading(false);
+        notifyListeners();
+      },
+      (response) {
+        Logger.logSuccess("Fetch Country List success : ${response.toJson()}");
+        Logger.logSuccess("Status : ${response.status}");
+
+        _countryListDtos = response;
+        _countries = _countryListDtos?.countryListData ?? [];
+
+        _setLoading(false);
+        notifyListeners();
+      },
+    );
+    return _countryListDtos;
+  }
+
+  void selectCountry(BuildContext context, CountryListData? country) {
+    _selectedCountry = country;
+    _selectedState = null; // reset state selection
+    _statelists = []; // clear previous states
+
+    if (country != null) {
+      fetchStateList(context, country.id); // fetch states for this country
+    }
+    notifyListeners();
+  }
+
+  //FetchStateList
+  StateListDtos? _stateListDtos;
+  StateListDtos? get stateListDtos => _stateListDtos;
+
+  List<StateListData> _statelists = [];
+  List<StateListData> get statelists => _statelists;
+
+  StateListData? _selectedState;
+  StateListData? get selectedState => _selectedState;
+
+  Future<StateListDtos?> fetchStateList(
+    BuildContext context,
+    int countryId,
+  ) async {
+    final result = await iCompanyCreationFacad.stateList(countryId);
+
+    result.fold(
+      (failure) {
+        _errorMessage = failure.errorMsg.toString();
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
+        Logger.logError("Fetch State List Failed : $_errorMessage");
+        _setLoading(false);
+        notifyListeners();
+      },
+      (response) {
+        Logger.logSuccess("Fetch State List success : ${response.toJson()}");
+        Logger.logSuccess("Status : ${response.status}");
+
+        _stateListDtos = response;
+        _statelists = _stateListDtos?.stateListData ?? [];
+
+        _setLoading(false);
+        notifyListeners();
+      },
+    );
+    return _stateListDtos;
+  }
+
+  void selectState(StateListData? states) {
+    _selectedState = states;
+    notifyListeners();
+  }
 
   // ======================================================================
   //                           VEHICLE MANAGEMENT (DDD)
@@ -318,8 +552,7 @@ class CompanyCreationProvider extends ChangeNotifier {
     _saveRoutes();
     notifyListeners();
   }
-
-  //get companyvuchertypelist
+//get companyvuchertypelist
   List<CompanyVoucherTypesListData> _voucherTypes = [];
   List<CompanyVoucherTypesListData> get voucherTypes => _voucherTypes;
   CompanyvouchertypeslistDtos? _companyvouchertypeslistDtos;
@@ -367,6 +600,11 @@ class CompanyCreationProvider extends ChangeNotifier {
   }
 
   void _setLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  }
+}
+ void _setLoading(bool value) {
     _isLoading = value;
     notifyListeners();
   }
