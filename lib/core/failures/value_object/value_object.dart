@@ -246,3 +246,13 @@ class RegistrationType extends ValueObjet<String> {
 
   const RegistrationType._(this.value);
 }
+
+class IntegrationSerialNo extends ValueObjet<String> {
+  @override
+  final Either<ValueFailure<String>, String> value;
+
+  factory IntegrationSerialNo(String value) =>
+      IntegrationSerialNo._(validateRegistrationType(value));
+
+  const IntegrationSerialNo._(this.value);
+}

@@ -123,7 +123,6 @@ class CustomTextField extends StatelessWidget {
               disabledBorder: InputBorder.none,
               enabledBorder: InputBorder.none,
               errorBorder: InputBorder.none,
-              
             ),
           ),
         ),

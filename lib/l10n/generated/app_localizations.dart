@@ -1957,8 +1957,14 @@ abstract class AppLocalizations {
   /// No description provided for @integration_type_tally.
   ///
   /// In en, this message translates to:
-  /// **'MPOS Retail'**
+  /// **'Tally'**
   String get integration_type_tally;
+
+  /// No description provided for @integration_type_mpos_retail.
+  ///
+  /// In en, this message translates to:
+  /// **'MPOS Retail'**
+  String get integration_type_mpos_retail;
 
   /// No description provided for @integration_type_finish.
   ///

@@ -19,6 +19,14 @@ class VoucherCard extends StatefulWidget {
 }
 
 class _VoucherCardState extends State<VoucherCard> {
+  late TextEditingController integrationSerialNoController;
+
+  @override
+  void initState() {
+    super.initState();
+    integrationSerialNoController = TextEditingController();
+  }
+
   String? selected;
   bool isExpand = false;
 
@@ -99,17 +107,34 @@ class _VoucherCardState extends State<VoucherCard> {
                     style: context.textStyle.s12.white.w400.roboto,
                   ),
                   h4,
-                  CustomTextField(
-                    hint: appLocalization.voucher_card_tally_enter_serial_no,
-                    hintTextStyle: context.textStyle.w500.dustyBlue.roboto,
-                    maxLength: 10,
-                    backgroundColor: ColorResources.lightGray.withValues(
-                      alpha: 0.35,
-                    ),
-                    inputType: TextInputType.phone,
-                    borderRadius: 12,
-                    hintColor: ColorResources.dustyBlue,
-                    borderColor: ColorResources.transparent,
+                  Consumer<CompanyCreationProvider>(
+                    builder: (context, provider, _) {
+                      return CustomTextField(
+                        controller: integrationSerialNoController,
+                        hint:
+                            appLocalization.voucher_card_tally_enter_serial_no,
+                        hintTextStyle: context.textStyle.w500.dustyBlue.roboto,
+                        maxLength: 10,
+                        backgroundColor: ColorResources.lightGray.withValues(
+                          alpha: 0.35,
+                        ),
+                        inputType: TextInputType.phone,
+                        borderRadius: 12,
+                        hintColor: ColorResources.dustyBlue,
+                        borderColor: ColorResources.transparent,
+                        onChange: (value) {
+                          provider.setIntegrationSerialNo(value);
+                          provider.updateIntegrationSerialNo(value);
+                          if (value.isNotEmpty) {
+                            provider.setIntegrationType(widget.title);
+                          }
+                        },
+
+                        autovalidateMode:
+                            provider.integrationSerialNoAutovalidateMode,
+                        failure: provider.integrationSerialNo.getFailure,
+                      );
+                    },
                   ),
                   h13,
                   Text(
@@ -126,15 +151,20 @@ class _VoucherCardState extends State<VoucherCard> {
 
                           return GestureDetector(
                             onTap: () {
-                              setState(() => selected = option);
+                              // setState(() => selected = option);
 
-                              if (option == 'Yes') {
-                                provider.activatePlan(widget.title);
-                              } else {
-                                if (provider.activePlan == widget.title) {
-                                  provider.deactivatePlan();
-                                }
-                              }
+                              // if (option == 'Yes') {
+                              //   provider.activatePlan(widget.title);
+                              // } else {
+                              //   if (provider.activePlan == widget.title) {
+                              //     provider.deactivatePlan();
+                              //   }
+                              // }
+
+                              setState(() => selected = option);
+                              provider.setStockInCloud(
+                                option == appLocalization.voucher_card_yes,
+                              );
                             },
                             child: Row(
                               children: [

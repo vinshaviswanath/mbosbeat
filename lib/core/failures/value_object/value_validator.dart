@@ -238,3 +238,10 @@ Either<ValueFailure<String>, String> validateRegistrationType(String value) {
   }
   return right(value);
 }
+
+Either<ValueFailure<String>, String> validateIntegrationSerialNo(String value) {
+  if (value.isEmpty) {
+    return left(const ValueFailure.invalidValue('Select a valid Serial No!'));
+  }
+  return right(value);
+}

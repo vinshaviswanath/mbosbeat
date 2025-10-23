@@ -1,10 +1,17 @@
 import 'package:mpos_beat/core/utils/imports.dart';
-import 'package:mpos_beat/presentation/views/company_creation/widget/voucher_card.dart';
+import 'package:mpos_beat/domain/request/integration_request.dart';
+import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
+import 'package:mpos_beat/presentation/views/company_creation/widget/integration_widget/integration_card.dart';
 
-class IntegrationWidget extends StatelessWidget {
+class IntegrationWidget extends StatefulWidget {
   const IntegrationWidget({super.key, this.onTap});
   final void Function()? onTap;
 
+  @override
+  State<IntegrationWidget> createState() => _IntegrationWidgetState();
+}
+
+class _IntegrationWidgetState extends State<IntegrationWidget> {
   @override
   Widget build(BuildContext context) {
     final appLocalizations = context.l10n;
@@ -31,7 +38,7 @@ class IntegrationWidget extends StatelessWidget {
               h30,
 
               VoucherCard(
-                title: appLocalizations.integration_type_tally,
+                title: appLocalizations.integration_type_mpos_retail,
                 description:
                     appLocalizations.integration_type_statnd_alone_description,
                 logoUrl: "",
@@ -48,7 +55,38 @@ class IntegrationWidget extends StatelessWidget {
                 padding: const EdgeInsetsGeometry.all(16),
                 child: CustomButton(
                   buttonText: appLocalizations.integration_type_finish,
-                  onTap: onTap,
+                  onTap: () {
+                    final provider = Provider.of<CompanyCreationProvider>(
+                      context,
+                      listen: false,
+                    );
+
+                    final integrationType =
+                        provider.selectedIntegrationType ?? '';
+                    final serialNo =
+                        provider.integrationSerialNoController ?? '';
+                    final stockInCloud = provider.stockInCloud;
+
+                    print('IntegrationType: $integrationType');
+                    print('SerialNo: $serialNo');
+                    print('StockInCloud: $stockInCloud');
+
+                    final result = provider.integration(
+                      context,
+                      onSuccess: widget.onTap,
+                      params: IntegrationParams(
+                        companyid: 1302,
+                        integrationType: integrationType,
+                        serialNo: serialNo,
+                        stockInCloud: stockInCloud,
+                      ),
+                    );
+
+                    // Navigate only if API succeeded
+                    if (result != null) {
+                      context.pushNamed(AppRouterConst.adminDashboard);
+                    }
+                  },
                   textStyle: context.textStyle.s16.bold.white.roboto,
                   isborderEnable: false,
                 ),
