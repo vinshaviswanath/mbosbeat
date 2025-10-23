@@ -2,9 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/failures/value_object/value_object.dart';
-import 'package:mpos_beat/core/param/param_builder.dart';
+import 'package:mpos_beat/core/failures/value_object/value_validator.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
-import 'package:mpos_beat/data/models/create_company_voucher_model.dart';
 import 'package:mpos_beat/data/models/get_company_voucher_model.dart';
 import 'package:mpos_beat/data/models/data/company_voucher_data.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
@@ -13,10 +12,11 @@ import 'package:mpos_beat/data/models/company_creation_response.dart';
 import 'package:mpos_beat/data/models/country_list_response.dart';
 import 'package:mpos_beat/data/models/data/country_list_data.dart';
 import 'package:mpos_beat/data/models/data/state_list_data.dart';
+import 'package:mpos_beat/data/models/integration_model.dart';
 import 'package:mpos_beat/data/models/state_list_response.dart';
 import 'package:mpos_beat/domain/repositories/i_company_creation_facad.dart';
 import 'package:mpos_beat/domain/request/company_creation_params.dart';
-import 'package:mpos_beat/domain/request/create_company_voucher_request.dart';
+import 'package:mpos_beat/domain/request/integration_request.dart';
 import 'package:mpos_beat/presentation/views/godown_wise_screen/godown_wise_screen.dart';
 import 'package:mpos_beat/presentation/views/route_wise_screen/route_wise_screen.dart';
 import 'package:path/path.dart';
@@ -296,100 +296,105 @@ class CompanyCreationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  //get companyvuchertypelist
-  List<CompanyVoucherTypesListData> _voucherTypes = [];
-  List<CompanyVoucherTypesListData> get voucherTypes => _voucherTypes;
-  CompanyvouchertypeslistDtos? _companyvouchertypeslistDtos;
-  CompanyvouchertypeslistDtos? get companyvouchertypeslistDtos =>
-      _companyvouchertypeslistDtos;
-  Future<CompanyvouchertypeslistDtos?> fetchVoucherTypes(
-    BuildContext context,
-    int companyID,
-  ) async {
-    _setLoading(true);
+  ///Integration Type.......
+  IntegrationSerialNo _integrationSerialNo = IntegrationSerialNo("");
+  IntegrationSerialNo get integrationSerialNo => _integrationSerialNo;
 
-    final result = await iCompanyCreationFacad.getVoucherType(companyID);
-    result.fold(
-      (failure) {
-        _errorMessage = failure.errorMsg.toString();
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
-        Logger.logError("Fetch Voucher Types failed: $_errorMessage");
-      },
+  IntegrationDtos? _integrationDtos;
+  IntegrationDtos? get integrationDtos => _integrationDtos;
 
-      (response) {
-        if (response.status == 1) {
-          _errorMessage = null;
-          _companyvouchertypeslistDtos = response;
-
-          _voucherTypes = response.companyVoucherTypesList;
-          // Logger.logSuccess(
-          //   "Voucher Types fetched successfully: $_voucherTypes",
-          // );
-
-          notifyListeners();
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //   const SnackBar(content: Text("Voucher Types fetched successfully")),
-          // );
-        } else {
-          _errorMessage = "Unexpected status: ${response.status}";
-        }
-      },
-    );
-
-    _setLoading(false);
-    notifyListeners();
-    return _companyvouchertypeslistDtos;
-  }
-
-  void _setLoading(bool value) {
-    _isLoading = value;
+  AutovalidateMode integrationSerialNoAutovalidateMode =
+      AutovalidateMode.disabled;
+  void updateIntegrationSerialNo(String input) {
+    _integrationSerialNo = IntegrationSerialNo(input);
     notifyListeners();
   }
 
-  //CREATE COMPANY VOUCHER TYPE
-  Future<CreateCompanyvochertypeDtos?> createCompanyVoucherTypes(
+  bool validateIntegrationSerialNo() {
+    return _integrationSerialNo.isValid();
+  }
+
+  String? selectedIntegrationType;
+  String? integrationSerialNoController;
+  bool stockInCloud = false;
+
+  void setIntegrationType(String title) {
+    selectedIntegrationType = title;
+    notifyListeners();
+  }
+
+  void setIntegrationSerialNo(String serial) {
+    integrationSerialNoController = serial;
+    notifyListeners();
+  }
+
+  void setStockInCloud(bool value) {
+    stockInCloud = value;
+    notifyListeners();
+  }
+
+  Future<IntegrationDtos?> integration(
     BuildContext context, {
-    required CreateCompanyVocherParams request,
+    required IntegrationParams params,
+    VoidCallback? onSuccess,
   }) async {
-    _setLoading(true);
+    final isValid = validateIntegrationSerialNo();
+    if (!isValid) {
+      integrationSerialNoAutovalidateMode = AutovalidateMode.always;
+      notifyListeners();
+      return null;
+    }
 
-    final result = await iCompanyCreationFacad.createCompanyVoucher(
-      BaseParams(data: request),
+    final result = await iCompanyCreationFacad.integartion(
+      BaseParams(data: params),
     );
-    CreateCompanyvochertypeDtos? createdVouchers;
+
     result.fold(
       (failure) {
         _errorMessage = failure.errorMsg.toString();
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
-        Logger.logError("Create Voucher Types failed: $_errorMessage");
+        Logger.logError("Integration Type failed : $_errorMessage");
+        _setLoading(false);
+        notifyListeners();
       },
-
       (response) {
+        Logger.logSuccess("Integration Type success : ${response.toJson()}");
+        Logger.logSuccess("Status : ${response.status}");
+
+        _setLoading(false);
+        notifyListeners();
+
         if (response.status == 1) {
-          _errorMessage = null;
-          createdVouchers = response;
-
-          Logger.logSuccess(
-            "Voucher Types created successfully: $createdVouchers",
-          );
-
-          notifyListeners();
+          _integrationDtos = response;
+          markStageCompleted(2);
+          onSuccess?.call();
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Voucher Types created successfully")),
+            SnackBar(
+              content: Text(response.message, textAlign: TextAlign.center),
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            ),
           );
         } else {
-          _errorMessage = "Unexpected status: ${response.status}";
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(response.message, textAlign: TextAlign.center),
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            ),
+          );
         }
       },
     );
-
-    _setLoading(false);
-    notifyListeners();
-    return createdVouchers;
+    return _integrationDtos;
   }
 
   // ======================================================================
@@ -633,20 +638,60 @@ class CompanyCreationProvider extends ChangeNotifier {
     _saveRoutes();
     notifyListeners();
   }
+
+  //get companyvuchertypelist
+  List<CompanyVoucherTypesListData> _voucherTypes = [];
+  List<CompanyVoucherTypesListData> get voucherTypes => _voucherTypes;
+  CompanyvouchertypeslistDtos? _companyvouchertypeslistDtos;
+  CompanyvouchertypeslistDtos? get companyvouchertypeslistDtos =>
+      _companyvouchertypeslistDtos;
+  Future<CompanyvouchertypeslistDtos?> fetchVoucherTypes(
+    BuildContext context,
+    int companyID,
+  ) async {
+    _setLoading(true);
+
+    final result = await iCompanyCreationFacad.getVoucherType(companyID);
+    result.fold(
+      (failure) {
+        _errorMessage = failure.errorMsg.toString();
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
+        Logger.logError("Fetch Voucher Types failed: $_errorMessage");
+      },
+
+      (response) {
+        if (response.status == 1) {
+          _errorMessage = null;
+          _companyvouchertypeslistDtos = response;
+
+          _voucherTypes = response.companyVoucherTypesList;
+          // Logger.logSuccess(
+          //   "Voucher Types fetched successfully: $_voucherTypes",
+          // );
+
+          notifyListeners();
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   const SnackBar(content: Text("Voucher Types fetched successfully")),
+          // );
+        } else {
+          _errorMessage = "Unexpected status: ${response.status}";
+        }
+      },
+    );
+
+    _setLoading(false);
+    notifyListeners();
+    return _companyvouchertypeslistDtos;
+  }
+
+  void _setLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
 
 
   // final Map<String, bool> _voucherStates = {

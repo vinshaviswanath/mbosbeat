@@ -7,10 +7,12 @@ class Urls {
   static const String resetPassword = "/api/Registration/ResetPassword";
   static const String login = "/auth/login";
   static const String companyCreation = '/api/Company/Create';
- static const String getCompanyvouchertypeList = '/api/CompanyVoucherTypes/GetAll?CompanyID=';
+  static const String getCompanyvouchertypeList =
+      '/api/CompanyVoucherTypes/GetAll?CompanyID=';
 
   static const String createCompanyVouchertype =
       '/api/CompanyVoucherTypes/Create';
- static const String countryList = '/api/Country/GetAll';
+  static const String countryList = '/api/Country/GetAll';
   static const String stateList = "/api/State/GetAll?CountryID=";
+  static const String integrationType = "/api/CompanyIntegration/Create";
 }

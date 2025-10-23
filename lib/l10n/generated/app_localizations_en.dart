@@ -984,7 +984,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Lorem ipsum dolor sitamet, consectetur adipiscing elitrae sem laoret libereou luctus facilisis. Maecen tortorx.';
 
   @override
-  String get integration_type_tally => 'MPOS Retail';
+  String get integration_type_tally => 'Tally';
+
+  @override
+  String get integration_type_mpos_retail => 'MPOS Retail';
 
   @override
   String get integration_type_finish => 'Finish';

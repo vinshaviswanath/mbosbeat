@@ -321,7 +321,7 @@
     "integration_type_statnd_alone": "Stand Alone",
     "integration_type_statnd_alone_description": "Lorem ipsum dolor sitamet, consectetur adipiscing elitrae sem laoret libereou luctus facilisis. Maecen tortorx.",
     "integration_type_tally": "Tally",
-    "integration_type_tally": "MPOS Retail",
+    "integration_type_mpos_retail": "MPOS Retail",
     "integration_type_finish": "Finish",
     "voucher_card_tally_serial_no": "Tally Serial No.",
     "voucher_card_tally_enter_serial_no": "Enter Serial Number",
