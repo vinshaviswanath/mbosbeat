@@ -14,6 +14,16 @@ import 'package:http/http.dart' as _i519;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
+import '../../data/data_sources/company_creation/company_info.dart'
+    as _i158;
+import '../../data/data_sources/company_creation/country_list.dart'
+    as _i821;
+import '../../data/data_sources/company_creation/create_company_voucherType.dart'
+    as _i453;
+import '../../data/data_sources/company_creation/get_company_voucherType.dart'
+    as _i95;
+import '../../data/data_sources/company_creation/state_list.dart'
+    as _i94;
 import '../../data/data_sources/authentication/company_registeration/company_registeration.dart'
     as _i70;
 import '../../data/data_sources/authentication/login/login_impl.dart' as _i526;

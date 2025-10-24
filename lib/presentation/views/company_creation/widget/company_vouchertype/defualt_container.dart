@@ -1,6 +1,8 @@
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/data/company_voucher_data.dart';
+import 'package:mpos_beat/domain/request/create_company_voucher_request.dart';
 import 'package:mpos_beat/l10n/generated/app_localizations.dart';
+import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/presentation/views/admin_home/widget/common_snackbar.dart';
 
 class DefaultContainer extends StatefulWidget {
@@ -8,12 +10,14 @@ class DefaultContainer extends StatefulWidget {
   final int isCheckOn;
   final int isToggleOn;
   final CompanyVoucherTypesListData? companydata;
+  final void Function()? onTap;
   const DefaultContainer({
     super.key,
     required this.companyId,
     required this.isCheckOn,
     required this.isToggleOn,
     required this.companydata,
+    this.onTap,
   });
 
   @override
@@ -28,6 +32,7 @@ class _DefaultContainerState extends State<DefaultContainer> {
   TextEditingController defaultdeclarationController = TextEditingController();
   bool _isInputValid = true;
   bool _isPrefixValid = true;
+  bool _isSuffixValid = true;
   String _errorText = "";
   //String _errorText2 = "";
 
@@ -60,13 +65,28 @@ class _DefaultContainerState extends State<DefaultContainer> {
       });
 
       return;
-    } else {
-      setState(() {
-        _isPrefixValid = true;
-        _errorText = "";
-      });
     }
 
+    // Check if suffix is empty
+    if (defaultsuffixcontroller.text.isEmpty) {
+      setState(() {
+        _isSuffixValid = false;
+        _errorText = "Suffix cannot be empty!";
+      });
+
+      Future.delayed(const Duration(seconds: 2), () {
+        setState(() {
+          _isSuffixValid = true;
+          _errorText = "";
+        });
+      });
+      return;
+    }
+    setState(() {
+      _isPrefixValid = true;
+      _isSuffixValid = true;
+      _errorText = "";
+    });
     // Get the width value
     String widthValue = defaultwidthcontroller.text;
 
@@ -141,6 +161,10 @@ class _DefaultContainerState extends State<DefaultContainer> {
   @override
   Widget build(BuildContext context) {
     final local = AppLocalizations.of(context);
+    final provider = Provider.of<CompanyCreationProvider>(
+      context,
+      listen: false,
+    );
 
     return Container(
       decoration: BoxDecoration(
@@ -334,7 +358,7 @@ class _DefaultContainerState extends State<DefaultContainer> {
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(18),
                                       borderSide: BorderSide(
-                                        color: _isInputValid
+                                        color: _isInputValid && _isSuffixValid
                                             ? Theme.of(
                                                 context,
                                               ).colorScheme.primaryFixed
@@ -344,7 +368,7 @@ class _DefaultContainerState extends State<DefaultContainer> {
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(18),
                                       borderSide: BorderSide(
-                                        color: _isInputValid
+                                        color: _isInputValid && _isSuffixValid
                                             ? Theme.of(
                                                 context,
                                               ).colorScheme.primaryFixed
@@ -354,7 +378,7 @@ class _DefaultContainerState extends State<DefaultContainer> {
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(18),
                                       borderSide: BorderSide(
-                                        color: _isInputValid
+                                        color: _isInputValid && _isSuffixValid
                                             ? Theme.of(
                                                 context,
                                               ).colorScheme.primaryFixed
@@ -388,7 +412,7 @@ class _DefaultContainerState extends State<DefaultContainer> {
                     //     ],
                     //   ),
                     // ),
-                    !_isInputValid || !_isPrefixValid
+                    !_isInputValid || !_isPrefixValid || !_isSuffixValid
                         // !_isInputValid
                         ? Center(
                             child: Text(
@@ -446,6 +470,7 @@ class _DefaultContainerState extends State<DefaultContainer> {
                     Center(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
+                          backgroundColor: ColorResources.indigoBlue,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -455,57 +480,47 @@ class _DefaultContainerState extends State<DefaultContainer> {
                           ),
                         ),
                         onPressed: () async {
-                          // if (_formKey.currentState!.validate()) {
-                          //                           _validateInput();
-                          //                           if (_isInputValid && _isPrefixValid) {
-                          //                             final createcompanyvoucherProvider =
-                          //                                 Provider.of<CreateCompanyProvider>(context,
-                          //                                     listen: false);
-
-                          //                             CreateCompanyvochertypeDtos? response =
-                          //                                 await createcompanyvoucherProvider
-                          //                                     .createcompanyvoucher(CreateCompanyVocherRequest(
-                          //                                         id: widget.companydata!.id,
-                          //                                         companyid: widget.companyId,
-                          //                                         hasB2B: widget.isToggleOn,
-                          //                                         B2Bprefix:
-                          //                                             defaultprefixcontroller.text,
-                          //                                         B2Bsuffix:
-                          //                                             defaultsuffixcontroller.text,
-                          //                                         B2Bwidth: int.tryParse(
-                          //                                                 defaultwidthcontroller
-                          //                                                     .text) ??
-                          //                                             0,
-                          //                                         B2Bdeclaration:
-                          //                                             defaultdeclarationController
-                          //                                                 .text,
-                          //                                         B2Cprefix:
-                          //                                             widget.companydata!.b2CPrefix,
-                          //                                         B2Csuffix:
-                          //                                             widget.companydata!.b2CSuffix,
-                          //                                         B2Cwidth:
-                          //                                             widget.companydata!.b2CWidth,
-                          //                                         B2Cdeclaration: widget
-                          //                                             .companydata!.b2CDeclaration,
-                          //                                         isenabled: widget.isCheckOn));
-
-                          //                             if (response != null && response.status == 1) {
-                          //                               dataCollecting();
-                          //                               context.pop();
-                          //                               CommonSnackBar.show(context,
-                          //                                   message: createcompanyvoucherProvider
-                          //                                           .serverMessage ??
-                          //                                       "");
-                          //                             } else {
-                          //                               CommonSnackBar.show(context,
-                          //                                   message: createcompanyvoucherProvider
-                          //                                           .serverMessage ??
-                          //                                       "");
-                          //                             }
-                          //                           }
-                          //                         }
+                          if (_formKey.currentState!.validate()) {
+                            _validateInput();
+                            if (_isInputValid &&
+                                _isPrefixValid &&
+                                _isSuffixValid) {
+                              provider.createCompanyVoucherTypes(
+                                onSuccess: widget.onTap,
+                                context,
+                                request: CreateCompanyVocherParams(
+                                  id: widget.companydata!.id,
+                                  companyid: 1302,
+                                  hasB2B: widget.isToggleOn,
+                                  b2Bprefix: defaultprefixcontroller.text,
+                                  b2Bsuffix: defaultsuffixcontroller.text,
+                                  b2Bwidth:
+                                      int.tryParse(
+                                        defaultwidthcontroller.text,
+                                      ) ??
+                                      0,
+                                  b2Bdeclaration:
+                                      defaultdeclarationController.text,
+                                  b2Cprefix: widget.companydata!.b2CPrefix,
+                                  b2Csuffix: defaultsuffixcontroller.text,
+                                  b2Cwidth:
+                                      int.tryParse(
+                                        defaultwidthcontroller.text,
+                                      ) ??
+                                      0,
+                                  b2Cdeclaration:
+                                      defaultdeclarationController.text,
+                                  isenabled: widget.isCheckOn,
+                                ),
+                              );
+                            }
+                          }
+                          dataCollecting();
                         },
-                        child: Text('Save', style: TextStyle(fontSize: 14)),
+                        child: Text(
+                          'Save',
+                          style: TextStyle(fontSize: 14, color: Colors.white),
+                        ),
                       ),
                     ),
                   ],

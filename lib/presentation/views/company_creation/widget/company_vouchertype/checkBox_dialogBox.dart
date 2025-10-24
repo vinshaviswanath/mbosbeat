@@ -1,18 +1,22 @@
-
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/domain/request/create_company_voucher_request.dart';
 import 'package:mpos_beat/l10n/generated/app_localizations.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 
 class CheckBoxDialogBox extends StatefulWidget {
   final int companyId;
   final int isCheckOn;
-  // final int isToggleOn;
+  final int isToggleOn;
   final int id;
-  CheckBoxDialogBox(
-      {required this.companyId,
-      required this.isCheckOn,
-      // required this.isToggleOn,
-      required this.id});
+  final void Function()? onTap;
+  CheckBoxDialogBox({
+    required this.companyId,
+    required this.isCheckOn,
+    required this.isToggleOn,
+
+    required this.id,
+    this.onTap,
+  });
 
   @override
   State<CheckBoxDialogBox> createState() => _CheckBoxDialogBoxState();
@@ -35,14 +39,17 @@ class _CheckBoxDialogBoxState extends State<CheckBoxDialogBox> {
   }
 
   void fetchCompanyVoucherList() {
-
-  final provider = context.read<CompanyCreationProvider>();
-      provider.fetchVoucherTypes(context, 1302);
+    final provider = context.read<CompanyCreationProvider>();
+    provider.fetchVoucherTypes(context, 1302);
   }
 
   @override
   Widget build(BuildContext context) {
     final local = AppLocalizations.of(context);
+    final provider = Provider.of<CompanyCreationProvider>(
+      context,
+      listen: false,
+    );
     return AlertDialog(
       backgroundColor: Theme.of(context).colorScheme.onPrimary,
       content: Container(
@@ -53,33 +60,52 @@ class _CheckBoxDialogBoxState extends State<CheckBoxDialogBox> {
             Text(
               "Confirmation",
               style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
+                color: ColorResources.indigoBlue,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.010),
             Text(
               "Are you sure you want to untick this checkbox?",
               style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                    color:Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
+                color: ColorResources.indigoBlue,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.030),
             Row(
               children: [
                 ElevatedButton(
                   onPressed: () async {
-                    
+                    provider.createCompanyVoucherTypes(
+                      onSuccess: widget.onTap,
+                      context,
+                      request: CreateCompanyVocherParams(
+                        id: widget.id,
+                        companyid: 1302,
+                        hasB2B: 0,
+                        b2Bprefix: "",
+                        b2Bsuffix: "",
+                        b2Bwidth: 0,
+                        b2Bdeclaration: "",
+                        b2Cprefix: "",
+                        b2Csuffix: "",
+                        b2Cwidth: 0,
+                        b2Cdeclaration: "",
+                        isenabled: 0,
+                      ),
+                    );
+                    context.pop(false);
                   },
                   child: Text(
                     "Yes",
                     style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   style: ElevatedButton.styleFrom(
+                    backgroundColor: ColorResources.indigoBlue,
                     minimumSize: Size(
                       MediaQuery.of(context).size.width * 0.30,
                       MediaQuery.of(context).size.height * 0.060,
@@ -94,15 +120,16 @@ class _CheckBoxDialogBoxState extends State<CheckBoxDialogBox> {
                   onPressed: () {
                     context.pop(false);
                   },
+
                   child: Text(
-                "hello",
+                    "Cancel",
                     style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).colorScheme.secondary,
+                    backgroundColor: ColorResources.indigoBlue,
                     minimumSize: Size(
                       MediaQuery.of(context).size.width * 0.30,
                       MediaQuery.of(context).size.height * 0.060,

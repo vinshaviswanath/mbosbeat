@@ -328,14 +328,20 @@ class CompanyCreationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setStockInCloud(bool value) {
+void setStockInCloud(bool value) {
     stockInCloud = value;
     notifyListeners();
   }
 
   Future<IntegrationDtos?> integration(
-    BuildContext context, {
-    required IntegrationParams params,
+
+  //CREATE COMPANY VOUCHER TYPE
+  CreateCompanyvochertypeDtos? _createdVouchers;
+  CreateCompanyvochertypeDtos? get createdVouchers => _createdVouchers;
+
+  Future<CreateCompanyvochertypeDtos?> createCompanyVoucherTypes(
+ BuildContext context, {
+  required IntegrationParams params,
     VoidCallback? onSuccess,
   }) async {
     final isValid = validateIntegrationSerialNo();
@@ -347,7 +353,14 @@ class CompanyCreationProvider extends ChangeNotifier {
 
     final result = await iCompanyCreationFacad.integartion(
       BaseParams(data: params),
-    );
+ required CreateCompanyVocherParams request,
+    VoidCallback? onSuccess,
+  }) async {
+    _setLoading(true);
+
+    final result = await iCompanyCreationFacad.createCompanyVoucher(
+      BaseParams(data: request),
+);
 
     result.fold(
       (failure) {
@@ -355,19 +368,27 @@ class CompanyCreationProvider extends ChangeNotifier {
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
-        Logger.logError("Integration Type failed : $_errorMessage");
+Logger.logError("Integration Type failed : $_errorMessage");
         _setLoading(false);
         notifyListeners();
-      },
+ Logger.logError("Create Voucher Types failed: $_errorMessage");
+        _setLoading(false);
+        notifyListeners();
+},
       (response) {
-        Logger.logSuccess("Integration Type success : ${response.toJson()}");
+Logger.logSuccess("Integration Type success : ${response.toJson()}");
         Logger.logSuccess("Status : ${response.status}");
 
         _setLoading(false);
         notifyListeners();
 
-        if (response.status == 1) {
-          _integrationDtos = response;
+   Logger.logSuccess("Comapany Info success : ${response.toJson()}");
+        Logger.logSuccess("Status : ${response.status}");
+
+        _setLoading(false);
+        notifyListeners();
+ if (response.status == 1) {
+ _integrationDtos = response;
           markStageCompleted(2);
           onSuccess?.call();
           ScaffoldMessenger.of(context).showSnackBar(
@@ -381,7 +402,11 @@ class CompanyCreationProvider extends ChangeNotifier {
             ),
           );
         } else {
-          ScaffoldMessenger.of(context).showSnackBar(
+ _createdVouchers = response;
+          onSuccess?.call();
+          context.pop();
+        } else {
+  ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(response.message, textAlign: TextAlign.center),
               behavior: SnackBarBehavior.floating,
@@ -394,8 +419,9 @@ class CompanyCreationProvider extends ChangeNotifier {
         }
       },
     );
-    return _integrationDtos;
-  }
+return _integrationDtos;
+  return _createdVouchers;
+}
 
   // ======================================================================
   //                           VEHICLE MANAGEMENT (DDD)

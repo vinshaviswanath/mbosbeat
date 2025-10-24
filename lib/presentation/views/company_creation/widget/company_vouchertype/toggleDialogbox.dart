@@ -1,4 +1,5 @@
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/domain/request/create_company_voucher_request.dart';
 import 'package:mpos_beat/l10n/generated/app_localizations.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/presentation/views/admin_home/widget/common_snackbar.dart';
@@ -7,13 +8,14 @@ class ToggleDialogBox extends StatefulWidget {
   final int companyId;
   final int isCheckOn;
   final int isToggleOn;
-
+  final void Function()? onTap;
   final int id;
   ToggleDialogBox({
     required this.companyId,
     required this.isCheckOn,
     required this.isToggleOn,
     required this.id,
+    this.onTap,
   });
 
   @override
@@ -41,6 +43,11 @@ class _ToggleDialogBoxState extends State<ToggleDialogBox> {
   @override
   Widget build(BuildContext context) {
     final local = AppLocalizations.of(context);
+    final provider = Provider.of<CompanyCreationProvider>(
+      context,
+      listen: false,
+    );
+
     return AlertDialog(
       backgroundColor: Theme.of(context).colorScheme.onPrimary,
       content: Container(
@@ -69,36 +76,24 @@ class _ToggleDialogBoxState extends State<ToggleDialogBox> {
                 ElevatedButton(
                   onPressed: () async {
                     context.pop(true);
-                    // final createcompanyvoucherProvider =
-                    //     Provider.of<CreateCompanyProvider>(context,
-                    //         listen: false);
-
-                    // CreateCompanyvochertypeDtos? response =
-                    //     await createcompanyvoucherProvider.createcompanyvoucher(
-                    //         CreateCompanyVocherRequest(
-                    //             companyid: widget.companyId,
-                    //             hasB2B: 0,
-                    //             id: widget.id,
-                    //             B2Bprefix: "",
-                    //             B2Bsuffix: "",
-                    //             B2Bwidth: 0,
-                    //             B2Bdeclaration: "",
-                    //             B2Cprefix: "",
-                    //             B2Csuffix: "",
-                    //             B2Cwidth: 0,
-                    //             B2Cdeclaration: "",
-                    //             isenabled: 0));
-
-                    // if (response != null && response.status == 1) {
-                    //   CommonSnackBar.show(context,
-                    //       message:
-                    //           createcompanyvoucherProvider.serverMessage ?? "");
-                    //   fetchCompanyVoucherList();
-                    // } else {
-                    //   CommonSnackBar.show(context,
-                    //       message:
-                    //           createcompanyvoucherProvider.serverMessage ?? "");
-                    // }
+                    provider.createCompanyVoucherTypes(
+                      onSuccess: widget.onTap,
+                      context,
+                      request: CreateCompanyVocherParams(
+                        id: widget.id,
+                        companyid: 1302,
+                        hasB2B: widget.isToggleOn,
+                        b2Bprefix: "",
+                        b2Bsuffix: "",
+                        b2Bwidth: 0,
+                        b2Bdeclaration: "",
+                        b2Cprefix: "",
+                        b2Csuffix: "",
+                        b2Cwidth: 0,
+                        b2Cdeclaration: "",
+                        isenabled: 0,
+                      ),
+                    );
                   },
                   child: Text(
                     "Yes",
@@ -108,6 +103,7 @@ class _ToggleDialogBoxState extends State<ToggleDialogBox> {
                     ),
                   ),
                   style: ElevatedButton.styleFrom(
+                    backgroundColor: ColorResources.indigoBlue,
                     minimumSize: Size(
                       MediaQuery.of(context).size.width * 0.30,
                       MediaQuery.of(context).size.height * 0.060,
@@ -130,7 +126,7 @@ class _ToggleDialogBoxState extends State<ToggleDialogBox> {
                     ),
                   ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).colorScheme.secondary,
+                    backgroundColor: ColorResources.indigoBlue,
                     minimumSize: Size(
                       MediaQuery.of(context).size.width * 0.30,
                       MediaQuery.of(context).size.height * 0.060,
