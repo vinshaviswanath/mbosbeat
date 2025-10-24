@@ -514,6 +514,7 @@ class _DefaultContainerState extends State<DefaultContainer> {
                                 ),
                               );
                             }
+                            context.pop();
                           }
                           dataCollecting();
                         },
