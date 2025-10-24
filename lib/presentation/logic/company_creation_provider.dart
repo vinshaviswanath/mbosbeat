@@ -4,6 +4,7 @@ import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/failures/value_object/value_object.dart';
 import 'package:mpos_beat/core/failures/value_object/value_validator.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/models/create_company_voucher_model.dart';
 import 'package:mpos_beat/data/models/get_company_voucher_model.dart';
 import 'package:mpos_beat/data/models/data/company_voucher_data.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
@@ -16,6 +17,7 @@ import 'package:mpos_beat/data/models/integration_model.dart';
 import 'package:mpos_beat/data/models/state_list_response.dart';
 import 'package:mpos_beat/domain/repositories/i_company_creation_facad.dart';
 import 'package:mpos_beat/domain/request/company_creation_params.dart';
+import 'package:mpos_beat/domain/request/create_company_voucher_request.dart';
 import 'package:mpos_beat/domain/request/integration_request.dart';
 import 'package:mpos_beat/presentation/views/godown_wise_screen/godown_wise_screen.dart';
 import 'package:mpos_beat/presentation/views/route_wise_screen/route_wise_screen.dart';
@@ -328,20 +330,14 @@ class CompanyCreationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-void setStockInCloud(bool value) {
+  void setStockInCloud(bool value) {
     stockInCloud = value;
     notifyListeners();
   }
 
   Future<IntegrationDtos?> integration(
-
-  //CREATE COMPANY VOUCHER TYPE
-  CreateCompanyvochertypeDtos? _createdVouchers;
-  CreateCompanyvochertypeDtos? get createdVouchers => _createdVouchers;
-
-  Future<CreateCompanyvochertypeDtos?> createCompanyVoucherTypes(
- BuildContext context, {
-  required IntegrationParams params,
+    BuildContext context, {
+    required IntegrationParams params,
     VoidCallback? onSuccess,
   }) async {
     final isValid = validateIntegrationSerialNo();
@@ -353,14 +349,7 @@ void setStockInCloud(bool value) {
 
     final result = await iCompanyCreationFacad.integartion(
       BaseParams(data: params),
- required CreateCompanyVocherParams request,
-    VoidCallback? onSuccess,
-  }) async {
-    _setLoading(true);
-
-    final result = await iCompanyCreationFacad.createCompanyVoucher(
-      BaseParams(data: request),
-);
+    );
 
     result.fold(
       (failure) {
@@ -368,27 +357,81 @@ void setStockInCloud(bool value) {
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
-Logger.logError("Integration Type failed : $_errorMessage");
+        Logger.logError("Integration Type failed : $_errorMessage");
         _setLoading(false);
         notifyListeners();
- Logger.logError("Create Voucher Types failed: $_errorMessage");
-        _setLoading(false);
-        notifyListeners();
-},
+      },
       (response) {
-Logger.logSuccess("Integration Type success : ${response.toJson()}");
+        Logger.logSuccess("Integration Type success : ${response.toJson()}");
         Logger.logSuccess("Status : ${response.status}");
-
         _setLoading(false);
         notifyListeners();
 
-   Logger.logSuccess("Comapany Info success : ${response.toJson()}");
-        Logger.logSuccess("Status : ${response.status}");
+        if (response.status == 1) {
+          _integrationDtos = response;
+          markStageCompleted(2);
+          context.pushNamed(AppRouterConst.adminDashboard);
+          onSuccess?.call();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(response.message, textAlign: TextAlign.center),
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            ),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(response.message, textAlign: TextAlign.center),
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            ),
+          );
+        }
+      },
+    );
+    return _integrationDtos;
+  }
 
+  //CREATE COMPANY VOUCHER TYPE
+  CreateCompanyvochertypeDtos? _createdVouchers;
+  CreateCompanyvochertypeDtos? get createdVouchers => _createdVouchers;
+
+  Future<CreateCompanyvochertypeDtos?> createCompanyVoucherTypes(
+    BuildContext context, {
+    required CreateCompanyVocherParams request,
+    VoidCallback? onSuccess,
+  }) async {
+    _setLoading(true);
+
+    final result = await iCompanyCreationFacad.createCompanyVoucher(
+      BaseParams(data: request),
+    );
+
+    result.fold(
+      (failure) {
+        _errorMessage = failure.errorMsg.toString();
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
+        Logger.logError("Create Voucher Types failed: $_errorMessage");
         _setLoading(false);
         notifyListeners();
- if (response.status == 1) {
- _integrationDtos = response;
+      },
+      (response) {
+        Logger.logSuccess("Create Voucher success : ${response.toJson()}");
+        Logger.logSuccess("Status : ${response.status}");
+        _setLoading(false);
+        notifyListeners();
+
+        if (response.status == 1) {
+          _createdVouchers = response;
           markStageCompleted(2);
           onSuccess?.call();
           ScaffoldMessenger.of(context).showSnackBar(
@@ -402,11 +445,7 @@ Logger.logSuccess("Integration Type success : ${response.toJson()}");
             ),
           );
         } else {
- _createdVouchers = response;
-          onSuccess?.call();
-          context.pop();
-        } else {
-  ScaffoldMessenger.of(context).showSnackBar(
+          ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(response.message, textAlign: TextAlign.center),
               behavior: SnackBarBehavior.floating,
@@ -419,9 +458,8 @@ Logger.logSuccess("Integration Type success : ${response.toJson()}");
         }
       },
     );
-return _integrationDtos;
-  return _createdVouchers;
-}
+    return _createdVouchers;
+  }
 
   // ======================================================================
   //                           VEHICLE MANAGEMENT (DDD)

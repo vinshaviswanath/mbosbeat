@@ -2,9 +2,6 @@ import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/presentation/views/company_creation/widget/company_info_widget/company_info_widget.dart';
 import 'package:mpos_beat/presentation/views/company_creation/widget/integration_widget/integration_widget.dart';
-import 'package:mpos_beat/presentation/views/company_creation/widget/voucher_type_widget.dart';
-import 'package:mpos_beat/presentation/views/company_creation/widget/company_info_widget.dart';
-import 'package:mpos_beat/presentation/views/company_creation/widget/integration_widget.dart';
 import 'package:mpos_beat/presentation/views/company_creation/widget/company_vouchertype/voucher_type_widget.dart';
 
 class CompanyCreationScreen extends StatefulWidget {

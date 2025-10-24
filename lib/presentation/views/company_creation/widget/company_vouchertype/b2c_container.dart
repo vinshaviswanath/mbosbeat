@@ -418,6 +418,7 @@ class _B2cContainerState extends State<B2cContainer> {
                           isenabled: widget.isCheckOn == 1 ? 1 : 0,
                         ),
                       );
+                      context.pop();
                     }
                     dataCollecting();
                   }

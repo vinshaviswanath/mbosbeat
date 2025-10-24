@@ -71,7 +71,8 @@ class _IntegrationWidgetState extends State<IntegrationWidget> {
                     print('SerialNo: $serialNo');
                     print('StockInCloud: $stockInCloud');
 
-                    final result = provider.integration(
+                    //  final result =
+                    provider.integration(
                       context,
                       onSuccess: widget.onTap,
                       params: IntegrationParams(
@@ -83,9 +84,6 @@ class _IntegrationWidgetState extends State<IntegrationWidget> {
                     );
 
                     // Navigate only if API succeeded
-                    if (result != null) {
-                      context.pushNamed(AppRouterConst.adminDashboard);
-                    }
                   },
                   textStyle: context.textStyle.s16.bold.white.roboto,
                   isborderEnable: false,
