@@ -1,6 +1,8 @@
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/data/company_voucher_data.dart';
+import 'package:mpos_beat/domain/request/create_company_voucher_request.dart';
 import 'package:mpos_beat/l10n/generated/app_localizations.dart';
+import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/presentation/views/admin_home/widget/common_snackbar.dart';
 
 class B2bContainer extends StatefulWidget {
@@ -8,12 +10,14 @@ class B2bContainer extends StatefulWidget {
   final int isCheckOn;
   final int isToggleOn;
   final CompanyVoucherTypesListData? companydata;
+  final void Function()? onTap;
   const B2bContainer({
     super.key,
     required this.companyId,
     required this.isCheckOn,
     required this.isToggleOn,
     required this.companydata,
+    this.onTap,
   });
   @override
   State<B2bContainer> createState() => _B2bContainerState();
@@ -27,6 +31,7 @@ class _B2bContainerState extends State<B2bContainer> {
   TextEditingController b2bdeclarationcontroller = TextEditingController();
   bool _isInputValid = true;
   bool _isPrefixValid = true;
+  bool _isSuffixValid = true;
   String _errorText = "";
   // String _errorText2 = "";
 
@@ -61,12 +66,28 @@ class _B2bContainerState extends State<B2bContainer> {
       });
 
       return;
-    } else {
-      setState(() {
-        _isPrefixValid = true;
-        _errorText = "";
-      });
     }
+
+    // Check if suffix is empty
+    if (b2bsuffixcontroller.text.isEmpty) {
+      setState(() {
+        _isSuffixValid = false;
+        _errorText = "Suffix cannot be empty!";
+      });
+
+      Future.delayed(const Duration(seconds: 2), () {
+        setState(() {
+          _isSuffixValid = true;
+          _errorText = "";
+        });
+      });
+      return;
+    }
+    setState(() {
+      _isPrefixValid = true;
+      _isSuffixValid = true;
+      _errorText = "";
+    });
 
     // Get the width value
     String widthValue = b2bwidthcontroller.text;
@@ -140,6 +161,11 @@ class _B2bContainerState extends State<B2bContainer> {
   @override
   Widget build(BuildContext context) {
     final local = AppLocalizations.of(context);
+    final provider = Provider.of<CompanyCreationProvider>(
+      context,
+      listen: false,
+    );
+
     return Padding(
       padding: const EdgeInsets.only(left: 15),
       child: SingleChildScrollView(
@@ -368,6 +394,7 @@ class _B2bContainerState extends State<B2bContainer> {
             Center(
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                  backgroundColor: ColorResources.indigoBlue,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -376,8 +403,36 @@ class _B2bContainerState extends State<B2bContainer> {
                     MediaQuery.of(context).size.height * 0.060,
                   ),
                 ),
-                onPressed: () async {},
-                child: Text("Save", style: TextStyle(fontSize: 14)),
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    _validateInput();
+                    if (_isInputValid && _isPrefixValid && _isSuffixValid) {
+                      provider.createCompanyVoucherTypes(
+                        onSuccess: widget.onTap,
+                        context,
+                        request: CreateCompanyVocherParams(
+                          id: widget.companydata!.id,
+                          companyid: 1302,
+                          hasB2B: widget.isToggleOn,
+                          b2Bprefix: b2bprefixcontroller.text,
+                          b2Bsuffix: b2bsuffixcontroller.text,
+                          b2Bwidth: int.tryParse(b2bwidthcontroller.text) ?? 0,
+                          b2Bdeclaration: b2bdeclarationcontroller.text,
+                          b2Cprefix: widget.companydata!.b2CPrefix,
+                          b2Csuffix: b2bsuffixcontroller.text,
+                          b2Cwidth: int.tryParse(b2bwidthcontroller.text) ?? 0,
+                          b2Cdeclaration: b2bdeclarationcontroller.text,
+                          isenabled: widget.isCheckOn == 1 ? 1 : 0,
+                        ),
+                      );
+                    }
+                    dataCollecting();
+                  }
+                },
+                child: Text(
+                  "Save",
+                  style: TextStyle(fontSize: 14, color: Colors.white),
+                ),
               ),
             ),
           ],

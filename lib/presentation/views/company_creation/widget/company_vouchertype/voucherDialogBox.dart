@@ -1,10 +1,10 @@
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/data/company_voucher_data.dart';
 import 'package:mpos_beat/l10n/generated/app_localizations.dart';
-import 'package:mpos_beat/presentation/views/company_creation/widget/b2b_container.dart';
-import 'package:mpos_beat/presentation/views/company_creation/widget/b2c_container.dart';
-import 'package:mpos_beat/presentation/views/company_creation/widget/defualt_container.dart';
-import 'package:mpos_beat/presentation/views/company_creation/widget/toggleDialogbox.dart';
+import 'package:mpos_beat/presentation/views/company_creation/widget/company_vouchertype/b2b_container.dart';
+import 'package:mpos_beat/presentation/views/company_creation/widget/company_vouchertype/b2c_container.dart';
+import 'package:mpos_beat/presentation/views/company_creation/widget/company_vouchertype/defualt_container.dart';
+import 'package:mpos_beat/presentation/views/company_creation/widget/company_vouchertype/toggleDialogbox.dart';
 
 class VoucherDialogbox extends StatefulWidget {
   final int id;

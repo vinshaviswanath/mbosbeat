@@ -349,16 +349,18 @@ class CompanyCreationProvider extends ChangeNotifier {
   }
 
   //CREATE COMPANY VOUCHER TYPE
+  CreateCompanyvochertypeDtos? _createdVouchers;
+  CreateCompanyvochertypeDtos? get createdVouchers => _createdVouchers;
   Future<CreateCompanyvochertypeDtos?> createCompanyVoucherTypes(
     BuildContext context, {
     required CreateCompanyVocherParams request,
+    VoidCallback? onSuccess,
   }) async {
     _setLoading(true);
 
     final result = await iCompanyCreationFacad.createCompanyVoucher(
       BaseParams(data: request),
     );
-    CreateCompanyvochertypeDtos? createdVouchers;
     result.fold(
       (failure) {
         _errorMessage = failure.errorMsg.toString();
@@ -366,30 +368,35 @@ class CompanyCreationProvider extends ChangeNotifier {
           context,
         ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
         Logger.logError("Create Voucher Types failed: $_errorMessage");
+        _setLoading(false);
+        notifyListeners();
       },
 
       (response) {
+        Logger.logSuccess("Comapany Info success : ${response.toJson()}");
+        Logger.logSuccess("Status : ${response.status}");
+
+        _setLoading(false);
+        notifyListeners();
         if (response.status == 1) {
-          _errorMessage = null;
-          createdVouchers = response;
-
-          Logger.logSuccess(
-            "Voucher Types created successfully: $createdVouchers",
-          );
-
-          notifyListeners();
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Voucher Types created successfully")),
-          );
+          _createdVouchers = response;
+          onSuccess?.call();
+          context.pop();
         } else {
-          _errorMessage = "Unexpected status: ${response.status}";
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(response.message, textAlign: TextAlign.center),
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            ),
+          );
         }
       },
     );
-
-    _setLoading(false);
-    notifyListeners();
-    return createdVouchers;
+    return _createdVouchers;
   }
 
   // ======================================================================

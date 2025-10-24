@@ -1,8 +1,6 @@
 import 'package:mpos_beat/core/utils/imports.dart';
-import 'package:mpos_beat/l10n/generated/app_localizations.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
-import 'package:mpos_beat/presentation/views/company_creation/widget/voucherDialogBox.dart';
-import 'package:mpos_beat/presentation/views/company_creation/widget/vouchertypeTile.dart';
+import 'package:mpos_beat/presentation/views/company_creation/widget/company_vouchertype/vouchertypeTile.dart';
 
 class VoucherTypeWidget extends StatefulWidget {
   const VoucherTypeWidget({super.key, this.onTap});
@@ -80,7 +78,6 @@ class _VoucherTypeWidgetState extends State<VoucherTypeWidget> {
                     vertical: 8,
                   ),
                   child: VoucherTypeTile(
-                    value: isCheckOnInt == 1,
                     voucher: voucher,
                     isCheckOnInt: isCheckOnInt,
                     isToggleOnInt: isToggleOnInt,
@@ -88,15 +85,11 @@ class _VoucherTypeWidgetState extends State<VoucherTypeWidget> {
 
                     onChanged: (newValue) {
                       setState(() {
-                        final newVal = newValue == true ? 1 : 0;
-                        checkStates[voucher.id] = newVal;
-                        voucher.isEnabled = newVal;
+                        checkStates[voucher.id] = newValue;
                       });
                     },
                   ),
-                
                 );
-                
               }, childCount: voucherList.length),
             );
           },
@@ -123,48 +116,3 @@ class _VoucherTypeWidgetState extends State<VoucherTypeWidget> {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-  //  final hasAnyValue =
-  //                     widget.voucher.b2BPrefix.isNotEmpty ||
-  //                     widget.voucher.b2BSuffix.isNotEmpty ||
-  //                     widget.voucher.b2CPrefix.isNotEmpty ||
-  //                     widget.voucher.b2CSuffix.isNotEmpty;
-  //                 if (value == false && hasAnyValue) {
-  //                   // Show the dialog box if any prefix or suffix has a value
-  //                   final result = await showDialog(
-  //                     context: context,
-  //                     builder: (BuildContext context) {
-  //                       return CheckBoxDialogBox(
-  //                         companyId: 1302,
-  //                         isCheckOn: widget.isCheckOnInt,
-  //                         //   isToggleOn: isToggleOnInt,
-  //                         id: widget.voucher.id,
-  //                       );
-  //                     },
-  //                   );
-  //                   if (result == true) {
-  //                     // User clicked "Yes" in the dialog
-  //                     setState(() {
-  //                       checkStates[widget.voucher.id] =
-  //                           0; // Untick the checkbox
-  //                     });
-  //                   } else {
-  //                     setState(() {
-  //                       checkStates[widget.voucher.id] = 1; // Keep it checked
-  //                     });
-  //                   }
-  //                 } else {
-  //                   // No valid prefix/suffix, simply close without showing dialog
-  //                   setState(() {
-  //                     checkStates[widget.voucher.id] = value == true ? 1 : 0;
-  //                   });
-  //                 }
