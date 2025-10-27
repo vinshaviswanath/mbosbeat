@@ -7,6 +7,7 @@ class Urls {
   static const String resendOtp = "/api/RegistrationOTP/Generate";
   static const String resetPassword = "/api/Registration/ResetPassword";
   static const String login = "/auth/login";
+  static const String loginByToken = "/auth/loginToken";
   static const String addDesignation = "/api/UserDesignation/Create";
   static const String getUserDesignationList = "/api/UserDesignation/GetAll";
   static const String activateDesignation1 =

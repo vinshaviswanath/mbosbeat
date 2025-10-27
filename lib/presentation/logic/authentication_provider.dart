@@ -558,9 +558,8 @@ class AuthFormProvider with ChangeNotifier {
     );
 
     _setLoading(true);
-    
+
     final result = await iAuthenticationFacad.companyRegistration(
-      
       BaseParams(
         data: CompanyRegistrationParams(
           companyName: companyName.getValue,
@@ -611,7 +610,9 @@ class AuthFormProvider with ChangeNotifier {
             companyName.getValue ?? '',
           ).then((_) {
             resetSignUpForm();
-            context.pushNamed(AppRouterConst.login);
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              context.pushNamed(AppRouterConst.login);
+            });
           });
         }
 

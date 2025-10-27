@@ -17,6 +17,8 @@ import 'package:shared_preferences/shared_preferences.dart' as _i460;
 import '../../data/data_sources/authentication/company_registeration/company_registeration.dart'
     as _i70;
 import '../../data/data_sources/authentication/login/login_impl.dart' as _i526;
+import '../../data/data_sources/authentication/login_by_token/login_by_token.dart'
+    as _i492;
 import '../../data/data_sources/authentication/otp_validation/otp_validation.dart'
     as _i42;
 import '../../data/data_sources/authentication/resend_otp/resend_otp.dart'
@@ -93,11 +95,11 @@ Future<_i174.GetIt> init(
     () => appInjectionModule.pref(),
     preResolve: true,
   );
-  gh.singleton<_i264.AppDb>(() => _i264.AppDb());
   gh.singleton<_i275.EventManager>(
     () => _i275.EventManager(),
     dispose: (i) => i.dispose(),
   );
+  gh.singleton<_i264.AppDb>(() => _i264.AppDb());
   gh.lazySingleton<_i530.RunSafely>(() => _i530.RunSafely());
   gh.lazySingleton<_i519.Client>(() => appInjectionModule.clent);
   gh.lazySingleton<_i816.HttpClient>(
@@ -105,6 +107,14 @@ Future<_i174.GetIt> init(
   );
   gh.lazySingleton<_i526.LoginImpl>(
     () => _i526.LoginImpl(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+      gh<_i264.AppDb>(),
+    ),
+  );
+  gh.lazySingleton<_i492.LoginByToken>(
+    () => _i492.LoginByToken(
       gh<_i816.HttpClient>(),
       gh<_i530.RunSafely>(),
       gh<_i460.SharedPreferences>(),
@@ -358,6 +368,7 @@ Future<_i174.GetIt> init(
       gh<_i816.HttpClient>(),
       gh<_i530.RunSafely>(),
       gh<_i460.SharedPreferences>(),
+      gh<_i492.LoginByToken>(),
     ),
   );
   return getIt;
