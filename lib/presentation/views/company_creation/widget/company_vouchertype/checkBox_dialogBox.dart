@@ -1,4 +1,5 @@
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/models/create_company_voucher_model.dart';
 import 'package:mpos_beat/domain/request/create_company_voucher_request.dart';
 import 'package:mpos_beat/l10n/generated/app_localizations.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
@@ -77,24 +78,31 @@ class _CheckBoxDialogBoxState extends State<CheckBoxDialogBox> {
               children: [
                 ElevatedButton(
                   onPressed: () async {
-                    provider.createCompanyVoucherTypes(
-                      onSuccess: widget.onTap,
-                      context,
-                      request: CreateCompanyVocherParams(
-                        id: widget.id,
-                        companyid: 1302,
-                        hasB2B: 0,
-                        b2Bprefix: "",
-                        b2Bsuffix: "",
-                        b2Bwidth: 0,
-                        b2Bdeclaration: "",
-                        b2Cprefix: "",
-                        b2Csuffix: "",
-                        b2Cwidth: 0,
-                        b2Cdeclaration: "",
-                        isenabled: 0,
-                      ),
-                    );
+                    CreateCompanyvochertypeDtos? response = await provider
+                        .createCompanyVoucherTypes(
+                          onSuccess: widget.onTap,
+                          context,
+                          request: CreateCompanyVocherParams(
+                            id: widget.id,
+                            companyid: 1302,
+                            hasB2B: 0,
+                            b2Bprefix: "",
+                            b2Bsuffix: "",
+                            b2Bwidth: 0,
+                            b2Bdeclaration: "",
+                            b2Cprefix: "",
+                            b2Csuffix: "",
+                            b2Cwidth: 0,
+                            b2Cdeclaration: "",
+                            isenabled: 0,
+                          ),
+                        );
+                    if (response != null && response.status == 1) {
+                      // CommonSnackBar.show(context,
+                      //     message:
+                      //         createcompanyvoucherProvider.serverMessage ?? "");
+                      fetchCompanyVoucherList();
+                    }
                     context.pop(false);
                   },
                   child: Text(

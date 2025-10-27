@@ -25,7 +25,7 @@ class PopoverBody extends StatelessWidget {
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(
-                            horizontal: 16,
+                            horizontal: 12,
                             vertical: 4,
                           ),
                           decoration: BoxDecoration(

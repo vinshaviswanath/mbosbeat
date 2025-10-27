@@ -407,11 +407,11 @@ class _B2cContainerState extends State<B2cContainer> {
                           id: widget.companydata!.id,
                           companyid: 1302,
                           hasB2B: widget.isToggleOn,
-                          b2Bprefix: b2cprefixcontroller.text,
-                          b2Bsuffix: b2csuffixcontroller.text,
-                          b2Bwidth: int.tryParse(b2cwidthcontroller.text) ?? 0,
-                          b2Bdeclaration: b2cdeclarationcontroller.text,
-                          b2Cprefix: widget.companydata!.b2CPrefix,
+                          b2Bprefix: widget.companydata!.b2BPrefix,
+                          b2Bsuffix: widget.companydata!.b2BSuffix,
+                          b2Bwidth: widget.companydata!.b2BWidth,
+                          b2Bdeclaration: widget.companydata!.b2BDeclaration,
+                          b2Cprefix: b2cprefixcontroller.text,
                           b2Csuffix: b2csuffixcontroller.text,
                           b2Cwidth: int.tryParse(b2cwidthcontroller.text) ?? 0,
                           b2Cdeclaration: b2cdeclarationcontroller.text,
@@ -419,6 +419,7 @@ class _B2cContainerState extends State<B2cContainer> {
                         ),
                       );
                       context.pop();
+                      provider.fetchVoucherTypes(context, 1302);
                     }
                     dataCollecting();
                   }
