@@ -518,13 +518,14 @@ class _DefaultContainerState extends State<DefaultContainer> {
                                   isenabled: widget.isCheckOn,
                                 ),
                               );
-                            }
-                            context.pop();
-                            provider.fetchVoucherTypes(
+                              context.pop();
+                           provider.fetchVoucherTypes(
                               context,
                               widget.companyId,
                             );
-                          }
+                           provider.fetchVoucherTypes(context, 1302);
+                            }
+                         }
                           dataCollecting();
                         },
                         child: Text(

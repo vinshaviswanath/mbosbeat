@@ -58,18 +58,12 @@ class _ToggleDialogBoxState extends State<ToggleDialogBox> {
           children: [
             Text(
               "Confirmation",
-              style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                color: Color(0xFF36489B),
-                fontWeight: FontWeight.bold,
-              ),
+              style: context.textStyle.s14.roboto.bold.indigoBlue,
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.010),
             Text(
               "Are you sure you want to close this toggle?",
-              style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                color: Color(0xff7787AD),
-                fontWeight: FontWeight.bold,
-              ),
+              style: context.textStyle.s12.roboto.dustyBlue,
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.030),
             Row(
@@ -97,8 +91,9 @@ class _ToggleDialogBoxState extends State<ToggleDialogBox> {
                           ),
                         );
                     if (response != null && response.status == 1) {
-                      CommonSnackBar.show(context, message: "eeee");
+                      CommonSnackBar.show(context, message: "");
                       fetchCompanyVoucherList();
+                      //  context.pop(true);
                     }
                   },
                   child: Text(

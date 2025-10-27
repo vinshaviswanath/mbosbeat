@@ -56,14 +56,12 @@ class _VoucherTypeTileState extends State<VoucherTypeTile> {
                 value: isCheckOnInt == 1,
                 onChanged: (value) async {
                   // Check if any of the prefixes or suffixes are non-empty
-                  // final hasAnyValue =
-                  //     voucher.b2BPrefix.isNotEmpty ||
-                  //     voucher.b2BSuffix.isNotEmpty ||
-                  //     voucher.b2CPrefix.isNotEmpty ||
-                  //     voucher.b2CSuffix.isNotEmpty;
-                  if (value == false
-                  // &&hasAnyValue
-                  ) {
+                  final hasAnyValue =
+                      voucher.b2BPrefix.isNotEmpty ||
+                      voucher.b2BSuffix.isNotEmpty ||
+                      voucher.b2CPrefix.isNotEmpty ||
+                      voucher.b2CSuffix.isNotEmpty;
+                  if (value == false && hasAnyValue) {
                     // Show the dialog box if any prefix or suffix has a value
                     final result = await showDialog(
                       context: context,
@@ -71,7 +69,6 @@ class _VoucherTypeTileState extends State<VoucherTypeTile> {
                         return CheckBoxDialogBox(
                           companyId: widget.companyId,
                           isCheckOn: isCheckOnInt,
-                          isToggleOn: isToggleOnInt,
                           id: voucher.id,
                         );
                       },
@@ -82,7 +79,7 @@ class _VoucherTypeTileState extends State<VoucherTypeTile> {
                       widget.onChanged(1); // Keep the checkbox checked
                     }
                   } else {
-                    widget.onChanged(1);
+                    widget.onChanged(value == true ? 1 : 0);
                   }
                 },
               ),
@@ -158,16 +155,15 @@ class _VoucherTypeTileState extends State<VoucherTypeTile> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.secondary.withOpacity(0.3),
-                        borderRadius: BorderRadius.circular(8),
+                        color: const Color(0xFF98A6BE).withOpacity(0.3),
+                        borderRadius: BorderRadius.circular(4),
                       ),
-                      height: MediaQuery.of(context).size.height * 0.03,
-                      width: MediaQuery.of(context).size.width * 0.06,
+                      height: MediaQuery.of(context).size.height * 0.025,
+                      width: MediaQuery.of(context).size.width * 0.05,
                       child: Icon(
-                        Icons.drive_file_rename_outline_outlined,
-                        color: Theme.of(context).colorScheme.primary,
+                        Icons.drive_file_rename_outline_sharp,
+                        size: 15,
+                        color: const Color(0xFF36489B),
                       ),
                     ),
                   ),
