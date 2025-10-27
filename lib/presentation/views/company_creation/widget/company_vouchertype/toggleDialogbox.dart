@@ -30,15 +30,15 @@ class _ToggleDialogBoxState extends State<ToggleDialogBox> {
     print("company checkOn togglebox....${widget.isCheckOn}");
     print("company toggleOn togglebox....${widget.isToggleOn}");
     print("company id togglebox....${widget.id}");
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      fetchCompanyVoucherList();
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   fetchCompanyVoucherList();
+    // });
     super.initState();
   }
 
   void fetchCompanyVoucherList() {
     final provider = context.read<CompanyCreationProvider>();
-    provider.fetchVoucherTypes(context, 1302);
+    provider.fetchVoucherTypes(context, widget.companyId);
   }
 
   @override
@@ -83,7 +83,7 @@ class _ToggleDialogBoxState extends State<ToggleDialogBox> {
                           context,
                           request: CreateCompanyVocherParams(
                             id: widget.id,
-                            companyid: 1302,
+                            companyid: widget.companyId,
                             hasB2B: 0,
                             b2Bprefix: "",
                             b2Bsuffix: "",

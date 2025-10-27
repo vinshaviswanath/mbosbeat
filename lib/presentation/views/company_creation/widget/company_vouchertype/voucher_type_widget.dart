@@ -18,7 +18,9 @@ class _VoucherTypeWidgetState extends State<VoucherTypeWidget> {
     checkStates = {};
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final provider = context.read<CompanyCreationProvider>();
-      provider.fetchVoucherTypes(context, 1302);
+      final companyId = provider.companyid;
+      print('companyId: $companyId');
+      provider.fetchVoucherTypes(context, companyId ?? 0);
     });
   }
 
@@ -56,6 +58,7 @@ class _VoucherTypeWidgetState extends State<VoucherTypeWidget> {
             }
 
             final voucherList = provider.voucherTypes;
+            final companyId = provider.companyid;
 
             if (voucherList.isEmpty) {
               return const SliverFillRemaining(
@@ -96,6 +99,7 @@ class _VoucherTypeWidgetState extends State<VoucherTypeWidget> {
                           : 0;
 
                       return VoucherTypeTile(
+                        companyId: companyId ?? 0,
                         voucher: voucher,
                         isCheckOnInt: isCheckOnInt,
                         isToggleOnInt: isToggleOnInt,

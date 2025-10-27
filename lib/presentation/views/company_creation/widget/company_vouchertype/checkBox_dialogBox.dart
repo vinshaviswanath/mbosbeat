@@ -33,15 +33,15 @@ class _CheckBoxDialogBoxState extends State<CheckBoxDialogBox> {
     print("company checkOn untickbox....${widget.isCheckOn}");
     // print("company toggleOn untickbox....${widget.isToggleOn}");
     print("id untickbox....${widget.id}");
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      fetchCompanyVoucherList();
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   fetchCompanyVoucherList();
+    // });
     super.initState();
   }
 
   void fetchCompanyVoucherList() {
     final provider = context.read<CompanyCreationProvider>();
-    provider.fetchVoucherTypes(context, 1302);
+    provider.fetchVoucherTypes(context, widget.companyId);
   }
 
   @override
@@ -84,7 +84,7 @@ class _CheckBoxDialogBoxState extends State<CheckBoxDialogBox> {
                           context,
                           request: CreateCompanyVocherParams(
                             id: widget.id,
-                            companyid: 1302,
+                            companyid: widget.companyId,
                             hasB2B: 0,
                             b2Bprefix: "",
                             b2Bsuffix: "",
