@@ -7,13 +7,11 @@ import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 class CheckBoxDialogBox extends StatefulWidget {
   final int companyId;
   final int isCheckOn;
-  final int isToggleOn;
   final int id;
   final void Function()? onTap;
   CheckBoxDialogBox({
     required this.companyId,
     required this.isCheckOn,
-    required this.isToggleOn,
 
     required this.id,
     this.onTap,
@@ -25,24 +23,6 @@ class CheckBoxDialogBox extends StatefulWidget {
 
 class _CheckBoxDialogBoxState extends State<CheckBoxDialogBox> {
   late int isCheckOn;
-  late int isToggleOn;
-
-  @override
-  void initState() {
-    print("company companyId untickbox....${widget.companyId}");
-    print("company checkOn untickbox....${widget.isCheckOn}");
-    // print("company toggleOn untickbox....${widget.isToggleOn}");
-    print("id untickbox....${widget.id}");
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      fetchCompanyVoucherList();
-    });
-    super.initState();
-  }
-
-  void fetchCompanyVoucherList() {
-    final provider = context.read<CompanyCreationProvider>();
-    provider.fetchVoucherTypes(context, 1302);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,18 +40,12 @@ class _CheckBoxDialogBoxState extends State<CheckBoxDialogBox> {
           children: [
             Text(
               "Confirmation",
-              style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                color: ColorResources.indigoBlue,
-                fontWeight: FontWeight.bold,
-              ),
+              style: context.textStyle.s14.roboto.bold.indigoBlue,
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.010),
             Text(
               "Are you sure you want to untick this checkbox?",
-              style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                color: ColorResources.indigoBlue,
-                fontWeight: FontWeight.bold,
-              ),
+              style: context.textStyle.s11.roboto.dustyBlue,
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.030),
             Row(
@@ -101,9 +75,9 @@ class _CheckBoxDialogBoxState extends State<CheckBoxDialogBox> {
                       // CommonSnackBar.show(context,
                       //     message:
                       //         createcompanyvoucherProvider.serverMessage ?? "");
-                      fetchCompanyVoucherList();
+                      provider.fetchVoucherTypes(context, 1302);
+                      context.pop(true);
                     }
-                    context.pop(false);
                   },
                   child: Text(
                     "Yes",

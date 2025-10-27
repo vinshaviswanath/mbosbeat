@@ -36,11 +36,6 @@ class _VoucherDialogboxState extends State<VoucherDialogbox> {
     pageController = PageController(initialPage: 0);
     isToggleOn = widget.isToggleOn == 1;
     pageIndices = {widget.id: 0};
-    print("companyid in voucherdialogbox....${widget.companydata!.companyId}");
-    print("initially toggle in  voucherdialogbox....${widget.isToggleOn}");
-    print("checkbox  in  voucherdialogbox ....${widget.isCheckOn}");
-    print("companydata  in voucherdialogbox....${widget.companydata}");
-    print("regtype in voucherdialogbox....${widget.regtype}");
     super.initState();
   }
 
@@ -48,6 +43,7 @@ class _VoucherDialogboxState extends State<VoucherDialogbox> {
   Widget build(BuildContext context) {
     final local = AppLocalizations.of(context);
     return AlertDialog(
+      backgroundColor: Color(0xFFF1F3F7),
       contentPadding: EdgeInsets.zero,
       content: SingleChildScrollView(
         child: Stack(
@@ -122,7 +118,7 @@ class _VoucherDialogboxState extends State<VoucherDialogbox> {
                         inactiveTrackColor: Theme.of(
                           context,
                         ).colorScheme.onPrimary,
-                        activeTrackColor: Theme.of(context).colorScheme.primary,
+                        activeTrackColor: Color(0xFF36489B),
                         value: isToggleOn,
                         onChanged: (value) async {
                           if (!value) {
@@ -178,7 +174,6 @@ class _VoucherDialogboxState extends State<VoucherDialogbox> {
                   //it shows instead of sales container
                   Container(
                     decoration: BoxDecoration(
-                      //color: Theme.of(context).colorScheme.onTertiaryContainer,
                       color: Color(0xfff98A6BE),
                       borderRadius: BorderRadius.circular(15),
                     ),
