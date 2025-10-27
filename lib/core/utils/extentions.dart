@@ -87,6 +87,40 @@ extension ResponseX on http.Response {
 }
 
 
+extension StreamedResponseX on http.StreamedResponse {
+  Future<bool> get isOk async => statusCode == 200 || statusCode == 201;
+
+  Future<dynamic> get data async {
+    final body = await stream.bytesToString();
+    return jsonDecode(body);
+  }
+
+  Future<String> get message async {
+    final decoded = await data;
+    if (decoded is Map && decoded['message'] != null) {
+      return decoded['message'].toString();
+    }
+    return decoded['message']?.toString() ?? '';
+  }
+
+  Future<String> get error async {
+    final decoded = await data;
+    if (decoded is Map && decoded['message'] != null) {
+      return decoded['message'].toString();
+    }
+    return 'Unknown error';
+  }
+}
+
+// extension StreamedResponseX on http.StreamedResponse {
+//   Future<http.Response> toResponse() async {
+//     return await http.Response.fromStream(this);
+//   }
+// }
+
+
+
+
 // extension JsonPrintable<T extends Object> on T {
 //   /// Convert to raw JSON string if object has `toJson`
 //   String toRawJson() {

@@ -1,8 +1,27 @@
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/models/user_settings_list_model.dart';
+import 'package:mpos_beat/presentation/common/widgets/sliverSpace.dart';
+import 'package:mpos_beat/presentation/logic/user_management_provider.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_settings/widgets/info_tool_tip.dart';
 
-class UserSettingsScreen extends StatelessWidget {
-  const UserSettingsScreen({super.key});
+class UserSettingsScreen extends StatefulWidget {
+  final String userId;
+  const UserSettingsScreen({super.key, required this.userId});
+
+  @override
+  State<UserSettingsScreen> createState() => _UserSettingsScreenState();
+}
+
+class _UserSettingsScreenState extends State<UserSettingsScreen> {
+  @override
+  void initState() {
+    super.initState();
+    final provider = Provider.of<UserManagementProvider>(
+      context,
+      listen: false,
+    );
+    provider.getUsersSettingsList(context: context, userId: widget.userId);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,157 +51,45 @@ class UserSettingsScreen extends StatelessWidget {
           child: Container(color: Colors.transparent),
         ),
       ),
-      body: CustomScrollView(
-        slivers: [
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            sliver: SliverList(
-              delegate: SliverChildListDelegate([
-                InfoTooltip(
-                  title: appLocalizations.user_settings_screen_sales,
-                  description:
-                      appLocalizations.user_settings_screen_description,
-                  onToggle: (val) {
-                    debugPrint("Switch toggled: $val");
-                  },
-                ),
-                h4,
-                InfoTooltip(
-                  title: appLocalizations.user_settings_screen_sales_return,
-                  description:
-                      appLocalizations.user_settings_screen_description,
-                  onToggle: (val) {
-                    debugPrint("Switch toggled: $val");
-                  },
-                ),
-                h4,
-                InfoTooltip(
-                  title: appLocalizations.user_settings_screen_payment,
-                  description:
-                      appLocalizations.user_settings_screen_description,
-                  onToggle: (val) {
-                    debugPrint("Switch toggled: $val");
-                  },
-                ),
-                h4,
-                InfoTooltip(
-                  title: appLocalizations.user_settings_screen_edit_rate,
-                  description:
-                      appLocalizations.user_settings_screen_description,
-                  onToggle: (val) {
-                    debugPrint("Switch toggled: $val");
-                  },
-                ),
-                h4,
-                InfoTooltip(
-                  title: appLocalizations
-                      .user_settings_screen_block_zero_rate_item,
-                  description:
-                      appLocalizations.user_settings_screen_description,
-                  onToggle: (val) {
-                    debugPrint("Switch toggled: $val");
-                  },
-                ),
-                h4,
-                InfoTooltip(
-                  title:
-                      appLocalizations.user_settings_screen_company_switching,
-                  description:
-                      appLocalizations.user_settings_screen_description,
-                  onToggle: (val) {
-                    debugPrint("Switch toggled: $val");
-                  },
-                ),
-                h4,
-                InfoTooltip(
-                  title: appLocalizations.user_settings_screen_edit_transaction,
-                  description:
-                      appLocalizations.user_settings_screen_description,
-                  onToggle: (val) {
-                    debugPrint("Switch toggled: $val");
-                  },
-                ),
-                h4,
-                InfoTooltip(
-                  title: appLocalizations.user_settings_screen_sales_order,
-                  description:
-                      appLocalizations.user_settings_screen_description,
-                  onToggle: (val) {
-                    debugPrint("Switch toggled: $val");
-                  },
-                ),
-                h4,
-                InfoTooltip(
-                  title: appLocalizations.user_settings_screen_receipt,
-                  description:
-                      appLocalizations.user_settings_screen_description,
-                  onToggle: (val) {
-                    debugPrint("Switch toggled: $val");
-                  },
-                ),
-                h4,
-                InfoTooltip(
-                  title: appLocalizations.user_settings_screen_stock_transfer,
-                  description:
-                      appLocalizations.user_settings_screen_description,
-                  onToggle: (val) {
-                    debugPrint("Switch toggled: $val");
-                  },
-                ),
+      body: StreamBuilder<UserSettingsResponse?>(
+        stream: context.read<UserManagementProvider>().userSettingsStream,
+        builder: (context, snapshot) {
+          final data = snapshot.data?.userSettingsList ?? [];
 
-                h4,
-                InfoTooltip(
-                  title: appLocalizations.user_settings_screen_edit_discount,
-                  description:
-                      appLocalizations.user_settings_screen_description,
-                  onToggle: (val) {
-                    debugPrint("Switch toggled: $val");
-                  },
+          return CustomScrollView(
+            slivers: [
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                sliver: SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    childCount: data.length,
+                    (context, index) {
+                      final settings = data[index];
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4),
+                        child: InfoTooltip(
+                          title: settings.menuName ?? '',
+                          description: settings.description ?? '',
+                          initialValue: settings.value?.toLowerCase() == 'yes',
+                          onToggle: (val) {
+                            context
+                                .read<UserManagementProvider>()
+                                .createUserSettings(
+                                  context: context,
+                                  id: settings.id ?? 0,
+                                  userId: int.parse(widget.userId),
+                                  value: val ? "Yes" : "",
+                                );
+                          },
+                        ),
+                      );
+                    },
+                  ),
                 ),
-                h4,
-                InfoTooltip(
-                  title: appLocalizations.user_settings_screen_party_creation,
-                  description:
-                      appLocalizations.user_settings_screen_description,
-                  onToggle: (val) {
-                    debugPrint("Switch toggled: $val");
-                  },
-                ),
-                h4,
-                InfoTooltip(
-                  title:
-                      appLocalizations.user_settings_screen_change_price_list,
-                  description:
-                      appLocalizations.user_settings_screen_description,
-                  onToggle: (val) {
-                    debugPrint("Switch toggled: $val");
-                  },
-                ),
-                h4,
-                InfoTooltip(
-                  title:
-                      appLocalizations.user_settings_screen_change_voucher_date,
-                  description:
-                      appLocalizations.user_settings_screen_description,
-                  onToggle: (val) {
-                    debugPrint("Switch toggled: $val");
-                  },
-                ),
-                h4,
-                InfoTooltip(
-                  title:
-                      appLocalizations.user_settings_screen_edit_party_details,
-                  description:
-                      appLocalizations.user_settings_screen_description,
-                  onToggle: (val) {
-                    debugPrint("Switch toggled: $val");
-                  },
-                ),
-                h16,
-              ]),
-            ),
-          ),
-        ],
+              ),
+            ],
+          );
+        },
       ),
     );
   }

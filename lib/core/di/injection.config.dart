@@ -23,10 +23,61 @@ import '../../data/data_sources/authentication/resend_otp/resend_otp.dart'
     as _i13;
 import '../../data/data_sources/authentication/reset_password/reset_password.dart'
     as _i244;
+import '../../data/data_sources/user_management/activate_designation/activate_designation.dart'
+    as _i185;
+import '../../data/data_sources/user_management/activate_godown/activate_godown.dart'
+    as _i42;
+import '../../data/data_sources/user_management/activate_route/activate_route.dart'
+    as _i442;
+import '../../data/data_sources/user_management/add_designation/add_designation.dart'
+    as _i749;
+import '../../data/data_sources/user_management/block_user/block_user.dart'
+    as _i183;
+import '../../data/data_sources/user_management/create_godown/create_godown.dart'
+    as _i993;
+import '../../data/data_sources/user_management/create_route/create_route.dart'
+    as _i974;
+import '../../data/data_sources/user_management/create_user/create_user.dart'
+    as _i420;
+import '../../data/data_sources/user_management/create_user_company_mapping%5D/create_user_company_mapping.dart'
+    as _i600;
+import '../../data/data_sources/user_management/create_user_settings/create_user_settings.dart'
+    as _i466;
+import '../../data/data_sources/user_management/deactivate_designation/deactivate_designation.dart'
+    as _i797;
+import '../../data/data_sources/user_management/deactivate_godown/deactivate_godown.dart'
+    as _i871;
+import '../../data/data_sources/user_management/deactivate_route/deactivate_route.dart'
+    as _i52;
+import '../../data/data_sources/user_management/delete_designation/delete_designation.dart'
+    as _i179;
+import '../../data/data_sources/user_management/delete_godown/delete_godown.dart'
+    as _i245;
+import '../../data/data_sources/user_management/delete_route/delete_route.dart'
+    as _i870;
+import '../../data/data_sources/user_management/delete_user/delete_user.dart'
+    as _i803;
+import '../../data/data_sources/user_management/get_companies/get_compamies.dart'
+    as _i213;
+import '../../data/data_sources/user_management/get_godown_list/get_godown_list.dart'
+    as _i232;
+import '../../data/data_sources/user_management/get_route_list/get_route_list.dart'
+    as _i629;
+import '../../data/data_sources/user_management/get_users_list/get_users_list.dart'
+    as _i165;
+import '../../data/data_sources/user_management/reset_user_password/reset_user_password.dart'
+    as _i762;
+import '../../data/data_sources/user_management/user_designation_list/user_designation_list.dart'
+    as _i308;
+import '../../data/data_sources/user_management/user_settings/user_settings_list.dart'
+    as _i829;
 import '../../data/local_db/app_db.dart' as _i264;
 import '../../data/repositories/i_authentication_facad_impl.dart' as _i823;
+import '../../data/repositories/i_user_management_facad_impl.dart' as _i168;
 import '../../domain/repositories/i_authentication_facad.dart' as _i590;
+import '../../domain/repositories/i_user_management_facad.dart' as _i172;
 import '../base/run_safely.dart' as _i530;
+import '../event/event_manager.dart' as _i275;
 import '../serveice/http_client.dart' as _i816;
 import 'app_injection_module.dart' as _i975;
 
@@ -43,6 +94,10 @@ Future<_i174.GetIt> init(
     preResolve: true,
   );
   gh.singleton<_i264.AppDb>(() => _i264.AppDb());
+  gh.singleton<_i275.EventManager>(
+    () => _i275.EventManager(),
+    dispose: (i) => i.dispose(),
+  );
   gh.lazySingleton<_i530.RunSafely>(() => _i530.RunSafely());
   gh.lazySingleton<_i519.Client>(() => appInjectionModule.clent);
   gh.lazySingleton<_i816.HttpClient>(
@@ -56,11 +111,11 @@ Future<_i174.GetIt> init(
       gh<_i264.AppDb>(),
     ),
   );
-  gh.lazySingleton<_i70.CompanyRegisteration>(
-    () => _i70.CompanyRegisteration(
+  gh.lazySingleton<_i70.RegistrationEventBinder>(
+    () => _i70.RegistrationEventBinder(
+      gh<_i275.EventManager>(),
       gh<_i816.HttpClient>(),
       gh<_i530.RunSafely>(),
-      gh<_i460.SharedPreferences>(),
     ),
   );
   gh.lazySingleton<_i42.OtpValidation>(
@@ -82,6 +137,215 @@ Future<_i174.GetIt> init(
       gh<_i816.HttpClient>(),
       gh<_i530.RunSafely>(),
       gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i185.ActivateDesignation>(
+    () => _i185.ActivateDesignation(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i42.ActivateGodown>(
+    () => _i42.ActivateGodown(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i442.ActivateRoute>(
+    () => _i442.ActivateRoute(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i749.AddDesignation>(
+    () => _i749.AddDesignation(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i183.BlockUser>(
+    () => _i183.BlockUser(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i993.CreateGodownOrVehicle>(
+    () => _i993.CreateGodownOrVehicle(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i974.CreateRoute>(
+    () => _i974.CreateRoute(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i420.CreateUser>(
+    () => _i420.CreateUser(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i600.CreateUserCompanyMapping>(
+    () => _i600.CreateUserCompanyMapping(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i466.CreateUserSettings>(
+    () => _i466.CreateUserSettings(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i797.DeactivateDesignation>(
+    () => _i797.DeactivateDesignation(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i871.DeactivateGodown>(
+    () => _i871.DeactivateGodown(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i52.DeactivateRoute>(
+    () => _i52.DeactivateRoute(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i179.DeleteDesignation>(
+    () => _i179.DeleteDesignation(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i245.DeleteGodown>(
+    () => _i245.DeleteGodown(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i870.DeleteRoute>(
+    () => _i870.DeleteRoute(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i803.DeleteUser>(
+    () => _i803.DeleteUser(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i213.GetCompanies>(
+    () => _i213.GetCompanies(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i232.GetAllGodowns>(
+    () => _i232.GetAllGodowns(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i629.GetAllRoutes>(
+    () => _i629.GetAllRoutes(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i165.GetAllUsers>(
+    () => _i165.GetAllUsers(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i762.ResetUserPassword>(
+    () => _i762.ResetUserPassword(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i308.GetUserDesignationList>(
+    () => _i308.GetUserDesignationList(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i829.GetUserSettings>(
+    () => _i829.GetUserSettings(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i172.IUserManagementFacad>(
+    () => _i168.IUserManagementFacadImpl(
+      gh<_i797.DeactivateDesignation>(),
+      gh<_i749.AddDesignation>(),
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+      gh<_i308.GetUserDesignationList>(),
+      gh<_i185.ActivateDesignation>(),
+      gh<_i179.DeleteDesignation>(),
+      gh<_i420.CreateUser>(),
+      gh<_i165.GetAllUsers>(),
+      gh<_i803.DeleteUser>(),
+      gh<_i183.BlockUser>(),
+      gh<_i762.ResetUserPassword>(),
+      gh<_i829.GetUserSettings>(),
+      gh<_i466.CreateUserSettings>(),
+      gh<_i213.GetCompanies>(),
+      gh<_i600.CreateUserCompanyMapping>(),
+      gh<_i993.CreateGodownOrVehicle>(),
+      gh<_i232.GetAllGodowns>(),
+      gh<_i42.ActivateGodown>(),
+      gh<_i871.DeactivateGodown>(),
+      gh<_i245.DeleteGodown>(),
+      gh<_i974.CreateRoute>(),
+      gh<_i629.GetAllRoutes>(),
+      gh<_i442.ActivateRoute>(),
+      gh<_i52.DeactivateRoute>(),
+      gh<_i870.DeleteRoute>(),
+    ),
+  );
+  gh.lazySingleton<_i70.CompanyRegisteration>(
+    () => appInjectionModule.companyRegisteration(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+      gh<_i264.AppDb>(),
+      gh<_i275.EventManager>(),
+      gh<_i70.RegistrationEventBinder>(),
     ),
   );
   gh.lazySingleton<_i590.IAuthenticationFacad>(

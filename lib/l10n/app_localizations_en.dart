@@ -513,6 +513,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get manage_user_screen_user_settings => 'User Settings';
 
   @override
+  String get manage_user_screen_add_company => 'Add Company';
+
+  @override
   String get activate_user_designation_widget_activate_user => 'Activate User';
 
   @override
