@@ -41,6 +41,7 @@ class HttpClient {
   Future<http.Response> post(
     String uri, {
     dynamic data,
+    dynamic formData,
     Map<String, String>? headers,
     Map<String, String>? queryParameters,
   }) async {
@@ -53,6 +54,7 @@ class HttpClient {
         url,
         headers: _getHeaders(headers),
         body: jsonEncode(data),
+        
       );
 
       return _handleResponse(response);

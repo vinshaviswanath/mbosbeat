@@ -168,6 +168,7 @@
     "manage_user_screen_reset_password": "Reset Password",
     "manage_user_screen_block_user": "Block User",
     "manage_user_screen_user_settings": "User Settings",
+    "manage_user_screen_add_company": "Add Company",
     "activate_user_designation_widget_activate_user": "Activate User",
     "activate_user_designation_widget_are_you_sure": "Are you sure want to activate Executive1?",
     "activate_user_designation_widget_user_activated": "The user have been Activated successfully!",

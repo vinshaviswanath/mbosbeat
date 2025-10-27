@@ -16,8 +16,9 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<UserManagementProvider>().loadDesignations();
-    context.read<UserManagementProvider>().loadUsers();
+    context.read<UserManagementProvider>()
+      ..loadDesignations()
+      ..loadUsers();
 
     Timer(const Duration(seconds: 2), () {
       if (mounted) {
@@ -30,7 +31,9 @@ class _SplashScreenState extends State<SplashScreen> {
           if (token.isEmpty) {
             context.pushNamed(AppRouterConst.login);
           } else {
-            context.pushNamed(AppRouterConst.adminDashboard);
+            context.read<UserManagementProvider>().getDesignationList(context);
+
+            context.pushNamed(AppRouterConst.adminHome);
           }
         } else {
           context.pushNamed(AppRouterConst.onboardScreen);

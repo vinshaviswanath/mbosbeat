@@ -1,6 +1,8 @@
 import 'package:go_router/go_router.dart';
 import 'package:mpos_beat/core/utils/app_details.dart';
 import 'package:mpos_beat/core/utils/enums.dart';
+import 'package:mpos_beat/data/models/company_list_model.dart';
+import 'package:mpos_beat/data/models/users_list_model.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_route_screen.dart';
 import 'package:mpos_beat/presentation/common/widgets/loading_screen.dart';
 import 'package:mpos_beat/presentation/views/admin_home/admin_dashboard.dart';
@@ -142,6 +144,7 @@ class AppRouter {
       GoRoute(
         path: "/manageUser",
         name: AppRouterConst.manageUser,
+        
         builder: (context, state) {
           return const ManageUserScreen();
         },
@@ -152,9 +155,8 @@ class AppRouter {
         builder: (context, state) {
           final extra = state.extra as Map<String, dynamic>? ?? {};
           final isEdit = extra["isEdit"] as bool? ?? false;
-          final user = extra["user"] as UserModel?;
-
-          return UserCreationScreen(isUpdate: isEdit, user: user);
+          final user = extra["user"] as UserMasterList?;
+          return UserCreationScreen(isUpdate: isEdit, user: user,);
         },
       ),
 
@@ -162,14 +164,16 @@ class AppRouter {
         path: "/resetPassword",
         name: AppRouterConst.resetPassword,
         builder: (context, state) {
-          return const ResetPasswordScreen();
+          final index = state.extra as int;
+          return  ResetPasswordScreen(index: index,);
         },
       ),
       GoRoute(
         path: "/userSettings",
         name: AppRouterConst.userSettings,
         builder: (context, state) {
-          return const UserSettingsScreen();
+          final userId = state.extra as String;
+          return  UserSettingsScreen(userId: userId,);
         },
       ),
       GoRoute(
@@ -179,7 +183,9 @@ class AppRouter {
           final extra = state.extra as Map<String, dynamic>;
           final name = extra["name"] as String;
           final companyName = extra["companyName"] as String;
-          return AddCompanyScreen(name: name, companyName: companyName);
+          final userId = extra["userId"] as int;
+          final company = extra["company"] as CompaniesListResponse;
+          return AddCompanyScreen(name: name, companyName: companyName,company: company,userId: userId,);
         },
       ),
       GoRoute(

@@ -1,7 +1,9 @@
+import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/failures/failures.dart';
 import 'package:mpos_beat/core/failures/value_object/value_object.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/models/company_registration_response.dart';
 import 'package:mpos_beat/data/models/data/otp_response_data.dart';
 import 'package:mpos_beat/data/models/login_response.dart';
@@ -489,7 +491,7 @@ class AuthFormProvider with ChangeNotifier {
 
         if (response.status == 20 || response.status == 1) {
           _cusomerId = response.loginData?.customerId;
-          context.pushNamed(AppRouterConst.adminDashboard);
+          context.pushNamed(AppRouterConst.adminHome);
         } else if (response.status == 10) {
           Logger.logInfo(response.message);
           RegistrationDialogs.pendingRegisteredDialog(
@@ -516,6 +518,8 @@ class AuthFormProvider with ChangeNotifier {
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             ),
           );
+          context.pushNamed(AppRouterConst.adminHome);
+
           //  RegistrationDialogs.pendingRegisteredDialog(context, enteredUser)
           // .then((_) => resetSignUpForm());
         }
@@ -606,7 +610,9 @@ class AuthFormProvider with ChangeNotifier {
             companyName.getValue ?? '',
           ).then((_) {
             resetSignUpForm();
-            context.pushNamed(AppRouterConst.login);
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              context.pushNamed(AppRouterConst.login);
+            });
           });
         }
 

@@ -1035,15 +1035,500 @@ class UsersCompanion extends UpdateCompanion<User> {
   }
 }
 
+class $RegistrationDetailsTable extends RegistrationDetails
+    with TableInfo<$RegistrationDetailsTable, RegistrationDetail> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $RegistrationDetailsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Variable(0),
+  );
+  static const VerificationMeta _productNameMeta = const VerificationMeta(
+    'productName',
+  );
+  @override
+  late final GeneratedColumn<String> productName = GeneratedColumn<String>(
+    'product_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Variable("mPosBeat"),
+  );
+  static const VerificationMeta _companyNameMeta = const VerificationMeta(
+    'companyName',
+  );
+  @override
+  late final GeneratedColumn<String> companyName = GeneratedColumn<String>(
+    'company_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _mobileMeta = const VerificationMeta('mobile');
+  @override
+  late final GeneratedColumn<String> mobile = GeneratedColumn<String>(
+    'mobile',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _emailMeta = const VerificationMeta('email');
+  @override
+  late final GeneratedColumn<String> email = GeneratedColumn<String>(
+    'email',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _adminUsernameMeta = const VerificationMeta(
+    'adminUsername',
+  );
+  @override
+  late final GeneratedColumn<String> adminUsername = GeneratedColumn<String>(
+    'admin_username',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _passwordMeta = const VerificationMeta(
+    'password',
+  );
+  @override
+  late final GeneratedColumn<String> password = GeneratedColumn<String>(
+    'password',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    productName,
+    companyName,
+    mobile,
+    email,
+    adminUsername,
+    password,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'registration_details';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<RegistrationDetail> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('product_name')) {
+      context.handle(
+        _productNameMeta,
+        productName.isAcceptableOrUnknown(
+          data['product_name']!,
+          _productNameMeta,
+        ),
+      );
+    }
+    if (data.containsKey('company_name')) {
+      context.handle(
+        _companyNameMeta,
+        companyName.isAcceptableOrUnknown(
+          data['company_name']!,
+          _companyNameMeta,
+        ),
+      );
+    }
+    if (data.containsKey('mobile')) {
+      context.handle(
+        _mobileMeta,
+        mobile.isAcceptableOrUnknown(data['mobile']!, _mobileMeta),
+      );
+    }
+    if (data.containsKey('email')) {
+      context.handle(
+        _emailMeta,
+        email.isAcceptableOrUnknown(data['email']!, _emailMeta),
+      );
+    }
+    if (data.containsKey('admin_username')) {
+      context.handle(
+        _adminUsernameMeta,
+        adminUsername.isAcceptableOrUnknown(
+          data['admin_username']!,
+          _adminUsernameMeta,
+        ),
+      );
+    }
+    if (data.containsKey('password')) {
+      context.handle(
+        _passwordMeta,
+        password.isAcceptableOrUnknown(data['password']!, _passwordMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  RegistrationDetail map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return RegistrationDetail(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      productName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}product_name'],
+      )!,
+      companyName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}company_name'],
+      ),
+      mobile: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}mobile'],
+      ),
+      email: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}email'],
+      ),
+      adminUsername: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}admin_username'],
+      ),
+      password: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}password'],
+      ),
+    );
+  }
+
+  @override
+  $RegistrationDetailsTable createAlias(String alias) {
+    return $RegistrationDetailsTable(attachedDatabase, alias);
+  }
+}
+
+class RegistrationDetail extends DataClass
+    implements Insertable<RegistrationDetail> {
+  final int id;
+  final String productName;
+  final String? companyName;
+  final String? mobile;
+  final String? email;
+  final String? adminUsername;
+  final String? password;
+  const RegistrationDetail({
+    required this.id,
+    required this.productName,
+    this.companyName,
+    this.mobile,
+    this.email,
+    this.adminUsername,
+    this.password,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['product_name'] = Variable<String>(productName);
+    if (!nullToAbsent || companyName != null) {
+      map['company_name'] = Variable<String>(companyName);
+    }
+    if (!nullToAbsent || mobile != null) {
+      map['mobile'] = Variable<String>(mobile);
+    }
+    if (!nullToAbsent || email != null) {
+      map['email'] = Variable<String>(email);
+    }
+    if (!nullToAbsent || adminUsername != null) {
+      map['admin_username'] = Variable<String>(adminUsername);
+    }
+    if (!nullToAbsent || password != null) {
+      map['password'] = Variable<String>(password);
+    }
+    return map;
+  }
+
+  RegistrationDetailsCompanion toCompanion(bool nullToAbsent) {
+    return RegistrationDetailsCompanion(
+      id: Value(id),
+      productName: Value(productName),
+      companyName: companyName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(companyName),
+      mobile: mobile == null && nullToAbsent
+          ? const Value.absent()
+          : Value(mobile),
+      email: email == null && nullToAbsent
+          ? const Value.absent()
+          : Value(email),
+      adminUsername: adminUsername == null && nullToAbsent
+          ? const Value.absent()
+          : Value(adminUsername),
+      password: password == null && nullToAbsent
+          ? const Value.absent()
+          : Value(password),
+    );
+  }
+
+  factory RegistrationDetail.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return RegistrationDetail(
+      id: serializer.fromJson<int>(json['id']),
+      productName: serializer.fromJson<String>(json['productName']),
+      companyName: serializer.fromJson<String?>(json['companyName']),
+      mobile: serializer.fromJson<String?>(json['mobile']),
+      email: serializer.fromJson<String?>(json['email']),
+      adminUsername: serializer.fromJson<String?>(json['adminUsername']),
+      password: serializer.fromJson<String?>(json['password']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'productName': serializer.toJson<String>(productName),
+      'companyName': serializer.toJson<String?>(companyName),
+      'mobile': serializer.toJson<String?>(mobile),
+      'email': serializer.toJson<String?>(email),
+      'adminUsername': serializer.toJson<String?>(adminUsername),
+      'password': serializer.toJson<String?>(password),
+    };
+  }
+
+  RegistrationDetail copyWith({
+    int? id,
+    String? productName,
+    Value<String?> companyName = const Value.absent(),
+    Value<String?> mobile = const Value.absent(),
+    Value<String?> email = const Value.absent(),
+    Value<String?> adminUsername = const Value.absent(),
+    Value<String?> password = const Value.absent(),
+  }) => RegistrationDetail(
+    id: id ?? this.id,
+    productName: productName ?? this.productName,
+    companyName: companyName.present ? companyName.value : this.companyName,
+    mobile: mobile.present ? mobile.value : this.mobile,
+    email: email.present ? email.value : this.email,
+    adminUsername: adminUsername.present
+        ? adminUsername.value
+        : this.adminUsername,
+    password: password.present ? password.value : this.password,
+  );
+  RegistrationDetail copyWithCompanion(RegistrationDetailsCompanion data) {
+    return RegistrationDetail(
+      id: data.id.present ? data.id.value : this.id,
+      productName: data.productName.present
+          ? data.productName.value
+          : this.productName,
+      companyName: data.companyName.present
+          ? data.companyName.value
+          : this.companyName,
+      mobile: data.mobile.present ? data.mobile.value : this.mobile,
+      email: data.email.present ? data.email.value : this.email,
+      adminUsername: data.adminUsername.present
+          ? data.adminUsername.value
+          : this.adminUsername,
+      password: data.password.present ? data.password.value : this.password,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RegistrationDetail(')
+          ..write('id: $id, ')
+          ..write('productName: $productName, ')
+          ..write('companyName: $companyName, ')
+          ..write('mobile: $mobile, ')
+          ..write('email: $email, ')
+          ..write('adminUsername: $adminUsername, ')
+          ..write('password: $password')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    productName,
+    companyName,
+    mobile,
+    email,
+    adminUsername,
+    password,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is RegistrationDetail &&
+          other.id == this.id &&
+          other.productName == this.productName &&
+          other.companyName == this.companyName &&
+          other.mobile == this.mobile &&
+          other.email == this.email &&
+          other.adminUsername == this.adminUsername &&
+          other.password == this.password);
+}
+
+class RegistrationDetailsCompanion extends UpdateCompanion<RegistrationDetail> {
+  final Value<int> id;
+  final Value<String> productName;
+  final Value<String?> companyName;
+  final Value<String?> mobile;
+  final Value<String?> email;
+  final Value<String?> adminUsername;
+  final Value<String?> password;
+  final Value<int> rowid;
+  const RegistrationDetailsCompanion({
+    this.id = const Value.absent(),
+    this.productName = const Value.absent(),
+    this.companyName = const Value.absent(),
+    this.mobile = const Value.absent(),
+    this.email = const Value.absent(),
+    this.adminUsername = const Value.absent(),
+    this.password = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  RegistrationDetailsCompanion.insert({
+    this.id = const Value.absent(),
+    this.productName = const Value.absent(),
+    this.companyName = const Value.absent(),
+    this.mobile = const Value.absent(),
+    this.email = const Value.absent(),
+    this.adminUsername = const Value.absent(),
+    this.password = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  static Insertable<RegistrationDetail> custom({
+    Expression<int>? id,
+    Expression<String>? productName,
+    Expression<String>? companyName,
+    Expression<String>? mobile,
+    Expression<String>? email,
+    Expression<String>? adminUsername,
+    Expression<String>? password,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (productName != null) 'product_name': productName,
+      if (companyName != null) 'company_name': companyName,
+      if (mobile != null) 'mobile': mobile,
+      if (email != null) 'email': email,
+      if (adminUsername != null) 'admin_username': adminUsername,
+      if (password != null) 'password': password,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  RegistrationDetailsCompanion copyWith({
+    Value<int>? id,
+    Value<String>? productName,
+    Value<String?>? companyName,
+    Value<String?>? mobile,
+    Value<String?>? email,
+    Value<String?>? adminUsername,
+    Value<String?>? password,
+    Value<int>? rowid,
+  }) {
+    return RegistrationDetailsCompanion(
+      id: id ?? this.id,
+      productName: productName ?? this.productName,
+      companyName: companyName ?? this.companyName,
+      mobile: mobile ?? this.mobile,
+      email: email ?? this.email,
+      adminUsername: adminUsername ?? this.adminUsername,
+      password: password ?? this.password,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (productName.present) {
+      map['product_name'] = Variable<String>(productName.value);
+    }
+    if (companyName.present) {
+      map['company_name'] = Variable<String>(companyName.value);
+    }
+    if (mobile.present) {
+      map['mobile'] = Variable<String>(mobile.value);
+    }
+    if (email.present) {
+      map['email'] = Variable<String>(email.value);
+    }
+    if (adminUsername.present) {
+      map['admin_username'] = Variable<String>(adminUsername.value);
+    }
+    if (password.present) {
+      map['password'] = Variable<String>(password.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RegistrationDetailsCompanion(')
+          ..write('id: $id, ')
+          ..write('productName: $productName, ')
+          ..write('companyName: $companyName, ')
+          ..write('mobile: $mobile, ')
+          ..write('email: $email, ')
+          ..write('adminUsername: $adminUsername, ')
+          ..write('password: $password, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDb extends GeneratedDatabase {
   _$AppDb(QueryExecutor e) : super(e);
   $AppDbManager get managers => $AppDbManager(this);
   late final $UsersTable users = $UsersTable(this);
+  late final $RegistrationDetailsTable registrationDetails =
+      $RegistrationDetailsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [users];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [
+    users,
+    registrationDetails,
+  ];
 }
 
 typedef $$UsersTableCreateCompanionBuilder =
@@ -1500,10 +1985,268 @@ typedef $$UsersTableProcessedTableManager =
       User,
       PrefetchHooks Function()
     >;
+typedef $$RegistrationDetailsTableCreateCompanionBuilder =
+    RegistrationDetailsCompanion Function({
+      Value<int> id,
+      Value<String> productName,
+      Value<String?> companyName,
+      Value<String?> mobile,
+      Value<String?> email,
+      Value<String?> adminUsername,
+      Value<String?> password,
+      Value<int> rowid,
+    });
+typedef $$RegistrationDetailsTableUpdateCompanionBuilder =
+    RegistrationDetailsCompanion Function({
+      Value<int> id,
+      Value<String> productName,
+      Value<String?> companyName,
+      Value<String?> mobile,
+      Value<String?> email,
+      Value<String?> adminUsername,
+      Value<String?> password,
+      Value<int> rowid,
+    });
+
+class $$RegistrationDetailsTableFilterComposer
+    extends Composer<_$AppDb, $RegistrationDetailsTable> {
+  $$RegistrationDetailsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get productName => $composableBuilder(
+    column: $table.productName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get companyName => $composableBuilder(
+    column: $table.companyName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get mobile => $composableBuilder(
+    column: $table.mobile,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get email => $composableBuilder(
+    column: $table.email,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get adminUsername => $composableBuilder(
+    column: $table.adminUsername,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get password => $composableBuilder(
+    column: $table.password,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$RegistrationDetailsTableOrderingComposer
+    extends Composer<_$AppDb, $RegistrationDetailsTable> {
+  $$RegistrationDetailsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get productName => $composableBuilder(
+    column: $table.productName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get companyName => $composableBuilder(
+    column: $table.companyName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get mobile => $composableBuilder(
+    column: $table.mobile,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get email => $composableBuilder(
+    column: $table.email,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get adminUsername => $composableBuilder(
+    column: $table.adminUsername,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get password => $composableBuilder(
+    column: $table.password,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$RegistrationDetailsTableAnnotationComposer
+    extends Composer<_$AppDb, $RegistrationDetailsTable> {
+  $$RegistrationDetailsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get productName => $composableBuilder(
+    column: $table.productName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get companyName => $composableBuilder(
+    column: $table.companyName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get mobile =>
+      $composableBuilder(column: $table.mobile, builder: (column) => column);
+
+  GeneratedColumn<String> get email =>
+      $composableBuilder(column: $table.email, builder: (column) => column);
+
+  GeneratedColumn<String> get adminUsername => $composableBuilder(
+    column: $table.adminUsername,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get password =>
+      $composableBuilder(column: $table.password, builder: (column) => column);
+}
+
+class $$RegistrationDetailsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDb,
+          $RegistrationDetailsTable,
+          RegistrationDetail,
+          $$RegistrationDetailsTableFilterComposer,
+          $$RegistrationDetailsTableOrderingComposer,
+          $$RegistrationDetailsTableAnnotationComposer,
+          $$RegistrationDetailsTableCreateCompanionBuilder,
+          $$RegistrationDetailsTableUpdateCompanionBuilder,
+          (
+            RegistrationDetail,
+            BaseReferences<
+              _$AppDb,
+              $RegistrationDetailsTable,
+              RegistrationDetail
+            >,
+          ),
+          RegistrationDetail,
+          PrefetchHooks Function()
+        > {
+  $$RegistrationDetailsTableTableManager(
+    _$AppDb db,
+    $RegistrationDetailsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$RegistrationDetailsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$RegistrationDetailsTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$RegistrationDetailsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> productName = const Value.absent(),
+                Value<String?> companyName = const Value.absent(),
+                Value<String?> mobile = const Value.absent(),
+                Value<String?> email = const Value.absent(),
+                Value<String?> adminUsername = const Value.absent(),
+                Value<String?> password = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => RegistrationDetailsCompanion(
+                id: id,
+                productName: productName,
+                companyName: companyName,
+                mobile: mobile,
+                email: email,
+                adminUsername: adminUsername,
+                password: password,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> productName = const Value.absent(),
+                Value<String?> companyName = const Value.absent(),
+                Value<String?> mobile = const Value.absent(),
+                Value<String?> email = const Value.absent(),
+                Value<String?> adminUsername = const Value.absent(),
+                Value<String?> password = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => RegistrationDetailsCompanion.insert(
+                id: id,
+                productName: productName,
+                companyName: companyName,
+                mobile: mobile,
+                email: email,
+                adminUsername: adminUsername,
+                password: password,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$RegistrationDetailsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDb,
+      $RegistrationDetailsTable,
+      RegistrationDetail,
+      $$RegistrationDetailsTableFilterComposer,
+      $$RegistrationDetailsTableOrderingComposer,
+      $$RegistrationDetailsTableAnnotationComposer,
+      $$RegistrationDetailsTableCreateCompanionBuilder,
+      $$RegistrationDetailsTableUpdateCompanionBuilder,
+      (
+        RegistrationDetail,
+        BaseReferences<_$AppDb, $RegistrationDetailsTable, RegistrationDetail>,
+      ),
+      RegistrationDetail,
+      PrefetchHooks Function()
+    >;
 
 class $AppDbManager {
   final _$AppDb _db;
   $AppDbManager(this._db);
   $$UsersTableTableManager get users =>
       $$UsersTableTableManager(_db, _db.users);
+  $$RegistrationDetailsTableTableManager get registrationDetails =>
+      $$RegistrationDetailsTableTableManager(_db, _db.registrationDetails);
 }

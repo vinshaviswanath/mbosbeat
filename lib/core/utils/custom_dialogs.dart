@@ -59,9 +59,9 @@ class CustomDialog {
           child: SingleChildScrollView(
             reverse: true,
             padding: paddingBottom != null
-                ? MediaQuery.of(context).viewInsets.copyWith(
-                      bottom: paddingBottom,
-                    )
+                ? MediaQuery.of(
+                    context,
+                  ).viewInsets.copyWith(bottom: paddingBottom)
                 : MediaQuery.of(context).viewInsets,
             child: Column(
               mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.center,
@@ -76,7 +76,7 @@ class CustomDialog {
                     borderRadius: BorderRadius.circular(borderRadius ?? 24),
                   ),
                   child: chid,
-                )
+                ),
               ],
             ),
           ),
@@ -93,10 +93,11 @@ class CustomDialog {
     MainAxisAlignment? mainAxisAlignment,
     bool blure = false,
     bool canPop = true,
-    EdgeInsetsGeometry? padding
+    EdgeInsetsGeometry? padding,
   }) {
     return showDialog<T>(
-      barrierDismissible: canPop,
+      // barrierDismissible: canPop,
+      barrierDismissible: false,
       context: AppDetails.globalNavigatorKey.currentContext!,
       builder: (context) {
         return Padding(
@@ -109,7 +110,8 @@ class CustomDialog {
             child: Material(
               type: MaterialType.transparency,
               child: Column(
-                mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.center,
+                mainAxisAlignment:
+                    mainAxisAlignment ?? MainAxisAlignment.center,
                 children: [
                   Container(
                     width: double.infinity,
@@ -121,7 +123,7 @@ class CustomDialog {
                       borderRadius: BorderRadius.circular(borderRadius ?? 24),
                     ),
                     child: chid,
-                  )
+                  ),
                 ],
               ),
             ),
@@ -141,9 +143,7 @@ class CustomDialog {
         child: const Material(
           type: MaterialType.transparency,
           child: Center(
-            child: CustomProgressIndicater(
-              valueColor: ColorResources.white,
-            ),
+            child: CustomProgressIndicater(valueColor: ColorResources.white),
           ),
         ),
       ),

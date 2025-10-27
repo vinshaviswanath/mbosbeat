@@ -132,11 +132,11 @@ class _SelectionSwitchState extends State<SelectionSwitch>
           child: Container(
             width: 18,
             height: 18,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: ColorResources.white,
 
               shape: BoxShape.circle,
-              boxShadow: const [
+              boxShadow: [
                 BoxShadow(
                   color: Colors.black26,
                   blurRadius: 4,

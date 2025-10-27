@@ -1,5 +1,7 @@
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_switch.dart';
+import 'package:mpos_beat/presentation/views/admin_home/widget/popover_body.dart';
+import 'package:popover/popover.dart';
 
 class InfoTooltip extends StatefulWidget {
   final String title;
@@ -137,27 +139,70 @@ class _InfoTooltipState extends State<InfoTooltip> {
                 w8,
               ],
               CustomSwitch(
-                value: _isOn,
-                thumbColor: !_isOn
+                value: widget.initialValue || _isOn,
+                thumbColor: !widget.initialValue || !_isOn
                     ? ColorResources.bluishGray
                     : ColorResources.white,
-                borderColor: !_isOn
+                borderColor: !widget.initialValue || !_isOn
                     ? ColorResources.neutralmidgray
                     : ColorResources.transparent,
-                onChanged: (val) {
-                  setState(() => _isOn = val);
-                  debugPrint("Switch is now: $val");
+                onChanged: (value) {
+                  widget.onToggle?.call(value);
                 },
               ),
               w8,
-              GestureDetector(
-                key: _iconKey,
-                onTap: _toggleTooltip,
-                child: const Icon(
-                  Icons.info_outline,
-                  color: ColorResources.indigoBlue,
-                  size: 16,
-                ),
+              Builder(
+                builder: (context) {
+                  return GestureDetector(
+                    // key: _iconKey,
+                    // onTap: _toggleTooltip,
+                    onTap: () {
+                      showPopover(
+                        context: context,
+                        bodyBuilder: (context) => Material(
+                          borderRadius: BorderRadius.circular(12),
+                          color: ColorResources.white,
+                          shadowColor: ColorResources.black,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 8,
+                            ),
+                            child: Text(
+                              widget.description.isNotEmpty
+                                  ? widget.description
+                                  : "By enabling this feature, it will allow the user to use this feature. This is just a demonstration message.",
+                              style:
+                                  context.textStyle.s09.w300.dustyBlue.roboto,
+                            ),
+                          ),
+                        ),
+                        direction: PopoverDirection.bottom,
+                        arrowDyOffset: 10,
+                        arrowDxOffset: -200,
+                        radius: 16,
+                        shadow: [
+                          BoxShadow(
+                            offset: const Offset(0, 3),
+                            blurRadius: 6,
+                            color: ColorResources.black.withValues(alpha: 0.2),
+                          ),
+                        ],
+                        width: context.getSize.width / 1.1,
+                        // height: 120,
+                        arrowHeight: 0,
+                        arrowWidth: 30,
+                        backgroundColor: Colors.white,
+                        barrierColor: Colors.transparent,
+                      );
+                    },
+                    child: const Icon(
+                      Icons.info_outline,
+                      color: ColorResources.indigoBlue,
+                      size: 16,
+                    ),
+                  );
+                },
               ),
             ],
           ),

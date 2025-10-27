@@ -1,5 +1,5 @@
 import 'package:mpos_beat/core/utils/imports.dart';
-import 'package:mpos_beat/presentation/views/admin_user_management/user_manage/manage_user_screen.dart';
+import 'package:mpos_beat/data/models/users_list_model.dart';
 
 class ListCard extends StatelessWidget {
   const ListCard({
@@ -15,7 +15,7 @@ class ListCard extends StatelessWidget {
 
   final bool isSelected;
   // ignore: prefer_typing_uninitialized_variables
-  final UserModel item;
+  final UserMasterList item;
   final int index;
   final void Function()? onTap;
   final bool isBlocked;
@@ -55,12 +55,12 @@ class ListCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  item.name,
+                  "${item.name}",
                   style: context.textStyle.s12.w500.copyWith(color: textColor),
                 ),
                 h4,
                 Text(
-                  item.designation,
+                  "${item.designation}",
                   style: context.textStyle.s10.w400.copyWith(
                     color: isBlocked ? Colors.grey : ColorResources.bluishGray,
                   ),

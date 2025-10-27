@@ -62,23 +62,36 @@ class UserManageDialog {
                   ),
                 ),
                 h20,
-                ...List.generate(optionActions.length, (i) {
-                  return Column(
-                    children: [
-                      OptionItem(
-                        index: i,
+                // ...List.generate(optionActions.length, (i) {
+                //   return Column(
+                //     children: [
+                //       OptionItem(
+                //         index: i,
+                //         selectedIndex: optionIndex,
+                //         title: optionTitles[i],
+                //         icon: optionIcons[i],
+                //         onTap: (_) {
+                //           setStateDialog(() => optionIndex = i);
+                //           optionActions[i]();
+                //         },
+                //       ),
+                //       if (i < optionActions.length - 1) _buildDivider(),
+                //     ],
+                //   );
+                // }),
+
+                ListView.separated(itemBuilder: (context, index) {
+                  return OptionItem(
+                        index: index,
                         selectedIndex: optionIndex,
-                        title: optionTitles[i],
-                        icon: optionIcons[i],
+                        title: optionTitles[index],
+                        icon: optionIcons[index],
                         onTap: (_) {
-                          setStateDialog(() => optionIndex = i);
-                          optionActions[i]();
+                          setStateDialog(() => optionIndex = index);
+                          optionActions[index]();
                         },
-                      ),
-                      if (i < optionActions.length - 1) _buildDivider(),
-                    ],
-                  );
-                }),
+                      );
+                }, separatorBuilder: (context, index) => _buildDivider(), itemCount: optionTitles.length)
               ],
             ),
           );

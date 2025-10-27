@@ -30,14 +30,18 @@ class LoginImpl {
     return runSafely(
       () async {
         final response = await httpClient.post(Urls.login, data: param.toMap());
+        // final response = await httpClient.postFormData(Urls.login, fields: param.toMap());
 
         if (response.isOk) {
           final data = LoginResponse.fromJson(response.data);
           final token = data.loginData?.token;
+          final customerId = data.loginData?.customerId;
           if (token != null && token.isNotEmpty && data.status != 10) {
             await sharedPreferences.setString("token", token);
           }
-          // await appDb.into(appDb.users).insert(User.fromJson(response.data));
+          await sharedPreferences.setInt("customerId", customerId ?? 0);
+
+          await appDb.into(appDb.users).insert(User.fromJson(response.data));
           // appDb.select(appDb.users).watch();
           return data;
         }

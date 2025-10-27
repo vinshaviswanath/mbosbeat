@@ -5,6 +5,7 @@ import 'package:mpos_beat/data/models/login_response.dart';
 import 'package:mpos_beat/data/models/otp_response.dart';
 import 'package:mpos_beat/data/models/response_data.dart';
 import 'package:mpos_beat/domain/request/company_registration_params.dart';
+import 'package:mpos_beat/domain/request/login_by_token_param.dart';
 import 'package:mpos_beat/domain/request/login_params.dart';
 import 'package:mpos_beat/domain/request/otp_validation_params.dart';
 import 'package:mpos_beat/domain/request/resend_otp_params.dart';
@@ -34,6 +35,8 @@ interface class IAuthenticationFacad {
   ResultFuture<LoginResponse> login(BaseParams<LoginParams> params) {
     throw UnimplementedError();
   }
-  
 
+    ResultFuture<LoginResponse> loginByToken(BaseParams<LoginByTokenParam> params) {
+    throw UnimplementedError();
+  }
 }

@@ -27,7 +27,11 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
     final appLocalization = context.l10n;
     return Consumer<UserManagementProvider>(
       builder: (context, provider, _) {
-        final items = provider.designations;
+        final items = provider.designationList?.userDesignationList;
+
+        Logger.logSuccess(
+          "DESIGNATION ::: ${provider.designationList?.toJson()}",
+        );
 
         return Scaffold(
           resizeToAvoidBottomInset: false,
@@ -51,6 +55,7 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
                   CustomDialog.showBottomCustomDialog(
                     chid: AddDesignationWidget(
                       designationController: designationController,
+                      isEdit: false,
                     ),
                   );
                 },
@@ -65,19 +70,21 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
               ),
             ],
           ),
-          body: items.isEmpty
+          body: items!.isEmpty
               ? Center(
                   child: Text(
                     appLocalization
                         .user_designation_screen_no_designation_added,
-                    style: TextStyle(color: Colors.grey),
+                    style: const TextStyle(color: Colors.grey),
                   ),
                 )
               : CustomScrollView(
                   slivers: [
                     SliverList(
                       delegate: SliverChildBuilderDelegate((context, index) {
-                        final item = items[index];
+                        final item = provider
+                            .designationList
+                            ?.userDesignationList[index];
                         final isSelected = index == selectedIndex;
 
                         return GestureDetector(
@@ -94,17 +101,21 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
                                   context,
                                 ).requestFocus(FocusNode());
 
-                                if (item.status == "Inactive") {
+                                if (item?.active == 0) {
                                   CustomDialog.showBottomCustomDialog(
                                     padding: const EdgeInsets.symmetric(
                                       vertical: 16,
                                     ),
                                     chid: ActivateUserDesignationWidget(
                                       onActivate: () {
-                                        provider.activateDesignation(index);
-                                        setState(() {
-                                          item.status = "Active";
-                                        });
+                                        // provider.activateDesignation(index);
+                                        // setState(() {
+                                        //   item.status = "Active";
+                                        // });
+                                        provider.designationActivation(
+                                          context,
+                                          designationId: item?.id ?? 0,
+                                        );
                                       },
                                     ),
                                   );
@@ -143,7 +154,7 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
                                                     Column(
                                                       children: [
                                                         Text(
-                                                          item.userName,
+                                                          item?.name ?? '',
                                                           style: context
                                                               .textStyle
                                                               .s12
@@ -153,7 +164,9 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
                                                         ),
                                                         h4,
                                                         Text(
-                                                          item.status,
+                                                          item?.active == 0
+                                                              ? 'Inactive'
+                                                              : 'Active',
                                                           style: context
                                                               .textStyle
                                                               .s10
@@ -197,20 +210,21 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
                                                     () => optionIndex = -1,
                                                   );
                                                   designationController.text =
-                                                      item.userName;
+                                                      item?.name ?? '';
 
                                                   CustomDialog.showBottomCustomDialog(
                                                     chid: AddDesignationWidget(
+                                                      index: index,
                                                       designationController:
                                                           designationController,
                                                       isEdit: true,
-                                                      onSave: (newName) {
-                                                        provider
-                                                            .editDesignation(
-                                                              index,
-                                                              newName,
-                                                            );
-                                                      },
+                                                      // onSave: (newName) {
+                                                      //   provider
+                                                      //       .editDesignation(
+                                                      //         index,
+                                                      //         newName,
+                                                      //       );
+                                                      // },
                                                     ),
                                                   );
                                                 },
@@ -237,7 +251,10 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
                                                           onDelete: () {
                                                             provider
                                                                 .deleteDesignation(
-                                                                  index,
+                                                                  context,
+                                                                  designationId:
+                                                                      item?.id ??
+                                                                      0,
                                                                 );
                                                           },
                                                         );
@@ -266,14 +283,61 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
                                                       builder: (dialogContext) {
                                                         return DeactivateUserDesignationWidget(
                                                           onDeactivate: () {
+                                                            Logger.logSuccess(
+                                                              "IDDDDDDDDD :: ${item?.id}",
+                                                            );
+                                                            // provider
+                                                            //     .deactivateDesignation(
+                                                            //       index,
+                                                            //     );
+                                                            // setState(() {
+                                                            //   item.status =
+                                                            //       "Inactive";
+                                                            // });
                                                             provider
-                                                                .deactivateDesignation(
-                                                                  index,
-                                                                );
-                                                            setState(() {
-                                                              item.status =
-                                                                  "Inactive";
-                                                            });
+                                                                .designationdeactivation(
+                                                                  context,
+                                                                  designationId:
+                                                                      item?.id ??
+                                                                      0,
+                                                                )
+                                                                .then((
+                                                                  response,
+                                                                ) {
+                                                                  // if (!mounted)
+                                                                  //   return; // ✅ ensures widget still active
+
+                                                                  // WidgetsBinding.instance.addPostFrameCallback((
+                                                                  //   _,
+                                                                  // ) {
+                                                                  //   if (!mounted)
+                                                                  //     return; // double safety
+                                                                  //   ScaffoldMessenger.of(
+                                                                  //     context,
+                                                                  //   ).showSnackBar(
+                                                                  //     SnackBar(
+                                                                  //       content: Text(
+                                                                  //         "${response?.message}",
+                                                                  //         textAlign:
+                                                                  //             TextAlign.center,
+                                                                  //       ),
+                                                                  //       behavior:
+                                                                  //           SnackBarBehavior.floating,
+                                                                  //       shape: RoundedRectangleBorder(
+                                                                  //         borderRadius: BorderRadius.circular(
+                                                                  //           16,
+                                                                  //         ),
+                                                                  //       ),
+                                                                  //       margin: const EdgeInsets.symmetric(
+                                                                  //         horizontal:
+                                                                  //             16,
+                                                                  //         vertical:
+                                                                  //             8,
+                                                                  //       ),
+                                                                  //     ),
+                                                                  //   );
+                                                                  // });
+                                                                });
                                                           },
                                                         );
                                                       },
@@ -299,20 +363,18 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
                                   color: ColorResources.indigoBlue,
                                 ),
                                 child: Text(
-                                  item.status == "Inactive"
-                                      ? "Activate"
-                                      : "Edit",
+                                  item?.active == 0 ? "Activate" : "Edit",
                                   style:
                                       context.textStyle.s10.w400.white.roboto,
                                 ),
                               ),
                             ),
                             isSelected: isSelected,
-                            item: item,
+                            item: item!,
                             index: index,
                           ),
                         );
-                      }, childCount: items.length),
+                      }, childCount: items?.length),
                     ),
                   ],
                 ),
