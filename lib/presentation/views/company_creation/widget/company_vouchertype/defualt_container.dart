@@ -495,7 +495,7 @@ class _DefaultContainerState extends State<DefaultContainer> {
                                 context,
                                 request: CreateCompanyVocherParams(
                                   id: widget.companydata!.id,
-                                  companyid: 1302,
+                                  companyid: widget.companyId,
                                   hasB2B: widget.isToggleOn,
                                   b2Bprefix: defaultprefixcontroller.text,
                                   b2Bsuffix: defaultsuffixcontroller.text,
@@ -520,7 +520,10 @@ class _DefaultContainerState extends State<DefaultContainer> {
                               );
                             }
                             context.pop();
-                            provider.fetchVoucherTypes(context, 1302);
+                            provider.fetchVoucherTypes(
+                              context,
+                              widget.companyId,
+                            );
                           }
                           dataCollecting();
                         },

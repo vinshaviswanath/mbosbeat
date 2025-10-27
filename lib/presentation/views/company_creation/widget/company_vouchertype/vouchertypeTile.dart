@@ -9,6 +9,7 @@ class VoucherTypeTile extends StatefulWidget {
   final int isToggleOnInt;
   final VoidCallback onEdit;
   final ValueChanged<int> onChanged;
+  final int companyId;
 
   const VoucherTypeTile({
     super.key,
@@ -17,6 +18,7 @@ class VoucherTypeTile extends StatefulWidget {
     required this.isToggleOnInt,
     required this.onEdit,
     required this.onChanged,
+    required this.companyId,
   });
 
   @override
@@ -67,7 +69,7 @@ class _VoucherTypeTileState extends State<VoucherTypeTile> {
                       context: context,
                       builder: (BuildContext context) {
                         return CheckBoxDialogBox(
-                          companyId: 1302,
+                          companyId: widget.companyId,
                           isCheckOn: isCheckOnInt,
                           isToggleOn: isToggleOnInt,
                           id: voucher.id,

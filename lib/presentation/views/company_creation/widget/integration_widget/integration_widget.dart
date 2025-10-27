@@ -15,6 +15,9 @@ class _IntegrationWidgetState extends State<IntegrationWidget> {
   @override
   Widget build(BuildContext context) {
     final appLocalizations = context.l10n;
+    final provider = context.watch<CompanyCreationProvider>();
+
+    final companyId = provider.companyid; // 👈 This is your new company ID
     return CustomScrollView(
       slivers: [
         SliverPadding(
@@ -56,11 +59,6 @@ class _IntegrationWidgetState extends State<IntegrationWidget> {
                 child: CustomButton(
                   buttonText: appLocalizations.integration_type_finish,
                   onTap: () {
-                    final provider = Provider.of<CompanyCreationProvider>(
-                      context,
-                      listen: false,
-                    );
-
                     final integrationType =
                         provider.selectedIntegrationType ?? '';
                     final serialNo =
@@ -76,7 +74,7 @@ class _IntegrationWidgetState extends State<IntegrationWidget> {
                       context,
                       onSuccess: widget.onTap,
                       params: IntegrationParams(
-                        companyid: 1302,
+                        companyid: companyId ?? 0,
                         integrationType: integrationType,
                         serialNo: serialNo,
                         stockInCloud: stockInCloud,

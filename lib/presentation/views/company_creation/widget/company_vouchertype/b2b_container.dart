@@ -412,7 +412,7 @@ class _B2bContainerState extends State<B2bContainer> {
                         context,
                         request: CreateCompanyVocherParams(
                           id: widget.companydata!.id,
-                          companyid: 1302,
+                          companyid: widget.companyId,
                           hasB2B: widget.isToggleOn,
                           b2Bprefix: b2bprefixcontroller.text,
                           b2Bsuffix: b2bsuffixcontroller.text,
@@ -426,7 +426,7 @@ class _B2bContainerState extends State<B2bContainer> {
                         ),
                       );
                       context.pop();
-                      provider.fetchVoucherTypes(context, 1302);
+                      provider.fetchVoucherTypes(context, widget.companyId);
                     }
                     dataCollecting();
                   }
