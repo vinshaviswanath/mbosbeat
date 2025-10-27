@@ -1,5 +1,6 @@
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/data/company_voucher_data.dart';
+import 'package:mpos_beat/data/models/get_company_voucher_model.dart';
 import 'package:mpos_beat/domain/request/create_company_voucher_request.dart';
 import 'package:mpos_beat/l10n/generated/app_localizations.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
@@ -41,6 +42,10 @@ class _DefaultContainerState extends State<DefaultContainer> {
     print("companyid in defaultcontainer ....${widget.companyId}");
     print("toggle in defaultcontainer ....${widget.isToggleOn}");
     print("checkbox  in defaultcontainer....${widget.isCheckOn}");
+
+    print("B2Cprefix:${widget.companydata!.b2CPrefix}");
+    print("B2Csuffix:${widget.companydata!.b2CSuffix}");
+    print("B2Cwidth:${widget.companydata!.b2CWidth}");
     fillFields();
     super.initState();
   }
@@ -501,20 +506,21 @@ class _DefaultContainerState extends State<DefaultContainer> {
                                       0,
                                   b2Bdeclaration:
                                       defaultdeclarationController.text,
-                                  b2Cprefix: widget.companydata!.b2CPrefix,
-                                  b2Csuffix: defaultsuffixcontroller.text,
+                                  //
+                                  b2Cprefix: "",
+                                  b2Csuffix: "",
                                   b2Cwidth:
-                                      int.tryParse(
-                                        defaultwidthcontroller.text,
-                                      ) ??
+                                      // int.tryParse(
+                                      //   defaultwidthcontroller.text,
+                                      // ) ??
                                       0,
-                                  b2Cdeclaration:
-                                      defaultdeclarationController.text,
+                                  b2Cdeclaration: "",
                                   isenabled: widget.isCheckOn,
                                 ),
                               );
                             }
                             context.pop();
+                            provider.fetchVoucherTypes(context, 1302);
                           }
                           dataCollecting();
                         },

@@ -419,13 +419,14 @@ class _B2bContainerState extends State<B2bContainer> {
                           b2Bwidth: int.tryParse(b2bwidthcontroller.text) ?? 0,
                           b2Bdeclaration: b2bdeclarationcontroller.text,
                           b2Cprefix: widget.companydata!.b2CPrefix,
-                          b2Csuffix: b2bsuffixcontroller.text,
-                          b2Cwidth: int.tryParse(b2bwidthcontroller.text) ?? 0,
-                          b2Cdeclaration: b2bdeclarationcontroller.text,
+                          b2Csuffix: widget.companydata!.b2CSuffix,
+                          b2Cwidth: widget.companydata!.b2CWidth,
+                          b2Cdeclaration: widget.companydata!.b2CDeclaration,
                           isenabled: widget.isCheckOn == 1 ? 1 : 0,
                         ),
                       );
                       context.pop();
+                      provider.fetchVoucherTypes(context, 1302);
                     }
                     dataCollecting();
                   }

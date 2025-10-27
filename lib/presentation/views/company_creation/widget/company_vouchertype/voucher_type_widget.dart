@@ -32,7 +32,7 @@ class _VoucherTypeWidgetState extends State<VoucherTypeWidget> {
       slivers: [
         SliverToBoxAdapter(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -40,7 +40,7 @@ class _VoucherTypeWidgetState extends State<VoucherTypeWidget> {
                   appLocalization.voucher_type_voucher_type_activation,
                   style: context.textStyle.s12.w400.bluishGray.roboto,
                 ),
-                h6,
+                //h6,
               ],
             ),
           ),
@@ -63,34 +63,53 @@ class _VoucherTypeWidgetState extends State<VoucherTypeWidget> {
               );
             }
 
-            return SliverList(
-              delegate: SliverChildBuilderDelegate((context, index) {
-                final voucher = voucherList[index];
-                //  Logger.logInfo('Voucher #$index: ${voucher.voucherMenuName}');
+            return SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.all(15),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        offset: Offset(0, 10),
 
-                final isCheckOnInt =
-                    (checkStates[voucher.id] ?? voucher.isEnabled) == 1 ? 1 : 0;
-                final isToggleOnInt =
-                    (toggleStates[voucher.id] ?? voucher.hasB2B) == 1 ? 1 : 0;
-                return Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 8,
+                        blurRadius: 3,
+                      ),
+                    ],
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  child: VoucherTypeTile(
-                    voucher: voucher,
-                    isCheckOnInt: isCheckOnInt,
-                    isToggleOnInt: isToggleOnInt,
-                    onEdit: () {},
 
-                    onChanged: (newValue) {
-                      setState(() {
-                        checkStates[voucher.id] = newValue;
-                      });
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: voucherList.length,
+                    itemBuilder: (context, index) {
+                      final voucher = voucherList[index];
+                      final isCheckOnInt =
+                          (checkStates[voucher.id] ?? voucher.isEnabled) == 1
+                          ? 1
+                          : 0;
+                      final isToggleOnInt =
+                          (toggleStates[voucher.id] ?? voucher.hasB2B) == 1
+                          ? 1
+                          : 0;
+
+                      return VoucherTypeTile(
+                        voucher: voucher,
+                        isCheckOnInt: isCheckOnInt,
+                        isToggleOnInt: isToggleOnInt,
+                        onEdit: () {},
+                        onChanged: (newValue) {
+                          setState(() {
+                            checkStates[voucher.id] = newValue;
+                          });
+                        },
+                      );
                     },
                   ),
-                );
-              }, childCount: voucherList.length),
+                ),
+              ),
             );
           },
         ),
@@ -106,7 +125,23 @@ class _VoucherTypeWidgetState extends State<VoucherTypeWidget> {
                 child: CustomButton(
                   buttonText: appLocalization.company_info_widget_next,
                   isborderEnable: false,
-                  onTap: widget.onTap,
+                  onTap: () {
+                    final provider = Provider.of<CompanyCreationProvider>(
+                      context,
+                      listen: false,
+                    );
+
+                    // Check if any voucher has isEnabled == 1
+                    final hasEnabledVoucher = provider.voucherTypes.any(
+                      (voucher) => voucher.isEnabled == 1,
+                    );
+
+                    print("hasEnabledVoucher: $hasEnabledVoucher");
+
+                    if (hasEnabledVoucher) {
+                      widget.onTap?.call();
+                    }
+                  },
                 ),
               ),
             ],

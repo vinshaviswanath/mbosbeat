@@ -46,10 +46,21 @@ class CompanyCreationProvider extends ChangeNotifier {
 
   bool get isGodown => _isGodown;
 
+  int? _companyid;
+  int? get companyid => _companyid;
+
   void toggleVoucher() {
     _isGodown = !_isGodown;
     notifyListeners();
   }
+
+  // bool _isExpand = false;
+  // bool get isExpand => _isExpand;
+
+  // void toggleCheckBox() {
+  //   _isExpand = !_isExpand;
+  //   notifyListeners();
+  // }
 
   final formKey = GlobalKey<FormState>();
 
@@ -186,6 +197,7 @@ class CompanyCreationProvider extends ChangeNotifier {
 
         if (response.status == 1) {
           _companyCreationDtos = response;
+          _companyid = _companyCreationDtos!.id;
           markStageCompleted(0);
           onSuccess?.call();
         } else {
@@ -432,8 +444,9 @@ class CompanyCreationProvider extends ChangeNotifier {
 
         if (response.status == 1) {
           _createdVouchers = response;
-          markStageCompleted(2);
+          markStageCompleted(1);
           onSuccess?.call();
+
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(response.message, textAlign: TextAlign.center),
