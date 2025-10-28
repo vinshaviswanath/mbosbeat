@@ -107,47 +107,5 @@ interface class IUserManagementFacad {
 
   //================================ Create company =====================
 
-  ResultFuture<GodownResponse> createGodown(
-    BaseParams<CreateGodownParams> params,
-  ) {
-    throw UnimplementedError();
-  }
 
-  ResultFuture<GodownListModel> getAllGodowns({required String companyId}) {
-    throw UnimplementedError();
-  }
-
-  ResultFuture<GodownResponse> activateGodown({required String mid}) {
-    throw UnimplementedError();
-  }
-
-  ResultFuture<GodownResponse> deactivateGodown({required String mid}) {
-    throw UnimplementedError();
-  }
-
-  ResultFuture<GodownResponse> deleteGodown({required String mid}) {
-    throw UnimplementedError();
-  }
-
-  ResultFuture<RouteResponse> createRoute(
-    BaseParams<CreateRouteParams> params,
-  ) {
-    throw UnimplementedError();
-  }
-
-  ResultFuture<RouteListModel> getRouteList({required String companyId}) {
-    throw UnimplementedError();
-  }
-
-  ResultFuture<RouteResponse> activateRoute({required String routeId}) {
-    throw UnimplementedError();
-  }
-
-    ResultFuture<RouteResponse> deactivateRoute({required String routeId}) {
-    throw UnimplementedError();
-  }
-
-  ResultFuture<RouteResponse> deleteRoute({required String routeId}) {
-    throw UnimplementedError();
-  }
 }

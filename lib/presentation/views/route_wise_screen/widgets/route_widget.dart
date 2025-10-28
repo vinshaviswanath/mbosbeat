@@ -1,5 +1,5 @@
 import 'package:mpos_beat/core/utils/imports.dart';
-import 'package:mpos_beat/presentation/views/route_wise_screen/route_wise_screen.dart';
+import 'package:mpos_beat/data/models/route_list_model.dart';
 
 class RouteWidget extends StatelessWidget {
   const RouteWidget({
@@ -14,7 +14,7 @@ class RouteWidget extends StatelessWidget {
   });
 
   final bool isSelected;
-  final RouteDetails item;
+  final RouteList item;
   final int index;
   final void Function()? onTap;
   final bool isBlocked;
@@ -23,7 +23,7 @@ class RouteWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isInactive = item.status == "Inactive";
+    final bool isInactive = item.active == 0;
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -49,7 +49,7 @@ class RouteWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  item.routeName,
+                  "${item.routeName}",
                   style: context.textStyle.s12.w500.roboto.copyWith(
                     color: isInactive
                         ? ColorResources.indigoBlue.withValues(alpha: 0.3)
@@ -58,7 +58,7 @@ class RouteWidget extends StatelessWidget {
                 ),
                 h4,
                 Text(
-                  item.status,
+                  isInactive ? "Inactive" : "Active",
                   style: context.textStyle.s10.w400.roboto.copyWith(
                     color: isInactive
                         ? ColorResources.dustyBlue.withValues(alpha: 0.6)

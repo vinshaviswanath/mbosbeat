@@ -21,11 +21,6 @@ class CompanyRegisteration {
   final HttpClient httpClient;
   final RunSafely runSafely;
   final SharedPreferences sharedPreferences;
-  CompanyRegisteration(this.httpClient, this.runSafely, this.sharedPreferences);
-
-  ResultFuture<CompanyRegistrationResponse> call(
-    BaseParams<CompanyRegistrationParams> param,
-  ) {
   final AppDb appDb;
   final EventManager eventManager;
   final List<IBinder> binders;
