@@ -33,7 +33,8 @@ class _SplashScreenState extends State<SplashScreen> {
           } else {
             context.read<UserManagementProvider>().getDesignationList(context);
 
-            context.pushNamed(AppRouterConst.adminHome);
+            // context.pushNamed(AppRouterConst.adminHome);
+            context.pushNamed(AppRouterConst.adminDashboard);
           }
         } else {
           context.pushNamed(AppRouterConst.onboardScreen);

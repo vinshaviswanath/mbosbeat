@@ -5,7 +5,6 @@ import 'package:mpos_beat/core/utils/app_details.dart';
 import 'package:mpos_beat/domain/repositories/i_authentication_facad.dart';
 import 'package:mpos_beat/domain/repositories/i_company_creation_facad.dart';
 import 'package:mpos_beat/domain/repositories/i_user_management_facad.dart';
-import 'package:mpos_beat/l10n/app_localizations.dart';
 
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';

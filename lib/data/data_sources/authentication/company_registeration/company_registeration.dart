@@ -13,23 +13,18 @@ import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/models/company_registration_response.dart';
 import 'package:mpos_beat/domain/request/company_registration_params.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+ 
 enum CompanyRegisterationEvent { register }
-
+ 
 // @lazySingleton
 class CompanyRegisteration {
   final HttpClient httpClient;
   final RunSafely runSafely;
   final SharedPreferences sharedPreferences;
-  CompanyRegisteration(this.httpClient, this.runSafely, this.sharedPreferences);
-
-  ResultFuture<CompanyRegistrationResponse> call(
-    BaseParams<CompanyRegistrationParams> param,
-  ) {
   final AppDb appDb;
   final EventManager eventManager;
   final List<IBinder> binders;
-
+ 
   CompanyRegisteration(
     this.httpClient,
     this.runSafely,
@@ -42,7 +37,7 @@ class CompanyRegisteration {
       binder.bind();
     }
   }
-
+ 
   ResultFuture<CompanyRegistrationResponse> call(BaseParams<CompanyRegistrationParams> param) {
     return runSafely(
       () async {
@@ -58,23 +53,23 @@ class CompanyRegisteration {
         // await appDb
         //     .into(appDb.registrationDetails)
         //     .insert(details.toCompanion(true));
-
+ 
         // eventManager.emit<BaseParams<CompanyRegistrationParams>>(
         //   eventName: CompanyRegisterationEvent.register.name,
         //   data: param,
         // );
-
+ 
         final response = await httpClient.post(
           Urls.companyRegistration,
           data: param.toMap(),
         );
-
+ 
         if (response.isOk) {
           final data = CompanyRegistrationResponse.fromJson(response.data);
-
+ 
           return data;
         }
-
+ 
         throw CustomException(errMsg: response.message);
       },
       failure: (error) {
@@ -87,7 +82,7 @@ class CompanyRegisteration {
     );
   }
 }
-
+ 
 // UserDetailModel? getUserDetails() {
 //   final userDetailsJson = sl<SharedPreferences>().getString('user-details');
 //   if (userDetailsJson != null) {
@@ -100,21 +95,21 @@ class CompanyRegisteration {
 //   }
 //   return null;
 // }
-
+ 
 abstract class IBinder {
   void bind();
   void unbind();
 }
-
+ 
 @lazySingleton
 class RegistrationEventBinder implements IBinder {
   final EventManager eventManager;
   final HttpClient httpClient;
   final RunSafely runSafely;
   RegistrationEventBinder(this.eventManager, this.httpClient, this.runSafely);
-
+ 
   StreamSubscription? subscription;
-
+ 
   @override
   void bind() {
     subscription = eventManager
@@ -128,9 +123,10 @@ class RegistrationEventBinder implements IBinder {
           );
         });
   }
-
+ 
   @override
   void unbind() {
     subscription?.cancel();
   }
 }
+ 
