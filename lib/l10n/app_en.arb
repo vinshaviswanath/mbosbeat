@@ -367,7 +367,7 @@
     "deactivate_route_widget_route_deactivated": "The route have been deactivated successfully!",
     "delete_route_widget_delete_route":  "Delete Route",
     "delete_route_widget_are_you_sure": "Are you sure want to delete Route?",
-    "delete_route_widget_route_removed": "The route have been removed successfully."
+    "delete_route_widget_route_removed": "The route have been removed successfully.",
 
-
+    "company_settings_screen_title":"Company Settings"
 }

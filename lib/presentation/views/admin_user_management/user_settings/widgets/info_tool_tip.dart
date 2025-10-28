@@ -33,6 +33,15 @@ class _InfoTooltipState extends State<InfoTooltip> {
   final GlobalKey _iconKey = GlobalKey();
   OverlayEntry? _overlayEntry;
 
+  bool _isOn = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // ✅ Initialize toggle value correctly
+    _isOn = widget.initialValue;
+  }
+
   void _showTooltip() {
     if (_overlayEntry != null) return;
 
@@ -98,8 +107,6 @@ class _InfoTooltipState extends State<InfoTooltip> {
     super.dispose();
   }
 
-  bool _isOn = false;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -147,6 +154,10 @@ class _InfoTooltipState extends State<InfoTooltip> {
                 onChanged: (val) {
                   setState(() => _isOn = val);
                   debugPrint("Switch is now: $val");
+                  // ✅ Notify parent screen
+                  if (widget.onToggle != null) {
+                    widget.onToggle!(val);
+                  }
                 },
               ),
               w8,
