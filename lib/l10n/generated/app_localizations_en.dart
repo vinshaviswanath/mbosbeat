@@ -1136,4 +1136,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get delete_route_widget_route_removed =>
       'The route have been removed successfully.';
+
+  @override
+  String get company_settings_screen_title => 'Company Settings';
 }

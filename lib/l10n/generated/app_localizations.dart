@@ -2235,6 +2235,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The route have been removed successfully.'**
   String get delete_route_widget_route_removed;
+
+  /// No description provided for @company_settings_screen_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Company Settings'**
+  String get company_settings_screen_title;
 }
 
 class _AppLocalizationsDelegate
