@@ -14,16 +14,6 @@ import 'package:http/http.dart' as _i519;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
-import '../../data/data_sources/company_creation/company_info.dart'
-    as _i158;
-import '../../data/data_sources/company_creation/country_list.dart'
-    as _i821;
-import '../../data/data_sources/company_creation/create_company_voucherType.dart'
-    as _i453;
-import '../../data/data_sources/company_creation/get_company_voucherType.dart'
-    as _i95;
-import '../../data/data_sources/company_creation/state_list.dart'
-    as _i94;
 import '../../data/data_sources/authentication/company_registeration/company_registeration.dart'
     as _i70;
 import '../../data/data_sources/authentication/login/login_impl.dart' as _i526;
@@ -37,10 +27,14 @@ import '../../data/data_sources/company_creation/company_info.dart' as _i665;
 import '../../data/data_sources/company_creation/country_list.dart' as _i79;
 import '../../data/data_sources/company_creation/create_company_voucherType.dart'
     as _i1051;
+import '../../data/data_sources/company_creation/get_all_company_settings.dart'
+    as _i252;
 import '../../data/data_sources/company_creation/get_company_voucherType.dart'
     as _i1001;
 import '../../data/data_sources/company_creation/integration_type.dart'
     as _i189;
+import '../../data/data_sources/company_creation/registration_type.dart'
+    as _i34;
 import '../../data/data_sources/company_creation/state_list.dart' as _i374;
 import '../../data/local_db/app_db.dart' as _i264;
 import '../../data/repositories/i_authentication_facad_impl.dart' as _i823;
@@ -126,6 +120,13 @@ Future<_i174.GetIt> init(
       gh<_i460.SharedPreferences>(),
     ),
   );
+  gh.lazySingleton<_i252.GetAllCompanySettingsDatasource>(
+    () => _i252.GetAllCompanySettingsDatasource(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
   gh.lazySingleton<_i1001.GetCompanyvoucherTypeListDatasource>(
     () => _i1001.GetCompanyvoucherTypeListDatasource(
       gh<_i816.HttpClient>(),
@@ -135,6 +136,13 @@ Future<_i174.GetIt> init(
   );
   gh.lazySingleton<_i189.IntegrationDatasource>(
     () => _i189.IntegrationDatasource(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i34.RegistrationTypeDatasource>(
+    () => _i34.RegistrationTypeDatasource(
       gh<_i816.HttpClient>(),
       gh<_i530.RunSafely>(),
       gh<_i460.SharedPreferences>(),
@@ -164,12 +172,14 @@ Future<_i174.GetIt> init(
       gh<_i665.CompanyInfo>(),
       gh<_i79.CountryList>(),
       gh<_i374.StateList>(),
+      gh<_i34.RegistrationTypeDatasource>(),
       gh<_i530.RunSafely>(),
       gh<_i816.HttpClient>(),
       gh<_i460.SharedPreferences>(),
       gh<_i1001.GetCompanyvoucherTypeListDatasource>(),
       gh<_i1051.CreateCompanyVouchertypeDatasource>(),
       gh<_i189.IntegrationDatasource>(),
+      gh<_i252.GetAllCompanySettingsDatasource>(),
     ),
   );
   return getIt;
