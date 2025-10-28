@@ -14,16 +14,6 @@ import 'package:http/http.dart' as _i519;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
-import '../../data/data_sources/company_creation/company_info.dart'
-    as _i158;
-import '../../data/data_sources/company_creation/country_list.dart'
-    as _i821;
-import '../../data/data_sources/company_creation/create_company_voucherType.dart'
-    as _i453;
-import '../../data/data_sources/company_creation/get_company_voucherType.dart'
-    as _i95;
-import '../../data/data_sources/company_creation/state_list.dart'
-    as _i94;
 import '../../data/data_sources/authentication/company_registeration/company_registeration.dart'
     as _i70;
 import '../../data/data_sources/authentication/login/login_impl.dart' as _i526;
@@ -35,6 +25,8 @@ import '../../data/data_sources/authentication/reset_password/reset_password.dar
     as _i244;
 import '../../data/data_sources/company_creation/company_info.dart' as _i665;
 import '../../data/data_sources/company_creation/country_list.dart' as _i79;
+import '../../data/data_sources/company_creation/create_company_settings.dart'
+    as _i640;
 import '../../data/data_sources/company_creation/create_company_voucherType.dart'
     as _i1051;
 import '../../data/data_sources/company_creation/get_company_voucherType.dart'
@@ -170,6 +162,7 @@ Future<_i174.GetIt> init(
       gh<_i1001.GetCompanyvoucherTypeListDatasource>(),
       gh<_i1051.CreateCompanyVouchertypeDatasource>(),
       gh<_i189.IntegrationDatasource>(),
+      gh<_i640.CreateCompanySettingsDatasource>(),
     ),
   );
   return getIt;

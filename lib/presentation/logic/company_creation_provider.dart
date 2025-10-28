@@ -4,11 +4,11 @@ import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/failures/value_object/value_object.dart';
 import 'package:mpos_beat/core/failures/value_object/value_validator.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/models/create_companySettings_model.dart';
 import 'package:mpos_beat/data/models/create_company_voucher_model.dart';
 import 'package:mpos_beat/data/models/get_company_voucher_model.dart';
 import 'package:mpos_beat/data/models/data/company_voucher_data.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
-import 'package:mpos_beat/core/utils/logger.dart';
 import 'package:mpos_beat/data/models/company_creation_response.dart';
 import 'package:mpos_beat/data/models/country_list_response.dart';
 import 'package:mpos_beat/data/models/data/country_list_data.dart';
@@ -17,6 +17,7 @@ import 'package:mpos_beat/data/models/integration_model.dart';
 import 'package:mpos_beat/data/models/state_list_response.dart';
 import 'package:mpos_beat/domain/repositories/i_company_creation_facad.dart';
 import 'package:mpos_beat/domain/request/company_creation_params.dart';
+import 'package:mpos_beat/domain/request/create_company_settings_request.dart';
 import 'package:mpos_beat/domain/request/create_company_voucher_request.dart';
 import 'package:mpos_beat/domain/request/integration_request.dart';
 import 'package:mpos_beat/presentation/views/godown_wise_screen/godown_wise_screen.dart';
@@ -48,7 +49,32 @@ class CompanyCreationProvider extends ChangeNotifier {
 
   int? _companyid;
   int? get companyid => _companyid;
+  List<CompanyVoucherTypesListData> _voucherTypes = [];
+  List<CompanyVoucherTypesListData> get voucherTypes => _voucherTypes;
+  CompanyvouchertypeslistDtos? _companyvouchertypeslistDtos;
+  CompanyvouchertypeslistDtos? get companyvouchertypeslistDtos =>
+      _companyvouchertypeslistDtos;
+  CreateCompanyvochertypeDtos? _createdVouchers;
+  CreateCompanyvochertypeDtos? get createdVouchers => _createdVouchers;
+  CountryListDtos? _countryListDtos;
+  CountryListDtos? get coountryListdtos => _countryListDtos;
 
+  List<CountryListData> _countries = [];
+  List<CountryListData> get countries => _countries;
+
+  CountryListData? _selectedCountry;
+  CountryListData? get selectedCountry => _selectedCountry;
+  StateListDtos? _stateListDtos;
+  StateListDtos? get stateListDtos => _stateListDtos;
+
+  List<StateListData> _statelists = [];
+  List<StateListData> get statelists => _statelists;
+
+  StateListData? _selectedState;
+  StateListData? get selectedState => _selectedState;
+
+  IntegrationDtos? _integrationDtos;
+  IntegrationDtos? get integrationDtos => _integrationDtos;
   void toggleVoucher() {
     _isGodown = !_isGodown;
     notifyListeners();
@@ -218,14 +244,6 @@ class CompanyCreationProvider extends ChangeNotifier {
   }
 
   //fetchCountryList........
-  CountryListDtos? _countryListDtos;
-  CountryListDtos? get coountryListdtos => _countryListDtos;
-
-  List<CountryListData> _countries = [];
-  List<CountryListData> get countries => _countries;
-
-  CountryListData? _selectedCountry;
-  CountryListData? get selectedCountry => _selectedCountry;
 
   Future<CountryListDtos?> fectchCountryList(BuildContext context) async {
     final result = await iCompanyCreationFacad.countryList();
@@ -266,14 +284,6 @@ class CompanyCreationProvider extends ChangeNotifier {
   }
 
   //FetchStateList
-  StateListDtos? _stateListDtos;
-  StateListDtos? get stateListDtos => _stateListDtos;
-
-  List<StateListData> _statelists = [];
-  List<StateListData> get statelists => _statelists;
-
-  StateListData? _selectedState;
-  StateListData? get selectedState => _selectedState;
 
   Future<StateListDtos?> fetchStateList(
     BuildContext context,
@@ -313,9 +323,6 @@ class CompanyCreationProvider extends ChangeNotifier {
   ///Integration Type.......
   IntegrationSerialNo _integrationSerialNo = IntegrationSerialNo("");
   IntegrationSerialNo get integrationSerialNo => _integrationSerialNo;
-
-  IntegrationDtos? _integrationDtos;
-  IntegrationDtos? get integrationDtos => _integrationDtos;
 
   AutovalidateMode integrationSerialNoAutovalidateMode =
       AutovalidateMode.disabled;
@@ -412,8 +419,6 @@ class CompanyCreationProvider extends ChangeNotifier {
   }
 
   //CREATE COMPANY VOUCHER TYPE
-  CreateCompanyvochertypeDtos? _createdVouchers;
-  CreateCompanyvochertypeDtos? get createdVouchers => _createdVouchers;
 
   Future<CreateCompanyvochertypeDtos?> createCompanyVoucherTypes(
     BuildContext context, {
@@ -717,11 +722,7 @@ class CompanyCreationProvider extends ChangeNotifier {
   }
 
   //get companyvuchertypelist
-  List<CompanyVoucherTypesListData> _voucherTypes = [];
-  List<CompanyVoucherTypesListData> get voucherTypes => _voucherTypes;
-  CompanyvouchertypeslistDtos? _companyvouchertypeslistDtos;
-  CompanyvouchertypeslistDtos? get companyvouchertypeslistDtos =>
-      _companyvouchertypeslistDtos;
+
   Future<CompanyvouchertypeslistDtos?> fetchVoucherTypes(
     BuildContext context,
     int companyID,
@@ -767,27 +768,66 @@ class CompanyCreationProvider extends ChangeNotifier {
     _isLoading = value;
     notifyListeners();
   }
+
+  CreateCompanySettingsDtos? _createCompanySettingsDtos;
+  CreateCompanySettingsDtos? get createCompanySettingsDtos =>
+      _createCompanySettingsDtos;
+  //create company settings
+  Future<CreateCompanySettingsDtos?> createCompanySettings(
+    BuildContext context, {
+    required CreateCompanysettingsParams param,
+    VoidCallback? onSuccess,
+  }) async {
+    final result = await iCompanyCreationFacad.createCompanySettings(
+      BaseParams(data: param),
+    );
+
+    result.fold(
+      (failure) {
+        _errorMessage = failure.errorMsg.toString();
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
+        Logger.logError("Create Company Settings failed: $_errorMessage");
+        _setLoading(false);
+        notifyListeners();
+      },
+      (response) {
+        Logger.logSuccess(
+          "Create Company Settings success : ${response.toJson()}",
+        );
+        Logger.logSuccess("Status : ${response.status}");
+        _setLoading(false);
+        notifyListeners();
+
+        if (response.status == 1) {
+          _createCompanySettingsDtos = response;
+          onSuccess?.call();
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(response.message, textAlign: TextAlign.center),
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            ),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(response.message, textAlign: TextAlign.center),
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            ),
+          );
+        }
+      },
+    );
+    return _createCompanySettingsDtos;
+  }
 }
- 
-
-
-  // final Map<String, bool> _voucherStates = {
-  //   "Sales Order": false,
-  //   "Sales": false,
-  //   "Sales Return": false,
-  //   "Receipt": false,
-  //   "Payment": false,
-  //   "Purchase": false,
-  //   "Purchase Return": false,
-  //   "Expenses": false,
-  //   "Feedbacks": false,
-  // };
-
-  // Map<String, bool> get voucherStates => _voucherStates;
-
-  // bool getValue(String title) => _voucherStates[title] ?? false;
-
-  // void toggleValue(String title, bool? value) {
-  //   _voucherStates[title] = value ?? false;
-  //   notifyListeners();
-  // }

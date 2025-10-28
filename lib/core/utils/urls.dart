@@ -15,4 +15,5 @@ class Urls {
   static const String countryList = '/api/Country/GetAll';
   static const String stateList = "/api/State/GetAll?CountryID=";
   static const String integrationType = "/api/CompanyIntegration/Create";
+  static const String createCompanySettings = "/api/CompanySettings/Create";
 }

@@ -5,6 +5,7 @@ import 'package:mpos_beat/core/serveice/http_client.dart';
 import 'package:mpos_beat/core/utils/typedefs.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/company_info.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/country_list.dart';
+import 'package:mpos_beat/data/data_sources/company_creation/create_company_settings.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/create_company_voucherType.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/get_company_voucherType.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/integration_type.dart';
@@ -16,12 +17,14 @@ import 'package:mpos_beat/data/data_sources/company_creation/get_company_voucher
 import 'package:mpos_beat/data/data_sources/company_creation/state_list.dart';
 import 'package:mpos_beat/data/models/company_creation_response.dart';
 import 'package:mpos_beat/data/models/country_list_response.dart';
+import 'package:mpos_beat/data/models/create_companySettings_model.dart';
 import 'package:mpos_beat/data/models/create_company_voucher_model.dart';
 import 'package:mpos_beat/data/models/get_company_voucher_model.dart';
 import 'package:mpos_beat/data/models/integration_model.dart';
 import 'package:mpos_beat/data/models/state_list_response.dart';
 import 'package:mpos_beat/domain/repositories/i_company_creation_facad.dart';
 import 'package:mpos_beat/domain/request/company_creation_params.dart';
+import 'package:mpos_beat/domain/request/create_company_settings_request.dart';
 import 'package:mpos_beat/domain/request/create_company_voucher_request.dart';
 import 'package:mpos_beat/domain/request/integration_request.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,6 +35,7 @@ class ICompanyCreationFacadImpl implements ICompanyCreationFacad {
   final GetCompanyvoucherTypeListDatasource getCompanyvoucherTypeList;
   final CreateCompanyVouchertypeDatasource createCompanyVouchertypeDatasource;
   final IntegrationDatasource integrationDatasource;
+  final CreateCompanySettingsDatasource createCompanySettingsDatasource;
   final CountryList fecthcountryList;
   final StateList fetchstateList;
   final HttpClient httpClient;
@@ -48,6 +52,7 @@ class ICompanyCreationFacadImpl implements ICompanyCreationFacad {
     this.getCompanyvoucherTypeList,
     this.createCompanyVouchertypeDatasource,
     this.integrationDatasource,
+    this.createCompanySettingsDatasource,
   );
 
   @override
@@ -84,5 +89,12 @@ class ICompanyCreationFacadImpl implements ICompanyCreationFacad {
     BaseParams<IntegrationParams> param,
   ) {
     return integrationDatasource.call(param);
+  }
+
+  @override
+  ResultFuture<CreateCompanySettingsDtos> createCompanySettings(
+    BaseParams<CreateCompanysettingsParams> param,
+  ) {
+    return createCompanySettingsDatasource.call(param);
   }
 }
