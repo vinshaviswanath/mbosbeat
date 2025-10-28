@@ -47,6 +47,8 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
     return Consumer<CompanyCreationProvider>(
       builder: (context, provider, _) {
         final countries = provider.countries;
+        final regtypelist = provider.registrationlists;
+
         final items = countries
             .map((e) => e.countryName.trim())
             .where((name) => name.isNotEmpty)
@@ -67,6 +69,19 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
         final selectedStateValue =
             stateItems.contains(provider.selectedState?.stateName)
             ? provider.selectedState?.stateName
+            : null;
+
+        final regItems = regtypelist
+            .map((e) => e.registrationType.trim())
+            .where((regType) => regType.isNotEmpty)
+            .toSet()
+            .toList();
+
+        final selectRegType =
+            regItems.contains(
+              provider.selectedregistrationtype?.registrationType,
+            )
+            ? provider.selectedregistrationtype?.registrationType
             : null;
 
         return CustomScrollView(
@@ -246,24 +261,26 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
                     ),
                     h16,
 
-                    Text(
-                      appLocalizations.company_info_widget_registration_type,
-                      style: context.textStyle.s12.bluishGray.w400.roboto,
-                    ),
-                    h4,
-                    CustomTextField(
-                      hint: appLocalizations
+                    CustomDropdown(
+                      label: appLocalizations
+                          .company_info_widget_registration_type,
+                      hintText: appLocalizations
                           .company_info_widget_enter_registration_type,
-                      hintTextStyle: context.textStyle.s12.silverGray.w300,
-                      backgroundColor: ColorResources.lightGray,
-                      onChange: provider.updateRegType,
-                      inputType: TextInputType.emailAddress,
-                      borderRadius: 12,
-                      hintColor: ColorResources.silverGray,
-                      borderColor: ColorResources.transparent,
+                      items: regItems,
+                      value: selectRegType,
+
+                      onChanged: (value) {
+                        if (value != null) {
+                          final selected = regtypelist.firstWhere(
+                            (element) =>
+                                element.registrationType.trim() == value.trim(),
+                          );
+                          provider.selectRegistrationType(selected);
+                          provider.updateRegType(value);
+                        }
+                      },
                       autovalidateMode: provider.companyinfoAutovalidateMode,
                       failure: provider.registrationType.getFailure,
-                      controller: regTypeController,
                     ),
                     h40,
                     CustomButton(
@@ -286,7 +303,10 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
                                 provider.selectedCountry?.id.toString() ?? '',
                             stateId:
                                 provider.selectedState?.id.toString() ?? "",
-                            regType: regTypeController.text,
+                            regType:
+                                provider.selectedregistrationtype?.id
+                                    .toString() ??
+                                "",
                           ),
                         );
                       },

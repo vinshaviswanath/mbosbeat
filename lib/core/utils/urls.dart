@@ -15,7 +15,7 @@ class Urls {
   static const String countryList = '/api/Country/GetAll';
   static const String stateList = "/api/State/GetAll?CountryID=";
   static const String integrationType = "/api/CompanyIntegration/Create";
-  static const String loginByToken = "/auth/loginToken";
+static const String loginByToken = "/auth/loginToken";
   static const String addDesignation = "/api/UserDesignation/Create";
   static const String getUserDesignationList = "/api/UserDesignation/GetAll";
   static const String activateDesignation1 =
@@ -49,4 +49,8 @@ class Urls {
   static const String deactivateRoute1 = "/api/Route/Active?RouteID=";
   static const String deactivateRoute2 = "&Active=0";
   static const String deleteRoute ="/api/Route/Delete?RouteID=";
+static const String registrationType =
+      "/api/RegistrationType/GetAll?CountryID=";
+  static const String getAllCompanySettings =
+      "/api/CompanySettings/GetAll?CompanyID=";
 }

@@ -5,6 +5,9 @@ import 'package:mpos_beat/core/failures/value_object/value_object.dart';
 import 'package:mpos_beat/core/failures/value_object/value_validator.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/create_company_voucher_model.dart';
+import 'package:mpos_beat/data/models/data/get_all_company_settings_data.dart';
+import 'package:mpos_beat/data/models/data/registration_type_data.dart';
+import 'package:mpos_beat/data/models/get_all_company_settings_model.dart';
 import 'package:mpos_beat/data/models/get_company_voucher_model.dart';
 import 'package:mpos_beat/data/models/data/company_voucher_data.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
@@ -14,6 +17,7 @@ import 'package:mpos_beat/data/models/country_list_response.dart';
 import 'package:mpos_beat/data/models/data/country_list_data.dart';
 import 'package:mpos_beat/data/models/data/state_list_data.dart';
 import 'package:mpos_beat/data/models/integration_model.dart';
+import 'package:mpos_beat/data/models/registration_type_model.dart';
 import 'package:mpos_beat/data/models/state_list_response.dart';
 import 'package:mpos_beat/domain/repositories/i_company_creation_facad.dart';
 import 'package:mpos_beat/domain/request/company_creation_params.dart';
@@ -258,9 +262,11 @@ class CompanyCreationProvider extends ChangeNotifier {
     _selectedCountry = country;
     _selectedState = null; // reset state selection
     _statelists = []; // clear previous states
-
+    _registrationlists = []; // clear previous registration types
+    _selectedregistrationtype = null; // reset registration type selection
     if (country != null) {
       fetchStateList(context, country.id); // fetch states for this country
+      getRegistrationType(context, country.id);
     }
     notifyListeners();
   }
@@ -307,6 +313,55 @@ class CompanyCreationProvider extends ChangeNotifier {
 
   void selectState(StateListData? states) {
     _selectedState = states;
+    notifyListeners();
+  }
+
+  //GetRegisrationType
+  RegistrationTypeDtos? _registrationTypeDtos;
+  RegistrationTypeDtos? get registrationTypeDtos => _registrationTypeDtos;
+
+  List<RegistrationTypeData> _registrationlists = [];
+  List<RegistrationTypeData> get registrationlists => _registrationlists;
+
+  RegistrationTypeData? _selectedregistrationtype;
+  RegistrationTypeData? get selectedregistrationtype =>
+      _selectedregistrationtype;
+
+  Future<RegistrationTypeDtos?> getRegistrationType(
+    BuildContext context,
+    int countryId,
+  ) async {
+    final result = await iCompanyCreationFacad.getRegistrationType(countryId);
+
+    result.fold(
+      (failure) {
+        _errorMessage = failure.errorMsg.toString();
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
+        Logger.logError("Fetch Registration List Failed : $_errorMessage");
+        _setLoading(false);
+        notifyListeners();
+      },
+      (response) {
+        Logger.logSuccess(
+          "Fetch Registration List success : ${response.toJson()}",
+        );
+        Logger.logSuccess("Status : ${response.status}");
+
+        _registrationTypeDtos = response;
+        _registrationlists =
+            _registrationTypeDtos?.registrationTypeListData ?? [];
+
+        _setLoading(false);
+        notifyListeners();
+      },
+    );
+    return _registrationTypeDtos;
+  }
+
+  void selectRegistrationType(RegistrationTypeData? registrationTypelist) {
+    _selectedregistrationtype = registrationTypelist;
     notifyListeners();
   }
 
@@ -472,6 +527,56 @@ class CompanyCreationProvider extends ChangeNotifier {
       },
     );
     return _createdVouchers;
+  }
+
+  //GetAllCompanySettings
+  List<CompanySettingsListData> _comapanySettingsListData = [];
+  List<CompanySettingsListData> get comapanySettingsListData =>
+      _comapanySettingsListData;
+  CompanysettingslistDtos? _companySettingslistDtos;
+  CompanysettingslistDtos? get companySettingslistDtos =>
+      _companySettingslistDtos;
+  Future<CompanysettingslistDtos?> getCompanySettings(
+    BuildContext context,
+    int companyID,
+  ) async {
+    _setLoading(true);
+
+    final result = await iCompanyCreationFacad.getCompanySettings(companyID);
+    result.fold(
+      (failure) {
+        _errorMessage = failure.errorMsg.toString();
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
+        Logger.logError("Fetch Company Settings failed: $_errorMessage");
+        _setLoading(false);
+        notifyListeners();
+      },
+
+      (response) {
+        Logger.logSuccess(
+          "Fetch Company Settings successfully: $_voucherTypes",
+        );
+        Logger.logSuccess("Status : ${response.status}");
+        _companySettingslistDtos = response;
+        _comapanySettingsListData = response.companySettingsList;
+        _setLoading(false);
+        notifyListeners();
+
+        // if (response.status == 1) {
+        //   _errorMessage = null;
+
+        //   notifyListeners();
+        //   // ScaffoldMessenger.of(context).showSnackBar(
+        //   //   const SnackBar(content: Text("Voucher Types fetched successfully")),
+        //   // );
+        // } else {
+        //   _errorMessage = "Unexpected status: ${response.status}";
+        // }
+      },
+    );
+    return _companySettingslistDtos;
   }
 
   // ======================================================================
