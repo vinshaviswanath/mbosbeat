@@ -1,12 +1,16 @@
+import 'package:mpos_beat/core/di/injection.dart';
+import 'package:mpos_beat/data/models/godown_list_model.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddVehicle extends StatefulWidget {
-  const AddVehicle({super.key, this.isEdit = false, this.index});
+  const AddVehicle({super.key, this.isEdit = false, this.index, this.details});
 
   final bool isEdit;
   final int? index;
+  final VehicleList? details;
 
   @override
   State<AddVehicle> createState() => _AddVehicleState();
@@ -16,25 +20,25 @@ class _AddVehicleState extends State<AddVehicle> {
   late TextEditingController vehicleNameController;
   late TextEditingController vehicleCodeController;
 
+  bool _submitted = false;
+  String? vehicleNameError;
+  String? vehicleCodeError;
+
   @override
   void initState() {
     super.initState();
-    final provider = context.read<CompanyCreationProvider>();
-    vehicleNameController = TextEditingController(
-      text: widget.isEdit && widget.index != null
-          ? provider.vehicles[widget.index!].vehicleName
-          : widget.isEdit == true && widget.index == null
-          ? "VEHICLE 1"
-          : '',
-    );
+    vehicleNameController = TextEditingController();
+    vehicleCodeController = TextEditingController();
 
-    vehicleCodeController = TextEditingController(
-      text: widget.isEdit && widget.index != null
-          ? provider.vehicles[widget.index!].vehicleCode
-          : widget.isEdit == true && widget.index == null
-          ? "VEH264"
-          : '',
-    );
+    if (!widget.isEdit) {
+      vehicleNameController.clear();
+      vehicleCodeController.clear();
+    } else {
+      vehicleNameController.text = widget.details?.name ?? '';
+      vehicleCodeController.text = widget.details?.code ?? '';
+    }
+    _submitted = false;
+    vehicleNameError = null;
   }
 
   @override
@@ -47,6 +51,8 @@ class _AddVehicleState extends State<AddVehicle> {
   @override
   Widget build(BuildContext context) {
     final appLocalizations = context.l10n;
+    final pref = sl<SharedPreferences>();
+    final companyId = pref.getInt('selected_company_id');
     return Consumer<CompanyCreationProvider>(
       builder: (context, provider, _) {
         return Column(
@@ -82,7 +88,9 @@ class _AddVehicleState extends State<AddVehicle> {
               inputType: TextInputType.text,
               borderRadius: 12,
               hintColor: ColorResources.silverGray,
-              borderColor: ColorResources.transparent,
+              borderColor: _submitted && vehicleNameError != null
+                  ? ColorResources.roseRed
+                  : ColorResources.transparent,
             ),
             h12,
             Text(
@@ -100,41 +108,150 @@ class _AddVehicleState extends State<AddVehicle> {
               inputType: TextInputType.text,
               borderRadius: 12,
               hintColor: ColorResources.silverGray,
-              borderColor: ColorResources.transparent,
+              borderColor: _submitted && vehicleCodeError != null
+                  ? ColorResources.roseRed
+                  : ColorResources.transparent,
             ),
             h16,
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: context.getSize.width / 4,
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: CustomButton(
-                      onTap: () {
-                        if (widget.isEdit && widget.index != null) {
-                          // Edit vehicle
-                          provider.editVehicle(
-                            widget.index!,
-                            vehicleNameController.text.trim(),
-                            vehicleCodeController.text.trim(),
-                          );
-                          Navigator.pop(context);
-                        } else {
-                          // Add vehicle (with validation)
-                          provider.submitVehicle(context);
+            Row(
+              children: [
+                Expanded(
+                  child: CustomButton(
+                    onTap: () {
+                      if (widget.isEdit && widget.index != null) {
+                        // Edit vehicle
+                        // provider.editVehicle(
+                        //   widget.index!,
+                        //   vehicleNameController.text.trim(),
+                        //   vehicleCodeController.text.trim(),
+                        // );
+
+                        setState(() {
+                          _submitted = true;
+                          vehicleNameError = null;
+                          vehicleCodeError = null;
+
+                          if (vehicleNameController.text.trim().isEmpty) {
+                            vehicleNameError = "Please enter vehicle name";
+                          }
+                          if (vehicleCodeController.text.trim().isEmpty) {
+                            vehicleCodeError = "Please enter vehicle code";
+                          }
+                        });
+                        Logger.logSuccess(
+                          "Godown EDIT ID ${provider.godownListResponse?.vehicleList[widget.index!].id}",
+                        );
+                        if (vehicleNameError != null &&
+                            vehicleCodeError != null) {
+                          return;
                         }
-                        vehicleNameController.clear();
-                        vehicleCodeController.clear();
-                      },
-                      borderRadius: BorderRadius.circular(16),
-                      buttonText: appLocalizations.save,
-                      textStyle: context.textStyle.s12.w500.white,
-                      isborderEnable: false,
-                    ),
+                        Logger.logSuccess("Company Id :::: $companyId");
+                        provider
+                            .createGodown(
+                              context: context,
+                              userId:
+                                  provider
+                                      .godownListResponse
+                                      ?.vehicleList[widget.index!]
+                                      .id ??
+                                  0,
+                              companyId: companyId ?? 0,
+                              code: vehicleCodeController.text,
+                              name: vehicleNameController.text,
+                            )
+                            // provider
+                            //     .addUserDesignation(
+                            //       context,
+                            //       designation: widget.designationController.text
+                            //           .trim(),
+                            //       customerId: customerId,
+                            //       id:
+                            //           provider
+                            //               .designationList
+                            //               ?.userDesignationList[widget.index]
+                            //               .id
+                            //               .toString() ??
+                            //           "",
+                            //     )
+                            .then((_) {
+                              WidgetsBinding.instance.addPostFrameCallback((_) {
+                                setState(() {
+                                  _submitted = false;
+                                  vehicleNameError = null;
+                                  vehicleCodeError = null;
+                                });
+                                Navigator.pop(context);
+                              });
+                            });
+                      } else {
+                        // Add vehicle (with validation)
+                        // provider.submitVehicle(context);
+                        setState(() {
+                          _submitted = true;
+                          vehicleNameError = null;
+                          vehicleCodeError = null;
+
+                          if (vehicleNameController.text.trim().isEmpty) {
+                            vehicleNameError = "Please enter vehicle name";
+                          }
+                          if (vehicleCodeController.text.trim().isEmpty) {
+                            vehicleCodeError = "Please enter vehicle code";
+                          }
+                        });
+
+                        if (vehicleNameError != null &&
+                            vehicleCodeError != null) {
+                          return;
+                        }
+
+                        Logger.logSuccess("Company Id :::: $companyId");
+
+                        provider
+                            .createGodown(
+                              context: context,
+                              userId: 0,
+                              companyId: companyId ?? 0,
+                              code: vehicleCodeController.text,
+                              name: vehicleNameController.text,
+                            )
+                            // provider
+                            //     .addUserDesignation(
+                            //       context,
+                            //       designation: widget.designationController.text
+                            //           .trim(),
+                            //       customerId: customerId,
+                            //       id: "0",
+                            //     )
+                            .then((_) {
+                              vehicleNameController.clear();
+                              vehicleCodeController.clear();
+                              WidgetsBinding.instance.addPostFrameCallback((_) {
+                                Navigator.pop(context);
+                              });
+                            });
+                      }
+                    },
+                    borderRadius: BorderRadius.circular(16),
+                    buttonText: appLocalizations.save,
+                    textStyle: context.textStyle.s12.w500.white,
+                    isborderEnable: false,
                   ),
-                ],
-              ),
+                ),
+                w12,
+                Expanded(
+                  child: CustomButton(
+                    onTap: () {
+                      vehicleNameController.clear();
+                      vehicleCodeController.clear();
+                      Navigator.pop(context);
+                    },
+                    borderRadius: BorderRadius.circular(16),
+                    buttonText: appLocalizations.cancel,
+                    textStyle: context.textStyle.s12.w500.white,
+                    isborderEnable: false,
+                  ),
+                ),
+              ],
             ),
             h8,
           ],

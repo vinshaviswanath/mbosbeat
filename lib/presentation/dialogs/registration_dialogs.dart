@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mpos_beat/core/theme/colors.dart';
 import 'package:mpos_beat/core/theme/diamentions.dart';
 import 'package:mpos_beat/core/theme/text_styles.dart';
 import 'package:mpos_beat/core/utils/app_assets.dart';
@@ -132,6 +133,62 @@ class RegistrationDialogs {
           ),
           h28,
         ],
+      ),
+    );
+  }
+
+  static Future<void> customDialog({
+    required BuildContext context,
+    required String heading,
+    required String subTitle,
+    required VoidCallback onTap,
+    required String buttonText,
+  }) {
+    final appLocalization = context.l10n;
+
+    return CustomDialog.showBottomCustomDialog(
+      chid: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(heading, style: context.textStyle.s14.w500.indigoBlue),
+            h10,
+            Text(
+              subTitle,
+              style: context.textStyle.s12.w500.dustyBlue.roboto,
+              textAlign: TextAlign.center,
+            ),
+            h24,
+            Row(
+              children: [
+                Expanded(
+                  child: CustomButton(
+                    onTap: () {
+                      onTap();
+                    },
+                    buttonText: buttonText,
+                    textStyle: context.textStyle.s12.w500.white.roboto,
+                    isborderEnable: false,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+                w10,
+                Expanded(
+                  child: CustomButton(
+                    onTap: () => Navigator.pop(context),
+                    buttonText: appLocalization.cancel,
+                    textStyle: context.textStyle.s12.w500.white.roboto,
+                    color: ColorResources.bluishGray,
+                    isborderEnable: false,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+              ],
+            ),
+            h10,
+          ],
+        ),
       ),
     );
   }

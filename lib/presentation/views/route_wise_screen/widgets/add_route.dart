@@ -1,12 +1,16 @@
+import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/models/route_list_model.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddRoute extends StatefulWidget {
-  const AddRoute({super.key, this.isEdit = false, this.index});
+  const AddRoute({super.key, this.isEdit = false, this.index, this.details});
 
   final bool isEdit;
   final int? index;
+  final RouteList? details;
 
   @override
   State<AddRoute> createState() => _AddRouteState();
@@ -16,25 +20,26 @@ class _AddRouteState extends State<AddRoute> {
   late TextEditingController routeNameController;
   late TextEditingController routeCodeController;
 
+  bool _submitted = false;
+  String? routeNameError;
+  String? routeCodeError;
+
   @override
   void initState() {
     super.initState();
-    final provider = context.read<CompanyCreationProvider>();
-    routeNameController = TextEditingController(
-      text: widget.isEdit && widget.index != null
-          ? provider.routes[widget.index!].routeName
-          : widget.isEdit == true && widget.index == null
-          ? "ROUTE 1"
-          : '',
-    );
+    routeNameController = TextEditingController();
+    routeCodeController = TextEditingController();
 
-    routeCodeController = TextEditingController(
-      text: widget.isEdit && widget.index != null
-          ? provider.routes[widget.index!].routeCode
-          : widget.isEdit == true && widget.index == null
-          ? "ROU07"
-          : '',
-    );
+    if (!widget.isEdit) {
+      routeNameController.clear();
+      routeCodeController.clear();
+    } else {
+      routeNameController.text = widget.details?.routeName ?? '';
+      routeCodeController.text = widget.details?.routeCode ?? '';
+    }
+    _submitted = false;
+    routeNameError = null;
+    routeCodeError = null;
   }
 
   @override
@@ -47,6 +52,8 @@ class _AddRouteState extends State<AddRoute> {
   @override
   Widget build(BuildContext context) {
     final appLocalizations = context.l10n;
+    final pref = sl<SharedPreferences>();
+    final companyId = pref.getInt('selected_company_id');
     return Consumer<CompanyCreationProvider>(
       builder: (context, provider, _) {
         return Column(
@@ -103,38 +110,149 @@ class _AddRouteState extends State<AddRoute> {
               borderColor: ColorResources.transparent,
             ),
             h16,
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: context.getSize.width / 4,
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: CustomButton(
-                      onTap: () {
-                        if (widget.isEdit && widget.index != null) {
-                          // Edit Route
-                          provider.editRoute(
-                            widget.index!,
-                            routeNameController.text.trim(),
-                            routeCodeController.text.trim(),
-                          );
-                          Navigator.pop(context);
-                        } else {
-                          // Add route (with validation)
-                          provider.submitRoute(context);
+            Row(
+              children: [
+                Expanded(
+                  child: CustomButton(
+                    onTap: () {
+                      if (widget.isEdit && widget.index != null) {
+                        // Edit Route
+                        // provider.editRoute(
+                        //   widget.index!,
+                        //   routeNameController.text.trim(),
+                        //   routeCodeController.text.trim(),
+                        // );
+                        // Navigator.pop(context);
+                        setState(() {
+                          _submitted = true;
+                          routeNameError = null;
+                          routeCodeError = null;
+
+                          if (routeNameController.text.trim().isEmpty) {
+                            routeNameError = "Please enter route name";
+                          }
+                          if (routeCodeController.text.trim().isEmpty) {
+                            routeCodeError = "Please enter route code";
+                          }
+                        });
+                        Logger.logSuccess(
+                          "Route EDIT ID ${provider.routeListResponse?.routeList[widget.index!].id}",
+                        );
+                        if (routeNameError != null && routeCodeError != null) {
+                          return;
                         }
-                        routeNameController.clear();
-                        routeCodeController.clear();
-                      },
-                      borderRadius: BorderRadius.circular(16),
-                      buttonText: appLocalizations.save,
-                      textStyle: context.textStyle.s12.w500.white,
-                      isborderEnable: false,
-                    ),
+                        Logger.logSuccess("Company Id :::: $companyId");
+                        provider
+                            .createRoute(
+                              context: context,
+                              id:
+                                  provider
+                                      .routeListResponse
+                                      ?.routeList[widget.index!]
+                                      .id ??
+                                  0,
+                              // provider
+                              //     .godownListResponse
+                              //     ?.vehicleList[widget.index!]
+                              //     .id ??
+                              // 0,
+                              companyId: companyId ?? 0,
+                              routeCode: routeCodeController.text,
+                              routeName: routeNameController.text,
+                            )
+                            // provider
+                            //     .addUserDesignation(
+                            //       context,
+                            //       designation: widget.designationController.text
+                            //           .trim(),
+                            //       customerId: customerId,
+                            //       id:
+                            //           provider
+                            //               .designationList
+                            //               ?.userDesignationList[widget.index]
+                            //               .id
+                            //               .toString() ??
+                            //           "",
+                            //     )
+                            .then((_) {
+                              WidgetsBinding.instance.addPostFrameCallback((_) {
+                                setState(() {
+                                  _submitted = false;
+                                  routeNameError = null;
+                                  routeCodeError = null;
+                                });
+                                Navigator.pop(context);
+                              });
+                            });
+                      } else {
+                        // Add route (with validation)
+                        // provider.submitRoute(context);
+                        setState(() {
+                          _submitted = true;
+                          routeNameError = null;
+                          routeCodeError = null;
+
+                          if (routeNameController.text.trim().isEmpty) {
+                            routeNameError = "Please enter route name";
+                          }
+                          if (routeCodeController.text.trim().isEmpty) {
+                            routeCodeError = "Please enter route code";
+                          }
+                        });
+
+                        if (routeNameError != null && routeCodeError != null) {
+                          return;
+                        }
+
+                        Logger.logSuccess("Company Id :::: $companyId");
+
+                        provider
+                            .createRoute(
+                              context: context,
+                              id: 0,
+                              companyId: companyId ?? 0,
+                              routeCode: routeCodeController.text,
+                              routeName: routeNameController.text,
+                            )
+                            // provider
+                            //     .addUserDesignation(
+                            //       context,
+                            //       designation: widget.designationController.text
+                            //           .trim(),
+                            //       customerId: customerId,
+                            //       id: "0",
+                            //     )
+                            .then((_) {
+                              routeNameController.clear();
+                              routeCodeController.clear();
+                              WidgetsBinding.instance.addPostFrameCallback((_) {
+                                Navigator.pop(context);
+                              });
+                            });
+                      }
+                    },
+
+                    borderRadius: BorderRadius.circular(16),
+                    buttonText: appLocalizations.save,
+                    textStyle: context.textStyle.s12.w500.white,
+                    isborderEnable: false,
                   ),
-                ],
-              ),
+                ),
+                w12,
+                Expanded(
+                  child: CustomButton(
+                    onTap: () {
+                      routeNameController.clear();
+                      routeCodeController.clear();
+                      Navigator.pop(context);
+                    },
+                    borderRadius: BorderRadius.circular(16),
+                    buttonText: appLocalizations.cancel,
+                    textStyle: context.textStyle.s12.w500.white,
+                    isborderEnable: false,
+                  ),
+                ),
+              ],
             ),
             h8,
           ],

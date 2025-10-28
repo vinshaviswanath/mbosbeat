@@ -3,6 +3,8 @@ import 'package:mpos_beat/core/base/run_safely.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
 import 'package:mpos_beat/core/serveice/http_client.dart';
 import 'package:mpos_beat/core/utils/typedefs.dart';
+import 'package:mpos_beat/data/data_sources/company_creation/activate_godown/activate_godown.dart';
+import 'package:mpos_beat/data/data_sources/company_creation/activate_route/activate_route.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/company_info.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/country_list.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/create_company_settings.dart';
@@ -11,8 +13,20 @@ import 'package:mpos_beat/data/data_sources/company_creation/get_all_company_set
 import 'package:mpos_beat/data/data_sources/company_creation/get_company_voucherType.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/integration_type.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/registration_type.dart';
+import 'package:mpos_beat/data/data_sources/company_creation/create_godown/create_godown.dart';
+import 'package:mpos_beat/data/data_sources/company_creation/create_route/create_route.dart';
+import 'package:mpos_beat/data/data_sources/company_creation/deactivate_godown/deactivate_godown.dart';
+import 'package:mpos_beat/data/data_sources/company_creation/deactivate_route/deactivate_route.dart';
+import 'package:mpos_beat/data/data_sources/company_creation/delete_godown/delete_godown.dart';
+import 'package:mpos_beat/data/data_sources/company_creation/delete_route/delete_route.dart';
+import 'package:mpos_beat/data/data_sources/company_creation/get_all_companies.dart';
+import 'package:mpos_beat/data/data_sources/company_creation/get_company_voucherType.dart';
+import 'package:mpos_beat/data/data_sources/company_creation/get_godown_list/get_godown_list.dart';
+import 'package:mpos_beat/data/data_sources/company_creation/get_route_list/get_route_list.dart';
+import 'package:mpos_beat/data/data_sources/company_creation/integration_type.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/state_list.dart';
 import 'package:mpos_beat/data/models/company_creation_response.dart';
+import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/data/models/country_list_response.dart';
 import 'package:mpos_beat/data/models/create_companySettings_model.dart';
 import 'package:mpos_beat/data/models/create_company_voucher_model.dart';
@@ -20,11 +34,19 @@ import 'package:mpos_beat/data/models/get_all_company_settings_model.dart';
 import 'package:mpos_beat/data/models/get_company_voucher_model.dart';
 import 'package:mpos_beat/data/models/integration_model.dart';
 import 'package:mpos_beat/data/models/registration_type_model.dart';
+import 'package:mpos_beat/data/models/create_godown_response.dart';
+import 'package:mpos_beat/data/models/create_route_response.dart';
+import 'package:mpos_beat/data/models/get_company_voucher_model.dart';
+import 'package:mpos_beat/data/models/godown_list_model.dart';
+import 'package:mpos_beat/data/models/integration_model.dart';
+import 'package:mpos_beat/data/models/route_list_model.dart';
 import 'package:mpos_beat/data/models/state_list_response.dart';
 import 'package:mpos_beat/domain/repositories/i_company_creation_facad.dart';
 import 'package:mpos_beat/domain/request/company_creation_params.dart';
 import 'package:mpos_beat/domain/request/create_company_settings_request.dart';
 import 'package:mpos_beat/domain/request/create_company_voucher_request.dart';
+import 'package:mpos_beat/domain/request/create_godown_params.dart';
+import 'package:mpos_beat/domain/request/create_route_params.dart';
 import 'package:mpos_beat/domain/request/integration_request.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -39,6 +61,17 @@ class ICompanyCreationFacadImpl implements ICompanyCreationFacad {
   final StateList fetchstateList;
   final RegistrationTypeDatasource registrationTypeDatasource;
   final GetAllCompanySettingsDatasource getAllCompanySettingsDatasource;
+  final GetCompanyList getAllCompanies;
+  final CreateGodownOrVehicle createGodowns;
+  final CreateRoute createRoutes;
+  final GetAllGodowns allGodownList;
+  final GetAllRoutes allRouteList;
+  final ActivateGodown activatingGodown;
+  final ActivateRoute activatingRoute;
+  final DeactivateRoute deactivatingRoute;
+  final DeactivateGodown deactivatingGodown;
+  final DeleteGodown godownDelete;
+  final DeleteRoute routeDelete;
   final HttpClient httpClient;
   final RunSafely runSafely;
   final SharedPreferences sharedPreferences;
@@ -56,6 +89,17 @@ class ICompanyCreationFacadImpl implements ICompanyCreationFacad {
     this.integrationDatasource,
    this.getAllCompanySettingsDatasource,
    this.createCompanySettingsDatasource,
+    this.getAllCompanies,
+    this.createGodowns,
+    this.createRoutes,
+    this.allGodownList,
+    this.allRouteList,
+    this.activatingGodown,
+    this.activatingRoute,
+    this.deactivatingRoute,
+    this.deactivatingGodown,
+    this.godownDelete,
+    this.routeDelete,
 );
 
   @override
@@ -109,5 +153,63 @@ class ICompanyCreationFacadImpl implements ICompanyCreationFacad {
     BaseParams<CreateCompanysettingsParams> param,
   ) {
     return createCompanySettingsDatasource.call(param);
+  }
+  @override
+  ResultFuture<CompaniesListResponse> getAllCompany() {
+    return getAllCompanies();
+  }
+
+  @override
+  ResultFuture<GodownResponse> createGodown(
+    BaseParams<CreateGodownParams> params,
+  ) {
+    return createGodowns(params);
+  }
+
+  @override
+  ResultFuture<GodownListModel> getAllGodowns({required String companyId}) {
+    return allGodownList(companyId: companyId);
+  }
+
+  @override
+  ResultFuture<GodownResponse> activateGodown({required String mid}) {
+    return activatingGodown(mid: mid);
+  }
+
+  @override
+  ResultFuture<GodownResponse> deactivateGodown({required String mid}) {
+    return deactivatingGodown(mid: mid);
+  }
+
+  @override
+  ResultFuture<GodownResponse> deleteGodown({required String mid}) {
+    return godownDelete(mid: mid);
+  }
+
+  @override
+  ResultFuture<RouteResponse> createRoute(
+    BaseParams<CreateRouteParams> params,
+  ) {
+    return createRoutes(params);
+  }
+
+  @override
+  ResultFuture<RouteListModel> getRouteList({required String companyId}) {
+    return allRouteList(companyId: companyId);
+  }
+
+  @override
+  ResultFuture<RouteResponse> activateRoute({required String routeId}) {
+    return activatingRoute(routeId: routeId);
+  }
+
+  @override
+  ResultFuture<RouteResponse> deactivateRoute({required String routeId}) {
+    return deactivatingRoute(routeId: routeId);
+  }
+
+  @override
+  ResultFuture<RouteResponse> deleteRoute({required String routeId}) {
+    return routeDelete(routeId: routeId);
   }
 }

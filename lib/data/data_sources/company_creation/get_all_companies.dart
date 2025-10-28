@@ -2,36 +2,33 @@ import 'package:injectable/injectable.dart';
 import 'package:mpos_beat/core/base/run_safely.dart';
 import 'package:mpos_beat/core/exception/custom_exception.dart';
 import 'package:mpos_beat/core/failures/failures.dart';
-import 'package:mpos_beat/core/param/param_builder.dart';
 import 'package:mpos_beat/core/serveice/http_client.dart';
 import 'package:mpos_beat/core/utils/extentions.dart';
+import 'package:mpos_beat/core/utils/logger.dart';
 import 'package:mpos_beat/core/utils/typedefs.dart';
 import 'package:mpos_beat/core/utils/urls.dart';
-import 'package:mpos_beat/data/models/otp_response.dart';
-import 'package:mpos_beat/domain/request/otp_validation_params.dart';
+import 'package:mpos_beat/data/models/company_list_model.dart';
+import 'package:mpos_beat/data/models/route_list_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 @lazySingleton
-class OtpValidation {
+class GetCompanyList {
   final HttpClient httpClient;
   final RunSafely runSafely;
   final SharedPreferences sharedPreferences;
-  OtpValidation(this.httpClient, this.runSafely, this.sharedPreferences);
+  GetCompanyList(this.httpClient, this.runSafely, this.sharedPreferences);
 
-  ResultFuture<OtpResponse> call(BaseParams<OtpParams> param) {
+  ResultFuture<CompaniesListResponse> call(
+  ) {
     return runSafely(
       () async {
-        final response = await httpClient.post(
-          Urls.otpValidation,
-          data: param.toMap(),
+        final response = await httpClient.get(
+          Urls.getAllCompany,
         );
 
         if (response.isOk) {
-          final data = OtpResponse.fromJson(response.data);
-          final token = data.loginData?.token;
-          if (token != null && token.isNotEmpty && data.status != 10) {
-            await sharedPreferences.setString("token", token);
-          }
+          final data = CompaniesListResponse.fromJson(response.data);
+          Logger.logInfo("Companies List : ${data.toJson()}");
           return data;
         }
 

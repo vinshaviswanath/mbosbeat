@@ -1,9 +1,7 @@
-import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/failures/failures.dart';
 import 'package:mpos_beat/core/failures/value_object/value_object.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
-import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/models/company_registration_response.dart';
 import 'package:mpos_beat/data/models/data/otp_response_data.dart';
 import 'package:mpos_beat/data/models/login_response.dart';
@@ -12,15 +10,13 @@ import 'package:mpos_beat/data/models/response_data.dart';
 import 'package:mpos_beat/data/models/user_model.dart';
 import 'package:mpos_beat/domain/repositories/i_authentication_facad.dart';
 import 'package:mpos_beat/domain/request/company_registration_params.dart';
+import 'package:mpos_beat/domain/request/login_by_token_param.dart';
 import 'package:mpos_beat/domain/request/login_params.dart';
 import 'package:mpos_beat/domain/request/otp_validation_params.dart';
 import 'package:mpos_beat/domain/request/resend_otp_params.dart';
 import 'package:mpos_beat/domain/request/reset_password_params.dart';
 import 'package:mpos_beat/presentation/dialogs/registration_dialogs.dart';
 
-/// Provider class that manages authentication-related state and logic.
-/// Handles Login, Signup, OTP verification, masked fields, form validation,
-/// and state updates for UI using [ChangeNotifier].
 class AuthFormProvider with ChangeNotifier {
   final IAuthenticationFacad iAuthenticationFacad;
   AuthFormProvider(this.iAuthenticationFacad);
@@ -448,26 +444,6 @@ class AuthFormProvider with ChangeNotifier {
       return null;
     }
 
-    // final users = await UserStorage.getUsers();
-    // LocalUser? enteredUser;
-
-    // for (final u in users) {
-    //   if ((u.phone == _emailOrPhone.getValue?.trim() ||
-    //           u.email == _emailOrPhone.getValue?.trim()) &&
-    //       u.password == _password.getValue?.trim()) {
-    //     enteredUser = u;
-    //     break;
-    //   }
-    // }
-
-    // if (enteredUser == null) {
-    //   CustomAlertDialog.showCustomDialog(
-    //     title: "User not found!",
-    //     typeAlert: TypeAlert.error,
-    //   );
-    //   return null;
-    // }
-
     final result = await iAuthenticationFacad.login(BaseParams(data: params));
 
     result.fold(
@@ -489,7 +465,7 @@ class AuthFormProvider with ChangeNotifier {
         _setLoading(false);
         notifyListeners();
 
-        if (response.status == 20 || response.status == 1) {
+        if ( response.status == 1) {
           _cusomerId = response.loginData?.customerId;
           context.pushNamed(AppRouterConst.adminHome);
         } else if (response.status == 10) {
@@ -499,15 +475,44 @@ class AuthFormProvider with ChangeNotifier {
             response.loginData?.companyName ?? '',
             id: response.loginData?.customerId,
           );
-        }
-        // else if (response.status == 20) {
-        //   context.pushNamed(AppRouterConst.companyCreationScreen);
-        // }
-        else {
-          // CustomAlertDialog.showCustomDialog( 7819
-          //   title: response.message!,
-          //   typeAlert: TypeAlert.error,
-          // );
+        } else if (response.status == 10) {
+          Logger.logInfo(response.message);
+          RegistrationDialogs.pendingRegisteredDialog(
+            context,
+            response.loginData?.companyName ?? '',
+            id: response.loginData?.customerId,
+          );
+        } else if (response.status == 20) {
+          RegistrationDialogs.customDialog(
+            context: context,
+            heading: "Pending",
+            subTitle: "Please complete company creation",
+            onTap: () {
+              context.pushNamed(AppRouterConst.companyCreationScreen, extra: 0);
+            },
+            buttonText: "Redirect",
+          );
+        } else if (response.status == 30) {
+          RegistrationDialogs.customDialog(
+            context: context,
+            heading: "Pending",
+            subTitle: "Please complete Company Integration Settings",
+            onTap: () {
+              context.pushNamed(AppRouterConst.companyCreationScreen, extra: 2);
+            },
+            buttonText: "Redirect",
+          );
+        } else if (response.status == 40) {
+          RegistrationDialogs.customDialog(
+            context: context,
+            heading: "Pending",
+            subTitle: "Please complete Company VoucherType Configuration",
+            onTap: () {
+              context.pushNamed(AppRouterConst.companyCreationScreen, extra: 1);
+            },
+            buttonText: "Redirect",
+          );
+        } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(response.message!, textAlign: TextAlign.center),
@@ -525,13 +530,6 @@ class AuthFormProvider with ChangeNotifier {
         }
       },
     );
-
-    // if (enteredUser.isOtpVerified == true) {
-    //   context.pushNamed(AppRouterConst.adminHome);
-    // } else {
-    //   RegistrationDialogs.pendingRegisteredDialog(context, enteredUser)
-    //       .then((_) => resetSignUpForm());
-    // }
     return _loginResponse;
   }
 
@@ -671,6 +669,38 @@ class AuthFormProvider with ChangeNotifier {
     _setLoading(false);
     notifyListeners();
     return _responseData;
+  }
+
+  //===========================Login By Token========================
+
+  Future<LoginResponse?> loginByToken({
+    required LoginByTokenParam params,
+  }) async {
+    LoginResponse? _loginResponse;
+
+    final result = await iAuthenticationFacad.loginByToken(
+      BaseParams(data: params),
+    );
+
+    await result.fold(
+      (failure) async {
+        _errorMessage = failure.errorMsg.toString();
+        Logger.logError("Login by token failed : $_errorMessage");
+        _setLoading(false);
+        notifyListeners();
+        _loginResponse = null;
+      },
+      (response) async {
+        Logger.logSuccess("Login by token success : ${response.toJson()}");
+        _loginResponse = response;
+        _cusomerId = response.status == 1
+            ? response.loginData?.customerId
+            : null;
+        notifyListeners();
+      },
+    );
+
+    return _loginResponse;
   }
 
   //============================================================================

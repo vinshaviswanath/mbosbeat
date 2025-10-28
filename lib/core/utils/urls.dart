@@ -54,4 +54,5 @@ static const String registrationType =
   static const String getAllCompanySettings =
       "/api/CompanySettings/GetAll?CompanyID=";
  static const String createCompanySettings = "/api/CompanySettings/Create";
+  static const String getAllCompany = "/api/Company/GetAll";
 }
