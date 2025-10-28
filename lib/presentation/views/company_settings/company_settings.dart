@@ -1,4 +1,5 @@
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/domain/request/create_company_settings_request.dart';
 import 'package:mpos_beat/l10n/generated/app_localizations.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_settings/widgets/info_tool_tip.dart';
@@ -110,7 +111,7 @@ class _CompanySettingsScreenState extends State<CompanySettingsScreen> {
                           description: setting.description,
                           ispremium: isFree,
                           initialValue: isOn,
-                          onToggle: (val) {
+                          onToggle: (val) async {
                             setState(() {
                               switchStates[setting.id] = val;
 
@@ -123,11 +124,23 @@ class _CompanySettingsScreenState extends State<CompanySettingsScreen> {
                                 }
                               }
                             });
+
+                            final params = CreateCompanysettingsParams(
+                              id: setting.id,
+                              companyid: 1336,
+                              settingsvalue: val ? "Yes" : "No",
+                            );
+
+                            await companysettings.createCompanySettings(
+                              context,
+                              param: params,
+                              onSuccess: () {
+                                Logger.logSuccess(
+                                  "Setting ${setting.settingsMenuName} updated to ${val ? 'Yes' : 'No'}",
+                                );
+                              },
+                            );
                           },
-
-
-
-                          
 
                           // child: Row(
                           //   children: [
@@ -241,7 +254,7 @@ class _CompanySettingsScreenState extends State<CompanySettingsScreen> {
                           // ),
                           //],
                           // ),
-                      ),
+                        ),
                       );
                     },
                   ),
