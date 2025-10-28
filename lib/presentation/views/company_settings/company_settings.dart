@@ -124,7 +124,124 @@ class _CompanySettingsScreenState extends State<CompanySettingsScreen> {
                               }
                             });
                           },
-                        ),
+
+
+
+                          
+
+                          // child: Row(
+                          //   children: [
+                          //     Expanded(
+                          //       child: Text(
+                          //         setting.settingsMenuName,
+                          //         style: Theme.of(
+                          //           context,
+                          //         ).textTheme.displayMedium,
+                          //       ),
+                          //     ),
+                          //     // $ symbol
+                          //     if (!isfree)
+                          //       Container(
+                          //         width:
+                          //             MediaQuery.of(
+                          //               context,
+                          //             ).size.width *
+                          //             0.052,
+                          //         height:
+                          //             MediaQuery.of(
+                          //               context,
+                          //             ).size.height *
+                          //             0.021,
+                          //         decoration: BoxDecoration(
+                          //           shape: BoxShape.circle,
+                          //           gradient: LinearGradient(
+                          //             colors: [
+                          //               Colors.orange,
+                          //               Colors.yellow,
+                          //             ],
+                          //             begin: Alignment.topLeft,
+                          //             end: Alignment.bottomRight,
+                          //           ),
+                          //         ),
+                          //         child: Center(
+                          //           child: Icon(
+                          //             Icons.currency_rupee_outlined,
+                          //             color: Colors.white,
+                          //             size: 14,
+                          //           ),
+                          //         ),
+                          //       ),
+                          //toggle button
+                          // Transform.scale(
+                          //   scale: 0.7,
+                          //   child: Switch(
+                          //     inactiveThumbColor: Theme.of(
+                          //       context,
+                          //     ).colorScheme.secondary,
+                          //     activeColor: Theme.of(
+                          //       context,
+                          //     ).colorScheme.onPrimary,
+                          //     inactiveTrackColor: Theme.of(
+                          //       context,
+                          //     ).colorScheme.onPrimary,
+                          //     activeTrackColor: Theme.of(
+                          //       context,
+                          //     ).colorScheme.primary,
+                          //     value: istoggle,
+                          //     onChanged: (value) async {
+                          //       setState(() {
+                          //         switchStates[setting.id] =
+                          //             value;
+                          //       });
+                          // final toggleprovider =
+                          //     Provider.of<
+                          //       CreateCompanyProvider
+                          //     >(context, listen: false);
+                          // final newvalue = value
+                          //     ? "Yes"
+                          //     : "No";
+
+                          // final check = await toggleprovider
+                          //     .createcompanysettings(
+                          //       CreateCompanysettingsRequest(
+                          //         id: setting.id,
+                          //         companyid:
+                          //             widget.companyId,
+                          //         settingsvalue: newvalue,
+                          //       ),
+                          //     );
+                          // if (check!) {
+                          //   CommonSnackBar.show(
+                          //     context,
+                          //     message:
+                          //         toggleprovider
+                          //             .serverMessage ??
+                          //         "",
+                          //   );
+                          // } else {
+                          //   CommonSnackBar.show(
+                          //     context,
+                          //     message:
+                          //         toggleprovider
+                          //             .serverMessage ??
+                          //         "",
+                          //   );
+                          // }
+                          //},
+                          // ),
+                          //  ),
+                          // CustomTooltip(
+                          //   message: setting.description,
+                          //   child: Icon(
+                          //     Icons.info_outline_rounded,
+                          //     color: Theme.of(
+                          //       context,
+                          //     ).colorScheme.primary,
+                          //   ),
+                          // ),
+                          //],
+                          // ),
+                      ),
                       );
                     },
                   ),

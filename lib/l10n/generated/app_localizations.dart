@@ -1042,6 +1042,12 @@ abstract class AppLocalizations {
   /// **'User Settings'**
   String get manage_user_screen_user_settings;
 
+  /// No description provided for @manage_user_screen_add_company.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Company'**
+  String get manage_user_screen_add_company;
+
   /// No description provided for @activate_user_designation_widget_activate_user.
   ///
   /// In en, this message translates to:

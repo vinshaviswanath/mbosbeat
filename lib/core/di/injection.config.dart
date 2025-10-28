@@ -91,11 +91,9 @@ import '../../data/data_sources/user_management/user_settings/user_settings_list
 import '../../data/local_db/app_db.dart' as _i264;
 import '../../data/repositories/i_authentication_facad_impl.dart' as _i823;
 import '../../data/repositories/i_company_creation_facad_impl.dart' as _i322;
-import '../../domain/repositories/i_authentication_facad.dart' as _i590;
-import '../../domain/repositories/i_company_creation_facad.dart' as _i483;
-import '../base/run_safely.dart' as _i530;
 import '../../data/repositories/i_user_management_facad_impl.dart' as _i168;
 import '../../domain/repositories/i_authentication_facad.dart' as _i590;
+import '../../domain/repositories/i_company_creation_facad.dart' as _i483;
 import '../../domain/repositories/i_user_management_facad.dart' as _i172;
 import '../base/run_safely.dart' as _i530;
 import '../event/event_manager.dart' as _i275;
@@ -177,6 +175,13 @@ Future<_i174.GetIt> init(
   );
   gh.lazySingleton<_i79.CountryList>(
     () => _i79.CountryList(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i640.CreateCompanySettingsDatasource>(
+    () => _i640.CreateCompanySettingsDatasource(
       gh<_i816.HttpClient>(),
       gh<_i530.RunSafely>(),
       gh<_i460.SharedPreferences>(),
@@ -433,19 +438,6 @@ Future<_i174.GetIt> init(
       gh<_i70.RegistrationEventBinder>(),
     ),
   );
- gh.lazySingleton<_i590.IAuthenticationFacad>(
-    () => _i823.IAuthenticationImpl(
-      gh<_i70.CompanyRegisteration>(),
-      gh<_i42.OtpValidation>(),
-      gh<_i13.ResendOtp>(),
-      gh<_i526.LoginImpl>(),
-      gh<_i244.ResetPassword>(),
-      gh<_i816.HttpClient>(),
-      gh<_i530.RunSafely>(),
-      gh<_i460.SharedPreferences>(),
-      gh<_i492.LoginByToken>(),
-    ),
-  );
   gh.lazySingleton<_i483.ICompanyCreationFacad>(
     () => _i322.ICompanyCreationFacadImpl(
       gh<_i665.CompanyInfo>(),
@@ -458,9 +450,22 @@ Future<_i174.GetIt> init(
       gh<_i1001.GetCompanyvoucherTypeListDatasource>(),
       gh<_i1051.CreateCompanyVouchertypeDatasource>(),
       gh<_i189.IntegrationDatasource>(),
-     gh<_i252.GetAllCompanySettingsDatasource>(),
-    gh<_i640.CreateCompanySettingsDatasource>(),
-   ),
+      gh<_i252.GetAllCompanySettingsDatasource>(),
+      gh<_i640.CreateCompanySettingsDatasource>(),
+    ),
+  );
+  gh.lazySingleton<_i590.IAuthenticationFacad>(
+    () => _i823.IAuthenticationImpl(
+      gh<_i70.CompanyRegisteration>(),
+      gh<_i42.OtpValidation>(),
+      gh<_i13.ResendOtp>(),
+      gh<_i526.LoginImpl>(),
+      gh<_i244.ResetPassword>(),
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+      gh<_i492.LoginByToken>(),
+    ),
   );
   return getIt;
 }
