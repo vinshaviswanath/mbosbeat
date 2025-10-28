@@ -27,6 +27,8 @@ import '../../data/data_sources/authentication/reset_password/reset_password.dar
     as _i244;
 import '../../data/data_sources/company_creation/company_info.dart' as _i665;
 import '../../data/data_sources/company_creation/country_list.dart' as _i79;
+import '../../data/data_sources/company_creation/create_company_settings.dart'
+    as _i640;
 import '../../data/data_sources/company_creation/create_company_voucherType.dart'
     as _i1051;
 import '../../data/data_sources/company_creation/get_all_company_settings.dart'
@@ -456,8 +458,9 @@ Future<_i174.GetIt> init(
       gh<_i1001.GetCompanyvoucherTypeListDatasource>(),
       gh<_i1051.CreateCompanyVouchertypeDatasource>(),
       gh<_i189.IntegrationDatasource>(),
-      gh<_i252.GetAllCompanySettingsDatasource>(),
-    ),
+     gh<_i252.GetAllCompanySettingsDatasource>(),
+    gh<_i640.CreateCompanySettingsDatasource>(),
+   ),
   );
   return getIt;
 }
