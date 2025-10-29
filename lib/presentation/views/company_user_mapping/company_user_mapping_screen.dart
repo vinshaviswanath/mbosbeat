@@ -1,47 +1,51 @@
 import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
-import 'package:mpos_beat/data/models/company_list_model.dart';
-import 'package:mpos_beat/domain/request/create_user_company_mapping_params.dart';
+import 'package:mpos_beat/data/models/users_list_model.dart';
+import 'package:mpos_beat/domain/request/create_comany_user_mapping_params.dart';
 import 'package:mpos_beat/presentation/logic/user_management_provider.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/add_company/widgets/add_company_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AddCompanyScreen extends StatefulWidget {
-  const AddCompanyScreen({
+class CompanyUserMappingScreen extends StatefulWidget {
+  const CompanyUserMappingScreen({
     super.key,
     required this.name,
     required this.companyName,
-    required this.userId,
+    required this.companyId,
   });
 
   final String name;
   final String companyName;
-  final int userId;
+  final int companyId;
 
   @override
-  State<AddCompanyScreen> createState() => _AddCompanyScreenState();
+  State<CompanyUserMappingScreen> createState() =>
+      _CompanyUserMappingScreenState();
 }
 
-class _AddCompanyScreenState extends State<AddCompanyScreen> {
+class _CompanyUserMappingScreenState extends State<CompanyUserMappingScreen> {
   final TextEditingController _searchController = TextEditingController();
 
-  final Set<int> selectedCompanyIds = {};
-  final List<CompanyList> selectedCompanyList = [];
+  final Set<int> selectedUserIds = {};
+  final List<UserList> selectedUserList = [];
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final provider = context.read<UserManagementProvider>();
-      await provider.getAllCompanies(context: context);
+      await provider.getAllUsersList(context);
 
       final pref = sl<SharedPreferences>();
-      final storedList = pref.getStringList('companies');
+      final storedList = pref.getStringList(
+        'company_users_${widget.companyId}',
+      );
       if (storedList != null && storedList.isNotEmpty) {
-        final loadedCompanies = storedList.map(int.parse).toList();
+        final loadedUsers = storedList.map(int.parse).toList();
         setState(() {
-          selectedCompanyIds.addAll(loadedCompanies);
-          selectedCompanyList.addAll(
-            loadedCompanies.map((id) => CompanyList(companyId: id)),
+          selectedUserIds.addAll(loadedUsers);
+          selectedUserList.addAll(
+            loadedUsers.map((id) => UserList(userId: id)),
           );
         });
       }
@@ -51,13 +55,13 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<UserManagementProvider>();
-    final filteredCompanies =
-        provider.companiesList?.companyViewList.where((company) {
-          final query = _searchController.text.toLowerCase();
-          return query.isEmpty ||
-              (company.companyName ?? '').toLowerCase().contains(query);
-        }).toList() ??
-        [];
+
+    final allUsers = provider.usersList?.userMasterList ?? [];
+
+    final filteredUsers = allUsers.where((user) {
+      final query = _searchController.text.toLowerCase();
+      return query.isEmpty || (user.name ?? '').toLowerCase().contains(query);
+    }).toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -70,20 +74,31 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
           ),
         ),
         title: Text(
-          "Add Company",
+          "Add Users",
           style: context.textStyle.s20.indigoBlue.bold.roboto,
         ),
         centerTitle: true,
+        actions: [
+          InkWell(
+            onTap: () {
+              context.pushNamed(AppRouterConst.userCreation);
+            },
+            child: const Padding(
+              padding: EdgeInsets.only(right: 20),
+              child: Icon(Icons.add_circle, color: ColorResources.indigoBlue),
+            ),
+          ),
+        ],
       ),
-      body: StreamBuilder<CompaniesListResponse?>(
-        stream: provider.companyListStream,
+      body: StreamBuilder<List<UserMasterList>>(
+        stream: provider.usersStream,
         builder: (context, snapshot) {
-          final companyList = snapshot.data?.companyViewList ?? [];
+          final allUsers = snapshot.data ?? [];
 
-          final filteredCompanies = companyList.where((company) {
+          final filteredUsers = allUsers.where((user) {
             final query = _searchController.text.toLowerCase();
             return query.isEmpty ||
-                (company.companyName ?? '').toLowerCase().contains(query);
+                (user.name ?? '').toLowerCase().contains(query);
           }).toList();
 
           return CustomScrollView(
@@ -107,8 +122,9 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
                       child: TextField(
                         controller: _searchController,
                         decoration: InputDecoration(
-                          hintText: "Search Company",
-                          hintStyle: context.textStyle.s12.w300.bluishGray.roboto,
+                          hintText: "Search User",
+                          hintStyle:
+                              context.textStyle.s12.w300.bluishGray.roboto,
                           fillColor: ColorResources.cloudGray,
                           filled: true,
                           suffixIcon: const Icon(
@@ -133,48 +149,46 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
                   ],
                 ),
               ),
-              if (filteredCompanies.isEmpty)
+              if (filteredUsers.isEmpty)
                 SliverFillRemaining(
                   hasScrollBody: false,
                   child: Center(
                     child: Text(
-                      "No data available",
+                      "No users available",
                       style: context.textStyle.s14.w500.bluishGray.roboto,
                     ),
                   ),
                 ),
-              if (filteredCompanies.isNotEmpty)
+              if (filteredUsers.isNotEmpty)
                 SliverList(
                   delegate: SliverChildBuilderDelegate((context, index) {
-                    final company = filteredCompanies[index];
-                    final isSelected = selectedCompanyIds.contains(company.id);
-          
+                    final user = filteredUsers[index];
+                    final isSelected = selectedUserIds.contains(user.id);
+
                     return AddCompanyWidget(
-                      title: company.companyName ?? "",
-                      subtitle: "${company.address1}, ${company.country}",
+                      title: user.name ?? "",
+                      subtitle: user.email ?? "",
                       isSelected: isSelected,
                       onTap: () {
                         setState(() {
                           if (isSelected) {
-                            selectedCompanyIds.remove(company.id);
-                            selectedCompanyList.removeWhere(
-                              (e) => e.companyId == company.id,
+                            selectedUserIds.remove(user.id);
+                            selectedUserList.removeWhere(
+                              (e) => e.userId == user.id,
                             );
                           } else {
-                            selectedCompanyIds.add(company.id!);
-                            selectedCompanyList.add(
-                              CompanyList(companyId: company.id!),
-                            );
+                            selectedUserIds.add(user.id!);
+                            selectedUserList.add(UserList(userId: user.id!));
                           }
                         });
                         Logger.logSuccess(
-                          "Selected Company IDs: ${selectedCompanyList.map((e) => e.companyId).toList()}",
+                          "Selected User IDs: ${selectedUserList.map((e) => e.userId).toList()}",
                         );
                       },
                     );
-                  }, childCount: filteredCompanies.length),
+                  }, childCount: filteredUsers.length),
                 ),
-              if (filteredCompanies.isNotEmpty)
+              if (filteredUsers.isNotEmpty)
                 SliverToBoxAdapter(
                   child: Padding(
                     padding: EdgeInsets.symmetric(
@@ -186,22 +200,22 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
                       onTap: () async {
                         final pref = sl<SharedPreferences>();
                         await pref.setStringList(
-                          'companies',
-                          selectedCompanyList
-                              .map((e) => e.companyId.toString())
+                          'company_users_${widget.companyId}',
+                          selectedUserList
+                              .map((e) => e.userId.toString())
                               .toList(),
                         );
+
                         provider
-                            .createUserCompanyMapping(
+                            .createCompanyMapping(
                               context: context,
-                              userId: widget.userId,
-                              companyList: selectedCompanyList,
+                              companyId: widget.companyId,
+                              userList: selectedUserList,
                             )
-                            .then((_) {
-                              WidgetsBinding.instance.addPostFrameCallback(
-                                (_) => context.pop(),
-                              );
-                            });
+                            .then(
+                              (_) => WidgetsBinding.instance
+                                  .addPostFrameCallback((_) => context.pop()),
+                            );
                       },
                       buttonText: "Save",
                       isborderEnable: false,
@@ -210,7 +224,7 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
                 ),
             ],
           );
-        }
+        },
       ),
     );
   }

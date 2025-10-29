@@ -50,4 +50,5 @@ class Urls {
   static const String deactivateRoute2 = "&Active=0";
   static const String deleteRoute ="/api/Route/Delete?RouteID=";
   static const String getAllCompany = "/api/Company/GetAll";
+  static const String createCompanyUserMapping = "/api/Company/CreateMapping";
 }

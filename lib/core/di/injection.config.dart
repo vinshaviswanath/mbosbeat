@@ -62,6 +62,8 @@ import '../../data/data_sources/user_management/add_designation/add_designation.
     as _i749;
 import '../../data/data_sources/user_management/block_user/block_user.dart'
     as _i183;
+import '../../data/data_sources/user_management/company_user_mapping/company_user_mapping.dart'
+    as _i148;
 import '../../data/data_sources/user_management/create_user/create_user.dart'
     as _i420;
 import '../../data/data_sources/user_management/create_user_company_mapping%5D/create_user_company_mapping.dart'
@@ -157,6 +159,125 @@ Future<_i174.GetIt> init(
   );
   gh.lazySingleton<_i244.ResetPassword>(
     () => _i244.ResetPassword(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i123.ActivateGodown>(
+    () => _i123.ActivateGodown(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i260.ActivateRoute>(
+    () => _i260.ActivateRoute(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i665.CompanyInfo>(
+    () => _i665.CompanyInfo(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i79.CountryList>(
+    () => _i79.CountryList(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i1051.CreateCompanyVouchertypeDatasource>(
+    () => _i1051.CreateCompanyVouchertypeDatasource(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i719.CreateGodownOrVehicle>(
+    () => _i719.CreateGodownOrVehicle(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i891.CreateRoute>(
+    () => _i891.CreateRoute(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i440.DeactivateGodown>(
+    () => _i440.DeactivateGodown(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i6.DeactivateRoute>(
+    () => _i6.DeactivateRoute(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i323.DeleteGodown>(
+    () => _i323.DeleteGodown(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i112.DeleteRoute>(
+    () => _i112.DeleteRoute(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i284.GetCompanyList>(
+    () => _i284.GetCompanyList(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i1001.GetCompanyvoucherTypeListDatasource>(
+    () => _i1001.GetCompanyvoucherTypeListDatasource(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i1064.GetAllGodowns>(
+    () => _i1064.GetAllGodowns(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i504.GetAllRoutes>(
+    () => _i504.GetAllRoutes(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i189.IntegrationDatasource>(
+    () => _i189.IntegrationDatasource(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i374.StateList>(
+    () => _i374.StateList(
       gh<_i816.HttpClient>(),
       gh<_i530.RunSafely>(),
       gh<_i460.SharedPreferences>(),
@@ -260,120 +381,8 @@ Future<_i174.GetIt> init(
       gh<_i460.SharedPreferences>(),
     ),
   );
-  gh.lazySingleton<_i665.CompanyInfo>(
-    () => _i665.CompanyInfo(
-      gh<_i816.HttpClient>(),
-      gh<_i530.RunSafely>(),
-      gh<_i460.SharedPreferences>(),
-    ),
-  );
-  gh.lazySingleton<_i79.CountryList>(
-    () => _i79.CountryList(
-      gh<_i816.HttpClient>(),
-      gh<_i530.RunSafely>(),
-      gh<_i460.SharedPreferences>(),
-    ),
-  );
-  gh.lazySingleton<_i1051.CreateCompanyVouchertypeDatasource>(
-    () => _i1051.CreateCompanyVouchertypeDatasource(
-      gh<_i816.HttpClient>(),
-      gh<_i530.RunSafely>(),
-      gh<_i460.SharedPreferences>(),
-    ),
-  );
-  gh.lazySingleton<_i1001.GetCompanyvoucherTypeListDatasource>(
-    () => _i1001.GetCompanyvoucherTypeListDatasource(
-      gh<_i816.HttpClient>(),
-      gh<_i530.RunSafely>(),
-      gh<_i460.SharedPreferences>(),
-    ),
-  );
-  gh.lazySingleton<_i189.IntegrationDatasource>(
-    () => _i189.IntegrationDatasource(
-      gh<_i816.HttpClient>(),
-      gh<_i530.RunSafely>(),
-      gh<_i460.SharedPreferences>(),
-    ),
-  );
-  gh.lazySingleton<_i374.StateList>(
-    () => _i374.StateList(
-      gh<_i816.HttpClient>(),
-      gh<_i530.RunSafely>(),
-      gh<_i460.SharedPreferences>(),
-    ),
-  );
-  gh.lazySingleton<_i284.GetCompanyList>(
-    () => _i284.GetCompanyList(
-      gh<_i816.HttpClient>(),
-      gh<_i530.RunSafely>(),
-      gh<_i460.SharedPreferences>(),
-    ),
-  );
-  gh.lazySingleton<_i123.ActivateGodown>(
-    () => _i123.ActivateGodown(
-      gh<_i816.HttpClient>(),
-      gh<_i530.RunSafely>(),
-      gh<_i460.SharedPreferences>(),
-    ),
-  );
-  gh.lazySingleton<_i260.ActivateRoute>(
-    () => _i260.ActivateRoute(
-      gh<_i816.HttpClient>(),
-      gh<_i530.RunSafely>(),
-      gh<_i460.SharedPreferences>(),
-    ),
-  );
-  gh.lazySingleton<_i719.CreateGodownOrVehicle>(
-    () => _i719.CreateGodownOrVehicle(
-      gh<_i816.HttpClient>(),
-      gh<_i530.RunSafely>(),
-      gh<_i460.SharedPreferences>(),
-    ),
-  );
-  gh.lazySingleton<_i891.CreateRoute>(
-    () => _i891.CreateRoute(
-      gh<_i816.HttpClient>(),
-      gh<_i530.RunSafely>(),
-      gh<_i460.SharedPreferences>(),
-    ),
-  );
-  gh.lazySingleton<_i440.DeactivateGodown>(
-    () => _i440.DeactivateGodown(
-      gh<_i816.HttpClient>(),
-      gh<_i530.RunSafely>(),
-      gh<_i460.SharedPreferences>(),
-    ),
-  );
-  gh.lazySingleton<_i6.DeactivateRoute>(
-    () => _i6.DeactivateRoute(
-      gh<_i816.HttpClient>(),
-      gh<_i530.RunSafely>(),
-      gh<_i460.SharedPreferences>(),
-    ),
-  );
-  gh.lazySingleton<_i323.DeleteGodown>(
-    () => _i323.DeleteGodown(
-      gh<_i816.HttpClient>(),
-      gh<_i530.RunSafely>(),
-      gh<_i460.SharedPreferences>(),
-    ),
-  );
-  gh.lazySingleton<_i112.DeleteRoute>(
-    () => _i112.DeleteRoute(
-      gh<_i816.HttpClient>(),
-      gh<_i530.RunSafely>(),
-      gh<_i460.SharedPreferences>(),
-    ),
-  );
-  gh.lazySingleton<_i1064.GetAllGodowns>(
-    () => _i1064.GetAllGodowns(
-      gh<_i816.HttpClient>(),
-      gh<_i530.RunSafely>(),
-      gh<_i460.SharedPreferences>(),
-    ),
-  );
-  gh.lazySingleton<_i504.GetAllRoutes>(
-    () => _i504.GetAllRoutes(
+  gh.lazySingleton<_i148.CreateCompanyUserMapping>(
+    () => _i148.CreateCompanyUserMapping(
       gh<_i816.HttpClient>(),
       gh<_i530.RunSafely>(),
       gh<_i460.SharedPreferences>(),
@@ -403,6 +412,28 @@ Future<_i174.GetIt> init(
       gh<_i112.DeleteRoute>(),
     ),
   );
+  gh.lazySingleton<_i172.IUserManagementFacad>(
+    () => _i168.IUserManagementFacadImpl(
+      gh<_i797.DeactivateDesignation>(),
+      gh<_i749.AddDesignation>(),
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+      gh<_i308.GetUserDesignationList>(),
+      gh<_i185.ActivateDesignation>(),
+      gh<_i179.DeleteDesignation>(),
+      gh<_i420.CreateUser>(),
+      gh<_i165.GetAllUsers>(),
+      gh<_i803.DeleteUser>(),
+      gh<_i183.BlockUser>(),
+      gh<_i762.ResetUserPassword>(),
+      gh<_i829.GetUserSettings>(),
+      gh<_i466.CreateUserSettings>(),
+      gh<_i213.GetCompanies>(),
+      gh<_i600.CreateUserCompanyMapping>(),
+      gh<_i148.CreateCompanyUserMapping>(),
+    ),
+  );
   gh.lazySingleton<_i70.CompanyRegisteration>(
     () => appInjectionModule.companyRegisteration(
       gh<_i816.HttpClient>(),
@@ -424,27 +455,6 @@ Future<_i174.GetIt> init(
       gh<_i530.RunSafely>(),
       gh<_i460.SharedPreferences>(),
       gh<_i492.LoginByToken>(),
-    ),
-  );
-  gh.lazySingleton<_i172.IUserManagementFacad>(
-    () => _i168.IUserManagementFacadImpl(
-      gh<_i797.DeactivateDesignation>(),
-      gh<_i749.AddDesignation>(),
-      gh<_i816.HttpClient>(),
-      gh<_i530.RunSafely>(),
-      gh<_i460.SharedPreferences>(),
-      gh<_i308.GetUserDesignationList>(),
-      gh<_i185.ActivateDesignation>(),
-      gh<_i179.DeleteDesignation>(),
-      gh<_i420.CreateUser>(),
-      gh<_i165.GetAllUsers>(),
-      gh<_i803.DeleteUser>(),
-      gh<_i183.BlockUser>(),
-      gh<_i762.ResetUserPassword>(),
-      gh<_i829.GetUserSettings>(),
-      gh<_i466.CreateUserSettings>(),
-      gh<_i213.GetCompanies>(),
-      gh<_i600.CreateUserCompanyMapping>(),
     ),
   );
   return getIt;

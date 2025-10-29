@@ -1,5 +1,6 @@
 import 'package:mpos_beat/core/param/param_builder.dart';
 import 'package:mpos_beat/core/utils/typedefs.dart';
+import 'package:mpos_beat/data/models/company_creation_response.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/data/models/create_godown_response.dart';
 import 'package:mpos_beat/data/models/create_route_response.dart';
@@ -12,6 +13,7 @@ import 'package:mpos_beat/data/models/user_settings_list_model.dart';
 import 'package:mpos_beat/data/models/users_list_model.dart';
 import 'package:mpos_beat/domain/request/add_designation_params.dart';
 import 'package:mpos_beat/domain/request/block_user_params.dart';
+import 'package:mpos_beat/domain/request/create_comany_user_mapping_params.dart';
 import 'package:mpos_beat/domain/request/create_godown_params.dart';
 import 'package:mpos_beat/domain/request/create_route_params.dart';
 import 'package:mpos_beat/domain/request/create_user_company_mapping_params.dart';
@@ -105,7 +107,9 @@ interface class IUserManagementFacad {
     throw UnimplementedError();
   }
 
-  //================================ Create company =====================
+    ResultFuture<CompanyInfoDtos> createCompanyUserMapping(BaseParams<CreateComanyUserMappingParams> params) {
+    throw UnimplementedError();
+  }
 
 
 }

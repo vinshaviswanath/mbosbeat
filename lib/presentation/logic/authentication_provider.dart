@@ -1,3 +1,4 @@
+import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/failures/failures.dart';
 import 'package:mpos_beat/core/failures/value_object/value_object.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
@@ -16,6 +17,7 @@ import 'package:mpos_beat/domain/request/otp_validation_params.dart';
 import 'package:mpos_beat/domain/request/resend_otp_params.dart';
 import 'package:mpos_beat/domain/request/reset_password_params.dart';
 import 'package:mpos_beat/presentation/dialogs/registration_dialogs.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthFormProvider with ChangeNotifier {
   final IAuthenticationFacad iAuthenticationFacad;
@@ -77,6 +79,9 @@ class AuthFormProvider with ChangeNotifier {
   bool get isVisible => _isVisible;
   bool get isVisibleSignupPassword => _isVisibleSignupPassword;
   bool get isVisibleSignupConfirmPassword => _isVisibleSignupConfirmPassword;
+
+  final prefs = sl<SharedPreferences>();
+      
 
   //============================================================================
   //                              SETTERS
