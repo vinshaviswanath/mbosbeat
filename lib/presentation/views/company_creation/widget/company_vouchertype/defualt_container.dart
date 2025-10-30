@@ -519,13 +519,12 @@ class _DefaultContainerState extends State<DefaultContainer> {
                                 ),
                               );
                               context.pop();
-                           provider.fetchVoucherTypes(
-                              context,
-                              widget.companyId,
-                            );
-                           provider.fetchVoucherTypes(context, 1302);
+                              provider.fetchVoucherTypes(
+                                context,
+                                widget.companyId,
+                              );
                             }
-                         }
+                          }
                           dataCollecting();
                         },
                         child: Text(
