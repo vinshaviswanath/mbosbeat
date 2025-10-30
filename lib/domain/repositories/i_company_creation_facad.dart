@@ -18,6 +18,7 @@ import 'package:mpos_beat/data/models/route_list_model.dart';
 import 'package:mpos_beat/data/models/state_list_response.dart';
 import 'package:mpos_beat/domain/request/company_creation_params.dart';
 import 'package:mpos_beat/domain/request/create_company_settings_request.dart';
+import 'package:mpos_beat/domain/request/create_comany_user_mapping_params.dart';
 import 'package:mpos_beat/domain/request/create_company_voucher_request.dart';
 import 'package:mpos_beat/domain/request/create_godown_params.dart';
 import 'package:mpos_beat/domain/request/create_route_params.dart';
@@ -115,4 +116,6 @@ interface class ICompanyCreationFacad {
   ResultFuture<RouteResponse> deleteRoute({required String routeId}) {
     throw UnimplementedError();
   }
+
+
 }

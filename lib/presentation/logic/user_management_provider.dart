@@ -1,6 +1,7 @@
 import 'package:mpos_beat/core/failures/value_object/value_object.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/models/company_creation_response.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/data/models/designation_response.dart';
 import 'package:mpos_beat/data/models/user_designation_list_model.dart';
@@ -10,13 +11,13 @@ import 'package:mpos_beat/data/models/users_list_model.dart';
 import 'package:mpos_beat/domain/repositories/i_user_management_facad.dart';
 import 'package:mpos_beat/domain/request/add_designation_params.dart';
 import 'package:mpos_beat/domain/request/block_user_params.dart';
+import 'package:mpos_beat/domain/request/create_comany_user_mapping_params.dart';
 import 'package:mpos_beat/domain/request/create_user_company_mapping_params.dart';
 import 'package:mpos_beat/domain/request/delete_user_param.dart';
 import 'package:mpos_beat/domain/request/reset_user_password_params.dart';
 import 'package:mpos_beat/domain/request/user_creation_params.dart';
 import 'package:mpos_beat/domain/request/user_settings_params.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_designation/user_designation_screen.dart';
-
 import 'dart:convert';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_manage/manage_user_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -75,15 +76,33 @@ class UserManagementProvider with ChangeNotifier {
 
   List<UserModel> _users = [];
   List<UserModel> get users => _users;
+
+  CompanyInfoDtos? _companyCreationDtos;
+  CompanyInfoDtos? get companyCreationDtos => _companyCreationDtos;
+
   AutovalidateMode userCreateAutovalidateMode = AutovalidateMode.disabled;
   AutovalidateMode designationAutovalidateMode = AutovalidateMode.disabled;
-  
+
+    bool _isVisiblePassword = false;
+  bool _isVisibleConfirmPassword = false;
+    bool get isVisiblePassword => _isVisiblePassword;
+  bool get isVisibleConfirmPassword => _isVisibleConfirmPassword;
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
   void setLoading(bool val) {
     _isLoading = val;
+    notifyListeners();
+  }
+
+    void toggleVisibilityPassword() {
+    _isVisiblePassword = !_isVisiblePassword;
+    notifyListeners();
+  }
+
+  void toggleVisibilityConfirmPassword() {
+    _isVisibleConfirmPassword = !_isVisibleConfirmPassword;
     notifyListeners();
   }
 
@@ -1047,7 +1066,60 @@ class UserManagementProvider with ChangeNotifier {
     return _userMasterResponse;
   }
 
-  //======================== Create Company ===========================
 
+ //========================= Create Company User Mapping =========================
 
+  Future<CompanyInfoDtos?> createCompanyMapping({
+    required BuildContext context,
+    required int companyId,
+    required List<UserList> userList,
+  }) async {
+    setLoading(true);
+    final result = await iUserManagementFacad.createCompanyUserMapping(
+      BaseParams(
+        data: CreateComanyUserMappingParams(
+          companyId: companyId,
+          userList: userList,
+        ),
+      ),
+    );
+
+    result.fold(
+      (failure) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(failure.errorMsg, textAlign: TextAlign.center),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          ),
+        );
+      },
+      (response) async {
+        _companyCreationDtos = response;
+        Logger.logSuccess(
+          " Company User Mapping successfull : ${response.toJson()}",
+        );
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              response.message ?? "Success",
+              textAlign: TextAlign.center,
+            ),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          ),
+        );
+        getAllUsersList(context);
+        notifyListeners();
+      },
+    );
+    setLoading(false);
+    return _companyCreationDtos;
+  }
 }

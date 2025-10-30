@@ -33,6 +33,8 @@ class AppRouterConst {
   static const routeWiseScreen = "/routeWiseScreen";
   static const godownRouteVoucherScreen = "/godownRouteVoucherScreen";
   static const companySettingsScreen = "/companySettingsScreen";
+  static const companyUserMappingScreen = "/companyUserMappingScreen";
+
 
   // anver
   static const homeScreen = "/homescreen";

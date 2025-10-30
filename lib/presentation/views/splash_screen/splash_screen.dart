@@ -19,9 +19,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 //   Future<void> _loginByToken() async {
 //     final prefs = sl<SharedPreferences>();
 //     final token = prefs.getString("token") ?? '';
-//     await context.read<AuthFormProvider>().loginByToken(
-//       context,
-//       params: LoginByTokenParam(token: token),
+//     await context.read<AuthFormProvider>().loginByToken(params: LoginByTokenParam(token: token)
 //     );
 //   }
 

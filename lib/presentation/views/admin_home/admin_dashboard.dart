@@ -44,6 +44,11 @@ class _AdminDashboardState extends State<AdminDashboard> {
       if (companyList.isNotEmpty) {
         selectedCompany = companyList.first;
       }
+      final prefs = sl<SharedPreferences>();
+      final companyId = prefs.getInt('selected_company_id');
+      if (companyList.isNotEmpty && companyId == null) {
+        await prefs.setInt('selected_company_id', selectedCompany?.id ?? 0);
+      }
 
       setState(() {});
     });
@@ -182,7 +187,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                               DropdownButtonFormField<
                                                 CompanyViewList
                                               >(
-                                                decoration: InputDecoration(
+                                                decoration: const InputDecoration(
                                                   border: OutlineInputBorder(
                                                     borderSide: BorderSide.none,
                                                   ),
@@ -565,7 +570,15 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                   );
                                                                   context.pushNamed(
                                                                     AppRouterConst
-                                                                        .userCreation,
+                                                                        .companyUserMappingScreen,
+                                                                    extra: {
+                                                                      "companyId":
+                                                                          companyId,
+                                                                      "name": selectedCompany
+                                                                          ?.companyName,
+                                                                      "companyName":
+                                                                          "${selectedCompany?.state},${selectedCompany?.country}",
+                                                                    },
                                                                   );
                                                                 },
                                                               ),

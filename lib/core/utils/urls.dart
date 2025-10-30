@@ -55,4 +55,5 @@ static const String registrationType =
       "/api/CompanySettings/GetAll?CompanyID=";
  static const String createCompanySettings = "/api/CompanySettings/Create";
   static const String getAllCompany = "/api/Company/GetAll";
+  static const String createCompanyUserMapping = "/api/Company/CreateMapping";
 }

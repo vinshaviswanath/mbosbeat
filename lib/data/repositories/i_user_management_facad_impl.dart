@@ -3,6 +3,7 @@ import 'package:mpos_beat/core/base/run_safely.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
 import 'package:mpos_beat/core/serveice/http_client.dart';
 import 'package:mpos_beat/core/utils/typedefs.dart';
+import 'package:mpos_beat/data/data_sources/user_management/company_user_mapping/company_user_mapping.dart';
 import 'package:mpos_beat/data/data_sources/user_management/activate_designation/activate_designation.dart';
 import 'package:mpos_beat/data/data_sources/user_management/add_designation/add_designation.dart';
 import 'package:mpos_beat/data/data_sources/user_management/block_user/block_user.dart';
@@ -17,6 +18,7 @@ import 'package:mpos_beat/data/data_sources/user_management/get_users_list/get_u
 import 'package:mpos_beat/data/data_sources/user_management/reset_user_password/reset_user_password.dart';
 import 'package:mpos_beat/data/data_sources/user_management/user_designation_list/user_designation_list.dart';
 import 'package:mpos_beat/data/data_sources/user_management/user_settings/user_settings_list.dart';
+import 'package:mpos_beat/data/models/company_creation_response.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/data/models/designation_response.dart';
 import 'package:mpos_beat/data/models/user_designation_list_model.dart';
@@ -26,6 +28,7 @@ import 'package:mpos_beat/data/models/users_list_model.dart';
 import 'package:mpos_beat/domain/repositories/i_user_management_facad.dart';
 import 'package:mpos_beat/domain/request/add_designation_params.dart';
 import 'package:mpos_beat/domain/request/block_user_params.dart';
+import 'package:mpos_beat/domain/request/create_comany_user_mapping_params.dart';
 import 'package:mpos_beat/domain/request/create_user_company_mapping_params.dart';
 import 'package:mpos_beat/domain/request/delete_user_param.dart';
 import 'package:mpos_beat/domain/request/reset_user_password_params.dart';
@@ -49,7 +52,7 @@ class IUserManagementFacadImpl implements IUserManagementFacad {
   final CreateUserSettings userSettings;
   final GetCompanies getAllcompanies;
   final CreateUserCompanyMapping userComapnyMapping;
-
+    final CreateCompanyUserMapping companyUserMapping;
   final HttpClient httpClient;
   final RunSafely runSafely;
   final SharedPreferences sharedPreferences;
@@ -70,7 +73,7 @@ class IUserManagementFacadImpl implements IUserManagementFacad {
     this.userSettingsList,
     this.userSettings,
     this.getAllcompanies,
-    this.userComapnyMapping,
+    this.userComapnyMapping, this.companyUserMapping,
   );
 
   @override
@@ -172,5 +175,8 @@ class IUserManagementFacadImpl implements IUserManagementFacad {
     return userComapnyMapping(params);
   }
 
-  
+      @override
+  ResultFuture<CompanyInfoDtos> createCompanyUserMapping(BaseParams<CreateComanyUserMappingParams> params) {
+    return companyUserMapping(params);
+  }
 }

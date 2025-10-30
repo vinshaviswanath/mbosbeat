@@ -5,46 +5,32 @@ import 'package:mpos_beat/core/failures/failures.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
 import 'package:mpos_beat/core/serveice/http_client.dart';
 import 'package:mpos_beat/core/utils/extentions.dart';
+import 'package:mpos_beat/core/utils/logger.dart';
 import 'package:mpos_beat/core/utils/typedefs.dart';
 import 'package:mpos_beat/core/utils/urls.dart';
-import 'package:mpos_beat/data/local_db/app_db.dart';
-import 'package:mpos_beat/data/models/login_response.dart';
-import 'package:mpos_beat/domain/request/login_by_token_param.dart';
+import 'package:mpos_beat/data/models/company_creation_response.dart';
+import 'package:mpos_beat/data/models/create_godown_response.dart';
+import 'package:mpos_beat/domain/request/create_comany_user_mapping_params.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 @lazySingleton
-class LoginByToken {
+class CreateCompanyUserMapping {
   final HttpClient httpClient;
   final RunSafely runSafely;
   final SharedPreferences sharedPreferences;
-  final AppDb appDb;
+  CreateCompanyUserMapping(this.httpClient, this.runSafely, this.sharedPreferences);
 
-  LoginByToken(
-    this.httpClient,
-    this.runSafely,
-    this.sharedPreferences,
-    this.appDb,
-  );
-
-  ResultFuture<LoginResponse> call(BaseParams<LoginByTokenParam> param) {
+  ResultFuture<CompanyInfoDtos> call(BaseParams<CreateComanyUserMappingParams> param) {
     return runSafely(
       () async {
         final response = await httpClient.post(
-          Urls.loginByToken,
+          Urls.createCompanyUserMapping,
           data: param.toMap(),
         );
-        // final response = await httpClient.postFormData(Urls.login, fields: param.toMap());
-        if (response.isOk) {
-          final data = LoginResponse.fromJson(response.data);
-          final token = data.loginData?.token;
-          final customerId = data.loginData?.customerId;
-          if (token != null && token.isNotEmpty && data.status == 1) {
-            await sharedPreferences.setString("token", token);
-          }
-          await sharedPreferences.setInt("customerId", customerId ?? 0);
 
-          await appDb.into(appDb.users).insert(User.fromJson(response.data));
-          // appDb.select(appDb.users).watch();
+        if (response.isOk) {
+          final data = CompanyInfoDtos.fromJson(response.data);
+          Logger.logInfo("Company user mapping response : ${data.toJson()}");
           return data;
         }
 

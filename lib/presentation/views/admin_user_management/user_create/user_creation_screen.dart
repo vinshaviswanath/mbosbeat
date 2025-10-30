@@ -260,6 +260,20 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                                   provider.userCreateAutovalidateMode,
                               failure: provider.password.getFailure,
                               onChange: provider.updatePassword,
+                              suffixIcon: InkWell(
+                                onTap: () =>
+                                    provider.toggleVisibilityPassword(),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12),
+                                  child: SvgPicture.asset(
+                                    provider.isVisiblePassword
+                                        ? AppAssets.featherEyeOn
+                                        : AppAssets.featherEyeOff,
+                                    height: context.getSize.height * 0.02,
+                                  ),
+                                ),
+                              ),
+                              obscureText: !provider.isVisiblePassword,
                               backgroundColor: ColorResources.lightGray,
                               inputType: TextInputType.visiblePassword,
                               borderRadius: 12,
@@ -389,12 +403,12 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                                       ),
                                       isExpanded: true,
                                       style: context.textStyle.s12,
-                                      validator: (value) {
-                                        if (value == null) {
-                                          return "Please select designation";
-                                        }
-                                        return null;
-                                      },
+                                      // validator: (value) {
+                                      //   if (value == null) {
+                                      //     return "Please select designation";
+                                      //   }
+                                      //   return null;
+                                      // },
                                       value: widget.isUpdate
                                           ? designationList.firstWhere(
                                               (e) =>
@@ -539,13 +553,13 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                             isExpanded: true,
                             style: context.textStyle.s12,
                             icon: const Icon(Icons.keyboard_arrow_down),
-                            validator: (value) {
-                              if (value == null) {
-                                return "Please select reporting person";
-                              }
-                              return null;
-                            },
-                            value: widget.isUpdate
+                            // validator: (value) {
+                            //   if (value == null) {
+                            //     return "Please select reporting person";
+                            //   }
+                            //   return null;
+                            // },
+                            initialValue: widget.isUpdate
                                 ? usersList.firstWhere(
                                     (e) => e.id == widget.user?.parentId,
                                     orElse: () => usersList.first,
@@ -570,7 +584,12 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                               );
                             },
                           ),
-                          if (_submitted && selectedReportingTo == null) ...[
+                          if (_submitted &&
+                              selectedReportingTo == null &&
+                              provider
+                                  .designationList!
+                                  .userDesignationList
+                                  .isNotEmpty) ...[
                             const SizedBox(height: 4),
                             Row(
                               children: [
@@ -672,7 +691,7 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                                         whatsappNo: whatsappController.text,
                                         email: emailController.text,
                                         designationId: selectedDesignation!.id!,
-                                        paretId: selectedReportingTo!.id!,
+                                        paretId: selectedReportingTo?.id! ?? 0,
                                         userName: userController.text,
                                         password: passwordController.text,
                                         active: 1,

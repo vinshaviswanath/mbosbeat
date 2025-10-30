@@ -6,6 +6,7 @@ import 'package:mpos_beat/core/utils/typedefs.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/activate_godown/activate_godown.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/activate_route/activate_route.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/company_info.dart';
+import 'package:mpos_beat/data/data_sources/user_management/company_user_mapping/company_user_mapping.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/country_list.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/create_company_settings.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/create_company_voucherType.dart';
@@ -44,6 +45,7 @@ import 'package:mpos_beat/data/models/state_list_response.dart';
 import 'package:mpos_beat/domain/repositories/i_company_creation_facad.dart';
 import 'package:mpos_beat/domain/request/company_creation_params.dart';
 import 'package:mpos_beat/domain/request/create_company_settings_request.dart';
+import 'package:mpos_beat/domain/request/create_comany_user_mapping_params.dart';
 import 'package:mpos_beat/domain/request/create_company_voucher_request.dart';
 import 'package:mpos_beat/domain/request/create_godown_params.dart';
 import 'package:mpos_beat/domain/request/create_route_params.dart';
@@ -212,4 +214,6 @@ class ICompanyCreationFacadImpl implements ICompanyCreationFacad {
   ResultFuture<RouteResponse> deleteRoute({required String routeId}) {
     return routeDelete(routeId: routeId);
   }
+
+
 }

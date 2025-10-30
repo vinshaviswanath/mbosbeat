@@ -60,6 +60,19 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       inputType: TextInputType.text,
                       borderRadius: 12,
                       hintColor: ColorResources.silverGray,
+                      suffixIcon: InkWell(
+                        onTap: () => provider.toggleVisibilityPassword(),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: SvgPicture.asset(
+                            provider.isVisiblePassword
+                                ? AppAssets.featherEyeOn
+                                : AppAssets.featherEyeOff,
+                            height: context.getSize.height * 0.02,
+                          ),
+                        ),
+                      ),
+                      obscureText: !provider.isVisiblePassword,
                       borderColor: _submitted && passwordError != null
                           ? ColorResources.roseRed
                           : ColorResources.transparent,
@@ -89,6 +102,19 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       backgroundColor: ColorResources.lightGray,
                       borderRadius: 12,
                       hintColor: ColorResources.silverGray,
+                      suffixIcon: InkWell(
+                        onTap: () => provider.toggleVisibilityConfirmPassword(),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: SvgPicture.asset(
+                            provider.isVisibleConfirmPassword
+                                ? AppAssets.featherEyeOn
+                                : AppAssets.featherEyeOff,
+                            height: context.getSize.height * 0.02,
+                          ),
+                        ),
+                      ),
+                      obscureText: !provider.isVisibleConfirmPassword,
                       borderColor: _submitted && confirmPasswordError != null
                           ? ColorResources.roseRed
                           : ColorResources.transparent,
