@@ -29,14 +29,16 @@ class LoginByToken {
   ResultFuture<LoginResponse> call(BaseParams<LoginByTokenParam> param) {
     return runSafely(
       () async {
-        final response = await httpClient.post(Urls.loginByToken, data: param.toMap());
+        final response = await httpClient.post(
+          Urls.loginByToken,
+          data: param.toMap(),
+        );
         // final response = await httpClient.postFormData(Urls.login, fields: param.toMap());
-
         if (response.isOk) {
           final data = LoginResponse.fromJson(response.data);
           final token = data.loginData?.token;
           final customerId = data.loginData?.customerId;
-          if (token != null && token.isNotEmpty && data.status != 10) {
+          if (token != null && token.isNotEmpty && data.status == 1) {
             await sharedPreferences.setString("token", token);
           }
           await sharedPreferences.setInt("customerId", customerId ?? 0);

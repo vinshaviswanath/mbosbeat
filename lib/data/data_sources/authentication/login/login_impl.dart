@@ -36,7 +36,7 @@ class LoginImpl {
           final data = LoginResponse.fromJson(response.data);
           final token = data.loginData?.token;
           final customerId = data.loginData?.customerId;
-          if (token != null && token.isNotEmpty && data.status != 10) {
+          if (token != null && token.isNotEmpty && data.status == 1) {
             await sharedPreferences.setString("token", token);
           }
           await sharedPreferences.setInt("customerId", customerId ?? 0);
