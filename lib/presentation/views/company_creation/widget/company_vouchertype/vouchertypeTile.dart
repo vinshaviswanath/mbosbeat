@@ -209,16 +209,15 @@ class _VoucherTypeTileState extends State<VoucherTypeTile> {
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.secondary.withOpacity(0.3),
-                            borderRadius: BorderRadius.circular(8),
+                            color: const Color(0xFF98A6BE).withOpacity(0.3),
+                            borderRadius: BorderRadius.circular(4),
                           ),
-                          height: MediaQuery.of(context).size.height * 0.03,
-                          width: MediaQuery.of(context).size.width * 0.06,
+                          height: MediaQuery.of(context).size.height * 0.025,
+                          width: MediaQuery.of(context).size.width * 0.05,
                           child: Icon(
-                            Icons.drive_file_rename_outline_outlined,
-                            color: Theme.of(context).colorScheme.primary,
+                            Icons.drive_file_rename_outline_sharp,
+                            size: 15,
+                            color: const Color(0xFF36489B),
                           ),
                         ),
                       ),
@@ -315,16 +314,15 @@ class _VoucherTypeTileState extends State<VoucherTypeTile> {
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.secondary.withOpacity(0.3),
-                          borderRadius: BorderRadius.circular(8),
+                          color: const Color(0xFF98A6BE).withOpacity(0.3),
+                          borderRadius: BorderRadius.circular(4),
                         ),
-                        height: MediaQuery.of(context).size.height * 0.03,
-                        width: MediaQuery.of(context).size.width * 0.06,
+                        height: MediaQuery.of(context).size.height * 0.025,
+                        width: MediaQuery.of(context).size.width * 0.05,
                         child: Icon(
-                          Icons.drive_file_rename_outline_outlined,
-                          color: Theme.of(context).colorScheme.primary,
+                          Icons.drive_file_rename_outline_sharp,
+                          size: 15,
+                          color: const Color(0xFF36489B),
                         ),
                       ),
                     ),
