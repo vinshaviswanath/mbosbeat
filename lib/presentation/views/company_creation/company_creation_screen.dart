@@ -1,11 +1,17 @@
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/presentation/views/company_creation/widget/company_info_widget/company_info_widget.dart';
 import 'package:mpos_beat/presentation/views/company_creation/widget/integration_widget/integration_widget.dart';
 import 'package:mpos_beat/presentation/views/company_creation/widget/company_vouchertype/voucher_type_widget.dart';
 
 class CompanyCreationScreen extends StatefulWidget {
-  const CompanyCreationScreen({super.key, required this.initialTabIndex});
+  final CompanyViewList? companyData;
+  const CompanyCreationScreen({
+    super.key,
+    required this.initialTabIndex,
+    this.companyData,
+  });
 
   final int initialTabIndex;
 
@@ -112,6 +118,7 @@ class _CompanyCreationScreenState extends State<CompanyCreationScreen>
                       _tabController.animateTo(1);
                     }
                   },
+                  companyData: widget.companyData,
                 ),
                 VoucherTypeWidget(
                   onTap: () {
@@ -133,6 +140,7 @@ class _CompanyCreationScreenState extends State<CompanyCreationScreen>
                     // _tabController.animateTo( 1);
                     // }
                   },
+                  companyData: widget.companyData,
                 ),
               ],
             ),

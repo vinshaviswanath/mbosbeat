@@ -38,7 +38,10 @@ class _ToggleDialogBoxState extends State<ToggleDialogBox> {
 
   void fetchCompanyVoucherList() {
     final provider = context.read<CompanyCreationProvider>();
-    provider.fetchVoucherTypes(context, widget.companyId);
+    provider.fetchVoucherTypes(
+      context,
+      // companyId ?? 0
+    );
   }
 
   @override

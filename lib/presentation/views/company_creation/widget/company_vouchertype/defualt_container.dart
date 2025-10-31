@@ -522,7 +522,9 @@ class _DefaultContainerState extends State<DefaultContainer> {
                               provider.fetchVoucherTypes(
                                 context,
                                 widget.companyId,
-                              );
+                               // companyId ?? 0
+                             );
+                             //   provider.fetchVoucherTypes(context, 1302);
                             }
                           }
                           dataCollecting();

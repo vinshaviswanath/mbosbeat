@@ -108,9 +108,9 @@ class CompanyViewList {
   final int? hasVoucherTypeSettings;
   final int? hasCompanySettings;
   final String? userList;
-  final dynamic integrationType;
-  final dynamic serialNumber;
-  final dynamic stockInCloud;
+  dynamic integrationType;
+  dynamic serialNumber;
+  dynamic stockInCloud;
   final String? registrationNo;
 
   factory CompanyViewList.fromJson(Map<String, dynamic> json) {

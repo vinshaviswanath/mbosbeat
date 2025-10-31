@@ -426,7 +426,10 @@ class _B2bContainerState extends State<B2bContainer> {
                         ),
                       );
                       context.pop();
-                      provider.fetchVoucherTypes(context, widget.companyId);
+                      provider.fetchVoucherTypes(
+                        context,
+                        // companyId ?? 0
+                      );
                     }
                     dataCollecting();
                   }

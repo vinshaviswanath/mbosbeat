@@ -419,7 +419,10 @@ class _B2cContainerState extends State<B2cContainer> {
                         ),
                       );
                       context.pop();
-                      provider.fetchVoucherTypes(context, widget.companyId);
+                      provider.fetchVoucherTypes(
+                        context,
+                        // companyId ?? 0
+                      );
                     }
                     dataCollecting();
                   }

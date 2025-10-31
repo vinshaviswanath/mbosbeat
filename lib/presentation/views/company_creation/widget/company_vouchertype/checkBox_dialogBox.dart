@@ -24,7 +24,7 @@ class CheckBoxDialogBox extends StatefulWidget {
 
 class _CheckBoxDialogBoxState extends State<CheckBoxDialogBox> {
   late int isCheckOn;
- late int isToggleOn;
+  late int isToggleOn;
 
   @override
   void initState() {
@@ -40,7 +40,10 @@ class _CheckBoxDialogBoxState extends State<CheckBoxDialogBox> {
 
   void fetchCompanyVoucherList() {
     final provider = context.read<CompanyCreationProvider>();
-    provider.fetchVoucherTypes(context, widget.companyId);
+    provider.fetchVoucherTypes(
+      context,
+      // companyId ?? 0
+    );
   }
 
   @override
@@ -94,8 +97,12 @@ class _CheckBoxDialogBoxState extends State<CheckBoxDialogBox> {
                       // CommonSnackBar.show(context,
                       //     message:
                       //         createcompanyvoucherProvider.serverMessage ?? "");
-                      provider.fetchVoucherTypes(context,widget.companyId);
-                      context.pop(true);
+                     provider.fetchVoucherTypes(context,widget.companyId);
+                      provider.fetchVoucherTypes(
+                        context,
+                        // companyId ?? 0
+                      );
+                     context.pop(true);
                     }
                   },
                   child: Text(

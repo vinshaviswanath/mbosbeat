@@ -20,7 +20,10 @@ class _VoucherTypeWidgetState extends State<VoucherTypeWidget> {
       final provider = context.read<CompanyCreationProvider>();
       final companyId = provider.companyid;
       print('companyId: $companyId');
-      provider.fetchVoucherTypes(context, companyId ?? 0);
+      provider.fetchVoucherTypes(
+        context,
+        // companyId ?? 0
+      );
     });
   }
 

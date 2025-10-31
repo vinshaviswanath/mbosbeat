@@ -1,10 +1,14 @@
+import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/domain/request/integration_request.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/presentation/views/company_creation/widget/integration_widget/integration_card.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class IntegrationWidget extends StatefulWidget {
-  const IntegrationWidget({super.key, this.onTap});
+  final CompanyViewList? companyData;
+  const IntegrationWidget({super.key, this.onTap, this.companyData});
   final void Function()? onTap;
 
   @override
@@ -15,9 +19,12 @@ class _IntegrationWidgetState extends State<IntegrationWidget> {
   @override
   Widget build(BuildContext context) {
     final appLocalizations = context.l10n;
-    final provider = context.watch<CompanyCreationProvider>();
+    final provider = context.read<CompanyCreationProvider>();
+    final prefs = sl<SharedPreferences>();
 
-    final companyId = provider.companyid; // 👈 This is your new company ID
+    final companyId = prefs.getInt(
+      'selected_company_id',
+    ); // 👈 This is your new company ID
     return CustomScrollView(
       slivers: [
         SliverPadding(
@@ -29,6 +36,7 @@ class _IntegrationWidgetState extends State<IntegrationWidget> {
                 description:
                     appLocalizations.integration_type_statnd_alone_description,
                 logoUrl: "",
+                companyData: widget.companyData,
               ),
               h30,
               VoucherCard(
@@ -37,6 +45,7 @@ class _IntegrationWidgetState extends State<IntegrationWidget> {
                     appLocalizations.integration_type_statnd_alone_description,
                 logoUrl:
                     "https://upload.wikimedia.org/wikipedia/commons/0/09/Tally_-_Logo.png",
+                companyData: widget.companyData,
               ),
               h30,
 
@@ -45,6 +54,7 @@ class _IntegrationWidgetState extends State<IntegrationWidget> {
                 description:
                     appLocalizations.integration_type_statnd_alone_description,
                 logoUrl: "",
+                companyData: widget.companyData,
               ),
             ]),
           ),
@@ -69,19 +79,16 @@ class _IntegrationWidgetState extends State<IntegrationWidget> {
                     print('SerialNo: $serialNo');
                     print('StockInCloud: $stockInCloud');
 
-                    //  final result =
                     provider.integration(
                       context,
                       onSuccess: widget.onTap,
                       params: IntegrationParams(
-                        companyid: companyId ?? 0,
+                        companyid: companyId,
                         integrationType: integrationType,
                         serialNo: serialNo,
                         stockInCloud: stockInCloud,
                       ),
                     );
-
-                    // Navigate only if API succeeded
                   },
                   textStyle: context.textStyle.s16.bold.white.roboto,
                   isborderEnable: false,
