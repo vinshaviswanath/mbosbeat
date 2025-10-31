@@ -41,6 +41,7 @@ class CompanyCreationProvider extends ChangeNotifier {
   Future<String> getCompanyId() async {
     final pref = sl<SharedPreferences>();
     final companyId = pref.getInt('selected_company_id');
+    _companyid = companyId;
     return companyId?.toString() ?? '';
   }
 
@@ -266,9 +267,19 @@ class CompanyCreationProvider extends ChangeNotifier {
 
         if (response.status == 1) {
           _companyCreationDtos = response;
-          _companyid = _companyCreationDtos!.id;
+          WidgetsBinding.instance.addPostFrameCallback((_) async {
+            final prefs = sl<SharedPreferences>();
+            await prefs.setInt('selected_company_id', _companyCreationDtos!.id);
+            final companyId = prefs.getInt('selected_company_id');
+            Logger.logSuccess(
+              "Company info tab SELECTED COMPANY ID: $companyId",
+            );
+          });
+          getCompanyId();
+          getAllCompanies(context);
           markStageCompleted(0);
           onSuccess?.call();
+          notifyListeners();
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -283,6 +294,7 @@ class CompanyCreationProvider extends ChangeNotifier {
         }
       },
     );
+
     return _companyCreationDtos;
   }
 
@@ -420,6 +432,7 @@ class CompanyCreationProvider extends ChangeNotifier {
 
   AutovalidateMode integrationSerialNoAutovalidateMode =
       AutovalidateMode.disabled;
+
   void updateIntegrationSerialNo(String input) {
     _integrationSerialNo = IntegrationSerialNo(input);
     notifyListeners();
@@ -429,12 +442,14 @@ class CompanyCreationProvider extends ChangeNotifier {
     return _integrationSerialNo.isValid();
   }
 
-  String? selectedIntegrationType;
+  String? _selectedIntegrationType;
+  String? get selectedIntegrationType => _selectedIntegrationType;
+
   String? integrationSerialNoController;
   bool stockInCloud = false;
 
   void setIntegrationType(String title) {
-    selectedIntegrationType = title;
+    _selectedIntegrationType = title;
     notifyListeners();
   }
 
@@ -445,6 +460,23 @@ class CompanyCreationProvider extends ChangeNotifier {
 
   void setStockInCloud(bool value) {
     stockInCloud = value;
+    notifyListeners();
+  }
+
+  void resetIntegration() {
+    _selectedIntegrationType = null;
+    stockInCloud = false;
+    integrationSerialNoController = null;
+    _integrationSerialNo = IntegrationSerialNo("");
+    integrationSerialNoAutovalidateMode = AutovalidateMode.disabled;
+    notifyListeners();
+  }
+
+  int _integrationResetKey = 0;
+  int get integrationResetKey => _integrationResetKey;
+
+  void triggerFullReset() {
+    _integrationResetKey++;
     notifyListeners();
   }
 
@@ -869,11 +901,13 @@ class CompanyCreationProvider extends ChangeNotifier {
 
   Future<CompanyvouchertypeslistDtos?> fetchVoucherTypes(
     BuildContext context,
-    int companyID,
+    // int companyID,
   ) async {
     _setLoading(true);
+    final prefs = sl<SharedPreferences>();
 
-    final result = await iCompanyCreationFacad.getVoucherType(companyID);
+    final companyId = prefs.getInt('selected_company_id');
+    final result = await iCompanyCreationFacad.getVoucherType(companyId ?? 0);
     result.fold(
       (failure) {
         _errorMessage = failure.errorMsg.toString();
@@ -935,7 +969,45 @@ class CompanyCreationProvider extends ChangeNotifier {
         Logger.logError("Create Company Settings failed: $_errorMessage");
         _setLoading(false);
         notifyListeners();
-    notifyListeners();
+        notifyListeners();
+      },
+      (response) {
+        Logger.logSuccess(
+          "Create Company Settings success : ${response.toJson()}",
+        );
+        Logger.logSuccess("Status : ${response.status}");
+        _setLoading(false);
+        notifyListeners();
+
+        if (response.status == 1) {
+          _createCompanySettingsDtos = response;
+          onSuccess?.call();
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(response.message, textAlign: TextAlign.center),
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            ),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(response.message, textAlign: TextAlign.center),
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            ),
+          );
+        }
+      },
+    );
+    return _createCompanySettingsDtos;
   }
 
   //========================= Users List =========================
@@ -1061,44 +1133,6 @@ class CompanyCreationProvider extends ChangeNotifier {
           "Godown List fetch successfull : ${response.toJson()}",
         );
         notifyListeners();
-      },
-      (response) {
-        Logger.logSuccess(
-          "Create Company Settings success : ${response.toJson()}",
-        );
-        Logger.logSuccess("Status : ${response.status}");
-        _setLoading(false);
-        notifyListeners();
-
-        if (response.status == 1) {
-          _createCompanySettingsDtos = response;
-          onSuccess?.call();
-
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(response.message, textAlign: TextAlign.center),
-              behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            ),
-          );
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(response.message, textAlign: TextAlign.center),
-              behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            ),
-          );
-        }
-      },
-    );
-    return _createCompanySettingsDtos;
       },
     );
     setLoading(false);

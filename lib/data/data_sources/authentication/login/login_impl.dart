@@ -41,7 +41,7 @@ class LoginImpl {
           }
           await sharedPreferences.setInt("customerId", customerId ?? 0);
 
-          await appDb.into(appDb.users).insert(User.fromJson(response.data));
+          // await appDb.into(appDb.users).insert(User.fromJson(response.data));
           // appDb.select(appDb.users).watch();
           return data;
         }

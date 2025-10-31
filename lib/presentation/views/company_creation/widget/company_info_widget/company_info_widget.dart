@@ -1,11 +1,13 @@
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/domain/request/company_creation_params.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_dropdown.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 
 class CompanyInfoWidget extends StatefulWidget {
-  const CompanyInfoWidget({super.key, this.onTap});
+  final CompanyViewList? companyData;
+  const CompanyInfoWidget({super.key, this.onTap, this.companyData});
   final void Function()? onTap;
 
   @override
@@ -35,9 +37,73 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
     countrytController = TextEditingController();
     stateController = TextEditingController();
     regTypeController = TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final provider = context.read<CompanyCreationProvider>();
+      await provider.fectchCountryList(context);
+      fillfeilds();
+    });
+  }
+
+  void fillfeilds() async {
+    if (widget.companyData == null) return;
 
     final provider = context.read<CompanyCreationProvider>();
-    provider.fectchCountryList(context);
+
+    compnyNameController.text = widget.companyData!.companyName ?? "";
+    displayNameController.text = widget.companyData!.mailingName ?? "";
+    address1Controller.text = widget.companyData!.address1 ?? "";
+    address2Controller.text = widget.companyData!.address2 ?? "";
+    address3Controller.text = widget.companyData!.address3 ?? "";
+    pincodeController.text = widget.companyData!.pinCode ?? "";
+
+    final countryId = widget.companyData!.country;
+    final stateId = widget.companyData!.state;
+    final regTypeId = widget.companyData!.regType;
+
+    // 🟢 Find and set the selected country
+    if (countryId != null && provider.countries.isNotEmpty) {
+      final selectedCountry = provider.countries.firstWhere(
+        (c) => c.id == countryId,
+        orElse: () => provider.countries.first,
+      );
+      provider.selectCountry(context, selectedCountry);
+
+      // 🟢 Fetch and set state + registration type after fetching
+      await Future.wait([
+        provider.fetchStateList(context, selectedCountry.id),
+        provider.getRegistrationType(context, selectedCountry.id),
+      ]);
+
+      // 🟢 Set state
+      if (stateId != null && provider.statelists.isNotEmpty) {
+        final selectedState = provider.statelists.firstWhere(
+          (s) => s.id == stateId,
+          orElse: () => provider.statelists.first,
+        );
+        provider.selectState(selectedState);
+      }
+
+      // 🟢 Set registration type
+      if (regTypeId != null && provider.registrationlists.isNotEmpty) {
+        final selectedReg = provider.registrationlists.firstWhere(
+          (r) => r.id == regTypeId,
+          orElse: () => provider.registrationlists.first,
+        );
+        provider.selectRegistrationType(selectedReg);
+      }
+    }
+
+    provider.updateCompanyName(compnyNameController.text);
+    provider.updateDisplayName(displayNameController.text);
+    provider.updateAddress1(address1Controller.text);
+    provider.updatePincode(pincodeController.text);
+    provider.updateCountry(provider.selectedCountry?.countryName ?? "");
+    provider.updateCountryState(provider.selectedState?.stateName ?? "");
+    provider.updateRegType(
+      provider.selectedregistrationtype?.registrationType ?? "",
+    );
+
+    setState(() {}); // refresh UI with selected dropdown values
   }
 
   @override
@@ -289,9 +355,10 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
                       onTap: () async {
                         provider.companyinfo(
                           onSuccess: widget.onTap,
+
                           context,
                           params: CompanyInfoParams(
-                            id: 0,
+                            id: widget.companyData!.id ?? 0,
                             companyCode: "1",
                             companyName: compnyNameController.text,
                             displayName: displayNameController.text,

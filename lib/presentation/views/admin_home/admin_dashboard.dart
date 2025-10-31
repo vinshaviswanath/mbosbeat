@@ -465,10 +465,44 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                   Navigator.pop(
                                                                     context,
                                                                   );
+
+                                                                  // Get the saved companyId
+                                                                  final pref =
+                                                                      sl<
+                                                                        SharedPreferences
+                                                                      >();
+                                                                  final companyId =
+                                                                      pref.getInt(
+                                                                        'selected_company_id',
+                                                                      );
+
+                                                                  // Find the company by ID
+                                                                  selectedCompany = companyList.firstWhere(
+                                                                    (company) =>
+                                                                        company
+                                                                            .id ==
+                                                                        companyId,
+                                                                    orElse: () =>
+                                                                        companyList
+                                                                            .first,
+                                                                  );
+
+                                                                  Logger.logInfo(
+                                                                    companyId,
+                                                                  );
+                                                                  Logger.logInfo(
+                                                                    selectedCompany,
+                                                                  );
+
                                                                   context.pushNamed(
                                                                     AppRouterConst
                                                                         .companyCreationScreen,
-                                                                    extra: 0,
+                                                                    extra: {
+                                                                      'tabIndex':
+                                                                          0,
+                                                                      'companyData':
+                                                                          selectedCompany,
+                                                                    },
                                                                   );
                                                                 },
                                                               ),
@@ -482,13 +516,46 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                 icon: Icons
                                                                     .settings_applications,
                                                                 onTap: (i) {
+                                                                  final pref =
+                                                                      sl<
+                                                                        SharedPreferences
+                                                                      >();
+                                                                  final companyId =
+                                                                      pref.getInt(
+                                                                        'selected_company_id',
+                                                                      );
+
+                                                                  // Find the company by ID
+                                                                  selectedCompany = companyList.firstWhere(
+                                                                    (company) =>
+                                                                        company
+                                                                            .id ==
+                                                                        companyId,
+                                                                    orElse: () =>
+                                                                        companyList
+                                                                            .first,
+                                                                  );
+
+                                                                  Logger.logInfo(
+                                                                    companyId,
+                                                                  );
+                                                                  Logger.logInfo(
+                                                                    selectedCompany,
+                                                                  );
+
                                                                   Navigator.pop(
                                                                     context,
                                                                   );
+
                                                                   context.pushNamed(
                                                                     AppRouterConst
                                                                         .companyCreationScreen,
-                                                                    extra: 2,
+                                                                    extra: {
+                                                                      'tabIndex':
+                                                                          2,
+                                                                      'companyData':
+                                                                          selectedCompany,
+                                                                    },
                                                                   );
                                                                 },
                                                               ),
@@ -521,13 +588,47 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                 icon: Icons
                                                                     .file_copy,
                                                                 onTap: (i) {
+                                                                  // Get the saved companyId
+                                                                  final pref =
+                                                                      sl<
+                                                                        SharedPreferences
+                                                                      >();
+                                                                  final companyId =
+                                                                      pref.getInt(
+                                                                        'selected_company_id',
+                                                                      );
+
+                                                                  // Find the company by ID
+                                                                  selectedCompany = companyList.firstWhere(
+                                                                    (company) =>
+                                                                        company
+                                                                            .id ==
+                                                                        companyId,
+                                                                    orElse: () =>
+                                                                        companyList
+                                                                            .first,
+                                                                  );
+
+                                                                  Logger.logInfo(
+                                                                    companyId,
+                                                                  );
+                                                                  Logger.logInfo(
+                                                                    selectedCompany,
+                                                                  );
+
                                                                   Navigator.pop(
                                                                     context,
                                                                   );
+
                                                                   context.pushNamed(
                                                                     AppRouterConst
                                                                         .companyCreationScreen,
-                                                                    extra: 1,
+                                                                    extra: {
+                                                                      'tabIndex':
+                                                                          1,
+                                                                      'companyData':
+                                                                          selectedCompany,
+                                                                    },
                                                                   );
                                                                 },
                                                               ),

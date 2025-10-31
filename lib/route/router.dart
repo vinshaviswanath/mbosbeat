@@ -144,7 +144,7 @@ class AppRouter {
       GoRoute(
         path: "/manageUser",
         name: AppRouterConst.manageUser,
-        
+
         builder: (context, state) {
           return const ManageUserScreen();
         },
@@ -156,7 +156,7 @@ class AppRouter {
           final extra = state.extra as Map<String, dynamic>? ?? {};
           final isEdit = extra["isEdit"] as bool? ?? false;
           final user = extra["user"] as UserMasterList?;
-          return UserCreationScreen(isUpdate: isEdit, user: user,);
+          return UserCreationScreen(isUpdate: isEdit, user: user);
         },
       ),
 
@@ -165,7 +165,7 @@ class AppRouter {
         name: AppRouterConst.resetPassword,
         builder: (context, state) {
           final index = state.extra as int;
-          return  ResetPasswordScreen(index: index,);
+          return ResetPasswordScreen(index: index);
         },
       ),
       GoRoute(
@@ -173,7 +173,7 @@ class AppRouter {
         name: AppRouterConst.userSettings,
         builder: (context, state) {
           final userId = state.extra as String;
-          return  UserSettingsScreen(userId: userId,);
+          return UserSettingsScreen(userId: userId);
         },
       ),
       GoRoute(
@@ -185,7 +185,12 @@ class AppRouter {
           final companyName = extra["companyName"] as String;
           final userId = extra["userId"] as int;
           final company = extra["company"] as CompaniesListResponse;
-          return AddCompanyScreen(name: name, companyName: companyName,company: company,userId: userId,);
+          return AddCompanyScreen(
+            name: name,
+            companyName: companyName,
+            company: company,
+            userId: userId,
+          );
         },
       ),
       GoRoute(
@@ -345,8 +350,13 @@ class AppRouter {
         name: AppRouterConst.companyCreationScreen,
         path: '/companyCreationScreen',
         builder: (context, state) {
-          final tabIndex = state.extra as int? ?? 0;
-          return CompanyCreationScreen(initialTabIndex: tabIndex);
+          final extra = state.extra as Map<String, dynamic>?;
+          final tabIndex = extra?['tabIndex'] as int? ?? 0;
+          final companyData = extra?['companyData'] as CompanyViewList?;
+          return CompanyCreationScreen(
+            initialTabIndex: tabIndex,
+            companyData: companyData,
+          );
         },
       ),
       GoRoute(
