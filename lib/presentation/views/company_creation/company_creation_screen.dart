@@ -32,6 +32,24 @@ class _CompanyCreationScreenState extends State<CompanyCreationScreen>
       vsync: this,
       initialIndex: widget.initialTabIndex,
     );
+
+    // ✅ update circles according to backend company data
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final provider = Provider.of<CompanyCreationProvider>(
+        context,
+        listen: false,
+      );
+      if (widget.companyData != null) {
+        provider.updateStageCompletionFromCompanyData(widget.companyData!);
+
+        // optional: move to the first uncompleted tab
+        // final nextStage = provider.stageCompleted.indexOf(false);
+        // if (nextStage != -1) {
+        //   _tabController.animateTo(nextStage);
+        // }
+      }
+    });
+
     _tabController.addListener(() {
       if (mounted) setState(() {});
     });
@@ -134,7 +152,7 @@ class _CompanyCreationScreenState extends State<CompanyCreationScreen>
                   onTap: () {
                     if (provider.canGoToStage(2)) {
                       provider.markStageCompleted(2);
-                      //context.pushNamed(AppRouterConst.adminDashboard);
+                      //   context.pushNamed(AppRouterConst.adminDashboard);
                     }
                     // if (0 < 2) {
                     // _tabController.animateTo( 1);

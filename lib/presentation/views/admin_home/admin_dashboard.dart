@@ -6,10 +6,8 @@ import 'package:mpos_beat/presentation/common/widgets/custom_divider.dart';
 import 'package:mpos_beat/presentation/dialogs/auth_dialogs.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/presentation/views/admin_home/widget/custom_drawer.dart';
-import 'package:mpos_beat/presentation/views/admin_home/widget/popover_body.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_manage/widgets/option_item.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/widgets/end_to_end_text_widget.dart';
-import 'package:popover/popover.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AdminDashboard extends StatefulWidget {
@@ -452,9 +450,11 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                     .roboto,
                                                               ),
                                                               h12,
+
+                                                              //Edit Compny Info......
                                                               OptionItem(
                                                                 index: 0,
-                                                                // style: context.textStyle.s10.w400.dustyBlue.roboto,
+
                                                                 selectedIndex:
                                                                     optionIndex,
                                                                 title:
@@ -507,6 +507,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                 },
                                                               ),
                                                               const CustomDivider(),
+
+                                                              //Integration Settings...
                                                               OptionItem(
                                                                 index: 1,
                                                                 selectedIndex:
@@ -560,6 +562,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                 },
                                                               ),
                                                               const CustomDivider(),
+
+                                                              //Company Settings...
                                                               OptionItem(
                                                                 index: 2,
                                                                 selectedIndex:
@@ -572,13 +576,31 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                   Navigator.pop(
                                                                     context,
                                                                   );
+                                                                  // Find the company by ID
+                                                                  selectedCompany = companyList.firstWhere(
+                                                                    (company) =>
+                                                                        company
+                                                                            .id ==
+                                                                        companyId,
+                                                                    orElse: () =>
+                                                                        companyList
+                                                                            .first,
+                                                                  );
+
                                                                   context.pushNamed(
                                                                     AppRouterConst
                                                                         .companySettingsScreen,
+                                                                    extra: {
+                                                                      "companyId":
+                                                                          selectedCompany
+                                                                              ?.id,
+                                                                    },
                                                                   );
                                                                 },
                                                               ),
                                                               const CustomDivider(),
+
+                                                              //Voucher Type...
                                                               OptionItem(
                                                                 index: 3,
                                                                 selectedIndex:
@@ -633,6 +655,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                 },
                                                               ),
                                                               const CustomDivider(),
+
+                                                              //Godown/Route....
                                                               OptionItem(
                                                                 index: 4,
                                                                 selectedIndex:
@@ -652,6 +676,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                 },
                                                               ),
                                                               const CustomDivider(),
+
+                                                              //Add Users
                                                               OptionItem(
                                                                 index: 5,
                                                                 selectedIndex:
