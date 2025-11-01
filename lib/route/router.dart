@@ -356,6 +356,7 @@ class AppRouter {
           final extra = state.extra as Map<String, dynamic>?;
           final tabIndex = extra?['tabIndex'] as int? ?? 0;
           final companyData = extra?['companyData'] as CompanyViewList?;
+
           return CompanyCreationScreen(
             initialTabIndex: tabIndex,
             companyData: companyData,
@@ -394,7 +395,9 @@ class AppRouter {
         path: "/companySettingsScreen",
         name: AppRouterConst.companySettingsScreen,
         builder: (context, state) {
-          return const CompanySettingsScreen();
+          final extra = state.extra as Map<String, dynamic>?;
+          final companyId = extra?['companyId'] as int? ?? 0;
+          return CompanySettingsScreen(companyId: companyId);
         },
       ),
       GoRoute(

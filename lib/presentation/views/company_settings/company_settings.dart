@@ -5,11 +5,11 @@ import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_settings/widgets/info_tool_tip.dart';
 
 class CompanySettingsScreen extends StatefulWidget {
-  // final int companyId;
+  final int? companyId;
   // final GetAllCompanyData? companyData;
   const CompanySettingsScreen({
     super.key,
-    // required this.companyId,
+    this.companyId,
     //   required this.companyData
   });
   @override
@@ -29,8 +29,8 @@ class _CompanySettingsScreenState extends State<CompanySettingsScreen> {
         context,
         listen: false,
       );
-      fetchsettingsprovider.getCompanySettings(context, 1336);
-      // fetchsettingsprovider.fetchCompany(widget.companyId);
+      //fetchsettingsprovider.getCompanySettings(context, 1336);
+      fetchsettingsprovider.getCompanySettings(context, widget.companyId!);
     });
   }
 

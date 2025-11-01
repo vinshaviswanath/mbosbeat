@@ -61,6 +61,9 @@ class _VoucherCardState extends State<VoucherCard> {
           widget.companyData!.integrationType == widget.title) {
         provider.setIntegrationType(widget.title);
         provider.setIntegrationSerialNo(widget.companyData!.serialNumber ?? "");
+        provider.updateIntegrationSerialNo(
+          widget.companyData!.serialNumber ?? "",
+        );
         provider.setStockInCloud(
           widget.companyData!.stockInCloud == 'Yes' ||
               widget.companyData!.stockInCloud == true,
@@ -141,7 +144,12 @@ class _VoucherCardState extends State<VoucherCard> {
                         final hasExistingIntegration =
                             widget.companyData?.hasIntegrationSettings !=
                                 null &&
-                            widget.companyData!.integrationType != null;
+                            widget.companyData?.integrationType != null;
+
+                        final activeIntegration =
+                            widget.companyData?.integrationType;
+
+                        final selectIntegration = widget.title;
 
                         // If tapping the same card → just toggle expand/collapse
                         if (provider.selectedIntegrationType == widget.title) {
@@ -173,9 +181,9 @@ class _VoucherCardState extends State<VoucherCard> {
                                 content: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    const Text(
+                                    Text(
                                       textAlign: TextAlign.center,
-                                      'You are currently activated Tally integration in settings. Are you sure to want to change Tally integration into MPOS Retail?',
+                                      'You are currently activated $activeIntegration integration in settings. Are you sure to want to change $activeIntegration integration into $selectIntegration Retail?',
                                       style: TextStyle(
                                         color: ColorResources.bluishGray,
                                         fontSize: 14,

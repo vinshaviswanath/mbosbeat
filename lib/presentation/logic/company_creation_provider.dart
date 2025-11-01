@@ -134,17 +134,38 @@ class CompanyCreationProvider extends ChangeNotifier {
 
   final formKey = GlobalKey<FormState>();
 
-  void activatePlan(String planTitle) {
-    _activePlan = planTitle;
+  // void activatePlan(String planTitle) {
+  //   _activePlan = planTitle;
+  //   notifyListeners();
+  // }
+
+  // void deactivatePlan() {
+  //   _activePlan = null;
+  //   notifyListeners();
+  // }
+
+  // bool isPlanActive(String planTitle) => _activePlan == planTitle;
+  bool isStageCompleted(int index) => stageCompleted[index];
+
+  /// ✅ Update stage completion based on backend data
+  void updateStageCompletionFromCompanyData(CompanyViewList company) {
+    // if company id > 0 → company info is completed
+    stageCompleted[0] = company.id != null && company.id! > 0;
+
+    // Voucher setup done if backend gives any non-zero value
+    stageCompleted[1] =
+        company.hasVoucherTypeSettings != null &&
+        company.hasVoucherTypeSettings != 0;
+
+    // Integration setup done if backend gives any non-zero value
+    stageCompleted[2] =
+        company.hasIntegrationSettings != null &&
+        company.hasIntegrationSettings != 0;
+
+    print('updateStageCompletionFromCompanyData: $stageCompleted');
+
     notifyListeners();
   }
-
-  void deactivatePlan() {
-    _activePlan = null;
-    notifyListeners();
-  }
-
-  bool isPlanActive(String planTitle) => _activePlan == planTitle;
 
   void markStageCompleted(int index) {
     if (index == 0 || stageCompleted[index - 1]) {
@@ -160,8 +181,6 @@ class CompanyCreationProvider extends ChangeNotifier {
     }
     return true;
   }
-
-  bool isStageCompleted(int index) => stageCompleted[index];
 
   // ======================================================================
   //                         Company Creation (DDD)
@@ -268,6 +287,7 @@ class CompanyCreationProvider extends ChangeNotifier {
 
         if (response.status == 1) {
           _companyCreationDtos = response;
+
           WidgetsBinding.instance.addPostFrameCallback((_) async {
             final prefs = sl<SharedPreferences>();
             await prefs.setInt('selected_company_id', _companyCreationDtos!.id);

@@ -470,7 +470,7 @@ class AuthFormProvider with ChangeNotifier {
         _setLoading(false);
         notifyListeners();
 
-        if ( response.status == 1) {
+        if (response.status == 1) {
           _cusomerId = response.loginData?.customerId;
           context.pushNamed(AppRouterConst.adminHome);
         } else if (response.status == 10) {
@@ -493,7 +493,10 @@ class AuthFormProvider with ChangeNotifier {
             heading: "Pending",
             subTitle: "Please complete company creation",
             onTap: () {
-              context.pushNamed(AppRouterConst.companyCreationScreen, extra: 0);
+              context.pushNamed(
+                AppRouterConst.companyCreationScreen,
+                extra: {'tabIndex': 0, 'companyData': null},
+              );
             },
             buttonText: "Redirect",
           );
@@ -503,7 +506,10 @@ class AuthFormProvider with ChangeNotifier {
             heading: "Pending",
             subTitle: "Please complete Company Integration Settings",
             onTap: () {
-              context.pushNamed(AppRouterConst.companyCreationScreen, extra: 2);
+              context.pushNamed(
+                AppRouterConst.companyCreationScreen,
+                extra: {'tabIndex': 2, 'companyData': null},
+              );
             },
             buttonText: "Redirect",
           );
@@ -513,7 +519,10 @@ class AuthFormProvider with ChangeNotifier {
             heading: "Pending",
             subTitle: "Please complete Company VoucherType Configuration",
             onTap: () {
-              context.pushNamed(AppRouterConst.companyCreationScreen, extra: 1);
+              context.pushNamed(
+                AppRouterConst.companyCreationScreen,
+                extra: {'tabIndex': 1, 'companyData': null},
+              );
             },
             buttonText: "Redirect",
           );

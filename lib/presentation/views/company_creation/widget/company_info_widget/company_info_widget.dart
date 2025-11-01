@@ -358,7 +358,7 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
 
                           context,
                           params: CompanyInfoParams(
-                            id: widget.companyData!.id ?? 0,
+                            id: widget.companyData?.id ?? 0,
                             companyCode: "1",
                             companyName: compnyNameController.text,
                             displayName: displayNameController.text,
