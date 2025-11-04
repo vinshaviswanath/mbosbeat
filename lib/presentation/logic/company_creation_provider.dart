@@ -123,7 +123,7 @@ class CompanyCreationProvider extends ChangeNotifier {
   RouteResponse? _routeResponse;
   RouteResponse? get routeResponse => _routeResponse;
 
-  void toggleVoucher() {
+  
   CreateVoucherNumberingResponse? _voucherNumberingResponsel;
   CreateVoucherNumberingResponse? get voucherNumberingResponsel =>
       _voucherNumberingResponsel;
@@ -992,7 +992,7 @@ class CompanyCreationProvider extends ChangeNotifier {
   //get companyvuchertypelist
 
   Future<CompanyvouchertypeslistDtos?> fetchVoucherTypes(
-    BuildContext context,
+    BuildContext context, int companyId,
     // int companyID,
   ) async {
     _setLoading(true);

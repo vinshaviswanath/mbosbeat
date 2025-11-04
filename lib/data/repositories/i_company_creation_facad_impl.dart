@@ -109,10 +109,10 @@ class ICompanyCreationFacadImpl implements ICompanyCreationFacad {
     this.deactivatingGodown,
     this.godownDelete,
     this.routeDelete,
-);
     this.voucherNumbering,
     this.createVoucherNumbers,
-  );
+);
+  
 
   @override
   ResultFuture<CompanyInfoDtos> companyInfo(

@@ -191,18 +191,6 @@ class AppRouter {
           final userId = extra["userId"] as int;
           // final company = extra["company"] as CompaniesListResponse;
           return AddCompanyScreen(name: name, companyName: companyName,userId: userId,);
-         final company = extra["company"] as CompaniesListResponse;
-          return AddCompanyScreen(
-            name: name,
-            companyName: companyName,
-            company: company,
-            userId: userId,
-          );
-          return AddCompanyScreen(
-            name: name,
-            companyName: companyName,
-            userId: userId,
-          );
       },
       ),
       GoRoute(
@@ -370,9 +358,6 @@ class AppRouter {
             initialTabIndex: tabIndex,
             companyData: companyData,
           );
-          final tabIndex = state.extra as int? ?? 0;
-
-          return CompanyCreationScreen(initialTabIndex: tabIndex);
         },
       ),
       GoRoute(

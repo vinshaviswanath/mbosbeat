@@ -22,7 +22,7 @@ class _VoucherTypeWidgetState extends State<VoucherTypeWidget> {
       print('companyId: $companyId');
       provider.fetchVoucherTypes(
         context,
-        // companyId ?? 0
+        companyId ?? 0
       );
     });
   }
