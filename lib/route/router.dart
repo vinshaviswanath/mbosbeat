@@ -1,11 +1,15 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mpos_beat/core/utils/app_details.dart';
 import 'package:mpos_beat/core/utils/enums.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
+import 'package:mpos_beat/data/models/godown_list_model.dart';
+import 'package:mpos_beat/data/models/route_list_model.dart';
 import 'package:mpos_beat/data/models/users_list_model.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_route_screen.dart';
 import 'package:mpos_beat/presentation/common/widgets/loading_screen.dart';
 import 'package:mpos_beat/presentation/views/admin_home/admin_dashboard.dart';
+import 'package:mpos_beat/presentation/views/admin_voucher_settings/voucher_settings_screen.dart';
 import 'package:mpos_beat/presentation/views/company_settings/company_settings.dart';
 import 'package:mpos_beat/presentation/views/company_user_mapping/company_user_mapping_screen.dart';
 import 'package:mpos_beat/presentation/views/godown_route_voucher_screen/godown_route_voucher_screen.dart';
@@ -194,6 +198,11 @@ class AppRouter {
             company: company,
             userId: userId,
           );
+          return AddCompanyScreen(
+            name: name,
+            companyName: companyName,
+            userId: userId,
+          );
       },
       ),
       GoRoute(
@@ -361,6 +370,9 @@ class AppRouter {
             initialTabIndex: tabIndex,
             companyData: companyData,
           );
+          final tabIndex = state.extra as int? ?? 0;
+
+          return CompanyCreationScreen(initialTabIndex: tabIndex);
         },
       ),
       GoRoute(
@@ -408,7 +420,35 @@ class AppRouter {
           final name = extra["name"] as String;
           final companyName = extra["companyName"] as String;
           final companyId = extra["companyId"] as int;
-          return  CompanyUserMappingScreen(name: name, companyName: companyName, companyId: companyId,);
+          return CompanyUserMappingScreen(
+            name: name,
+            companyName: companyName,
+            companyId: companyId,
+          );
+        },
+      ),
+      GoRoute(
+        path: "/voucherSettingsScreen",
+        name: AppRouterConst.voucherSettingsScreen,
+        builder: (context, state) {
+          final extra = state.extra;
+          if (extra is Map<String, dynamic>) {
+            final data = extra['data'];
+            final voucherModeId = extra['voucherModeId'] as int;
+            if (data is VehicleList) {
+              return VoucherSettingsScreen<VehicleList>(
+                data: data,
+                voucherModeId: voucherModeId,
+              );
+            } else if (data is RouteList) {
+              return VoucherSettingsScreen<RouteList>(
+                data: data,
+                voucherModeId: voucherModeId,
+              );
+            }
+          }
+
+          return const SizedBox.shrink();
         },
       ),
     ],

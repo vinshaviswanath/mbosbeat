@@ -310,8 +310,11 @@ class _GodownWiseScreenState extends State<GodownWiseScreen> {
                                               onTap: (i) {
                                                 context.pushNamed(
                                                   AppRouterConst
-                                                      .companyCreationScreen,
-                                                  extra: 1,
+                                                      .voucherSettingsScreen,
+                                                  extra: {
+                                                    'data': item,
+                                                    'voucherModeId': item.id,
+                                                  },
                                                 );
                                               },
                                             ),

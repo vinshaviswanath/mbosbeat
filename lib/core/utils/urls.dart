@@ -54,6 +54,14 @@ static const String registrationType =
   static const String getAllCompanySettings =
       "/api/CompanySettings/GetAll?CompanyID=";
  static const String createCompanySettings = "/api/CompanySettings/Create";
+  static const String deleteRoute = "/api/Route/Delete?RouteID=";
   static const String getAllCompany = "/api/Company/GetAll";
   static const String createCompanyUserMapping = "/api/Company/CreateMapping";
+  static const String getVoucherNumbering1 =
+      "/api/Company/GetVoucherNumbering?";
+  static const String getVoucherNumbering2 = "CompanyID=";
+  static const String getVoucherNumbering3 = "&VoucherMode=";
+  static const String getVoucherNumbering4 = "&VoucherModeID=";
+  static const String createVoucherNumbering =
+      "/api/Company/CreateVoucherNumbering";
 }

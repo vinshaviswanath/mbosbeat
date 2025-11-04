@@ -9,7 +9,6 @@ class AppTheme {
         return ThemeData(
           brightness: Brightness.light,
           scaffoldBackgroundColor: ColorResources.white,
-
           textTheme: const TextTheme(
             bodyMedium: TextStyle(color: Colors.black),
           ),

@@ -11,6 +11,7 @@ import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/data/models/create_company_voucher_model.dart';
 import 'package:mpos_beat/data/models/create_godown_response.dart';
 import 'package:mpos_beat/data/models/create_route_response.dart';
+import 'package:mpos_beat/data/models/create_voucher_numbering_response.dart';
 import 'package:mpos_beat/data/models/get_company_voucher_model.dart';
 import 'package:mpos_beat/data/models/data/company_voucher_data.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
@@ -23,6 +24,7 @@ import 'package:mpos_beat/data/models/integration_model.dart';
 import 'package:mpos_beat/data/models/registration_type_model.dart';
 import 'package:mpos_beat/data/models/route_list_model.dart';
 import 'package:mpos_beat/data/models/state_list_response.dart';
+import 'package:mpos_beat/data/models/voucher_numbering_response.dart';
 import 'package:mpos_beat/domain/repositories/i_company_creation_facad.dart';
 import 'package:mpos_beat/domain/request/company_creation_params.dart';
 import 'package:mpos_beat/domain/request/create_company_settings_request.dart';
@@ -30,6 +32,7 @@ import 'package:mpos_beat/domain/request/create_comany_user_mapping_params.dart'
 import 'package:mpos_beat/domain/request/create_company_voucher_request.dart';
 import 'package:mpos_beat/domain/request/create_godown_params.dart';
 import 'package:mpos_beat/domain/request/create_route_params.dart';
+import 'package:mpos_beat/domain/request/create_voucher_numbering_params.dart';
 import 'package:mpos_beat/domain/request/integration_request.dart';
 import 'package:mpos_beat/presentation/views/godown_wise_screen/godown_wise_screen.dart';
 import 'package:mpos_beat/presentation/views/route_wise_screen/route_wise_screen.dart';
@@ -119,9 +122,77 @@ class CompanyCreationProvider extends ChangeNotifier {
 
   RouteResponse? _routeResponse;
   RouteResponse? get routeResponse => _routeResponse;
+
   void toggleVoucher() {
-    _isGodown = !_isGodown;
+  CreateVoucherNumberingResponse? _voucherNumberingResponsel;
+  CreateVoucherNumberingResponse? get voucherNumberingResponsel =>
+      _voucherNumberingResponsel;
+
+  final _voucherNumberingController =
+      StreamController<List<VoucherNumberingModel>>.broadcast();
+  Stream<List<VoucherNumberingModel>> get voucherNumberingStream =>
+      _voucherNumberingController.stream;
+  VoucherNumberingResponse? _voucherNumberingResponse;
+  VoucherNumberingResponse? get voucherNumberingResponse =>
+      _voucherNumberingResponse;
+
+  VehicleList? _selectedVehicle;
+  VehicleList? get selectedVehicle => _selectedVehicle;
+
+  RouteList? _selectedRoute;
+  RouteList? get selectedRoute => _selectedRoute;
+
+  final List<VoucherNumber> _voucherNumberList = [];
+  List<VoucherNumber>? get voucherNumberList => _voucherNumberList;
+
+  void addOrUpdateVoucherNumber(VoucherNumber voucher) {
+    final index = _voucherNumberList!.indexWhere(
+      (v) => v.voucherTypeId == voucher.voucherTypeId,
+    );
+
+    if (index != -1) {
+      _voucherNumberList[index] = voucher;
+    } else {
+      _voucherNumberList.add(voucher);
+    }
+
+    Logger.logSuccess(
+      "VoucherNumberList ::::::::::::::::::::::::::::    ${_voucherNumberList.map((e) => e.toJson())}",
+    );
+
     notifyListeners();
+  }
+
+  void setSelectedVehicle(VehicleList vehicle) {
+    _selectedVehicle = vehicle;
+    Logger.logSuccess("Selected Godown : ${selectedVehicle?.toJson()}");
+    notifyListeners();
+  }
+
+  void setSelectedRoute(RouteList route) {
+    _selectedRoute = route;
+    Logger.logSuccess("Selected Route : ${selectedRoute?.toJson()}");
+    notifyListeners();
+  }
+
+  void toggleVoucher(BuildContext context) {
+    _isGodown = !_isGodown;
+    final companyId =
+        sl<SharedPreferences>().getInt('selected_company_id')?.toString() ?? '';
+    getVoucherNumbering(
+      context: context,
+      companyId: companyId,
+      voucherModeId: _isGodown
+          ? selectedVehicle?.id ?? 0
+          : selectedRoute?.id ?? 0,
+    );
+    Logger.logSuccess("Godown Id : ${selectedVehicle?.id}, Route id :${selectedRoute?.id} ");
+    notifyListeners();
+    if (isGodown) {
+      getAllGodowns(context: context, companyId: companyId);
+    } else {
+      getAllRoutess(context: context, companyId: companyId);
+    }
   }
 
   // bool _isExpand = false;
@@ -1507,5 +1578,101 @@ class CompanyCreationProvider extends ChangeNotifier {
     return _routeResponse;
   }
 
- 
+  //========================= Create Voucher Numbering =========================
+
+  Future<CreateVoucherNumberingResponse?> createVoucherNumbering({
+    required BuildContext context,
+    required int companyId,
+    required int voucherModeId,
+    required List<VoucherNumber> voucherNumbers,
+  }) async {
+    setLoading(true);
+    final result = await iCompanyCreationFacad.createVoucherNumber(
+      BaseParams(
+        data: CreateVoucherNumberingParams(
+          companyId: companyId,
+          voucherMode: _isGodown ? "Godown" : "Route",
+          voucherModeId: voucherModeId,
+          voucherNumbers: voucherNumbers,
+        ),
+      ),
+    );
+
+    result.fold(
+      (failure) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(failure.errorMsg, textAlign: TextAlign.center),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          ),
+        );
+      },
+      (response) async {
+        _voucherNumberingResponsel = response;
+        Logger.logSuccess(
+          "Voucher numbering created successfull : ${response.toJson()}",
+        );
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              response.message ?? "Success",
+              textAlign: TextAlign.center,
+            ),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          ),
+        );
+      },
+    );
+    setLoading(false);
+    return _voucherNumberingResponsel;
+  }
+
+  //========================= Get Voucher Numbering =========================
+
+  Future<VoucherNumberingResponse?> getVoucherNumbering({
+    required BuildContext context,
+    required String companyId,
+    required int voucherModeId,
+  }) async {
+    setLoading(true);
+    final result = await iCompanyCreationFacad.getVoucherNumbering(
+      companyId: companyId,
+      voucherMode: _isGodown ? "Godown" : "Route",
+      voucherModeId: voucherModeId,
+    );
+    result.fold(
+      (failure) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(failure.errorMsg, textAlign: TextAlign.center),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          ),
+        );
+      },
+      (response) async {
+        _voucherNumberingResponse = response;
+        _voucherNumberingController.add(
+          _voucherNumberingResponse?.voucherNumberingModels ?? [],
+        );
+        Logger.logSuccess(
+          "voucher numbering list fetch successfull : ${response.toJson()}",
+        );
+        notifyListeners();
+      },
+    );
+    setLoading(false);
+    return _voucherNumberingResponse;
+  }
 }
