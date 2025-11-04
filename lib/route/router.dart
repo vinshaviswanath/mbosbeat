@@ -1,11 +1,15 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mpos_beat/core/utils/app_details.dart';
 import 'package:mpos_beat/core/utils/enums.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
+import 'package:mpos_beat/data/models/godown_list_model.dart';
+import 'package:mpos_beat/data/models/route_list_model.dart';
 import 'package:mpos_beat/data/models/users_list_model.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_route_screen.dart';
 import 'package:mpos_beat/presentation/common/widgets/loading_screen.dart';
 import 'package:mpos_beat/presentation/views/admin_home/admin_dashboard.dart';
+import 'package:mpos_beat/presentation/views/admin_voucher_settings/voucher_settings_screen.dart';
 import 'package:mpos_beat/presentation/views/company_settings/company_settings.dart';
 import 'package:mpos_beat/presentation/views/company_user_mapping/company_user_mapping_screen.dart';
 import 'package:mpos_beat/presentation/views/godown_route_voucher_screen/godown_route_voucher_screen.dart';
@@ -145,7 +149,7 @@ class AppRouter {
       GoRoute(
         path: "/manageUser",
         name: AppRouterConst.manageUser,
-        
+
         builder: (context, state) {
           return const ManageUserScreen();
         },
@@ -157,7 +161,7 @@ class AppRouter {
           final extra = state.extra as Map<String, dynamic>? ?? {};
           final isEdit = extra["isEdit"] as bool? ?? false;
           final user = extra["user"] as UserMasterList?;
-          return UserCreationScreen(isUpdate: isEdit, user: user,);
+          return UserCreationScreen(isUpdate: isEdit, user: user);
         },
       ),
 
@@ -166,7 +170,7 @@ class AppRouter {
         name: AppRouterConst.resetPassword,
         builder: (context, state) {
           final index = state.extra as int;
-          return  ResetPasswordScreen(index: index,);
+          return ResetPasswordScreen(index: index);
         },
       ),
       GoRoute(
@@ -174,7 +178,7 @@ class AppRouter {
         name: AppRouterConst.userSettings,
         builder: (context, state) {
           final userId = state.extra as String;
-          return  UserSettingsScreen(userId: userId,);
+          return UserSettingsScreen(userId: userId);
         },
       ),
       GoRoute(
@@ -186,7 +190,11 @@ class AppRouter {
           final companyName = extra["companyName"] as String;
           final userId = extra["userId"] as int;
           // final company = extra["company"] as CompaniesListResponse;
-          return AddCompanyScreen(name: name, companyName: companyName,userId: userId,);
+          return AddCompanyScreen(
+            name: name,
+            companyName: companyName,
+            userId: userId,
+          );
         },
       ),
       GoRoute(
@@ -347,6 +355,7 @@ class AppRouter {
         path: '/companyCreationScreen',
         builder: (context, state) {
           final tabIndex = state.extra as int? ?? 0;
+
           return CompanyCreationScreen(initialTabIndex: tabIndex);
         },
       ),
@@ -393,7 +402,35 @@ class AppRouter {
           final name = extra["name"] as String;
           final companyName = extra["companyName"] as String;
           final companyId = extra["companyId"] as int;
-          return  CompanyUserMappingScreen(name: name, companyName: companyName, companyId: companyId,);
+          return CompanyUserMappingScreen(
+            name: name,
+            companyName: companyName,
+            companyId: companyId,
+          );
+        },
+      ),
+      GoRoute(
+        path: "/voucherSettingsScreen",
+        name: AppRouterConst.voucherSettingsScreen,
+        builder: (context, state) {
+          final extra = state.extra;
+          if (extra is Map<String, dynamic>) {
+            final data = extra['data'];
+            final voucherModeId = extra['voucherModeId'] as int;
+            if (data is VehicleList) {
+              return VoucherSettingsScreen<VehicleList>(
+                data: data,
+                voucherModeId: voucherModeId,
+              );
+            } else if (data is RouteList) {
+              return VoucherSettingsScreen<RouteList>(
+                data: data,
+                voucherModeId: voucherModeId,
+              );
+            }
+          }
+
+          return const SizedBox.shrink();
         },
       ),
     ],

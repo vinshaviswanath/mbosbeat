@@ -34,6 +34,7 @@ class AppRouterConst {
   static const godownRouteVoucherScreen = "/godownRouteVoucherScreen";
   static const companySettingsScreen = "/companySettingsScreen";
   static const companyUserMappingScreen = "/companyUserMappingScreen";
+  static const voucherSettingsScreen = "/voucherSettingsScreen";
 
 
   // anver

@@ -237,6 +237,7 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
           child: DropdownButtonHideUnderline(
             child: DropdownButton<T>(
               value: selectedValue,
+              style: context.textStyle.s12.w400.dustyBlue,
               isExpanded: true,
               hint: Text(
                 widget.hintText,
@@ -257,7 +258,7 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
                   value: item,
                   child: Text(
                     label,
-                    style: context.textStyle.s12.black.w400.roboto,
+                    style: context.textStyle.s12.w400.dustyBlue,
                   ),
                 );
               }).toList(),

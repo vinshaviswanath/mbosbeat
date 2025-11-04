@@ -53,7 +53,6 @@ class MyApp extends StatelessWidget {
             supportedLocales: AppLocalizations.supportedLocales,
             locale: const Locale("en"),
             title: 'mPOS Beat',
-
             theme: AppTheme.getTheme(themeMode, context),
             // builder: (context, child) =>
             //     Stack(children: [child!, const DropdownAlert()]),

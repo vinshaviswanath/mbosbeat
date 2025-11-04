@@ -37,6 +37,8 @@ import '../../data/data_sources/company_creation/create_godown/create_godown.dar
     as _i719;
 import '../../data/data_sources/company_creation/create_route/create_route.dart'
     as _i891;
+import '../../data/data_sources/company_creation/create_voucher_numbering/create_voucher_numbering.dart'
+    as _i220;
 import '../../data/data_sources/company_creation/deactivate_godown/deactivate_godown.dart'
     as _i440;
 import '../../data/data_sources/company_creation/deactivate_route/deactivate_route.dart'
@@ -53,6 +55,8 @@ import '../../data/data_sources/company_creation/get_godown_list/get_godown_list
     as _i1064;
 import '../../data/data_sources/company_creation/get_route_list/get_route_list.dart'
     as _i504;
+import '../../data/data_sources/company_creation/get_voucher_numbering/get_voucher_numbering.dart'
+    as _i853;
 import '../../data/data_sources/company_creation/integration_type.dart'
     as _i189;
 import '../../data/data_sources/company_creation/state_list.dart' as _i374;
@@ -213,6 +217,13 @@ Future<_i174.GetIt> init(
       gh<_i460.SharedPreferences>(),
     ),
   );
+  gh.lazySingleton<_i220.CreateVoucherNumbering>(
+    () => _i220.CreateVoucherNumbering(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
   gh.lazySingleton<_i440.DeactivateGodown>(
     () => _i440.DeactivateGodown(
       gh<_i816.HttpClient>(),
@@ -269,6 +280,13 @@ Future<_i174.GetIt> init(
       gh<_i460.SharedPreferences>(),
     ),
   );
+  gh.lazySingleton<_i853.GetVoucherNumbering>(
+    () => _i853.GetVoucherNumbering(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
   gh.lazySingleton<_i189.IntegrationDatasource>(
     () => _i189.IntegrationDatasource(
       gh<_i816.HttpClient>(),
@@ -299,6 +317,13 @@ Future<_i174.GetIt> init(
   );
   gh.lazySingleton<_i183.BlockUser>(
     () => _i183.BlockUser(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i148.CreateCompanyUserMapping>(
+    () => _i148.CreateCompanyUserMapping(
       gh<_i816.HttpClient>(),
       gh<_i530.RunSafely>(),
       gh<_i460.SharedPreferences>(),
@@ -381,37 +406,6 @@ Future<_i174.GetIt> init(
       gh<_i460.SharedPreferences>(),
     ),
   );
-  gh.lazySingleton<_i148.CreateCompanyUserMapping>(
-    () => _i148.CreateCompanyUserMapping(
-      gh<_i816.HttpClient>(),
-      gh<_i530.RunSafely>(),
-      gh<_i460.SharedPreferences>(),
-    ),
-  );
-  gh.lazySingleton<_i483.ICompanyCreationFacad>(
-    () => _i322.ICompanyCreationFacadImpl(
-      gh<_i665.CompanyInfo>(),
-      gh<_i79.CountryList>(),
-      gh<_i374.StateList>(),
-      gh<_i530.RunSafely>(),
-      gh<_i816.HttpClient>(),
-      gh<_i460.SharedPreferences>(),
-      gh<_i1001.GetCompanyvoucherTypeListDatasource>(),
-      gh<_i1051.CreateCompanyVouchertypeDatasource>(),
-      gh<_i189.IntegrationDatasource>(),
-      gh<_i284.GetCompanyList>(),
-      gh<_i719.CreateGodownOrVehicle>(),
-      gh<_i891.CreateRoute>(),
-      gh<_i1064.GetAllGodowns>(),
-      gh<_i504.GetAllRoutes>(),
-      gh<_i123.ActivateGodown>(),
-      gh<_i260.ActivateRoute>(),
-      gh<_i6.DeactivateRoute>(),
-      gh<_i440.DeactivateGodown>(),
-      gh<_i323.DeleteGodown>(),
-      gh<_i112.DeleteRoute>(),
-    ),
-  );
   gh.lazySingleton<_i172.IUserManagementFacad>(
     () => _i168.IUserManagementFacadImpl(
       gh<_i797.DeactivateDesignation>(),
@@ -455,6 +449,32 @@ Future<_i174.GetIt> init(
       gh<_i530.RunSafely>(),
       gh<_i460.SharedPreferences>(),
       gh<_i492.LoginByToken>(),
+    ),
+  );
+  gh.lazySingleton<_i483.ICompanyCreationFacad>(
+    () => _i322.ICompanyCreationFacadImpl(
+      gh<_i665.CompanyInfo>(),
+      gh<_i79.CountryList>(),
+      gh<_i374.StateList>(),
+      gh<_i530.RunSafely>(),
+      gh<_i816.HttpClient>(),
+      gh<_i460.SharedPreferences>(),
+      gh<_i1001.GetCompanyvoucherTypeListDatasource>(),
+      gh<_i1051.CreateCompanyVouchertypeDatasource>(),
+      gh<_i189.IntegrationDatasource>(),
+      gh<_i284.GetCompanyList>(),
+      gh<_i719.CreateGodownOrVehicle>(),
+      gh<_i891.CreateRoute>(),
+      gh<_i1064.GetAllGodowns>(),
+      gh<_i504.GetAllRoutes>(),
+      gh<_i123.ActivateGodown>(),
+      gh<_i260.ActivateRoute>(),
+      gh<_i6.DeactivateRoute>(),
+      gh<_i440.DeactivateGodown>(),
+      gh<_i323.DeleteGodown>(),
+      gh<_i112.DeleteRoute>(),
+      gh<_i853.GetVoucherNumbering>(),
+      gh<_i220.CreateVoucherNumbering>(),
     ),
   );
   return getIt;

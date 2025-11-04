@@ -96,12 +96,13 @@ class CustomDialog {
     EdgeInsetsGeometry? padding,
   }) {
     return showDialog<T>(
-      // barrierDismissible: canPop,
-      barrierDismissible: false,
+      barrierDismissible: canPop,
       context: AppDetails.globalNavigatorKey.currentContext!,
       builder: (context) {
-        return Padding(
-          padding: MediaQuery.of(context).viewInsets,
+        return GestureDetector(
+          onTap: () => FocusScope.of(
+            context,
+          ).unfocus(), // dismiss keyboard on tap outside
           child: BackdropFilter(
             filter: ImageFilter.blur(
               sigmaX: blure ? 2 : 0,
@@ -109,22 +110,30 @@ class CustomDialog {
             ),
             child: Material(
               type: MaterialType.transparency,
-              child: Column(
-                mainAxisAlignment:
-                    mainAxisAlignment ?? MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: double.infinity,
-                    margin: EdgeInsets.all(margin ?? 16),
-                    padding: padding ?? const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: ColorResources.transparent),
-                      color: ColorResources.white,
-                      borderRadius: BorderRadius.circular(borderRadius ?? 24),
-                    ),
-                    child: chid,
+              child: Center(
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: 16,
+                    right: 16,
+                    bottom: MediaQuery.of(context).viewInsets.bottom + 16,
                   ),
-                ],
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 400),
+                    child: SingleChildScrollView(
+                      child: Container(
+                        padding: padding ?? const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: ColorResources.transparent),
+                          color: ColorResources.white,
+                          borderRadius: BorderRadius.circular(
+                            borderRadius ?? 24,
+                          ),
+                        ),
+                        child: chid,
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ),
           ),

@@ -320,8 +320,11 @@ class _RouteWiseScreenState extends State<RouteWiseScreen> {
                                               onTap: (i) {
                                                 context.pushNamed(
                                                   AppRouterConst
-                                                      .companyCreationScreen,
-                                                  extra: 1,
+                                                      .voucherSettingsScreen,
+                                                  extra: {
+                                                    'data': item,
+                                                    'voucherModeId': item.id,
+                                                  },
                                                 );
                                                 // setStateDialog(
                                                 //   () => optionIndex = i,
