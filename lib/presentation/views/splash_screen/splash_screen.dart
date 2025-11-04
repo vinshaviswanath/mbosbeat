@@ -44,6 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
           VehicleList(id: 0, companyId: 0, code: '', name: '', active: 0),
     );
 
+
      companyProvider.setSelectedRoute(
       firstRoute ??
           RouteList(
@@ -98,11 +99,7 @@ class _SplashScreenState extends State<SplashScreen> {
             // context.pushNamed(AppRouterConst.adminHome);
             context.pushNamed(AppRouterConst.adminDashboard);
       return;
-         } else {
-            context.read<UserManagementProvider>().getDesignationList(context);
-
-            context.pushNamed(AppRouterConst.adminDashboard);
-          }
+         }
         } else {
           context.pushNamed(AppRouterConst.onboardScreen);
         }

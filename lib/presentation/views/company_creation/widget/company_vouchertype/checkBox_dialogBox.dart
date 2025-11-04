@@ -6,12 +6,12 @@ import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 
 
 class CheckBoxDialogBox extends StatefulWidget {
-  final int companyId;
+  final int? companyId;
   final int isCheckOn;
   final int id;
   final void Function()? onTap;
-  CheckBoxDialogBox({
-    required this.companyId,
+  const CheckBoxDialogBox({super.key, 
+     this.companyId,
     required this.isCheckOn,
 
     required this.id,
@@ -42,7 +42,7 @@ class _CheckBoxDialogBoxState extends State<CheckBoxDialogBox> {
     final provider = context.read<CompanyCreationProvider>();
     provider.fetchVoucherTypes(
       context,
-      // companyId ?? 0
+      widget.companyId ?? 0
     );
   }
 
@@ -97,11 +97,11 @@ class _CheckBoxDialogBoxState extends State<CheckBoxDialogBox> {
                       // CommonSnackBar.show(context,
                       //     message:
                       //         createcompanyvoucherProvider.serverMessage ?? "");
-                     provider.fetchVoucherTypes(context,widget.companyId);
-                      provider.fetchVoucherTypes(
-                        context,
-                        // companyId ?? 0
-                      );
+                     provider.fetchVoucherTypes(context,widget.companyId ?? 0);
+                      // provider.fetchVoucherTypes(
+                      //   context,
+                      //   // companyId ?? 0
+                      // );
                      context.pop(true);
                     }
                   },
