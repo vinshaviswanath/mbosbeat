@@ -16,15 +16,38 @@ class IntegrationWidget extends StatefulWidget {
 }
 
 class _IntegrationWidgetState extends State<IntegrationWidget> {
+  int? companyId;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final provider = context.read<CompanyCreationProvider>();
+
+      // Get companyId either from widget.companyData or provider
+      if (widget.companyData != null && widget.companyData!.id != null) {
+        companyId = widget.companyData!.id!;
+        print(
+          'companyId in integration screen  from widget.companyData: $companyId',
+        );
+      } else {
+        companyId = provider.companyid ?? 0;
+        print('companyId in integration screen  from provider: $companyId');
+      }
+
+      // provider.fetchVoucherTypes(context, companyId!);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final appLocalizations = context.l10n;
-    final provider = context.read<CompanyCreationProvider>();
-    final prefs = sl<SharedPreferences>();
 
-    final companyId = prefs.getInt(
-      'selected_company_id',
-    ); // 👈 This is your new company ID
+    //final prefs = sl<SharedPreferences>();
+
+    // final companyId = prefs.getInt(
+    //   'selected_company_id',
+    // ); // 👈 This is your new company ID
     return CustomScrollView(
       slivers: [
         SliverPadding(
@@ -69,6 +92,7 @@ class _IntegrationWidgetState extends State<IntegrationWidget> {
                 child: CustomButton(
                   buttonText: appLocalizations.integration_type_finish,
                   onTap: () {
+                    final provider = context.read<CompanyCreationProvider>();
                     final integrationType =
                         provider.selectedIntegrationType ?? '';
                     final serialNo =

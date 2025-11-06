@@ -1,9 +1,13 @@
 import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/models/company_list_model.dart';
+import 'package:mpos_beat/data/models/login_response.dart';
 import 'package:mpos_beat/domain/request/login_params.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 import 'package:mpos_beat/presentation/dialogs/auth_dialogs.dart';
+import 'package:mpos_beat/presentation/dialogs/registration_dialogs.dart';
 import 'package:mpos_beat/presentation/logic/authentication_provider.dart';
+import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -191,16 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       context.textStyle.s16.white.bold.roboto,
                                   borderRadius: BorderRadius.circular(45),
                                   onTap: () async {
-                                    // provider.resetSignUpForm();
-                                    // provider.submitLogin(
-                                    //   context,
-                                    //   params: LoginParams(
-                                    //     username: emailController.text,
-                                    //     password: passwordController.text,
-                                    //   ),
-                                    // );
-                                    // context.pushNamed(
-                                    //   AppRouterConst.customerTransactions,);
+                                    // Proceed with login
                                     await provider.submitLogin(
                                       context,
                                       params: LoginParams(

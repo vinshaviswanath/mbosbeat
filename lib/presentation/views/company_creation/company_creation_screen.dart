@@ -147,6 +147,7 @@ class _CompanyCreationScreenState extends State<CompanyCreationScreen>
                       }
                     }
                   },
+                  companyData: widget.companyData,
                 ),
                 IntegrationWidget(
                   onTap: () {

@@ -41,12 +41,15 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
       if (companyList.isNotEmpty) {
         selectedCompany = companyList.first;
+        Logger.logSuccess(
+          "Company Id in admin dashboard :: ${selectedCompany?.id ?? 0}",
+        );
       }
-      final prefs = sl<SharedPreferences>();
-      final companyId = prefs.getInt('selected_company_id');
-      if (companyList.isNotEmpty && companyId == null) {
-        await prefs.setInt('selected_company_id', selectedCompany?.id ?? 0);
-      }
+      // final prefs = sl<SharedPreferences>();
+      // final companyId = prefs.getInt('selected_company_id');
+      // if (companyList.isNotEmpty && companyId == null) {
+      //   await prefs.setInt('selected_company_id', selectedCompany?.id ?? 0);
+      // }
 
       setState(() {});
     });
@@ -55,9 +58,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
   @override
   Widget build(BuildContext context) {
     final appLocalization = context.l10n;
-    final pref = sl<SharedPreferences>();
-    final companyId = pref.getInt('selected_company_id');
-    Logger.logSuccess("Company Id Saved :: $companyId");
+    //final pref = sl<SharedPreferences>();
+    // final companyId = pref.getInt('selected_company_id');
+
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, result) async {
@@ -181,86 +184,79 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                             color: ColorResources.white
                                                 .withValues(alpha: 0.1),
                                           ),
-                                          child:
-                                              DropdownButtonFormField<
-                                                CompanyViewList
-                                              >(
-                                                decoration: const InputDecoration(
-                                                  border: OutlineInputBorder(
-                                                    borderSide: BorderSide.none,
-                                                  ),
-                                                ),
-                                                initialValue: selectedCompany,
-                                                isExpanded: true,
-                                                dropdownColor: Colors.white,
-                                                style: context
-                                                    .textStyle
-                                                    .s14
-                                                    .w400
-                                                    .white
-                                                    .roboto,
-                                                icon: const SizedBox.shrink(),
-                                                selectedItemBuilder:
-                                                    (
-                                                      context,
-                                                    ) => companyList.map((e) {
-                                                      return Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Text(
-                                                            e.companyName ?? '',
-                                                          ),
-                                                          w12,
-                                                          const Icon(
-                                                            Icons
-                                                                .keyboard_arrow_down,
-                                                            size: 20,
-                                                            color:
-                                                                ColorResources
-                                                                    .white,
-                                                          ),
-                                                        ],
-                                                      );
-                                                    }).toList(),
-
-                                                items: companyList.map((e) {
-                                                  return DropdownMenuItem(
-                                                    value: e,
-                                                    alignment: Alignment.center,
-                                                    child: Text(
-                                                      e.companyName ?? '',
-                                                      style: context
-                                                          .textStyle
-                                                          .s14
-                                                          .w400
-                                                          .black
-                                                          .roboto,
-                                                    ),
+                                          child: DropdownButtonFormField<CompanyViewList>(
+                                            decoration: const InputDecoration(
+                                              border: OutlineInputBorder(
+                                                borderSide: BorderSide.none,
+                                              ),
+                                            ),
+                                            initialValue: selectedCompany,
+                                            isExpanded: true,
+                                            dropdownColor: Colors.white,
+                                            style: context
+                                                .textStyle
+                                                .s14
+                                                .w400
+                                                .white
+                                                .roboto,
+                                            icon: const SizedBox.shrink(),
+                                            selectedItemBuilder: (context) =>
+                                                companyList.map((e) {
+                                                  return Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(e.companyName ?? ''),
+                                                      w12,
+                                                      const Icon(
+                                                        Icons
+                                                            .keyboard_arrow_down,
+                                                        size: 20,
+                                                        color: ColorResources
+                                                            .white,
+                                                      ),
+                                                    ],
                                                   );
                                                 }).toList(),
 
-                                                onChanged: (value) async {
-                                                  setState(
-                                                    () =>
-                                                        selectedCompany = value,
-                                                  );
-                                                  final prefs =
-                                                      sl<SharedPreferences>();
-                                                  await prefs.setInt(
-                                                    'selected_company_id',
-                                                    value?.id ?? 0,
-                                                  );
-                                                  final companyId = prefs
-                                                      .getInt(
-                                                        'selected_company_id',
-                                                      );
-                                                  Logger.logSuccess(
-                                                    "SELECTED COMPANY ID: $companyId",
-                                                  );
-                                                },
-                                              ),
+                                            items: companyList.map((e) {
+                                              return DropdownMenuItem(
+                                                value: e,
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  e.companyName ?? '',
+                                                  style: context
+                                                      .textStyle
+                                                      .s14
+                                                      .w400
+                                                      .black
+                                                      .roboto,
+                                                ),
+                                              );
+                                            }).toList(),
+
+                                            onChanged: (value) async {
+                                              setState(
+                                                () => selectedCompany = value,
+                                              );
+                                              // final prefs =
+                                              //     sl<SharedPreferences>();
+                                              // await prefs.setInt(
+                                              //   'selected_company_id',
+                                              //   value?.id ?? 0,
+                                              // );
+                                              // final companyId = prefs.getInt(
+                                              //   'selected_company_id',
+                                              // );
+                                              Logger.logSuccess(
+                                                "SELECTED COMPANY ID: ${selectedCompany!.id}",
+                                              );
+                                              Logger.logInfo(
+                                                "Company Selected: ${selectedCompany?.companyName}",
+                                              );
+                                            },
+                                          ),
                                         ),
                                       ),
 
@@ -472,31 +468,31 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                   );
 
                                                                   // Get the saved companyId
-                                                                  final pref =
-                                                                      sl<
-                                                                        SharedPreferences
-                                                                      >();
-                                                                  final companyId =
-                                                                      pref.getInt(
-                                                                        'selected_company_id',
-                                                                      );
+                                                                  // final pref =
+                                                                  //     sl<
+                                                                  //       SharedPreferences
+                                                                  //     >();
+                                                                  // final companyId =
+                                                                  //     pref.getInt(
+                                                                  //       'selected_company_id',
+                                                                  //     );
 
-                                                                  // Find the company by ID
-                                                                  selectedCompany = companyList.firstWhere(
-                                                                    (company) =>
-                                                                        company
-                                                                            .id ==
-                                                                        companyId,
-                                                                    orElse: () =>
-                                                                        companyList
-                                                                            .first,
-                                                                  );
+                                                                  // // Find the company by ID
+                                                                  // selectedCompany = companyList.firstWhere(
+                                                                  //   (company) =>
+                                                                  //       company
+                                                                  //           .id ==
+                                                                  //       companyId,
+                                                                  //   orElse: () =>
+                                                                  //       companyList
+                                                                  //           .first,
+                                                                  // );
 
-                                                                  Logger.logInfo(
-                                                                    companyId,
+                                                                  Logger.logSuccess(
+                                                                    "SELECTED COMPANY ID: ${selectedCompany!.id}",
                                                                   );
                                                                   Logger.logInfo(
-                                                                    selectedCompany,
+                                                                    "Company Selected: ${selectedCompany?.companyName}",
                                                                   );
 
                                                                   context.pushNamed(
@@ -523,31 +519,31 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                 icon: Icons
                                                                     .settings_applications,
                                                                 onTap: (i) {
-                                                                  final pref =
-                                                                      sl<
-                                                                        SharedPreferences
-                                                                      >();
-                                                                  final companyId =
-                                                                      pref.getInt(
-                                                                        'selected_company_id',
-                                                                      );
+                                                                  // final pref =
+                                                                  //     sl<
+                                                                  //       SharedPreferences
+                                                                  //     >();
+                                                                  // final companyId =
+                                                                  //     pref.getInt(
+                                                                  //       'selected_company_id',
+                                                                  //     );
 
-                                                                  // Find the company by ID
-                                                                  selectedCompany = companyList.firstWhere(
-                                                                    (company) =>
-                                                                        company
-                                                                            .id ==
-                                                                        companyId,
-                                                                    orElse: () =>
-                                                                        companyList
-                                                                            .first,
-                                                                  );
+                                                                  // // Find the company by ID
+                                                                  // selectedCompany = companyList.firstWhere(
+                                                                  //   (company) =>
+                                                                  //       company
+                                                                  //           .id ==
+                                                                  //       companyId,
+                                                                  //   orElse: () =>
+                                                                  //       companyList
+                                                                  //           .first,
+                                                                  // );
 
-                                                                  Logger.logInfo(
-                                                                    companyId,
+                                                                  Logger.logSuccess(
+                                                                    "SELECTED COMPANY ID: ${selectedCompany!.id}",
                                                                   );
                                                                   Logger.logInfo(
-                                                                    selectedCompany,
+                                                                    "Company Selected: ${selectedCompany?.companyName}",
                                                                   );
 
                                                                   Navigator.pop(
@@ -581,15 +577,22 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                   Navigator.pop(
                                                                     context,
                                                                   );
-                                                                  // Find the company by ID
-                                                                  selectedCompany = companyList.firstWhere(
-                                                                    (company) =>
-                                                                        company
-                                                                            .id ==
-                                                                        companyId,
-                                                                    orElse: () =>
-                                                                        companyList
-                                                                            .first,
+                                                                  // // Find the company by ID
+                                                                  // selectedCompany = companyList.firstWhere(
+                                                                  //   (company) =>
+                                                                  //       company
+                                                                  //           .id ==
+                                                                  //       companyId,
+                                                                  //   orElse: () =>
+                                                                  //       companyList
+                                                                  //           .first,
+                                                                  // );
+
+                                                                  Logger.logSuccess(
+                                                                    "SELECTED COMPANY ID: ${selectedCompany!.id}",
+                                                                  );
+                                                                  Logger.logInfo(
+                                                                    "Company Selected: ${selectedCompany?.companyName}",
                                                                   );
 
                                                                   context.pushNamed(
@@ -616,31 +619,31 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                     .file_copy,
                                                                 onTap: (i) {
                                                                   // Get the saved companyId
-                                                                  final pref =
-                                                                      sl<
-                                                                        SharedPreferences
-                                                                      >();
-                                                                  final companyId =
-                                                                      pref.getInt(
-                                                                        'selected_company_id',
-                                                                      );
+                                                                  // final pref =
+                                                                  //     sl<
+                                                                  //       SharedPreferences
+                                                                  //     >();
+                                                                  // final companyId =
+                                                                  //     pref.getInt(
+                                                                  //       'selected_company_id',
+                                                                  //     );
 
-                                                                  // Find the company by ID
-                                                                  selectedCompany = companyList.firstWhere(
-                                                                    (company) =>
-                                                                        company
-                                                                            .id ==
-                                                                        companyId,
-                                                                    orElse: () =>
-                                                                        companyList
-                                                                            .first,
-                                                                  );
+                                                                  // // Find the company by ID
+                                                                  // selectedCompany = companyList.firstWhere(
+                                                                  //   (company) =>
+                                                                  //       company
+                                                                  //           .id ==
+                                                                  //       companyId,
+                                                                  //   orElse: () =>
+                                                                  //       companyList
+                                                                  //           .first,
+                                                                  // );
 
-                                                                  Logger.logInfo(
-                                                                    companyId,
+                                                                  Logger.logSuccess(
+                                                                    "SELECTED COMPANY ID: ${selectedCompany!.id}",
                                                                   );
                                                                   Logger.logInfo(
-                                                                    selectedCompany,
+                                                                    "Company Selected: ${selectedCompany?.companyName}",
                                                                   );
 
                                                                   Navigator.pop(
@@ -700,7 +703,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                         .companyUserMappingScreen,
                                                                     extra: {
                                                                       "companyId":
-                                                                          companyId,
+                                                                          selectedCompany!
+                                                                              .id,
                                                                       "name": selectedCompany
                                                                           ?.companyName,
                                                                       "companyName":

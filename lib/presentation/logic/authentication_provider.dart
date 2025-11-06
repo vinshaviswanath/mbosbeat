@@ -3,6 +3,7 @@ import 'package:mpos_beat/core/failures/failures.dart';
 import 'package:mpos_beat/core/failures/value_object/value_object.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/data/models/company_registration_response.dart';
 import 'package:mpos_beat/data/models/data/otp_response_data.dart';
 import 'package:mpos_beat/data/models/login_response.dart';
@@ -17,6 +18,7 @@ import 'package:mpos_beat/domain/request/otp_validation_params.dart';
 import 'package:mpos_beat/domain/request/resend_otp_params.dart';
 import 'package:mpos_beat/domain/request/reset_password_params.dart';
 import 'package:mpos_beat/presentation/dialogs/registration_dialogs.dart';
+import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthFormProvider with ChangeNotifier {
@@ -81,7 +83,6 @@ class AuthFormProvider with ChangeNotifier {
   bool get isVisibleSignupConfirmPassword => _isVisibleSignupConfirmPassword;
 
   final prefs = sl<SharedPreferences>();
-      
 
   //============================================================================
   //                              SETTERS
@@ -442,17 +443,17 @@ class AuthFormProvider with ChangeNotifier {
     required LoginParams params,
   }) async {
     final isValid = validateLoginForm();
-
     if (!isValid) {
       loginAutovalidateMode = AutovalidateMode.always;
       notifyListeners();
       return null;
     }
 
+    // Start login
     final result = await iAuthenticationFacad.login(BaseParams(data: params));
 
-    result.fold(
-      (failure) {
+    await result.fold(
+      (failure) async {
         _errorMessage = failure.errorMsg.toString();
         ScaffoldMessenger.of(
           context,
@@ -461,89 +462,132 @@ class AuthFormProvider with ChangeNotifier {
         _setLoading(false);
         notifyListeners();
       },
-      (response) {
-        Logger.logSuccess("Login success : ${response.toJson()}");
+      (response) async {
+        Logger.logSuccess("Login response : ${response.toJson()}");
         Logger.logSuccess(
           "Customer ID : ${response.loginData?.customerId}, Status : ${response.status}",
         );
 
+        _loginResponse = response;
         _setLoading(false);
         notifyListeners();
 
-        if (response.status == 1) {
-          _cusomerId = response.loginData?.customerId;
-          context.pushNamed(AppRouterConst.adminHome);
-        } else if (response.status == 10) {
-          Logger.logInfo(response.message);
-          RegistrationDialogs.pendingRegisteredDialog(
-            context,
-            response.loginData?.companyName ?? '',
-            id: response.loginData?.customerId,
-          );
-        } else if (response.status == 10) {
-          Logger.logInfo(response.message);
-          RegistrationDialogs.pendingRegisteredDialog(
-            context,
-            response.loginData?.companyName ?? '',
-            id: response.loginData?.customerId,
-          );
-        } else if (response.status == 20) {
-          RegistrationDialogs.customDialog(
-            context: context,
-            heading: "Pending",
-            subTitle: "Please complete company creation",
-            onTap: () {
-              context.pushNamed(
-                AppRouterConst.companyCreationScreen,
-                extra: {'tabIndex': 0, 'companyData': null},
-              );
-            },
-            buttonText: "Redirect",
-          );
-        } else if (response.status == 30) {
-          RegistrationDialogs.customDialog(
-            context: context,
-            heading: "Pending",
-            subTitle: "Please complete Company Integration Settings",
-            onTap: () {
-              context.pushNamed(
-                AppRouterConst.companyCreationScreen,
-                extra: {'tabIndex': 2, 'companyData': null},
-              );
-            },
-            buttonText: "Redirect",
-          );
-        } else if (response.status == 40) {
-          RegistrationDialogs.customDialog(
-            context: context,
-            heading: "Pending",
-            subTitle: "Please complete Company VoucherType Configuration",
-            onTap: () {
-              context.pushNamed(
-                AppRouterConst.companyCreationScreen,
-                extra: {'tabIndex': 1, 'companyData': null},
-              );
-            },
-            buttonText: "Redirect",
-          );
-        } else {
+        //Stop immediately if invalid credentials or no login data
+        if (response.status == 0 || response.loginData == null) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(response.message!, textAlign: TextAlign.center),
+              content: Text(response.message ?? ""),
               behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             ),
           );
-          context.pushNamed(AppRouterConst.adminHome);
+          Logger.logError("Login failed: Invalid credentials or no data");
+          return;
+        }
 
-          //  RegistrationDialogs.pendingRegisteredDialog(context, enteredUser)
-          // .then((_) => resetSignUpForm());
+        //Save token
+        final prefs = sl<SharedPreferences>();
+        final newToken = response.loginData?.token ?? '';
+        await prefs.setString("token", newToken);
+        Logger.logInfo("Token saved after login: $newToken");
+
+        //Fetch company list using valid token
+        final companyProvider = context.read<CompanyCreationProvider>();
+        List<CompanyViewList> companyList = [];
+        CompanyViewList? companyData;
+        bool hasCompany = false;
+
+        try {
+          await companyProvider.getAllCompanies(context);
+          companyList = companyProvider.companiesList?.companyViewList ?? [];
+          hasCompany = companyList.isNotEmpty;
+          companyData = hasCompany ? companyList.first : null;
+        } catch (e) {
+          Logger.logError("Error fetching companies after login: $e");
+        }
+
+        Logger.logInfo(
+          "hasCompany: $hasCompany, companyData: ${companyData?.companyName}",
+        );
+
+        // Handle navigation or dialogs based on status
+        switch (response.status) {
+          case 1: //Login successful → Go to Admin Home
+            _cusomerId = response.loginData?.customerId;
+            context.pushNamed(AppRouterConst.adminDashboard);
+            break;
+
+          case 10: //Pending registration approval
+            RegistrationDialogs.pendingRegisteredDialog(
+              context,
+              response.loginData?.companyName ?? '',
+              id: response.loginData?.customerId,
+            );
+            break;
+
+          case 20: //Company creation pending
+            RegistrationDialogs.customDialog(
+              context: context,
+              heading: "Pending",
+              subTitle: "Please complete company creation",
+              onTap: () {
+                context.pushNamed(
+                  AppRouterConst.companyCreationScreen,
+                  extra: {'tabIndex': 0, 'companyData': companyData},
+                );
+              },
+              buttonText: "Redirect",
+            );
+            break;
+
+          case 30: //Integration settings pending
+            RegistrationDialogs.customDialog(
+              context: context,
+              heading: "Pending",
+              subTitle: "Please complete Company Integration Settings",
+              onTap: () {
+                context.pushNamed(
+                  AppRouterConst.companyCreationScreen,
+                  extra: {'tabIndex': 2, 'companyData': companyData},
+                );
+              },
+              buttonText: "Redirect",
+            );
+            break;
+
+          case 40: //Voucher type configuration pending
+            RegistrationDialogs.customDialog(
+              context: context,
+              heading: "Pending",
+              subTitle: "Please complete Company VoucherType Configuration",
+              onTap: () {
+                context.pushNamed(
+                  AppRouterConst.companyCreationScreen,
+                  extra: {'tabIndex': 1, 'companyData': companyData},
+                );
+              },
+              buttonText: "Redirect",
+            );
+            break;
+
+          default:
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  response.message ?? "Unknown error occurred",
+                  textAlign: TextAlign.center,
+                ),
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              ),
+            );
+            break;
         }
       },
     );
+
     return _loginResponse;
   }
 

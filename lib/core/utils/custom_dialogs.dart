@@ -96,7 +96,7 @@ class CustomDialog {
     EdgeInsetsGeometry? padding,
   }) {
     return showDialog<T>(
-      barrierDismissible: canPop,
+      barrierDismissible: false,
       context: AppDetails.globalNavigatorKey.currentContext!,
       builder: (context) {
         return GestureDetector(
