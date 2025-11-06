@@ -41,6 +41,7 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
       final provider = context.read<CompanyCreationProvider>();
       await provider.fectchCountryList(context);
       fillfeilds();
+      print(" company data in compnay info ${widget.companyData?.id}");
     });
   }
 

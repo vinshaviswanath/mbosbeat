@@ -45,7 +45,7 @@ class CompanyCreationProvider extends ChangeNotifier {
   Future<String> getCompanyId() async {
     final pref = sl<SharedPreferences>();
     final companyId = pref.getInt('selected_company_id');
-    _companyid = companyId;
+    // _companyid = companyId;
     return companyId?.toString() ?? '';
   }
 
@@ -123,7 +123,6 @@ class CompanyCreationProvider extends ChangeNotifier {
   RouteResponse? _routeResponse;
   RouteResponse? get routeResponse => _routeResponse;
 
-  
   CreateVoucherNumberingResponse? _voucherNumberingResponsel;
   CreateVoucherNumberingResponse? get voucherNumberingResponsel =>
       _voucherNumberingResponsel;
@@ -186,7 +185,9 @@ class CompanyCreationProvider extends ChangeNotifier {
           ? selectedVehicle?.id ?? 0
           : selectedRoute?.id ?? 0,
     );
-    Logger.logSuccess("Godown Id : ${selectedVehicle?.id}, Route id :${selectedRoute?.id} ");
+    Logger.logSuccess(
+      "Godown Id : ${selectedVehicle?.id}, Route id :${selectedRoute?.id} ",
+    );
     notifyListeners();
     if (isGodown) {
       getAllGodowns(context: context, companyId: companyId);
@@ -195,30 +196,12 @@ class CompanyCreationProvider extends ChangeNotifier {
     }
   }
 
-  // bool _isExpand = false;
-  // bool get isExpand => _isExpand;
-
-  // void toggleCheckBox() {
-  //   _isExpand = !_isExpand;
-  //   notifyListeners();
-  // }
-
   final formKey = GlobalKey<FormState>();
-
-  // void activatePlan(String planTitle) {
-  //   _activePlan = planTitle;
-  //   notifyListeners();
-  // }
-
-  // void deactivatePlan() {
-  //   _activePlan = null;
-  //   notifyListeners();
-  // }
 
   // bool isPlanActive(String planTitle) => _activePlan == planTitle;
   bool isStageCompleted(int index) => stageCompleted[index];
 
-  /// ✅ Update stage completion based on backend data
+  ///  Update stage completion based on backend data
   void updateStageCompletionFromCompanyData(CompanyViewList company) {
     // if company id > 0 → company info is completed
     stageCompleted[0] = company.id != null && company.id! > 0;
@@ -358,17 +341,17 @@ class CompanyCreationProvider extends ChangeNotifier {
 
         if (response.status == 1) {
           _companyCreationDtos = response;
-
+          _companyid = _companyCreationDtos!.id;
           WidgetsBinding.instance.addPostFrameCallback((_) async {
-            final prefs = sl<SharedPreferences>();
-            await prefs.setInt('selected_company_id', _companyCreationDtos!.id);
-            final companyId = prefs.getInt('selected_company_id');
+            // final prefs = sl<SharedPreferences>();
+            // await prefs.setInt('selected_company_id', _companyCreationDtos!.id);
+            // final companyId = prefs.getInt('selected_company_id');
             Logger.logSuccess(
-              "Company info tab SELECTED COMPANY ID: $companyId",
+              "Company info tab SELECTED COMPANY ID: $_companyid",
             );
           });
-          getCompanyId();
-          getAllCompanies(context);
+          // getCompanyId();
+          //getAllCompanies(context);
           markStageCompleted(0);
           onSuccess?.call();
           notifyListeners();
@@ -992,14 +975,15 @@ class CompanyCreationProvider extends ChangeNotifier {
   //get companyvuchertypelist
 
   Future<CompanyvouchertypeslistDtos?> fetchVoucherTypes(
-    BuildContext context, int companyId,
+    BuildContext context,
+    int companyId,
     // int companyID,
   ) async {
     _setLoading(true);
-    final prefs = sl<SharedPreferences>();
+    //final prefs = sl<SharedPreferences>();
 
-    final companyId = prefs.getInt('selected_company_id');
-    final result = await iCompanyCreationFacad.getVoucherType(companyId ?? 0);
+    //final companyId = prefs.getInt('selected_company_id');
+    final result = await iCompanyCreationFacad.getVoucherType(companyId);
     result.fold(
       (failure) {
         _errorMessage = failure.errorMsg.toString();

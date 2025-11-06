@@ -1,9 +1,11 @@
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/presentation/views/company_creation/widget/company_vouchertype/vouchertypeTile.dart';
 
 class VoucherTypeWidget extends StatefulWidget {
-  const VoucherTypeWidget({super.key, this.onTap});
+  final CompanyViewList? companyData;
+  const VoucherTypeWidget({super.key, this.onTap, this.companyData});
   final void Function()? onTap;
 
   @override
@@ -11,6 +13,10 @@ class VoucherTypeWidget extends StatefulWidget {
 }
 
 class _VoucherTypeWidgetState extends State<VoucherTypeWidget> {
+  int? companyId;
+  Map<int, int> toggleStates = {};
+  Map<int, int> checkStates = {};
+
   @override
   void initState() {
     super.initState();
@@ -18,17 +24,22 @@ class _VoucherTypeWidgetState extends State<VoucherTypeWidget> {
     checkStates = {};
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final provider = context.read<CompanyCreationProvider>();
-      final companyId = provider.companyid;
-      print('companyId: $companyId');
-      provider.fetchVoucherTypes(
-        context,
-        companyId ?? 0
-      );
+
+      // Get companyId either from widget.companyData or provider
+      if (widget.companyData != null && widget.companyData!.id != null) {
+        companyId = widget.companyData!.id!;
+        print(
+          'companyId in voucher screen  from widget.companyData: $companyId',
+        );
+      } else {
+        companyId = provider.companyid ?? 0;
+        print('companyId in voucher screen  from provider: $companyId');
+      }
+
+      provider.fetchVoucherTypes(context, companyId!);
     });
   }
 
-  Map<int, int> toggleStates = {};
-  Map<int, int> checkStates = {};
   @override
   Widget build(BuildContext context) {
     final appLocalization = context.l10n;
@@ -61,7 +72,7 @@ class _VoucherTypeWidgetState extends State<VoucherTypeWidget> {
             }
 
             final voucherList = provider.voucherTypes;
-            final companyId = provider.companyid;
+            //final companyId = provider.companyid;
 
             if (voucherList.isEmpty) {
               return const SliverFillRemaining(
