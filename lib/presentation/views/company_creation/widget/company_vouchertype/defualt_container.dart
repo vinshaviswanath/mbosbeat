@@ -399,24 +399,7 @@ class _DefaultContainerState extends State<DefaultContainer> {
                       ),
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                    // Form(
-                    //   key: _formKey,
-                    //   child: Row(
-                    //     children: [
 
-                    //       SizedBox(
-                    //         width: MediaQuery.of(context).size.width * 0.020,
-                    //       ),
-                    //       SizedBox(
-                    //         width: MediaQuery.of(context).size.width * 0.020,
-                    //       ),
-
-                    //       SizedBox(
-                    //         width: MediaQuery.of(context).size.width * 0.020,
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
                     !_isInputValid || !_isPrefixValid || !_isSuffixValid
                         // !_isInputValid
                         ? Center(
@@ -490,7 +473,7 @@ class _DefaultContainerState extends State<DefaultContainer> {
                             if (_isInputValid &&
                                 _isPrefixValid &&
                                 _isSuffixValid) {
-                              provider.createCompanyVoucherTypes(
+                              await provider.createCompanyVoucherTypes(
                                 onSuccess: widget.onTap,
                                 context,
                                 request: CreateCompanyVocherParams(
@@ -518,13 +501,16 @@ class _DefaultContainerState extends State<DefaultContainer> {
                                   isenabled: widget.isCheckOn,
                                 ),
                               );
-                              context.pop();
-                              provider.fetchVoucherTypes(
+
+                              await provider.fetchVoucherTypes(
                                 context,
                                 widget.companyId,
-                               // companyId ?? 0
-                             );
-                             //   provider.fetchVoucherTypes(context, 1302);
+                                // companyId ?? 0
+                              );
+
+                              context.pop();
+
+                              //   provider.fetchVoucherTypes(context, 1302);
                             }
                           }
                           dataCollecting();

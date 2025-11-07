@@ -407,7 +407,7 @@ class _B2bContainerState extends State<B2bContainer> {
                   if (_formKey.currentState!.validate()) {
                     _validateInput();
                     if (_isInputValid && _isPrefixValid && _isSuffixValid) {
-                      provider.createCompanyVoucherTypes(
+                      await provider.createCompanyVoucherTypes(
                         onSuccess: widget.onTap,
                         context,
                         request: CreateCompanyVocherParams(
@@ -425,11 +425,12 @@ class _B2bContainerState extends State<B2bContainer> {
                           isenabled: widget.isCheckOn == 1 ? 1 : 0,
                         ),
                       );
-                      context.pop();
-                      provider.fetchVoucherTypes(
+
+                      await provider.fetchVoucherTypes(
                         context,
-                        widget.companyId ?? 0
+                        widget.companyId ?? 0,
                       );
+                      context.pop();
                     }
                     dataCollecting();
                   }
