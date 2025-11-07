@@ -193,8 +193,7 @@ class CompanyCreationProvider extends ChangeNotifier {
   void toggleVoucher(BuildContext context) {
     _isGodown = !_isGodown;
 
-    final companyId =
-        selectedCompany?.id;
+    final companyId = selectedCompany?.id;
 
     // getVoucherNumbering(
     //   context: context,
@@ -206,6 +205,8 @@ class CompanyCreationProvider extends ChangeNotifier {
     Logger.logSuccess(
       "Godown Id : ${selectedVehicle?.id}, Route id :${selectedRoute?.id} ",
     );
+    getAllRoutess(context: context, companyId: companyId.toString());
+
     notifyListeners();
     if (isGodown) {
       if (_isGodown) {
@@ -1206,7 +1207,10 @@ class CompanyCreationProvider extends ChangeNotifier {
         );
         // final companyId = await getCompanyId();
         WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-          getAllGodowns(context: context, companyId: selectedCompany?.id.toString() ?? '');
+          getAllGodowns(
+            context: context,
+            companyId: selectedCompany?.id.toString() ?? '',
+          );
         });
         notifyListeners();
       },
@@ -1293,7 +1297,10 @@ class CompanyCreationProvider extends ChangeNotifier {
         // getAllGodowns(context: context,companyId: );
         // final companyId = await getCompanyId();
         WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-          getAllGodowns(context: context, companyId: selectedCompany?.id.toString() ?? '');
+          getAllGodowns(
+            context: context,
+            companyId: selectedCompany?.id.toString() ?? '',
+          );
         });
         notifyListeners();
       },
@@ -1332,7 +1339,10 @@ class CompanyCreationProvider extends ChangeNotifier {
         // getAllGodowns(context: context,companyId: );
         // final companyId = await getCompanyId();
         WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-          getAllGodowns(context: context, companyId: selectedCompany?.id.toString() ?? '');
+          getAllGodowns(
+            context: context,
+            companyId: selectedCompany?.id.toString() ?? '',
+          );
         });
         notifyListeners();
       },
@@ -1369,7 +1379,10 @@ class CompanyCreationProvider extends ChangeNotifier {
         // getAllGodowns(context: context,companyId: );
         // final companyId = await getCompanyId();
         WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-          getAllGodowns(context: context, companyId: selectedCompany?.id.toString() ?? '');
+          getAllGodowns(
+            context: context,
+            companyId: selectedCompany?.id.toString() ?? '',
+          );
         });
         notifyListeners();
       },
@@ -1430,7 +1443,10 @@ class CompanyCreationProvider extends ChangeNotifier {
         );
         // final companyId = await getCompanyId();
         WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-          getAllRoutess(context: context, companyId: selectedCompany?.id.toString() ?? '');
+          getAllRoutess(
+            context: context,
+            companyId: selectedCompany?.id.toString() ?? '',
+          );
         });
         notifyListeners();
       },
@@ -1514,7 +1530,10 @@ class CompanyCreationProvider extends ChangeNotifier {
         // );
         // final companyId = await getCompanyId();
         WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-          getAllRoutess(context: context, companyId: selectedCompany?.id.toString() ?? '');
+          getAllRoutess(
+            context: context,
+            companyId: selectedCompany?.id.toString() ?? '',
+          );
         });
         notifyListeners();
       },
@@ -1554,7 +1573,10 @@ class CompanyCreationProvider extends ChangeNotifier {
         );
         // final companyId = await getCompanyId();
         WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-          getAllRoutess(context: context, companyId: selectedCompany?.id.toString() ?? '');
+          getAllRoutess(
+            context: context,
+            companyId: selectedCompany?.id.toString() ?? '',
+          );
         });
 
         notifyListeners();
@@ -1591,7 +1613,10 @@ class CompanyCreationProvider extends ChangeNotifier {
         Logger.logSuccess("Route deleted successfull : ${response.toJson()}");
         // final companyId = await getCompanyId();
         WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-          getAllRoutess(context: context, companyId: selectedCompany?.id.toString() ?? '');
+          getAllRoutess(
+            context: context,
+            companyId: selectedCompany?.id.toString() ?? '',
+          );
         });
         notifyListeners();
       },
