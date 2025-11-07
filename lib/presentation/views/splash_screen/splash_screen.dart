@@ -35,44 +35,44 @@ class _SplashScreenState extends State<SplashScreen> {
     await authProvider.loginByToken(params: LoginByTokenParam(token: token));
     await companyProvider.getAllRoutess(context: context, companyId: companyId);
     await companyProvider.getAllGodowns(context: context, companyId: companyId);
-    final firstVehicle =
-        companyProvider.godownListResponse?.vehicleList.firstOrNull;
-    final firstRoute = companyProvider.routeListResponse?.routeList.firstOrNull;
+    // final firstVehicle =
+    //     companyProvider.godownListResponse?.vehicleList.firstOrNull;
+    // final firstRoute = companyProvider.routeListResponse?.routeList.firstOrNull;
 
-     companyProvider.setSelectedVehicle(
-      firstVehicle ??
-          VehicleList(id: 0, companyId: 0, code: '', name: '', active: 0),
-    );
+    //  companyProvider.setSelectedVehicle(
+    //   firstVehicle ??
+    //       VehicleList(id: 0, companyId: 0, code: '', name: '', active: 0),
+    // );
 
 
-     companyProvider.setSelectedRoute(
-      firstRoute ??
-          RouteList(
-            id: 0,
-            companyId: 0,
-            routeCode: '',
-            routeName: '',
-            active: 0,
-          ),
-    );
+    //  companyProvider.setSelectedRoute(
+    //   firstRoute ??
+    //       RouteList(
+    //         id: 0,
+    //         companyId: 0,
+    //         routeCode: '',
+    //         routeName: '',
+    //         active: 0,
+    //       ),
+    // );
 
     // Step 4: Fetch voucher numbering
-    final voucherModeId = companyProvider.isGodown
-        ? companyProvider.selectedVehicle?.id ?? 0
-        : companyProvider.selectedRoute?.id ?? 0;
+    // final voucherModeId = companyProvider.isGodown
+    //     ? companyProvider.selectedVehicle?.id ?? 0
+    //     : companyProvider.selectedRoute?.id ?? 0;
 
-    await companyProvider.getVoucherNumbering(
-      context: context,
-      companyId: companyId,
-      voucherModeId: voucherModeId,
-    );
+    // await companyProvider.getVoucherNumbering(
+    //   context: context,
+    //   companyId: companyId,
+    //   voucherModeId: voucherModeId,
+    // );
 
     // Step 5: Log success information
-    Logger.logSuccess(
-      "Company ID: $companyId | "
-      "Voucher Mode: ${companyProvider.isGodown ? "Godown" : "Route"} | "
-      "Voucher Mode ID: $voucherModeId",
-    );
+    // Logger.logSuccess(
+    //   "Company ID: $companyId | "
+    //   "Voucher Mode: ${companyProvider.isGodown ? "Godown" : "Route"} | "
+      // "Voucher Mode ID: $voucherModeId",
+    // );
   }
 
   @override

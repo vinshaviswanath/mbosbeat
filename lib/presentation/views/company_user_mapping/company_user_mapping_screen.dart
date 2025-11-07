@@ -143,9 +143,8 @@ class _CompanyUserMappingScreenState extends State<CompanyUserMappingScreen> {
                         onChanged: (_) => setState(() {}),
                       ),
                     ),
-                    h10,
-                    Divider(thickness: 1, color: Colors.grey.shade200),
                     h5,
+                    Divider(thickness: 1, color: Colors.grey.shade200),
                   ],
                 ),
               ),
@@ -189,37 +188,45 @@ class _CompanyUserMappingScreenState extends State<CompanyUserMappingScreen> {
                   }, childCount: filteredUsers.length),
                 ),
               if (filteredUsers.isNotEmpty)
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: context.getSize.width / 4,
-                      vertical: 16,
-                    ),
-                    child: CustomButton(
-                      borderRadius: BorderRadius.circular(16),
-                      onTap: () async {
-                        final pref = sl<SharedPreferences>();
-                        await pref.setStringList(
-                          'company_users_${widget.companyId}',
-                          selectedUserList
-                              .map((e) => e.userId.toString())
-                              .toList(),
-                        );
-
-                        provider
-                            .createCompanyMapping(
-                              context: context,
-                              companyId: widget.companyId,
-                              userList: selectedUserList,
-                            )
-                            .then(
-                              (_) => WidgetsBinding.instance
-                                  .addPostFrameCallback((_) => context.pop()),
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: context.getSize.width / 4,
+                          vertical: 12,
+                        ),
+                        child: CustomButton(
+                          borderRadius: BorderRadius.circular(16),
+                          onTap: () async {
+                            final pref = sl<SharedPreferences>();
+                            await pref.setStringList(
+                              'company_users_${widget.companyId}',
+                              selectedUserList
+                                  .map((e) => e.userId.toString())
+                                  .toList(),
                             );
-                      },
-                      buttonText: "Save",
-                      isborderEnable: false,
-                    ),
+
+                            provider
+                                .createCompanyMapping(
+                                  context: context,
+                                  companyId: widget.companyId,
+                                  userList: selectedUserList,
+                                )
+                                .then(
+                                  (_) => WidgetsBinding.instance
+                                      .addPostFrameCallback(
+                                        (_) => context.pop(),
+                                      ),
+                                );
+                          },
+                          buttonText: "Save",
+                          isborderEnable: false,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
             ],

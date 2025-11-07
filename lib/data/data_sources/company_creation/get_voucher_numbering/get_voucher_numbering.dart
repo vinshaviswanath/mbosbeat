@@ -30,6 +30,7 @@ class GetVoucherNumbering {
         Logger.logInfo(
           "URL: ${Urls.getVoucherNumbering1}${Urls.getVoucherNumbering2}$companyId${Urls.getVoucherNumbering3}$voucherMode${Urls.getVoucherNumbering4}$voucherModeId",
         );
+        
         if (response.isOk) {
           final data = VoucherNumberingResponse.fromJson(response.data);
           Logger.logInfo("Voucher Numbering Respons : ${data.toJson()}");
