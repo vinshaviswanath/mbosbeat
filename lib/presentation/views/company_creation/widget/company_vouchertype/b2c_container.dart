@@ -400,7 +400,7 @@ class _B2cContainerState extends State<B2cContainer> {
                   if (_formKey.currentState!.validate()) {
                     _validateInput();
                     if (_isInputValid && _isPrefixValid && _isSuffixValid) {
-                      provider.createCompanyVoucherTypes(
+                      await provider.createCompanyVoucherTypes(
                         onSuccess: widget.onTap,
                         context,
                         request: CreateCompanyVocherParams(
@@ -418,11 +418,12 @@ class _B2cContainerState extends State<B2cContainer> {
                           isenabled: widget.isCheckOn == 1 ? 1 : 0,
                         ),
                       );
-                      context.pop();
-                      provider.fetchVoucherTypes(
+
+                      await provider.fetchVoucherTypes(
                         context,
-                        widget.companyId ?? 0
+                        widget.companyId ?? 0,
                       );
+                      context.pop();
                     }
                     dataCollecting();
                   }
