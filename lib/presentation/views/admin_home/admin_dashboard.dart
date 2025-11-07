@@ -188,20 +188,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                             decoration: const InputDecoration(
                                               border: OutlineInputBorder(
                                                 borderSide: BorderSide.none,
-                                          child:
-                                              DropdownButtonFormField<
-                                                CompanyViewList
-                                              >(
-                                                decoration:
-                                                    const InputDecoration(
-                                                      border:
-                                                          OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide.none,
                                               ),
-                                                         ),
                                             ),
-                                                    ),
                                             initialValue: selectedCompany,
                                             isExpanded: true,
                                             dropdownColor: Colors.white,
