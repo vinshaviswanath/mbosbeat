@@ -167,19 +167,13 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
                             ? provider.godownStream
                             : provider.routeStream,
                         builder: (context, snapshot) {
-                          // Only show loader during the *first* connection
-                          // if (snapshot.connectionState ==
-                          //         ConnectionState.waiting &&
-                          //     (snapshot.data == null ||
-                          //         (snapshot.data as List).isEmpty)) {
-                          //   // Optional: You can comment this out if you never want loader at all
-                          //   return const SizedBox.shrink();
-                          // }
-
-                          // Safely extract data
+                          final connectionState = snapshot.connectionState;
                           final dataList = snapshot.data;
 
-                          if (dataList == null || (dataList as List).isEmpty) {
+                          // CASE 1: Stream not yet ready (null data, waiting)
+                          if (connectionState == ConnectionState.waiting &&
+                              dataList == null) {
+                            // You can show nothing or a placeholder dropdown
                             return CustomDropdown(
                               hintText: provider.isGodown
                                   ? appLocalizations
@@ -187,56 +181,75 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
                                   : appLocalizations
                                         .godown_route_voucher_enter_route_name,
                               value: null,
-                              items: const [], 
+                              items: const [],
                               onChanged: (_) {},
                             );
                           }
 
-                          final items = provider.isGodown
-                              ? (dataList as List<VehicleList>)
-                                    .map((e) => e.name ?? "")
-                                    .toList()
-                              : (dataList as List<RouteList>)
-                                    .map((e) => e.routeName ?? "")
-                                    .toList();
+                          // CASE 2: Once data arrives (even later)
+                          if (dataList != null &&
+                              (dataList as List).isNotEmpty) {
+                            final items = provider.isGodown
+                                ? (dataList as List<VehicleList>)
+                                      .map((e) => e.name ?? "")
+                                      .toList()
+                                : (dataList as List<RouteList>)
+                                      .map((e) => e.routeName ?? "")
+                                      .toList();
 
-                          final selectedValue = provider.isGodown
-                              ? provider.selectedVehicle?.name
-                              : provider.selectedRoute?.routeName;
+                            final selectedValue = provider.isGodown
+                                ? provider.selectedVehicle?.name
+                                : provider.selectedRoute?.routeName;
 
+                            return CustomDropdown(
+                              hintText: provider.isGodown
+                                  ? appLocalizations
+                                        .godown_route_voucher_enter_godown_name
+                                  : appLocalizations
+                                        .godown_route_voucher_enter_route_name,
+                              value: selectedValue,
+                              items: items,
+                              onChanged: (value) async {
+                                if (provider.isGodown) {
+                                  final selected =
+                                      (dataList as List<VehicleList>)
+                                          .firstWhere((e) => e.name == value);
+                                  provider.setSelectedVehicle(selected);
+                                  await provider.getVoucherNumberingGodown(
+                                    context: context,
+                                    companyId:
+                                        provider.selectedCompany?.id
+                                            .toString() ??
+                                        '',
+                                    voucherModeId: selected.id ?? 0,
+                                  );
+                                } else {
+                                  final selected = (dataList as List<RouteList>)
+                                      .firstWhere((e) => e.routeName == value);
+                                  provider.setSelectedRoute(selected);
+                                  await provider.getVoucherNumberingRoute(
+                                    context: context,
+                                    companyId:
+                                        provider.selectedCompany?.id
+                                            .toString() ??
+                                        '',
+                                    voucherModeId: selected.id ?? 0,
+                                  );
+                                }
+                              },
+                            );
+                          }
+
+                          // CASE 3: Empty or null list after stream completes
                           return CustomDropdown(
                             hintText: provider.isGodown
                                 ? appLocalizations
                                       .godown_route_voucher_enter_godown_name
                                 : appLocalizations
                                       .godown_route_voucher_enter_route_name,
-                            value: selectedValue,
-                            items: items,
-                            onChanged: (value) async {
-                              if (provider.isGodown) {
-                                final selected = (dataList as List<VehicleList>)
-                                    .firstWhere((e) => e.name == value);
-                                provider.setSelectedVehicle(selected);
-                                await provider.getVoucherNumberingGodown(
-                                  context: context,
-                                  companyId:
-                                      provider.selectedCompany?.id.toString() ??
-                                      '',
-                                  voucherModeId: selected.id ?? 0,
-                                );
-                              } else {
-                                final selected = (dataList as List<RouteList>)
-                                    .firstWhere((e) => e.routeName == value);
-                                provider.setSelectedRoute(selected);
-                                await provider.getVoucherNumberingRoute(
-                                  context: context,
-                                  companyId:
-                                      provider.selectedCompany?.id.toString() ??
-                                      '',
-                                  voucherModeId: selected.id ?? 0,
-                                );
-                              }
-                            },
+                            value: null,
+                            items: const [],
+                            onChanged: (_) {},
                           );
                         },
                       ),
