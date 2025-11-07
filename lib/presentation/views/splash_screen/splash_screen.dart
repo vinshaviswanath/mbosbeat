@@ -247,30 +247,6 @@ class _SplashScreenState extends State<SplashScreen> {
                   Logger.logSuccess(
                     "COMPANY ID from dialog: ${companyData.id}",
                   );
-    await authProvider.loginByToken(params: LoginByTokenParam(token: token));
-    await companyProvider.getAllRoutess(context: context, companyId: companyId);
-    await companyProvider.getAllGodowns(context: context, companyId: companyId);
-    // final firstVehicle =
-    //     companyProvider.godownListResponse?.vehicleList.firstOrNull;
-    // final firstRoute = companyProvider.routeListResponse?.routeList.firstOrNull;
-
-    //  companyProvider.setSelectedVehicle(
-    //   firstVehicle ??
-    //       VehicleList(id: 0, companyId: 0, code: '', name: '', active: 0),
-    // );
-
-
-    //  companyProvider.setSelectedRoute(
-    //   firstRoute ??
-    //       RouteList(
-    //         id: 0,
-    //         companyId: 0,
-    //         routeCode: '',
-    //         routeName: '',
-    //         active: 0,
-    //       ),
-    // );
-
                   context.pushNamed(
                     AppRouterConst.companyCreationScreen,
                     extra: {'tabIndex': 0, 'companyData': companyData},
@@ -297,17 +273,6 @@ class _SplashScreenState extends State<SplashScreen> {
                 },
                 buttonText: "Redirect",
               );
-
-    // Step 4: Fetch voucher numbering
-    // final voucherModeId = companyProvider.isGodown
-    //     ? companyProvider.selectedVehicle?.id ?? 0
-    //     : companyProvider.selectedRoute?.id ?? 0;
-
-    // await companyProvider.getVoucherNumbering(
-    //   context: context,
-    //   companyId: companyId,
-    //   voucherModeId: voucherModeId,
-    // );
              break;
             case 40:
               RegistrationDialogs.customDialog(
@@ -328,12 +293,6 @@ class _SplashScreenState extends State<SplashScreen> {
                 buttonText: "Redirect",
               );
               break;
-    // Step 5: Log success information
-    // Logger.logSuccess(
-    //   "Company ID: $companyId | "
-    //   "Voucher Mode: ${companyProvider.isGodown ? "Godown" : "Route"} | "
-      // "Voucher Mode ID: $voucherModeId",
-    // );
           }
         });
         break;

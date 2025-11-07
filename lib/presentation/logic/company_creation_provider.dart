@@ -188,39 +188,43 @@ class CompanyCreationProvider extends ChangeNotifier {
     final companyId =
         sl<SharedPreferences>().getInt('selected_company_id')?.toString() ?? '';
 
-    
-    getVoucherNumbering(
-      context: context,
-      companyId: companyId,
-      voucherModeId: _isGodown
-          ? selectedVehicle?.id ?? 0
-          : selectedRoute?.id ?? 0,
-    );
+    // getVoucherNumbering(
+    //   context: context,
+    //   companyId: companyId,
+    //   voucherModeId: _isGodown
+    //       ? selectedVehicle?.id ?? 0
+    //       : selectedRoute?.id ?? 0,
+    // );
     Logger.logSuccess(
       "Godown Id : ${selectedVehicle?.id}, Route id :${selectedRoute?.id} ",
     );
     notifyListeners();
     if (isGodown) {
-    if (_isGodown) {
-      getAllGodowns(context: context, companyId: companyId);
-      if(selectedVehicle != null){
-      getVoucherNumberingGodown(context: context, companyId: companyId, voucherModeId: selectedVehicle?.id ?? 0);
-      }
-    } else {
-      getAllRoutess(context: context, companyId: companyId);
-      if(selectedRoute != null){
-      getVoucherNumberingRoute(context: context, companyId: companyId, voucherModeId: selectedVehicle?.id ?? 0);
+      if (_isGodown) {
+        getAllGodowns(context: context, companyId: companyId);
+        if (selectedVehicle != null) {
+          getVoucherNumberingGodown(
+            context: context,
+            companyId: companyId,
+            voucherModeId: selectedVehicle?.id ?? 0,
+          );
+        }
+      } else {
+        getAllRoutess(context: context, companyId: companyId);
+        if (selectedRoute != null) {
+          getVoucherNumberingRoute(
+            context: context,
+            companyId: companyId,
+            voucherModeId: selectedVehicle?.id ?? 0,
+          );
+        }
       }
 
+      Logger.logSuccess("Switched to ${_isGodown ? 'Godown' : 'Route'} wise");
+
+      notifyListeners();
     }
-
-
-    Logger.logSuccess("Switched to ${_isGodown ? 'Godown' : 'Route'} wise");
-
-    notifyListeners();
   }
-
-
 
   final formKey = GlobalKey<FormState>();
 
