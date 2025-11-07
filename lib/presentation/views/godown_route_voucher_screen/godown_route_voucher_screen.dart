@@ -4,7 +4,6 @@ import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/godown_list_model.dart';
 import 'package:mpos_beat/data/models/route_list_model.dart';
 import 'package:mpos_beat/data/models/voucher_numbering_response.dart';
-import 'package:mpos_beat/presentation/common/widgets/custom_button.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_divider.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_dropdown.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_switch.dart';
@@ -35,13 +34,13 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final provider = context.read<CompanyCreationProvider>();
       provider
-        ..getVoucherNumbering(
-          context: context,
-          companyId: companyId,
-          voucherModeId: provider.isGodown
-              ? provider.selectedVehicle?.id ?? 0
-              : provider.selectedRoute?.id ?? 0,
-        )
+        // ..getVoucherNumbering(
+        //   context: context,
+        //   companyId: companyId,
+        //   voucherModeId: provider.isGodown
+        //       ? provider.selectedVehicle?.id ?? 0
+        //       : provider.selectedRoute?.id ?? 0,
+        // )
         ..getAllRoutess(context: context, companyId: companyId)
         ..getAllGodowns(context: context, companyId: companyId);
     });
@@ -61,6 +60,7 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             surfaceTintColor: Colors.transparent,
+            automaticallyImplyLeading: false,
             elevation: 0,
             centerTitle: true,
             title: Text(
@@ -88,7 +88,11 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
                     children: [
                       Text(
                         appLocalizations.popover_body_godown_wise,
-                        style: context.textStyle.s12.bold.indigoBlue.roboto,
+                        style: context.textStyle.s12.bold.roboto.copyWith(
+                          color: ColorResources.indigoBlue.withValues(
+                            alpha: !provider.isGodown ? 0.5 : 1,
+                          ),
+                        ),
                       ),
                       SelectionSwitch(
                         value: !provider.isGodown,
@@ -98,7 +102,11 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
                       ),
                       Text(
                         appLocalizations.popover_body_route_wise,
-                        style: context.textStyle.s12.bold.indigoBlue.roboto,
+                        style: context.textStyle.s12.bold.roboto.copyWith(
+                          color: ColorResources.indigoBlue.withValues(
+                            alpha: provider.isGodown ? 0.5 : 1,
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -161,34 +169,11 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
                           }
                           final dataList = snapshot.data;
 
-                          if (dataList == null || (dataList as List).isEmpty) {
-                            return Text(
-                              provider.isGodown
-                                  ? "No vehicles available"
-                                  : "No routes available",
-                              style:
-                                  context.textStyle.s12.w500.dustyBlue.roboto,
+                          if (dataList == null) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
                             );
                           }
-
-                          // ✅ Preselect first item if none selected
-                          WidgetsBinding.instance.addPostFrameCallback((_) {
-                            if (provider.isGodown) {
-                              if (provider.selectedVehicle == null &&
-                                  (dataList as List).isNotEmpty) {
-                                provider.setSelectedVehicle(
-                                  (dataList as List<VehicleList>).first,
-                                );
-                              }
-                            } else {
-                              if (provider.selectedRoute == null &&
-                                  (dataList as List).isNotEmpty) {
-                                provider.setSelectedRoute(
-                                  (dataList as List<RouteList>).first,
-                                );
-                              }
-                            }
-                          });
 
                           final items = provider.isGodown
                               ? (dataList as List<VehicleList>)
@@ -210,15 +195,25 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
                                       .godown_route_voucher_enter_route_name,
                             value: selectedValue,
                             items: items,
-                            onChanged: (value) {
+                            onChanged: (value) async {
                               if (provider.isGodown) {
                                 final selected = (dataList as List<VehicleList>)
                                     .firstWhere((e) => e.name == value);
                                 provider.setSelectedVehicle(selected);
+                                await provider.getVoucherNumberingGodown(
+                                  context: context,
+                                  companyId: companyId,
+                                  voucherModeId: selected.id ?? 0,
+                                );
                               } else {
                                 final selected = (dataList as List<RouteList>)
                                     .firstWhere((e) => e.routeName == value);
                                 provider.setSelectedRoute(selected);
+                                await provider.getVoucherNumberingRoute(
+                                  context: context,
+                                  companyId: companyId,
+                                  voucherModeId: selected.id ?? 0,
+                                );
                               }
                             },
                           );
@@ -269,11 +264,14 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
                 // 🔹 Voucher List Stream
                 Expanded(
                   child: StreamBuilder<List<VoucherNumberingModel>>(
-                    stream: provider.voucherNumberingStream,
+                    key: ValueKey(provider.isGodown),
+                    stream: provider.isGodown
+                        ? provider.voucherNumberingGodownStream
+                        : provider.voucherNumberingRouteStream,
                     builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      }
+                      // if (snapshot.connectionState == ConnectionState.waiting) {
+                      //   return const Center(child: CircularProgressIndicator());
+                      // }
 
                       if (!snapshot.hasData || snapshot.data!.isEmpty) {
                         return Center(
@@ -358,7 +356,7 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
                           : provider.selectedRoute?.id ?? 0,
                       voucherNumbers: provider.voucherNumberList ?? [],
                     );
-                    context.pop();
+                    // context.pop();
                   },
                   buttonText: "Save",
                   isborderEnable: false,

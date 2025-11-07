@@ -188,8 +188,20 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                             decoration: const InputDecoration(
                                               border: OutlineInputBorder(
                                                 borderSide: BorderSide.none,
+                                          child:
+                                              DropdownButtonFormField<
+                                                CompanyViewList
+                                              >(
+                                                decoration:
+                                                    const InputDecoration(
+                                                      border:
+                                                          OutlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide.none,
                                               ),
+                                                         ),
                                             ),
+                                                    ),
                                             initialValue: selectedCompany,
                                             isExpanded: true,
                                             dropdownColor: Colors.white,
@@ -282,7 +294,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                       .roboto,
                                                 ),
                                                 Text(
-                                                  "Anakkattu bldg, Near Dhanalakshmi Bank, Bank Road, Aluva, Ernakulam.",
+                                                  "${selectedCompany?.address1},${selectedCompany?.address2},${selectedCompany?.address3},${selectedCompany?.state},${selectedCompany?.country}",
                                                   style: context
                                                       .textStyle
                                                       .s10
@@ -401,11 +413,11 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                     Column(
                                                                       children: [
                                                                         Text(
-                                                                          "Manvish Info Solutions",
+                                                                          "${selectedCompany?.companyName}",
                                                                           style: context
                                                                               .textStyle
                                                                               .s12
-                                                                              .w500
+                                                                              .bold
                                                                               .indigoBlue
                                                                               .roboto,
                                                                         ),
@@ -442,7 +454,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                               ),
                                                               h4,
                                                               Text(
-                                                                "Bank Jn, Aluva",
+                                                                "${selectedCompany?.address1},${selectedCompany?.address2},${selectedCompany?.address3},${selectedCompany?.state},${selectedCompany?.country}",
                                                                 style: context
                                                                     .textStyle
                                                                     .s10
@@ -461,7 +473,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                 title:
                                                                     "Edit Company",
                                                                 icon: Icons
-                                                                    .edit_outlined,
+                                                                    .mode_edit,
                                                                 onTap: (i) {
                                                                   Navigator.pop(
                                                                     context,
@@ -517,7 +529,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                 title:
                                                                     "Integration Settings",
                                                                 icon: Icons
-                                                                    .settings_applications,
+                                                                    .settings_suggest_outlined,
                                                                 onTap: (i) {
                                                                   // final pref =
                                                                   //     sl<
@@ -572,7 +584,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                 title:
                                                                     "Company Settings",
                                                                 icon: Icons
-                                                                    .settings,
+                                                                    .settings_outlined,
                                                                 onTap: (i) {
                                                                   Navigator.pop(
                                                                     context,
@@ -616,7 +628,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                 title:
                                                                     "Voucher Type",
                                                                 icon: Icons
-                                                                    .file_copy,
+                                                                    .description_outlined,
                                                                 onTap: (i) {
                                                                   // Get the saved companyId
                                                                   // final pref =
@@ -693,7 +705,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                 title:
                                                                     "Add Users",
                                                                 icon: Icons
-                                                                    .person,
+                                                                    .person_outline,
                                                                 onTap: (i) {
                                                                   Navigator.pop(
                                                                     context,

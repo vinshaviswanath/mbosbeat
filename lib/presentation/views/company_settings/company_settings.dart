@@ -127,7 +127,7 @@ class _CompanySettingsScreenState extends State<CompanySettingsScreen> {
 
                             final params = CreateCompanysettingsParams(
                               id: setting.id,
-                              companyid: 1336,
+                              companyid: widget.companyId ?? 0,
                               settingsvalue: val ? "Yes" : "No",
                             );
 

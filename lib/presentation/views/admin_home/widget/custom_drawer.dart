@@ -30,7 +30,7 @@ class _CustomDrawerState extends State<CustomDrawer>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _drawerWidth = MediaQuery.of(context).size.width / 1.33;
+    _drawerWidth = MediaQuery.of(context).size.width / 1.23;
     final begin = -_drawerWidth;
     _drawerAnimation = Tween<double>(
       begin: begin,

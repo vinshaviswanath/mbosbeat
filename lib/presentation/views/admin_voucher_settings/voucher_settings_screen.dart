@@ -15,7 +15,11 @@ class VoucherSettingsScreen<T> extends StatefulWidget {
   final T data;
   final int voucherModeId;
 
-  const VoucherSettingsScreen({super.key, required this.data, required this.voucherModeId});
+  const VoucherSettingsScreen({
+    super.key,
+    required this.data,
+    required this.voucherModeId,
+  });
 
   @override
   State<VoucherSettingsScreen<T>> createState() =>
@@ -36,8 +40,18 @@ class _VoucherSettingsScreenState<T> extends State<VoucherSettingsScreen<T>> {
     final companyId = pref.getInt('selected_company_id').toString();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final provider = context.read<CompanyCreationProvider>();
+      provider.isGodown
+          ? provider.getVoucherNumberingGodown(
+              context: context,
+              companyId: companyId,
+              voucherModeId: widget.voucherModeId,
+            )
+          : provider.getVoucherNumberingRoute(
+              context: context,
+              companyId: companyId,
+              voucherModeId: widget.voucherModeId,
+            );
       provider
-        ..getVoucherNumbering(context: context, companyId: companyId,voucherModeId: widget.voucherModeId)
         ..getAllRoutess(context: context, companyId: companyId)
         ..getAllGodowns(context: context, companyId: companyId);
     });
@@ -116,7 +130,9 @@ class _VoucherSettingsScreenState<T> extends State<VoucherSettingsScreen<T>> {
 
                 // ✅ VoucherNumbering Stream
                 StreamBuilder<List<VoucherNumberingModel>>(
-                  stream: provider.voucherNumberingStream,
+                  stream: provider.isGodown
+                      ? provider.voucherNumberingGodownStream
+                      : provider.voucherNumberingRouteStream,
                   builder: (context, snapshot) {
                     if (!snapshot.hasData || snapshot.data!.isEmpty) {
                       return Center(
@@ -259,13 +275,12 @@ class _VoucherSettingsScreenState<T> extends State<VoucherSettingsScreen<T>> {
                 CustomButton(
                   width: context.getSize.width - 32,
                   onTap: () {
-                     provider.createVoucherNumbering(
-                                    context: context,
-                                    companyId: int.parse(companyId),
-                                    voucherModeId: widget.voucherModeId,
-                                    voucherNumbers:
-                                        provider.voucherNumberList ?? [],
-                                  );
+                    provider.createVoucherNumbering(
+                      context: context,
+                      companyId: int.parse(companyId),
+                      voucherModeId: widget.voucherModeId,
+                      voucherNumbers: provider.voucherNumberList ?? [],
+                    );
                     context.pop();
                   },
                   buttonText: "Save",

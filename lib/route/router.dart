@@ -111,13 +111,13 @@ class AppRouter {
           return CustomRouteScreen(status: status);
         },
       ),
-      GoRoute(
-        path: "/adminHome",
-        name: AppRouterConst.adminHome,
-        builder: (context, state) {
-          return const AdminHome();
-        },
-      ),
+      // GoRoute(
+      //   path: "/adminHome",
+      //   name: AppRouterConst.adminHome,
+      //   builder: (context, state) {
+      //     return const AdminHome();
+      //   },
+      // ),
       GoRoute(
         path: "/forgotPassword",
         name: AppRouterConst.forgotPassword,
