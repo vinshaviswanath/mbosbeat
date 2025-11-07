@@ -38,11 +38,15 @@ class _AdminDashboardState extends State<AdminDashboard> {
       );
 
       companyList = provider.companiesList?.companyViewList ?? [];
-
       if (companyList.isNotEmpty) {
         selectedCompany = companyList.first;
         Logger.logSuccess(
-          "Company Id in admin dashboard :: ${selectedCompany?.id ?? 0}",
+          "Company Id in admin  :: ${selectedCompany?.id ?? 0}",
+        );
+
+        provider.setSelectedCompany(company: selectedCompany!);
+        Logger.logSuccess(
+          "Company Id in admin dashboard :: ${provider.selectedCompany?.id ?? 0}",
         );
       }
       // final prefs = sl<SharedPreferences>();
@@ -239,6 +243,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                             onChanged: (value) async {
                                               setState(
                                                 () => selectedCompany = value,
+                                              );
+                                              provider.setSelectedCompany(
+                                                company: value!,
                                               );
                                               // final prefs =
                                               //     sl<SharedPreferences>();

@@ -52,10 +52,10 @@ class _AddRouteState extends State<AddRoute> {
   @override
   Widget build(BuildContext context) {
     final appLocalizations = context.l10n;
-    final pref = sl<SharedPreferences>();
-    final companyId = pref.getInt('selected_company_id');
+    // final pref = sl<SharedPreferences>();
     return Consumer<CompanyCreationProvider>(
       builder: (context, provider, _) {
+        final companyId = provider.selectedCompany?.id;
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

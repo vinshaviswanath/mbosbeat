@@ -25,11 +25,11 @@ class _GodownWiseScreenState extends State<GodownWiseScreen> {
 
   @override
   void initState() {
-    final pref = sl<SharedPreferences>();
-    final companyId = pref.getInt('selected_company_id').toString();
+    // final pref = sl<SharedPreferences>();
+    // final companyId = pref.getInt('selected_company_id').toString();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final provider = context.read<CompanyCreationProvider>();
-      provider.getAllGodowns(context: context, companyId: companyId);
+      provider.getAllGodowns(context: context, companyId:  provider.selectedCompany?.id.toString() ?? '');
     });
     super.initState();
   }
