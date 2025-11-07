@@ -51,10 +51,11 @@ class _AddVehicleState extends State<AddVehicle> {
   @override
   Widget build(BuildContext context) {
     final appLocalizations = context.l10n;
-    final pref = sl<SharedPreferences>();
-    final companyId = pref.getInt('selected_company_id');
+    // final pref = sl<SharedPreferences>();
     return Consumer<CompanyCreationProvider>(
       builder: (context, provider, _) {
+    final companyId = provider.selectedCompany?.id;
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -145,7 +146,7 @@ class _AddVehicleState extends State<AddVehicle> {
                             vehicleCodeError != null) {
                           return;
                         }
-                        Logger.logSuccess("Company Id :::: $companyId");
+                        // Logger.logSuccess("Company Id :::: $companyId");
                         provider
                             .createGodown(
                               context: context,

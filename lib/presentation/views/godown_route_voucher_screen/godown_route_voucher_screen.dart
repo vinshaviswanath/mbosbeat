@@ -29,8 +29,8 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
 
   @override
   void initState() {
-    final pref = sl<SharedPreferences>();
-    final companyId = pref.getInt('selected_company_id').toString();
+    // final pref = sl<SharedPreferences>();
+    // final companyId = pref.getInt('selected_company_id').toString();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final provider = context.read<CompanyCreationProvider>();
       provider
@@ -41,8 +41,14 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
         //       ? provider.selectedVehicle?.id ?? 0
         //       : provider.selectedRoute?.id ?? 0,
         // )
-        ..getAllRoutess(context: context, companyId: companyId)
-        ..getAllGodowns(context: context, companyId: companyId);
+        ..getAllRoutess(
+          context: context,
+          companyId: provider.selectedCompany?.id.toString() ?? '',
+        )
+        ..getAllGodowns(
+          context: context,
+          companyId: provider.selectedCompany?.id.toString() ?? '',
+        );
     });
     super.initState();
   }
@@ -50,8 +56,8 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
   @override
   Widget build(BuildContext context) {
     final appLocalizations = context.l10n;
-    final pref = sl<SharedPreferences>();
-    final companyId = pref.getInt('selected_company_id').toString();
+    // final pref = sl<SharedPreferences>();
+    // final companyId = pref.getInt('selected_company_id').toString();
 
     return Consumer<CompanyCreationProvider>(
       builder: (context, provider, _) {
@@ -161,17 +167,28 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
                             ? provider.godownStream
                             : provider.routeStream,
                         builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
+                          // Only show loader during the *first* connection
+                          // if (snapshot.connectionState ==
+                          //         ConnectionState.waiting &&
+                          //     (snapshot.data == null ||
+                          //         (snapshot.data as List).isEmpty)) {
+                          //   // Optional: You can comment this out if you never want loader at all
+                          //   return const SizedBox.shrink();
+                          // }
+
+                          // Safely extract data
                           final dataList = snapshot.data;
 
-                          if (dataList == null) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
+                          if (dataList == null || (dataList as List).isEmpty) {
+                            return CustomDropdown(
+                              hintText: provider.isGodown
+                                  ? appLocalizations
+                                        .godown_route_voucher_enter_godown_name
+                                  : appLocalizations
+                                        .godown_route_voucher_enter_route_name,
+                              value: null,
+                              items: const [], 
+                              onChanged: (_) {},
                             );
                           }
 
@@ -202,7 +219,9 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
                                 provider.setSelectedVehicle(selected);
                                 await provider.getVoucherNumberingGodown(
                                   context: context,
-                                  companyId: companyId,
+                                  companyId:
+                                      provider.selectedCompany?.id.toString() ??
+                                      '',
                                   voucherModeId: selected.id ?? 0,
                                 );
                               } else {
@@ -211,7 +230,9 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
                                 provider.setSelectedRoute(selected);
                                 await provider.getVoucherNumberingRoute(
                                   context: context,
-                                  companyId: companyId,
+                                  companyId:
+                                      provider.selectedCompany?.id.toString() ??
+                                      '',
                                   voucherModeId: selected.id ?? 0,
                                 );
                               }
@@ -220,6 +241,7 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
                         },
                       ),
                     ),
+
                     const SizedBox(width: 8),
                     GestureDetector(
                       onTap: () {
@@ -350,7 +372,7 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
                   onTap: () {
                     provider.createVoucherNumbering(
                       context: context,
-                      companyId: int.parse(companyId),
+                      companyId: provider.selectedCompany?.id ?? 0,
                       voucherModeId: provider.isGodown
                           ? provider.selectedVehicle?.id ?? 0
                           : provider.selectedRoute?.id ?? 0,

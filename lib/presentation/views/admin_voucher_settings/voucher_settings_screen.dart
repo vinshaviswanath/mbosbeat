@@ -36,24 +36,24 @@ class _VoucherSettingsScreenState<T> extends State<VoucherSettingsScreen<T>> {
 
   @override
   void initState() {
-    final pref = sl<SharedPreferences>();
-    final companyId = pref.getInt('selected_company_id').toString();
+    // final pref = sl<SharedPreferences>();
+    // final companyId = pref.getInt('selected_company_id').toString();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final provider = context.read<CompanyCreationProvider>();
       provider.isGodown
           ? provider.getVoucherNumberingGodown(
               context: context,
-              companyId: companyId,
+              companyId:  provider.selectedCompany?.id.toString() ?? '',
               voucherModeId: widget.voucherModeId,
             )
           : provider.getVoucherNumberingRoute(
               context: context,
-              companyId: companyId,
+              companyId:  provider.selectedCompany?.id.toString() ?? '',
               voucherModeId: widget.voucherModeId,
             );
       provider
-        ..getAllRoutess(context: context, companyId: companyId)
-        ..getAllGodowns(context: context, companyId: companyId);
+        ..getAllRoutess(context: context, companyId:  provider.selectedCompany?.id.toString() ?? '')
+        ..getAllGodowns(context: context, companyId:  provider.selectedCompany?.id.toString() ?? '');
     });
     super.initState();
   }
