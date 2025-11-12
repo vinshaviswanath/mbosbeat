@@ -60,7 +60,7 @@ class CustomRouteScreen extends StatelessWidget {
                             child: CustomButton(
                               onTap: () =>
                                   // AppRoute.pushNamed(AdminHome.routeName),
-                                  context.pushNamed(
+                                  context.goNamed(
                                     AppRouterConst.companyCreationScreen,
                                     extra: {'tabIndex': 0, 'companyData': null},
                                   ),

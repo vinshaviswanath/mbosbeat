@@ -1,5 +1,6 @@
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
+import 'package:mpos_beat/presentation/dialogs/auth_dialogs.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/presentation/views/company_creation/widget/company_info_widget/company_info_widget.dart';
 import 'package:mpos_beat/presentation/views/company_creation/widget/integration_widget/integration_widget.dart';
@@ -66,105 +67,131 @@ class _CompanyCreationScreenState extends State<CompanyCreationScreen>
     final provider = Provider.of<CompanyCreationProvider>(context);
     final appLocalizations = context.l10n;
 
-    return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FC),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        title: Text(
-          appLocalizations.company_creation,
-          style: context.textStyle.s22.bold.indigoBlue.roboto,
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) async {
+        if (didPop) return;
+
+        final companyData = widget.companyData;
+
+        final hasIntegration =
+            companyData?.hasIntegrationSettings != null &&
+            companyData!.hasIntegrationSettings != 0;
+        final hasVoucherType =
+            companyData?.hasVoucherTypeSettings != null &&
+            companyData!.hasVoucherTypeSettings != 0;
+
+        if (!(widget.companyData != null && hasIntegration && hasVoucherType)) {
+          final shouldExit = await AuthDialogs.show(context);
+          if (shouldExit == true) {
+            AuthDialogs.exitApp();
+          }
+        } else {
+          if (context.mounted) context.pop();
+        }
+      },
+      child: Scaffold(
+        backgroundColor: const Color(0xFFF8F9FC),
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          centerTitle: true,
+          automaticallyImplyLeading: false,
+          title: Text(
+            appLocalizations.company_creation,
+            style: context.textStyle.s22.bold.indigoBlue.roboto,
+          ),
         ),
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.getSize.width / 6,
-              vertical: 6,
+        body: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: context.getSize.width / 6,
+                vertical: 6,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _buildCircle(context, provider, index: 0),
+                  _buildLine(provider, index: 1),
+                  _buildCircle(context, provider, index: 1),
+                  _buildLine(provider, index: 2),
+                  _buildCircle(context, provider, index: 2),
+                ],
+              ),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildCircle(context, provider, index: 0),
-                _buildLine(provider, index: 1),
-                _buildCircle(context, provider, index: 1),
-                _buildLine(provider, index: 2),
-                _buildCircle(context, provider, index: 2),
-              ],
+            Container(
+              decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: Colors.grey.shade300)),
+              ),
+              child: TabBar(
+                // onTap: (index) {
+                //   if (!provider.canGoToStage(index)) {
+                //     Future.delayed(Duration.zero, () {
+                //       _tabController.animateTo(
+                //         provider.stageCompleted.indexOf(false).clamp(0, 2),
+                //       );
+                //     });
+                //   }
+                // },
+                controller: _tabController,
+                labelColor: _activeColor,
+                unselectedLabelColor: ColorResources.bluishGray,
+                indicatorColor: _activeColor,
+                unselectedLabelStyle:
+                    context.textStyle.s12.w500.bluishGray.roboto,
+                labelStyle: context.textStyle.s12.w500.indigoBlue.roboto,
+                tabs: [
+                  Tab(text: appLocalizations.company_creation_company_info),
+                  Tab(text: appLocalizations.company_creation_voucher_type),
+                  Tab(
+                    text: appLocalizations.company_creation_Integrastion_type,
+                  ),
+                ],
+              ),
             ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              border: Border(bottom: BorderSide(color: Colors.grey.shade300)),
-            ),
-            child: TabBar(
-              // onTap: (index) {
-              //   if (!provider.canGoToStage(index)) {
-              //     Future.delayed(Duration.zero, () {
-              //       _tabController.animateTo(
-              //         provider.stageCompleted.indexOf(false).clamp(0, 2),
-              //       );
-              //     });
-              //   }
-              // },
-              controller: _tabController,
-              labelColor: _activeColor,
-              unselectedLabelColor: ColorResources.bluishGray,
-              indicatorColor: _activeColor,
-              unselectedLabelStyle:
-                  context.textStyle.s12.w500.bluishGray.roboto,
-              labelStyle: context.textStyle.s12.w500.indigoBlue.roboto,
-              tabs: [
-                Tab(text: appLocalizations.company_creation_company_info),
-                Tab(text: appLocalizations.company_creation_voucher_type),
-                Tab(text: appLocalizations.company_creation_Integrastion_type),
-              ],
-            ),
-          ),
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              physics: const NeverScrollableScrollPhysics(),
-              children: [
-                CompanyInfoWidget(
-                  onTap: () {
-                    provider.markStageCompleted(0);
-                    if (0 < 2) {
-                      _tabController.animateTo(1);
-                    }
-                  },
-                  companyData: widget.companyData,
-                ),
-                VoucherTypeWidget(
-                  onTap: () {
-                    if (provider.canGoToStage(1)) {
-                      provider.markStageCompleted(1);
-                      if (provider.isStageCompleted(1)) {
-                        _tabController.animateTo(2);
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                physics: const NeverScrollableScrollPhysics(),
+                children: [
+                  CompanyInfoWidget(
+                    onTap: () {
+                      provider.markStageCompleted(0);
+                      if (0 < 2) {
+                        _tabController.animateTo(1);
                       }
-                    }
-                  },
-                  companyData: widget.companyData,
-                ),
-                IntegrationWidget(
-                  onTap: () {
-                    if (provider.canGoToStage(2)) {
-                      provider.markStageCompleted(2);
-                      //   context.pushNamed(AppRouterConst.adminDashboard);
-                    }
-                    // if (0 < 2) {
-                    // _tabController.animateTo( 1);
-                    // }
-                  },
-                  companyData: widget.companyData,
-                ),
-              ],
+                    },
+                    companyData: widget.companyData,
+                  ),
+                  VoucherTypeWidget(
+                    onTap: () {
+                      if (provider.canGoToStage(1)) {
+                        provider.markStageCompleted(1);
+                        if (provider.isStageCompleted(1)) {
+                          _tabController.animateTo(2);
+                        }
+                      }
+                    },
+                    companyData: widget.companyData,
+                  ),
+                  IntegrationWidget(
+                    onTap: () {
+                      if (provider.canGoToStage(2)) {
+                        provider.markStageCompleted(2);
+                        //   context.pushNamed(AppRouterConst.adminDashboard);
+                      }
+                      // if (0 < 2) {
+                      // _tabController.animateTo( 1);
+                      // }
+                    },
+                    companyData: widget.companyData,
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

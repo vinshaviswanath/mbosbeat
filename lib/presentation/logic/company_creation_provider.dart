@@ -599,9 +599,25 @@ class CompanyCreationProvider extends ChangeNotifier {
     required IntegrationParams params,
     VoidCallback? onSuccess,
   }) async {
+    final integrationType = _selectedIntegrationType;
+    final isStandAlone = integrationType == "Stand Alone";
     final isValid = validateIntegrationSerialNo();
-    if (!isValid) {
+
+    if (!isValid && !isStandAlone) {
       integrationSerialNoAutovalidateMode = AutovalidateMode.always;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Please select any one integration",
+            textAlign: TextAlign.center,
+          ),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        ),
+      );
       notifyListeners();
       return null;
     }

@@ -530,7 +530,7 @@ class AuthFormProvider with ChangeNotifier {
               heading: "Pending",
               subTitle: "Please complete company creation",
               onTap: () {
-                context.pushNamed(
+                context.goNamed(
                   AppRouterConst.companyCreationScreen,
                   extra: {'tabIndex': 0, 'companyData': companyData},
                 );
@@ -545,7 +545,7 @@ class AuthFormProvider with ChangeNotifier {
               heading: "Pending",
               subTitle: "Please complete Company Integration Settings",
               onTap: () {
-                context.pushNamed(
+                context.goNamed(
                   AppRouterConst.companyCreationScreen,
                   extra: {'tabIndex': 2, 'companyData': companyData},
                 );
@@ -560,7 +560,7 @@ class AuthFormProvider with ChangeNotifier {
               heading: "Pending",
               subTitle: "Please complete Company VoucherType Configuration",
               onTap: () {
-                context.pushNamed(
+                context.goNamed(
                   AppRouterConst.companyCreationScreen,
                   extra: {'tabIndex': 1, 'companyData': companyData},
                 );

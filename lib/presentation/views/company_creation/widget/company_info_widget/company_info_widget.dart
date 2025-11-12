@@ -1,5 +1,8 @@
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
+import 'package:mpos_beat/data/models/data/country_list_data.dart';
+import 'package:mpos_beat/data/models/data/registration_type_data.dart';
+import 'package:mpos_beat/data/models/data/state_list_data.dart';
 import 'package:mpos_beat/domain/request/company_creation_params.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_dropdown.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
@@ -57,42 +60,86 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
     address3Controller.text = widget.companyData!.address3 ?? "";
     pincodeController.text = widget.companyData!.pinCode ?? "";
 
-    final countryId = widget.companyData!.country;
-    final stateId = widget.companyData!.state;
-    final regTypeId = widget.companyData!.regType;
+    debugPrint(
+      " fillFields(): Starting for company ID: ${widget.companyData!.id}",
+    );
+    debugPrint(
+      "   → country: ${widget.companyData!.country}, state: ${widget.companyData!.state}, regType: ${widget.companyData!.regType}",
+    );
 
-    // 🟢 Find and set the selected country
-    if (countryId != null && provider.countries.isNotEmpty) {
-      final selectedCountry = provider.countries.firstWhere(
-        (c) => c.id == countryId,
-        orElse: () => provider.countries.first,
-      );
-      provider.selectCountry(context, selectedCountry);
-
-      // 🟢 Fetch and set state + registration type after fetching
-      await Future.wait([
-        provider.fetchStateList(context, selectedCountry.id),
-        provider.getRegistrationType(context, selectedCountry.id),
-      ]);
-
-      // 🟢 Set state
-      if (stateId != null && provider.statelists.isNotEmpty) {
-        final selectedState = provider.statelists.firstWhere(
-          (s) => s.id == stateId,
-          orElse: () => provider.statelists.first,
-        );
-        provider.selectState(selectedState);
-      }
-
-      // 🟢 Set registration type
-      if (regTypeId != null && provider.registrationlists.isNotEmpty) {
-        final selectedReg = provider.registrationlists.firstWhere(
-          (r) => r.id == regTypeId,
-          orElse: () => provider.registrationlists.first,
-        );
-        provider.selectRegistrationType(selectedReg);
-      }
+    if (provider.countries.isEmpty) {
+      debugPrint(" No countries loaded yet");
+      return;
     }
+
+    // Select Country
+
+    final selectedCountry = provider.countries.firstWhere(
+      (c) => c.id.toString() == widget.companyData!.country.toString(),
+      orElse: () => CountryListData(
+        id: 0,
+        countryName: "Unknown",
+        stateTitle: "",
+        pinTitle: "",
+        currency: "",
+        altCurrency: null,
+        currencyNod: 0,
+        currencySymbol: null,
+        taxApplicable: null,
+        taxType: null,
+        taxRegNoTitle: "",
+        cessApplicable: null,
+        exciseApplicable: null,
+      ),
+    );
+
+    if (selectedCountry.id == 0) {
+      debugPrint(" Country not found for ID: ${widget.companyData!.country}");
+      return;
+    }
+
+    debugPrint("Country found: ${selectedCountry.countryName}");
+    provider.selectCountry(context, selectedCountry);
+
+    //Fetch and Select State
+
+    await provider.fetchStateList(context, selectedCountry.id);
+    await Future.delayed(const Duration(milliseconds: 200));
+
+    final selectedState = provider.statelists.firstWhere(
+      (s) => s.id.toString() == widget.companyData!.state.toString(),
+      orElse: () => StateListData(id: 0, stateName: 'Unknown', countryId: 0),
+    );
+
+    if (selectedState.id != 0) {
+      provider.selectState(selectedState);
+      debugPrint(" State found: ${selectedState.stateName}");
+    } else {
+      debugPrint(" No state found for ID: ${widget.companyData!.state}");
+    }
+
+    //  Fetch and Select RegType
+    await provider.getRegistrationType(context, selectedCountry.id);
+    await Future.delayed(const Duration(milliseconds: 200));
+
+    final selectedRegType = provider.registrationlists.firstWhere(
+      (r) => r.id.toString() == widget.companyData!.regType.toString(),
+      orElse: () =>
+          RegistrationTypeData(id: 0, countryId: 0, registrationType: ''),
+    );
+
+    if (selectedRegType.id != 0) {
+      provider.selectRegistrationType(selectedRegType);
+      debugPrint(
+        " Registration type found: ${selectedRegType.registrationType}",
+      );
+    } else {
+      debugPrint(
+        " No registration type found for ID: ${widget.companyData!.regType}",
+      );
+    }
+
+    debugPrint("🎯 Field filling completed.");
 
     provider.updateCompanyName(compnyNameController.text);
     provider.updateDisplayName(displayNameController.text);
@@ -115,6 +162,7 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
       builder: (context, provider, _) {
         final countries = provider.countries;
         final regtypelist = provider.registrationlists;
+        final selectedCountry = provider.selectedCountry;
 
         final items = countries
             .map((e) => e.countryName.trim())
@@ -150,6 +198,14 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
             )
             ? provider.selectedregistrationtype?.registrationType
             : null;
+
+        final pinTitle = (selectedCountry?.pinTitle.isNotEmpty ?? false)
+            ? selectedCountry!.pinTitle
+            : "Pincode";
+
+        final stateTitle = (selectedCountry?.stateTitle.isNotEmpty ?? false)
+            ? selectedCountry!.stateTitle
+            : "State";
 
         return CustomScrollView(
           slivers: [
@@ -256,7 +312,7 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
                     ),
                     h16,
                     Text(
-                      appLocalizations.company_info_widget_pincode,
+                      pinTitle,
                       style: context.textStyle.s12.bluishGray.w400.roboto,
                     ),
                     CustomTextField(
@@ -306,7 +362,7 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
                             autovalidateMode:
                                 provider.companyinfoAutovalidateMode,
                             failure: provider.countryState.getFailure,
-                            label: appLocalizations.company_info_widget_state,
+                            label: stateTitle,
                             hintText: appLocalizations
                                 .company_info_widget_enter_address,
                             items: stateItems,

@@ -236,6 +236,8 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: DropdownButtonHideUnderline(
             child: DropdownButton<T>(
+              dropdownColor: ColorResources.white,
+              borderRadius: BorderRadius.circular(10),
               value: selectedValue,
               style: context.textStyle.s12.w400.dustyBlue,
               isExpanded: true,

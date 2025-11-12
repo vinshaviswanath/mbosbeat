@@ -1,4 +1,3 @@
-import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
@@ -8,7 +7,6 @@ import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/presentation/views/admin_home/widget/custom_drawer.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_manage/widgets/option_item.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/widgets/end_to_end_text_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({super.key});
@@ -49,11 +47,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
           "Company Id in admin dashboard :: ${provider.selectedCompany?.id ?? 0}",
         );
       }
-      // final prefs = sl<SharedPreferences>();
-      // final companyId = prefs.getInt('selected_company_id');
-      // if (companyList.isNotEmpty && companyId == null) {
-      //   await prefs.setInt('selected_company_id', selectedCompany?.id ?? 0);
-      // }
 
       setState(() {});
     });
@@ -62,9 +55,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
   @override
   Widget build(BuildContext context) {
     final appLocalization = context.l10n;
-    //final pref = sl<SharedPreferences>();
-    // final companyId = pref.getInt('selected_company_id');
-
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, result) async {
@@ -247,15 +237,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                               provider.setSelectedCompany(
                                                 company: value!,
                                               );
-                                              // final prefs =
-                                              //     sl<SharedPreferences>();
-                                              // await prefs.setInt(
-                                              //   'selected_company_id',
-                                              //   value?.id ?? 0,
-                                              // );
-                                              // final companyId = prefs.getInt(
-                                              //   'selected_company_id',
-                                              // );
+
                                               Logger.logSuccess(
                                                 "SELECTED COMPANY ID: ${selectedCompany!.id}",
                                               );
@@ -474,27 +456,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                     context,
                                                                   );
 
-                                                                  // Get the saved companyId
-                                                                  // final pref =
-                                                                  //     sl<
-                                                                  //       SharedPreferences
-                                                                  //     >();
-                                                                  // final companyId =
-                                                                  //     pref.getInt(
-                                                                  //       'selected_company_id',
-                                                                  //     );
-
-                                                                  // // Find the company by ID
-                                                                  // selectedCompany = companyList.firstWhere(
-                                                                  //   (company) =>
-                                                                  //       company
-                                                                  //           .id ==
-                                                                  //       companyId,
-                                                                  //   orElse: () =>
-                                                                  //       companyList
-                                                                  //           .first,
-                                                                  // );
-
                                                                   Logger.logSuccess(
                                                                     "SELECTED COMPANY ID: ${selectedCompany!.id}",
                                                                   );
@@ -526,26 +487,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                 icon: Icons
                                                                     .settings_suggest_outlined,
                                                                 onTap: (i) {
-                                                                  // final pref =
-                                                                  //     sl<
-                                                                  //       SharedPreferences
-                                                                  //     >();
-                                                                  // final companyId =
-                                                                  //     pref.getInt(
-                                                                  //       'selected_company_id',
-                                                                  //     );
-
-                                                                  // // Find the company by ID
-                                                                  // selectedCompany = companyList.firstWhere(
-                                                                  //   (company) =>
-                                                                  //       company
-                                                                  //           .id ==
-                                                                  //       companyId,
-                                                                  //   orElse: () =>
-                                                                  //       companyList
-                                                                  //           .first,
-                                                                  // );
-
                                                                   Logger.logSuccess(
                                                                     "SELECTED COMPANY ID: ${selectedCompany!.id}",
                                                                   );
@@ -584,16 +525,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                   Navigator.pop(
                                                                     context,
                                                                   );
-                                                                  // // Find the company by ID
-                                                                  // selectedCompany = companyList.firstWhere(
-                                                                  //   (company) =>
-                                                                  //       company
-                                                                  //           .id ==
-                                                                  //       companyId,
-                                                                  //   orElse: () =>
-                                                                  //       companyList
-                                                                  //           .first,
-                                                                  // );
 
                                                                   Logger.logSuccess(
                                                                     "SELECTED COMPANY ID: ${selectedCompany!.id}",
@@ -625,27 +556,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                 icon: Icons
                                                                     .description_outlined,
                                                                 onTap: (i) {
-                                                                  // Get the saved companyId
-                                                                  // final pref =
-                                                                  //     sl<
-                                                                  //       SharedPreferences
-                                                                  //     >();
-                                                                  // final companyId =
-                                                                  //     pref.getInt(
-                                                                  //       'selected_company_id',
-                                                                  //     );
-
-                                                                  // // Find the company by ID
-                                                                  // selectedCompany = companyList.firstWhere(
-                                                                  //   (company) =>
-                                                                  //       company
-                                                                  //           .id ==
-                                                                  //       companyId,
-                                                                  //   orElse: () =>
-                                                                  //       companyList
-                                                                  //           .first,
-                                                                  // );
-
                                                                   Logger.logSuccess(
                                                                     "SELECTED COMPANY ID: ${selectedCompany!.id}",
                                                                   );
