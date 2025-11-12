@@ -23,6 +23,7 @@ class VoucherCard extends StatefulWidget {
 
 class _VoucherCardState extends State<VoucherCard> {
   int lastResetKey = 0;
+  late TextEditingController integrationSerialNoController;
 
   @override
   void didChangeDependencies() {
@@ -43,16 +44,21 @@ class _VoucherCardState extends State<VoucherCard> {
     });
   }
 
-  late TextEditingController integrationSerialNoController;
-
   String? selected;
   bool isExpand = false;
   bool isActivated = false;
+  bool isTextFilled = false;
 
   @override
   void initState() {
     super.initState();
     integrationSerialNoController = TextEditingController();
+    integrationSerialNoController.addListener(() {
+      setState(() {
+        isTextFilled = integrationSerialNoController.text.trim().isNotEmpty;
+      });
+    });
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       fillFields();
 
@@ -100,6 +106,7 @@ class _VoucherCardState extends State<VoucherCard> {
       appLocalization.voucher_card_no,
     ];
 
+    final isStandAlone = widget.title == 'Stand Alone';
     return Stack(
       children: [
         Container(
@@ -136,20 +143,54 @@ class _VoucherCardState extends State<VoucherCard> {
                         ],
                       ],
                     ),
+                    Spacer(),
+                    if (isExpand &&
+                        !isStandAlone &&
+                        !isActivated &&
+                        isTextFilled) ...[
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isActivated = true;
+                            isExpand = false;
+                          });
+                        },
+                        child: CircleAvatar(
+                          radius: 10,
+                          backgroundColor: ColorResources.tealGreen,
+                          child: Icon(
+                            Icons.check,
+                            size: 10,
+                            color: ColorResources.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                    SizedBox(width: 10),
                     GestureDetector(
                       onTap: () async {
                         final provider = context
                             .read<CompanyCreationProvider>();
 
-                        final hasExistingIntegration =
-                            widget.companyData?.hasIntegrationSettings !=
-                                null &&
-                            widget.companyData?.integrationType != null;
-
                         final activeIntegration =
                             widget.companyData?.integrationType;
 
                         final selectIntegration = widget.title;
+
+                        final currentIntegration =
+                            provider.selectedIntegrationType ??
+                            widget.companyData?.integrationType;
+
+                        final isSwitchingIntegration =
+                            currentIntegration != null &&
+                            currentIntegration != widget.title;
+
+                        if (isStandAlone && !isSwitchingIntegration) {
+                          setState(() {
+                            isActivated = true;
+                            isExpand = false;
+                          });
+                        }
 
                         // If tapping the same card → just toggle expand/collapse
                         if (provider.selectedIntegrationType == widget.title) {
@@ -157,10 +198,13 @@ class _VoucherCardState extends State<VoucherCard> {
                           return;
                         }
 
+                        print(
+                          "currentIntegration${provider.selectedIntegrationType} ${widget.companyData?.integrationType}  ",
+                        );
+                        print("isSwitchingIntegration$isSwitchingIntegration");
+
                         //  If tapping a different card but an integration already exists → show dialog
-                        if (hasExistingIntegration &&
-                            widget.companyData!.integrationType !=
-                                widget.title) {
+                        if (isSwitchingIntegration) {
                           final confirm = await showDialog<bool>(
                             context: context,
                             builder: (context) {
@@ -194,8 +238,10 @@ class _VoucherCardState extends State<VoucherCard> {
                                       children: [
                                         Expanded(
                                           child: ElevatedButton(
-                                            onPressed: () =>
-                                                Navigator.of(context).pop(true),
+                                            onPressed: () {
+                                              Navigator.of(context).pop(true);
+                                            },
+
                                             style: ElevatedButton.styleFrom(
                                               minimumSize: Size(
                                                 MediaQuery.of(
@@ -269,20 +315,33 @@ class _VoucherCardState extends State<VoucherCard> {
                             provider
                                 .triggerFullReset(); // tell all cards to reset themselves
 
-                            setState(() {
-                              // Clear UI-level fields
-                              ///integrationSerialNoController.clear();
-                              ///selected = null;
-                              //isExpand = true;
+                            // Now expand THIS selected card after reset
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              setState(() {
+                                isExpand = true;
+                                isActivated = false;
+                                integrationSerialNoController.clear();
+                                selected = null;
+                                provider.setIntegrationType(widget.title);
 
-                              // 🧹 Clear old integration data from widget.companyData
-                              if (widget.companyData != null) {
-                                widget.companyData!.integrationType = null;
-                                widget.companyData!.serialNumber = null;
-                              }
+                                // Clear old integration data from companyData
+                                if (widget.companyData != null) {
+                                  widget.companyData!.integrationType =
+                                      widget.title;
+                                  widget.companyData!.serialNumber = null;
+                                }
+
+                                // If switching TO Stand Alone → instantly activate
+                                if (isStandAlone) {
+                                  isActivated = true;
+                                  isExpand = false;
+                                } else {
+                                  // For other integrations → expand form as usual
+                                  isExpand = true;
+                                  isActivated = false;
+                                }
+                              });
                             });
-
-                            provider.setIntegrationType(widget.title);
                           }
                         } else {
                           // No existing integration → just expand/collapse current card
@@ -292,23 +351,37 @@ class _VoucherCardState extends State<VoucherCard> {
                           });
                         }
                       },
-                      child: Container(
-                        height: 22,
-                        width: 22,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(color: Colors.white),
-                        ),
-                        child: Icon(
-                          isExpand ? Icons.close : Icons.add,
-                          size: 16,
-                          color: Colors.white,
-                        ),
-                      ),
+                      child: isStandAlone
+                          ? Container(
+                              height: 22,
+                              width: 22,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(color: Colors.white),
+                              ),
+                              child: Icon(
+                                Icons.add,
+                                size: 16,
+                                color: Colors.white,
+                              ),
+                            )
+                          : Container(
+                              height: 22,
+                              width: 22,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(color: Colors.white),
+                              ),
+                              child: Icon(
+                                isExpand ? Icons.close : Icons.add,
+                                size: 16,
+                                color: Colors.white,
+                              ),
+                            ),
                     ),
                   ],
                 ),
-                if (isExpand) ...[
+                if (isExpand && !isStandAlone) ...[
                   h14,
                   Text(
                     appLocalization.voucher_card_tally_serial_no,

@@ -247,7 +247,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   Logger.logSuccess(
                     "COMPANY ID from dialog: ${companyData.id}",
                   );
-                  context.pushNamed(
+                  context.goNamed(
                     AppRouterConst.companyCreationScreen,
                     extra: {'tabIndex': 0, 'companyData': companyData},
                   );
@@ -266,14 +266,14 @@ class _SplashScreenState extends State<SplashScreen> {
                     "COMPANY ID from dialog: ${companyData.id}",
                   );
 
-                  context.pushNamed(
+                  context.goNamed(
                     AppRouterConst.companyCreationScreen,
                     extra: {'tabIndex': 2, 'companyData': companyData},
                   );
                 },
                 buttonText: "Redirect",
               );
-             break;
+              break;
             case 40:
               RegistrationDialogs.customDialog(
                 context: context,
@@ -285,7 +285,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     "COMPANY ID from dialog: ${companyData.id}",
                   );
 
-                  context.pushNamed(
+                  context.goNamed(
                     AppRouterConst.companyCreationScreen,
                     extra: {'tabIndex': 1, 'companyData': companyData},
                   );

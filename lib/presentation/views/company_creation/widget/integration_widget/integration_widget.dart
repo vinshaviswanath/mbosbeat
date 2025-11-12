@@ -1,10 +1,8 @@
-import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/domain/request/integration_request.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/presentation/views/company_creation/widget/integration_widget/integration_card.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class IntegrationWidget extends StatefulWidget {
   final CompanyViewList? companyData;
@@ -34,20 +32,12 @@ class _IntegrationWidgetState extends State<IntegrationWidget> {
         companyId = provider.companyid ?? 0;
         print('companyId in integration screen  from provider: $companyId');
       }
-
-      // provider.fetchVoucherTypes(context, companyId!);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final appLocalizations = context.l10n;
-
-    //final prefs = sl<SharedPreferences>();
-
-    // final companyId = prefs.getInt(
-    //   'selected_company_id',
-    // ); // 👈 This is your new company ID
     return CustomScrollView(
       slivers: [
         SliverPadding(
