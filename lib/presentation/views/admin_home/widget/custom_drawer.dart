@@ -1,5 +1,6 @@
 import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/presentation/views/admin_home/admin_dashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomDrawer extends StatefulWidget {
@@ -77,6 +78,8 @@ class _CustomDrawerState extends State<CustomDrawer>
     setState(() {});
   }
 
+  bool _isExpand = false;
+
   @override
   Widget build(BuildContext context) {
     final applocalizations = context.l10n;
@@ -84,7 +87,7 @@ class _CustomDrawerState extends State<CustomDrawer>
     return Scaffold(
       backgroundColor: ColorResources.paleBlue,
       body: GestureDetector(
-        behavior: HitTestBehavior.translucent, // detect gestures anywhere
+        behavior: HitTestBehavior.translucent,
         onHorizontalDragUpdate: _onDragUpdate,
         onHorizontalDragEnd: _onDragEnd,
         child: Stack(
@@ -98,15 +101,14 @@ class _CustomDrawerState extends State<CustomDrawer>
               builder: (context, _) {
                 return Positioned(
                   left: MediaQuery.of(context).size.width * 0.03,
-                  top: MediaQuery.of(context).size.height * 0.062,
+                  top: MediaQuery.of(context).size.height * 0.07,
                   child: GestureDetector(
                     onTap: toggleDrawer,
                     onHorizontalDragUpdate: _onDragUpdate,
                     onHorizontalDragEnd: _onDragEnd,
-                    child: const Icon(
-                      Icons.menu,
-                      size: 32,
-                      color: ColorResources.white,
+                    child: SvgPicture.asset(
+                      AppAssets.menu,
+                      height: context.getSize.height * 0.014,
                     ),
                   ),
                 );
@@ -157,9 +159,19 @@ class _CustomDrawerState extends State<CustomDrawer>
                                       AppAssets.companyImage,
                                       height: 60,
                                     ),
-                                    SvgPicture.asset(
-                                      AppAssets.refresh,
-                                      height: 16,
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          AppAssets.refresh,
+                                          height: 16,
+                                        ),
+                                        w12,
+                                        NavButton(
+                                          color: ColorResources.amber,
+                                          svgArrowPath: AppAssets.arrowToLeft,
+                                          onTap: toggleDrawer,
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
@@ -328,17 +340,18 @@ class _CustomDrawerState extends State<CustomDrawer>
                               ],
                             ),
 
-                            // --- SCROLLABLE MIDDLE SECTION ---
                             Expanded(
-                              child: ListView.builder(
-                                physics: const BouncingScrollPhysics(),
-                                itemCount: 15,
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 10,
-                                    ),
+                              child: Column(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _isExpand = !_isExpand;
+                                      });
+                                    },
                                     child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -365,7 +378,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                                             ),
                                             w8,
                                             Text(
-                                              "${applocalizations.custom_drawer_menu} ${index + 1}",
+                                              "User Management",
                                               style: context
                                                   .textStyle
                                                   .s14
@@ -375,14 +388,120 @@ class _CustomDrawerState extends State<CustomDrawer>
                                             ),
                                           ],
                                         ),
-                                        SvgPicture.asset(
-                                          AppAssets.roundArrowRight,
-                                          height: 12,
+                                        // SvgPicture.asset(
+                                        //   AppAssets.roundArrowRight,
+                                        //   height: 12,
+                                        // ),
+                                        NavButton(
+                                          height: 16,
+                                          color: ColorResources.indigoBlue
+                                              .withValues(alpha: 0.35),
+                                          svgArrowPath: AppAssets.person,
                                         ),
                                       ],
                                     ),
-                                  );
-                                },
+                                  ),
+                                  h12,
+                                  if (_isExpand) ...[
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
+                                          children: [
+                                            GestureDetector(
+                                              onTap: () {
+                                                context.pushNamed(
+                                                  AppRouterConst.manageUser,
+                                                );
+                                              },
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                      horizontal: 12,
+                                                      vertical: 7,
+                                                    ),
+                                                width:
+                                                    context.getSize.width /
+                                                    1.53,
+                                                decoration: BoxDecoration(
+                                                  color: ColorResources.grayD9
+                                                      .withValues(alpha: 0.12),
+                                                  borderRadius:
+                                                      BorderRadius.circular(4),
+                                                ),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      "All Users",
+                                                      style: context
+                                                          .textStyle
+                                                          .w400
+                                                          .s12
+                                                          .white,
+                                                    ),
+                                                    SvgPicture.asset(
+                                                      AppAssets.editIcon,
+                                                      height: 16,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            h12,
+                                            GestureDetector(
+                                              onTap: () {
+                                                context.pushNamed(
+                                                  AppRouterConst
+                                                      .userDesignation,
+                                                );
+                                              },
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                      horizontal: 12,
+                                                      vertical: 7,
+                                                    ),
+                                                width:
+                                                    context.getSize.width /
+                                                    1.53,
+                                                decoration: BoxDecoration(
+                                                  color: ColorResources.grayD9
+                                                      .withValues(alpha: 0.12),
+                                                  borderRadius:
+                                                      BorderRadius.circular(4),
+                                                ),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      "User Designation",
+                                                      style: context
+                                                          .textStyle
+                                                          .w400
+                                                          .s12
+                                                          .white,
+                                                    ),
+                                                    SvgPicture.asset(
+                                                      AppAssets.editIcon,
+                                                      height: 16,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ],
                               ),
                             ),
 

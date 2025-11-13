@@ -91,6 +91,19 @@ class _AddRouteState extends State<AddRoute> {
               hintColor: ColorResources.silverGray,
               borderColor: ColorResources.transparent,
             ),
+            if (_submitted && routeNameError != null) ...[
+              const SizedBox(height: 4),
+              Row(
+                children: [
+                  SvgPicture.asset(AppAssets.alertError, height: 16),
+                  const SizedBox(width: 2),
+                  Text(
+                    routeNameError!,
+                    style: context.textStyle.s09.roseRed.w400.roboto,
+                  ),
+                ],
+              ),
+            ],
             h12,
             Text(
               appLocalizations.add_route_screen_route_code,
@@ -109,71 +122,68 @@ class _AddRouteState extends State<AddRoute> {
               hintColor: ColorResources.silverGray,
               borderColor: ColorResources.transparent,
             ),
+            if (_submitted && routeCodeError != null) ...[
+              const SizedBox(height: 4),
+              Row(
+                children: [
+                  SvgPicture.asset(AppAssets.alertError, height: 16),
+                  const SizedBox(width: 2),
+                  Text(
+                    routeCodeError!,
+                    style: context.textStyle.s09.roseRed.w400.roboto,
+                  ),
+                ],
+              ),
+            ],
             h16,
             Row(
               children: [
                 Expanded(
                   child: CustomButton(
                     onTap: () {
-                      if (widget.isEdit && widget.index != null) {
-                        // Edit Route
-                        // provider.editRoute(
-                        //   widget.index!,
-                        //   routeNameController.text.trim(),
-                        //   routeCodeController.text.trim(),
-                        // );
-                        // Navigator.pop(context);
-                        setState(() {
-                          _submitted = true;
-                          routeNameError = null;
-                          routeCodeError = null;
+                      setState(() {
+                        _submitted = true;
+                        routeNameError = null;
+                        routeCodeError = null;
 
-                          if (routeNameController.text.trim().isEmpty) {
-                            routeNameError = "Please enter route name";
-                          }
-                          if (routeCodeController.text.trim().isEmpty) {
-                            routeCodeError = "Please enter route code";
-                          }
-                        });
-                        Logger.logSuccess(
-                          "Route EDIT ID ${provider.routeListResponse?.routeList[widget.index!].id}",
-                        );
-                        if (routeNameError != null && routeCodeError != null) {
-                          return;
+                        if (routeNameController.text.trim().isEmpty) {
+                          routeNameError = "Please enter route name";
                         }
-                        Logger.logSuccess("Company Id :::: $companyId");
+                        if (routeCodeController.text.trim().isEmpty) {
+                          routeCodeError = "Please enter route code";
+                        }
+                      });
+
+                      // ❌ Stop if there are any validation errors
+                      if (routeNameError != null || routeCodeError != null) {
+                        return;
+                      }
+
+                      final companyId = provider.selectedCompany?.id ?? 0;
+                      final routeName = routeNameController.text.trim();
+                      final routeCode = routeCodeController.text.trim();
+
+                      if (widget.isEdit && widget.index != null) {
+                        // ✏️ Edit existing route
+                        final routeId =
+                            provider
+                                .routeListResponse
+                                ?.routeList[widget.index!]
+                                .id ??
+                            0;
+
+                        Logger.logSuccess(
+                          "Editing Route ID: $routeId, Company ID: $companyId",
+                        );
+
                         provider
                             .createRoute(
                               context: context,
-                              id:
-                                  provider
-                                      .routeListResponse
-                                      ?.routeList[widget.index!]
-                                      .id ??
-                                  0,
-                              // provider
-                              //     .godownListResponse
-                              //     ?.vehicleList[widget.index!]
-                              //     .id ??
-                              // 0,
-                              companyId: companyId ?? 0,
-                              routeCode: routeCodeController.text,
-                              routeName: routeNameController.text,
+                              id: routeId,
+                              companyId: companyId,
+                              routeCode: routeCode,
+                              routeName: routeName,
                             )
-                            // provider
-                            //     .addUserDesignation(
-                            //       context,
-                            //       designation: widget.designationController.text
-                            //           .trim(),
-                            //       customerId: customerId,
-                            //       id:
-                            //           provider
-                            //               .designationList
-                            //               ?.userDesignationList[widget.index]
-                            //               .id
-                            //               .toString() ??
-                            //           "",
-                            //     )
                             .then((_) {
                               WidgetsBinding.instance.addPostFrameCallback((_) {
                                 setState(() {
@@ -185,43 +195,19 @@ class _AddRouteState extends State<AddRoute> {
                               });
                             });
                       } else {
-                        // Add route (with validation)
-                        // provider.submitRoute(context);
-                        setState(() {
-                          _submitted = true;
-                          routeNameError = null;
-                          routeCodeError = null;
-
-                          if (routeNameController.text.trim().isEmpty) {
-                            routeNameError = "Please enter route name";
-                          }
-                          if (routeCodeController.text.trim().isEmpty) {
-                            routeCodeError = "Please enter route code";
-                          }
-                        });
-
-                        if (routeNameError != null && routeCodeError != null) {
-                          return;
-                        }
-
-                        Logger.logSuccess("Company Id :::: $companyId");
+                        // ➕ Add new route
+                        Logger.logSuccess(
+                          "Adding New Route for Company ID: $companyId",
+                        );
 
                         provider
                             .createRoute(
                               context: context,
                               id: 0,
-                              companyId: companyId ?? 0,
-                              routeCode: routeCodeController.text,
-                              routeName: routeNameController.text,
+                              companyId: companyId,
+                              routeCode: routeCode,
+                              routeName: routeName,
                             )
-                            // provider
-                            //     .addUserDesignation(
-                            //       context,
-                            //       designation: widget.designationController.text
-                            //           .trim(),
-                            //       customerId: customerId,
-                            //       id: "0",
-                            //     )
                             .then((_) {
                               routeNameController.clear();
                               routeCodeController.clear();

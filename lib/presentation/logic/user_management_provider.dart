@@ -83,9 +83,9 @@ class UserManagementProvider with ChangeNotifier {
   AutovalidateMode userCreateAutovalidateMode = AutovalidateMode.disabled;
   AutovalidateMode designationAutovalidateMode = AutovalidateMode.disabled;
 
-    bool _isVisiblePassword = false;
+  bool _isVisiblePassword = false;
   bool _isVisibleConfirmPassword = false;
-    bool get isVisiblePassword => _isVisiblePassword;
+  bool get isVisiblePassword => _isVisiblePassword;
   bool get isVisibleConfirmPassword => _isVisibleConfirmPassword;
 
   bool _isLoading = false;
@@ -96,7 +96,7 @@ class UserManagementProvider with ChangeNotifier {
     notifyListeners();
   }
 
-    void toggleVisibilityPassword() {
+  void toggleVisibilityPassword() {
     _isVisiblePassword = !_isVisiblePassword;
     notifyListeners();
   }
@@ -864,6 +864,7 @@ class UserManagementProvider with ChangeNotifier {
         ?.then((_) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             getAllUsersList(context);
+            context.pushNamed(AppRouterConst.resetSuccessScreen);
           });
           notifyListeners();
         });
@@ -1066,8 +1067,7 @@ class UserManagementProvider with ChangeNotifier {
     return _userMasterResponse;
   }
 
-
- //========================= Create Company User Mapping =========================
+  //========================= Create Company User Mapping =========================
 
   Future<CompanyInfoDtos?> createCompanyMapping({
     required BuildContext context,

@@ -4,7 +4,7 @@ class OptionItem extends StatelessWidget {
   final int index;
   final int? selectedIndex;
   final String title;
-  final IconData? icon;
+  final String? icon;
   final TextStyle? style;
   final Function(int) onTap;
 
@@ -36,12 +36,16 @@ class OptionItem extends StatelessWidget {
                       ? context.textStyle.s12.w500.indigoBlue.roboto
                       : context.textStyle.s10.dustyBlue.w500.roboto),
             ),
-            Icon(
-              icon,
-              color: isSelected
-                  ? ColorResources.indigoBlue
-                  : ColorResources.bluishGray,
-              size: context.getSize.height * 0.02,
+            SvgPicture.asset(
+              icon ?? '',
+              colorFilter: ColorFilter.mode(
+                isSelected
+                    ? ColorResources.indigoBlue
+                    : ColorResources.bluishGray,
+                BlendMode.srcIn,
+              ),
+
+              height: context.getSize.height * 0.02,
             ),
           ],
         ),

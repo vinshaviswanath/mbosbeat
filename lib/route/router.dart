@@ -14,6 +14,8 @@ import 'package:mpos_beat/presentation/views/company_settings/company_settings.d
 import 'package:mpos_beat/presentation/views/company_user_mapping/company_user_mapping_screen.dart';
 import 'package:mpos_beat/presentation/views/godown_route_voucher_screen/godown_route_voucher_screen.dart';
 import 'package:mpos_beat/presentation/views/godown_wise_screen/godown_wise_screen.dart';
+import 'package:mpos_beat/presentation/views/master_management/master_details_screen.dart';
+import 'package:mpos_beat/presentation/views/reset_password/reset_success_screen.dart';
 import 'package:mpos_beat/presentation/views/route_wise_screen/route_wise_screen.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/add_company/add_company_screen.dart';
 import 'package:mpos_beat/presentation/views/admin_home/admin_home.dart';
@@ -434,6 +436,20 @@ class AppRouter {
           }
 
           return const SizedBox.shrink();
+        },
+      ),
+      GoRoute(
+        path: "/resetSuccessScreen",
+        name: AppRouterConst.resetSuccessScreen,
+        builder: (context, state) {
+          return const ResetSuccessScreen();
+        },
+      ),
+      GoRoute(
+        path: "/masterDetailsScreen",
+        name: AppRouterConst.masterDetailsScreen,
+        builder: (context, state) {
+          return const MasterDetailsScreen();
         },
       ),
     ],

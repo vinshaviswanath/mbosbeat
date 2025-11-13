@@ -35,6 +35,8 @@ class AppRouterConst {
   static const companySettingsScreen = "/companySettingsScreen";
   static const companyUserMappingScreen = "/companyUserMappingScreen";
   static const voucherSettingsScreen = "/voucherSettingsScreen";
+  static const resetSuccessScreen = "/resetSuccessScreen";
+  static const masterDetailsScreen = "/masterDetailsScreen";
 
 
   // anver

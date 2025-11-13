@@ -200,7 +200,7 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
                                                 selectedIndex: optionIndex,
                                                 title: appLocalization
                                                     .user_designation_screen_edit,
-                                                icon: Icons.edit_outlined,
+                                                icon: AppAssets.editIcon,
                                                 onTap: (i) {
                                                   setStateDialog(
                                                     () => optionIndex = i,
@@ -235,7 +235,7 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
                                                 selectedIndex: optionIndex,
                                                 title: appLocalization
                                                     .user_designation_screen_delete,
-                                                icon: Icons.delete,
+                                                icon:AppAssets.refresh,
                                                 onTap: (i) {
                                                   setStateDialog(
                                                     () => optionIndex = i,
@@ -269,7 +269,7 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
                                                 selectedIndex: optionIndex,
                                                 title: appLocalization
                                                     .user_designation_screen_deactivate,
-                                                icon: Icons.pan_tool,
+                                                icon: AppAssets.palm,
                                                 onTap: (i) {
                                                   setStateDialog(
                                                     () => optionIndex = i,

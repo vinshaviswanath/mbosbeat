@@ -1,4 +1,3 @@
-import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/godown_list_model.dart';
@@ -13,7 +12,6 @@ import 'package:mpos_beat/presentation/views/godown_route_voucher_screen/widgets
 import 'package:mpos_beat/presentation/views/godown_route_voucher_screen/widgets/custom_dropdown_widget.dart';
 import 'package:mpos_beat/presentation/views/godown_wise_screen/widgets/add_vehicle.dart';
 import 'package:mpos_beat/presentation/views/route_wise_screen/widgets/add_route.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class GodownRouteVoucherScreen extends StatefulWidget {
   const GodownRouteVoucherScreen({super.key});
@@ -40,7 +38,7 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
         //   voucherModeId: provider.isGodown
         //       ? provider.selectedVehicle?.id ?? 0
         //       : provider.selectedRoute?.id ?? 0,
-        // )
+        // );
         ..getAllRoutess(
           context: context,
           companyId: provider.selectedCompany?.id.toString() ?? '',
@@ -130,29 +128,39 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
                           : appLocalizations.godown_route_voucher_route_name,
                       style: context.textStyle.s12.w400.bluishGray.roboto,
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        CustomDialog.showBottomCustomDialog(
-                          chid: provider.isGodown
-                              ? const AddVehicle(isEdit: true)
-                              : const AddRoute(isEdit: true),
-                        );
-                      },
-                      child: CircleAvatar(
-                        backgroundColor: ColorResources.indigoBlue.withValues(
-                          alpha: 0.2,
-                        ),
-                        radius: 12,
-                        child: SvgPicture.asset(
-                          AppAssets.edit,
-                          height: 8,
-                          colorFilter: const ColorFilter.mode(
-                            ColorResources.white,
-                            BlendMode.srcIn,
+                    if ((provider.isGodown &&
+                            (provider.selectedVehicle != null)) ||
+                        (!provider.isGodown &&
+                            (provider.selectedRoute != null)))
+                      GestureDetector(
+                        onTap: () {
+                          CustomDialog.showBottomCustomDialog(
+                            chid: provider.isGodown
+                                ? AddVehicle(
+                                    isEdit: true,
+                                    details: provider.selectedVehicle,
+                                  )
+                                : AddRoute(
+                                    isEdit: true,
+                                    details: provider.selectedRoute,
+                                  ),
+                          );
+                        },
+                        child: CircleAvatar(
+                          backgroundColor: ColorResources.indigoBlue.withValues(
+                            alpha: 0.2,
+                          ),
+                          radius: 12,
+                          child: SvgPicture.asset(
+                            AppAssets.edit,
+                            height: 8,
+                            colorFilter: const ColorFilter.mode(
+                              ColorResources.white,
+                              BlendMode.srcIn,
+                            ),
                           ),
                         ),
                       ),
-                    ),
                   ],
                 ),
                 const SizedBox(height: 8),

@@ -39,6 +39,7 @@ class _AddVehicleState extends State<AddVehicle> {
     }
     _submitted = false;
     vehicleNameError = null;
+    vehicleCodeError = null;
   }
 
   @override
@@ -54,7 +55,7 @@ class _AddVehicleState extends State<AddVehicle> {
     // final pref = sl<SharedPreferences>();
     return Consumer<CompanyCreationProvider>(
       builder: (context, provider, _) {
-    final companyId = provider.selectedCompany?.id;
+        final companyId = provider.selectedCompany?.id;
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,6 +94,19 @@ class _AddVehicleState extends State<AddVehicle> {
                   ? ColorResources.roseRed
                   : ColorResources.transparent,
             ),
+            if (_submitted && vehicleNameError != null) ...[
+              const SizedBox(height: 4),
+              Row(
+                children: [
+                  SvgPicture.asset(AppAssets.alertError, height: 16),
+                  const SizedBox(width: 2),
+                  Text(
+                    vehicleNameError!,
+                    style: context.textStyle.s09.roseRed.w400.roboto,
+                  ),
+                ],
+              ),
+            ],
             h12,
             Text(
               appLocalizations.add_vehicle_screen_vehicle_code,
@@ -113,40 +127,50 @@ class _AddVehicleState extends State<AddVehicle> {
                   ? ColorResources.roseRed
                   : ColorResources.transparent,
             ),
+            if (_submitted && vehicleCodeError != null) ...[
+              const SizedBox(height: 4),
+              Row(
+                children: [
+                  SvgPicture.asset(AppAssets.alertError, height: 16),
+                  const SizedBox(width: 2),
+                  Text(
+                    vehicleCodeError!,
+                    style: context.textStyle.s09.roseRed.w400.roboto,
+                  ),
+                ],
+              ),
+            ],
             h16,
             Row(
               children: [
                 Expanded(
                   child: CustomButton(
                     onTap: () {
+                      setState(() {
+                        _submitted = true;
+                        vehicleNameError = null;
+                        vehicleCodeError = null;
+
+                        if (vehicleNameController.text.trim().isEmpty) {
+                          vehicleNameError = "Please enter vehicle name";
+                        }
+                        if (vehicleCodeController.text.trim().isEmpty) {
+                          vehicleCodeError = "Please enter vehicle code";
+                        }
+                      });
+
+                      // Stop execution if there are validation errors
+                      if (vehicleNameError != null ||
+                          vehicleCodeError != null) {
+                        return;
+                      }
+
+                      final companyId = provider.selectedCompany?.id ?? 0;
+                      final vehicleName = vehicleNameController.text.trim();
+                      final vehicleCode = vehicleCodeController.text.trim();
+
                       if (widget.isEdit && widget.index != null) {
                         // Edit vehicle
-                        // provider.editVehicle(
-                        //   widget.index!,
-                        //   vehicleNameController.text.trim(),
-                        //   vehicleCodeController.text.trim(),
-                        // );
-
-                        setState(() {
-                          _submitted = true;
-                          vehicleNameError = null;
-                          vehicleCodeError = null;
-
-                          if (vehicleNameController.text.trim().isEmpty) {
-                            vehicleNameError = "Please enter vehicle name";
-                          }
-                          if (vehicleCodeController.text.trim().isEmpty) {
-                            vehicleCodeError = "Please enter vehicle code";
-                          }
-                        });
-                        Logger.logSuccess(
-                          "Godown EDIT ID ${provider.godownListResponse?.vehicleList[widget.index!].id}",
-                        );
-                        if (vehicleNameError != null &&
-                            vehicleCodeError != null) {
-                          return;
-                        }
-                        // Logger.logSuccess("Company Id :::: $companyId");
                         provider
                             .createGodown(
                               context: context,
@@ -156,24 +180,10 @@ class _AddVehicleState extends State<AddVehicle> {
                                       ?.vehicleList[widget.index!]
                                       .id ??
                                   0,
-                              companyId: companyId ?? 0,
-                              code: vehicleCodeController.text,
-                              name: vehicleNameController.text,
+                              companyId: companyId,
+                              code: vehicleCode,
+                              name: vehicleName,
                             )
-                            // provider
-                            //     .addUserDesignation(
-                            //       context,
-                            //       designation: widget.designationController.text
-                            //           .trim(),
-                            //       customerId: customerId,
-                            //       id:
-                            //           provider
-                            //               .designationList
-                            //               ?.userDesignationList[widget.index]
-                            //               .id
-                            //               .toString() ??
-                            //           "",
-                            //     )
                             .then((_) {
                               WidgetsBinding.instance.addPostFrameCallback((_) {
                                 setState(() {
@@ -185,44 +195,15 @@ class _AddVehicleState extends State<AddVehicle> {
                               });
                             });
                       } else {
-                        // Add vehicle (with validation)
-                        // provider.submitVehicle(context);
-                        setState(() {
-                          _submitted = true;
-                          vehicleNameError = null;
-                          vehicleCodeError = null;
-
-                          if (vehicleNameController.text.trim().isEmpty) {
-                            vehicleNameError = "Please enter vehicle name";
-                          }
-                          if (vehicleCodeController.text.trim().isEmpty) {
-                            vehicleCodeError = "Please enter vehicle code";
-                          }
-                        });
-
-                        if (vehicleNameError != null &&
-                            vehicleCodeError != null) {
-                          return;
-                        }
-
-                        Logger.logSuccess("Company Id :::: $companyId");
-
+                        // Add new vehicle
                         provider
                             .createGodown(
                               context: context,
                               userId: 0,
-                              companyId: companyId ?? 0,
-                              code: vehicleCodeController.text,
-                              name: vehicleNameController.text,
+                              companyId: companyId,
+                              code: vehicleCode,
+                              name: vehicleName,
                             )
-                            // provider
-                            //     .addUserDesignation(
-                            //       context,
-                            //       designation: widget.designationController.text
-                            //           .trim(),
-                            //       customerId: customerId,
-                            //       id: "0",
-                            //     )
                             .then((_) {
                               vehicleNameController.clear();
                               vehicleCodeController.clear();
@@ -232,6 +213,7 @@ class _AddVehicleState extends State<AddVehicle> {
                             });
                       }
                     },
+
                     borderRadius: BorderRadius.circular(16),
                     buttonText: appLocalizations.save,
                     textStyle: context.textStyle.s12.w500.white,
@@ -242,8 +224,11 @@ class _AddVehicleState extends State<AddVehicle> {
                 Expanded(
                   child: CustomButton(
                     onTap: () {
+                      vehicleNameError = null;
+                      vehicleCodeError = null;
                       vehicleNameController.clear();
                       vehicleCodeController.clear();
+                      setState(() {});
                       Navigator.pop(context);
                     },
                     borderRadius: BorderRadius.circular(16),

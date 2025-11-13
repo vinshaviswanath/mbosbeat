@@ -47,6 +47,19 @@ class _SingleCompanyPrefixSuffixState extends State<SingleCompanyPrefixSuffix> {
 
     selectedType = "B2B";
     selectedDate = widget.data.applicableFrom;
+
+    final provider = context.read<CompanyCreationProvider>();
+    provider.isGodown
+        ? provider.getVoucherNumberingGodown(
+            context: context,
+            companyId: provider.selectedCompany?.id.toString() ?? '',
+            voucherModeId: provider.selectedVehicle?.id ?? 0,
+          )
+        : provider.getVoucherNumberingRoute(
+            context: context,
+            companyId: provider.selectedCompany?.id.toString() ?? '',
+            voucherModeId: provider.selectedRoute?.id ?? 0,
+          );
   }
 
   @override

@@ -160,7 +160,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                               confirmPasswordError = "Please confirm password";
                             } else if (confirmPasswordController.text !=
                                 passwordController.text) {
-                              confirmPasswordError = "Passwords do not match";
+                              confirmPasswordError =
+                                  "Your Password do not matching. Try again!";
                             }
 
                             if (passwordError == null &&
