@@ -55,6 +55,8 @@ class _MasterDetailsScreenState extends State<MasterDetailsScreen> {
     "Other Ledgers",
     "Price Lists",
   ];
+
+  List<String> routes = [AppRouterConst.partyGroupScreen];
   @override
   Widget build(BuildContext context) {
     // final appLocalizations = context.l10n;
@@ -100,45 +102,53 @@ class _MasterDetailsScreenState extends State<MasterDetailsScreen> {
             final title = titles[index];
             final parts = title.split(' '); // split by newline if exists
 
-            return Container(
-              decoration: BoxDecoration(
-                color: colors[index],
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 14, bottom: 12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Container(
-                      height: 63,
-                      width: 63,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: iconsBGcolors[index],
-                      ),
-                      child: Center(
-                        child: SvgPicture.asset(masterIcons[index], height: 20),
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-                    Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: parts[0] + (parts.length > 1 ? '\n' : ''),
-                            style: context.textStyle.s14.w300.dustyBlue,
+            return GestureDetector(
+              onTap: () {
+                context.pushNamed(routes[index]);
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: colors[index],
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 14, bottom: 12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                        height: 63,
+                        width: 63,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: iconsBGcolors[index],
+                        ),
+                        child: Center(
+                          child: SvgPicture.asset(
+                            masterIcons[index],
+                            height: 20,
                           ),
-                          if (parts.length > 1)
-                            TextSpan(
-                              text: parts[1],
-                              style: context.textStyle.s14.w500.dustyBlue,
-                            ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 24),
+                      Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                              text: parts[0] + (parts.length > 1 ? '\n' : ''),
+                              style: context.textStyle.s14.w300.dustyBlue,
+                            ),
+                            if (parts.length > 1)
+                              TextSpan(
+                                text: parts[1],
+                                style: context.textStyle.s14.w500.dustyBlue,
+                              ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );

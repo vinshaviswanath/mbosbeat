@@ -10,13 +10,14 @@ class ListCard extends StatelessWidget {
     this.onTap,
     this.isBlocked = false,
     this.suffixWidget,
-    this.backgroundColor,
+    this.backgroundColor, this.showIndex = true,
   });
 
   final bool isSelected;
   // ignore: prefer_typing_uninitialized_variables
   final UserMasterList item;
   final int index;
+  final bool? showIndex;
   final void Function()? onTap;
   final bool isBlocked;
   final Widget? suffixWidget;
@@ -45,6 +46,7 @@ class ListCard extends StatelessWidget {
       ),
       child: Row(
         children: [
+          if(showIndex)
           Text(
             "${index + 1}",
             style: context.textStyle.s12.w500.copyWith(color: textColor),
