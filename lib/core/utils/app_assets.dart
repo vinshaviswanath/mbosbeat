@@ -40,6 +40,27 @@ class AppAssets {
   static const locationPin = "$baseDir/locationPin.svg";
   static const settings = "$baseDir/settings.svg";
   static const arrowToRight = "$baseDir/arrowToRight.svg";
+  static const arrowToLeft = "$baseDir/arrowToLeft.svg";
+  static const rupee = "$baseDir/rupee.svg";
+  static const menu = "$baseDir/menu.svg";
+  static const person = "$baseDir/person.svg";
+  static const editIcon = "$baseDir/edit_svg.svg";
+  static const palm = "$baseDir/palm.svg";
+  static const settingsIcon = "$baseDir/settingsIcon.svg";
+  static const addIcon = "$baseDir/addIcon.svg";
+  static const settings2 = "$baseDir/settings2.svg";
+  static const voucherIcon = "$baseDir/voucherIcon.svg";
+  static const building = "$baseDir/building.svg";
+  static const person2 = "$baseDir/person2.svg";
+  static const partyGroup = "$baseDir/partyGroup.svg";
+  static const partyName = "$baseDir/partyName.svg";
+  static const itemGroup = "$baseDir/itemGroup.svg";
+  static const itemName = "$baseDir/itemName.svg";
+  static const unit = "$baseDir/unit.svg";
+  static const godown = "$baseDir/godown.svg";
+  static const itemCategory = "$baseDir/itemCategory.svg";
+  static const otherLedgers = "$baseDir/otherLedgers.svg";
+
 
   //Animations
   static const forgot_password = "$baseAnimDir/forgot.json";

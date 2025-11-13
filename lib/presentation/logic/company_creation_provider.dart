@@ -206,8 +206,6 @@ class CompanyCreationProvider extends ChangeNotifier {
       "Godown Id : ${selectedVehicle?.id}, Route id :${selectedRoute?.id} ",
     );
     getAllRoutess(context: context, companyId: companyId.toString());
-
-    notifyListeners();
     if (isGodown) {
       if (_isGodown) {
         getAllGodowns(context: context, companyId: companyId.toString());
@@ -1694,6 +1692,17 @@ class CompanyCreationProvider extends ChangeNotifier {
         );
       },
     );
+    _isGodown
+        ? getVoucherNumberingGodown(
+            context: context,
+            companyId: selectedCompany?.id.toString() ?? '',
+            voucherModeId: voucherModeId,
+          )
+        : getVoucherNumberingRoute(
+            context: context,
+            companyId: selectedCompany?.id.toString() ?? '',
+            voucherModeId: voucherModeId,
+          );
     setLoading(false);
     return _voucherNumberingResponsel;
   }

@@ -95,6 +95,7 @@ const w8 = SizedBox(width: 8);
 const w10 = SizedBox(width: 10);
 const w12 = SizedBox(width: 12);
 const w13 = SizedBox(width: 13);
+const w14 = SizedBox(width: 14);
 const w16 = SizedBox(width: 16);
 const w17 = SizedBox(width: 17);
 const w18 = SizedBox(width: 18);

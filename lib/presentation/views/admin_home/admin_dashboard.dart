@@ -167,86 +167,145 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                       //     ],
                                       //   ),
                                       // ),
-                                      DropdownButtonHideUnderline(
-                                        child: Container(
-                                          width: double.infinity,
-                                          padding: EdgeInsets.zero,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(
-                                              8,
-                                            ),
-                                            color: ColorResources.white
-                                                .withValues(alpha: 0.1),
-                                          ),
-                                          child: DropdownButtonFormField<CompanyViewList>(
-                                            decoration: const InputDecoration(
-                                              border: OutlineInputBorder(
-                                                borderSide: BorderSide.none,
-                                              ),
-                                            ),
-                                            initialValue: selectedCompany,
-                                            isExpanded: true,
-                                            dropdownColor: Colors.white,
-                                            style: context
-                                                .textStyle
-                                                .s14
-                                                .w400
-                                                .white
-                                                .roboto,
-                                            icon: const SizedBox.shrink(),
-                                            selectedItemBuilder: (context) =>
-                                                companyList.map((e) {
-                                                  return Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Text(e.companyName ?? ''),
-                                                      w12,
-                                                      const Icon(
-                                                        Icons
-                                                            .keyboard_arrow_down,
-                                                        size: 20,
-                                                        color: ColorResources
-                                                            .white,
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: DropdownButtonHideUnderline(
+                                              child: Container(
+                                                width: double.infinity,
+                                                padding: EdgeInsets.zero,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                  color: ColorResources.white
+                                                      .withValues(alpha: 0.1),
+                                                ),
+                                                child: DropdownButtonFormField<CompanyViewList>(
+                                                  decoration:
+                                                      const InputDecoration(
+                                                        border:
+                                                            OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide
+                                                                      .none,
+                                                            ),
                                                       ),
-                                                    ],
-                                                  );
-                                                }).toList(),
-
-                                            items: companyList.map((e) {
-                                              return DropdownMenuItem(
-                                                value: e,
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                  e.companyName ?? '',
+                                                  initialValue: selectedCompany,
+                                                  isExpanded: true,
+                                                  dropdownColor: Colors.white,
                                                   style: context
                                                       .textStyle
                                                       .s14
                                                       .w400
-                                                      .black
+                                                      .white
                                                       .roboto,
+                                                  icon: const SizedBox.shrink(),
+                                                  selectedItemBuilder: (context) {
+                                                    return companyList.map((e) {
+                                                      return Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                            e.companyName ?? '',
+                                                          ),
+                                                          w12,
+                                                          const Icon(
+                                                            Icons
+                                                                .keyboard_arrow_down,
+                                                            size: 20,
+                                                            color:
+                                                                ColorResources
+                                                                    .white,
+                                                          ),
+                                                        ],
+                                                      );
+                                                    }).toList();
+                                                  },
+                                                  items: companyList.map((e) {
+                                                    return DropdownMenuItem(
+                                                      value: e,
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Text(
+                                                        e.companyName ?? '',
+                                                        style: context
+                                                            .textStyle
+                                                            .s14
+                                                            .w400
+                                                            .black
+                                                            .roboto,
+                                                      ),
+                                                    );
+                                                  }).toList(),
+
+                                                  onChanged: (value) async {
+                                                    setState(
+                                                      () => selectedCompany =
+                                                          value,
+                                                    );
+                                                    provider.setSelectedCompany(
+                                                      company: value!,
+                                                    );
+                                                    // final prefs =
+                                                    //     sl<SharedPreferences>();
+                                                    // await prefs.setInt(
+                                                    //   'selected_company_id',
+                                                    //   value?.id ?? 0,
+                                                    // );
+                                                    // final companyId = prefs.getInt(
+                                                    //   'selected_company_id',
+                                                    // );
+
+                                                    Logger.logSuccess(
+                                                      "SELECTED COMPANY ID: ${selectedCompany!.id}",
+                                                    );
+                                                    Logger.logInfo(
+                                                      "Company Selected: ${selectedCompany?.toJson()}",
+                                                    );
+                                                  },
                                                 ),
-                                              );
-                                            }).toList(),
-
-                                            onChanged: (value) async {
-                                              setState(
-                                                () => selectedCompany = value,
-                                              );
-                                              provider.setSelectedCompany(
-                                                company: value!,
-                                              );
-
-                                              Logger.logSuccess(
-                                                "SELECTED COMPANY ID: ${selectedCompany!.id}",
-                                              );
-                                              Logger.logInfo(
-                                                "Company Selected: ${selectedCompany?.companyName}",
+                                              ),
+                                            ),
+                                          ),
+                                          w4,
+                                          GestureDetector(
+                                            onTap: () {
+                                              context.pushNamed(
+                                                AppRouterConst
+                                                    .companyCreationScreen,
+                                                extra: {
+                                                  'tabIndex': 0,
+                                                  // 'companyData':
+                                                  //     selectedCompany,
+                                                },
                                               );
                                             },
+                                            child: Container(
+                                              height:
+                                                  context.getSize.height *
+                                                  0.054,
+                                              width:
+                                                  context.getSize.width * 0.12,
+                                              decoration: BoxDecoration(
+                                                color:
+                                                    ColorResources.blueAccent,
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              child: Center(
+                                                child: Icon(
+                                                  Icons.add,
+                                                  color: ColorResources.white,
+                                                  size:
+                                                      context.getSize.height *
+                                                      0.03,
+                                                ),
+                                              ),
+                                            ),
                                           ),
-                                        ),
+                                        ],
                                       ),
 
                                       h10,
@@ -449,8 +508,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                     optionIndex,
                                                                 title:
                                                                     "Edit Company",
-                                                                icon: Icons
-                                                                    .mode_edit,
+                                                                icon: AppAssets
+                                                                    .editIcon,
                                                                 onTap: (i) {
                                                                   Navigator.pop(
                                                                     context,
@@ -484,8 +543,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                     optionIndex,
                                                                 title:
                                                                     "Integration Settings",
-                                                                icon: Icons
-                                                                    .settings_suggest_outlined,
+                                                                icon: AppAssets
+                                                                    .settings2,
                                                                 onTap: (i) {
                                                                   Logger.logSuccess(
                                                                     "SELECTED COMPANY ID: ${selectedCompany!.id}",
@@ -519,8 +578,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                     optionIndex,
                                                                 title:
                                                                     "Company Settings",
-                                                                icon: Icons
-                                                                    .settings_outlined,
+                                                                icon: AppAssets
+                                                                    .settingsIcon,
                                                                 onTap: (i) {
                                                                   Navigator.pop(
                                                                     context,
@@ -553,8 +612,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                     optionIndex,
                                                                 title:
                                                                     "Voucher Type",
-                                                                icon: Icons
-                                                                    .description_outlined,
+                                                                icon: AppAssets
+                                                                    .voucherIcon,
                                                                 onTap: (i) {
                                                                   Logger.logSuccess(
                                                                     "SELECTED COMPANY ID: ${selectedCompany!.id}",
@@ -588,8 +647,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                     optionIndex,
                                                                 title:
                                                                     "Godown / Route Wise Voucher",
-                                                                icon: Icons
-                                                                    .apartment,
+                                                                icon: AppAssets
+                                                                    .building,
                                                                 onTap: (i) {
                                                                   Navigator.pop(
                                                                     context,
@@ -609,8 +668,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                     optionIndex,
                                                                 title:
                                                                     "Add Users",
-                                                                icon: Icons
-                                                                    .person_outline,
+                                                                icon: AppAssets
+                                                                    .person2,
                                                                 onTap: (i) {
                                                                   Navigator.pop(
                                                                     context,
@@ -654,6 +713,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                     ],
                                   ),
                                 ),
+
                                 Container(
                                   width: double.infinity,
                                   padding: const EdgeInsets.symmetric(
@@ -668,6 +728,68 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
+                                      if (selectedCompany?.integrationType ==
+                                          'Stand Alone') ...[
+                                        GestureDetector(
+                                          onTap: () {
+                                            context.pushNamed(
+                                              AppRouterConst
+                                                  .masterDetailsScreen,
+                                            );
+                                          },
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 16,
+                                              vertical: 10,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              color: ColorResources.paleYellow,
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      "Master",
+                                                      style: context
+                                                          .textStyle
+                                                          .s14
+                                                          .w500
+                                                          .royalBlue
+                                                          .roboto,
+                                                    ),
+                                                    w4,
+                                                    Text(
+                                                      "${selectedCompany?.integrationType}",
+                                                      style: context
+                                                          .textStyle
+                                                          .s10
+                                                          .w400
+                                                          .neutralGray
+                                                          .roboto,
+                                                    ),
+                                                  ],
+                                                ),
+
+                                                NavButton(
+                                                  color: ColorResources.amber,
+                                                  onTap: () {},
+                                                  svgArrowPath:
+                                                      AppAssets.arrowToRight,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                      h16,
                                       Text(
                                         appLocalization.admin_dashboard_summary,
                                         style: context
@@ -729,14 +851,11 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                       .white
                                                       .roboto,
                                                 ),
-                                                CircleAvatar(
-                                                  backgroundColor:
-                                                      ColorResources.amber,
-                                                  radius: 12,
-                                                  child: SvgPicture.asset(
-                                                    AppAssets.arrowToRight,
-                                                    height: 10,
-                                                  ),
+                                                NavButton(
+                                                  color: ColorResources.amber,
+                                                  onTap: () {},
+                                                  svgArrowPath:
+                                                      AppAssets.arrowToRight,
                                                 ),
                                               ],
                                             ),
@@ -803,7 +922,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                               ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
-                                color: ColorResources.black.withValues(
+                                color: ColorResources.indigoBlue.withValues(
                                   alpha: 0.05,
                                 ),
                               ),
@@ -822,14 +941,95 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                         .roboto,
                                   ),
                                   w12,
-                                  Text(
-                                    "135",
-                                    style: context
-                                        .textStyle
-                                        .s14
-                                        .w500
-                                        .indigoBlue
-                                        .roboto,
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "135",
+                                        style: context
+                                            .textStyle
+                                            .s14
+                                            .w500
+                                            .indigoBlue
+                                            .roboto,
+                                      ),
+                                      w14,
+                                      NavButton(
+                                        color: ColorResources.dustyBlue,
+                                        onTap: () {},
+                                        svgArrowPath: AppAssets.arrowToRight,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          h16,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 12,
+                                horizontal: 16,
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: ColorResources.peachPink.withValues(
+                                  alpha: 0.15,
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Expense Entry",
+                                        style: context
+                                            .textStyle
+                                            .s14
+                                            .w500
+                                            .dustyBlue
+                                            .roboto,
+                                      ),
+                                      h10,
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              bottom: 8,
+                                            ),
+                                            child: SvgPicture.asset(
+                                              AppAssets.rupee,
+                                              height:
+                                                  context.getSize.height *
+                                                  0.018,
+                                            ),
+                                          ),
+                                          Text(
+                                            "17,78,54,731.00",
+                                            style: context
+                                                .textStyle
+                                                .s22
+                                                .bold
+                                                .dustyBlue
+                                                .roboto,
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  w12,
+                                  NavButton(
+                                    color: ColorResources.peachPink,
+                                    onTap: () {},
+                                    svgArrowPath: AppAssets.arrowToRight,
                                   ),
                                 ],
                               ),
@@ -844,6 +1044,33 @@ class _AdminDashboardState extends State<AdminDashboard> {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class NavButton extends StatelessWidget {
+  const NavButton({
+    super.key,
+    required this.color,
+    required this.svgArrowPath,
+    this.height,
+    this.onTap,
+  });
+
+  final Color color;
+  final String svgArrowPath;
+  final void Function()? onTap;
+  final double? height;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: CircleAvatar(
+        backgroundColor: color,
+        radius: 12,
+        child: SvgPicture.asset(svgArrowPath, height: height ?? 10),
       ),
     );
   }

@@ -5,8 +5,7 @@
 //========== Build runner command ===========
 // dart run build_runner build --delete-conflicting-outputs
 
-   import 'package:flutter/material.dart';
-import 'package:mpos_beat/core/theme/colors.dart';
+import 'package:mpos_beat/core/utils/imports.dart';
 
 final List<String> optionTitles = [
     "Edit User",
@@ -16,12 +15,12 @@ final List<String> optionTitles = [
     "Add Company",
   ];
 
-   final List<IconData> optionIcons = [
-    Icons.edit_outlined,
-    Icons.refresh,
-    Icons.pan_tool,
-    Icons.settings,
-    Icons.add_circle,
+   final List<String> optionIcons = [
+    AppAssets.editIcon,
+    AppAssets.refresh,
+    AppAssets.palm,
+    AppAssets.settingsIcon,
+    AppAssets.addIcon,
   ];
 
   final List<Color> colors = [

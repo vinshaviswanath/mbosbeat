@@ -517,55 +517,65 @@ class AuthFormProvider with ChangeNotifier {
             break;
 
           case 10: //Pending registration approval
-            RegistrationDialogs.pendingRegisteredDialog(
-              context,
-              response.loginData?.companyName ?? '',
-              id: response.loginData?.customerId,
+            // RegistrationDialogs.pendingRegisteredDialog(
+            //   context,
+            //   response.loginData?.companyName ?? '',
+            //   id: response.loginData?.customerId,
+            // );
+            RegistrationDialogs.customDialog(
+              context: context,
+              heading: "OTP not Varified",
+              subTitle:
+                  "You have successfully completed Login. Kindly\nverify with OTP to continue.",
+              onTap: () {
+                context.pushNamed(AppRouterConst.otpAuth);
+              },
+              buttonText: "Varify OTP",
             );
             break;
 
           case 20: //Company creation pending
             RegistrationDialogs.customDialog(
               context: context,
-              heading: "Pending",
-              subTitle: "Please complete company creation",
+              heading: "Registration Completed!",
+              subTitle: "You have successfully completed the\nregistration on last login. Kindly go to company\ncreation page to continue.",
               onTap: () {
                 context.goNamed(
                   AppRouterConst.companyCreationScreen,
                   extra: {'tabIndex': 0, 'companyData': companyData},
                 );
               },
-              buttonText: "Redirect",
+              buttonText: "Go to Company Creation",
             );
             break;
 
           case 30: //Integration settings pending
             RegistrationDialogs.customDialog(
               context: context,
-              heading: "Pending",
-              subTitle: "Please complete Company Integration Settings",
+              heading: "Company Creation Completed!",
+              subTitle: "You have successfully created company details\non last login. Kindly start the integration settings\nto continue.",
               onTap: () {
                 context.goNamed(
                   AppRouterConst.companyCreationScreen,
                   extra: {'tabIndex': 2, 'companyData': companyData},
                 );
               },
-              buttonText: "Redirect",
+              buttonText: "Continue",
             );
             break;
 
           case 40: //Voucher type configuration pending
             RegistrationDialogs.customDialog(
               context: context,
-              heading: "Pending",
-              subTitle: "Please complete Company VoucherType Configuration",
+              heading: "Company Creation Completed!",
+              subTitle: "You have successfully created integration\nsettings on last login. Kindly start the voucher\ntype configuration to continue.",
               onTap: () {
                 context.goNamed(
                   AppRouterConst.companyCreationScreen,
                   extra: {'tabIndex': 1, 'companyData': companyData},
                 );
               },
-              buttonText: "Redirect",
+              buttonText: "Continue",
             );
             break;
 

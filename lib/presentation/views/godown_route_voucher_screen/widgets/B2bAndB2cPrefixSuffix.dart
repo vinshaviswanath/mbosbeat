@@ -60,6 +60,19 @@ class _B2bAndB2cPrefixSuffixState extends State<B2bAndB2cPrefixSuffix> {
       selectedType = "B2B";
     }
     selectedDate = widget.data.applicableFrom;
+
+    final provider = context.read<CompanyCreationProvider>();
+    provider.isGodown
+        ? provider.getVoucherNumberingGodown(
+            context: context,
+            companyId: provider.selectedCompany?.id.toString() ?? '',
+            voucherModeId: provider.selectedVehicle?.id ?? 0,
+          )
+        : provider.getVoucherNumberingRoute(
+            context: context,
+            companyId: provider.selectedCompany?.id.toString() ?? '',
+            voucherModeId: provider.selectedRoute?.id ?? 0,
+          );
   }
 
   @override
@@ -98,666 +111,699 @@ class _B2bAndB2cPrefixSuffixState extends State<B2bAndB2cPrefixSuffix> {
       orElse: () => fallback,
     );
     final appLocalizations = context.l10n;
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Consumer<CompanyCreationProvider>(
+      builder: (context, provider, _) {
+        return Column(
           children: [
-            Text("B2B", style: context.textStyle.s10.w400.indigoBlue.roboto),
-            GestureDetector(
-              onTap: () {
-                CustomDialog.showBottomCustomDialog(
-                  chid: StatefulBuilder(
-                    builder: (context, setDialogState) {
-                      return Container(
-                        constraints: const BoxConstraints(maxWidth: 400),
-                        child: CustomScrollView(
-                          shrinkWrap: true,
-                          slivers: [
-                            SliverToBoxAdapter(
-                              child: Form(
-                                key: _formKey,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "B2B",
+                  style: context.textStyle.s10.w400.indigoBlue.roboto,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    CustomDialog.showBottomCustomDialog(
+                      chid: StatefulBuilder(
+                        builder: (context, setDialogState) {
+                          return Container(
+                            constraints: const BoxConstraints(maxWidth: 400),
+                            child: CustomScrollView(
+                              shrinkWrap: true,
+                              slivers: [
+                                SliverToBoxAdapter(
+                                  child: Form(
+                                    key: _formKey,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: const CircleAvatar(
-                                            radius: 12,
-                                            child: Icon(
-                                              Icons.close,
-                                              color: ColorResources.bluishGray,
-                                              size: 16,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          appLocalizations
-                                              .godown_route_voucher_serires,
-                                          style: context
-                                              .textStyle
-                                              .s14
-                                              .w500
-                                              .dustyBlue
-                                              .roboto,
-                                        ),
-                                      ],
-                                    ),
-                                    h12,
-
-                                    Text(
-                                      "Sales Order B2B:",
-                                      style: context
-                                          .textStyle
-                                          .s12
-                                          .w400
-                                          .bluishGray
-                                          .roboto,
-                                    ),
-                                    h12,
-
-                                    Text(
-                                      "Applicable From",
-                                      style: context
-                                          .textStyle
-                                          .s09
-                                          .w300
-                                          .bluishGray
-                                          .roboto,
-                                    ),
-                                    h4,
-                                    // Date Picker
-                                    InkWell(
-                                      onTap: () async {
-                                        final picked = await showDatePicker(
-                                          context: context,
-                                          firstDate: DateTime(2000),
-                                          lastDate: DateTime(2100),
-                                          initialDate: DateTime.now(),
-                                        );
-                                        if (picked != null) {
-                                          Logger.logInfo(
-                                            "Selected date: $picked",
-                                          );
-                                          if (!mounted) return;
-                                          setDialogState(
-                                            () => selectedDate = picked,
-                                          );
-                                        }
-                                      },
-
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          vertical: 12,
-                                          horizontal: 12,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: ColorResources.lightGray
-                                              .withValues(alpha: 0.65),
-
-                                          borderRadius: BorderRadius.circular(
-                                            15,
-                                          ),
-                                        ),
-                                        child: Row(
+                                        Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            GestureDetector(
+                                              onTap: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: const CircleAvatar(
+                                                radius: 12,
+                                                child: Icon(
+                                                  Icons.close,
+                                                  color:
+                                                      ColorResources.bluishGray,
+                                                  size: 16,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                              selectedDate == null
-                                                  ? "Select Date"
-                                                  : "${selectedDate!.year}-${selectedDate!.month}-${selectedDate!.day}",
+                                              appLocalizations
+                                                  .godown_route_voucher_serires,
                                               style: context
                                                   .textStyle
-                                                  .s11
-                                                  .w400
-                                                  .bluishGray
+                                                  .s14
+                                                  .w500
+                                                  .dustyBlue
                                                   .roboto,
                                             ),
-                                            const Icon(
-                                              Icons.calendar_today_outlined,
-                                              size: 18,
-                                              color: ColorResources.bluishGray,
-                                            ),
                                           ],
                                         ),
-                                      ),
-                                    ),
-                                    h12,
+                                        h12,
 
-                                    Text(
-                                      "Voucher Type",
-                                      style: context
-                                          .textStyle
-                                          .s12
-                                          .w400
-                                          .bluishGray
-                                          .roboto,
-                                    ),
-                                    h4,
+                                        Text(
+                                          "Sales Order B2B:",
+                                          style: context
+                                              .textStyle
+                                              .s12
+                                              .w400
+                                              .bluishGray
+                                              .roboto,
+                                        ),
+                                        h12,
 
-                                    // Dropdown
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: ColorResources.lightGray
-                                            .withValues(alpha: 0.65),
-
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 12,
-                                      ),
-                                      child: DropdownButtonHideUnderline(
-                                        child: DropdownButton<String>(
-                                          value: selectedType,
-                                          hint: Text(
-                                            "Voucher Type",
-                                            style: context
-                                                .textStyle
-                                                .s11
-                                                .w400
-                                                .bluishGray
-                                                .roboto,
-                                          ),
-                                          isExpanded: true,
-                                          icon: const Icon(
-                                            Icons.keyboard_arrow_down_rounded,
-                                          ),
-                                          items: [
-                                            DropdownMenuItem(
-                                              value: "B2B",
-                                              child: Text(
-                                                "B2B",
-                                                style: context
-                                                    .textStyle
-                                                    .s11
-                                                    .w400
-                                                    .bluishGray
-                                                    .roboto,
-                                              ),
-                                            ),
-                                            DropdownMenuItem(
-                                              value: "B2C",
-                                              child: Text(
-                                                "B2C",
-                                                style: context
-                                                    .textStyle
-                                                    .s11
-                                                    .w400
-                                                    .bluishGray
-                                                    .roboto,
-                                              ),
-                                            ),
-                                          ],
-                                          onChanged: (value) {
-                                            setDialogState(
-                                              () => selectedType = value,
+                                        Text(
+                                          "Applicable From",
+                                          style: context
+                                              .textStyle
+                                              .s09
+                                              .w300
+                                              .bluishGray
+                                              .roboto,
+                                        ),
+                                        h4,
+                                        // Date Picker
+                                        InkWell(
+                                          onTap: () async {
+                                            final picked = await showDatePicker(
+                                              context: context,
+                                              firstDate: DateTime(2000),
+                                              lastDate: DateTime(2100),
+                                              initialDate: DateTime.now(),
                                             );
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                    h12,
-
-                                    Text(
-                                      "Prefix",
-                                      style: context
-                                          .textStyle
-                                          .s12
-                                          .w400
-                                          .bluishGray
-                                          .roboto,
-                                    ),
-                                    h4,
-                                    TextFormField(
-                                      style: context
-                                          .textStyle
-                                          .s11
-                                          .w400
-                                          .bluishGray
-                                          .roboto,
-                                      controller: selectedType == "B2B"
-                                          ? prefixController
-                                          : b2cPrefixController,
-                                      validator: (val) =>
-                                          (val == null || val.isEmpty)
-                                          ? "Prefix is required"
-                                          : null,
-                                      decoration: InputDecoration(
-                                        filled: true,
-                                        fillColor: ColorResources.lightGray
-                                            .withValues(alpha: 0.65),
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                              vertical: 12,
-                                              horizontal: 12,
-                                            ),
-                                        border: InputBorder.none,
-                                        enabledBorder: InputBorder.none,
-                                        focusedBorder: InputBorder.none,
-                                        errorBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            12,
-                                          ),
-                                          borderSide: const BorderSide(
-                                            color: Colors.red,
-                                            width: 1.5,
-                                          ),
-                                        ),
-                                        focusedErrorBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            12,
-                                          ),
-                                          borderSide: const BorderSide(
-                                            color: Colors.red,
-                                            width: 1.5,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    h12,
-
-                                    Text(
-                                      "Suffix",
-                                      style: context
-                                          .textStyle
-                                          .s12
-                                          .w400
-                                          .bluishGray
-                                          .roboto,
-                                    ),
-                                    h4,
-                                    TextFormField(
-                                      style: context
-                                          .textStyle
-                                          .s11
-                                          .w400
-                                          .bluishGray
-                                          .roboto,
-                                      controller: selectedType == "B2B"
-                                          ? suffixController
-                                          : b2cSuffixController,
-                                      validator: (val) =>
-                                          (val == null || val.isEmpty)
-                                          ? "Suffix is required"
-                                          : null,
-                                      decoration: InputDecoration(
-                                        filled: true,
-                                        fillColor: ColorResources.lightGray
-                                            .withValues(alpha: 0.65),
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                              vertical: 12,
-                                              horizontal: 12,
-                                            ),
-                                        border: InputBorder.none,
-                                        enabledBorder: InputBorder.none,
-                                        focusedBorder: InputBorder.none,
-                                        errorBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            12,
-                                          ),
-                                          borderSide: const BorderSide(
-                                            color: Colors.red,
-                                            width: 1.5,
-                                          ),
-                                        ),
-                                        focusedErrorBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            12,
-                                          ),
-                                          borderSide: const BorderSide(
-                                            color: Colors.red,
-                                            width: 1.5,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    h12,
-
-                                    Text(
-                                      "Width",
-                                      style: context
-                                          .textStyle
-                                          .s12
-                                          .w400
-                                          .bluishGray
-                                          .roboto,
-                                    ),
-                                    h4,
-                                    TextFormField(
-                                      style: context
-                                          .textStyle
-                                          .s11
-                                          .w400
-                                          .bluishGray
-                                          .roboto,
-                                      controller: selectedType == "B2B"
-                                          ? widthController
-                                          : b2cWidthController,
-                                      keyboardType: TextInputType.number,
-                                      validator: (val) =>
-                                          (val == null || val.isEmpty)
-                                          ? "Width is required"
-                                          : null,
-                                      decoration: InputDecoration(
-                                        filled: true,
-                                        fillColor: ColorResources.lightGray
-                                            .withValues(alpha: 0.65),
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                              vertical: 12,
-                                              horizontal: 12,
-                                            ),
-                                        border: InputBorder.none,
-                                        enabledBorder: InputBorder.none,
-                                        focusedBorder: InputBorder.none,
-                                        errorBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            12,
-                                          ),
-                                          borderSide: const BorderSide(
-                                            color: Colors.red,
-                                            width: 1.5,
-                                          ),
-                                        ),
-                                        focusedErrorBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            12,
-                                          ),
-                                          borderSide: const BorderSide(
-                                            color: Colors.red,
-                                            width: 1.5,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    h12,
-
-                                    Text(
-                                      "Starts From",
-                                      style: context
-                                          .textStyle
-                                          .s12
-                                          .w400
-                                          .bluishGray
-                                          .roboto,
-                                    ),
-                                    h4,
-                                    TextFormField(
-                                      style: context
-                                          .textStyle
-                                          .s11
-                                          .w400
-                                          .bluishGray
-                                          .roboto,
-                                      controller: selectedType == "B2B"
-                                          ? startFromController
-                                          : b2cstartFromController,
-                                      keyboardType: TextInputType.number,
-                                      validator: (val) =>
-                                          (val == null || val.isEmpty)
-                                          ? "Start From is required"
-                                          : null,
-                                      decoration: InputDecoration(
-                                        filled: true,
-                                        fillColor: ColorResources.lightGray
-                                            .withValues(alpha: 0.65),
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                              vertical: 12,
-                                              horizontal: 12,
-                                            ),
-                                        border: InputBorder.none,
-                                        enabledBorder: InputBorder.none,
-                                        focusedBorder: InputBorder.none,
-                                        errorBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            12,
-                                          ),
-                                          borderSide: const BorderSide(
-                                            color: Colors.red,
-                                            width: 1.5,
-                                          ),
-                                        ),
-                                        focusedErrorBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            12,
-                                          ),
-                                          borderSide: const BorderSide(
-                                            color: Colors.red,
-                                            width: 1.5,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    h24,
-
-                                    Center(
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal:
-                                              context.getSize.width / 3.5,
-                                        ),
-                                        child: CustomButton(
-                                          buttonText: "Save",
-                                          borderRadius: BorderRadius.circular(
-                                            16,
-                                          ),
-                                          textStyle:
-                                              context.textStyle.s12.w500.white,
-                                          isborderEnable: false,
-                                          onTap: () {
-                                            final provider = context
-                                                .read<
-                                                  CompanyCreationProvider
-                                                >();
-                                            if (_formKey.currentState
-                                                    ?.validate() ??
-                                                false) {
-                                              final updatedVoucher =
-                                                  VoucherNumber(
-                                                    voucherTypeId: widget
-                                                        .data
-                                                        .voucherTypeId,
-                                                    applicableFrom:
-                                                        selectedDate ??
-                                                        widget
-                                                            .data
-                                                            .applicableFrom,
-                                                    hasB2B: widget.data.hasB2B,
-                                                    b2BPrefix:
-                                                        prefixController.text,
-                                                    b2BSuffix:
-                                                        suffixController.text,
-                                                    b2BWidth:
-                                                        int.tryParse(
-                                                          widthController.text,
-                                                        ) ??
-                                                        widget.data.b2BWidth,
-                                                    b2BStartFrom:
-                                                        int.tryParse(
-                                                          startFromController
-                                                              .text,
-                                                        ) ??
-                                                        widget
-                                                            .data
-                                                            .b2BStartFrom,
-                                                    b2CPrefix:
-                                                        b2cPrefixController
-                                                            .text,
-                                                    b2CSuffix:
-                                                        b2cSuffixController
-                                                            .text,
-                                                    b2CWidth:
-                                                        int.tryParse(
-                                                          b2cWidthController
-                                                              .text,
-                                                        ) ??
-                                                        widget.data.b2CWidth,
-                                                    b2CStartFrom:
-                                                        int.tryParse(
-                                                          b2cstartFromController
-                                                              .text,
-                                                        ) ??
-                                                        widget
-                                                            .data
-                                                            .b2CStartFrom,
-                                                    b2BDeclaration: widget
-                                                        .data
-                                                        .b2BDeclaration,
-                                                    b2CDeclaration: widget
-                                                        .data
-                                                        .b2CDeclaration,
-                                                  );
-                                              Logger.logSuccess(
-                                                "Voucher Mode ::: ${provider.isGodown}",
-                                              );
-
-                                              provider.addOrUpdateVoucherNumber(
-                                                updatedVoucher,
+                                            if (picked != null) {
+                                              Logger.logInfo(
+                                                "Selected date: $picked",
                                               );
                                               if (!mounted) return;
-                                              Navigator.pop(context);
+                                              setDialogState(
+                                                () => selectedDate = picked,
+                                              );
                                             }
                                           },
+
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(
+                                              vertical: 12,
+                                              horizontal: 12,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: ColorResources.lightGray
+                                                  .withValues(alpha: 0.65),
+
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  selectedDate == null
+                                                      ? "Select Date"
+                                                      : "${selectedDate!.year}-${selectedDate!.month}-${selectedDate!.day}",
+                                                  style: context
+                                                      .textStyle
+                                                      .s11
+                                                      .w400
+                                                      .bluishGray
+                                                      .roboto,
+                                                ),
+                                                const Icon(
+                                                  Icons.calendar_today_outlined,
+                                                  size: 18,
+                                                  color:
+                                                      ColorResources.bluishGray,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
                                         ),
-                                      ),
+                                        h12,
+
+                                        Text(
+                                          "Voucher Type",
+                                          style: context
+                                              .textStyle
+                                              .s12
+                                              .w400
+                                              .bluishGray
+                                              .roboto,
+                                        ),
+                                        h4,
+
+                                        // Dropdown
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            color: ColorResources.lightGray
+                                                .withValues(alpha: 0.65),
+
+                                            borderRadius: BorderRadius.circular(
+                                              12,
+                                            ),
+                                          ),
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 12,
+                                          ),
+                                          child: DropdownButtonHideUnderline(
+                                            child: DropdownButton<String>(
+                                              value: selectedType,
+                                              hint: Text(
+                                                "Voucher Type",
+                                                style: context
+                                                    .textStyle
+                                                    .s11
+                                                    .w400
+                                                    .bluishGray
+                                                    .roboto,
+                                              ),
+                                              isExpanded: true,
+                                              icon: const Icon(
+                                                Icons
+                                                    .keyboard_arrow_down_rounded,
+                                              ),
+                                              items: [
+                                                DropdownMenuItem(
+                                                  value: "B2B",
+                                                  child: Text(
+                                                    "B2B",
+                                                    style: context
+                                                        .textStyle
+                                                        .s11
+                                                        .w400
+                                                        .bluishGray
+                                                        .roboto,
+                                                  ),
+                                                ),
+                                                DropdownMenuItem(
+                                                  value: "B2C",
+                                                  child: Text(
+                                                    "B2C",
+                                                    style: context
+                                                        .textStyle
+                                                        .s11
+                                                        .w400
+                                                        .bluishGray
+                                                        .roboto,
+                                                  ),
+                                                ),
+                                              ],
+                                              onChanged: (value) {
+                                                setDialogState(
+                                                  () => selectedType = value,
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        h12,
+
+                                        Text(
+                                          "Prefix",
+                                          style: context
+                                              .textStyle
+                                              .s12
+                                              .w400
+                                              .bluishGray
+                                              .roboto,
+                                        ),
+                                        h4,
+                                        TextFormField(
+                                          style: context
+                                              .textStyle
+                                              .s11
+                                              .w400
+                                              .bluishGray
+                                              .roboto,
+                                          controller: selectedType == "B2B"
+                                              ? prefixController
+                                              : b2cPrefixController,
+                                          validator: (val) =>
+                                              (val == null || val.isEmpty)
+                                              ? "Prefix is required"
+                                              : null,
+                                          decoration: InputDecoration(
+                                            filled: true,
+                                            fillColor: ColorResources.lightGray
+                                                .withValues(alpha: 0.65),
+                                            contentPadding:
+                                                const EdgeInsets.symmetric(
+                                                  vertical: 12,
+                                                  horizontal: 12,
+                                                ),
+                                            border: InputBorder.none,
+                                            enabledBorder: InputBorder.none,
+                                            focusedBorder: InputBorder.none,
+                                            errorBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              borderSide: const BorderSide(
+                                                color: Colors.red,
+                                                width: 1.5,
+                                              ),
+                                            ),
+                                            focusedErrorBorder:
+                                                OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                  borderSide: const BorderSide(
+                                                    color: Colors.red,
+                                                    width: 1.5,
+                                                  ),
+                                                ),
+                                          ),
+                                        ),
+                                        h12,
+
+                                        Text(
+                                          "Suffix",
+                                          style: context
+                                              .textStyle
+                                              .s12
+                                              .w400
+                                              .bluishGray
+                                              .roboto,
+                                        ),
+                                        h4,
+                                        TextFormField(
+                                          style: context
+                                              .textStyle
+                                              .s11
+                                              .w400
+                                              .bluishGray
+                                              .roboto,
+                                          controller: selectedType == "B2B"
+                                              ? suffixController
+                                              : b2cSuffixController,
+                                          validator: (val) =>
+                                              (val == null || val.isEmpty)
+                                              ? "Suffix is required"
+                                              : null,
+                                          decoration: InputDecoration(
+                                            filled: true,
+                                            fillColor: ColorResources.lightGray
+                                                .withValues(alpha: 0.65),
+                                            contentPadding:
+                                                const EdgeInsets.symmetric(
+                                                  vertical: 12,
+                                                  horizontal: 12,
+                                                ),
+                                            border: InputBorder.none,
+                                            enabledBorder: InputBorder.none,
+                                            focusedBorder: InputBorder.none,
+                                            errorBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              borderSide: const BorderSide(
+                                                color: Colors.red,
+                                                width: 1.5,
+                                              ),
+                                            ),
+                                            focusedErrorBorder:
+                                                OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                  borderSide: const BorderSide(
+                                                    color: Colors.red,
+                                                    width: 1.5,
+                                                  ),
+                                                ),
+                                          ),
+                                        ),
+                                        h12,
+
+                                        Text(
+                                          "Width",
+                                          style: context
+                                              .textStyle
+                                              .s12
+                                              .w400
+                                              .bluishGray
+                                              .roboto,
+                                        ),
+                                        h4,
+                                        TextFormField(
+                                          style: context
+                                              .textStyle
+                                              .s11
+                                              .w400
+                                              .bluishGray
+                                              .roboto,
+                                          controller: selectedType == "B2B"
+                                              ? widthController
+                                              : b2cWidthController,
+                                          keyboardType: TextInputType.number,
+                                          validator: (val) =>
+                                              (val == null || val.isEmpty)
+                                              ? "Width is required"
+                                              : null,
+                                          decoration: InputDecoration(
+                                            filled: true,
+                                            fillColor: ColorResources.lightGray
+                                                .withValues(alpha: 0.65),
+                                            contentPadding:
+                                                const EdgeInsets.symmetric(
+                                                  vertical: 12,
+                                                  horizontal: 12,
+                                                ),
+                                            border: InputBorder.none,
+                                            enabledBorder: InputBorder.none,
+                                            focusedBorder: InputBorder.none,
+                                            errorBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              borderSide: const BorderSide(
+                                                color: Colors.red,
+                                                width: 1.5,
+                                              ),
+                                            ),
+                                            focusedErrorBorder:
+                                                OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                  borderSide: const BorderSide(
+                                                    color: Colors.red,
+                                                    width: 1.5,
+                                                  ),
+                                                ),
+                                          ),
+                                        ),
+                                        h12,
+
+                                        Text(
+                                          "Starts From",
+                                          style: context
+                                              .textStyle
+                                              .s12
+                                              .w400
+                                              .bluishGray
+                                              .roboto,
+                                        ),
+                                        h4,
+                                        TextFormField(
+                                          style: context
+                                              .textStyle
+                                              .s11
+                                              .w400
+                                              .bluishGray
+                                              .roboto,
+                                          controller: selectedType == "B2B"
+                                              ? startFromController
+                                              : b2cstartFromController,
+                                          keyboardType: TextInputType.number,
+                                          validator: (val) =>
+                                              (val == null || val.isEmpty)
+                                              ? "Start From is required"
+                                              : null,
+                                          decoration: InputDecoration(
+                                            filled: true,
+                                            fillColor: ColorResources.lightGray
+                                                .withValues(alpha: 0.65),
+                                            contentPadding:
+                                                const EdgeInsets.symmetric(
+                                                  vertical: 12,
+                                                  horizontal: 12,
+                                                ),
+                                            border: InputBorder.none,
+                                            enabledBorder: InputBorder.none,
+                                            focusedBorder: InputBorder.none,
+                                            errorBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              borderSide: const BorderSide(
+                                                color: Colors.red,
+                                                width: 1.5,
+                                              ),
+                                            ),
+                                            focusedErrorBorder:
+                                                OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                  borderSide: const BorderSide(
+                                                    color: Colors.red,
+                                                    width: 1.5,
+                                                  ),
+                                                ),
+                                          ),
+                                        ),
+                                        h24,
+
+                                        Center(
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal:
+                                                  context.getSize.width / 3.5,
+                                            ),
+                                            child: CustomButton(
+                                              buttonText: "Save",
+                                              borderRadius:
+                                                  BorderRadius.circular(16),
+                                              textStyle: context
+                                                  .textStyle
+                                                  .s12
+                                                  .w500
+                                                  .white,
+                                              isborderEnable: false,
+                                              onTap: () {
+                                                final provider = context
+                                                    .read<
+                                                      CompanyCreationProvider
+                                                    >();
+                                                if (_formKey.currentState
+                                                        ?.validate() ??
+                                                    false) {
+                                                  final updatedVoucher =
+                                                      VoucherNumber(
+                                                        voucherTypeId: widget
+                                                            .data
+                                                            .voucherTypeId,
+                                                        applicableFrom:
+                                                            selectedDate ??
+                                                            widget
+                                                                .data
+                                                                .applicableFrom,
+                                                        hasB2B:
+                                                            widget.data.hasB2B,
+                                                        b2BPrefix:
+                                                            prefixController
+                                                                .text,
+                                                        b2BSuffix:
+                                                            suffixController
+                                                                .text,
+                                                        b2BWidth:
+                                                            int.tryParse(
+                                                              widthController
+                                                                  .text,
+                                                            ) ??
+                                                            widget
+                                                                .data
+                                                                .b2BWidth,
+                                                        b2BStartFrom:
+                                                            int.tryParse(
+                                                              startFromController
+                                                                  .text,
+                                                            ) ??
+                                                            widget
+                                                                .data
+                                                                .b2BStartFrom,
+                                                        b2CPrefix:
+                                                            b2cPrefixController
+                                                                .text,
+                                                        b2CSuffix:
+                                                            b2cSuffixController
+                                                                .text,
+                                                        b2CWidth:
+                                                            int.tryParse(
+                                                              b2cWidthController
+                                                                  .text,
+                                                            ) ??
+                                                            widget
+                                                                .data
+                                                                .b2CWidth,
+                                                        b2CStartFrom:
+                                                            int.tryParse(
+                                                              b2cstartFromController
+                                                                  .text,
+                                                            ) ??
+                                                            widget
+                                                                .data
+                                                                .b2CStartFrom,
+                                                        b2BDeclaration: widget
+                                                            .data
+                                                            .b2BDeclaration,
+                                                        b2CDeclaration: widget
+                                                            .data
+                                                            .b2CDeclaration,
+                                                      );
+                                                  Logger.logSuccess(
+                                                    "Voucher Mode ::: ${provider.isGodown}",
+                                                  );
+
+                                                  provider
+                                                      .addOrUpdateVoucherNumber(
+                                                        updatedVoucher,
+                                                      );
+                                                  if (!mounted) return;
+                                                  Navigator.pop(context);
+                                                }
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        h12,
+                                      ],
                                     ),
-                                    h12,
-                                  ],
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
-                          ],
-                        ),
-                      );
-                    },
+                          );
+                        },
+                      ),
+                    );
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: ColorResources.bluishGray.withValues(alpha: 0.3),
+                    ),
+                    child: SvgPicture.asset(
+                      AppAssets.editIcon,
+                      colorFilter: const ColorFilter.mode(
+                        ColorResources.indigoBlue,
+                        BlendMode.srcIn,
+                      ),
+                      height: 12,
+                    ),
+
+                    // const Icon(
+                    //   Icons.search,
+                    //   size: 10,
+                    //   color: ColorResources.indigoBlue,
+                    // ),
                   ),
-                );
-              },
-              child: Container(
-                padding: const EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: ColorResources.bluishGray.withValues(alpha: 0.3),
                 ),
-                child: const Icon(
-                  Icons.edit,
-                  size: 10,
-                  color: ColorResources.indigoBlue,
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 32),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        "Prefix: ",
+                        style: context.textStyle.s12.w400.bluishGray.roboto,
+                      ),
+                      Text(
+                        "${widget.data.b2BPrefix}",
+                        style: context.textStyle.s12.w400.bluishGray.roboto,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        "Suffix: ",
+                        style: context.textStyle.s12.w400.bluishGray.roboto,
+                      ),
+                      Text(
+                        "${widget.data.b2BSuffix}",
+                        style: context.textStyle.s12.w400.bluishGray.roboto,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        "Width: ",
+                        style: context.textStyle.s12.w400.bluishGray.roboto,
+                      ),
+                      Text(
+                        "${widget.data.b2BWidth}",
+                        style: context.textStyle.s12.w400.bluishGray.roboto,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            h12,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "B2C",
+                  style: context.textStyle.s10.w400.indigoBlue.roboto,
                 ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 32),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        "Prefix: ",
+                        style: context.textStyle.s12.w400.bluishGray.roboto,
+                      ),
+                      Text(
+                        "${widget.data.b2CPrefix}",
+                        style: context.textStyle.s12.w400.bluishGray.roboto,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        "Suffix: ",
+                        style: context.textStyle.s12.w400.bluishGray.roboto,
+                      ),
+                      Text(
+                        "${widget.data.b2CSuffix}",
+                        style: context.textStyle.s12.w400.bluishGray.roboto,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        "Width: ",
+                        style: context.textStyle.s12.w400.bluishGray.roboto,
+                      ),
+                      Text(
+                        "${widget.data.b2CWidth}",
+                        style: context.textStyle.s12.w400.bluishGray.roboto,
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ],
-        ),
-        Padding(
-          padding: const EdgeInsets.only(right: 32),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    "Prefix: ",
-                    style: context.textStyle.s12.w400.bluishGray.roboto,
-                  ),
-                  Text(
-                    "${currentVoucher.b2BPrefix}",
-                    style: context.textStyle.s12.w400.bluishGray.roboto,
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Text(
-                    "Suffix: ",
-                    style: context.textStyle.s12.w400.bluishGray.roboto,
-                  ),
-                  Text(
-                    "${currentVoucher.b2BSuffix}",
-                    style: context.textStyle.s12.w400.bluishGray.roboto,
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Text(
-                    "Width: ",
-                    style: context.textStyle.s12.w400.bluishGray.roboto,
-                  ),
-                  Text(
-                    "${currentVoucher.b2BWidth}",
-                    style: context.textStyle.s12.w400.bluishGray.roboto,
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        h12,
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text("B2C", style: context.textStyle.s10.w400.indigoBlue.roboto),
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.only(right: 32),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    "Prefix: ",
-                    style: context.textStyle.s12.w400.bluishGray.roboto,
-                  ),
-                  Text(
-                    "${currentVoucher.b2CPrefix}",
-                    style: context.textStyle.s12.w400.bluishGray.roboto,
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Text(
-                    "Suffix: ",
-                    style: context.textStyle.s12.w400.bluishGray.roboto,
-                  ),
-                  Text(
-                    "${currentVoucher.b2CSuffix}",
-                    style: context.textStyle.s12.w400.bluishGray.roboto,
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Text(
-                    "Width: ",
-                    style: context.textStyle.s12.w400.bluishGray.roboto,
-                  ),
-                  Text(
-                    "${currentVoucher.b2CWidth}",
-                    style: context.textStyle.s12.w400.bluishGray.roboto,
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ],
+        );
+      },
     );
   }
 }
