@@ -49,9 +49,8 @@ extension TextStyleX on TextStyle {
   TextStyle get lightgreen => copyWith(color: ColorResources.lightgreen);
   TextStyle get lavenderGray => copyWith(color: ColorResources.lavenderGray);
   TextStyle get royalBlue => copyWith(color: ColorResources.royalBlue);
-
-
-
+  TextStyle get mutedBlue => copyWith(color: ColorResources.mutedBlue);
+  TextStyle get lightMutedBlue => copyWith(color: ColorResources.lightMutedBlue); 
 
   TextStyle get shade100 => copyWith(color: color?.withValues(alpha: 0.1));
   TextStyle get shade200 => copyWith(color: color?.withValues(alpha: 0.2));

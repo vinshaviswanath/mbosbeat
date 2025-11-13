@@ -43,7 +43,6 @@ class ColorResources {
   static const freshgreen = Color(0xFF69D282);
   static const navyGray = Color(0xFF42526E);
 
-
   // For OTP field border and error messages
   static const roseRed = Color(0xFFFF5D5D);
   // OTP field fill color
@@ -69,4 +68,7 @@ class ColorResources {
   static const mintcream = Color(0xFFDDF6E7);
   static const lightgreen = Color(0xFF54A959);
   static const cloudWhite = Color(0xFFF8FAFF);
+
+  static const mutedBlue = Color(0xFF7787AD);
+  static const lightMutedBlue = Color(0xFF49B96B);
 }
