@@ -1,9 +1,13 @@
+import 'package:mpos_beat/core/di/injection.dart';
+import 'package:mpos_beat/core/utils/constants.dart';
 import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_divider.dart';
 import 'package:mpos_beat/presentation/dialogs/auth_dialogs.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
+import 'package:mpos_beat/presentation/views/admin_home/widget/company_card_widget.dart';
+import 'package:mpos_beat/presentation/views/admin_home/widget/companydropdown.dart';
 import 'package:mpos_beat/presentation/views/admin_home/widget/custom_drawer.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_manage/widgets/option_item.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/widgets/end_to_end_text_widget.dart';
@@ -134,37 +138,86 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                         automaticallyImplyLeading: false,
                                       ),
                                       h6,
-                                      // Container(
-                                      //   width: double.infinity,
-                                      //   padding: const EdgeInsets.symmetric(
-                                      //     vertical: 10,
-                                      //   ),
-                                      //   decoration: BoxDecoration(
-                                      //     borderRadius: BorderRadius.circular(8),
-                                      //     color: ColorResources.white.withValues(
-                                      //       alpha: 0.1,
+
+                                      // DropdownButtonHideUnderline(
+                                      //   child: Container(
+                                      //     width: double.infinity,
+                                      //     padding: EdgeInsets.zero,
+                                      //     decoration: BoxDecoration(
+                                      //       borderRadius: BorderRadius.circular(
+                                      //         8,
+                                      //       ),
+                                      //       color: ColorResources.white
+                                      //           .withValues(alpha: 0.1),
                                       //     ),
-                                      //   ),
-                                      //   child: Row(
-                                      //     mainAxisAlignment:
-                                      //         MainAxisAlignment.center,
-                                      //     children: [
-                                      //       Text(
-                                      //         "Manvish Info Solutions",
-                                      //         style: context
-                                      //             .textStyle
-                                      //             .s14
-                                      //             .w400
-                                      //             .white
-                                      //             .roboto,
+                                      //     child: DropdownButtonFormField<CompanyViewList>(
+                                      //       decoration: const InputDecoration(
+                                      //         border: OutlineInputBorder(
+                                      //           borderSide: BorderSide.none,
+                                      //         ),
                                       //       ),
-                                      //       w12,
-                                      //       const Icon(
-                                      //         Icons.keyboard_arrow_down,
-                                      //         size: 20,
-                                      //         color: ColorResources.white,
-                                      //       ),
-                                      //     ],
+                                      //       initialValue: selectedCompany,
+                                      //       isExpanded: true,
+                                      //       dropdownColor: Colors.white,
+                                      //       style: context
+                                      //           .textStyle
+                                      //           .s14
+                                      //           .w400
+                                      //           .white
+                                      //           .roboto,
+                                      //       icon: const SizedBox.shrink(),
+                                      //       selectedItemBuilder: (context) =>
+                                      //           companyList.map((e) {
+                                      //             return Row(
+                                      //               mainAxisAlignment:
+                                      //                   MainAxisAlignment
+                                      //                       .center,
+                                      //               children: [
+                                      //                 Text(e.companyName ?? ''),
+                                      //                 Spacer(),
+                                      //                 const Icon(
+                                      //                   Icons
+                                      //                       .keyboard_arrow_down,
+                                      //                   size: 20,
+                                      //                   color: ColorResources
+                                      //                       .white,
+                                      //                 ),
+                                      //               ],
+                                      //             );
+                                      //           }).toList(),
+
+                                      //       items: companyList.map((e) {
+                                      //         return DropdownMenuItem(
+                                      //           value: e,
+                                      //           alignment: Alignment.center,
+                                      //           child: Text(
+                                      //             e.companyName ?? '',
+                                      //             style: context
+                                      //                 .textStyle
+                                      //                 .s14
+                                      //                 .w400
+                                      //                 .black
+                                      //                 .roboto,
+                                      //           ),
+                                      //         );
+                                      //       }).toList(),
+
+                                      //       onChanged: (value) async {
+                                      //         setState(
+                                      //           () => selectedCompany = value,
+                                      //         );
+                                      //         provider.setSelectedCompany(
+                                      //           company: value!,
+                                      //         );
+
+                                      //         Logger.logSuccess(
+                                      //           "SELECTED COMPANY ID: ${selectedCompany!.id}",
+                                      //         );
+                                      //         Logger.logInfo(
+                                      //           "Company Selected: ${selectedCompany?.companyName}",
+                                      //         );
+                                      //       },
+                                      //     ),
                                       //   ),
                                       // ),
                                       Row(
@@ -174,12 +227,12 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                               child: Container(
                                                 width: double.infinity,
                                                 padding: EdgeInsets.zero,
-                                                decoration: BoxDecoration(
+                                              decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(8),
                                                   color: ColorResources.white
                                                       .withValues(alpha: 0.1),
-                                                ),
+                                               ),
                                                 child: DropdownButtonFormField<CompanyViewList>(
                                                   decoration:
                                                       const InputDecoration(
@@ -236,17 +289,24 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                             .w400
                                                             .black
                                                             .roboto,
-                                                      ),
-                                                    );
+                                                    ),
+                                         ),
+                                                   );
                                                   }).toList(),
 
                                                   onChanged: (value) async {
-                                                    setState(
+                                          child: CompanyDropdown(
+                                            companyList: companyList,
+                                            selectedCompany: selectedCompany,
+                                            onCompanySelected: (company) {
+                                                   setState(
                                                       () => selectedCompany =
                                                           value,
+                                                () => selectedCompany = company,
                                                     );
                                                     provider.setSelectedCompany(
                                                       company: value!,
+                                               company: company,
                                                     );
                                                     // final prefs =
                                                     //     sl<SharedPreferences>();
@@ -260,9 +320,11 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
                                                     Logger.logSuccess(
                                                       "SELECTED COMPANY ID: ${selectedCompany!.id}",
+                                                "SELECTED COMPANY ID: ${company.id}",
                                                     );
                                                     Logger.logInfo(
                                                       "Company Selected: ${selectedCompany?.toJson()}",
+                                                "Company Selected: ${company.companyName}",
                                                     );
                                                   },
                                                 ),

@@ -82,4 +82,7 @@ class ColorResources {
   static const mintcream = Color(0xFFDDF6E7);
   static const lightgreen = Color(0xFF54A959);
   static const cloudWhite = Color(0xFFF8FAFF);
+
+  static const mutedBlue = Color(0xFF7787AD);
+  static const lightMutedBlue = Color(0xFF49B96B);
 }
