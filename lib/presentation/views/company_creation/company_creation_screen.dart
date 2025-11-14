@@ -211,7 +211,7 @@ class _CompanyCreationScreenState extends State<CompanyCreationScreen>
     if (isCompleted) {
       fillColor = ColorResources.aquaGreen;
       borderColor = ColorResources.tealGreen;
-      textColor = Colors.white;
+      textColor =ColorResources.white;
     } else if (isActive) {
       fillColor = ColorResources.white;
       borderColor = ColorResources.indigoBlue;

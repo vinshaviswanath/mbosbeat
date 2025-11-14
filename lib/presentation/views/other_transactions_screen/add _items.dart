@@ -74,8 +74,8 @@ class _AddItemsState extends State<AddItems> {
                               },
                               activeColor: ColorResources.indigoBlue,
                               inactiveThumbColor: ColorResources.bluishGray,
-                              inactiveTrackColor: Colors.white,
-                              activeTrackColor: Colors.white,
+                              inactiveTrackColor: ColorResources.white,
+                              activeTrackColor:ColorResources.white,
                               trackOutlineColor:
                                   MaterialStateProperty.resolveWith<Color?>((
                                     states,

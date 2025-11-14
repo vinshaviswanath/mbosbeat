@@ -65,7 +65,7 @@ class _InfoTooltipState extends State<InfoTooltip> {
                   width: context.getSize.width - 32,
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color:ColorResources.white,
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
@@ -204,7 +204,7 @@ class _InfoTooltipState extends State<InfoTooltip> {
                         // height: 120,
                         arrowHeight: 0,
                         arrowWidth: 30,
-                        backgroundColor: Colors.white,
+                        backgroundColor:ColorResources.white,
                         barrierColor: Colors.transparent,
                       );
                     },

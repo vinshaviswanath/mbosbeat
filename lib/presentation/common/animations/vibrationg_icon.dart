@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mpos_beat/core/theme/colors.dart';
 
 class VibratingIconAnimation extends StatefulWidget {
   final String icon;
@@ -10,7 +11,7 @@ class VibratingIconAnimation extends StatefulWidget {
     super.key,
     required this.icon,
     this.size = 65,
-    this.color = Colors.white,
+    this.color = ColorResources.white,
   });
 
   @override

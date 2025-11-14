@@ -21,6 +21,7 @@ class CompanyDropdown extends StatefulWidget {
 
 class _CompanyDropdownState extends State<CompanyDropdown> {
   CompanyViewList? selectedCompany;
+  TextEditingController searchController = TextEditingController();
 
   final GlobalKey _dropdownKey = GlobalKey();
 
@@ -33,6 +34,7 @@ class _CompanyDropdownState extends State<CompanyDropdown> {
     showDialog(
       context: context,
       barrierColor: Colors.transparent,
+
       builder: (BuildContext context) {
         return Stack(
           children: [
@@ -44,17 +46,18 @@ class _CompanyDropdownState extends State<CompanyDropdown> {
             ),
             Positioned(
               left: position.dx,
-              top: size.height + 70,
+              top: MediaQuery.of(context).size.height * 0.120,
               child: Material(
                 elevation: 6,
                 borderRadius: BorderRadius.circular(12),
-                color: Colors.white,
+                color: ColorResources.white,
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: ColorResources.white,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  width: MediaQuery.of(context).size.width * .93,
+                  width: MediaQuery.of(context).size.width * 0.923,
+
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -71,6 +74,7 @@ class _CompanyDropdownState extends State<CompanyDropdown> {
                           borderColor: ColorResources.transparent,
                         ),
                         h8,
+
                         ListView.separated(
                           shrinkWrap: true,
                           itemCount: widget.companyList.length,
@@ -80,6 +84,7 @@ class _CompanyDropdownState extends State<CompanyDropdown> {
                           ),
                           itemBuilder: (context, index) {
                             final company = widget.companyList[index];
+
                             return CompanyCard(
                               company: company,
                               onTap: () {
@@ -88,6 +93,39 @@ class _CompanyDropdownState extends State<CompanyDropdown> {
                               },
                             );
                           },
+                        ),
+                        if (widget.companyList.length > 4)
+                          GestureDetector(
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                top: 10,
+                                bottom: 6,
+                              ),
+                              child: Text(
+                                "Load More",
+                                style: context
+                                    .textStyle
+                                    .s12
+                                    .bold
+                                    .indigoBlue
+                                    .w400
+                                    .roboto,
+                              ),
+                            ),
+                          ),
+
+                        GestureDetector(
+                          child: CircleAvatar(
+                            radius: 10,
+                            backgroundColor: ColorResources.dustyBlue
+                                .withOpacity(0.15),
+                            child: const Icon(
+                              Icons.close,
+                              color: ColorResources.bluishGray,
+                              size: 12,
+                            ),
+                          ),
+                          onTap: () => Navigator.pop(context),
                         ),
                       ],
                     ),
@@ -104,31 +142,32 @@ class _CompanyDropdownState extends State<CompanyDropdown> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 40,
+      height: MediaQuery.of(context).size.height * 0.045,
+
       key: _dropdownKey,
       decoration: BoxDecoration(
         color: ColorResources.white.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              widget.selectedCompany?.companyName ?? "",
-              style: context.textStyle.s14.w400.white.roboto,
-              overflow: TextOverflow.ellipsis,
+      child: InkWell(
+        onTap: () => _showCompanyDialog(context),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                widget.selectedCompany?.companyName ?? "",
+                style: context.textStyle.s14.w400.white.roboto,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
-          ),
-          InkWell(
-            onTap: () => _showCompanyDialog(context),
-            child: const Icon(
+            const Icon(
               Icons.keyboard_arrow_down,
-              color: Colors.white,
+              color: ColorResources.white,
               size: 20,
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -128,7 +128,7 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
                                       builder: (context, setStateDialog) {
                                         return Container(
                                           decoration: BoxDecoration(
-                                            color: Colors.white,
+                                            color: ColorResources.white,
                                             borderRadius: BorderRadius.circular(
                                               12,
                                             ),

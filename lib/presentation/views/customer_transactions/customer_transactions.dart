@@ -33,7 +33,7 @@ class _CustomerTransactionsState extends State<CustomerTransactions> {
         actions: [
           CircleAvatar(
             backgroundColor: ColorResources.indigoBlue,
-            child: Icon(Icons.add, size: 18, color: Colors.white),
+            child: Icon(Icons.add, size: 18, color:ColorResources.white),
             radius: 11,
           ),
           w18,

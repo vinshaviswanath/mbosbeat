@@ -263,7 +263,7 @@ class _VoucherCardState extends State<VoucherCard> {
                                             child: const Text(
                                               'Change',
                                               style: TextStyle(
-                                                color: Colors.white,
+                                                color:ColorResources.white,
                                               ),
                                             ),
                                           ),
@@ -296,7 +296,7 @@ class _VoucherCardState extends State<VoucherCard> {
                                             child: const Text(
                                               'Cancel',
                                               style: TextStyle(
-                                                color: Colors.white,
+                                                color:ColorResources.white,
                                               ),
                                             ),
                                           ),
@@ -357,12 +357,12 @@ class _VoucherCardState extends State<VoucherCard> {
                               width: 22,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                border: Border.all(color: Colors.white),
+                                border: Border.all(color:ColorResources.white),
                               ),
                               child: Icon(
                                 Icons.add,
                                 size: 16,
-                                color: Colors.white,
+                                color:ColorResources.white,
                               ),
                             )
                           : Container(
@@ -370,12 +370,12 @@ class _VoucherCardState extends State<VoucherCard> {
                               width: 22,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                border: Border.all(color: Colors.white),
+                                border: Border.all(color:ColorResources.white),
                               ),
                               child: Icon(
                                 isExpand ? Icons.close : Icons.add,
                                 size: 16,
-                                color: Colors.white,
+                                color:ColorResources.white,
                               ),
                             ),
                     ),
@@ -484,7 +484,7 @@ class _VoucherCardState extends State<VoucherCard> {
                           style: context.textStyle.s12.white.bold.roboto
                               .copyWith(
                                 decoration: TextDecoration.underline,
-                                decorationColor: Colors.white,
+                                decorationColor:ColorResources.white,
                               ),
                         ),
                       ),

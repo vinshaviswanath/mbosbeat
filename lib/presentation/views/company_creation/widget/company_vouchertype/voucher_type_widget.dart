@@ -85,7 +85,7 @@ class _VoucherTypeWidgetState extends State<VoucherTypeWidget> {
                 padding: const EdgeInsets.all(15),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color:ColorResources.white,
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withOpacity(0.1),

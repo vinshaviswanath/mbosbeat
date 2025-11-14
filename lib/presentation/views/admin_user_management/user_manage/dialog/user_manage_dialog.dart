@@ -20,7 +20,7 @@ class UserManageDialog {
         builder: (context, setStateDialog) {
           return Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color:ColorResources.white,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(

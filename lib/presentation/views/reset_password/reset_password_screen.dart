@@ -39,7 +39,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             centerTitle: true,
             bottom: PreferredSize(
               preferredSize: Size(MediaQuery.sizeOf(context).width, 25),
-              child: Container(color: Colors.white),
+              child: Container(color:ColorResources.white ),
             ),
           ),
           body: CustomScrollView(
