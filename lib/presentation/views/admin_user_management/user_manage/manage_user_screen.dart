@@ -205,8 +205,7 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
                                         child: const Icon(
                                           Icons.settings,
                                           size: 16,
-                                            color: ColorResources.white,
-                                          color: Colors.white,
+                                          color: ColorResources.white,
                                         ),
                                       ),
                                     ),
