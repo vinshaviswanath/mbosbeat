@@ -6,70 +6,79 @@ import 'package:mpos_beat/l10n/generated/app_localizations.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_divider.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 import 'package:mpos_beat/presentation/logic/user_management_provider.dart';
+import 'package:mpos_beat/presentation/views/admin_home/admin_dashboard.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_manage/widgets/block_user_widget.dart';
+import 'package:mpos_beat/presentation/views/admin_user_management/user_manage/widgets/list_card.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_manage/widgets/no_user_widget.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_manage/widgets/option_item.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_manage/widgets/unblock_user_widget.dart';
-import 'package:mpos_beat/presentation/views/admin_user_management/user_manage/widgets/list_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ManageUserScreen extends StatefulWidget {
-  const ManageUserScreen({super.key});
+class ItemGroupScreen extends StatefulWidget {
+  const ItemGroupScreen({super.key});
 
   @override
-  State<ManageUserScreen> createState() => _ManageUserScreenState();
+  State<ItemGroupScreen> createState() => _ItemGroupScreenState();
 }
 
-class _ManageUserScreenState extends State<ManageUserScreen> {
+class _ItemGroupScreenState extends State<ItemGroupScreen> {
   int? selectedIndex;
   int? optionIndex;
   final TextEditingController searchController = TextEditingController();
   bool firstLoad = true;
   GoRouterDelegate? routerDelegate;
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    routerDelegate ??= GoRouter.of(context).routerDelegate;
-    routerDelegate?.addListener(_routerListener);
-  }
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   routerDelegate ??= GoRouter.of(context).routerDelegate;
+  //   routerDelegate?.addListener(_routerListener);
+  // }
 
   @override
   void initState() {
     super.initState();
     searchController.addListener(_onSearchChanged);
-    WidgetsBinding.instance.addPostFrameCallback((_) => _loadData());
+    // WidgetsBinding.instance.addPostFrameCallback((_) => _loadData());
   }
 
-  @override
-  void dispose() {
-    routerDelegate?.removeListener(_routerListener);
-    searchController.removeListener(_onSearchChanged);
-    searchController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   routerDelegate?.removeListener(_routerListener);
+  //   searchController.removeListener(_onSearchChanged);
+  //   searchController.dispose();
+  //   super.dispose();
+  // }
 
-  void _routerListener() {
-    if (!mounted) return;
-    final route = ModalRoute.of(context);
-    if (route != null && route.isCurrent) {
-      context.read<UserManagementProvider>().getAllUsersList(context);
-    }
-  }
+  // void _routerListener() {
+  //   if (!mounted) return;
+  //   final route = ModalRoute.of(context);
+  //   if (route != null && route.isCurrent) {
+  //     context.read<UserManagementProvider>().getAllUsersList(context);
+  //   }
+  // }
 
-  Future<void> _loadData() async {
-    final provider = context.read<UserManagementProvider>();
-    await provider
-        .getAllCompanies(context: context)
-        .then((_) => provider.getAllUsersList(context))
-        .then((_) => provider.getDesignationList(context))
-        .whenComplete(() {
-          if (!mounted) return;
-          setState(() => firstLoad = false);
-        });
-  }
+  // Future<void> _loadData() async {
+  //   final provider = context.read<UserManagementProvider>();
+  //   await provider
+  //       .getAllCompanies(context: context)
+  //       .then((_) => provider.getAllUsersList(context))
+  //       .then((_) => provider.getDesignationList(context))
+  //       .whenComplete(() {
+  //         if (!mounted) return;
+  //         setState(() => firstLoad = false);
+  //       });
+  // }
 
   void _onSearchChanged() => setState(() {});
+
+  final groupList = [
+    "Item Group 1",
+    "Item Group 2",
+    "Item Group 3",
+    "Item Group 4",
+    "Item Group 5",
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -93,11 +102,8 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
               final users = snapshot.data ?? [];
               final query = searchController.text.toLowerCase();
 
-              final filteredItems = users.where((item) {
-                return query.isEmpty ||
-                    (item.name ?? '').toLowerCase().contains(query) ||
-                    (item.designation ?? '').toLowerCase().contains(query) ||
-                    (item.parentName ?? '').toLowerCase().contains(query);
+              final filteredItems = groupList.where((item) {
+                return query.isEmpty || (item).toLowerCase().contains(query);
               }).toList();
 
               return Scaffold(
@@ -112,14 +118,14 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
                     ),
                   ),
                   title: Text(
-                    appLocalizations.manage_user_screen_manage_user,
+                    "Item Group",
                     style: context.textStyle.s20.indigoBlue.bold.roboto,
                   ),
                   centerTitle: true,
                   actions: [
                     InkWell(
                       onTap: () {
-                        context.pushNamed(AppRouterConst.userCreation);
+                        context.pushNamed(AppRouterConst.addItemGroup);
                       },
                       child: const Padding(
                         padding: EdgeInsets.only(right: 20),
@@ -131,18 +137,33 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
                     ),
                   ],
                   bottom: PreferredSize(
-                    preferredSize: Size(MediaQuery.sizeOf(context).width, 85),
+                    preferredSize: Size(
+                      MediaQuery.sizeOf(context).width,
+                      context.getSize.height * 0.13,
+                    ),
                     child: Container(
-                      color: ColorResources.white,
+                      color: Colors.white,
                       child: Column(
                         children: [
                           const SizedBox(height: 10),
+                          Column(
+                            children: [
+                              Text(
+                                "Gopakumar_23",
+                                style: context.textStyle.w500.s12.indigoBlue,
+                              ),
+                              Text(
+                                "KM Supermarket, Kannur",
+                                style: context.textStyle.w400.s10.dustyBlue,
+                              ),
+                              h5,
+                            ],
+                          ),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 16),
                             child: CustomTextField(
                               controller: searchController,
-                              hint: appLocalizations
-                                  .manage_user_screen_search_user,
+                              hint: 'Search Group',
                               suffixIcon: const Padding(
                                 padding: EdgeInsets.all(12),
                                 child: Icon(
@@ -167,66 +188,63 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
                     ),
                   ),
                 ),
-                body: provider.isLoading && firstLoad
-                    ? const Center(child: CircularProgressIndicator())
-                    : CustomScrollView(
-                        slivers: [
-                          if (filteredItems.isNotEmpty)
-                            SliverList(
-                              delegate: SliverChildBuilderDelegate((
-                                context,
-                                index,
-                              ) {
-                                final item = filteredItems[index];
-                                final isSelected = index == selectedIndex;
+                body:
+                    // provider.isLoading && firstLoad
+                    //     ? const Center(child: CircularProgressIndicator())
+                    //     :
+                    CustomScrollView(
+                      slivers: [
+                        if (filteredItems.isNotEmpty)
+                          SliverList(
+                            delegate: SliverChildBuilderDelegate((
+                              context,
+                              index,
+                            ) {
+                              final item = filteredItems[index];
+                              final isSelected = index == selectedIndex;
 
-                                return GestureDetector(
-                                  onTap: () async {
-                                    await _handleUserTap(item, index, provider);
-                                  },
-                                  child: ListCard(
-                                    suffixWidget: InkWell(
-                                      onTap: item.isBlocked
-                                          ? null
-                                          : () async {
-                                              await _showUserOptionsDialog(
-                                                context,
-                                                index,
-                                                item,
-                                                provider,
-                                                appLocalizations,
-                                              );
-                                            },
-                                      child: CircleAvatar(
-                                        radius: 12,
-                                        backgroundColor: isSelected
-                                            ? ColorResources.amber
-                                            : ColorResources.dustyBlue,
-                                        child: const Icon(
-                                          Icons.settings,
-                                          size: 16,
-                                            color: ColorResources.white,
-                                          color: Colors.white,
-                                        ),
-                                      ),
+                              return GestureDetector(
+                                onTap: () async {
+                                  // await _handleUserTap(item, index, provider);
+                                  setState(() => selectedIndex = index);
+                                },
+                                child: ListCard(
+                                  suffixWidget: InkWell(
+                                    onTap: () {},
+                                    // item.isBlocked
+                                    //     ? null
+                                    //     : () async {
+                                    //         await _showUserOptionsDialog(
+                                    //           context,
+                                    //           index,
+                                    //           item,
+                                    //           provider,
+                                    //           appLocalizations,
+                                    //         );
+                                    //       },
+                                    child: NavButton(
+                                      color: isSelected
+                                          ? ColorResources.amber
+                                          : ColorResources.dustyBlue,
+                                      svgArrowPath: AppAssets.arrowToRight,
                                     ),
-                                    isSelected: isSelected,
-                                    // item: item,
-                                    title: item.name ?? '',
-                                    subTitle: item.designation,
-                                    index: index,
-                                    isBlocked: item.isBlocked,
                                   ),
-                                );
-                              }, childCount: filteredItems.length),
-                            ),
-                          if (filteredItems.isEmpty && !provider.isLoading)
-                            const SliverFillRemaining(
-                              hasScrollBody: false,
-                              child: NoUserWidget(),
-                            ),
-                        ],
-                      ),
+                                  showIndex: false,
+                                  isSelected: isSelected,
+                                  // item: item,
+                                  title: item,
+                                  index: index,
+                                ),
+                              );
+                            }, childCount: filteredItems.length),
+                          ),
+                        if (filteredItems.isEmpty)
+                          const SliverFillRemaining(
+                            hasScrollBody: false,
+                            child: NoUserWidget(),
+                          ),
+                      ],
+                    ),
               );
             },
           );
@@ -291,7 +309,7 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
         builder: (context, setStateDialog) {
           return Container(
             decoration: BoxDecoration(
-              color: ColorResources.white,
+              color: Colors.white,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(
@@ -395,76 +413,4 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
       ),
     );
   }
-}
-
-class UserModel {
-  String id;
-  String name;
-  String phone;
-  String email;
-  String password;
-  String whatsAppNumber;
-  String designation;
-  String reportingTo;
-  bool isBlocked;
-
-  UserModel({
-    required this.id,
-    required this.name,
-    required this.phone,
-    required this.email,
-    required this.password,
-    required this.whatsAppNumber,
-    required this.designation,
-    required this.reportingTo,
-    this.isBlocked = false,
-  });
-
-  UserModel copyWith({
-    String? id,
-    String? name,
-    String? phone,
-    String? email,
-    String? password,
-    String? whatsAppNumber,
-    String? designation,
-    String? reportingTo,
-    bool? isBlocked,
-  }) {
-    return UserModel(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      phone: phone ?? this.phone,
-      email: email ?? this.email,
-      password: password ?? this.password,
-      whatsAppNumber: whatsAppNumber ?? this.whatsAppNumber,
-      designation: designation ?? this.designation,
-      reportingTo: reportingTo ?? this.reportingTo,
-      isBlocked: isBlocked ?? this.isBlocked,
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-    'id': id,
-    'name': name,
-    'phone': phone,
-    'email': email,
-    'password': password,
-    'whatsAppNumber': whatsAppNumber,
-    'designation': designation,
-    'reportingTo': reportingTo,
-    'isBlocked': isBlocked,
-  };
-
-  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-    id: json['id'] as String,
-    name: json['name'] as String? ?? '',
-    phone: json['phone'] as String? ?? '',
-    email: json['email'] as String? ?? '',
-    password: json['password'] as String? ?? '',
-    whatsAppNumber: json['whatsAppNumber'] as String? ?? '',
-    designation: json['designation'] as String? ?? '',
-    reportingTo: json['reportingTo'] as String? ?? '',
-    isBlocked: json['isBlocked'] as bool? ?? false,
-  );
 }

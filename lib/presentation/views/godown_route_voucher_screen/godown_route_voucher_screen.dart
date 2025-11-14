@@ -68,7 +68,7 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
             elevation: 0,
             centerTitle: true,
             title: Text(
-              appLocalizations.company_creation,
+              "Voucher Type",
               style: context.textStyle.s22.bold.indigoBlue.roboto,
             ),
           ),

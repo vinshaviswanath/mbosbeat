@@ -655,8 +655,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                             ),
                                           ),
                                         ),
+                                        h16,
                                       ],
-                                      h16,
                                       Text(
                                         appLocalization.admin_dashboard_summary,
                                         style: context
@@ -676,10 +676,20 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                           borderRadius: BorderRadius.circular(
                                             16,
                                           ),
-                                          gradient: const LinearGradient(
+                                          boxShadow: [
+                                            BoxShadow(
+                                              offset: const Offset(0, 6),
+                                              color: ColorResources.black
+                                                  .withValues(alpha: 0.25),
+                                              blurRadius: 5,
+                                            ),
+                                          ],
+                                          gradient: LinearGradient(
                                             colors: [
-                                              ColorResources.softViolet,
-                                              ColorResources.deepViolet,
+                                              ColorResources.deepIndigo
+                                                  .withValues(alpha: 0.8),
+                                              ColorResources.deepIndigo
+                                                  .withValues(alpha: 0.9),
                                             ],
                                             begin: Alignment.topLeft,
                                             end: Alignment.bottomRight,
@@ -726,42 +736,81 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                 ),
                                               ],
                                             ),
-                                            const Divider(
-                                              color: ColorResources.white,
+                                            Divider(
+                                              color: ColorResources.white
+                                                  .withValues(alpha: 0.18),
                                             ),
-                                            EndToEndTextWidget(
-                                              text1: appLocalization
-                                                  .admin_dashboard_cash_sales,
-                                              textStyle1: context
-                                                  .textStyle
-                                                  .s10
-                                                  .w400
-                                                  .white
-                                                  .roboto,
-                                              text2: appLocalization
-                                                  .admin_dashboard_credit_sales,
-                                              textStyle2: context
-                                                  .textStyle
-                                                  .s10
-                                                  .w400
-                                                  .white
-                                                  .roboto,
-                                            ),
-                                            EndToEndTextWidget(
-                                              text1: "39,84,62,378.00",
-                                              textStyle1: context
-                                                  .textStyle
-                                                  .s14
-                                                  .bold
-                                                  .white
-                                                  .roboto,
-                                              text2: "39,84,62,378.00",
-                                              textStyle2: context
-                                                  .textStyle
-                                                  .s14
-                                                  .bold
-                                                  .white
-                                                  .roboto,
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      appLocalization
+                                                          .admin_dashboard_cash_sales,
+                                                      style: context
+                                                          .textStyle
+                                                          .s10
+                                                          .w400
+                                                          .white
+                                                          .roboto,
+                                                    ),
+                                                    h5,
+                                                    Text(
+                                                      "39,84,62,378.00",
+                                                      style: context
+                                                          .textStyle
+                                                          .s14
+                                                          .bold
+                                                          .white
+                                                          .roboto,
+                                                    ),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height:
+                                                      40, // Adjust height as needed
+                                                  child: VerticalDivider(
+                                                    color: ColorResources.white
+                                                        .withValues(
+                                                          alpha: 0.18,
+                                                        ),
+                                                    thickness: 1,
+                                                    width:
+                                                        20, // Space around divider
+                                                  ),
+                                                ),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.end,
+                                                  children: [
+                                                    Text(
+                                                      appLocalization
+                                                          .admin_dashboard_credit_sales,
+                                                      style: context
+                                                          .textStyle
+                                                          .s10
+                                                          .w400
+                                                          .white
+                                                          .roboto,
+                                                    ),
+                                                    h5,
+                                                    Text(
+                                                      "39,84,62,378.00",
+                                                      style: context
+                                                          .textStyle
+                                                          .s14
+                                                          .bold
+                                                          .white
+                                                          .roboto,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),
