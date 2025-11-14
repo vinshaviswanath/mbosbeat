@@ -249,7 +249,11 @@ class _SplashScreenState extends State<SplashScreen> {
                   );
                   context.goNamed(
                     AppRouterConst.companyCreationScreen,
-                    extra: {'tabIndex': 0, 'companyData': companyData},
+                    extra: {
+                      'tabIndex': 0,
+                      'companyData': companyData,
+                      'isPop': true,
+                    },
                   );
                 },
                 buttonText: "Redirect",
@@ -268,7 +272,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
                   context.goNamed(
                     AppRouterConst.companyCreationScreen,
-                    extra: {'tabIndex': 2, 'companyData': companyData},
+                    extra: {
+                      'tabIndex': 2,
+                      'companyData': companyData,
+                      'isPop': true,
+                    },
                   );
                 },
                 buttonText: "Redirect",
@@ -287,7 +295,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
                   context.goNamed(
                     AppRouterConst.companyCreationScreen,
-                    extra: {'tabIndex': 1, 'companyData': companyData},
+                    extra: {
+                      'tabIndex': 1,
+                      'companyData': companyData,
+                      'isPop': true,
+                    },
                   );
                 },
                 buttonText: "Redirect",

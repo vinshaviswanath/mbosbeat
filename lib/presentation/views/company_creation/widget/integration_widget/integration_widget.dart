@@ -83,6 +83,7 @@ class _IntegrationWidgetState extends State<IntegrationWidget> {
                   buttonText: appLocalizations.integration_type_finish,
                   onTap: () {
                     final provider = context.read<CompanyCreationProvider>();
+
                     final integrationType =
                         provider.selectedIntegrationType ?? '';
                     final serialNo =

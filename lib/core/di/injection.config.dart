@@ -30,6 +30,8 @@ import '../../data/data_sources/company_creation/activate_godown/activate_godown
 import '../../data/data_sources/company_creation/activate_route/activate_route.dart'
     as _i260;
 import '../../data/data_sources/company_creation/company_info.dart' as _i665;
+import '../../data/data_sources/company_creation/complete_voucher_settings.dart'
+    as _i915;
 import '../../data/data_sources/company_creation/country_list.dart' as _i79;
 import '../../data/data_sources/company_creation/create_company_settings.dart'
     as _i640;
@@ -190,6 +192,13 @@ Future<_i174.GetIt> init(
   );
   gh.lazySingleton<_i665.CompanyInfo>(
     () => _i665.CompanyInfo(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i915.CompleteVoucherSettings>(
+    () => _i915.CompleteVoucherSettings(
       gh<_i816.HttpClient>(),
       gh<_i530.RunSafely>(),
       gh<_i460.SharedPreferences>(),
@@ -465,19 +474,6 @@ Future<_i174.GetIt> init(
       gh<_i70.RegistrationEventBinder>(),
     ),
   );
-  gh.lazySingleton<_i590.IAuthenticationFacad>(
-    () => _i823.IAuthenticationImpl(
-      gh<_i70.CompanyRegisteration>(),
-      gh<_i42.OtpValidation>(),
-      gh<_i13.ResendOtp>(),
-      gh<_i526.LoginImpl>(),
-      gh<_i244.ResetPassword>(),
-      gh<_i816.HttpClient>(),
-      gh<_i530.RunSafely>(),
-      gh<_i460.SharedPreferences>(),
-      gh<_i492.LoginByToken>(),
-    ),
-  );
   gh.lazySingleton<_i483.ICompanyCreationFacad>(
     () => _i322.ICompanyCreationFacadImpl(
       gh<_i665.CompanyInfo>(),
@@ -505,6 +501,20 @@ Future<_i174.GetIt> init(
       gh<_i112.DeleteRoute>(),
       gh<_i853.GetVoucherNumbering>(),
       gh<_i220.CreateVoucherNumbering>(),
+      gh<_i915.CompleteVoucherSettings>(),
+    ),
+  );
+  gh.lazySingleton<_i590.IAuthenticationFacad>(
+    () => _i823.IAuthenticationImpl(
+      gh<_i70.CompanyRegisteration>(),
+      gh<_i42.OtpValidation>(),
+      gh<_i13.ResendOtp>(),
+      gh<_i526.LoginImpl>(),
+      gh<_i244.ResetPassword>(),
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+      gh<_i492.LoginByToken>(),
     ),
   );
   return getIt;

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
@@ -148,12 +149,74 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                       .withValues(alpha: 0.1),
                                                 ),
 
-                                                child: CompanyDropdown(
+ child: CompanyDropdown(
                                                   companyList: companyList,
                                                   selectedCompany:
                                                       selectedCompany,
                                                   onCompanySelected: (company) {
-                                                    setState(
+ child: DropdownButtonFormField<CompanyViewList>(
+                                                  decoration:
+                                                      const InputDecoration(
+                                                        border:
+                                                            OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide
+                                                                      .none,
+                                                            ),
+                                                      ),
+                                                  initialValue: selectedCompany,
+                                                  isExpanded: true,
+                                                  dropdownColor: Colors.white,
+                                                  style: context
+                                                      .textStyle
+                                                      .s14
+                                                      .w400
+                                                      .white
+                                                      .roboto,
+                                                  icon: const SizedBox.shrink(),
+                                                  selectedItemBuilder: (context) {
+                                                    return companyList.map((e) {
+                                                      return Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                            e.companyName ?? '',
+                                                          ),
+                                                          w12,
+                                                          const Icon(
+                                                            Icons
+                                                                .keyboard_arrow_down,
+                                                            size: 20,
+                                                            color:
+                                                                ColorResources
+                                                                    .white,
+                                                          ),
+                                                        ],
+                                                      );
+                                                    }).toList();
+                                                  },
+                                                  items: companyList.map((e) {
+                                                    return DropdownMenuItem(
+                                                      value: e,
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Text(
+                                                        e.companyName ?? '',
+                                                        style: context
+                                                            .textStyle
+                                                            .s14
+                                                            .w400
+                                                            .black
+                                                            .roboto,
+                                                      ),
+                                                    );
+                                                  }).toList(),
+
+                                                  onChanged: (value) async {
+                                                    provider.resetIntegration();
+setState(
                                                       () => selectedCompany =
                                                           company,
                                                     );
@@ -177,9 +240,13 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                     .companyCreationScreen,
                                                 extra: {
                                                   'tabIndex': 0,
-                                                  'companyData': null,
-                                                },
+'companyData': null,
+                                                  'isPop': false,
+   },
                                               );
+
+                                              //
+                                              provider.resetIntegration();
                                             },
                                             child: Container(
                                               height:
@@ -397,6 +464,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                           0,
                                                                       'companyData':
                                                                           selectedCompany,
+                                                                      'isPop':
+                                                                          false,
                                                                     },
                                                                   );
                                                                 },
@@ -432,6 +501,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                           2,
                                                                       'companyData':
                                                                           selectedCompany,
+                                                                      'isPop':
+                                                                          false,
                                                                     },
                                                                   );
                                                                 },
@@ -501,6 +572,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                           1,
                                                                       'companyData':
                                                                           selectedCompany,
+                                                                      'isPop':
+                                                                          false,
                                                                     },
                                                                   );
                                                                 },

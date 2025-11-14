@@ -1,9 +1,11 @@
 import 'package:mpos_beat/core/param/param_builder.dart';
 import 'package:mpos_beat/core/utils/typedefs.dart';
+import 'package:mpos_beat/data/data_sources/company_creation/complete_voucher_settings.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/create_voucher_numbering/create_voucher_numbering.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/get_voucher_numbering/get_voucher_numbering.dart';
 import 'package:mpos_beat/data/models/company_creation_response.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
+import 'package:mpos_beat/data/models/complete_voucher_settings_model.dart';
 import 'package:mpos_beat/data/models/country_list_response.dart';
 import 'package:mpos_beat/data/models/create_companySettings_model.dart';
 import 'package:mpos_beat/data/models/create_company_voucher_model.dart';
@@ -14,15 +16,12 @@ import 'package:mpos_beat/data/models/registration_type_model.dart';
 import 'package:mpos_beat/data/models/create_godown_response.dart';
 import 'package:mpos_beat/data/models/create_route_response.dart';
 import 'package:mpos_beat/data/models/create_voucher_numbering_response.dart';
-import 'package:mpos_beat/data/models/get_company_voucher_model.dart';
 import 'package:mpos_beat/data/models/godown_list_model.dart';
-import 'package:mpos_beat/data/models/integration_model.dart';
 import 'package:mpos_beat/data/models/route_list_model.dart';
 import 'package:mpos_beat/data/models/state_list_response.dart';
 import 'package:mpos_beat/data/models/voucher_numbering_response.dart';
 import 'package:mpos_beat/domain/request/company_creation_params.dart';
 import 'package:mpos_beat/domain/request/create_company_settings_request.dart';
-import 'package:mpos_beat/domain/request/create_comany_user_mapping_params.dart';
 import 'package:mpos_beat/domain/request/create_company_voucher_request.dart';
 import 'package:mpos_beat/domain/request/create_godown_params.dart';
 import 'package:mpos_beat/domain/request/create_route_params.dart';
@@ -60,11 +59,11 @@ interface class ICompanyCreationFacad {
     throw UnimplementedError();
   }
 
-    ResultFuture<CompaniesListResponse> getAllCompany() {
+  ResultFuture<CompaniesListResponse> getAllCompany() {
     throw UnimplementedError();
   }
 
-    ResultFuture<GodownResponse> createGodown(
+  ResultFuture<GodownResponse> createGodown(
     BaseParams<CreateGodownParams> params,
   ) {
     throw UnimplementedError();
@@ -114,7 +113,7 @@ interface class ICompanyCreationFacad {
     throw UnimplementedError();
   }
 
-    ResultFuture<RouteResponse> deactivateRoute({required String routeId}) {
+  ResultFuture<RouteResponse> deactivateRoute({required String routeId}) {
     throw UnimplementedError();
   }
 
@@ -122,12 +121,21 @@ interface class ICompanyCreationFacad {
     throw UnimplementedError();
   }
 
-  ResultFuture<VoucherNumberingResponse> getVoucherNumbering({required String companyId,required String voucherMode,required int voucherModeId}) {
+  ResultFuture<VoucherNumberingResponse> getVoucherNumbering({
+    required String companyId,
+    required String voucherMode,
+    required int voucherModeId,
+  }) {
     throw UnimplementedError();
   }
 
-   ResultFuture<CreateVoucherNumberingResponse> createVoucherNumber(BaseParams<CreateVoucherNumberingParams> params) {
+  ResultFuture<CreateVoucherNumberingResponse> createVoucherNumber(
+    BaseParams<CreateVoucherNumberingParams> params,
+  ) {
     throw UnimplementedError();
   }
 
+  ResultFuture<CompleteVoucherSettingsDtos> completeVouchers(int companyId) {
+    throw UnimplementedError();
+  }
 }
