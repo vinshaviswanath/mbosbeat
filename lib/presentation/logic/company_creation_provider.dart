@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/failures/value_object/value_object.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/models/complete_voucher_settings_model.dart';
 import 'package:mpos_beat/data/models/create_companySettings_model.dart';
 import 'package:mpos_beat/data/models/create_company_voucher_model.dart';
 import 'package:mpos_beat/data/models/data/get_all_company_settings_data.dart';
@@ -61,7 +62,7 @@ class CompanyCreationProvider extends ChangeNotifier {
   String? _errorMessage;
   String? get errorMessage => _errorMessage;
 
-  final List<bool> stageCompleted = [false, false, false];
+  List<bool> stageCompleted = [false, false, false];
 
   bool _isGodown = true;
 
@@ -255,6 +256,11 @@ class CompanyCreationProvider extends ChangeNotifier {
 
     print('updateStageCompletionFromCompanyData: $stageCompleted');
 
+    notifyListeners();
+  }
+
+  void resetStageCompletion() {
+    stageCompleted = [false, false, false];
     notifyListeners();
   }
 
@@ -767,20 +773,68 @@ class CompanyCreationProvider extends ChangeNotifier {
         _comapanySettingsListData = response.companySettingsList;
         _setLoading(false);
         notifyListeners();
-
-        // if (response.status == 1) {
-        //   _errorMessage = null;
-
-        //   notifyListeners();
-        //   // ScaffoldMessenger.of(context).showSnackBar(
-        //   //   const SnackBar(content: Text("Voucher Types fetched successfully")),
-        //   // );
-        // } else {
-        //   _errorMessage = "Unexpected status: ${response.status}";
-        // }
       },
     );
     return _companySettingslistDtos;
+  }
+
+  //completeVoucherSettings
+  CompleteVoucherSettingsDtos? _completeVoucherSettingsDtos;
+  CompleteVoucherSettingsDtos? get completeVoucherSettingsDtos =>
+      _completeVoucherSettingsDtos;
+
+  Future<CompleteVoucherSettingsDtos?> completeVouchers(
+    BuildContext context, {
+    int? companyId,
+    VoidCallback? onSuccess,
+  }) async {
+    final result = await iCompanyCreationFacad.completeVouchers(companyId!);
+
+    result.fold(
+      (failure) {
+        _errorMessage = failure.errorMsg.toString();
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
+        Logger.logError("Complete Voucher Settings failed : $_errorMessage");
+        _setLoading(false);
+        notifyListeners();
+      },
+      (response) {
+        Logger.logSuccess(
+          "Complete Voucher Settings success : ${response.toJson()}",
+        );
+        Logger.logSuccess("Status : ${response.status}");
+        _setLoading(false);
+        notifyListeners();
+
+        if (response.status == 1) {
+          _completeVoucherSettingsDtos = response;
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(
+          //     content: Text(response.message, textAlign: TextAlign.center),
+          //     behavior: SnackBarBehavior.floating,
+          //     shape: RoundedRectangleBorder(
+          //       borderRadius: BorderRadius.circular(16),
+          //     ),
+          //     margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          //   ),
+          // );
+        } else {
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(
+          //     content: Text(response.message, textAlign: TextAlign.center),
+          //     behavior: SnackBarBehavior.floating,
+          //     shape: RoundedRectangleBorder(
+          //       borderRadius: BorderRadius.circular(16),
+          //     ),
+          //     margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          //   ),
+          // );
+        }
+      },
+    );
+    return _completeVoucherSettingsDtos;
   }
 
   // ======================================================================

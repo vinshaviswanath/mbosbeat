@@ -538,11 +538,16 @@ class AuthFormProvider with ChangeNotifier {
             RegistrationDialogs.customDialog(
               context: context,
               heading: "Registration Completed!",
-              subTitle: "You have successfully completed the\nregistration on last login. Kindly go to company\ncreation page to continue.",
+              subTitle:
+                  "You have successfully completed the\nregistration on last login. Kindly go to company\ncreation page to continue.",
               onTap: () {
                 context.goNamed(
                   AppRouterConst.companyCreationScreen,
-                  extra: {'tabIndex': 0, 'companyData': companyData},
+                  extra: {
+                    'tabIndex': 0,
+                    'companyData': companyData,
+                    'isPop': true,
+                  },
                 );
               },
               buttonText: "Go to Company Creation",
@@ -553,11 +558,16 @@ class AuthFormProvider with ChangeNotifier {
             RegistrationDialogs.customDialog(
               context: context,
               heading: "Company Creation Completed!",
-              subTitle: "You have successfully created company details\non last login. Kindly start the integration settings\nto continue.",
+              subTitle:
+                  "You have successfully created company details\non last login. Kindly start the integration settings\nto continue.",
               onTap: () {
                 context.goNamed(
                   AppRouterConst.companyCreationScreen,
-                  extra: {'tabIndex': 2, 'companyData': companyData},
+                  extra: {
+                    'tabIndex': 2,
+                    'companyData': companyData,
+                    'isPop': true,
+                  },
                 );
               },
               buttonText: "Continue",
@@ -568,11 +578,16 @@ class AuthFormProvider with ChangeNotifier {
             RegistrationDialogs.customDialog(
               context: context,
               heading: "Company Creation Completed!",
-              subTitle: "You have successfully created integration\nsettings on last login. Kindly start the voucher\ntype configuration to continue.",
+              subTitle:
+                  "You have successfully created integration\nsettings on last login. Kindly start the voucher\ntype configuration to continue.",
               onTap: () {
                 context.goNamed(
                   AppRouterConst.companyCreationScreen,
-                  extra: {'tabIndex': 1, 'companyData': companyData},
+                  extra: {
+                    'tabIndex': 1,
+                    'companyData': companyData,
+                    'isPop': true,
+                  },
                 );
               },
               buttonText: "Continue",

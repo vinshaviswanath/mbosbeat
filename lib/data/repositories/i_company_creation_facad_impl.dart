@@ -6,9 +6,10 @@ import 'package:mpos_beat/core/utils/typedefs.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/activate_godown/activate_godown.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/activate_route/activate_route.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/company_info.dart';
+import 'package:mpos_beat/data/data_sources/company_creation/complete_voucher_settings.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/create_voucher_numbering/create_voucher_numbering.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/get_voucher_numbering/get_voucher_numbering.dart';
-import 'package:mpos_beat/data/data_sources/user_management/company_user_mapping/company_user_mapping.dart';
+
 import 'package:mpos_beat/data/data_sources/company_creation/country_list.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/create_company_settings.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/create_company_voucherType.dart';
@@ -30,6 +31,7 @@ import 'package:mpos_beat/data/data_sources/company_creation/integration_type.da
 import 'package:mpos_beat/data/data_sources/company_creation/state_list.dart';
 import 'package:mpos_beat/data/models/company_creation_response.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
+import 'package:mpos_beat/data/models/complete_voucher_settings_model.dart';
 import 'package:mpos_beat/data/models/country_list_response.dart';
 import 'package:mpos_beat/data/models/create_companySettings_model.dart';
 import 'package:mpos_beat/data/models/create_company_voucher_model.dart';
@@ -82,6 +84,7 @@ class ICompanyCreationFacadImpl implements ICompanyCreationFacad {
   final HttpClient httpClient;
   final GetVoucherNumbering voucherNumbering;
   final CreateVoucherNumbering createVoucherNumbers;
+  final CompleteVoucherSettings completeVoucherSettings;
   final RunSafely runSafely;
   final SharedPreferences sharedPreferences;
 
@@ -96,8 +99,8 @@ class ICompanyCreationFacadImpl implements ICompanyCreationFacad {
     this.getCompanyvoucherTypeList,
     this.createCompanyVouchertypeDatasource,
     this.integrationDatasource,
-   this.getAllCompanySettingsDatasource,
-   this.createCompanySettingsDatasource,
+    this.getAllCompanySettingsDatasource,
+    this.createCompanySettingsDatasource,
     this.getAllCompanies,
     this.createGodowns,
     this.createRoutes,
@@ -111,8 +114,8 @@ class ICompanyCreationFacadImpl implements ICompanyCreationFacad {
     this.routeDelete,
     this.voucherNumbering,
     this.createVoucherNumbers,
-);
-  
+    this.completeVoucherSettings,
+  );
 
   @override
   ResultFuture<CompanyInfoDtos> companyInfo(
@@ -166,6 +169,7 @@ class ICompanyCreationFacadImpl implements ICompanyCreationFacad {
   ) {
     return createCompanySettingsDatasource.call(param);
   }
+
   @override
   ResultFuture<CompaniesListResponse> getAllCompany() {
     return getAllCompanies();
@@ -230,9 +234,12 @@ class ICompanyCreationFacadImpl implements ICompanyCreationFacad {
     required String companyId,
     required String voucherMode,
     required int voucherModeId,
-
   }) {
-    return voucherNumbering(companyId: companyId, voucherMode: voucherMode,voucherModeId: voucherModeId );
+    return voucherNumbering(
+      companyId: companyId,
+      voucherMode: voucherMode,
+      voucherModeId: voucherModeId,
+    );
   }
 
   @override
@@ -240,5 +247,10 @@ class ICompanyCreationFacadImpl implements ICompanyCreationFacad {
     BaseParams<CreateVoucherNumberingParams> params,
   ) {
     return createVoucherNumbers(params);
+  }
+
+  @override
+  ResultFuture<CompleteVoucherSettingsDtos> completeVouchers(int companyId) {
+    return completeVoucherSettings(companyId);
   }
 }

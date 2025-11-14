@@ -62,7 +62,11 @@ class CustomRouteScreen extends StatelessWidget {
                                   // AppRoute.pushNamed(AdminHome.routeName),
                                   context.goNamed(
                                     AppRouterConst.companyCreationScreen,
-                                    extra: {'tabIndex': 0, 'companyData': null},
+                                    extra: {
+                                      'tabIndex': 0,
+                                      'companyData': null,
+                                      'isPop': true,
+                                    },
                                   ),
                               buttonText: appLocalization
                                   .custom_route_screen_create_company,

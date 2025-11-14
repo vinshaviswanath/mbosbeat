@@ -60,30 +60,44 @@ class _VoucherCardState extends State<VoucherCard> {
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      fillFields();
-
       final provider = context.read<CompanyCreationProvider>();
-      if (widget.companyData != null &&
-          widget.companyData!.integrationType == widget.title) {
-        provider.setIntegrationType(widget.title);
-        provider.setIntegrationSerialNo(widget.companyData!.serialNumber ?? "");
-        provider.updateIntegrationSerialNo(
-          widget.companyData!.serialNumber ?? "",
-        );
-        provider.setStockInCloud(
-          widget.companyData!.stockInCloud == 'Yes' ||
-              widget.companyData!.stockInCloud == true,
-        );
+      final company = widget.companyData;
+
+      if (company != null && company.hasIntegrationSettings == 0) {
+        provider.resetIntegration();
+        print(' No integration settings found');
+        print('Resetting all values for ${widget.title}');
+        print(' Cleared provider and local state for ${widget.title}');
+        print('selected....${selected}');
+        print('isExpand...$isExpand');
+        print("isActivated....$isActivated");
+        return; // stop here if no integration
       }
+
+      // Only fill fields if company data is available
+      if (company != null) {
+        fillFields();
+        if (company.integrationType == widget.title) {
+          provider.setIntegrationType(widget.title);
+          provider.setIntegrationSerialNo(company.serialNumber ?? "");
+          provider.updateIntegrationSerialNo(company.serialNumber ?? "");
+          provider.setStockInCloud(
+            company.stockInCloud == 'Yes' || company.stockInCloud == true,
+          );
+        }
+      }
+
+      print('selected....${selected}');
+      print('isExpand...$isExpand');
+      print("isActivated....$isActivated");
     });
   }
 
   void fillFields() {
-    if (widget.companyData != null &&
-        widget.companyData!.integrationType == widget.title) {
-      integrationSerialNoController.text =
-          widget.companyData!.serialNumber ?? "";
-      selected = widget.companyData!.stockInCloud ?? "";
+    final company = widget.companyData;
+    if (company != null && company.integrationType == widget.title) {
+      integrationSerialNoController.text = company.serialNumber ?? "";
+      selected = company.stockInCloud ?? "";
       isActivated = true;
       isExpand = true;
     } else {
@@ -172,9 +186,6 @@ class _VoucherCardState extends State<VoucherCard> {
                         final provider = context
                             .read<CompanyCreationProvider>();
 
-                        final activeIntegration =
-                            widget.companyData?.integrationType;
-
                         final selectIntegration = widget.title;
 
                         final currentIntegration =
@@ -190,6 +201,7 @@ class _VoucherCardState extends State<VoucherCard> {
                             isActivated = true;
                             isExpand = false;
                           });
+                          provider.setIntegrationType(widget.title);
                         }
 
                         // If tapping the same card → just toggle expand/collapse
@@ -227,7 +239,7 @@ class _VoucherCardState extends State<VoucherCard> {
                                   children: [
                                     Text(
                                       textAlign: TextAlign.center,
-                                      'You are currently activated $activeIntegration integration in settings. Are you sure to want to change $activeIntegration integration into $selectIntegration Retail?',
+                                      'You are currently activated $currentIntegration integration in settings. Are you sure to want to change $currentIntegration integration into $selectIntegration?',
                                       style: TextStyle(
                                         color: ColorResources.bluishGray,
                                         fontSize: 14,

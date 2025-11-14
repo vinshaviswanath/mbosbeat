@@ -15,7 +15,7 @@ class Urls {
   static const String countryList = '/api/Country/GetAll';
   static const String stateList = "/api/State/GetAll?CountryID=";
   static const String integrationType = "/api/CompanyIntegration/Create";
-static const String loginByToken = "/auth/loginToken";
+  static const String loginByToken = "/auth/loginToken";
   static const String addDesignation = "/api/UserDesignation/Create";
   static const String getUserDesignationList = "/api/UserDesignation/GetAll";
   static const String activateDesignation1 =
@@ -48,12 +48,12 @@ static const String loginByToken = "/auth/loginToken";
   static const String activateRoute2 = "&Active=1";
   static const String deactivateRoute1 = "/api/Route/Active?RouteID=";
   static const String deactivateRoute2 = "&Active=0";
-  static const String deleteRoute ="/api/Route/Delete?RouteID=";
-static const String registrationType =
+  static const String deleteRoute = "/api/Route/Delete?RouteID=";
+  static const String registrationType =
       "/api/RegistrationType/GetAll?CountryID=";
   static const String getAllCompanySettings =
       "/api/CompanySettings/GetAll?CompanyID=";
- static const String createCompanySettings = "/api/CompanySettings/Create";
+  static const String createCompanySettings = "/api/CompanySettings/Create";
   static const String getAllCompany = "/api/Company/GetAll";
   static const String createCompanyUserMapping = "/api/Company/CreateMapping";
   static const String getVoucherNumbering1 =
@@ -63,4 +63,6 @@ static const String registrationType =
   static const String getVoucherNumbering4 = "&VoucherModeID=";
   static const String createVoucherNumbering =
       "/api/Company/CreateVoucherNumbering";
+  static const String completeVoucherSettings =
+      "/api/Company/CompleteSettings?CompanyID=";
 }

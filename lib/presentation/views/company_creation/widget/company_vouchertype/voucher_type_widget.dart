@@ -157,6 +157,10 @@ class _VoucherTypeWidgetState extends State<VoucherTypeWidget> {
                     print("hasEnabledVoucher: $hasEnabledVoucher");
 
                     if (hasEnabledVoucher) {
+                      provider.completeVouchers(
+                        context,
+                        companyId: widget.companyData?.id!,
+                      );
                       widget.onTap?.call();
                     }
                   },

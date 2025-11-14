@@ -8,10 +8,12 @@ import 'package:mpos_beat/presentation/views/company_creation/widget/company_vou
 
 class CompanyCreationScreen extends StatefulWidget {
   final CompanyViewList? companyData;
+  final bool isPop;
   const CompanyCreationScreen({
     super.key,
     required this.initialTabIndex,
     this.companyData,
+    this.isPop = false,
   });
 
   final int initialTabIndex;
@@ -40,6 +42,7 @@ class _CompanyCreationScreenState extends State<CompanyCreationScreen>
         context,
         listen: false,
       );
+
       if (widget.companyData != null) {
         provider.updateStageCompletionFromCompanyData(widget.companyData!);
 
@@ -48,6 +51,8 @@ class _CompanyCreationScreenState extends State<CompanyCreationScreen>
         // if (nextStage != -1) {
         //   _tabController.animateTo(nextStage);
         // }
+      } else {
+        provider.resetStageCompletion();
       }
     });
 
@@ -72,16 +77,16 @@ class _CompanyCreationScreenState extends State<CompanyCreationScreen>
       onPopInvoked: (didPop) async {
         if (didPop) return;
 
-        final companyData = widget.companyData;
+        // final companyData = widget.companyData;
 
-        final hasIntegration =
-            companyData?.hasIntegrationSettings != null &&
-            companyData!.hasIntegrationSettings != 0;
-        final hasVoucherType =
-            companyData?.hasVoucherTypeSettings != null &&
-            companyData!.hasVoucherTypeSettings != 0;
+        // final hasIntegration =
+        //     companyData?.hasIntegrationSettings != null &&
+        //     companyData!.hasIntegrationSettings != 0;
+        // final hasVoucherType =
+        //     companyData?.hasVoucherTypeSettings != null &&
+        //     companyData!.hasVoucherTypeSettings != 0;
 
-        if (!(widget.companyData != null && hasIntegration && hasVoucherType)) {
+        if (widget.isPop) {
           final shouldExit = await AuthDialogs.show(context);
           if (shouldExit == true) {
             AuthDialogs.exitApp();

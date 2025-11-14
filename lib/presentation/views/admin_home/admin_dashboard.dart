@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
@@ -241,6 +242,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                   }).toList(),
 
                                                   onChanged: (value) async {
+                                                    provider.resetIntegration();
                                                     setState(
                                                       () => selectedCompany =
                                                           value,
@@ -277,10 +279,13 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                     .companyCreationScreen,
                                                 extra: {
                                                   'tabIndex': 0,
-                                                  // 'companyData':
-                                                  //     selectedCompany,
+                                                  'companyData': null,
+                                                  'isPop': false,
                                                 },
                                               );
+
+                                              //
+                                              provider.resetIntegration();
                                             },
                                             child: Container(
                                               height:
@@ -530,6 +535,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                           0,
                                                                       'companyData':
                                                                           selectedCompany,
+                                                                      'isPop':
+                                                                          false,
                                                                     },
                                                                   );
                                                                 },
@@ -565,6 +572,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                           2,
                                                                       'companyData':
                                                                           selectedCompany,
+                                                                      'isPop':
+                                                                          false,
                                                                     },
                                                                   );
                                                                 },
@@ -634,6 +643,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                           1,
                                                                       'companyData':
                                                                           selectedCompany,
+                                                                      'isPop':
+                                                                          false,
                                                                     },
                                                                   );
                                                                 },
