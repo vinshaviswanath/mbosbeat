@@ -149,74 +149,12 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                       .withValues(alpha: 0.1),
                                                 ),
 
- child: CompanyDropdown(
+                                                child: CompanyDropdown(
                                                   companyList: companyList,
                                                   selectedCompany:
                                                       selectedCompany,
                                                   onCompanySelected: (company) {
- child: DropdownButtonFormField<CompanyViewList>(
-                                                  decoration:
-                                                      const InputDecoration(
-                                                        border:
-                                                            OutlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide
-                                                                      .none,
-                                                            ),
-                                                      ),
-                                                  initialValue: selectedCompany,
-                                                  isExpanded: true,
-                                                  dropdownColor: Colors.white,
-                                                  style: context
-                                                      .textStyle
-                                                      .s14
-                                                      .w400
-                                                      .white
-                                                      .roboto,
-                                                  icon: const SizedBox.shrink(),
-                                                  selectedItemBuilder: (context) {
-                                                    return companyList.map((e) {
-                                                      return Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            e.companyName ?? '',
-                                                          ),
-                                                          w12,
-                                                          const Icon(
-                                                            Icons
-                                                                .keyboard_arrow_down,
-                                                            size: 20,
-                                                            color:
-                                                                ColorResources
-                                                                    .white,
-                                                          ),
-                                                        ],
-                                                      );
-                                                    }).toList();
-                                                  },
-                                                  items: companyList.map((e) {
-                                                    return DropdownMenuItem(
-                                                      value: e,
-                                                      alignment:
-                                                          Alignment.center,
-                                                      child: Text(
-                                                        e.companyName ?? '',
-                                                        style: context
-                                                            .textStyle
-                                                            .s14
-                                                            .w400
-                                                            .black
-                                                            .roboto,
-                                                      ),
-                                                    );
-                                                  }).toList(),
-
-                                                  onChanged: (value) async {
-                                                    provider.resetIntegration();
-setState(
+                                                    setState(
                                                       () => selectedCompany =
                                                           company,
                                                     );
@@ -240,9 +178,9 @@ setState(
                                                     .companyCreationScreen,
                                                 extra: {
                                                   'tabIndex': 0,
-'companyData': null,
+                                                  'companyData': null,
                                                   'isPop': false,
-   },
+                                                },
                                               );
 
                                               //
