@@ -133,7 +133,7 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
                   bottom: PreferredSize(
                     preferredSize: Size(MediaQuery.sizeOf(context).width, 85),
                     child: Container(
-                      color: Colors.white,
+                      color: ColorResources.white,
                       child: Column(
                         children: [
                           const SizedBox(height: 10),
@@ -203,7 +203,7 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
                                           child: const Icon(
                                             Icons.settings,
                                             size: 16,
-                                            color: Colors.white,
+                                            color: ColorResources.white,
                                           ),
                                         ),
                                       ),
@@ -291,7 +291,7 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
         builder: (context, setStateDialog) {
           return Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: ColorResources.white,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(

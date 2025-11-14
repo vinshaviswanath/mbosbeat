@@ -10,7 +10,7 @@ class PopoverBody extends StatelessWidget {
     return Consumer<CompanyCreationProvider>(
       builder: (context, provider, _) {
         return Material(
-          color: Colors.white,
+          color: ColorResources.white,
           borderRadius: BorderRadius.circular(12),
           child: Padding(
             padding: const EdgeInsets.all(14),

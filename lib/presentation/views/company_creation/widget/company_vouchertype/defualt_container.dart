@@ -517,7 +517,7 @@ class _DefaultContainerState extends State<DefaultContainer> {
                         },
                         child: Text(
                           'Save',
-                          style: TextStyle(fontSize: 14, color: Colors.white),
+                          style: TextStyle(fontSize: 14, color: ColorResources.white),
                         ),
                       ),
                     ),

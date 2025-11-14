@@ -17,8 +17,8 @@ class StatusView extends StatelessWidget {
     super.key,
     this.numberOfStatus = 3,
     this.indexOfSeenStatus = 0,
-    this.spacing = 12.0,
-    this.radius = 30,
+    this.spacing = 8.0,
+    this.radius = 28,
     this.padding = 5,
     required this.centerImageUrl,
     this.strokeWidth = 2,
@@ -46,8 +46,17 @@ class StatusView extends StatelessWidget {
           ),
         ),
         CircleAvatar(
+          backgroundColor: ColorResources.veryLightGray,
           radius: radius - padding,
-          backgroundImage: NetworkImage(centerImageUrl),
+          backgroundImage: centerImageUrl.isNotEmpty
+              ? NetworkImage(centerImageUrl)
+              : null,
+          child: centerImageUrl.isEmpty
+              ? Image.asset(
+                  'assets/images/pngs/mpos_logo.png',
+                  fit: BoxFit.cover,
+                )
+              : null,
         ),
       ],
     );

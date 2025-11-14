@@ -430,7 +430,7 @@ class _B2cContainerState extends State<B2cContainer> {
                 },
                 child: Text(
                   "Save",
-                  style: TextStyle(fontSize: 14, color: Colors.white),
+                  style: TextStyle(fontSize: 14, color:ColorResources.white),
                 ),
               ),
             ),

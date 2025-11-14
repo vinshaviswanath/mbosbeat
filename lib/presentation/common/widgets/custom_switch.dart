@@ -59,7 +59,7 @@ class _CustomSwitchState extends State<CustomSwitch>
             height: 18,
             decoration: BoxDecoration(
               color: _value
-                  ? Colors.white
+                  ?ColorResources.white
                   : widget.thumbColor ?? ColorResources.white,
 
               shape: BoxShape.circle,

@@ -21,7 +21,7 @@ class AppTheme {
           scaffoldBackgroundColor: Colors.black,
 
           textTheme: const TextTheme(
-            bodyMedium: TextStyle(color: Colors.white),
+            bodyMedium: TextStyle(color:ColorResources.white),
           ),
           // fontFamily: 'Dancing Script',
         );

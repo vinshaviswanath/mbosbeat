@@ -22,7 +22,7 @@ class CompletedTickMark extends StatelessWidget {
         ],
       ),
       child: const Center(
-        child: Icon(Icons.check, size: 13, color: Colors.white),
+        child: Icon(Icons.check, size: 13, color: ColorResources.white),
       ),
     );
   }

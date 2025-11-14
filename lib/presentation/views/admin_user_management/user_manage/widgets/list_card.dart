@@ -33,7 +33,7 @@ class ListCard extends StatelessWidget {
     final textColor = isBlocked
         ? Colors.grey
         : isSelected
-        ? Colors.white
+        ? ColorResources.white
         : ColorResources.dustyBlue;
 
     return Container(

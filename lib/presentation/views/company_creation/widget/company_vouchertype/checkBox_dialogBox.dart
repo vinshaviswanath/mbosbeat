@@ -108,7 +108,7 @@ class _CheckBoxDialogBoxState extends State<CheckBoxDialogBox> {
                   child: Text(
                     "Yes",
                     style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                      color: Colors.white,
+                      color:ColorResources.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -132,7 +132,7 @@ class _CheckBoxDialogBoxState extends State<CheckBoxDialogBox> {
                   child: Text(
                     "Cancel",
                     style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                      color: Colors.white,
+                      color:ColorResources.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
