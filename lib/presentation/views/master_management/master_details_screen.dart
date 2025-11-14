@@ -56,7 +56,18 @@ class _MasterDetailsScreenState extends State<MasterDetailsScreen> {
     "Price Lists",
   ];
 
-  List<String> routes = [AppRouterConst.partyGroupScreen];
+  List<String> routes = [
+    AppRouterConst.partyGroupScreen,
+    AppRouterConst.partyNameScreen,
+    AppRouterConst.itemGroupScreen,
+    AppRouterConst.itemNameScreen,
+    AppRouterConst.unitScreen,
+    AppRouterConst.godownScreen,
+    AppRouterConst.itemCategoryScreen,
+    AppRouterConst.otherLedgerScreen,
+    AppRouterConst.priceListScreen,
+  ];
+
   @override
   Widget build(BuildContext context) {
     // final appLocalizations = context.l10n;

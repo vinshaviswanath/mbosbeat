@@ -14,8 +14,24 @@ import 'package:mpos_beat/presentation/views/company_settings/company_settings.d
 import 'package:mpos_beat/presentation/views/company_user_mapping/company_user_mapping_screen.dart';
 import 'package:mpos_beat/presentation/views/godown_route_voucher_screen/godown_route_voucher_screen.dart';
 import 'package:mpos_beat/presentation/views/godown_wise_screen/godown_wise_screen.dart';
+import 'package:mpos_beat/presentation/views/master_management/godown/add_godown.dart';
+import 'package:mpos_beat/presentation/views/master_management/godown/godown_screen.dart';
+import 'package:mpos_beat/presentation/views/master_management/item_category/add_item_category.dart';
+import 'package:mpos_beat/presentation/views/master_management/item_category/item_category_screen.dart';
+import 'package:mpos_beat/presentation/views/master_management/item_group/add_item_group.dart';
+import 'package:mpos_beat/presentation/views/master_management/item_group/item_group_screen.dart';
+import 'package:mpos_beat/presentation/views/master_management/item_name/add_item_name.dart';
+import 'package:mpos_beat/presentation/views/master_management/item_name/item_name_screen.dart';
 import 'package:mpos_beat/presentation/views/master_management/master_details_screen.dart';
+import 'package:mpos_beat/presentation/views/master_management/other_ledgers/add_other_ledger.dart';
+import 'package:mpos_beat/presentation/views/master_management/other_ledgers/other_ledger_screen.dart';
+import 'package:mpos_beat/presentation/views/master_management/party_group/add_party_group.dart';
 import 'package:mpos_beat/presentation/views/master_management/party_group/party_group_screen.dart';
+import 'package:mpos_beat/presentation/views/master_management/party_name/add_party_name.dart';
+import 'package:mpos_beat/presentation/views/master_management/party_name/party_name_screen.dart';
+import 'package:mpos_beat/presentation/views/master_management/price_list/price_list_screen.dart';
+import 'package:mpos_beat/presentation/views/master_management/unit/add_unit.dart';
+import 'package:mpos_beat/presentation/views/master_management/unit/unit_screen.dart';
 import 'package:mpos_beat/presentation/views/reset_password/reset_success_screen.dart';
 import 'package:mpos_beat/presentation/views/route_wise_screen/route_wise_screen.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/add_company/add_company_screen.dart';
@@ -193,8 +209,12 @@ class AppRouter {
           final companyName = extra["companyName"] as String;
           final userId = extra["userId"] as int;
           // final company = extra["company"] as CompaniesListResponse;
-          return AddCompanyScreen(name: name, companyName: companyName,userId: userId,);
-      },
+          return AddCompanyScreen(
+            name: name,
+            companyName: companyName,
+            userId: userId,
+          );
+        },
       ),
       GoRoute(
         path: "/userDesignation",
@@ -458,6 +478,118 @@ class AppRouter {
         name: AppRouterConst.partyGroupScreen,
         builder: (context, state) {
           return const PartyGroupScreen();
+        },
+      ),
+      GoRoute(
+        path: "/addPartyGroup",
+        name: AppRouterConst.addPartyGroup,
+        builder: (context, state) {
+          return const AddPartyGroup();
+        },
+      ),
+      GoRoute(
+        path: "/partyNameScreen",
+        name: AppRouterConst.partyNameScreen,
+        builder: (context, state) {
+          return const PartyNameScreen();
+        },
+      ),
+      GoRoute(
+        path: "/addPartyName",
+        name: AppRouterConst.addPartyName,
+        builder: (context, state) {
+          return const AddPartyName();
+        },
+      ),
+      GoRoute(
+        path: "/itemGroupScreen",
+        name: AppRouterConst.itemGroupScreen,
+        builder: (context, state) {
+          return const ItemGroupScreen();
+        },
+      ),
+      GoRoute(
+        path: "/addItemGroup",
+        name: AppRouterConst.addItemGroup,
+        builder: (context, state) {
+          return const AddItemGroup();
+        },
+      ),
+      GoRoute(
+        path: "/unitScreen",
+        name: AppRouterConst.unitScreen,
+        builder: (context, state) {
+          return const UnitScreen();
+        },
+      ),
+      GoRoute(
+        path: "/addUnit",
+        name: AppRouterConst.addUnit,
+        builder: (context, state) {
+          return const AddUnit();
+        },
+      ),
+      GoRoute(
+        path: "/godownScreen",
+        name: AppRouterConst.godownScreen,
+        builder: (context, state) {
+          return const GodownScreen();
+        },
+      ),
+      GoRoute(
+        path: "/addGodown",
+        name: AppRouterConst.addGodown,
+        builder: (context, state) {
+          return const AddGodown();
+        },
+      ),
+      GoRoute(
+        path: "/itemCategoryScreen",
+        name: AppRouterConst.itemCategoryScreen,
+        builder: (context, state) {
+          return const ItemCategoryScreen();
+        },
+      ),
+      GoRoute(
+        path: "/addItemCategory",
+        name: AppRouterConst.addItemCategory,
+        builder: (context, state) {
+          return const AddItemCategory();
+        },
+      ),
+       GoRoute(
+        path: "/otherLedgerScreen",
+        name: AppRouterConst.otherLedgerScreen,
+        builder: (context, state) {
+          return const OtherLedgerScreen();
+        },
+      ),
+      GoRoute(
+        path: "/addOtherLedger",
+        name: AppRouterConst.addOtherLedger,
+        builder: (context, state) {
+          return const AddOtherLedger();
+        },
+      ),
+       GoRoute(
+        path: "/priceListScreen",
+        name: AppRouterConst.priceListScreen,
+        builder: (context, state) {
+          return const PriceListScreen();
+        },
+      ),
+       GoRoute(
+        path: "/itemNameScreen",
+        name: AppRouterConst.itemNameScreen,
+        builder: (context, state) {
+          return const ItemNameScreen();
+        },
+      ),
+      GoRoute(
+        path: "/addItemName",
+        name: AppRouterConst.addItemName,
+        builder: (context, state) {
+          return const AddItemName();
         },
       ),
     ],

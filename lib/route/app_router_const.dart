@@ -38,6 +38,22 @@ class AppRouterConst {
   static const resetSuccessScreen = "/resetSuccessScreen";
   static const masterDetailsScreen = "/masterDetailsScreen";
   static const partyGroupScreen = "/partyGroupScreen";
+  static const addPartyGroup = "/addPartyGroup";
+  static const partyNameScreen = "/partyNameScreen";
+  static const addPartyName = "/addPartyName";
+  static const itemGroupScreen = "/itemGroupScreen";
+  static const addItemGroup = "/addItemGroup";
+  static const unitScreen = "/unitScreen";
+  static const addUnit = "/addUnit";
+  static const godownScreen = "/godownScreen";
+  static const addGodown = "/addGodown";
+  static const itemCategoryScreen = "/itemCategoryScreen";
+  static const addItemCategory = "/addItemCategory";
+  static const otherLedgerScreen = "/otherLedgerScreen";
+  static const addOtherLedger = "/addOtherLedger";
+  static const priceListScreen = "/priceListScreen";
+  static const itemNameScreen = "/itemNameScreen";
+  static const addItemName = "/addItemName";
 
 
   // anver

@@ -93,7 +93,7 @@ class CustomButton extends StatelessWidget {
                             SvgPicture.asset(
                               imagePath!,
                               colorFilter: colorFilter,
-                              width: 24,
+                              width: 16,
                             ),
                             w4,
                           ],

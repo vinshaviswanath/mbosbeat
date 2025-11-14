@@ -5,23 +5,28 @@ class ListCard extends StatelessWidget {
   const ListCard({
     super.key,
     required this.isSelected,
-    required this.item,
+    // required this.item,
     required this.index,
     this.onTap,
     this.isBlocked = false,
     this.suffixWidget,
-    this.backgroundColor, this.showIndex = true,
+    this.backgroundColor,
+    this.showIndex = true,
+    required this.title,
+    this.subTitle,
   });
 
   final bool isSelected;
   // ignore: prefer_typing_uninitialized_variables
-  final UserMasterList item;
+  // final UserMasterList item;
   final int index;
   final bool? showIndex;
   final void Function()? onTap;
   final bool isBlocked;
   final Widget? suffixWidget;
   final Color? backgroundColor;
+  final String title;
+  final String? subTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -46,27 +51,32 @@ class ListCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          if(showIndex)
-          Text(
-            "${index + 1}",
-            style: context.textStyle.s12.w500.copyWith(color: textColor),
-          ),
+          if (showIndex == true) ...[
+            Text(
+              "${index + 1}",
+              style: context.textStyle.s12.w500.copyWith(color: textColor),
+            ),
+          ],
           w12,
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "${item.name}",
+                  title,
                   style: context.textStyle.s12.w500.copyWith(color: textColor),
                 ),
-                h4,
-                Text(
-                  "${item.designation}",
-                  style: context.textStyle.s10.w400.copyWith(
-                    color: isBlocked ? Colors.grey : ColorResources.bluishGray,
+                if (subTitle != null) ...[
+                  h4,
+                  Text(
+                    "$subTitle",
+                    style: context.textStyle.s10.w400.copyWith(
+                      color: isBlocked
+                          ? Colors.grey
+                          : ColorResources.bluishGray,
+                    ),
                   ),
-                ),
+                ],
               ],
             ),
           ),

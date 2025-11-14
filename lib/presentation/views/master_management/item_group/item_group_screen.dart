@@ -14,65 +14,71 @@ import 'package:mpos_beat/presentation/views/admin_user_management/user_manage/w
 import 'package:mpos_beat/presentation/views/admin_user_management/user_manage/widgets/unblock_user_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class PartyGroupScreen extends StatefulWidget {
-  const PartyGroupScreen({super.key});
+class ItemGroupScreen extends StatefulWidget {
+  const ItemGroupScreen({super.key});
 
   @override
-  State<PartyGroupScreen> createState() => _PartyGroupScreenState();
+  State<ItemGroupScreen> createState() => _ItemGroupScreenState();
 }
 
-class _PartyGroupScreenState extends State<PartyGroupScreen> {
+class _ItemGroupScreenState extends State<ItemGroupScreen> {
   int? selectedIndex;
   int? optionIndex;
   final TextEditingController searchController = TextEditingController();
   bool firstLoad = true;
   GoRouterDelegate? routerDelegate;
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    routerDelegate ??= GoRouter.of(context).routerDelegate;
-    routerDelegate?.addListener(_routerListener);
-  }
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   routerDelegate ??= GoRouter.of(context).routerDelegate;
+  //   routerDelegate?.addListener(_routerListener);
+  // }
 
   @override
   void initState() {
     super.initState();
     searchController.addListener(_onSearchChanged);
-    WidgetsBinding.instance.addPostFrameCallback((_) => _loadData());
+    // WidgetsBinding.instance.addPostFrameCallback((_) => _loadData());
   }
 
-  @override
-  void dispose() {
-    routerDelegate?.removeListener(_routerListener);
-    searchController.removeListener(_onSearchChanged);
-    searchController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   routerDelegate?.removeListener(_routerListener);
+  //   searchController.removeListener(_onSearchChanged);
+  //   searchController.dispose();
+  //   super.dispose();
+  // }
 
-  void _routerListener() {
-    if (!mounted) return;
-    final route = ModalRoute.of(context);
-    if (route != null && route.isCurrent) {
-      context.read<UserManagementProvider>().getAllUsersList(context);
-    }
-  }
+  // void _routerListener() {
+  //   if (!mounted) return;
+  //   final route = ModalRoute.of(context);
+  //   if (route != null && route.isCurrent) {
+  //     context.read<UserManagementProvider>().getAllUsersList(context);
+  //   }
+  // }
 
-  Future<void> _loadData() async {
-    final provider = context.read<UserManagementProvider>();
-    await provider
-        .getAllCompanies(context: context)
-        .then((_) => provider.getAllUsersList(context))
-        .then((_) => provider.getDesignationList(context))
-        .whenComplete(() {
-          if (!mounted) return;
-          setState(() => firstLoad = false);
-        });
-  }
+  // Future<void> _loadData() async {
+  //   final provider = context.read<UserManagementProvider>();
+  //   await provider
+  //       .getAllCompanies(context: context)
+  //       .then((_) => provider.getAllUsersList(context))
+  //       .then((_) => provider.getDesignationList(context))
+  //       .whenComplete(() {
+  //         if (!mounted) return;
+  //         setState(() => firstLoad = false);
+  //       });
+  // }
 
   void _onSearchChanged() => setState(() {});
 
-  final groupList = ["Group 1", "Group 2", "Group 3", "Group 4", "Group 5"];
+  final groupList = [
+    "Item Group 1",
+    "Item Group 2",
+    "Item Group 3",
+    "Item Group 4",
+    "Item Group 5",
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -112,14 +118,14 @@ class _PartyGroupScreenState extends State<PartyGroupScreen> {
                     ),
                   ),
                   title: Text(
-                    "Party Group",
+                    "Item Group",
                     style: context.textStyle.s20.indigoBlue.bold.roboto,
                   ),
                   centerTitle: true,
                   actions: [
                     InkWell(
                       onTap: () {
-                        context.pushNamed(AppRouterConst.addPartyGroup);
+                        context.pushNamed(AppRouterConst.addItemGroup);
                       },
                       child: const Padding(
                         padding: EdgeInsets.only(right: 20),

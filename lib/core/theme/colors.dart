@@ -35,6 +35,8 @@ class ColorResources {
   static const blueAccent = Color(0xFF1D80CC);
   static const grayD9 = Color(0xFFD9D9D9);
   static const lightIndigo = Color(0xFF8FACFF);
+  static const deepIndigo  = Color(0xFF492D8B);
+
 
   static const lavenderMist = Color(0xFFE3D7FE);
   static const babyBlue = Color(0xFFD2DCFF);

@@ -64,9 +64,9 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
         .then((_) => provider.getAllUsersList(context))
         .then((_) => provider.getDesignationList(context))
         .whenComplete(() {
-      if (!mounted) return;
-      setState(() => firstLoad = false);
-    });
+          if (!mounted) return;
+          setState(() => firstLoad = false);
+        });
   }
 
   void _onSearchChanged() => setState(() {});
@@ -173,49 +173,51 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
                         slivers: [
                           if (filteredItems.isNotEmpty)
                             SliverList(
-                              delegate: SliverChildBuilderDelegate(
-                                (context, index) {
-                                  final item = filteredItems[index];
-                                  final isSelected = index == selectedIndex;
+                              delegate: SliverChildBuilderDelegate((
+                                context,
+                                index,
+                              ) {
+                                final item = filteredItems[index];
+                                final isSelected = index == selectedIndex;
 
-                                  return GestureDetector(
-                                    onTap: () async {
-                                      await _handleUserTap(item, index, provider);
-                                    },
-                                    child: ListCard(
-                                      suffixWidget: InkWell(
-                                        onTap: item.isBlocked
-                                            ? null
-                                            : () async {
-                                                await _showUserOptionsDialog(
-                                                  context,
-                                                  index,
-                                                  item,
-                                                  provider,
-                                                  appLocalizations,
-                                                );
-                                              },
-                                        child: CircleAvatar(
-                                          radius: 12,
-                                          backgroundColor: isSelected
-                                              ? ColorResources.amber
-                                              : ColorResources.dustyBlue,
-                                          child: const Icon(
-                                            Icons.settings,
-                                            size: 16,
-                                            color: Colors.white,
-                                          ),
+                                return GestureDetector(
+                                  onTap: () async {
+                                    await _handleUserTap(item, index, provider);
+                                  },
+                                  child: ListCard(
+                                    suffixWidget: InkWell(
+                                      onTap: item.isBlocked
+                                          ? null
+                                          : () async {
+                                              await _showUserOptionsDialog(
+                                                context,
+                                                index,
+                                                item,
+                                                provider,
+                                                appLocalizations,
+                                              );
+                                            },
+                                      child: CircleAvatar(
+                                        radius: 12,
+                                        backgroundColor: isSelected
+                                            ? ColorResources.amber
+                                            : ColorResources.dustyBlue,
+                                        child: const Icon(
+                                          Icons.settings,
+                                          size: 16,
+                                          color: Colors.white,
                                         ),
                                       ),
-                                      isSelected: isSelected,
-                                      item: item,
-                                      index: index,
-                                      isBlocked: item.isBlocked,
                                     ),
-                                  );
-                                },
-                                childCount: filteredItems.length,
-                              ),
+                                    isSelected: isSelected,
+                                    // item: item,
+                                    title: item.name ?? '',
+                                    subTitle: item.designation,
+                                    index: index,
+                                    isBlocked: item.isBlocked,
+                                  ),
+                                );
+                              }, childCount: filteredItems.length),
                             ),
                           if (filteredItems.isEmpty && !provider.isLoading)
                             const SliverFillRemaining(
@@ -260,10 +262,7 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
           builder: (context) {
             return UnblockUserWidget(
               onConfirm: () {
-                provider.unblockUser(
-                  context: context,
-                  userId: item.id ?? 0,
-                );
+                provider.unblockUser(context: context, userId: item.id ?? 0);
                 Navigator.pop(context);
               },
             );
