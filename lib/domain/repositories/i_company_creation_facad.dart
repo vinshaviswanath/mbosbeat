@@ -129,17 +129,22 @@ interface class ICompanyCreationFacad {
     throw UnimplementedError();
   }
 
-  ResultFuture<CreateVoucherNumberingResponse> createVoucherNumber(
-    BaseParams<CreateVoucherNumberingParams> params,
-  ) {
   ResultFuture<ResponseModel> createVoucherNumber(
     BaseParams<CreateVoucherNumberingParams> params,
   ) {
     throw UnimplementedError();
   }
 
- ResultFuture<CompleteVoucherSettingsDtos> completeVouchers(int companyId) {
-  ResultFuture<ResponseModel> setVoucherNumberMethod({required String voucherMode, required String companyId,}) {
+  ResultFuture<CompleteVoucherSettingsDtos> completeVouchers(int companyId) {
+    {
+      throw UnimplementedError();
+    }
+  }
+
+  ResultFuture<ResponseModel> setVoucherNumberMethod({
+    required String voucherMode,
+    required String companyId,
+  }) {
     throw UnimplementedError();
   }
 }
