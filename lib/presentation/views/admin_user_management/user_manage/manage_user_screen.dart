@@ -206,7 +206,6 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
                                           Icons.settings,
                                           size: 16,
                                             color: ColorResources.white,
-                                          color: Colors.white,
                                         ),
                                       ),
                                     ),
