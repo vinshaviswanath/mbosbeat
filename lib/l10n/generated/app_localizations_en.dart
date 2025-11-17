@@ -1142,4 +1142,58 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get company_settings_screen_title => 'Company Settings';
+
+  @override
+  String get dashboard_edit_company => 'Edit Company';
+
+  @override
+  String get dashboard_integration_settings => 'Integration Settings';
+
+  @override
+  String get dashboard_company_settings => 'Company Settings';
+
+  @override
+  String get dashboard_voucher_type => 'Voucher Type';
+
+  @override
+  String get dashboard_godown_or_route_wise_voucher =>
+      'Godown / Route Wise Voucher';
+
+  @override
+  String get dashboard_add_users => 'Add Users';
+
+  @override
+  String get dashboard_master => 'Master';
+
+  @override
+  String get dashboard_total_sales => 'Total Sales';
+
+  @override
+  String get dashboard_expense_entry => 'Expense Entry';
+
+  @override
+  String get drawer_all_users => 'All Users';
+
+  @override
+  String get drawer_user_designation => 'User Designation';
+
+  @override
+  String get drawer_user_management => 'User Management';
+
+  @override
+  String get add_company_screen_add_company => 'Add Company';
+
+  @override
+  String get add_company_search_company => 'Search Company';
+
+  @override
+  String get user_creation_please_select_reporting_person =>
+      'Please select reporting person';
+
+  @override
+  String get user_creation_please_select_designation =>
+      'Please select designation';
+
+  @override
+  String get user_creation_enter_full_name => 'Please enter full name';
 }

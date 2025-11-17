@@ -67,6 +67,8 @@ import '../../data/data_sources/company_creation/integration_type.dart'
     as _i189;
 import '../../data/data_sources/company_creation/registration_type.dart'
     as _i34;
+import '../../data/data_sources/company_creation/set_voucher_numbering_method/set_voucher_numbering_method.dart'
+    as _i931;
 import '../../data/data_sources/company_creation/state_list.dart' as _i374;
 import '../../data/data_sources/user_management/activate_designation/activate_designation.dart'
     as _i185;
@@ -330,6 +332,13 @@ Future<_i174.GetIt> init(
       gh<_i460.SharedPreferences>(),
     ),
   );
+  gh.lazySingleton<_i931.SetVoucherNumberingMethod>(
+    () => _i931.SetVoucherNumberingMethod(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
   gh.lazySingleton<_i374.StateList>(
     () => _i374.StateList(
       gh<_i816.HttpClient>(),
@@ -502,6 +511,20 @@ Future<_i174.GetIt> init(
       gh<_i853.GetVoucherNumbering>(),
       gh<_i220.CreateVoucherNumbering>(),
       gh<_i915.CompleteVoucherSettings>(),
+    ),
+  );
+  gh.lazySingleton<_i590.IAuthenticationFacad>(
+    () => _i823.IAuthenticationImpl(
+      gh<_i70.CompanyRegisteration>(),
+      gh<_i42.OtpValidation>(),
+      gh<_i13.ResendOtp>(),
+      gh<_i526.LoginImpl>(),
+      gh<_i244.ResetPassword>(),
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+      gh<_i492.LoginByToken>(),
+      gh<_i931.SetVoucherNumberingMethod>(),
     ),
   );
   gh.lazySingleton<_i590.IAuthenticationFacad>(

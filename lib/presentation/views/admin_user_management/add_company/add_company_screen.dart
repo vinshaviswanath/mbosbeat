@@ -50,6 +50,7 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final appLocalization = context.l10n;
     final provider = context.watch<UserManagementProvider>();
     final filteredCompanies =
         provider.companiesList?.companyViewList.where((company) {
@@ -70,7 +71,7 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
           ),
         ),
         title: Text(
-          "Add Company",
+          appLocalization.add_company_screen_add_company,
           style: context.textStyle.s20.indigoBlue.bold.roboto,
         ),
         centerTitle: true,
@@ -107,8 +108,9 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
                       child: TextField(
                         controller: _searchController,
                         decoration: InputDecoration(
-                          hintText: "Search Company",
-                          hintStyle: context.textStyle.s12.w300.bluishGray.roboto,
+                          hintText: appLocalization.add_company_search_company,
+                          hintStyle:
+                              context.textStyle.s12.w300.bluishGray.roboto,
                           fillColor: ColorResources.cloudGray,
                           filled: true,
                           suffixIcon: const Icon(
@@ -148,7 +150,7 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
                   delegate: SliverChildBuilderDelegate((context, index) {
                     final company = filteredCompanies[index];
                     final isSelected = selectedCompanyIds.contains(company.id);
-          
+
                     return AddCompanyWidget(
                       title: company.companyName ?? "",
                       subtitle: "${company.address1}, ${company.country}",
@@ -203,14 +205,14 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
                               );
                             });
                       },
-                      buttonText: "Save",
+                      buttonText: appLocalization.save,
                       isborderEnable: false,
                     ),
                   ),
                 ),
             ],
           );
-        }
+        },
       ),
     );
   }

@@ -214,7 +214,7 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                                 ),
                                 const SizedBox(width: 2),
                                 Text(
-                                  "Please enter full name",
+                                  appLocalizations.user_creation_enter_full_name,
                                   style: context
                                       .textStyle
                                       .s10
@@ -478,7 +478,8 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                                 ),
                                 const SizedBox(width: 2),
                                 Text(
-                                  "Please select designation",
+                                  appLocalizations
+                                      .user_creation_please_select_designation,
                                   style: context
                                       .textStyle
                                       .s10
@@ -599,7 +600,8 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                                 ),
                                 const SizedBox(width: 2),
                                 Text(
-                                  "Please select reporting person",
+                                  appLocalizations
+                                      .user_creation_please_select_reporting_person,
                                   style: context
                                       .textStyle
                                       .s10

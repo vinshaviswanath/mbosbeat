@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
-import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_divider.dart';
 import 'package:mpos_beat/presentation/dialogs/auth_dialogs.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
@@ -20,37 +19,34 @@ class AdminDashboard extends StatefulWidget {
 class _AdminDashboardState extends State<AdminDashboard> {
   int? selectedIndex;
   int? optionIndex;
-  List<CompanyViewList> companyList = [];
-  CompanyViewList? selectedCompany;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await Provider.of<CompanyCreationProvider>(
-        context,
-        listen: false,
-      ).getAllCompanies(context);
 
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       final provider = Provider.of<CompanyCreationProvider>(
         context,
         listen: false,
       );
 
-      companyList = provider.companiesList?.companyViewList ?? [];
-      if (companyList.isNotEmpty) {
-        selectedCompany = companyList.first;
-        Logger.logSuccess(
-          "Company Id in admin  :: ${selectedCompany?.id ?? 0}",
-        );
+      // Load list
+      await provider.getAllCompanies(context);
 
-        provider.setSelectedCompany(company: selectedCompany!);
-        Logger.logSuccess(
-          "Company Id in admin dashboard :: ${provider.selectedCompany?.id ?? 0}",
-        );
+      final list = provider.companiesList?.companyViewList ?? [];
+
+      // Set selected company if not set
+      if (list.isNotEmpty) {
+        if (provider.selectedCompany == null) {
+          provider.setSelectedCompany(company: list.first);
+        } else {
+          final matched = list.firstWhere(
+            (c) => c.id == provider.selectedCompany!.id,
+            orElse: () => list.first,
+          );
+          provider.setSelectedCompany(company: matched);
+        }
       }
-
-      setState(() {});
     });
   }
 
@@ -149,21 +145,27 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                       .withValues(alpha: 0.1),
                                                 ),
 
-                                                child: CompanyDropdown(
-                                                  companyList: companyList,
-                                                  selectedCompany:
-                                                      selectedCompany,
-                                                  onCompanySelected: (company) {
-                                                    setState(
-                                                      () => selectedCompany =
-                                                          company,
-                                                    );
-                                                    provider.setSelectedCompany(
-                                                      company: company,
-                                                    );
+                                                child: Consumer<CompanyCreationProvider>(
+                                                  builder: (context, provider, _) {
+                                                    final companyList =
+                                                        provider
+                                                            .companiesList
+                                                            ?.companyViewList ??
+                                                        [];
+                                                    final selectedCompany =
+                                                        provider
+                                                            .selectedCompany;
 
-                                                    Logger.logSuccess(
-                                                      "SELECTED COMPANY ID: ${company.id} COMPANY NAME: ${company.companyName}  ",
+                                                    return CompanyDropdown(
+                                                      companyList: companyList,
+                                                      selectedCompany:
+                                                          selectedCompany,
+                                                      onCompanySelected: (company) {
+                                                        provider
+                                                            .setSelectedCompany(
+                                                              company: company,
+                                                            );
+                                                      },
                                                     );
                                                   },
                                                 ),
@@ -219,185 +221,199 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                       ),
 
                                       h10,
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          SizedBox(
-                                            width: context.getSize.width / 1.44,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  appLocalization
-                                                      .admin_dashboard_address,
-                                                  style: context
-                                                      .textStyle
-                                                      .s09
-                                                      .w400
-                                                      .white
-                                                      .roboto,
-                                                ),
-                                                Text(
-                                                  "${selectedCompany?.address1},${selectedCompany?.address2},${selectedCompany?.address3},${selectedCompany?.state},${selectedCompany?.country}",
-                                                  style: context
-                                                      .textStyle
-                                                      .s10
-                                                      .w400
-                                                      .white
-                                                      .roboto,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-
-                                          Row(
+                                      Consumer<CompanyCreationProvider>(
+                                        builder: (context, provider, _) {
+                                          final selectedCompany =
+                                              provider.selectedCompany;
+                                          return Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Builder(
-                                                builder: (context) {
-                                                  return GestureDetector(
-                                                    onTap: () {
-                                                      provider.isGodown
-                                                          ? context.pushNamed(
-                                                              AppRouterConst
-                                                                  .godownWiseScreen,
-                                                            )
-                                                          : context.pushNamed(
-                                                              AppRouterConst
-                                                                  .routeWiseScreen,
-                                                            );
-                                                    },
-                                                    child: CircleAvatar(
-                                                      backgroundColor:
-                                                          ColorResources
-                                                              .rosePink,
-                                                      radius: 15,
-                                                      child: SvgPicture.asset(
-                                                        AppAssets.locationPin,
-                                                        height: 16,
-                                                      ),
+                                              SizedBox(
+                                                width:
+                                                    context.getSize.width /
+                                                    1.44,
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      appLocalization
+                                                          .admin_dashboard_address,
+                                                      style: context
+                                                          .textStyle
+                                                          .s09
+                                                          .w400
+                                                          .white
+                                                          .roboto,
                                                     ),
-                                                  );
-                                                },
+                                                    Text(
+                                                      "${selectedCompany?.address1},${selectedCompany?.address2},${selectedCompany?.address3},${selectedCompany?.state},${selectedCompany?.country}",
+                                                      style: context
+                                                          .textStyle
+                                                          .s10
+                                                          .w400
+                                                          .white
+                                                          .roboto,
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
-                                              w8,
-                                              GestureDetector(
-                                                onTap: () {
-                                                  CustomDialog.showBottomCustomDialog(
-                                                    padding:
-                                                        const EdgeInsets.symmetric(
-                                                          vertical: 16,
-                                                        ),
-                                                    chid: StatefulBuilder(
-                                                      builder: (context, setStateDialog) {
-                                                        return Container(
-                                                          decoration: BoxDecoration(
-                                                            color:
-                                                                ColorResources
-                                                                    .white,
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                  12,
+
+                                              Row(
+                                                children: [
+                                                  Consumer<
+                                                    CompanyCreationProvider
+                                                  >(
+                                                    builder: (context, provider, _) {
+                                                      return Builder(
+                                                        builder: (context) {
+                                                          return GestureDetector(
+                                                            onTap: () {
+                                                              WidgetsBinding.instance.addPostFrameCallback((
+                                                                _,
+                                                              ) async {
+                                                                await provider
+                                                                    .getAllCompanies(
+                                                                      context,
+                                                                    );
+                                                                provider.isGodown
+                                                                    ? context.pushNamed(
+                                                                        AppRouterConst
+                                                                            .godownWiseScreen,
+                                                                      )
+                                                                    : context.pushNamed(
+                                                                        AppRouterConst
+                                                                            .routeWiseScreen,
+                                                                      );
+                                                              });
+                                                            },
+                                                            child: CircleAvatar(
+                                                              backgroundColor:
+                                                                  ColorResources
+                                                                      .rosePink,
+                                                              radius: 15,
+                                                              child: SvgPicture.asset(
+                                                                AppAssets
+                                                                    .locationPin,
+                                                                height: 16,
+                                                              ),
+                                                            ),
+                                                          );
+                                                        },
+                                                      );
+                                                    },
+                                                  ),
+                                                  w8,
+                                                  Consumer<
+                                                    CompanyCreationProvider
+                                                  >(
+                                                    builder: (context, provider, _) {
+                                                      final selectedCompany =
+                                                          provider
+                                                              .selectedCompany;
+                                                      return GestureDetector(
+                                                        onTap: () {
+                                                          CustomDialog.showBottomCustomDialog(
+                                                            padding:
+                                                                const EdgeInsets.symmetric(
+                                                                  vertical: 16,
                                                                 ),
-                                                          ),
-                                                          child: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .min,
-                                                            children: [
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsets.symmetric(
-                                                                      horizontal:
-                                                                          16,
-                                                                    ),
-                                                                child: Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceBetween,
-                                                                  children: [
-                                                                    w10,
-                                                                    Column(
-                                                                      children: [
-                                                                        Text(
-                                                                          "${selectedCompany?.companyName}",
-                                                                          style: context
-                                                                              .textStyle
-                                                                              .s12
-                                                                              .bold
-                                                                              .indigoBlue
-                                                                              .roboto,
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                    Row(
-                                                                      crossAxisAlignment:
-                                                                          CrossAxisAlignment
-                                                                              .start,
-                                                                      children: [
-                                                                        GestureDetector(
-                                                                          onTap: () {
-                                                                            Navigator.pop(
-                                                                              context,
-                                                                            );
-                                                                          },
-                                                                          child: CircleAvatar(
-                                                                            backgroundColor: ColorResources.bluishGray.withValues(
-                                                                              alpha: 0.15,
+                                                            chid: StatefulBuilder(
+                                                              builder:
+                                                                  (
+                                                                    context,
+                                                                    setStateDialog,
+                                                                  ) {
+                                                                    return Container(
+                                                                      decoration: BoxDecoration(
+                                                                        color: ColorResources
+                                                                            .white,
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                              12,
                                                                             ),
-                                                                            radius:
-                                                                                12,
-                                                                            child: const Icon(
-                                                                              Icons.close,
-                                                                              size: 12,
-                                                                              color: ColorResources.bluishGray,
+                                                                      ),
+                                                                      child: Column(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.min,
+                                                                        children: [
+                                                                          Padding(
+                                                                            padding: const EdgeInsets.symmetric(
+                                                                              horizontal: 16,
+                                                                            ),
+                                                                            child: Row(
+                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                              children: [
+                                                                                w10,
+                                                                                Column(
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      "${selectedCompany?.companyName}",
+                                                                                      style: context.textStyle.s12.bold.indigoBlue.roboto,
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                                Row(
+                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                  children: [
+                                                                                    GestureDetector(
+                                                                                      onTap: () {
+                                                                                        Navigator.pop(
+                                                                                          context,
+                                                                                        );
+                                                                                      },
+                                                                                      child: CircleAvatar(
+                                                                                        backgroundColor: ColorResources.bluishGray.withValues(
+                                                                                          alpha: 0.15,
+                                                                                        ),
+                                                                                        radius: 12,
+                                                                                        child: const Icon(
+                                                                                          Icons.close,
+                                                                                          size: 12,
+                                                                                          color: ColorResources.bluishGray,
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                              ],
                                                                             ),
                                                                           ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                              h4,
-                                                              Text(
-                                                                "${selectedCompany?.address1},${selectedCompany?.address2},${selectedCompany?.address3},${selectedCompany?.state},${selectedCompany?.country}",
-                                                                style: context
-                                                                    .textStyle
-                                                                    .s10
-                                                                    .w400
-                                                                    .dustyBlue
-                                                                    .roboto,
-                                                              ),
-                                                              h12,
+                                                                          h4,
+                                                                          Text(
+                                                                            "${selectedCompany?.address1},${selectedCompany?.address2},${selectedCompany?.address3},${selectedCompany?.state},${selectedCompany?.country}",
+                                                                            style:
+                                                                                context.textStyle.s10.w400.dustyBlue.roboto,
+                                                                          ),
+                                                                          h12,
 
-                                                              //Edit Compny Info......
-                                                              OptionItem(
-                                                                index: 0,
+                                                                          //Edit Compny Info......
+                                                                          OptionItem(
+                                                                            index:
+                                                                                0,
 
-                                                                selectedIndex:
-                                                                    optionIndex,
-                                                                title:
-                                                                    "Edit Company",
-                                                                icon: AppAssets
-                                                                    .editIcon,
-                                                                onTap: (i) {
-                                                                  Navigator.pop(
-                                                                    context,
-                                                                  );
+                                                                            selectedIndex:
+                                                                                optionIndex,
+                                                                            title:
+                                                                                appLocalization.dashboard_edit_company,
+                                                                            icon:
+                                                                                AppAssets.editIcon,
+                                                                            onTap: (i) {
+                                                                              Navigator.pop(
+                                                                                context,
+                                                                              );
 
-                                                                  Logger.logSuccess(
-                                                                    "SELECTED COMPANY ID: ${selectedCompany!.id}",
-                                                                  );
-                                                                  Logger.logInfo(
-                                                                    "Company Selected: ${selectedCompany?.companyName}",
-                                                                  );
+                                                                              Logger.logSuccess(
+                                                                                "SELECTED COMPANY ID: ${selectedCompany!.id}",
+                                                                              );
+                                                                              Logger.logInfo(
+                                                                                "Company Selected: ${selectedCompany.companyName}",
+                                                                              );
 
-                                                                  context.pushNamed(
-                                                                    AppRouterConst
-                                                                        .companyCreationScreen,
-                                                                    extra: {
+                                                                              context.pushNamed(
+                                                                                AppRouterConst.companyCreationScreen,
+                                                                                extra: {
                                                                       'tabIndex':
                                                                           0,
                                                                       'companyData':
@@ -405,36 +421,39 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                       'isPop':
                                                                           false,
                                                                     },
-                                                                  );
-                                                                },
-                                                              ),
-                                                              const CustomDivider(),
+                                                                                  'tabIndex': 0,
+                                                                                  'companyData': selectedCompany,
+                                                                                },
+                                                                              );
+                                                                            },
+                                                                          ),
+                                                                          const CustomDivider(),
 
-                                                              //Integration Settings...
-                                                              OptionItem(
-                                                                index: 1,
-                                                                selectedIndex:
-                                                                    optionIndex,
-                                                                title:
-                                                                    "Integration Settings",
-                                                                icon: AppAssets
-                                                                    .settings2,
-                                                                onTap: (i) {
-                                                                  Logger.logSuccess(
-                                                                    "SELECTED COMPANY ID: ${selectedCompany!.id}",
-                                                                  );
-                                                                  Logger.logInfo(
-                                                                    "Company Selected: ${selectedCompany?.companyName}",
-                                                                  );
+                                                                          //Integration Settings...
+                                                                          OptionItem(
+                                                                            index:
+                                                                                1,
+                                                                            selectedIndex:
+                                                                                optionIndex,
+                                                                            title:
+                                                                                appLocalization.dashboard_integration_settings,
+                                                                            icon:
+                                                                                AppAssets.settings2,
+                                                                            onTap: (i) {
+                                                                              Logger.logSuccess(
+                                                                                "SELECTED COMPANY ID: ${selectedCompany!.id}",
+                                                                              );
+                                                                              Logger.logInfo(
+                                                                                "Company Selected: ${selectedCompany.companyName}",
+                                                                              );
 
-                                                                  Navigator.pop(
-                                                                    context,
-                                                                  );
+                                                                              Navigator.pop(
+                                                                                context,
+                                                                              );
 
-                                                                  context.pushNamed(
-                                                                    AppRouterConst
-                                                                        .companyCreationScreen,
-                                                                    extra: {
+                                                                              context.pushNamed(
+                                                                                AppRouterConst.companyCreationScreen,
+                                                                                extra: {
                                                                       'tabIndex':
                                                                           2,
                                                                       'companyData':
@@ -442,70 +461,71 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                       'isPop':
                                                                           false,
                                                                     },
-                                                                  );
-                                                                },
-                                                              ),
-                                                              const CustomDivider(),
+                                                                                  'tabIndex': 2,
+                                                                                  'companyData': selectedCompany,
+                                                                                },
+                                                                              );
+                                                                            },
+                                                                          ),
+                                                                          const CustomDivider(),
 
-                                                              //Company Settings...
-                                                              OptionItem(
-                                                                index: 2,
-                                                                selectedIndex:
-                                                                    optionIndex,
-                                                                title:
-                                                                    "Company Settings",
-                                                                icon: AppAssets
-                                                                    .settingsIcon,
-                                                                onTap: (i) {
-                                                                  Navigator.pop(
-                                                                    context,
-                                                                  );
+                                                                          //Company Settings...
+                                                                          OptionItem(
+                                                                            index:
+                                                                                2,
+                                                                            selectedIndex:
+                                                                                optionIndex,
+                                                                            title:
+                                                                                appLocalization.dashboard_company_settings,
+                                                                            icon:
+                                                                                AppAssets.settingsIcon,
+                                                                            onTap: (i) {
+                                                                              Navigator.pop(
+                                                                                context,
+                                                                              );
 
-                                                                  Logger.logSuccess(
-                                                                    "SELECTED COMPANY ID: ${selectedCompany!.id}",
-                                                                  );
-                                                                  Logger.logInfo(
-                                                                    "Company Selected: ${selectedCompany?.companyName}",
-                                                                  );
+                                                                              Logger.logSuccess(
+                                                                                "SELECTED COMPANY ID: ${selectedCompany!.id}",
+                                                                              );
+                                                                              Logger.logInfo(
+                                                                                "Company Selected: ${selectedCompany.companyName}",
+                                                                              );
 
-                                                                  context.pushNamed(
-                                                                    AppRouterConst
-                                                                        .companySettingsScreen,
-                                                                    extra: {
-                                                                      "companyId":
-                                                                          selectedCompany
-                                                                              ?.id,
-                                                                    },
-                                                                  );
-                                                                },
-                                                              ),
-                                                              const CustomDivider(),
+                                                                              context.pushNamed(
+                                                                                AppRouterConst.companySettingsScreen,
+                                                                                extra: {
+                                                                                  "companyId": selectedCompany.id,
+                                                                                },
+                                                                              );
+                                                                            },
+                                                                          ),
+                                                                          const CustomDivider(),
 
-                                                              //Voucher Type...
-                                                              OptionItem(
-                                                                index: 3,
-                                                                selectedIndex:
-                                                                    optionIndex,
-                                                                title:
-                                                                    "Voucher Type",
-                                                                icon: AppAssets
-                                                                    .voucherIcon,
-                                                                onTap: (i) {
-                                                                  Logger.logSuccess(
-                                                                    "SELECTED COMPANY ID: ${selectedCompany!.id}",
-                                                                  );
-                                                                  Logger.logInfo(
-                                                                    "Company Selected: ${selectedCompany?.companyName}",
-                                                                  );
+                                                                          //Voucher Type...
+                                                                          OptionItem(
+                                                                            index:
+                                                                                3,
+                                                                            selectedIndex:
+                                                                                optionIndex,
+                                                                            title:
+                                                                                appLocalization.dashboard_voucher_type,
+                                                                            icon:
+                                                                                AppAssets.voucherIcon,
+                                                                            onTap: (i) {
+                                                                              Logger.logSuccess(
+                                                                                "SELECTED COMPANY ID: ${selectedCompany!.id}",
+                                                                              );
+                                                                              Logger.logInfo(
+                                                                                "Company Selected: ${selectedCompany.companyName}",
+                                                                              );
 
-                                                                  Navigator.pop(
-                                                                    context,
-                                                                  );
+                                                                              Navigator.pop(
+                                                                                context,
+                                                                              );
 
-                                                                  context.pushNamed(
-                                                                    AppRouterConst
-                                                                        .companyCreationScreen,
-                                                                    extra: {
+                                                                              context.pushNamed(
+                                                                                AppRouterConst.companyCreationScreen,
+                                                                                extra: {
                                                                       'tabIndex':
                                                                           1,
                                                                       'companyData':
@@ -513,321 +533,344 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                       'isPop':
                                                                           false,
                                                                     },
-                                                                  );
-                                                                },
-                                                              ),
-                                                              const CustomDivider(),
+                                                                                  'tabIndex': 1,
+                                                                                  'companyData': selectedCompany,
+                                                                                },
+                                                                              );
+                                                                            },
+                                                                          ),
+                                                                          const CustomDivider(),
 
-                                                              //Godown/Route....
-                                                              OptionItem(
-                                                                index: 4,
-                                                                selectedIndex:
-                                                                    optionIndex,
-                                                                title:
-                                                                    "Godown / Route Wise Voucher",
-                                                                icon: AppAssets
-                                                                    .building,
-                                                                onTap: (i) {
-                                                                  Navigator.pop(
-                                                                    context,
-                                                                  );
-                                                                  context.pushNamed(
-                                                                    AppRouterConst
-                                                                        .godownRouteVoucherScreen,
-                                                                  );
-                                                                },
-                                                              ),
-                                                              const CustomDivider(),
+                                                                          //Godown/Route....
+                                                                          OptionItem(
+                                                                            index:
+                                                                                4,
+                                                                            selectedIndex:
+                                                                                optionIndex,
+                                                                            title:
+                                                                                appLocalization.dashboard_godown_or_route_wise_voucher,
+                                                                            icon:
+                                                                                AppAssets.building,
+                                                                            onTap: (i) {
+                                                                              Navigator.pop(
+                                                                                context,
+                                                                              );
+                                                                              context.pushNamed(
+                                                                                AppRouterConst.godownRouteVoucherScreen,
+                                                                              );
+                                                                            },
+                                                                          ),
+                                                                          const CustomDivider(),
 
-                                                              //Add Users
-                                                              OptionItem(
-                                                                index: 5,
-                                                                selectedIndex:
-                                                                    optionIndex,
-                                                                title:
-                                                                    "Add Users",
-                                                                icon: AppAssets
-                                                                    .person2,
-                                                                onTap: (i) {
-                                                                  Navigator.pop(
-                                                                    context,
-                                                                  );
-                                                                  context.pushNamed(
-                                                                    AppRouterConst
-                                                                        .companyUserMappingScreen,
-                                                                    extra: {
-                                                                      "companyId":
-                                                                          selectedCompany!
-                                                                              .id,
-                                                                      "name": selectedCompany
-                                                                          ?.companyName,
-                                                                      "companyName":
-                                                                          "${selectedCompany?.state},${selectedCompany?.country}",
-                                                                    },
-                                                                  );
-                                                                },
+                                                                          //Add Users
+                                                                          OptionItem(
+                                                                            index:
+                                                                                5,
+                                                                            selectedIndex:
+                                                                                optionIndex,
+                                                                            title:
+                                                                                appLocalization.dashboard_add_users,
+                                                                            icon:
+                                                                                AppAssets.person2,
+                                                                            onTap: (i) {
+                                                                              Navigator.pop(
+                                                                                context,
+                                                                              );
+                                                                              context.pushNamed(
+                                                                                AppRouterConst.companyUserMappingScreen,
+                                                                                extra: {
+                                                                                  "companyId": selectedCompany!.id,
+                                                                                  "name": selectedCompany.companyName,
+                                                                                  "companyName": "${selectedCompany.state},${selectedCompany.country}",
+                                                                                },
+                                                                              );
+                                                                            },
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    );
+                                                                  },
+                                                            ),
+                                                          );
+                                                        },
+                                                        child: CircleAvatar(
+                                                          backgroundColor:
+                                                              ColorResources
+                                                                  .rosePink,
+                                                          radius: 15,
+                                                          child:
+                                                              SvgPicture.asset(
+                                                                AppAssets
+                                                                    .settings,
+                                                                height: 16,
                                                               ),
-                                                            ],
-                                                          ),
-                                                        );
-                                                      },
-                                                    ),
-                                                  );
-                                                },
-                                                child: CircleAvatar(
-                                                  backgroundColor:
-                                                      ColorResources.rosePink,
-                                                  radius: 15,
-                                                  child: SvgPicture.asset(
-                                                    AppAssets.settings,
-                                                    height: 16,
+                                                        ),
+                                                      );
+                                                    },
                                                   ),
-                                                ),
+                                                ],
                                               ),
                                             ],
-                                          ),
-                                        ],
+                                          );
+                                        },
                                       ),
                                     ],
                                   ),
                                 ),
 
-                                Container(
-                                  width: double.infinity,
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 18,
-                                    vertical: 20,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: ColorResources.white,
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      if (selectedCompany?.integrationType ==
-                                          'Stand Alone') ...[
-                                        GestureDetector(
-                                          onTap: () {
-                                            context.pushNamed(
-                                              AppRouterConst
-                                                  .masterDetailsScreen,
-                                            );
-                                          },
-                                          child: Container(
+                                Consumer<CompanyCreationProvider>(
+                                  builder: (context, provider, _) {
+                                    final selectedCompany =
+                                        provider.selectedCompany;
+                                    return Container(
+                                      width: double.infinity,
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 18,
+                                        vertical: 20,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: ColorResources.white,
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          if (selectedCompany
+                                                  ?.integrationType ==
+                                              'Stand Alone') ...[
+                                            GestureDetector(
+                                              onTap: () {
+                                                context.pushNamed(
+                                                  AppRouterConst
+                                                      .masterDetailsScreen,
+                                                );
+                                              },
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                      horizontal: 16,
+                                                      vertical: 10,
+                                                    ),
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                  color:
+                                                      ColorResources.paleYellow,
+                                                ),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          appLocalization
+                                                              .dashboard_master,
+                                                          style: context
+                                                              .textStyle
+                                                              .s14
+                                                              .w500
+                                                              .royalBlue
+                                                              .roboto,
+                                                        ),
+                                                        w4,
+                                                        Text(
+                                                          "${selectedCompany?.integrationType}",
+                                                          style: context
+                                                              .textStyle
+                                                              .s10
+                                                              .w400
+                                                              .neutralGray
+                                                              .roboto,
+                                                        ),
+                                                      ],
+                                                    ),
+
+                                                    NavButton(
+                                                      color:
+                                                          ColorResources.amber,
+                                                      onTap: () {},
+                                                      svgArrowPath: AppAssets
+                                                          .arrowToRight,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            h16,
+                                          ],
+                                          Text(
+                                            appLocalization
+                                                .admin_dashboard_summary,
+                                            style: context
+                                                .textStyle
+                                                .s14
+                                                .w500
+                                                .royalBlue
+                                                .roboto,
+                                          ),
+                                          h5,
+                                          Container(
                                             padding: const EdgeInsets.symmetric(
                                               horizontal: 16,
                                               vertical: 10,
                                             ),
                                             decoration: BoxDecoration(
                                               borderRadius:
-                                                  BorderRadius.circular(8),
-                                              color: ColorResources.paleYellow,
-                                            ),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      "Master",
-                                                      style: context
-                                                          .textStyle
-                                                          .s14
-                                                          .w500
-                                                          .royalBlue
-                                                          .roboto,
-                                                    ),
-                                                    w4,
-                                                    Text(
-                                                      "${selectedCompany?.integrationType}",
-                                                      style: context
-                                                          .textStyle
-                                                          .s10
-                                                          .w400
-                                                          .neutralGray
-                                                          .roboto,
-                                                    ),
-                                                  ],
-                                                ),
-
-                                                NavButton(
-                                                  color: ColorResources.amber,
-                                                  onTap: () {},
-                                                  svgArrowPath:
-                                                      AppAssets.arrowToRight,
+                                                  BorderRadius.circular(16),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  offset: const Offset(0, 6),
+                                                  color: ColorResources.black
+                                                      .withValues(alpha: 0.25),
+                                                  blurRadius: 5,
                                                 ),
                                               ],
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  ColorResources.deepIndigo
+                                                      .withValues(alpha: 0.8),
+                                                  ColorResources.deepIndigo
+                                                      .withValues(alpha: 0.9),
+                                                ],
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                                        h16,
-                                      ],
-                                      Text(
-                                        appLocalization.admin_dashboard_summary,
-                                        style: context
-                                            .textStyle
-                                            .s14
-                                            .w500
-                                            .royalBlue
-                                            .roboto,
-                                      ),
-                                      h5,
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 16,
-                                          vertical: 10,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            16,
-                                          ),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              offset: const Offset(0, 6),
-                                              color: ColorResources.black
-                                                  .withValues(alpha: 0.25),
-                                              blurRadius: 5,
-                                            ),
-                                          ],
-                                          gradient: LinearGradient(
-                                            colors: [
-                                              ColorResources.deepIndigo
-                                                  .withValues(alpha: 0.8),
-                                              ColorResources.deepIndigo
-                                                  .withValues(alpha: 0.9),
-                                            ],
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomRight,
-                                          ),
-                                        ),
-                                        child: Column(
-                                          children: [
-                                            EndToEndTextWidget(
-                                              text1: "Total Sales",
-                                              textStyle1: context
-                                                  .textStyle
-                                                  .s16
-                                                  .w400
-                                                  .white
-                                                  .roboto,
-                                              text2: "September",
-                                              textStyle2: context
-                                                  .textStyle
-                                                  .s10
-                                                  .w400
-                                                  .white
-                                                  .roboto,
-                                            ),
-                                            h5,
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                            child: Column(
                                               children: [
-                                                Text(
-                                                  "39,84,62,378.00",
-                                                  style: context
+                                                EndToEndTextWidget(
+                                                  text1: appLocalization
+                                                      .dashboard_total_sales,
+                                                  textStyle1: context
                                                       .textStyle
-                                                      .s22
-                                                      .bold
+                                                      .s16
+                                                      .w400
+                                                      .white
+                                                      .roboto,
+                                                  text2: "September",
+                                                  textStyle2: context
+                                                      .textStyle
+                                                      .s10
+                                                      .w400
                                                       .white
                                                       .roboto,
                                                 ),
-                                                NavButton(
-                                                  color: ColorResources.amber,
-                                                  onTap: () {},
-                                                  svgArrowPath:
-                                                      AppAssets.arrowToRight,
-                                                ),
-                                              ],
-                                            ),
-                                            Divider(
-                                              color: ColorResources.white
-                                                  .withValues(alpha: 0.18),
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                                h5,
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
-                                                    Text(
-                                                      appLocalization
-                                                          .admin_dashboard_cash_sales,
-                                                      style: context
-                                                          .textStyle
-                                                          .s10
-                                                          .w400
-                                                          .white
-                                                          .roboto,
-                                                    ),
-                                                    h5,
                                                     Text(
                                                       "39,84,62,378.00",
                                                       style: context
                                                           .textStyle
-                                                          .s14
+                                                          .s22
                                                           .bold
                                                           .white
                                                           .roboto,
                                                     ),
+                                                    NavButton(
+                                                      color:
+                                                          ColorResources.amber,
+                                                      onTap: () {},
+                                                      svgArrowPath: AppAssets
+                                                          .arrowToRight,
+                                                    ),
                                                   ],
                                                 ),
-                                                SizedBox(
-                                                  height:
-                                                      40, // Adjust height as needed
-                                                  child: VerticalDivider(
-                                                    color: ColorResources.white
-                                                        .withValues(
-                                                          alpha: 0.18,
+                                                Divider(
+                                                  color: ColorResources.white
+                                                      .withValues(alpha: 0.18),
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          appLocalization
+                                                              .admin_dashboard_cash_sales,
+                                                          style: context
+                                                              .textStyle
+                                                              .s10
+                                                              .w400
+                                                              .white
+                                                              .roboto,
                                                         ),
-                                                    thickness: 1,
-                                                    width:
-                                                        20, // Space around divider
-                                                  ),
-                                                ),
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.end,
-                                                  children: [
-                                                    Text(
-                                                      appLocalization
-                                                          .admin_dashboard_credit_sales,
-                                                      style: context
-                                                          .textStyle
-                                                          .s10
-                                                          .w400
-                                                          .white
-                                                          .roboto,
+                                                        h5,
+                                                        Text(
+                                                          "39,84,62,378.00",
+                                                          style: context
+                                                              .textStyle
+                                                              .s14
+                                                              .bold
+                                                              .white
+                                                              .roboto,
+                                                        ),
+                                                      ],
                                                     ),
-                                                    h5,
-                                                    Text(
-                                                      "39,84,62,378.00",
-                                                      style: context
-                                                          .textStyle
-                                                          .s14
-                                                          .bold
-                                                          .white
-                                                          .roboto,
+                                                    SizedBox(
+                                                      height:
+                                                          40, // Adjust height as needed
+                                                      child: VerticalDivider(
+                                                        color: ColorResources
+                                                            .white
+                                                            .withValues(
+                                                              alpha: 0.18,
+                                                            ),
+                                                        thickness: 1,
+                                                        width:
+                                                            20, // Space around divider
+                                                      ),
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .end,
+                                                      children: [
+                                                        Text(
+                                                          appLocalization
+                                                              .admin_dashboard_credit_sales,
+                                                          style: context
+                                                              .textStyle
+                                                              .s10
+                                                              .w400
+                                                              .white
+                                                              .roboto,
+                                                        ),
+                                                        h5,
+                                                        Text(
+                                                          "39,84,62,378.00",
+                                                          style: context
+                                                              .textStyle
+                                                              .s14
+                                                              .bold
+                                                              .white
+                                                              .roboto,
+                                                        ),
+                                                      ],
                                                     ),
                                                   ],
                                                 ),
                                               ],
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
+                                    );
+                                  },
                                 ),
                               ],
                             ),
@@ -915,7 +958,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "Expense Entry",
+                                        appLocalization.dashboard_expense_entry,
                                         style: context
                                             .textStyle
                                             .s14

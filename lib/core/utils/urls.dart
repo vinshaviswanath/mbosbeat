@@ -65,4 +65,6 @@ class Urls {
       "/api/Company/CreateVoucherNumbering";
   static const String completeVoucherSettings =
       "/api/Company/CompleteSettings?CompanyID=";
+      static const String setVoucherNumberingMethod1 = "/api/Company/SetVoucherNumberingMethod?CompanyID=";
+      static const String setVoucherNumberingMethod2 = "&VoucherMode=";
 }

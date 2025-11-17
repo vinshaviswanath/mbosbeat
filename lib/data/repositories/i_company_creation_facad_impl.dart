@@ -9,6 +9,7 @@ import 'package:mpos_beat/data/data_sources/company_creation/company_info.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/complete_voucher_settings.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/create_voucher_numbering/create_voucher_numbering.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/get_voucher_numbering/get_voucher_numbering.dart';
+import 'package:mpos_beat/data/data_sources/company_creation/set_voucher_numbering_method/set_voucher_numbering_method.dart';
 
 import 'package:mpos_beat/data/data_sources/company_creation/country_list.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/create_company_settings.dart';
@@ -24,10 +25,8 @@ import 'package:mpos_beat/data/data_sources/company_creation/deactivate_route/de
 import 'package:mpos_beat/data/data_sources/company_creation/delete_godown/delete_godown.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/delete_route/delete_route.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/get_all_companies.dart';
-import 'package:mpos_beat/data/data_sources/company_creation/get_company_voucherType.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/get_godown_list/get_godown_list.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/get_route_list/get_route_list.dart';
-import 'package:mpos_beat/data/data_sources/company_creation/integration_type.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/state_list.dart';
 import 'package:mpos_beat/data/models/company_creation_response.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
@@ -42,16 +41,13 @@ import 'package:mpos_beat/data/models/registration_type_model.dart';
 import 'package:mpos_beat/data/models/create_godown_response.dart';
 import 'package:mpos_beat/data/models/create_route_response.dart';
 import 'package:mpos_beat/data/models/create_voucher_numbering_response.dart';
-import 'package:mpos_beat/data/models/get_company_voucher_model.dart';
 import 'package:mpos_beat/data/models/godown_list_model.dart';
-import 'package:mpos_beat/data/models/integration_model.dart';
 import 'package:mpos_beat/data/models/route_list_model.dart';
 import 'package:mpos_beat/data/models/state_list_response.dart';
 import 'package:mpos_beat/data/models/voucher_numbering_response.dart';
 import 'package:mpos_beat/domain/repositories/i_company_creation_facad.dart';
 import 'package:mpos_beat/domain/request/company_creation_params.dart';
 import 'package:mpos_beat/domain/request/create_company_settings_request.dart';
-import 'package:mpos_beat/domain/request/create_comany_user_mapping_params.dart';
 import 'package:mpos_beat/domain/request/create_company_voucher_request.dart';
 import 'package:mpos_beat/domain/request/create_godown_params.dart';
 import 'package:mpos_beat/domain/request/create_route_params.dart';
@@ -85,6 +81,7 @@ class ICompanyCreationFacadImpl implements ICompanyCreationFacad {
   final GetVoucherNumbering voucherNumbering;
   final CreateVoucherNumbering createVoucherNumbers;
   final CompleteVoucherSettings completeVoucherSettings;
+  final SetVoucherNumberingMethod setVoucherNumberMode;
   final RunSafely runSafely;
   final SharedPreferences sharedPreferences;
 
@@ -115,6 +112,7 @@ class ICompanyCreationFacadImpl implements ICompanyCreationFacad {
     this.voucherNumbering,
     this.createVoucherNumbers,
     this.completeVoucherSettings,
+    this.createVoucherNumbers, this.setVoucherNumberMode  ,
   );
 
   @override
@@ -243,7 +241,7 @@ class ICompanyCreationFacadImpl implements ICompanyCreationFacad {
   }
 
   @override
-  ResultFuture<CreateVoucherNumberingResponse> createVoucherNumber(
+  ResultFuture<ResponseModel> createVoucherNumber(
     BaseParams<CreateVoucherNumberingParams> params,
   ) {
     return createVoucherNumbers(params);
@@ -252,5 +250,10 @@ class ICompanyCreationFacadImpl implements ICompanyCreationFacad {
   @override
   ResultFuture<CompleteVoucherSettingsDtos> completeVouchers(int companyId) {
     return completeVoucherSettings(companyId);
+  }
+
+ @override
+   ResultFuture<ResponseModel> setVoucherNumberMethod({required String voucherMode, required String companyId,}) {
+    return setVoucherNumberMode(companyId: companyId,voucherMode: voucherMode);
   }
 }
