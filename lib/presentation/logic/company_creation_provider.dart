@@ -63,10 +63,6 @@ class CompanyCreationProvider extends ChangeNotifier {
 
   final List<bool> stageCompleted = [false, false, false];
 
-  bool _isGodown = true;
-
-  bool get isGodown => _isGodown;
-
   int? _companyid;
   int? get companyid => _companyid;
   List<CompanyVoucherTypesListData> _voucherTypes = [];
@@ -123,9 +119,8 @@ class CompanyCreationProvider extends ChangeNotifier {
   RouteResponse? _routeResponse;
   RouteResponse? get routeResponse => _routeResponse;
 
-  CreateVoucherNumberingResponse? _voucherNumberingResponsel;
-  CreateVoucherNumberingResponse? get voucherNumberingResponsel =>
-      _voucherNumberingResponsel;
+  ResponseModel? _responseModel;
+  ResponseModel? get responseModel => _responseModel;
 
   final _voucherNumberingGodownController =
       StreamController<List<VoucherNumberingModel>>.broadcast();
@@ -153,10 +148,17 @@ class CompanyCreationProvider extends ChangeNotifier {
   List<VoucherNumber>? get voucherNumberList => _voucherNumberList;
 
   CompanyViewList? _selectedCompany;
+  bool _isGodown = true;
+
   CompanyViewList? get selectedCompany => _selectedCompany;
+  bool get isGodown => _isGodown;
 
   void setSelectedCompany({required CompanyViewList company}) {
     _selectedCompany = company;
+    _isGodown =
+        company.vchNumberingMode == null ||
+        company.vchNumberingMode == "Godown";
+
     notifyListeners();
   }
 
@@ -192,7 +194,6 @@ class CompanyCreationProvider extends ChangeNotifier {
 
   void toggleVoucher(BuildContext context) {
     _isGodown = !_isGodown;
-
     final companyId = selectedCompany?.id;
 
     // getVoucherNumbering(
@@ -204,6 +205,11 @@ class CompanyCreationProvider extends ChangeNotifier {
     // );
     Logger.logSuccess(
       "Godown Id : ${selectedVehicle?.id}, Route id :${selectedRoute?.id} ",
+    );
+    setVoucherNumberingMode(
+      context: context,
+      companyId: _selectedCompany?.id.toString() ?? '',
+      voucherMode: _isGodown ? "Godown" : "Route",
     );
     getAllRoutess(context: context, companyId: companyId.toString());
     if (isGodown) {
@@ -1641,7 +1647,44 @@ class CompanyCreationProvider extends ChangeNotifier {
 
   //========================= Create Voucher Numbering =========================
 
-  Future<CreateVoucherNumberingResponse?> createVoucherNumbering({
+  Future<ResponseModel?> setVoucherNumberingMode({
+    required BuildContext context,
+    required String companyId,
+    required String voucherMode,
+  }) async {
+    setLoading(true);
+    final result = await iCompanyCreationFacad.setVoucherNumberMethod(
+      companyId: companyId,
+      voucherMode: voucherMode,
+    );
+
+    result.fold(
+      (failure) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(failure.errorMsg, textAlign: TextAlign.center),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          ),
+        );
+      },
+      (response) async {
+        _responseModel = response;
+        Logger.logSuccess(
+          "Voucher numbering mode set successfull : ${response.toJson()}",
+        );
+      },
+    );
+    setLoading(false);
+    return _responseModel;
+  }
+
+  //========================= Create Voucher Numbering =========================
+
+  Future<ResponseModel?> createVoucherNumbering({
     required BuildContext context,
     required int companyId,
     required int voucherModeId,
@@ -1673,7 +1716,7 @@ class CompanyCreationProvider extends ChangeNotifier {
         );
       },
       (response) async {
-        _voucherNumberingResponsel = response;
+        _responseModel = response;
         Logger.logSuccess(
           "Voucher numbering created successfull : ${response.toJson()}",
         );
@@ -1704,7 +1747,7 @@ class CompanyCreationProvider extends ChangeNotifier {
             voucherModeId: voucherModeId,
           );
     setLoading(false);
-    return _voucherNumberingResponsel;
+    return _responseModel;
   }
 
   //========================= Get Voucher Numbering =========================

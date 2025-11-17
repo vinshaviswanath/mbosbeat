@@ -1,5 +1,5 @@
-class CreateVoucherNumberingResponse {
-    CreateVoucherNumberingResponse({
+class ResponseModel {
+    ResponseModel({
         required this.id,
         required this.status,
         required this.message,
@@ -9,8 +9,8 @@ class CreateVoucherNumberingResponse {
     final int? status;
     final String? message;
 
-    factory CreateVoucherNumberingResponse.fromJson(Map<String, dynamic> json){ 
-        return CreateVoucherNumberingResponse(
+    factory ResponseModel.fromJson(Map<String, dynamic> json){ 
+        return ResponseModel(
             id: json["id"],
             status: json["status"],
             message: json["message"],

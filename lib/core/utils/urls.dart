@@ -63,4 +63,6 @@ static const String registrationType =
   static const String getVoucherNumbering4 = "&VoucherModeID=";
   static const String createVoucherNumbering =
       "/api/Company/CreateVoucherNumbering";
+      static const String setVoucherNumberingMethod1 = "/api/Company/SetVoucherNumberingMethod?CompanyID=";
+      static const String setVoucherNumberingMethod2 = "&VoucherMode=";
 }

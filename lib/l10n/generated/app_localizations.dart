@@ -2247,6 +2247,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Company Settings'**
   String get company_settings_screen_title;
+
+  /// No description provided for @dashboard_edit_company.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Company'**
+  String get dashboard_edit_company;
+
+  /// No description provided for @dashboard_integration_settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Integration Settings'**
+  String get dashboard_integration_settings;
+
+  /// No description provided for @dashboard_company_settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Company Settings'**
+  String get dashboard_company_settings;
+
+  /// No description provided for @dashboard_voucher_type.
+  ///
+  /// In en, this message translates to:
+  /// **'Voucher Type'**
+  String get dashboard_voucher_type;
+
+  /// No description provided for @dashboard_godown_or_route_wise_voucher.
+  ///
+  /// In en, this message translates to:
+  /// **'Godown / Route Wise Voucher'**
+  String get dashboard_godown_or_route_wise_voucher;
+
+  /// No description provided for @dashboard_add_users.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Users'**
+  String get dashboard_add_users;
+
+  /// No description provided for @dashboard_master.
+  ///
+  /// In en, this message translates to:
+  /// **'Master'**
+  String get dashboard_master;
+
+  /// No description provided for @dashboard_total_sales.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Sales'**
+  String get dashboard_total_sales;
+
+  /// No description provided for @dashboard_expense_entry.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense Entry'**
+  String get dashboard_expense_entry;
+
+  /// No description provided for @drawer_all_users.
+  ///
+  /// In en, this message translates to:
+  /// **'All Users'**
+  String get drawer_all_users;
+
+  /// No description provided for @drawer_user_designation.
+  ///
+  /// In en, this message translates to:
+  /// **'User Designation'**
+  String get drawer_user_designation;
+
+  /// No description provided for @drawer_user_management.
+  ///
+  /// In en, this message translates to:
+  /// **'User Management'**
+  String get drawer_user_management;
+
+  /// No description provided for @add_company_screen_add_company.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Company'**
+  String get add_company_screen_add_company;
+
+  /// No description provided for @add_company_search_company.
+  ///
+  /// In en, this message translates to:
+  /// **'Search Company'**
+  String get add_company_search_company;
+
+  /// No description provided for @user_creation_please_select_reporting_person.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select reporting person'**
+  String get user_creation_please_select_reporting_person;
+
+  /// No description provided for @user_creation_please_select_designation.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select designation'**
+  String get user_creation_please_select_designation;
+
+  /// No description provided for @user_creation_enter_full_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter full name'**
+  String get user_creation_enter_full_name;
 }
 
 class _AppLocalizationsDelegate

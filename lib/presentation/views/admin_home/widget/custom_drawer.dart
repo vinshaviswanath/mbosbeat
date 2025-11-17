@@ -378,7 +378,8 @@ class _CustomDrawerState extends State<CustomDrawer>
                                             ),
                                             w8,
                                             Text(
-                                              "User Management",
+                                              applocalizations
+                                                  .drawer_user_management,
                                               style: context
                                                   .textStyle
                                                   .s14
@@ -437,7 +438,8 @@ class _CustomDrawerState extends State<CustomDrawer>
                                                           .spaceBetween,
                                                   children: [
                                                     Text(
-                                                      "All Users",
+                                                      applocalizations
+                                                          .drawer_all_users,
                                                       style: context
                                                           .textStyle
                                                           .w400
@@ -481,7 +483,8 @@ class _CustomDrawerState extends State<CustomDrawer>
                                                           .spaceBetween,
                                                   children: [
                                                     Text(
-                                                      "User Designation",
+                                                      applocalizations
+                                                          .drawer_user_designation,
                                                       style: context
                                                           .textStyle
                                                           .w400

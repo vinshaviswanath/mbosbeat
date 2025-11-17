@@ -72,6 +72,7 @@ class CompanyViewList {
     required this.serialNumber,
     required this.stockInCloud,
     required this.registrationNo,
+    required this.vchNumberingMode,
   });
 
   final int? id;
@@ -112,6 +113,7 @@ class CompanyViewList {
   dynamic serialNumber;
   dynamic stockInCloud;
   final String? registrationNo;
+  final String? vchNumberingMode;
 
   factory CompanyViewList.fromJson(Map<String, dynamic> json) {
     return CompanyViewList(
@@ -153,6 +155,7 @@ class CompanyViewList {
       serialNumber: json["serialNumber"],
       stockInCloud: json["stockInCloud"],
       registrationNo: json["registrationNo"],
+      vchNumberingMode: json["vchNumberingMode"],
     );
   }
 
@@ -195,5 +198,6 @@ class CompanyViewList {
     "serialNumber": serialNumber,
     "stockInCloud": stockInCloud,
     "registrationNo": registrationNo,
+    "vchNumberingMode": vchNumberingMode,
   };
 }
