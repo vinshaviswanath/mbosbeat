@@ -587,10 +587,18 @@ class CompanyCreationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool _isIntegrationActive = false;
+  bool get isIntegrationActive => _isIntegrationActive;
+
+  void setIntegrationActive(value) {
+    _isIntegrationActive = value;
+  }
+
   void resetIntegration() {
     _selectedIntegrationType = null;
     stockInCloud = false;
     integrationSerialNoController = null;
+    _isIntegrationActive = false;
     _integrationSerialNo = IntegrationSerialNo("");
     integrationSerialNoAutovalidateMode = AutovalidateMode.disabled;
     notifyListeners();
@@ -628,6 +636,25 @@ class CompanyCreationProvider extends ChangeNotifier {
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         ),
       );
+
+      notifyListeners();
+      return null;
+    } else if (!_isIntegrationActive) {
+      print('isIntegrationActive......$isIntegrationActive');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Please activate the integration",
+            textAlign: TextAlign.center,
+          ),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        ),
+      );
+
       notifyListeners();
       return null;
     }

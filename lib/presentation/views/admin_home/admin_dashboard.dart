@@ -270,23 +270,23 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                         builder: (context) {
                                                           return GestureDetector(
                                                             onTap: () {
-                                                              WidgetsBinding.instance.addPostFrameCallback((
-                                                                _,
-                                                              ) async {
-                                                                await provider
-                                                                    .getAllCompanies(
-                                                                      context,
+                                                              // WidgetsBinding.instance.addPostFrameCallback((
+                                                              //   _,
+                                                              // ) async {
+                                                              //   await provider
+                                                              //       .getAllCompanies(
+                                                              //         context,
+                                                              //       );
+                                                              provider.isGodown
+                                                                  ? context.pushNamed(
+                                                                      AppRouterConst
+                                                                          .godownWiseScreen,
+                                                                    )
+                                                                  : context.pushNamed(
+                                                                      AppRouterConst
+                                                                          .routeWiseScreen,
                                                                     );
-                                                                provider.isGodown
-                                                                    ? context.pushNamed(
-                                                                        AppRouterConst
-                                                                            .godownWiseScreen,
-                                                                      )
-                                                                    : context.pushNamed(
-                                                                        AppRouterConst
-                                                                            .routeWiseScreen,
-                                                                      );
-                                                              });
+                                                              // });
                                                             },
                                                             child: CircleAvatar(
                                                               backgroundColor:
@@ -414,14 +414,10 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                               context.pushNamed(
                                                                                 AppRouterConst.companyCreationScreen,
                                                                                 extra: {
-                                                                      'tabIndex':
-                                                                          0,
-                                                                      'companyData':
-                                                                          selectedCompany,
-                                                                      'isPop':
-                                                                          false,
-                                                                    },
-                                                                                  
+                                                                                  'tabIndex': 0,
+                                                                                  'companyData': selectedCompany,
+                                                                                  'isPop': false,
+                                                                                },
                                                                               );
                                                                             },
                                                                           ),
@@ -449,18 +445,20 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                                 context,
                                                                               );
 
-                                                                              context.pushNamed(
-                                                                                AppRouterConst.companyCreationScreen,
-                                                                                extra: {
-                                                                      'tabIndex':
-                                                                          2,
-                                                                      'companyData':
-                                                                          selectedCompany,
-                                                                      'isPop':
-                                                                          false,
-                                                                    },
-                                                                                 
-                                                                              );
+                                                                              final isVoucherComplete =
+                                                                                  provider.selectedCompany!.hasVoucherTypeSettings !=
+                                                                                  0;
+
+                                                                              isVoucherComplete
+                                                                                  ? context.pushNamed(
+                                                                                      AppRouterConst.companyCreationScreen,
+                                                                                      extra: {
+                                                                                        'tabIndex': 2,
+                                                                                        'companyData': selectedCompany,
+                                                                                        'isPop': false,
+                                                                                      },
+                                                                                    )
+                                                                                  : null;
                                                                             },
                                                                           ),
                                                                           const CustomDivider(),
@@ -522,14 +520,10 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                               context.pushNamed(
                                                                                 AppRouterConst.companyCreationScreen,
                                                                                 extra: {
-                                                                      'tabIndex':
-                                                                          1,
-                                                                      'companyData':
-                                                                          selectedCompany,
-                                                                      'isPop':
-                                                                          false,
-                                                                    },
-                                                                              
+                                                                                  'tabIndex': 1,
+                                                                                  'companyData': selectedCompany,
+                                                                                  'isPop': false,
+                                                                                },
                                                                               );
                                                                             },
                                                                           ),

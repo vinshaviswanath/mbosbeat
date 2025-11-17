@@ -213,6 +213,11 @@ Either<ValueFailure<String>, String> validatePinocde(String value) {
   if (value.isEmpty) {
     return left(const ValueFailure.invalidValue('Select a valid Pincode!'));
   }
+
+  if (value.length != 6) {
+    return left(const ValueFailure.invalidValue("Enter a valid PinCode"));
+  }
+
   return right(value);
 }
 

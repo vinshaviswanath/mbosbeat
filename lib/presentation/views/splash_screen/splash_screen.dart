@@ -240,8 +240,9 @@ class _SplashScreenState extends State<SplashScreen> {
             case 20:
               RegistrationDialogs.customDialog(
                 context: context,
-                heading: "Pending",
-                subTitle: "Please complete company creation",
+                heading: "Registration Completed!",
+                subTitle:
+                    "You have successfully completed the\nregistration on last login. Kindly go to company\ncreation page to continue.",
                 onTap: () {
                   if (!mounted) return;
                   Logger.logSuccess(
@@ -262,8 +263,10 @@ class _SplashScreenState extends State<SplashScreen> {
             case 40:
               RegistrationDialogs.customDialog(
                 context: context,
-                heading: "Pending",
-                subTitle: "Please complete Company Integration Settings",
+                heading: "Company Creation Completed!",
+                subTitle:
+                    "You have successfully completed voucher type configuration on last login. Kindly start the integration settings to continue.",
+
                 onTap: () {
                   if (!mounted) return;
                   Logger.logSuccess(
@@ -285,8 +288,9 @@ class _SplashScreenState extends State<SplashScreen> {
             case 30:
               RegistrationDialogs.customDialog(
                 context: context,
-                heading: "Pending",
-                subTitle: "Please complete Company VoucherType Configuration",
+                heading: "Company Creation Completed!",
+                subTitle:
+                    "You have successfully created company details on last login. Kindly start the voucher type configuration to continue.",
                 onTap: () {
                   if (!mounted) return;
                   Logger.logSuccess(
