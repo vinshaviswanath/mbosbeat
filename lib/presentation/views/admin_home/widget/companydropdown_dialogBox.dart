@@ -24,116 +24,173 @@ class _CompanyDropdownState extends State<CompanyDropdown> {
   TextEditingController searchController = TextEditingController();
 
   final GlobalKey _dropdownKey = GlobalKey();
+  List<CompanyViewList> filteredList = [];
+  bool isSearching = false;
+
+  @override
+  void initState() {
+    super.initState();
+    filteredList = widget.companyList;
+
+    searchController.addListener(() {
+      filterCompanyList(searchController.text);
+    });
+  }
+
+  void filterCompanyList(String query) {
+    if (query.isEmpty) {
+      setState(() {
+        isSearching = false;
+        filteredList = widget.companyList;
+      });
+    } else {
+      setState(() {
+        isSearching = true;
+        filteredList = widget.companyList
+            .where(
+              (c) => c.companyName!.toLowerCase().contains(query.toLowerCase()),
+            )
+            .toList();
+      });
+    }
+  }
 
   void _showCompanyDialog(BuildContext context) {
     final RenderBox box =
         _dropdownKey.currentContext!.findRenderObject() as RenderBox;
     final Offset position = box.localToGlobal(Offset.zero);
-    final Size size = box.size;
-
+   setState(() {
+    searchController.clear();
+    isSearching = false;
+    filteredList = widget.companyList;
+  });
     showDialog(
       context: context,
       barrierColor: Colors.transparent,
 
       builder: (BuildContext context) {
-        return Stack(
-          children: [
-            Positioned.fill(
-              child: GestureDetector(
-                onTap: () => Navigator.pop(context),
-                child: Container(color: Colors.transparent),
-              ),
-            ),
-            Positioned(
-              left: position.dx,
-              top: MediaQuery.of(context).size.height * 0.120,
-              child: Material(
-                elevation: 6,
-                borderRadius: BorderRadius.circular(12),
-                color: ColorResources.white,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: ColorResources.white,
-                    borderRadius: BorderRadius.circular(12),
+        return StatefulBuilder(
+          builder: (context, setStateDialog) {
+            return Stack(
+              children: [
+                Positioned.fill(
+                  child: GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: Container(color: Colors.transparent),
                   ),
-                  width: MediaQuery.of(context).size.width * 0.923,
+                ),
+                Positioned(
+                  left: position.dx,
+                  top: MediaQuery.of(context).size.height * 0.120,
+                  child: Material(
+                    elevation: 6,
+                    borderRadius: BorderRadius.circular(12),
+                    color: ColorResources.white,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: ColorResources.white,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      width: MediaQuery.of(context).size.width * 0.923,
 
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        CustomTextField(
-                          hint: "Search Company",
-                          hintTextStyle: context.textStyle.s12.silverGray.w300,
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            CustomTextField(
+                              hint: "Search Company",
+                              hintTextStyle:
+                                  context.textStyle.s12.silverGray.w300,
+                              controller: searchController,
+                              backgroundColor: ColorResources.lightGray,
 
-                          backgroundColor: ColorResources.lightGray,
-
-                          borderRadius: 12,
-                          hintColor: ColorResources.silverGray,
-                          borderColor: ColorResources.transparent,
-                        ),
-                        h8,
-
-                        ListView.separated(
-                          shrinkWrap: true,
-                          itemCount: widget.companyList.length,
-                          separatorBuilder: (context, index) => const Divider(
-                            height: 1,
-                            color: Color(0xFFEEEEEE),
-                          ),
-                          itemBuilder: (context, index) {
-                            final company = widget.companyList[index];
-
-                            return CompanyCard(
-                              company: company,
-                              onTap: () {
-                                widget.onCompanySelected?.call(company);
-                                Navigator.pop(context);
+                              borderRadius: 12,
+                              hintColor: ColorResources.silverGray,
+                              borderColor: ColorResources.transparent,
+                              onChange: (value) {
+                                filterCompanyList(value);
+                                setStateDialog(() {});
                               },
-                            );
-                          },
-                        ),
-                        if (widget.companyList.length > 4)
-                          GestureDetector(
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                top: 10,
-                                bottom: 6,
-                              ),
-                              child: Text(
-                                "Load More",
-                                style: context
-                                    .textStyle
-                                    .s12
-                                    .bold
-                                    .indigoBlue
-                                    .w400
-                                    .roboto,
-                              ),
+                            
                             ),
-                          ),
+                            h8,
 
-                        GestureDetector(
-                          child: CircleAvatar(
-                            radius: 10,
-                            backgroundColor: ColorResources.dustyBlue
-                                .withOpacity(0.15),
-                            child: const Icon(
-                              Icons.close,
-                              color: ColorResources.bluishGray,
-                              size: 12,
+                            ConstrainedBox(
+                              constraints: BoxConstraints(
+                                maxHeight: (widget.companyList.length > 4)
+                                    ? 70 * 4
+                                    : 70 * widget.companyList.length.toDouble(),
+                              ),
+                              child: ListView.separated(
+                                shrinkWrap: true,
+                                itemCount: isSearching
+                                    ? filteredList.length
+                                    : widget.companyList.length,
+
+                                separatorBuilder: (context, index) =>
+                                    const Divider(
+                                      height: 1,
+                                      color: Color(0xFFEEEEEE),
+                                    ),
+                                itemBuilder: (context, index) {
+                                     final company = isSearching
+          ? filteredList[index]
+          : widget.companyList[index];
+
+
+                                  return CompanyCard(
+                                    company: company,
+                                    onTap: () {
+                                      widget.onCompanySelected?.call(company);
+                                      Navigator.pop(context);
+                                    },
+                                  );
+                                },
+                              ),
                             ),
-                          ),
-                          onTap: () => Navigator.pop(context),
+                            if (widget.companyList.length > 4)
+                              GestureDetector(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: 10,
+                                    bottom: 6,
+                                  ),
+                                  child: Text(
+                                    "Load More",
+                                    style: context
+                                        .textStyle
+                                        .s12
+                                        .bold
+                                        .indigoBlue
+                                        .w400
+                                        .roboto,
+                                  ),
+                                ),
+                              ),
+
+                            GestureDetector(
+                              child: CircleAvatar(
+                                radius: 10,
+                                backgroundColor: ColorResources.dustyBlue
+                                    .withOpacity(0.15),
+                                child: const Icon(
+                                  Icons.close,
+                                  color: ColorResources.bluishGray,
+                                  size: 12,
+                                ),
+                              ),
+                              onTap: () => Navigator.pop(context),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
-          ],
+              ],
+            );
+          },
         );
       },
     );
