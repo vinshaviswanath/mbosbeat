@@ -112,7 +112,8 @@ class ICompanyCreationFacadImpl implements ICompanyCreationFacad {
     this.voucherNumbering,
     this.createVoucherNumbers,
     this.completeVoucherSettings,
-    this.createVoucherNumbers, this.setVoucherNumberMode  ,
+
+    this.setVoucherNumberMode,
   );
 
   @override
@@ -252,8 +253,11 @@ class ICompanyCreationFacadImpl implements ICompanyCreationFacad {
     return completeVoucherSettings(companyId);
   }
 
- @override
-   ResultFuture<ResponseModel> setVoucherNumberMethod({required String voucherMode, required String companyId,}) {
-    return setVoucherNumberMode(companyId: companyId,voucherMode: voucherMode);
+  @override
+  ResultFuture<ResponseModel> setVoucherNumberMethod({
+    required String voucherMode,
+    required String companyId,
+  }) {
+    return setVoucherNumberMode(companyId: companyId, voucherMode: voucherMode);
   }
 }

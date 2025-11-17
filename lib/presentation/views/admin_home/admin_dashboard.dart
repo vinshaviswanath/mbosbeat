@@ -421,9 +421,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                       'isPop':
                                                                           false,
                                                                     },
-                                                                                  'tabIndex': 0,
-                                                                                  'companyData': selectedCompany,
-                                                                                },
+                                                                                  
                                                                               );
                                                                             },
                                                                           ),
@@ -461,9 +459,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                       'isPop':
                                                                           false,
                                                                     },
-                                                                                  'tabIndex': 2,
-                                                                                  'companyData': selectedCompany,
-                                                                                },
+                                                                                 
                                                                               );
                                                                             },
                                                                           ),
@@ -533,9 +529,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                       'isPop':
                                                                           false,
                                                                     },
-                                                                                  'tabIndex': 1,
-                                                                                  'companyData': selectedCompany,
-                                                                                },
+                                                                              
                                                                               );
                                                                             },
                                                                           ),

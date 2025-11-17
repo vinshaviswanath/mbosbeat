@@ -20,6 +20,16 @@ class CompanyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int percentage = 0;
+    if (company.hasCompanySettings != 0) {
+      percentage += 40;
+    }
+    if (company.hasIntegrationSettings != 0) {
+      percentage += 30;
+    }
+    if (company.hasVoucherTypeSettings != 0) {
+      percentage += 30;
+    }
     return Column(
       children: [
         InkWell(
@@ -96,30 +106,10 @@ class CompanyCard extends StatelessWidget {
                             style: context.textStyle.s10.w400.mutedBlue.roboto,
                           ),
                           Spacer(),
-                          if (company.hasCompanySettings != 0 &&
-                              company.hasIntegrationSettings != 0 &&
-                              company.hasVoucherTypeSettings != 0)
-                            Text(
-                              "100% Completed",
-                              style:
-                                  context.textStyle.s08.w400.lightgreen.roboto,
-                            ),
-                          if (company.hasCompanySettings != 0 &&
-                              company.hasIntegrationSettings == 0 &&
-                              company.hasVoucherTypeSettings == 0)
-                            Text(
-                              "40% Completed",
-                              style:
-                                  context.textStyle.s08.w400.lightgreen.roboto,
-                            ),
-                          if (company.hasCompanySettings != 0 &&
-                                  company.hasIntegrationSettings == 0 ||
-                              company.hasVoucherTypeSettings == 0)
-                            Text(
-                              "70% Completed",
-                              style:
-                                  context.textStyle.s08.w400.lightgreen.roboto,
-                            ),
+                          Text(
+                            "$percentage% Completed",
+                            style: context.textStyle.s08.w400.lightgreen.roboto,
+                          ),
                         ],
                       ),
                     ],
