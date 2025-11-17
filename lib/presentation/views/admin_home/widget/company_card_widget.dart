@@ -25,6 +25,7 @@ class CompanyCard extends StatelessWidget {
         InkWell(
           borderRadius: BorderRadius.circular(10),
           onTap: onTap,
+
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
@@ -36,12 +37,20 @@ class CompanyCard extends StatelessWidget {
                 Stack(
                   clipBehavior: Clip.none,
                   children: [
-                    StatusView(centerImageUrl: ''),
-                    const Positioned(
-                      bottom: -3,
-                      right: -3,
-                      child: CompletedTickMark(),
+                    StatusView(
+                      numberOfStatus: 3,
+                      company: company,
+                      centerImageUrl: '',
                     ),
+
+                    if (company.hasCompanySettings != 0 &&
+                        company.hasIntegrationSettings != 0 &&
+                        company.hasVoucherTypeSettings != 0)
+                      const Positioned(
+                        bottom: -3,
+                        right: -3,
+                        child: CompletedTickMark(),
+                      ),
                   ],
                 ),
 
@@ -87,10 +96,30 @@ class CompanyCard extends StatelessWidget {
                             style: context.textStyle.s10.w400.mutedBlue.roboto,
                           ),
                           Spacer(),
-                          Text(
-                            "100% Completed",
-                            style: context.textStyle.s08.w400.lightgreen.roboto,
-                          ),
+                          if (company.hasCompanySettings != 0 &&
+                              company.hasIntegrationSettings != 0 &&
+                              company.hasVoucherTypeSettings != 0)
+                            Text(
+                              "100% Completed",
+                              style:
+                                  context.textStyle.s08.w400.lightgreen.roboto,
+                            ),
+                          if (company.hasCompanySettings != 0 &&
+                              company.hasIntegrationSettings == 0 &&
+                              company.hasVoucherTypeSettings == 0)
+                            Text(
+                              "40% Completed",
+                              style:
+                                  context.textStyle.s08.w400.lightgreen.roboto,
+                            ),
+                          if (company.hasCompanySettings != 0 &&
+                                  company.hasIntegrationSettings == 0 ||
+                              company.hasVoucherTypeSettings == 0)
+                            Text(
+                              "70% Completed",
+                              style:
+                                  context.textStyle.s08.w400.lightgreen.roboto,
+                            ),
                         ],
                       ),
                     ],

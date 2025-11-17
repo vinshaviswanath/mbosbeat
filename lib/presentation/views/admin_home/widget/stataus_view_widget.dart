@@ -1,33 +1,47 @@
 import 'dart:math';
 
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/models/company_list_model.dart';
 
 class StatusView extends StatelessWidget {
   final int numberOfStatus;
-  final int indexOfSeenStatus;
   final double spacing;
   final double radius;
   final double padding;
   final String centerImageUrl;
   final double strokeWidth;
-  final Color seenColor;
-  final Color unSeenColor;
+  final Color incompleteColor;
+  final Color completeColor;
+  final CompanyViewList company;
 
   const StatusView({
     super.key,
     this.numberOfStatus = 3,
-    this.indexOfSeenStatus = 0,
     this.spacing = 8.0,
     this.radius = 28,
     this.padding = 5,
     required this.centerImageUrl,
     this.strokeWidth = 2,
-    this.seenColor = Colors.grey,
-    this.unSeenColor = ColorResources.indigoBlue,
+    this.incompleteColor = Colors.grey,
+    this.completeColor = ColorResources.indigoBlue,
+    required this.company,
   }) : assert(centerImageUrl != null, "Please provide centerImageUrl");
+  int calculateCompletedSteps(CompanyViewList c) {
+    int steps = 0;
+
+    if (c.hasCompanySettings != 0) steps++;
+    if (c.hasIntegrationSettings != 0) steps++;
+    if (c.hasVoucherTypeSettings != 0) steps++;
+
+    return steps;
+  }
 
   @override
   Widget build(BuildContext context) {
+    print('Company: ${company.companyName}');
+    print('company completion: ${company.hasCompanySettings}');
+    print('integration completion: ${company.hasIntegrationSettings}');
+    print('voucher completion: ${company.hasVoucherTypeSettings}');
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -36,12 +50,12 @@ class StatusView extends StatelessWidget {
           height: radius * 2,
           child: CustomPaint(
             painter: Arc(
-              alreadyWatch: indexOfSeenStatus,
+              alreadyWatch: calculateCompletedSteps(company),
               numberOfArc: numberOfStatus,
               spacing: spacing,
               strokeWidth: strokeWidth,
-              seenColor: seenColor,
-              unSeenColor: unSeenColor,
+              seenColor: completeColor,
+              unSeenColor: incompleteColor,
             ),
           ),
         ),

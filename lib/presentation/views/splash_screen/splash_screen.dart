@@ -259,7 +259,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 buttonText: "Redirect",
               );
               break;
-            case 30:
+            case 40:
               RegistrationDialogs.customDialog(
                 context: context,
                 heading: "Pending",
@@ -282,7 +282,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 buttonText: "Redirect",
               );
               break;
-            case 40:
+            case 30:
               RegistrationDialogs.customDialog(
                 context: context,
                 heading: "Pending",
