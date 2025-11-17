@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/data/models/data/country_list_data.dart';
@@ -323,10 +324,12 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
                       autovalidateMode: provider.companyinfoAutovalidateMode,
                       failure: provider.pincode.getFailure,
                       onChange: provider.updatePincode,
-                      inputType: TextInputType.emailAddress,
+                      inputType: TextInputType.phone,
                       borderRadius: 12,
                       hintColor: ColorResources.silverGray,
                       borderColor: ColorResources.transparent,
+                      maxLength: 6,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     ),
                     h16,
                     // Country & State side-by-side

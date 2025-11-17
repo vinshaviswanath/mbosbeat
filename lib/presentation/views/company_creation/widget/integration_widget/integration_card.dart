@@ -84,6 +84,7 @@ class _VoucherCardState extends State<VoucherCard> {
           provider.setStockInCloud(
             company.stockInCloud == 'Yes' || company.stockInCloud == true,
           );
+          provider.setIntegrationActive(isActivated);
         }
       }
 
@@ -168,6 +169,13 @@ class _VoucherCardState extends State<VoucherCard> {
                             isActivated = true;
                             isExpand = false;
                           });
+                          provider.setIntegrationActive(isActivated);
+                          final IntegrationActivated =
+                              provider.isIntegrationActive;
+
+                          print(
+                            'IntegrationActivated...... $IntegrationActivated',
+                          );
                         },
                         child: CircleAvatar(
                           radius: 10,
@@ -275,7 +283,7 @@ class _VoucherCardState extends State<VoucherCard> {
                                             child: const Text(
                                               'Change',
                                               style: TextStyle(
-                                                color:ColorResources.white,
+                                                color: ColorResources.white,
                                               ),
                                             ),
                                           ),
@@ -308,7 +316,7 @@ class _VoucherCardState extends State<VoucherCard> {
                                             child: const Text(
                                               'Cancel',
                                               style: TextStyle(
-                                                color:ColorResources.white,
+                                                color: ColorResources.white,
                                               ),
                                             ),
                                           ),
@@ -347,6 +355,7 @@ class _VoucherCardState extends State<VoucherCard> {
                                 if (isStandAlone) {
                                   isActivated = true;
                                   isExpand = false;
+                                  provider.setIntegrationActive(isActivated);
                                 } else {
                                   // For other integrations → expand form as usual
                                   isExpand = true;
@@ -369,12 +378,12 @@ class _VoucherCardState extends State<VoucherCard> {
                               width: 22,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                border: Border.all(color:ColorResources.white),
+                                border: Border.all(color: ColorResources.white),
                               ),
                               child: Icon(
                                 Icons.add,
                                 size: 16,
-                                color:ColorResources.white,
+                                color: ColorResources.white,
                               ),
                             )
                           : Container(
@@ -382,12 +391,12 @@ class _VoucherCardState extends State<VoucherCard> {
                               width: 22,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                border: Border.all(color:ColorResources.white),
+                                border: Border.all(color: ColorResources.white),
                               ),
                               child: Icon(
                                 isExpand ? Icons.close : Icons.add,
                                 size: 16,
-                                color:ColorResources.white,
+                                color: ColorResources.white,
                               ),
                             ),
                     ),
@@ -496,7 +505,7 @@ class _VoucherCardState extends State<VoucherCard> {
                           style: context.textStyle.s12.white.bold.roboto
                               .copyWith(
                                 decoration: TextDecoration.underline,
-                                decorationColor:ColorResources.white,
+                                decorationColor: ColorResources.white,
                               ),
                         ),
                       ),

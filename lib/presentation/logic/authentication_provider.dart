@@ -554,12 +554,12 @@ class AuthFormProvider with ChangeNotifier {
             );
             break;
 
-          case 30: //Integration settings pending
+          case 40: //Integration settings pending
             RegistrationDialogs.customDialog(
               context: context,
               heading: "Company Creation Completed!",
               subTitle:
-                  "You have successfully created company details\non last login. Kindly start the integration settings\nto continue.",
+                  "You have successfully completed voucher type configuration on last login. Kindly start the integration settings to continue.",
               onTap: () {
                 context.goNamed(
                   AppRouterConst.companyCreationScreen,
@@ -574,12 +574,12 @@ class AuthFormProvider with ChangeNotifier {
             );
             break;
 
-          case 40: //Voucher type configuration pending
+          case 30: //Voucher type configuration pending
             RegistrationDialogs.customDialog(
               context: context,
               heading: "Company Creation Completed!",
               subTitle:
-                  "You have successfully created integration\nsettings on last login. Kindly start the voucher\ntype configuration to continue.",
+                  "You have successfully created company details on last login. Kindly start the voucher type configuration to continue.",
               onTap: () {
                 context.goNamed(
                   AppRouterConst.companyCreationScreen,
