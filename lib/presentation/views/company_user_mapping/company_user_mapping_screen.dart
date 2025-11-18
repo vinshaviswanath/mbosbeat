@@ -54,8 +54,8 @@ class _CompanyUserMappingScreenState extends State<CompanyUserMappingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final appLocalization = context.l10n;
     final provider = context.watch<UserManagementProvider>();
-
     final allUsers = provider.usersList?.userMasterList ?? [];
 
     final filteredUsers = allUsers.where((user) {
@@ -74,7 +74,7 @@ class _CompanyUserMappingScreenState extends State<CompanyUserMappingScreen> {
           ),
         ),
         title: Text(
-          "Add Users",
+          appLocalization.dashboard_add_users,
           style: context.textStyle.s20.indigoBlue.bold.roboto,
         ),
         centerTitle: true,
@@ -122,7 +122,8 @@ class _CompanyUserMappingScreenState extends State<CompanyUserMappingScreen> {
                       child: TextField(
                         controller: _searchController,
                         decoration: InputDecoration(
-                          hintText: "Search User",
+                          hintText:
+                              appLocalization.manage_user_screen_search_user,
                           hintStyle:
                               context.textStyle.s12.w300.bluishGray.roboto,
                           fillColor: ColorResources.cloudGray,
@@ -222,7 +223,7 @@ class _CompanyUserMappingScreenState extends State<CompanyUserMappingScreen> {
                                       ),
                                 );
                           },
-                          buttonText: "Save",
+                          buttonText: appLocalization.save,
                           isborderEnable: false,
                         ),
                       ),

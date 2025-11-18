@@ -1,5 +1,6 @@
 import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/presentation/dialogs/logout_dialog.dart';
 import 'package:mpos_beat/presentation/views/admin_home/admin_dashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -556,10 +557,15 @@ class _CustomDrawerState extends State<CustomDrawer>
                                 ),
                                 h12,
                                 GestureDetector(
-                                  onTap: () {
-                                    final prefs = sl<SharedPreferences>();
-                                    prefs.remove("token");
-                                    context.pushNamed(AppRouterConst.login);
+                                  onTap: () async {
+                                    // toggleDrawer();
+                                    final result = await LogOutDialogs.show(
+                                      context,
+                                    );
+
+                                    if (result == true) {
+                                      // Logout handled inside dialog already
+                                    }
                                   },
                                   child: Row(
                                     mainAxisAlignment:

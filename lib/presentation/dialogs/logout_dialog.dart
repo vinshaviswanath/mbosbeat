@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/theme/colors.dart';
 import 'package:mpos_beat/core/utils/extentions.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class AuthDialogs {
+class LogOutDialogs {
   static Future<bool> show(BuildContext context) async {
-    final shouldExit = await showDialog<bool>(
+    final shouldLogout = await showDialog<bool>(
       context: context,
+      barrierDismissible: false,
       builder: (ctx) {
         return Center(
           child: Material(
@@ -27,40 +30,52 @@ class AuthDialogs {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    "Exit App",
+                    "Logout",
                     style: context.textStyle.s14.w500.indigoBlue,
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    "Are you sure you want to exit the app?",
+                    "Are you sure you want to logout?",
                     style: context.textStyle.s12.w500.dustyBlue,
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 20),
 
+                  /// BUTTONS
                   Row(
                     children: [
+                      /// LOGOUT BUTTON
                       Expanded(
                         child: CustomButton(
-                          buttonText: "Cancel",
-                          color: ColorResources.bluishGray,
+                          buttonText: "Logout",
                           isborderEnable: false,
                           borderRadius: BorderRadius.circular(16),
-                          onTap: () {
-                            Navigator.of(ctx).pop(false);
+                          onTap: () async {
+                            final prefs = sl<SharedPreferences>();
+                            await prefs.remove("token");
+
+                            /// Close dialog first
+                            Navigator.of(ctx).pop(true);
+
+                            /// Navigate after closing dialog
+                            context.pushNamed(AppRouterConst.login);
                           },
                           textStyle: context.textStyle.s12.white.w500,
                         ),
                       ),
+
                       const SizedBox(width: 10),
+
+                      /// CANCEL BUTTON
                       Expanded(
                         child: CustomButton(
-                          buttonText: "Exit",
+                          color: ColorResources.bluishGray,
+                          buttonText: "Cancel",
                           isborderEnable: false,
                           borderRadius: BorderRadius.circular(16),
                           onTap: () {
-                            Navigator.of(ctx).pop(true);
+                            Navigator.of(ctx).pop(false);
                           },
                           textStyle: context.textStyle.s12.white.w500,
                         ),
@@ -74,10 +89,7 @@ class AuthDialogs {
         );
       },
     );
-    return shouldExit ?? false;
-  }
 
-  static void exitApp() {
-    SystemNavigator.pop();
+    return shouldLogout ?? false;
   }
 }
