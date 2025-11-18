@@ -639,12 +639,12 @@ class CompanyCreationProvider extends ChangeNotifier {
 
       notifyListeners();
       return null;
-    } else if (!_isIntegrationActive) {
+    } else if (!_isIntegrationActive && !isStandAlone) {
       print('isIntegrationActive......$isIntegrationActive');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            "Please activate the integration",
+            "Please activate the selected integration",
             textAlign: TextAlign.center,
           ),
           behavior: SnackBarBehavior.floating,

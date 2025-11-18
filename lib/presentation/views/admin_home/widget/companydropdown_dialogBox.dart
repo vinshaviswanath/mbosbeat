@@ -59,11 +59,11 @@ class _CompanyDropdownState extends State<CompanyDropdown> {
     final RenderBox box =
         _dropdownKey.currentContext!.findRenderObject() as RenderBox;
     final Offset position = box.localToGlobal(Offset.zero);
-   setState(() {
-    searchController.clear();
-    isSearching = false;
-    filteredList = widget.companyList;
-  });
+    setState(() {
+      searchController.clear();
+      isSearching = false;
+      filteredList = widget.companyList;
+    });
     showDialog(
       context: context,
       barrierColor: Colors.transparent,
@@ -112,15 +112,14 @@ class _CompanyDropdownState extends State<CompanyDropdown> {
                                 filterCompanyList(value);
                                 setStateDialog(() {});
                               },
-                            
                             ),
                             h8,
 
                             ConstrainedBox(
                               constraints: BoxConstraints(
-                                maxHeight: (widget.companyList.length > 4)
-                                    ? 70 * 4
-                                    : 70 * widget.companyList.length.toDouble(),
+                                maxHeight: (widget.companyList.length > 3)
+                                    ? 90 * 3
+                                    : 90 * widget.companyList.length.toDouble(),
                               ),
                               child: ListView.separated(
                                 shrinkWrap: true,
@@ -134,10 +133,9 @@ class _CompanyDropdownState extends State<CompanyDropdown> {
                                       color: Color(0xFFEEEEEE),
                                     ),
                                 itemBuilder: (context, index) {
-                                     final company = isSearching
-          ? filteredList[index]
-          : widget.companyList[index];
-
+                                  final company = isSearching
+                                      ? filteredList[index]
+                                      : widget.companyList[index];
 
                                   return CompanyCard(
                                     company: company,
