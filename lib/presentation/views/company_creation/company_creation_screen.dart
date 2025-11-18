@@ -216,7 +216,7 @@ class _CompanyCreationScreenState extends State<CompanyCreationScreen>
     if (isCompleted) {
       fillColor = ColorResources.aquaGreen;
       borderColor = ColorResources.tealGreen;
-      textColor =ColorResources.white;
+      textColor = ColorResources.white;
     } else if (isActive) {
       fillColor = ColorResources.white;
       borderColor = ColorResources.indigoBlue;
@@ -228,7 +228,17 @@ class _CompanyCreationScreenState extends State<CompanyCreationScreen>
     }
 
     return GestureDetector(
-      onTap: () => _tabController.animateTo(index),
+      onTap: () {
+        if (index > 0 && widget.companyData == null) {
+          return;
+        }
+
+        if (!provider.canGoToStage(index)) {
+          return;
+        }
+
+        _tabController.animateTo(index);
+      },
       child: Container(
         height: 24,
         width: 24,
