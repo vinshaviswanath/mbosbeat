@@ -1,10 +1,16 @@
 import 'package:mpos_beat/core/utils/app_details.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/presentation/logic/user_management_provider.dart';
 
 class ActivateUserDesignationWidget extends StatelessWidget {
   final VoidCallback onActivate;
+  final String designation;
 
-  const ActivateUserDesignationWidget({super.key, required this.onActivate});
+  const ActivateUserDesignationWidget({
+    super.key,
+    required this.onActivate,
+    required this.designation,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +26,7 @@ class ActivateUserDesignationWidget extends StatelessWidget {
           ),
           h10,
           Text(
-            appLocatlizations.activate_user_designation_widget_are_you_sure,
+            "${appLocatlizations.activate_user_designation_widget_are_you_sure}$designation ?",
             style: context.textStyle.s12.w500.dustyBlue.roboto,
           ),
           h24,
@@ -31,24 +37,29 @@ class ActivateUserDesignationWidget extends StatelessWidget {
                   onTap: () {
                     Navigator.pop(context);
                     onActivate();
-                    AppDetails.rootScaffoldMessengerKey.currentState?.showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          appLocatlizations
-                              .activate_user_designation_widget_user_activated,
-                          textAlign: TextAlign.center,
-                          style: context.textStyle.s12.w500.white.roboto,
-                        ),
-                        backgroundColor: ColorResources.black.withValues(
-                          alpha: 0.6,
-                        ),
-                        behavior: SnackBarBehavior.floating,
-                        margin: const EdgeInsets.all(16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                    );
+                    AppDetails.rootScaffoldMessengerKey.currentState
+                        ?.showSnackBar(
+                          SnackBar(
+                            content: Consumer<UserManagementProvider>(
+                              builder: (context, provider, _) {
+                                return Text(
+                                  provider.designationResponse?.message ?? "",
+                                  textAlign: TextAlign.center,
+                                  style:
+                                      context.textStyle.s12.w500.white.roboto,
+                                );
+                              },
+                            ),
+                            backgroundColor: ColorResources.black.withValues(
+                              alpha: 0.6,
+                            ),
+                            behavior: SnackBarBehavior.floating,
+                            margin: const EdgeInsets.all(16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                        );
                   },
                   buttonText: appLocatlizations
                       .activate_user_designation_widget_activate,

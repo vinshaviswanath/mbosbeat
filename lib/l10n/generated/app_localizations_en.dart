@@ -520,7 +520,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get activate_user_designation_widget_are_you_sure =>
-      'Are you sure want to activate Executive1?';
+      'Are you sure want to activate ';
 
   @override
   String get activate_user_designation_widget_user_activated =>
@@ -535,7 +535,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deactivate_user_designation_widget_are_you_sure =>
-      'Are you sure want to deactivate Executive1?';
+      'Are you sure want to deactivate ';
 
   @override
   String get deactivate_user_designation_widget_user_deactivated =>
@@ -550,7 +550,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get delete_user_designation_widget_are_you_sure =>
-      'Are you sure want to delete Executive1?';
+      'Are you sure want to delete ';
 
   @override
   String get delete_user_designation_widget_designation_removed =>

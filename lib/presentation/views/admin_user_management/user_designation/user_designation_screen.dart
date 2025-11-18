@@ -70,7 +70,7 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
               ),
             ],
           ),
-          body: items!.isEmpty
+          body: (items == null || items.isEmpty)
               ? Center(
                   child: Text(
                     appLocalization
@@ -107,6 +107,7 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
                                       vertical: 16,
                                     ),
                                     chid: ActivateUserDesignationWidget(
+                                      designation: item?.name ?? "",
                                       onActivate: () {
                                         // provider.activateDesignation(index);
                                         // setState(() {
@@ -235,7 +236,7 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
                                                 selectedIndex: optionIndex,
                                                 title: appLocalization
                                                     .user_designation_screen_delete,
-                                                icon:AppAssets.refresh,
+                                                icon: AppAssets.refresh,
                                                 onTap: (i) {
                                                   setStateDialog(
                                                     () => optionIndex = i,
@@ -248,6 +249,8 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
                                                     chid: Builder(
                                                       builder: (dialogContext) {
                                                         return DeleteUserDesignationWidget(
+                                                          designation:
+                                                              item?.name ?? "",
                                                           onDelete: () {
                                                             provider
                                                                 .deleteDesignation(
@@ -282,6 +285,8 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
                                                     chid: Builder(
                                                       builder: (dialogContext) {
                                                         return DeactivateUserDesignationWidget(
+                                                          designation:
+                                                              item?.name ?? "",
                                                           onDeactivate: () {
                                                             Logger.logSuccess(
                                                               "IDDDDDDDDD :: ${item?.id}",

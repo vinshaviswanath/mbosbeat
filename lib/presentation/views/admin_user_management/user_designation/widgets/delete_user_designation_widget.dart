@@ -1,14 +1,24 @@
 import 'package:mpos_beat/core/utils/app_details.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/presentation/logic/user_management_provider.dart';
 
 class DeleteUserDesignationWidget extends StatelessWidget {
   final VoidCallback onDelete;
+  final String designation;
 
-  const DeleteUserDesignationWidget({super.key, required this.onDelete});
+  const DeleteUserDesignationWidget({
+    super.key,
+    required this.onDelete,
+    required this.designation,
+  });
 
   @override
   Widget build(BuildContext context) {
     final appLoaclizations = context.l10n;
+    // final provider = Provider.of<UserManagementProvider>(
+    //   context,
+    //   listen: false,
+    // );
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -18,10 +28,10 @@ class DeleteUserDesignationWidget extends StatelessWidget {
         ),
         h10,
         Text(
-          appLoaclizations.delete_user_designation_widget_are_you_sure,
+          "${appLoaclizations.delete_user_designation_widget_are_you_sure}$designation?",
           style: context.textStyle.s12.w500.dustyBlue.roboto,
         ),
-        w24,
+        h16,
         Row(
           children: [
             Expanded(
@@ -29,24 +39,28 @@ class DeleteUserDesignationWidget extends StatelessWidget {
                 onTap: () {
                   Navigator.pop(context);
                   onDelete();
-                  AppDetails.rootScaffoldMessengerKey.currentState?.showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        appLoaclizations
-                            .delete_user_designation_widget_delete_designation,
-                        textAlign: TextAlign.center,
-                        style: context.textStyle.s12.w500.white.roboto,
-                      ),
-                      backgroundColor: ColorResources.black.withValues(
-                        alpha: 0.6,
-                      ),
-                      behavior: SnackBarBehavior.floating,
-                      margin: const EdgeInsets.all(16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                  );
+                  AppDetails.rootScaffoldMessengerKey.currentState
+                      ?.showSnackBar(
+                        SnackBar(
+                          content: Consumer<UserManagementProvider>(
+                            builder: (context, provider, _) {
+                              return Text(
+                                provider.designationResponse?.message ?? "",
+                                textAlign: TextAlign.center,
+                                style: context.textStyle.s12.w500.white.roboto,
+                              );
+                            },
+                          ),
+                          backgroundColor: ColorResources.black.withValues(
+                            alpha: 0.6,
+                          ),
+                          behavior: SnackBarBehavior.floating,
+                          margin: const EdgeInsets.all(16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                      );
                 },
                 buttonText:
                     appLoaclizations.delete_user_designation_widget_delete,
