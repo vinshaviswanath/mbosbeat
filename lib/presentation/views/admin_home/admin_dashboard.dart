@@ -456,14 +456,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                                         'tabIndex': 2,
                                                                                         'companyData': selectedCompany,
                                                                                         'isPop': false,
-                                                                                  'tabIndex': 2,
-                                                                                  'companyData': selectedCompany,
-                                                                                  'isPop': false,
                                                                                       },
-                                                                                },
                                                                                     )
                                                                                   : null;
-                                                                             );
                                                                             },
                                                                           ),
                                                                           const CustomDivider(),
