@@ -1057,7 +1057,7 @@ abstract class AppLocalizations {
   /// No description provided for @activate_user_designation_widget_are_you_sure.
   ///
   /// In en, this message translates to:
-  /// **'Are you sure want to activate Executive1?'**
+  /// **'Are you sure want to activate '**
   String get activate_user_designation_widget_are_you_sure;
 
   /// No description provided for @activate_user_designation_widget_user_activated.
@@ -1081,7 +1081,7 @@ abstract class AppLocalizations {
   /// No description provided for @deactivate_user_designation_widget_are_you_sure.
   ///
   /// In en, this message translates to:
-  /// **'Are you sure want to deactivate Executive1?'**
+  /// **'Are you sure want to deactivate '**
   String get deactivate_user_designation_widget_are_you_sure;
 
   /// No description provided for @deactivate_user_designation_widget_user_deactivated.
@@ -1105,7 +1105,7 @@ abstract class AppLocalizations {
   /// No description provided for @delete_user_designation_widget_are_you_sure.
   ///
   /// In en, this message translates to:
-  /// **'Are you sure want to delete Executive1?'**
+  /// **'Are you sure want to delete '**
   String get delete_user_designation_widget_are_you_sure;
 
   /// No description provided for @delete_user_designation_widget_designation_removed.
