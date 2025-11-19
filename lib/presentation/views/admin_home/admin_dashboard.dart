@@ -411,6 +411,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                                 "Company Selected: ${selectedCompany.companyName}",
                                                                               );
 
+                                                                              provider.resetStageCompletion();
+
                                                                               context.pushNamed(
                                                                                 AppRouterConst.companyCreationScreen,
                                                                                 extra: {

@@ -37,6 +37,7 @@ import 'package:mpos_beat/domain/request/create_voucher_numbering_params.dart';
 import 'package:mpos_beat/domain/request/integration_request.dart';
 import 'package:mpos_beat/presentation/views/godown_wise_screen/godown_wise_screen.dart';
 import 'package:mpos_beat/presentation/views/route_wise_screen/route_wise_screen.dart';
+import 'package:mpos_beat/presentation/views/route_wise_screen/widgets/add_route.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CompanyCreationProvider extends ChangeNotifier {
@@ -353,6 +354,17 @@ class CompanyCreationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void resetCompanyInfo() {
+    _companyName = CompanyName('');
+    _displayName = DisplayName('');
+    _address1 = Address1('');
+    _pincode = Pincode('');
+    _country = Country('');
+    _countryState = CountryState('');
+    _registrationType = RegistrationType('');
+    companyinfoAutovalidateMode = AutovalidateMode.disabled;
+  }
+
   //CompanyInformations....
   Future<CompanyInfoDtos?> companyinfo(
     BuildContext context, {
@@ -391,6 +403,7 @@ class CompanyCreationProvider extends ChangeNotifier {
         if (response.status == 1) {
           _companyCreationDtos = response;
           _companyid = _companyCreationDtos!.id;
+          resetCompanyInfo();
           WidgetsBinding.instance.addPostFrameCallback((_) async {
             // final prefs = sl<SharedPreferences>();
             // await prefs.setInt('selected_company_id', _companyCreationDtos!.id);
