@@ -36,21 +36,39 @@ class _CompanyCreationScreenState extends State<CompanyCreationScreen>
       initialIndex: widget.initialTabIndex,
     );
 
+    final provider = Provider.of<CompanyCreationProvider>(
+      context,
+      listen: false,
+    );
+
+    //tabcontroller of heading of tabs for block the tab navigation accroding to completion
+    _tabController.addListener(() {
+      int newIndex = _tabController.index;
+      int oldIndex = _tabController.previousIndex;
+
+      print("LISTENER → oldIndex=$oldIndex  newIndex=$newIndex");
+
+      // BLOCK Voucher Type
+      if (newIndex == 1 && !provider.isStageCompleted(0)) {
+        print("BLOCK: Voucher Type → reverting to $oldIndex");
+        _tabController.index = oldIndex;
+        return;
+      }
+
+      // BLOCK Integration
+      if (newIndex == 2 && !provider.isStageCompleted(1)) {
+        print("BLOCK: Integration → reverting to $oldIndex");
+        _tabController.index = oldIndex;
+        return;
+      }
+
+      print("ALLOW → moved to $newIndex");
+    });
+
     // ✅ update circles according to backend company data
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final provider = Provider.of<CompanyCreationProvider>(
-        context,
-        listen: false,
-      );
-
       if (widget.companyData != null) {
         provider.updateStageCompletionFromCompanyData(widget.companyData!);
-
-        // optional: move to the first uncompleted tab
-        // final nextStage = provider.stageCompleted.indexOf(false);
-        // if (nextStage != -1) {
-        //   _tabController.animateTo(nextStage);
-        // }
       } else {
         provider.resetStageCompletion();
       }
@@ -77,6 +95,7 @@ class _CompanyCreationScreenState extends State<CompanyCreationScreen>
       onPopInvoked: (didPop) async {
         if (didPop) return;
 
+        provider.resetCompanyInfo();
         // final companyData = widget.companyData;
 
         // final hasIntegration =
@@ -130,15 +149,9 @@ class _CompanyCreationScreenState extends State<CompanyCreationScreen>
                 border: Border(bottom: BorderSide(color: Colors.grey.shade300)),
               ),
               child: TabBar(
-                // onTap: (index) {
-                //   if (!provider.canGoToStage(index)) {
-                //     Future.delayed(Duration.zero, () {
-                //       _tabController.animateTo(
-                //         provider.stageCompleted.indexOf(false).clamp(0, 2),
-                //       );
-                //     });
-                //   }
-                // },
+                onTap: (index) {
+                  print("User tapped: $index");
+                },
                 controller: _tabController,
                 labelColor: _activeColor,
                 unselectedLabelColor: ColorResources.bluishGray,
