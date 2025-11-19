@@ -59,6 +59,7 @@ class _CompanyDropdownState extends State<CompanyDropdown> {
     final RenderBox box =
         _dropdownKey.currentContext!.findRenderObject() as RenderBox;
     final Offset position = box.localToGlobal(Offset.zero);
+    double itemHeight = MediaQuery.of(context).size.height * 0.09;
     setState(() {
       searchController.clear();
       isSearching = false;
@@ -81,7 +82,7 @@ class _CompanyDropdownState extends State<CompanyDropdown> {
                 ),
                 Positioned(
                   left: position.dx,
-                  top: MediaQuery.of(context).size.height * 0.120,
+                  top: MediaQuery.of(context).size.height * 0.125,
                   child: Material(
                     elevation: 6,
                     borderRadius: BorderRadius.circular(12),
@@ -93,7 +94,6 @@ class _CompanyDropdownState extends State<CompanyDropdown> {
                       ),
                       width: MediaQuery.of(context).size.width * 0.923,
 
-                      padding: const EdgeInsets.symmetric(vertical: 8),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
@@ -117,10 +117,12 @@ class _CompanyDropdownState extends State<CompanyDropdown> {
 
                             ConstrainedBox(
                               constraints: BoxConstraints(
-                                maxHeight: (widget.companyList.length > 3)
-                                    ? 90 * 3
-                                    : 90 * widget.companyList.length.toDouble(),
-                              ),
+                               
+                               maxHeight: (widget.companyList.length > 3)
+                                    ? itemHeight * 3
+                                    : itemHeight *
+                                          widget.companyList.length.toDouble(),
+  ),
                               child: ListView.separated(
                                 shrinkWrap: true,
                                 itemCount: isSearching
@@ -137,12 +139,17 @@ class _CompanyDropdownState extends State<CompanyDropdown> {
                                       ? filteredList[index]
                                       : widget.companyList[index];
 
+
                                   return CompanyCard(
-                                    company: company,
-                                    onTap: () {
-                                      widget.onCompanySelected?.call(company);
-                                      Navigator.pop(context);
-                                    },
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: CompanyCard(
+                                     company: company,
+                                      onTap: () {
+                                        widget.onCompanySelected?.call(company);
+                                        Navigator.pop(context);
+                                      },
+                                    ),
                                   );
                                 },
                               ),

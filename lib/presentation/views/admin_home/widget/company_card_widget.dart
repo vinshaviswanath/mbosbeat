@@ -33,11 +33,10 @@ class CompanyCard extends StatelessWidget {
     return Column(
       children: [
         InkWell(
-          borderRadius: BorderRadius.circular(10),
+          // borderRadius: BorderRadius.circular(10),
           onTap: onTap,
 
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
               color: const Color(0xFFF6FBFF),
               borderRadius: BorderRadius.circular(12),
@@ -118,11 +117,6 @@ class CompanyCard extends StatelessWidget {
               ],
             ),
           ),
-        ),
-        Divider(
-          height: 20,
-          thickness: 1,
-          color: ColorResources.dustyBlue.withOpacity(0.18),
         ),
       ],
     );
