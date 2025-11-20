@@ -143,52 +143,35 @@ class RegistrationDialogs {
     required String subTitle,
     required VoidCallback onTap,
     required String buttonText,
+    EdgeInsetsGeometry? margin,
   }) {
     final appLocalization = context.l10n;
 
     return CustomDialog.showBottomCustomDialog(
-      chid: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(heading, style: context.textStyle.s14.w500.indigoBlue),
-            h10,
-            Text(
-              subTitle,
-              style: context.textStyle.s12.w500.dustyBlue.roboto,
-              textAlign: TextAlign.center,
-            ),
-            h24,
-            Row(
-              children: [
-                Expanded(
-                  child: CustomButton(
-                    onTap: () {
-                      onTap();
-                    },
-                    buttonText: buttonText,
-                    textStyle: context.textStyle.s12.w500.white.roboto,
-                    isborderEnable: false,
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                ),
-                w10,
-                Expanded(
-                  child: CustomButton(
-                    onTap: () => Navigator.pop(context),
-                    buttonText: appLocalization.cancel,
-                    textStyle: context.textStyle.s12.w500.white.roboto,
-                    color: ColorResources.bluishGray,
-                    isborderEnable: false,
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                ),
-              ],
-            ),
-            h10,
-          ],
-        ),
+      chid: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(heading, style: context.textStyle.s14.w500.indigoBlue),
+          h10,
+          Text(
+            subTitle,
+            style: context.textStyle.s12.w500.dustyBlue.roboto,
+            textAlign: TextAlign.center,
+          ),
+          h24,
+          CustomButton(
+            margin: margin,
+            onTap: () {
+              onTap();
+            },
+            buttonText: buttonText,
+            textStyle: context.textStyle.s12.w500.white.roboto,
+            isborderEnable: false,
+            borderRadius: BorderRadius.circular(16),
+          ),
+          w10,
+          h10,
+        ],
       ),
     );
   }
