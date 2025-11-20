@@ -68,8 +68,10 @@ class MailedScreen extends StatelessWidget {
                                     horizontal: 16,
                                   ),
                                   child: CustomButton(
-                                    onTap: () =>
-                                        context.pushNamed(AppRouterConst.login),
+                                    onTap: () {
+                                      provider.emailController.clear();
+                                      context.pushNamed(AppRouterConst.login);
+                                    },
                                     buttonText: appLocalization.login,
                                     isborderEnable: false,
                                   ),

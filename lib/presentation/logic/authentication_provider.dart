@@ -64,7 +64,7 @@ class AuthFormProvider with ChangeNotifier {
   bool _isVisibleSignupPassword = false;
   bool _isVisibleSignupConfirmPassword = false;
 
-  final formKey = GlobalKey<FormState>();
+  // final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
 
   AutovalidateMode loginAutovalidateMode = AutovalidateMode.disabled;
@@ -196,7 +196,7 @@ class AuthFormProvider with ChangeNotifier {
   }
 
   /// Submits email form and navigates to mailed screen.
-  void submitEmail(BuildContext context) {
+  void submitEmail(BuildContext context, {required GlobalKey<FormState> formKey,}) {
     if (formKey.currentState!.validate()) {
       context.pushNamed(AppRouterConst.mailedScreen);
     }
@@ -705,7 +705,10 @@ class AuthFormProvider with ChangeNotifier {
     return _companyRegistrationResponse;
   }
 
-  Future<ResponseData?> resetPassword(BuildContext context) async {
+  Future<ResponseData?> resetPassword(
+    BuildContext context, {
+    required GlobalKey<FormState> formKey,
+  }) async {
     if (!formKey.currentState!.validate()) {
       loginAutovalidateMode = AutovalidateMode.onUserInteraction;
       notifyListeners();
@@ -734,14 +737,8 @@ class AuthFormProvider with ChangeNotifier {
         _responseData = response;
         Logger.logSuccess("Reset Password success : ${response.toJson()}");
         if (response.status != 0) {
-          submitEmail(context);
-
-          // emailController.clear();
+          submitEmail(context,formKey: formKey);
         } else {
-          // CustomAlertDialog.showCustomDialog(
-          //   title: response.message!,
-          //   typeAlert: TypeAlert.error,
-          // );
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text(response.message!)));

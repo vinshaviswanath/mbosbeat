@@ -36,7 +36,10 @@ Either<ValueFailure<String>, String> validateEmail(String mail) {
 // }
 
 Either<ValueFailure<String>, String> validatePassword(String value) {
-  if (value.isEmpty || value.length < 3) {
+  final trimmedValue = value.trim();
+
+  // 1. Minimum length check
+  if (trimmedValue.isEmpty || trimmedValue.length < 3) {
     return left(
       const ValueFailure.invalidValue(
         'Password must be at least 3 characters!',
@@ -44,8 +47,8 @@ Either<ValueFailure<String>, String> validatePassword(String value) {
     );
   }
 
-  // Must contain at least one alphabet
-  final hasAlphabet = RegExp(r'[a-zA-Z]').hasMatch(value);
+  // 2. Must contain at least one alphabet
+  final hasAlphabet = RegExp(r'[A-Za-z]').hasMatch(trimmedValue);
   if (!hasAlphabet) {
     return left(
       const ValueFailure.invalidValue(
@@ -54,17 +57,18 @@ Either<ValueFailure<String>, String> validatePassword(String value) {
     );
   }
 
-  // Allow only alphabets, numbers, and allowed symbols (no emojis/invalid chars)
+  // 3. Only allow alphabets, numbers, and allowed symbols
   final allowedRegExp = RegExp(
-    r"^[a-zA-Z0-9!@#\$%^&*(),.?':{}|<>_\-+=~`\[\]\\;\/]+$",
+    r"^[A-Za-z0-9!@#\$%^&*(),.?':{}|<>_\-+=~`\[\]\\;\/]+$",
   );
-  if (!allowedRegExp.hasMatch(value)) {
+
+  if (!allowedRegExp.hasMatch(trimmedValue)) {
     return left(
       const ValueFailure.invalidValue('Password contains invalid characters!'),
     );
   }
 
-  return right(value.trim());
+  return right(trimmedValue);
 }
 
 Either<ValueFailure<String>, String> validateConfirmPassword(

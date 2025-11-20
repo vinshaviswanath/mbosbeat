@@ -54,19 +54,26 @@ class RegistrationDialogs {
                 textAlign: TextAlign.center,
               ),
               h24,
-              CustomButton(
-                onTap: () async {
-                  await provider.resendOtp(context, id: id);
-                  WidgetsBinding.instance.addPostFrameCallback((_) {
-                    Navigator.pop(context);
-                    context.push(AppRouterConst.otpAuth);
-                  });
+              Consumer<AuthFormProvider>(
+                builder: (context, provider, _) {
+                  return CustomButton(
+                    onTap: () async {
+                      await provider.resendOtp(context, id: id);
+                      Navigator.pop(context);
+                      provider.resetSignUpForm();
+                      context.push(AppRouterConst.otpAuth);
+                      // WidgetsBinding.instance.addPostFrameCallback((_) {
+                      //   context.push(AppRouterConst.otpAuth);
+                      // });
+                    },
+                    buttonText:
+                        appLocalization.registration_dialogs_verify_number,
+                    textStyle: context.textStyle.s12.white.bold,
+                    isborderEnable: false,
+                    borderRadius: BorderRadius.circular(16),
+                    width: context.getSize.width / 2,
+                  );
                 },
-                buttonText: appLocalization.registration_dialogs_verify_number,
-                textStyle: context.textStyle.s12.white.bold,
-                isborderEnable: false,
-                borderRadius: BorderRadius.circular(16),
-                width: context.getSize.width / 2,
               ),
               h28,
             ],
@@ -117,19 +124,26 @@ class RegistrationDialogs {
             ),
           ),
           h24,
-          CustomButton(
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const LoginScreen()),
+          Consumer<AuthFormProvider>(
+            builder: (context, provider, _) {
+              return CustomButton(
+                onTap: () {
+                  Navigator.pop(context);
+                  provider.resetSignUpForm();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LoginScreen(),
+                    ),
+                  );
+                },
+                buttonText: appLocalization.login,
+                textStyle: context.textStyle.s12.white.bold,
+                isborderEnable: false,
+                borderRadius: BorderRadius.circular(16),
+                width: context.getSize.width / 2,
               );
             },
-            buttonText: appLocalization.login,
-            textStyle: context.textStyle.s12.white.bold,
-            isborderEnable: false,
-            borderRadius: BorderRadius.circular(16),
-            width: context.getSize.width / 2,
           ),
           h28,
         ],

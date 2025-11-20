@@ -41,6 +41,8 @@ class CustomTextField extends StatelessWidget {
     this.onTapOutside,
     this.hintTextStyle,
     this.errorPrefixIcon,
+    this.onFieldSubmitted,
+    this.focusNode,
   });
 
   final GlobalKey<FormState>? fomeKey;
@@ -73,6 +75,8 @@ class CustomTextField extends StatelessWidget {
   final VoidCallback? onTapOutside;
   final TextStyle? hintTextStyle;
   final Widget? errorPrefixIcon;
+  final void Function(String)? onFieldSubmitted;
+  final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +95,8 @@ class CustomTextField extends StatelessWidget {
             borderRadius: BorderRadius.circular(borderRadius ?? 0),
           ),
           child: TextFormField(
+            focusNode: focusNode,
+            onFieldSubmitted: onFieldSubmitted,
             onTapOutside: (event) {
               onTapOutside?.call();
             },

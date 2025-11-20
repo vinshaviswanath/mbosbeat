@@ -21,7 +21,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
+  final compnyFocusNode = FocusNode();
+  final phoneFocusNode = FocusNode();
+  final emailFocusNode = FocusNode();
+  final passwordFocusNode = FocusNode();
+  final confirmPasswordFocusNode = FocusNode();
 
+  @override
+  void dispose() {
+    compnyController.dispose();
+    phoneController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    compnyFocusNode.dispose();
+    phoneFocusNode.dispose();
+    emailFocusNode.dispose();
+    passwordFocusNode.dispose();
+    confirmPasswordFocusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +87,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         CustomTextField(
                           hint: appLocalization.sign_up_enter_company_name,
                           controller: compnyController,
+                          focusNode: compnyFocusNode,
+                          onFieldSubmitted: (_) {
+                            FocusScope.of(context).requestFocus(phoneFocusNode);
+                          },
                           backgroundColor: ColorResources.lightGray,
                           autovalidateMode: provider.registerAutovalidateMode,
                           failure: provider.companyName.getFailure,
@@ -87,6 +110,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         CustomTextField(
                           hint: appLocalization.enter_mobile_number,
                           controller: phoneController,
+                          focusNode: phoneFocusNode,
+                          onFieldSubmitted: (_) {
+                            FocusScope.of(context).requestFocus(emailFocusNode);
+                          },
                           maxLength: 10,
                           backgroundColor: ColorResources.lightGray,
                           autovalidateMode: provider.registerAutovalidateMode,
@@ -110,6 +137,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         CustomTextField(
                           hint: appLocalization.enter_email,
                           controller: emailController,
+                          focusNode: emailFocusNode,
+                          onFieldSubmitted: (_) {
+                            FocusScope.of(
+                              context,
+                            ).requestFocus(passwordFocusNode);
+                          },
                           backgroundColor: ColorResources.lightGray,
                           autovalidateMode: provider.registerAutovalidateMode,
                           failure: provider.email.getFailure,
@@ -135,7 +168,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           hint: appLocalization.enter_password,
                           controller: passwordController,
                           obscureText: !provider.isVisibleSignupPassword,
-
+                          focusNode: passwordFocusNode,
+                          onFieldSubmitted: (_) {
+                            FocusScope.of(
+                              context,
+                            ).requestFocus(confirmPasswordFocusNode);
+                          },
                           suffixIcon: InkWell(
                             onTap: () =>
                                 provider.toggleVisibilitySignUpPassword(),
@@ -168,6 +206,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         CustomTextField(
                           hint: appLocalization.confirm_password,
                           controller: confirmPasswordController,
+                          focusNode: confirmPasswordFocusNode,
+                          onFieldSubmitted: (_) {
+                            // Close keyboard or submit form
+                            confirmPasswordFocusNode.unfocus();
+                          },
                           suffixIcon: InkWell(
                             onTap: () => provider
                                 .toggleVisibilitySignUpConfirmPassword(),
@@ -212,12 +255,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         child: CustomButton(
                           onTap: () async {
                             FocusScope.of(context).unfocus();
-                            
+
                             final response = await provider.submitSignUp(
                               context,
                             );
-
-                            if (response != null && response.status == 1) {
+                            if (response != null && response.status == 1 ||
+                                response?.status == 20) {
                               compnyController.clear();
                               phoneController.clear();
                               emailController.clear();

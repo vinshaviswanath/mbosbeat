@@ -117,12 +117,11 @@ class _CompanyDropdownState extends State<CompanyDropdown> {
 
                             ConstrainedBox(
                               constraints: BoxConstraints(
-                               
-                               maxHeight: (widget.companyList.length > 3)
+                                maxHeight: (widget.companyList.length > 3)
                                     ? itemHeight * 3
                                     : itemHeight *
                                           widget.companyList.length.toDouble(),
-  ),
+                              ),
                               child: ListView.separated(
                                 shrinkWrap: true,
                                 itemCount: isSearching
@@ -139,12 +138,10 @@ class _CompanyDropdownState extends State<CompanyDropdown> {
                                       ? filteredList[index]
                                       : widget.companyList[index];
 
-
-                                  return CompanyCard(
                                   return Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: CompanyCard(
-                                     company: company,
+                                      company: company,
                                       onTap: () {
                                         widget.onCompanySelected?.call(company);
                                         Navigator.pop(context);
