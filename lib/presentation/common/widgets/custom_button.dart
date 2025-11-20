@@ -29,6 +29,7 @@ class CustomButton extends StatelessWidget {
   final IconData? icon;
   final double? iconSize;
   final Color? iconColor;
+  final EdgeInsetsGeometry? margin;
   const CustomButton({
     super.key,
     this.onTap,
@@ -50,6 +51,7 @@ class CustomButton extends StatelessWidget {
     this.icon,
     this.iconSize,
     this.iconColor,
+    this.margin,
   });
 
   @override
@@ -57,6 +59,7 @@ class CustomButton extends StatelessWidget {
     return Consumer<ThemeProvider>(
       builder: (context, provider, _) {
         return Container(
+          margin: margin,
           padding: buttonPadding,
           height: height ?? context.getSize.height * 0.06,
           width: width,

@@ -132,7 +132,10 @@ class InvalidOtp extends StatelessWidget {
                                   ? null
                                   : () {
                                       provider.startOtpTimer();
-                                      provider.resendOtp(context);
+                                      provider.resendOtp(
+                                        context,
+                                        id: provider.customerId,
+                                      );
                                       wheelKey.currentState?.startSpin();
                                     },
                               child: Text(

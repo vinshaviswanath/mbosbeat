@@ -522,20 +522,24 @@ class AuthFormProvider with ChangeNotifier {
             //   response.loginData?.companyName ?? '',
             //   id: response.loginData?.customerId,
             // );
+
             RegistrationDialogs.customDialog(
+              margin: EdgeInsets.symmetric(horizontal: 70),
               context: context,
               heading: "OTP not Varified",
               subTitle:
                   "You have successfully completed Login. Kindly\nverify with OTP to continue.",
-              onTap: () {
+              onTap: () async {
+                final customerId = response.loginData?.customerId;
+                await resendOtp(context, id: customerId);
                 context.pushNamed(AppRouterConst.otpAuth);
               },
               buttonText: "Varify OTP",
             );
-            break;
 
           case 20: //Company creation pending
             RegistrationDialogs.customDialog(
+              margin: EdgeInsets.symmetric(horizontal: 70),
               context: context,
               heading: "Registration Completed!",
               subTitle:
@@ -556,6 +560,7 @@ class AuthFormProvider with ChangeNotifier {
 
           case 40: //Integration settings pending
             RegistrationDialogs.customDialog(
+              margin: EdgeInsets.symmetric(horizontal: 103),
               context: context,
               heading: "Company Creation Completed!",
               subTitle:
@@ -576,6 +581,7 @@ class AuthFormProvider with ChangeNotifier {
 
           case 30: //Voucher type configuration pending
             RegistrationDialogs.customDialog(
+              margin: EdgeInsets.symmetric(horizontal: 103),
               context: context,
               heading: "Company Creation Completed!",
               subTitle:
