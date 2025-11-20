@@ -12,7 +12,7 @@ class RegisterSuccessWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.only(left: 32, top: 32, right: 32),
+          padding: EdgeInsets.only(left: 32, top: 52, right: 32),
           child: AvatarGlow(
             glowColor: ColorResources.amber,
             glowShape: BoxShape.circle,
@@ -34,7 +34,7 @@ class RegisterSuccessWidget extends StatelessWidget {
           textAlign: TextAlign.center,
           style: context.textStyle.s12.silverGray,
         ),
-        h12,
+        h16,
       ],
     );
   }

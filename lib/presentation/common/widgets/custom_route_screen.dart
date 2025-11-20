@@ -35,7 +35,7 @@ class CustomRouteScreen extends StatelessWidget {
                     if (status == NavigationType.success)
                       BaseBox(
                         width: context.getSize.width - 8,
-                        padding: const EdgeInsets.symmetric(horizontal: 32),
+                        padding: const EdgeInsets.symmetric(horizontal: 42),
                         widgwt: const RegisterSuccessWidget(),
                       ),
                     if (status == NavigationType.failed)

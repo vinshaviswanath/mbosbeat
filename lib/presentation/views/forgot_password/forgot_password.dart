@@ -13,6 +13,8 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
+  final _formKey = GlobalKey<FormState>(); // moved key here
+
   @override
   Widget build(BuildContext context) {
     final appLocalization = context.l10n;
@@ -22,11 +24,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           canPop: true,
           onPopInvokedWithResult: (didPop, result) {
             if (didPop) {
-              context.read<AuthFormProvider>().resetSignUpForm();
+              provider.resetSignUpForm();
             }
           },
           child: Form(
-            key: provider.formKey,
+            key: _formKey, // use local key
             child: BaseScaffold(
               widget: SizedBox(
                 height: context.getSize.height,
@@ -119,7 +121,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                           decoration: InputDecoration(
                                             hintText:
                                                 appLocalization.enter_email,
-
                                             filled: true,
                                             fillColor: ColorResources.lightGray,
                                             hintStyle: context
@@ -139,7 +140,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                                 color: Colors.transparent,
                                               ),
                                             ),
-
                                             errorBorder: OutlineInputBorder(
                                               borderRadius:
                                                   BorderRadius.circular(12),
@@ -193,7 +193,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                   ),
                                   child: CustomButton(
                                     onTap: () {
-                                      provider.resetPassword(context);
+                                      // pass the local _formKey to provider
+                                      provider.resetPassword(
+                                        context,
+                                        formKey: _formKey,
+                                      );
                                     },
                                     buttonText: appLocalization.send,
                                     isborderEnable: false,

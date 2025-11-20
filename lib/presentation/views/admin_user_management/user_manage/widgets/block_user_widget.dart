@@ -48,6 +48,7 @@ class BlockUserWidget extends StatelessWidget {
                         ),
                       );
                 },
+                textStyle: context.textStyle.s12.w500.white,
                 buttonText: appLocalizations.block_user_widget_block,
                 isborderEnable: false,
                 borderRadius: BorderRadius.circular(16),
@@ -58,6 +59,7 @@ class BlockUserWidget extends StatelessWidget {
               child: CustomButton(
                 onTap: () => Navigator.pop(context),
                 buttonText: appLocalizations.cancel,
+                textStyle: context.textStyle.s12.w500.white,
                 color: ColorResources.bluishGray,
                 isborderEnable: false,
                 borderRadius: BorderRadius.circular(16),
