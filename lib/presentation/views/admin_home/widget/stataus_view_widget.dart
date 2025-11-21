@@ -38,10 +38,10 @@ class StatusView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('Company: ${company.companyName}');
-    print('company completion: ${company.hasCompanySettings}');
-    print('integration completion: ${company.hasIntegrationSettings}');
-    print('voucher completion: ${company.hasVoucherTypeSettings}');
+    // print('Company: ${company.companyName}');
+    // print('company completion: ${company.hasCompanySettings}');
+    // print('integration completion: ${company.hasIntegrationSettings}');
+    // print('voucher completion: ${company.hasVoucherTypeSettings}');
     return Stack(
       alignment: Alignment.center,
       children: [

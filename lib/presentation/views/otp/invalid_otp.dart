@@ -99,11 +99,13 @@ class InvalidOtp extends StatelessWidget {
                                       ),
                                     ),
                                   );
-                                } else if (response.status == 0) {
-                                  GoRouter.of(
-                                    context,
-                                  ).pushNamed(AppRouterConst.invalidOtp);
-                                }
+                                } 
+                                
+                                // else if (response.status == 0) {
+                                //   GoRouter.of(
+                                //     context,
+                                //   ).pushNamed(AppRouterConst.invalidOtp);
+                                // }
                               },
                             );
                           },

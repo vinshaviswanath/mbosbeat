@@ -1,6 +1,7 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:mpos_beat/core/failures/value_object/value_failure.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 
 Either<ValueFailure<String>, String> validatePhoneNumber(String input) {
   if (input.isEmpty) {
@@ -130,10 +131,12 @@ Either<ValueFailure<String>, String> validateCompanyName(String value) {
   return right(value.trim());
 }
 
-Either<ValueFailure<String>, String> validateOtp(String value) {
+Either<ValueFailure<String>, String> validateOtp(
+  String value,) {
   if (value.length < 4) {
     return left(const ValueFailure.invalidValue('Enter a valid otp!'));
   }
+
   return right(value);
 }
 

@@ -130,10 +130,7 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
                                             AppRouterConst.customRouteScreen,
                                             extra: NavigationType.success,
                                           );
-                                          // CustomAlertDialog.showCustomDialog(
-                                          //   title: "OTP Verified Successfully",
-                                          //   typeAlert: TypeAlert.success,
-                                          // );
+                                      
                                           ScaffoldMessenger.of(
                                             context,
                                           ).showSnackBar(
@@ -156,9 +153,8 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
                                             ),
                                           );
                                         } else if (response.status == 0) {
-                                          GoRouter.of(context).pushNamed(
-                                            AppRouterConst.invalidOtp,
-                                          );
+
+
                                         }
                                       },
                                     );
@@ -228,5 +224,3 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
     );
   }
 }
-
-

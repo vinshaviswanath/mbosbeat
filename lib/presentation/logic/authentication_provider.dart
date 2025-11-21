@@ -196,7 +196,10 @@ class AuthFormProvider with ChangeNotifier {
   }
 
   /// Submits email form and navigates to mailed screen.
-  void submitEmail(BuildContext context, {required GlobalKey<FormState> formKey,}) {
+  void submitEmail(
+    BuildContext context, {
+    required GlobalKey<FormState> formKey,
+  }) {
     if (formKey.currentState!.validate()) {
       context.pushNamed(AppRouterConst.mailedScreen);
     }
@@ -308,11 +311,20 @@ class AuthFormProvider with ChangeNotifier {
       (response) async {
         _otpResponse = response;
 
-        if (response.loginData == null || response.status == 1) {
+        if (response.status == 0) {
           _otpError = response.message;
-        } else {
-          _otpError = null;
+          Logger.logError(_otpError!);
+
+          notifyListeners();
+
+          // Close loading screen
+          GoRouter.of(context).pop();
+
+          return; // stop flow – don’t go to success page
         }
+
+        // ✔ VALID OTP (status == 1)
+        _otpError = null;
 
         Logger.logSuccess("OTP verification success : ${response.toJson()}");
 
@@ -743,7 +755,7 @@ class AuthFormProvider with ChangeNotifier {
         _responseData = response;
         Logger.logSuccess("Reset Password success : ${response.toJson()}");
         if (response.status != 0) {
-          submitEmail(context,formKey: formKey);
+          submitEmail(context, formKey: formKey);
         } else {
           ScaffoldMessenger.of(
             context,

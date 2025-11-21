@@ -306,8 +306,7 @@ class _VoucherCardState extends State<VoucherCard> {
                                                     0.056,
                                               ),
                                               backgroundColor: ColorResources
-                                                  .indigoBlue
-                                                  .withOpacity(0),
+                                                  .indigoBlue,
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(15),

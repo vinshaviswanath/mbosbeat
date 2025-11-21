@@ -122,7 +122,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                 onTap: toggleDrawer,
                 onHorizontalDragUpdate: _onDragUpdate,
                 onHorizontalDragEnd: _onDragEnd,
-                child: Container(color: Colors.black.withOpacity(0.3)),
+                child: Container(color: Colors.black. withValues(alpha: 0.3),),
               ),
 
             // Drawer itself

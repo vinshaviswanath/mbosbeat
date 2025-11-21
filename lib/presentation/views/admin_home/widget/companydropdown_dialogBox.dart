@@ -151,7 +151,7 @@ class _CompanyDropdownState extends State<CompanyDropdown> {
                                 },
                               ),
                             ),
-                            if (widget.companyList.length > 4)
+                            if (widget.companyList.length > 7)
                               GestureDetector(
                                 child: Padding(
                                   padding: const EdgeInsets.only(
@@ -169,13 +169,17 @@ class _CompanyDropdownState extends State<CompanyDropdown> {
                                         .roboto,
                                   ),
                                 ),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  _showLargeCompanyDialog(context);
+                                },
                               ),
 
                             GestureDetector(
                               child: CircleAvatar(
                                 radius: 10,
                                 backgroundColor: ColorResources.dustyBlue
-                                    .withOpacity(0.15),
+                                    .withValues(alpha: 0.15),
                                 child: const Icon(
                                   Icons.close,
                                   color: ColorResources.bluishGray,
@@ -228,6 +232,87 @@ class _CompanyDropdownState extends State<CompanyDropdown> {
           ],
         ),
       ),
+    );
+  }
+
+  void _showLargeCompanyDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setStateDialog) {
+            return Dialog(
+              backgroundColor: Colors.white,
+              insetPadding: const EdgeInsets.symmetric(
+                horizontal: 10,
+                vertical: 40,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                    children: [
+                      CustomTextField(
+                        hint: "Search Company",
+                        hintTextStyle: context.textStyle.s12.silverGray.w300,
+                        controller: searchController,
+                        backgroundColor: ColorResources.lightGray,
+                        borderRadius: 12,
+                        borderColor: ColorResources.transparent,
+                        onChange: (value) {
+                          filterCompanyList(value);
+                          setStateDialog(() {});
+                        },
+                      ),
+                      h12,
+                      Expanded(
+                        child: ListView.separated(
+                          itemCount: filteredList.length,
+                          separatorBuilder: (context, index) =>
+                              const Divider(height: 1),
+                          itemBuilder: (context, index) {
+                            final company = filteredList[index];
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CompanyCard(
+                                company: company,
+                                onTap: () {
+                                  widget.onCompanySelected?.call(company);
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+
+                      // Close button
+                      GestureDetector(
+                        child: CircleAvatar(
+                          radius: 10,
+                          backgroundColor: ColorResources.dustyBlue.withValues(
+                            alpha: 0.15,
+                          ),
+                          child: const Icon(
+                            Icons.close,
+                            color: ColorResources.bluishGray,
+                            size: 12,
+                          ),
+                        ),
+                        onTap: () => Navigator.pop(context),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }
