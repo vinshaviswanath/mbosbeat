@@ -56,7 +56,7 @@ class SummaryCard extends StatelessWidget {
       width: size.width * 0.280,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: item.backgroundColor.withOpacity(0.2),
+        color: item.backgroundColor  .withValues(alpha: 0.2),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

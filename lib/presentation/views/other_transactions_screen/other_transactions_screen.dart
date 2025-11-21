@@ -102,7 +102,7 @@ class _OtherTransOptionsScreenState extends State<OtherTransOptionsScreen> {
                             height: MediaQuery.of(context).size.height * 0.150,
                             width: MediaQuery.of(context).size.width * 0.450,
                             decoration: BoxDecoration(
-                              color: color.withOpacity(0.2),
+                              color: color  .withValues(alpha: 0.2),
                               borderRadius: BorderRadius.circular(15),
                             ),
                             child: Padding(
@@ -138,9 +138,7 @@ class _OtherTransOptionsScreenState extends State<OtherTransOptionsScreen> {
                                         ),
                                         child: CircleAvatar(
                                           radius: 14,
-                                          backgroundColor: color.withOpacity(
-                                            0.2,
-                                          ),
+                                          backgroundColor: color  .withValues(alpha: 0.2),
                                           child: Icon(
                                             size: 15,
                                             Icons.arrow_forward_ios_rounded,

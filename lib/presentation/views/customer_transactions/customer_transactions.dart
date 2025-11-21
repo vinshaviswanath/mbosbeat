@@ -82,7 +82,7 @@ class _CustomerTransactionsState extends State<CustomerTransactions> {
                           Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              color: ColorResources.indigoBlue.withOpacity(0.1),
+                              color: ColorResources.indigoBlue  .withValues(alpha: 0.1),
                             ),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),

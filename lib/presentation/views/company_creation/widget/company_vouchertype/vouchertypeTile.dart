@@ -155,7 +155,7 @@ class _VoucherTypeTileState extends State<VoucherTypeTile> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        color: const Color(0xFF98A6BE).withOpacity(0.3),
+                        color: const Color(0xFF98A6BE)  .withValues(alpha: 0.3),
                         borderRadius: BorderRadius.circular(4),
                       ),
                       height: MediaQuery.of(context).size.height * 0.025,
@@ -209,7 +209,7 @@ class _VoucherTypeTileState extends State<VoucherTypeTile> {
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                            color: const Color(0xFF98A6BE).withOpacity(0.3),
+                            color: const Color(0xFF98A6BE)  .withValues(alpha: 0.3),
                             borderRadius: BorderRadius.circular(4),
                           ),
                           height: MediaQuery.of(context).size.height * 0.025,
@@ -314,7 +314,7 @@ class _VoucherTypeTileState extends State<VoucherTypeTile> {
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          color: const Color(0xFF98A6BE).withOpacity(0.3),
+                          color: const Color(0xFF98A6BE)  .withValues(alpha: 0.3),
                           borderRadius: BorderRadius.circular(4),
                         ),
                         height: MediaQuery.of(context).size.height * 0.025,

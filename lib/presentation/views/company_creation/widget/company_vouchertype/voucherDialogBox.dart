@@ -212,7 +212,7 @@ class _VoucherDialogboxState extends State<VoucherDialogbox> {
                                     MediaQuery.of(context).size.width * 0.099,
                                 color: Theme.of(
                                   context,
-                                ).colorScheme.onPrimary.withOpacity(0.2),
+                                ).colorScheme.onPrimary  .withValues(alpha: 0.2),
                               ),
                             ),
 

@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:mpos_beat/core/theme/colors.dart';
 import 'package:mpos_beat/core/theme/text_styles.dart';
@@ -8,15 +10,11 @@ import 'package:mpos_beat/presentation/views/admin_home/widget/stataus_view_widg
 
 class CompanyCard extends StatelessWidget {
   final CompanyViewList company;
-  final bool isSelected;
+
   final VoidCallback? onTap;
 
-  const CompanyCard({
-    Key? key,
-    required this.company,
-    this.isSelected = false,
-    this.onTap,
-  }) : super(key: key);
+  const CompanyCard({Key? key, required this.company, this.onTap})
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,17 +44,24 @@ class CompanyCard extends StatelessWidget {
                 Stack(
                   clipBehavior: Clip.none,
                   children: [
-                    StatusView(
-                      numberOfStatus: 3,
-                      company: company,
-                      centerImageUrl: '',
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 5,
+                        top: 5,
+                        bottom: 5,
+                      ),
+                      child: StatusView(
+                        numberOfStatus: 3,
+                        company: company,
+                        centerImageUrl: '',
+                      ),
                     ),
 
                     if (company.hasCompanySettings != 0 &&
                         company.hasIntegrationSettings != 0 &&
                         company.hasVoucherTypeSettings != 0)
                       const Positioned(
-                        bottom: -3,
+                        bottom: 4,
                         right: -3,
                         child: CompletedTickMark(),
                       ),
@@ -109,6 +114,7 @@ class CompanyCard extends StatelessWidget {
                             "$percentage% Completed",
                             style: context.textStyle.s08.w400.lightgreen.roboto,
                           ),
+                          SizedBox(width: 5,)
                         ],
                       ),
                     ],
