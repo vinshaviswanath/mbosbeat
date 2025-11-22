@@ -366,8 +366,8 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
                                 provider.companyinfoAutovalidateMode,
                             failure: provider.countryState.getFailure,
                             label: stateTitle,
-                            hintText: appLocalizations
-                                .company_info_widget_enter_address,
+                            hintText:
+                                appLocalizations.company_info_widget_state,
                             items: stateItems,
                             value: selectedStateValue,
 

@@ -1,6 +1,5 @@
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_switch.dart';
-import 'package:mpos_beat/presentation/views/admin_home/widget/popover_body.dart';
 import 'package:popover/popover.dart';
 
 class InfoTooltip extends StatefulWidget {
@@ -32,75 +31,16 @@ class InfoTooltip extends StatefulWidget {
 }
 
 class _InfoTooltipState extends State<InfoTooltip> {
-  final GlobalKey _iconKey = GlobalKey();
   OverlayEntry? _overlayEntry;
-
-  bool _isOn = false;
 
   @override
   void initState() {
     super.initState();
-    // ✅ Initialize toggle value correctly
-    _isOn = widget.initialValue;
-  }
-
-  void _showTooltip() {
-    if (_overlayEntry != null) return;
-
-    final renderBox = _iconKey.currentContext!.findRenderObject() as RenderBox;
-    final position = renderBox.localToGlobal(Offset.zero);
-
-    _overlayEntry = OverlayEntry(
-      builder: (context) => GestureDetector(
-        onTap: _hideTooltip,
-        behavior: HitTestBehavior.translucent,
-        child: Stack(
-          children: [
-            Positioned(
-              left: 16,
-              top: position.dy + renderBox.size.height,
-              child: Material(
-                color: Colors.transparent,
-                child: Container(
-                  width: context.getSize.width - 32,
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color:ColorResources.white,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        offset: const Offset(0, 8),
-                        color: ColorResources.black.withValues(alpha: 0.2),
-                        blurRadius: 13,
-                      ),
-                    ],
-                  ),
-                  child: Text(
-                    widget.description,
-                    style: context.textStyle.s09.w300.dustyBlue.roboto,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-
-    Overlay.of(context).insert(_overlayEntry!);
   }
 
   void _hideTooltip() {
     _overlayEntry?.remove();
     _overlayEntry = null;
-  }
-
-  void _toggleTooltip() {
-    if (_overlayEntry == null) {
-      _showTooltip();
-    } else {
-      _hideTooltip();
-    }
   }
 
   @override
@@ -146,28 +86,21 @@ class _InfoTooltipState extends State<InfoTooltip> {
                 w8,
               ],
               CustomSwitch(
-                value: widget.initialValue || _isOn,
-                thumbColor: !widget.initialValue || !_isOn
+                value: widget.initialValue,
+                thumbColor: !widget.initialValue
                     ? ColorResources.bluishGray
                     : ColorResources.white,
-                borderColor: !widget.initialValue || !_isOn
+                borderColor: !widget.initialValue
                     ? ColorResources.neutralmidgray
                     : ColorResources.transparent,
- onChanged: (val) {
-                  setState(() => _isOn = val);
-                  debugPrint("Switch is now: $val");
-                  // ✅ Notify parent screen
-                  if (widget.onToggle != null) {
-                    widget.onToggle!(val);
-                  }
- },
+                onChanged: (val) {
+                  widget.onToggle?.call(val);
+                },
               ),
               w8,
               Builder(
                 builder: (context) {
                   return GestureDetector(
-                    // key: _iconKey,
-                    // onTap: _toggleTooltip,
                     onTap: () {
                       showPopover(
                         context: context,
@@ -204,7 +137,7 @@ class _InfoTooltipState extends State<InfoTooltip> {
                         // height: 120,
                         arrowHeight: 0,
                         arrowWidth: 30,
-                        backgroundColor:ColorResources.white,
+                        backgroundColor: ColorResources.white,
                         barrierColor: Colors.transparent,
                       );
                     },

@@ -44,13 +44,6 @@ class CompanyCreationProvider extends ChangeNotifier {
   final ICompanyCreationFacad iCompanyCreationFacad;
   CompanyCreationProvider(this.iCompanyCreationFacad);
 
-  // Future<String> getCompanyId() async {
-  //   final pref = sl<SharedPreferences>();
-  //   final companyId = pref.getInt('selected_company_id');
-  //   // _companyid = companyId;
-  //   return companyId?.toString() ?? '';
-  // }
-
   String? _activePlan;
 
   String? get activePlan => _activePlan;
@@ -725,7 +718,6 @@ class CompanyCreationProvider extends ChangeNotifier {
   }
 
   //CREATE COMPANY VOUCHER TYPE
-
   Future<CreateCompanyvochertypeDtos?> createCompanyVoucherTypes(
     BuildContext context, {
     required CreateCompanyVocherParams request,
@@ -811,9 +803,6 @@ class CompanyCreationProvider extends ChangeNotifier {
       },
 
       (response) {
-        Logger.logSuccess(
-          "Fetch Company Settings successfully: $_voucherTypes",
-        );
         Logger.logSuccess("Status : ${response.status}");
         _companySettingslistDtos = response;
         _comapanySettingsListData = response.companySettingsList;
@@ -1047,86 +1036,7 @@ class CompanyCreationProvider extends ChangeNotifier {
     return _routeName.isValid() && _routeCode.isValid();
   }
 
-  // =========================== SUBMIT / CRUD ============================
-
-  // Future<void> submitRoute(BuildContext context) async {
-  //   final isValid = validateRoute();
-
-  //   if (!isValid) {
-  //     routeAutovalidateMode = AutovalidateMode.always;
-  //     notifyListeners();
-  //     return;
-  //   }
-
-  //   final name = _routeName.getOrCrash();
-  //   final code = _routeCode.getOrCrash();
-
-  //   addRoute(name: name, code: code);
-  //   routeAutovalidateMode = AutovalidateMode.disabled;
-  //   Navigator.pop(context);
-  // }
-
-  // Future<void> _saveRoutes() async {
-  //   final prefs = sl<SharedPreferences>();
-  //   final jsonList = _routes.map((v) => jsonEncode(v.toJson())).toList();
-  //   await prefs.setStringList("routes", jsonList);
-  // }
-
-  // void loadRoutes() {
-  //   final prefs = sl<SharedPreferences>();
-  //   final jsonList = prefs.getStringList("routes") ?? [];
-  //   _routes
-  //     ..clear()
-  //     ..addAll(jsonList.map((e) => RouteDetails.fromJson(jsonDecode(e))));
-  //   notifyListeners();
-  // }
-
-  // void addRoute({required String name, required String code}) {
-  //   _routes.add(
-  //     RouteDetails(routeName: name, routeCode: code, status: "Active"),
-  //   );
-  //   _saveRoutes();
-  //   notifyListeners();
-  // }
-
-  // void editRoute(int index, String newName, String newCode) {
-  //   _routes[index] = RouteDetails(
-  //     routeName: newName,
-  //     routeCode: newCode,
-  //     status: _routes[index].status,
-  //   );
-  //   _saveRoutes();
-  //   notifyListeners();
-  // }
-
-  // void deleteRoute(int index) {
-  //   _routes.removeAt(index);
-  //   _saveRoutes();
-  //   notifyListeners();
-  // }
-
-  // void deactivateRoute(int index) {
-  //   _routes[index] = RouteDetails(
-  //     routeName: _routes[index].routeName,
-  //     routeCode: _routes[index].routeCode,
-  //     status: "Inactive",
-  //   );
-  //   _saveRoutes();
-  //   notifyListeners();
-  // }
-
-  // void activateRoute(int index) {
-  //   _routes[index] = RouteDetails(
-  //     routeName: _routes[index].routeName,
-  //     routeCode: _routes[index].routeCode,
-  //     status: "Active",
-  //   );
-  //   _saveRoutes();
-  //   notifyListeners();
-  // }
-
   //get companyvuchertypelist
-
   Future<CompanyvouchertypeslistDtos?> fetchVoucherTypes(
     BuildContext context,
     int companyId,
@@ -1212,16 +1122,16 @@ class CompanyCreationProvider extends ChangeNotifier {
           _createCompanySettingsDtos = response;
           onSuccess?.call();
 
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(response.message, textAlign: TextAlign.center),
-              behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            ),
-          );
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(
+          //     content: Text(response.message, textAlign: TextAlign.center),
+          //     behavior: SnackBarBehavior.floating,
+          //     shape: RoundedRectangleBorder(
+          //       borderRadius: BorderRadius.circular(16),
+          //     ),
+          //     margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          //   ),
+          // );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -1237,6 +1147,55 @@ class CompanyCreationProvider extends ChangeNotifier {
       },
     );
     return _createCompanySettingsDtos;
+  }
+
+  Future<void> updateParentAndChildren(
+    BuildContext context,
+    int parentId,
+    bool newValue,
+    int companyId,
+  ) async {
+    String parentValue = newValue ? "Yes" : "No";
+
+    // 1. Update Parent Locally
+    for (var item in _comapanySettingsListData) {
+      if (item.id == parentId) {
+        item.settingsValue = parentValue;
+      }
+    }
+    notifyListeners();
+
+    // 2. Call API for Parent
+    await createCompanySettings(
+      context,
+      param: CreateCompanysettingsParams(
+        id: parentId,
+        companyid: companyId,
+        settingsvalue: parentValue,
+      ),
+    );
+
+    //  3. If Parent is OFF → Turn Off ALL children
+    if (!newValue) {
+      final children = _comapanySettingsListData
+          .where((item) => item.parentId == parentId)
+          .toList();
+
+      for (var child in children) {
+        child.settingsValue = "No";
+        notifyListeners();
+
+        //  4. API update for each child
+        await createCompanySettings(
+          context,
+          param: CreateCompanysettingsParams(
+            id: child.id,
+            companyid: companyId,
+            settingsvalue: "No",
+          ),
+        );
+      }
+    }
   }
 
   //========================= Users List =========================
