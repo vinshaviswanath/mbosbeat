@@ -185,6 +185,7 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
                                     onTap: provider.remainingSeconds > 0
                                         ? null
                                         : () {
+                                            provider.clearOtpValidation();
                                             provider.startOtpTimer();
                                             provider.resendOtp(
                                               context,

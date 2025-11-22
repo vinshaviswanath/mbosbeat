@@ -1,5 +1,5 @@
-// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format width=80
 
 // **************************************************************************
 // InjectableConfigGenerator
@@ -276,13 +276,6 @@ Future<_i174.GetIt> init(
       gh<_i460.SharedPreferences>(),
     ),
   );
-  gh.lazySingleton<_i284.GetCompanyList>(
-    () => _i284.GetCompanyList(
-      gh<_i816.HttpClient>(),
-      gh<_i530.RunSafely>(),
-      gh<_i460.SharedPreferences>(),
-    ),
-  );
   gh.lazySingleton<_i252.GetAllCompanySettingsDatasource>(
     () => _i252.GetAllCompanySettingsDatasource(
       gh<_i816.HttpClient>(),
@@ -449,6 +442,14 @@ Future<_i174.GetIt> init(
       gh<_i816.HttpClient>(),
       gh<_i530.RunSafely>(),
       gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i284.GetCompanyList>(
+    () => _i284.GetCompanyList(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+      appDb: gh<_i264.AppDb>(),
     ),
   );
   gh.lazySingleton<_i172.IUserManagementFacad>(

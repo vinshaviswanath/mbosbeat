@@ -44,3 +44,42 @@ class CreateUser {
     );
   }
 }
+
+// @lazySingleton
+// class CreateUser {
+//   final HttpClient httpClient;
+//   final RunSafely runSafely;
+
+//   CreateUser(this.httpClient, this.runSafely);
+
+//   ResultFuture<DesignationResponse> call(BaseParams<UserCreationParams> param) {
+//     return runSafely(
+//       () async {
+//         final response = await httpClient.post(
+//           Urls.createUser,
+//           data: param.toMap(),
+//         );
+
+//         if (response.isOk) {
+//           final designationParser =
+//               ParserRegistry.getParser<DesignationResponse>();
+
+//           final parsed = await IsolateService.runParser(
+//             designationParser,
+//             response.data,
+//           );
+
+//           return parsed;
+//         }
+
+//         throw CustomException(errMsg: response.message);
+//       },
+//       failure: (error) {
+//         if (error.toLowerCase() == 'invalid referrel code!'.toLowerCase()) {
+//           return InvalidReferralCode(errorMsg: error);
+//         }
+//         return MainFailure.genericError(errorMsg: error);
+//       },
+//     );
+//   }
+// }

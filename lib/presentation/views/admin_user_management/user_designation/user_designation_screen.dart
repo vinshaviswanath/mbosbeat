@@ -6,6 +6,7 @@ import 'package:mpos_beat/presentation/logic/user_management_provider.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_designation/widgets/activate_user_designation_widget.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_designation/widgets/deactivate_user_designation_widget.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_designation/widgets/delete_user_designation_widget.dart';
+import 'package:mpos_beat/presentation/views/admin_user_management/user_designation/widgets/shimmer/uder_designation_shimmer.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_manage/widgets/option_item.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_designation/widgets/user_designation_widget.dart';
 
@@ -70,7 +71,9 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
               ),
             ],
           ),
-          body: (items == null || items.isEmpty)
+          body: provider.isLoading
+              ? const UserDesignationShimmer() 
+              : (items == null || items.isEmpty)
               ? Center(
                   child: Text(
                     appLocalization

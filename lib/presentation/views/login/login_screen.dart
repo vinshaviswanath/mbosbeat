@@ -181,7 +181,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   autovalidateMode:
                                       provider.loginAutovalidateMode,
                                   failure: provider.password.getFailure,
-                                  onChange: provider.updatePassword,
+                                  onChange: (value) {
+                                    provider.updatePassword(value, '');
+                                  },
+
                                   inputType: TextInputType.visiblePassword,
                                   borderRadius: 12,
                                   hintColor: ColorResources.silverGray,
@@ -257,6 +260,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   appLocalization.sign_up,
                                   style: context.textStyle.s12.amber.bold.roboto
                                       .copyWith(
+                                        height: 1.8,
                                         decoration: TextDecoration.underline,
                                         decorationColor:
                                             context.textStyle.amber.color,

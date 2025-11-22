@@ -350,57 +350,61 @@ class _CustomDrawerState extends State<CustomDrawer>
                                         _isExpand = !_isExpand;
                                       });
                                     },
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Checkbox(
-                                              value: false,
-                                              side: BorderSide.none,
-                                              materialTapTargetSize:
-                                                  MaterialTapTargetSize
-                                                      .shrinkWrap,
-                                              visualDensity:
-                                                  VisualDensity.compact,
-                                              onChanged: (value) {},
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
+                                    child: Container(
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Checkbox(
+                                                value: false,
+                                                side: BorderSide.none,
+                                                materialTapTargetSize:
+                                                    MaterialTapTargetSize
+                                                        .shrinkWrap,
+                                                visualDensity:
+                                                    VisualDensity.compact,
+                                                onChanged: (value) {},
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                ),
+                                                fillColor:
+                                                    WidgetStateProperty.all(
+                                                      ColorResources.white
+                                                          .withValues(
+                                                            alpha: 0.2,
+                                                          ),
+                                                    ),
                                               ),
-                                              fillColor:
-                                                  WidgetStateProperty.all(
-                                                    ColorResources.white
-                                                        .withValues(alpha: 0.2),
-                                                  ),
-                                            ),
-                                            w8,
-                                            Text(
-                                              applocalizations
-                                                  .drawer_user_management,
-                                              style: context
-                                                  .textStyle
-                                                  .s14
-                                                  .bold
-                                                  .white
-                                                  .roboto,
-                                            ),
-                                          ],
-                                        ),
-                                        // SvgPicture.asset(
-                                        //   AppAssets.roundArrowRight,
-                                        //   height: 12,
-                                        // ),
-                                        NavButton(
-                                          height: 16,
-                                          color: ColorResources.indigoBlue
-                                              .withValues(alpha: 0.35),
-                                          svgArrowPath: AppAssets.person,
-                                        ),
-                                      ],
+                                              w8,
+                                              Text(
+                                                applocalizations
+                                                    .drawer_user_management,
+                                                style: context
+                                                    .textStyle
+                                                    .s14
+                                                    .bold
+                                                    .white
+                                                    .roboto,
+                                              ),
+                                            ],
+                                          ),
+                                          // SvgPicture.asset(
+                                          //   AppAssets.roundArrowRight,
+                                          //   height: 12,
+                                          // ),
+                                          NavButton(
+                                            height: 16,
+                                            color: ColorResources.indigoBlue
+                                                .withValues(alpha: 0.35),
+                                            svgArrowPath: AppAssets.person,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                   h12,

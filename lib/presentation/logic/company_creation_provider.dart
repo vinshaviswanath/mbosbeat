@@ -364,10 +364,14 @@ class CompanyCreationProvider extends ChangeNotifier {
     required CompanyInfoParams params,
     VoidCallback? onSuccess,
   }) async {
+    setLoading(true);
+
     final isValid = validateCompanyInfoFields();
     if (!isValid) {
       companyinfoAutovalidateMode = AutovalidateMode.always;
       notifyListeners();
+      setLoading(false);
+
       return null;
     }
 
@@ -382,7 +386,6 @@ class CompanyCreationProvider extends ChangeNotifier {
           context,
         ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
         Logger.logError("Company info failed : $_errorMessage");
-        _setLoading(false);
         notifyListeners();
       },
       (response) {
@@ -390,7 +393,6 @@ class CompanyCreationProvider extends ChangeNotifier {
         Logger.logSuccess("Status : ${response.status}");
         Logger.logSuccess("Company ID : ${response.id}");
 
-        _setLoading(false);
         notifyListeners();
 
         if (response.status == 1) {
@@ -424,6 +426,8 @@ class CompanyCreationProvider extends ChangeNotifier {
         }
       },
     );
+    setLoading(false);
+    notifyListeners();
 
     return _companyCreationDtos;
   }
@@ -431,6 +435,8 @@ class CompanyCreationProvider extends ChangeNotifier {
   //fetchCountryList........
 
   Future<CountryListDtos?> fectchCountryList(BuildContext context) async {
+    setLoading(true);
+
     final result = await iCompanyCreationFacad.countryList();
 
     result.fold(
@@ -440,7 +446,6 @@ class CompanyCreationProvider extends ChangeNotifier {
           context,
         ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
         Logger.logError("Fetch Country List Failed : $_errorMessage");
-        _setLoading(false);
         notifyListeners();
       },
       (response) {
@@ -450,10 +455,12 @@ class CompanyCreationProvider extends ChangeNotifier {
         _countryListDtos = response;
         _countries = _countryListDtos?.countryListData ?? [];
 
-        _setLoading(false);
         notifyListeners();
       },
     );
+
+    setLoading(false);
+    notifyListeners();
     return _countryListDtos;
   }
 
@@ -476,6 +483,8 @@ class CompanyCreationProvider extends ChangeNotifier {
     BuildContext context,
     int countryId,
   ) async {
+    setLoading(true);
+
     final result = await iCompanyCreationFacad.stateList(countryId);
 
     result.fold(
@@ -485,7 +494,6 @@ class CompanyCreationProvider extends ChangeNotifier {
           context,
         ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
         Logger.logError("Fetch State List Failed : $_errorMessage");
-        _setLoading(false);
         notifyListeners();
       },
       (response) {
@@ -495,10 +503,11 @@ class CompanyCreationProvider extends ChangeNotifier {
         _stateListDtos = response;
         _statelists = _stateListDtos?.stateListData ?? [];
 
-        _setLoading(false);
         notifyListeners();
       },
     );
+    setLoading(false);
+    notifyListeners();
     return _stateListDtos;
   }
 
@@ -522,6 +531,8 @@ class CompanyCreationProvider extends ChangeNotifier {
     BuildContext context,
     int countryId,
   ) async {
+    setLoading(true);
+
     final result = await iCompanyCreationFacad.getRegistrationType(countryId);
 
     result.fold(
@@ -531,7 +542,6 @@ class CompanyCreationProvider extends ChangeNotifier {
           context,
         ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
         Logger.logError("Fetch Registration List Failed : $_errorMessage");
-        _setLoading(false);
         notifyListeners();
       },
       (response) {
@@ -544,10 +554,11 @@ class CompanyCreationProvider extends ChangeNotifier {
         _registrationlists =
             _registrationTypeDtos?.registrationTypeListData ?? [];
 
-        _setLoading(false);
         notifyListeners();
       },
     );
+    setLoading(false);
+    notifyListeners();
     return _registrationTypeDtos;
   }
 
@@ -618,11 +629,116 @@ class CompanyCreationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Future<IntegrationDtos?> integration(
+  //   BuildContext context, {
+  //   required IntegrationParams params,
+  //   VoidCallback? onSuccess,
+  // }) async {
+  //       setLoading(true);
+
+  //   final integrationType = _selectedIntegrationType;
+  //   final isStandAlone = integrationType == "Stand Alone";
+  //   final isValid = validateIntegrationSerialNo();
+
+  //   if (!isValid && !isStandAlone) {
+  //     integrationSerialNoAutovalidateMode = AutovalidateMode.always;
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         content: Text(
+  //           "Please select any one integration",
+  //           textAlign: TextAlign.center,
+  //         ),
+  //         behavior: SnackBarBehavior.floating,
+  //         shape: RoundedRectangleBorder(
+  //           borderRadius: BorderRadius.circular(16),
+  //         ),
+  //         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+  //       ),
+  //     );
+
+  //     notifyListeners();
+  //       setLoading(false);
+  //     return null;
+  //   } else if (!_isIntegrationActive && !isStandAlone) {
+  //     print('isIntegrationActive......$isIntegrationActive');
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         content: Text(
+  //           "Please activate the selected integration",
+  //           textAlign: TextAlign.center,
+  //         ),
+  //         behavior: SnackBarBehavior.floating,
+  //         shape: RoundedRectangleBorder(
+  //           borderRadius: BorderRadius.circular(16),
+  //         ),
+  //         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+  //       ),
+  //     );
+
+  //     notifyListeners();
+  //       setLoading(false);
+  //     return null;
+  //   }
+
+  //   final result = await iCompanyCreationFacad.integartion(
+  //     BaseParams(data: params),
+  //   );
+
+  //   result.fold(
+  //     (failure) {
+  //       _errorMessage = failure.errorMsg.toString();
+  //       ScaffoldMessenger.of(
+  //         context,
+  //       ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
+  //       Logger.logError("Integration Type failed : $_errorMessage");
+  //       notifyListeners();
+  //     },
+  //     (response) {
+  //       Logger.logSuccess("Integration Type success : ${response.toJson()}");
+  //       Logger.logSuccess("Status : ${response.status}");
+  //       notifyListeners();
+
+  //       if (response.status == 1) {
+  //         _integrationDtos = response;
+  //         markStageCompleted(2);
+  //         context.pushNamed(AppRouterConst.adminDashboard);
+  //         onSuccess?.call();
+  //         ScaffoldMessenger.of(context).showSnackBar(
+  //           SnackBar(
+  //             content: Text(response.message, textAlign: TextAlign.center),
+  //             behavior: SnackBarBehavior.floating,
+  //             shape: RoundedRectangleBorder(
+  //               borderRadius: BorderRadius.circular(16),
+  //             ),
+  //             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+  //           ),
+  //         );
+  //       } else {
+  //         ScaffoldMessenger.of(context).showSnackBar(
+  //           SnackBar(
+  //             content: Text(response.message, textAlign: TextAlign.center),
+  //             behavior: SnackBarBehavior.floating,
+  //             shape: RoundedRectangleBorder(
+  //               borderRadius: BorderRadius.circular(16),
+  //             ),
+  //             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+  //           ),
+  //         );
+  //       }
+  //     },
+  //   );
+  //       setLoading(false);
+
+  //   return _integrationDtos;
+  // }
+
   Future<IntegrationDtos?> integration(
     BuildContext context, {
     required IntegrationParams params,
     VoidCallback? onSuccess,
   }) async {
+    setLoading(true);
+
     final integrationType = _selectedIntegrationType;
     final isStandAlone = integrationType == "Stand Alone";
     final isValid = validateIntegrationSerialNo();
@@ -631,7 +747,7 @@ class CompanyCreationProvider extends ChangeNotifier {
       integrationSerialNoAutovalidateMode = AutovalidateMode.always;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(
+          content: const Text(
             "Please select any one integration",
             textAlign: TextAlign.center,
           ),
@@ -642,14 +758,14 @@ class CompanyCreationProvider extends ChangeNotifier {
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         ),
       );
-
-      notifyListeners();
+      setLoading(false);
       return null;
-    } else if (!_isIntegrationActive && !isStandAlone) {
-      print('isIntegrationActive......$isIntegrationActive');
+    }
+
+    if (!_isIntegrationActive && !isStandAlone) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(
+          content: const Text(
             "Please activate the selected integration",
             textAlign: TextAlign.center,
           ),
@@ -660,36 +776,33 @@ class CompanyCreationProvider extends ChangeNotifier {
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         ),
       );
-
-      notifyListeners();
+      setLoading(false);
       return null;
     }
 
-    final result = await iCompanyCreationFacad.integartion(
-      BaseParams(data: params),
-    );
+    try {
+      final result = await iCompanyCreationFacad.integartion(
+        BaseParams(data: params),
+      );
 
-    result.fold(
-      (failure) {
-        _errorMessage = failure.errorMsg.toString();
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
-        Logger.logError("Integration Type failed : $_errorMessage");
-        _setLoading(false);
-        notifyListeners();
-      },
-      (response) {
-        Logger.logSuccess("Integration Type success : ${response.toJson()}");
-        Logger.logSuccess("Status : ${response.status}");
-        _setLoading(false);
-        notifyListeners();
+      result.fold(
+        (failure) {
+          _errorMessage = failure.errorMsg.toString();
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
+          Logger.logError("Integration Type failed : $_errorMessage");
+        },
+        (response) {
+          Logger.logSuccess("Integration Type success : ${response.toJson()}");
 
-        if (response.status == 1) {
-          _integrationDtos = response;
-          markStageCompleted(2);
-          context.pushNamed(AppRouterConst.adminDashboard);
-          onSuccess?.call();
+          if (response.status == 1) {
+            _integrationDtos = response;
+            markStageCompleted(2);
+            context.pushNamed(AppRouterConst.adminDashboard);
+            onSuccess?.call();
+          }
+
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(response.message, textAlign: TextAlign.center),
@@ -700,20 +813,17 @@ class CompanyCreationProvider extends ChangeNotifier {
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             ),
           );
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(response.message, textAlign: TextAlign.center),
-              behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            ),
-          );
-        }
-      },
-    );
+        },
+      );
+    } catch (e) {
+      Logger.logError("Integration exception: $e");
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Something went wrong")));
+    } finally {
+      setLoading(false); // ensures loading stops in all cases
+    }
+
     return _integrationDtos;
   }
 
@@ -723,7 +833,7 @@ class CompanyCreationProvider extends ChangeNotifier {
     required CreateCompanyVocherParams request,
     VoidCallback? onSuccess,
   }) async {
-    _setLoading(true);
+    setLoading(true);
 
     final result = await iCompanyCreationFacad.createCompanyVoucher(
       BaseParams(data: request),
@@ -736,13 +846,11 @@ class CompanyCreationProvider extends ChangeNotifier {
           context,
         ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
         Logger.logError("Create Voucher Types failed: $_errorMessage");
-        _setLoading(false);
         notifyListeners();
       },
       (response) {
         Logger.logSuccess("Create Voucher success : ${response.toJson()}");
         Logger.logSuccess("Status : ${response.status}");
-        _setLoading(false);
         notifyListeners();
 
         if (response.status == 1) {
@@ -774,6 +882,8 @@ class CompanyCreationProvider extends ChangeNotifier {
         }
       },
     );
+    setLoading(false);
+    notifyListeners();
     return _createdVouchers;
   }
 
@@ -788,7 +898,7 @@ class CompanyCreationProvider extends ChangeNotifier {
     BuildContext context,
     int companyID,
   ) async {
-    _setLoading(true);
+    setLoading(true);
 
     final result = await iCompanyCreationFacad.getCompanySettings(companyID);
     result.fold(
@@ -798,7 +908,6 @@ class CompanyCreationProvider extends ChangeNotifier {
           context,
         ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
         Logger.logError("Fetch Company Settings failed: $_errorMessage");
-        _setLoading(false);
         notifyListeners();
       },
 
@@ -806,10 +915,11 @@ class CompanyCreationProvider extends ChangeNotifier {
         Logger.logSuccess("Status : ${response.status}");
         _companySettingslistDtos = response;
         _comapanySettingsListData = response.companySettingsList;
-        _setLoading(false);
         notifyListeners();
       },
     );
+    setLoading(false);
+    notifyListeners();
     return _companySettingslistDtos;
   }
 
@@ -823,6 +933,8 @@ class CompanyCreationProvider extends ChangeNotifier {
     int? companyId,
     VoidCallback? onSuccess,
   }) async {
+    setLoading(true);
+
     final result = await iCompanyCreationFacad.completeVouchers(companyId!);
 
     result.fold(
@@ -832,7 +944,6 @@ class CompanyCreationProvider extends ChangeNotifier {
           context,
         ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
         Logger.logError("Complete Voucher Settings failed : $_errorMessage");
-        _setLoading(false);
         notifyListeners();
       },
       (response) {
@@ -840,7 +951,6 @@ class CompanyCreationProvider extends ChangeNotifier {
           "Complete Voucher Settings success : ${response.toJson()}",
         );
         Logger.logSuccess("Status : ${response.status}");
-        _setLoading(false);
         notifyListeners();
 
         if (response.status == 1) {
@@ -869,6 +979,8 @@ class CompanyCreationProvider extends ChangeNotifier {
         }
       },
     );
+    setLoading(false);
+    notifyListeners();
     return _completeVoucherSettingsDtos;
   }
 
@@ -1042,7 +1154,7 @@ class CompanyCreationProvider extends ChangeNotifier {
     int companyId,
     // int companyID,
   ) async {
-    _setLoading(true);
+    setLoading(true);
     //final prefs = sl<SharedPreferences>();
 
     //final companyId = prefs.getInt('selected_company_id');
@@ -1076,15 +1188,15 @@ class CompanyCreationProvider extends ChangeNotifier {
       },
     );
 
-    _setLoading(false);
+    setLoading(false);
     notifyListeners();
     return _companyvouchertypeslistDtos;
   }
 
-  void _setLoading(bool value) {
-    _isLoading = value;
-    notifyListeners();
-  }
+  // void _setLoading(bool value) {
+  //   _isLoading = value;
+  //   notifyListeners();
+  // }
 
   CreateCompanySettingsDtos? _createCompanySettingsDtos;
   CreateCompanySettingsDtos? get createCompanySettingsDtos =>
@@ -1095,6 +1207,8 @@ class CompanyCreationProvider extends ChangeNotifier {
     required CreateCompanysettingsParams param,
     VoidCallback? onSuccess,
   }) async {
+    setLoading(true);
+
     final result = await iCompanyCreationFacad.createCompanySettings(
       BaseParams(data: param),
     );
@@ -1106,8 +1220,6 @@ class CompanyCreationProvider extends ChangeNotifier {
           context,
         ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
         Logger.logError("Create Company Settings failed: $_errorMessage");
-        _setLoading(false);
-        notifyListeners();
         notifyListeners();
       },
       (response) {
@@ -1115,7 +1227,6 @@ class CompanyCreationProvider extends ChangeNotifier {
           "Create Company Settings success : ${response.toJson()}",
         );
         Logger.logSuccess("Status : ${response.status}");
-        _setLoading(false);
         notifyListeners();
 
         if (response.status == 1) {
@@ -1146,6 +1257,8 @@ class CompanyCreationProvider extends ChangeNotifier {
         }
       },
     );
+    setLoading(false);
+    notifyListeners();
     return _createCompanySettingsDtos;
   }
 
@@ -1201,6 +1314,8 @@ class CompanyCreationProvider extends ChangeNotifier {
   //========================= Users List =========================
 
   Future<CompaniesListResponse?> getAllCompanies(BuildContext context) async {
+    setLoading(true);
+
     final result = await iCompanyCreationFacad.getAllCompany();
 
     result.fold(
@@ -1225,6 +1340,8 @@ class CompanyCreationProvider extends ChangeNotifier {
         notifyListeners();
       },
     );
+    setLoading(false);
+    notifyListeners();
     return _companiesList;
   }
 
@@ -1289,6 +1406,7 @@ class CompanyCreationProvider extends ChangeNotifier {
       },
     );
     setLoading(false);
+    notifyListeners();
     return _godownResponse;
   }
 
@@ -1379,6 +1497,7 @@ class CompanyCreationProvider extends ChangeNotifier {
       },
     );
     setLoading(false);
+    notifyListeners();
     return _godownResponse;
   }
 
@@ -1421,6 +1540,7 @@ class CompanyCreationProvider extends ChangeNotifier {
       },
     );
     setLoading(false);
+    notifyListeners();
     return _godownResponse;
   }
 
@@ -1461,6 +1581,7 @@ class CompanyCreationProvider extends ChangeNotifier {
       },
     );
     setLoading(false);
+    notifyListeners();
     return _godownResponse;
   }
 
@@ -1525,6 +1646,7 @@ class CompanyCreationProvider extends ChangeNotifier {
       },
     );
     setLoading(false);
+    notifyListeners();
     return _routeResponse;
   }
 
@@ -1563,6 +1685,7 @@ class CompanyCreationProvider extends ChangeNotifier {
       },
     );
     setLoading(false);
+    notifyListeners();
     return _routeListResponse;
   }
 
@@ -1612,6 +1735,7 @@ class CompanyCreationProvider extends ChangeNotifier {
       },
     );
     setLoading(false);
+    notifyListeners();
     return _routeResponse;
   }
 
@@ -1656,6 +1780,7 @@ class CompanyCreationProvider extends ChangeNotifier {
       },
     );
     setLoading(false);
+    notifyListeners();
     return _routeResponse;
   }
 
@@ -1695,6 +1820,7 @@ class CompanyCreationProvider extends ChangeNotifier {
       },
     );
     setLoading(false);
+    notifyListeners();
     return _routeResponse;
   }
 
@@ -1732,6 +1858,7 @@ class CompanyCreationProvider extends ChangeNotifier {
       },
     );
     setLoading(false);
+    notifyListeners();
     return _responseModel;
   }
 
@@ -1800,6 +1927,7 @@ class CompanyCreationProvider extends ChangeNotifier {
             voucherModeId: voucherModeId,
           );
     setLoading(false);
+    notifyListeners();
     return _responseModel;
   }
 
@@ -1841,6 +1969,7 @@ class CompanyCreationProvider extends ChangeNotifier {
       },
     );
     setLoading(false);
+    notifyListeners();
     return _voucherNumberingGodownResponse;
   }
 
@@ -1850,6 +1979,8 @@ class CompanyCreationProvider extends ChangeNotifier {
     required int voucherModeId,
   }) async {
     setLoading(true);
+    setLoading(true);
+
     final result = await iCompanyCreationFacad.getVoucherNumbering(
       companyId: companyId,
       voucherMode: "Route",
@@ -1880,6 +2011,7 @@ class CompanyCreationProvider extends ChangeNotifier {
       },
     );
     setLoading(false);
+    notifyListeners();
     return _voucherNumberingRouteResponse;
   }
 }

@@ -32,6 +32,7 @@ class AuthFormProvider with ChangeNotifier {
 
   EmailOrPhone _emailOrPhone = EmailOrPhone('');
   Password _password = Password('');
+  ConfirmPassword _confirmPassword = ConfirmPassword('', '');
 
   CompanyRegistrationResponse? _companyRegistrationResponse;
   CompanyRegistrationResponse? get companyRegistrationResponse =>
@@ -52,7 +53,6 @@ class AuthFormProvider with ChangeNotifier {
   CompanyName _companyName = CompanyName('');
   PhoneNumber _phone = PhoneNumber('');
   EmailAddress _email = EmailAddress('');
-  ConfirmPassword _confirmPassword = ConfirmPassword('', '');
 
   Otp _otp = Otp('');
   String? _otpError;
@@ -95,24 +95,23 @@ class AuthFormProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void updatePassword(String input) {
-    _password = Password(input);
-    // _passwordValidationMode =
-    //     input.isNotEmpty ? AutovalidateMode.always : AutovalidateMode.disabled;
+void updatePassword(String input, String? confirmInput) {
+  _password = Password(input);
 
-    _confirmPassword = ConfirmPassword(
-      _confirmPassword.getValue ?? '',
-      _password.getValue ?? '',
-    );
-    notifyListeners();
-  }
+  _confirmPassword = ConfirmPassword(
+    confirmInput ?? '',
+    input,
+  );
 
-  void updateConfirmPassword(String input) {
-    _confirmPassword = ConfirmPassword(input, _password.getValue ?? '');
-    // _confirmPasswordValidationMode =
-    //     input.isNotEmpty ? AutovalidateMode.always : AutovalidateMode.disabled;
-    notifyListeners();
-  }
+  notifyListeners();
+}
+
+
+void updateConfirmPassword(String input) {
+  _confirmPassword = ConfirmPassword(input, _password.getValue ?? '');
+  notifyListeners();
+}
+
 
   void updateCompanyName(String input) {
     _companyName = CompanyName(input);
@@ -239,6 +238,14 @@ class AuthFormProvider with ChangeNotifier {
     resetOtpTimer();
     _otpError = null;
   }
+
+  void clearOtpValidation() {
+  _otp = Otp('');
+  _otpError = null;
+  otpAutovalidateMode = AutovalidateMode.disabled;
+  notifyListeners();
+}
+
 
   Future<OtpResponse?> submitOtp(
     BuildContext context, {
@@ -820,6 +827,14 @@ class AuthFormProvider with ChangeNotifier {
     _isVisibleSignupConfirmPassword = !_isVisibleSignupConfirmPassword;
     notifyListeners();
   }
+
+  void resetVisibilitySignUp(){
+    _isVisibleSignupPassword = false;
+    _isVisibleSignupConfirmPassword = false;
+    notifyListeners();
+  }
+
+ 
 
   //============================================================================
   //                             LIFECYCLE
