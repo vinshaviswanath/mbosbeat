@@ -2,6 +2,7 @@ import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/theme/app_theme.dart';
 import 'package:mpos_beat/core/theme/theme/theme_provider.dart';
 import 'package:mpos_beat/core/utils/app_details.dart';
+import 'package:mpos_beat/core/utils/isolates/init_parsers.dart';
 import 'package:mpos_beat/domain/repositories/i_authentication_facad.dart';
 import 'package:mpos_beat/domain/repositories/i_company_creation_facad.dart';
 import 'package:mpos_beat/domain/repositories/i_user_management_facad.dart';
@@ -19,7 +20,7 @@ import 'package:provider/provider.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependency(env: Environment.test);
-
+  initParsers();
   runApp(const MyApp());
 }
 
@@ -35,7 +36,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => AuthFormProvider(sl<IAuthenticationFacad>()),
         ),
-        ChangeNotifierProvider(create: (_) => UserManagementProvider(sl<IUserManagementFacad>(),)),
+        ChangeNotifierProvider(
+          create: (_) => UserManagementProvider(sl<IUserManagementFacad>()),
+        ),
         ChangeNotifierProvider(create: (_) => CustomerTransactionProvider()),
         ChangeNotifierProvider(
           create: (_) => CompanyCreationProvider(sl<ICompanyCreationFacad>()),

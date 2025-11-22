@@ -5,6 +5,7 @@ import 'package:mpos_beat/data/models/godown_list_model.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_divider.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/presentation/common/widgets/activate_widget.dart';
+import 'package:mpos_beat/presentation/views/admin_user_management/user_manage/widgets/shimmers/user_list_shimmer.dart';
 import 'package:mpos_beat/presentation/views/godown_wise_screen/widgets/add_vehicle.dart';
 import 'package:mpos_beat/presentation/common/widgets/deactivate_widget.dart';
 import 'package:mpos_beat/presentation/common/widgets/delete_widget.dart';
@@ -29,7 +30,10 @@ class _GodownWiseScreenState extends State<GodownWiseScreen> {
     // final companyId = pref.getInt('selected_company_id').toString();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final provider = context.read<CompanyCreationProvider>();
-      provider.getAllGodowns(context: context, companyId:  provider.selectedCompany?.id.toString() ?? '');
+      provider.getAllGodowns(
+        context: context,
+        companyId: provider.selectedCompany?.id.toString() ?? '',
+      );
     });
     super.initState();
   }
@@ -75,6 +79,9 @@ class _GodownWiseScreenState extends State<GodownWiseScreen> {
           body: StreamBuilder<List<VehicleList>>(
             stream: provider.godownStream,
             builder: (context, snapshot) {
+              if (provider.isLoading) {
+                return const UserListShimmer();
+              }
               if (!snapshot.hasData || snapshot.data!.isEmpty) {
                 return Center(
                   child: Text(
@@ -202,7 +209,7 @@ class _GodownWiseScreenState extends State<GodownWiseScreen> {
                                               selectedIndex: optionIndex,
                                               title: appLocalization
                                                   .user_designation_screen_edit,
-                                              icon:  AppAssets.editIcon,
+                                              icon: AppAssets.editIcon,
                                               onTap: (i) {
                                                 setStateDialog(
                                                   () => optionIndex = i,
@@ -227,7 +234,7 @@ class _GodownWiseScreenState extends State<GodownWiseScreen> {
                                               selectedIndex: optionIndex,
                                               title: appLocalization
                                                   .user_designation_screen_delete,
-                                              icon:  AppAssets.refresh,
+                                              icon: AppAssets.refresh,
                                               onTap: (i) {
                                                 setStateDialog(
                                                   () => optionIndex = i,
@@ -267,7 +274,7 @@ class _GodownWiseScreenState extends State<GodownWiseScreen> {
                                               selectedIndex: optionIndex,
                                               title: appLocalization
                                                   .user_designation_screen_deactivate,
-                                              icon:  AppAssets.palm,
+                                              icon: AppAssets.palm,
                                               onTap: (i) {
                                                 setStateDialog(
                                                   () => optionIndex = i,

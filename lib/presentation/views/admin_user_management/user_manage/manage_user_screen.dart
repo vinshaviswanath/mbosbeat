@@ -9,6 +9,7 @@ import 'package:mpos_beat/presentation/logic/user_management_provider.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_manage/widgets/block_user_widget.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_manage/widgets/no_user_widget.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_manage/widgets/option_item.dart';
+import 'package:mpos_beat/presentation/views/admin_user_management/user_manage/widgets/shimmers/user_list_shimmer.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_manage/widgets/unblock_user_widget.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_manage/widgets/list_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -168,7 +169,7 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
                   ),
                 ),
                 body: provider.isLoading && firstLoad
-                    ? const Center(child: CircularProgressIndicator())
+                    ? const UserListShimmer()
                     : CustomScrollView(
                         slivers: [
                           if (filteredItems.isNotEmpty)

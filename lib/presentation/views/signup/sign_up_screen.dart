@@ -55,6 +55,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           onPopInvokedWithResult: (didPop, result) {
             if (didPop) {
               context.read<AuthFormProvider>().resetSignUpForm();
+              provider.resetVisibilitySignUp();
             }
           },
           child: Scaffold(
@@ -191,7 +192,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           autovalidateMode: provider.registerAutovalidateMode,
                           failure: provider.password.getFailure,
                           inputFormatters: [noEmojiFormatter],
-                          onChange: provider.updatePassword,
+                          onChange: (value) {
+                            provider.updatePassword(
+                              value,
+                              confirmPasswordController.text,
+                            );
+                          },
                           inputType: TextInputType.emailAddress,
                           borderRadius: 12,
                           hintColor: ColorResources.silverGray,
