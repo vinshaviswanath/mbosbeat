@@ -1,4 +1,5 @@
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/models/data/get_all_company_settings_data.dart';
 import 'package:mpos_beat/domain/request/create_company_settings_request.dart';
 import 'package:mpos_beat/l10n/generated/app_localizations.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
@@ -6,12 +7,7 @@ import 'package:mpos_beat/presentation/views/admin_user_management/user_settings
 
 class CompanySettingsScreen extends StatefulWidget {
   final int? companyId;
-  // final GetAllCompanyData? companyData;
-  const CompanySettingsScreen({
-    super.key,
-    this.companyId,
-    //   required this.companyData
-  });
+  const CompanySettingsScreen({super.key, this.companyId});
   @override
   _CompanySettingsScreenState createState() => _CompanySettingsScreenState();
 }
@@ -21,15 +17,12 @@ class _CompanySettingsScreenState extends State<CompanySettingsScreen> {
   @override
   void initState() {
     super.initState();
-    // print("companyid in company settings ....${widget.companyId}");
-    // print(
-    //     "hasintegrationsettings company settings ....${widget.companyData!.hasVoucherTypeSettings}");
+    ;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final fetchsettingsprovider = Provider.of<CompanyCreationProvider>(
         context,
         listen: false,
       );
-      //fetchsettingsprovider.getCompanySettings(context, 1336);
       fetchsettingsprovider.getCompanySettings(context, widget.companyId!);
     });
   }
@@ -93,7 +86,23 @@ class _CompanySettingsScreenState extends State<CompanySettingsScreen> {
 
                       // parent toggle check
                       final bool parentEnabled =
-                          switchStates[setting.parentId] ?? false;
+                          allSettings
+                              .firstWhere(
+                                (e) => e.id == setting.parentId,
+                                orElse: () => CompanySettingsListData(
+                                  parentId: 0,
+                                  settingsValue: "No",
+                                  id: 0,
+                                  companyId: 0,
+                                  settingsMenuName: '',
+                                  buttonType: ButtonType.TOGGLE,
+                                  description: '',
+                                  orderNo: 0,
+                                  menuType: MenuType.FREE,
+                                ),
+                              )
+                              .settingsValue ==
+                          "Yes";
 
                       // if child and parent is OFF, hide it
                       if (isChild && !parentEnabled) {
@@ -112,148 +121,13 @@ class _CompanySettingsScreenState extends State<CompanySettingsScreen> {
                           ispremium: isFree,
                           initialValue: isOn,
                           onToggle: (val) async {
-                            setState(() {
-                              switchStates[setting.id] = val;
-
-                              // if this is a parent turning OFF, also hide its children
-                              if (!val) {
-                                for (var child in allSettings.where(
-                                  (c) => c.parentId == setting.id,
-                                )) {
-                                  switchStates[child.id] = false;
-                                }
-                              }
-                            });
-
-                            final params = CreateCompanysettingsParams(
-                              id: setting.id,
-                              companyid: widget.companyId ?? 0,
-                              settingsvalue: val ? "Yes" : "No",
-                            );
-
-                            await companysettings.createCompanySettings(
+                            companysettings.updateParentAndChildren(
                               context,
-                              param: params,
-                              onSuccess: () {
-                                Logger.logSuccess(
-                                  "Setting ${setting.settingsMenuName} updated to ${val ? 'Yes' : 'No'}",
-                                );
-                              },
+                              setting.id,
+                              val,
+                              widget.companyId!,
                             );
                           },
-
-                          // child: Row(
-                          //   children: [
-                          //     Expanded(
-                          //       child: Text(
-                          //         setting.settingsMenuName,
-                          //         style: Theme.of(
-                          //           context,
-                          //         ).textTheme.displayMedium,
-                          //       ),
-                          //     ),
-                          //     // $ symbol
-                          //     if (!isfree)
-                          //       Container(
-                          //         width:
-                          //             MediaQuery.of(
-                          //               context,
-                          //             ).size.width *
-                          //             0.052,
-                          //         height:
-                          //             MediaQuery.of(
-                          //               context,
-                          //             ).size.height *
-                          //             0.021,
-                          //         decoration: BoxDecoration(
-                          //           shape: BoxShape.circle,
-                          //           gradient: LinearGradient(
-                          //             colors: [
-                          //               Colors.orange,
-                          //               Colors.yellow,
-                          //             ],
-                          //             begin: Alignment.topLeft,
-                          //             end: Alignment.bottomRight,
-                          //           ),
-                          //         ),
-                          //         child: Center(
-                          //           child: Icon(
-                          //             Icons.currency_rupee_outlined,
-                          //             color: Colors.white,
-                          //             size: 14,
-                          //           ),
-                          //         ),
-                          //       ),
-                          //toggle button
-                          // Transform.scale(
-                          //   scale: 0.7,
-                          //   child: Switch(
-                          //     inactiveThumbColor: Theme.of(
-                          //       context,
-                          //     ).colorScheme.secondary,
-                          //     activeColor: Theme.of(
-                          //       context,
-                          //     ).colorScheme.onPrimary,
-                          //     inactiveTrackColor: Theme.of(
-                          //       context,
-                          //     ).colorScheme.onPrimary,
-                          //     activeTrackColor: Theme.of(
-                          //       context,
-                          //     ).colorScheme.primary,
-                          //     value: istoggle,
-                          //     onChanged: (value) async {
-                          //       setState(() {
-                          //         switchStates[setting.id] =
-                          //             value;
-                          //       });
-                          // final toggleprovider =
-                          //     Provider.of<
-                          //       CreateCompanyProvider
-                          //     >(context, listen: false);
-                          // final newvalue = value
-                          //     ? "Yes"
-                          //     : "No";
-
-                          // final check = await toggleprovider
-                          //     .createcompanysettings(
-                          //       CreateCompanysettingsRequest(
-                          //         id: setting.id,
-                          //         companyid:
-                          //             widget.companyId,
-                          //         settingsvalue: newvalue,
-                          //       ),
-                          //     );
-                          // if (check!) {
-                          //   CommonSnackBar.show(
-                          //     context,
-                          //     message:
-                          //         toggleprovider
-                          //             .serverMessage ??
-                          //         "",
-                          //   );
-                          // } else {
-                          //   CommonSnackBar.show(
-                          //     context,
-                          //     message:
-                          //         toggleprovider
-                          //             .serverMessage ??
-                          //         "",
-                          //   );
-                          // }
-                          //},
-                          // ),
-                          //  ),
-                          // CustomTooltip(
-                          //   message: setting.description,
-                          //   child: Icon(
-                          //     Icons.info_outline_rounded,
-                          //     color: Theme.of(
-                          //       context,
-                          //     ).colorScheme.primary,
-                          //   ),
-                          // ),
-                          //],
-                          // ),
                         ),
                       );
                     },

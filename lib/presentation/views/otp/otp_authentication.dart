@@ -228,5 +228,3 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
     );
   }
 }
-
-
