@@ -96,6 +96,8 @@ class _CompanyCreationScreenState extends State<CompanyCreationScreen>
         if (didPop) return;
 
         provider.resetCompanyInfo();
+        provider.getAllCompanies(context);
+        
         // final companyData = widget.companyData;
 
         // final hasIntegration =
