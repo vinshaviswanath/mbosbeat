@@ -43,6 +43,11 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
     regTypeController = TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final provider = context.read<CompanyCreationProvider>();
+
+      if (widget.companyData == null) {
+        provider.clearSelections();
+      }
+
       await provider.fectchCountryList(context);
       fillfeilds();
       print(" company data in compnay info ${widget.companyData?.id}");
@@ -352,6 +357,9 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
                                 );
                                 provider.selectCountry(context, selected);
                                 provider.updateCountry(value);
+
+                                provider.updateCountryState("");
+                                provider.updateRegType("");
                               }
                             },
                             autovalidateMode:
