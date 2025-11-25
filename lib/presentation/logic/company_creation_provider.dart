@@ -556,6 +556,13 @@ class CompanyCreationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void clearSelections() {
+    _selectedCountry = null;
+    _selectedState = null;
+    _selectedregistrationtype = null;
+    notifyListeners();
+  }
+
   ///Integration Type.......
   IntegrationSerialNo _integrationSerialNo = IntegrationSerialNo("");
   IntegrationSerialNo get integrationSerialNo => _integrationSerialNo;
