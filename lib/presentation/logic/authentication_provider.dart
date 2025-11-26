@@ -3,6 +3,7 @@ import 'package:mpos_beat/core/failures/failures.dart';
 import 'package:mpos_beat/core/failures/value_object/value_object.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/data/models/company_registration_response.dart';
 import 'package:mpos_beat/data/models/data/otp_response_data.dart';
@@ -23,7 +24,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthFormProvider with ChangeNotifier {
   final IAuthenticationFacad iAuthenticationFacad;
-  AuthFormProvider(this.iAuthenticationFacad);
+  final AppDb db;
+  AuthFormProvider(this.iAuthenticationFacad, {required this.db});
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -37,10 +39,10 @@ class AuthFormProvider with ChangeNotifier {
   CompanyRegistrationResponse? _companyRegistrationResponse;
   CompanyRegistrationResponse? get companyRegistrationResponse =>
       _companyRegistrationResponse;
-  OtpResponse? _otpResponse;
-  OtpResponse? get otpResponse => _otpResponse;
-  OtpResponseData? _otpResponseData;
-  OtpResponseData? get otpResponsData => _otpResponseData;
+  // OtpResponse? _otpResponse;
+  // OtpResponse? get otpResponse => _otpResponse;
+  // OtpResponseData? _otpResponseData;
+  // OtpResponseData? get otpResponsData => _otpResponseData;
   ResponseData? _responseData;
   ResponseData? get responseData => _responseData;
   LoginResponse? _loginResponse;
@@ -95,23 +97,18 @@ class AuthFormProvider with ChangeNotifier {
     notifyListeners();
   }
 
-void updatePassword(String input, String? confirmInput) {
-  _password = Password(input);
+  void updatePassword(String input, String? confirmInput) {
+    _password = Password(input);
 
-  _confirmPassword = ConfirmPassword(
-    confirmInput ?? '',
-    input,
-  );
+    _confirmPassword = ConfirmPassword(confirmInput ?? '', input);
 
-  notifyListeners();
-}
+    notifyListeners();
+  }
 
-
-void updateConfirmPassword(String input) {
-  _confirmPassword = ConfirmPassword(input, _password.getValue ?? '');
-  notifyListeners();
-}
-
+  void updateConfirmPassword(String input) {
+    _confirmPassword = ConfirmPassword(input, _password.getValue ?? '');
+    notifyListeners();
+  }
 
   void updateCompanyName(String input) {
     _companyName = CompanyName(input);
@@ -240,16 +237,15 @@ void updateConfirmPassword(String input) {
   }
 
   void clearOtpValidation() {
-  _otp = Otp('');
-  _otpError = null;
-  otpAutovalidateMode = AutovalidateMode.disabled;
-  notifyListeners();
-}
+    _otp = Otp('');
+    _otpError = null;
+    otpAutovalidateMode = AutovalidateMode.disabled;
+    notifyListeners();
+  }
 
-
-  Future<OtpResponse?> submitOtp(
+  Future<LoginResponse?> submitOtp(
     BuildContext context, {
-    required void Function(OtpResponse) onResponse,
+    required void Function(LoginResponse) onResponse,
     required void Function(MainFailure) onError,
   }) async {
     otpAutovalidateMode = AutovalidateMode.always;
@@ -290,17 +286,12 @@ void updateConfirmPassword(String input) {
       (failure) {
         _otpError = failure.errorMsg;
         Logger.logError(failure.errorMsg);
-
         // _otpError = "Please enter valid OTP";
         if (!_alreadyNavigatedToInvalidOtp && _otp.isValid()) {
           _alreadyNavigatedToInvalidOtp = true;
           startOtpTimer();
           GoRouter.of(context).pushNamed(AppRouterConst.invalidOtp);
         } else {
-          // CustomAlertDialog.showCustomDialog(
-          //   title: _otpError!,
-          //   typeAlert: TypeAlert.error,
-          // );
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(_otpError!, textAlign: TextAlign.center),
@@ -316,7 +307,7 @@ void updateConfirmPassword(String input) {
         notifyListeners();
       },
       (response) async {
-        _otpResponse = response;
+        _loginResponse = response;
 
         if (response.status == 0) {
           _otpError = response.message;
@@ -329,7 +320,6 @@ void updateConfirmPassword(String input) {
 
           return; // stop flow – don’t go to success page
         }
-
         // ✔ VALID OTP (status == 1)
         _otpError = null;
 
@@ -348,14 +338,14 @@ void updateConfirmPassword(String input) {
       },
     );
 
-    return _otpResponse;
+    return _loginResponse;
   }
 
   //============================================================================
   //                           RESEND OTP
   //============================================================================
 
-  Future<OtpResponse?> resendOtp(BuildContext context, {int? id}) async {
+  Future<LoginResponse?> resendOtp(BuildContext context, {int? id}) async {
     final result = await iAuthenticationFacad.resendOtp(
       BaseParams(data: ResendOtpParams(userId: id ?? _cusomerId ?? 0)),
     );
@@ -372,7 +362,7 @@ void updateConfirmPassword(String input) {
         notifyListeners();
       },
       (response) {
-        _otpResponse = response;
+        _loginResponse = response;
         _otpValue = response.message;
         _cusomerId = response.id;
         Logger.logSuccess("Resend OTP success : ${response.toJson()}");
@@ -388,7 +378,7 @@ void updateConfirmPassword(String input) {
       },
     );
 
-    return _otpResponse;
+    return _loginResponse;
   }
 
   /// Starts OTP countdown timer.
@@ -511,13 +501,13 @@ void updateConfirmPassword(String input) {
 
         //Fetch company list using valid token
         final companyProvider = context.read<CompanyCreationProvider>();
-        List<CompanyViewList> companyList = [];
-        CompanyViewList? companyData;
+        List<Company> companyList = [];
+        Company? companyData;
         bool hasCompany = false;
 
         try {
           await companyProvider.getAllCompanies(context);
-          companyList = companyProvider.companiesList?.companyViewList ?? [];
+          companyList = companyProvider.companiesList ?? [];
           hasCompany = companyList.isNotEmpty;
           companyData = hasCompany ? companyList.first : null;
         } catch (e) {
@@ -828,13 +818,11 @@ void updateConfirmPassword(String input) {
     notifyListeners();
   }
 
-  void resetVisibilitySignUp(){
+  void resetVisibilitySignUp() {
     _isVisibleSignupPassword = false;
     _isVisibleSignupConfirmPassword = false;
     notifyListeners();
   }
-
- 
 
   //============================================================================
   //                             LIFECYCLE

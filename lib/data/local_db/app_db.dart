@@ -46,15 +46,17 @@
 import 'dart:io';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
-import 'package:mpos_beat/data/local_db/tables/registration_details_tables.dart';
-import 'package:mpos_beat/data/local_db/tables/user_tables.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
 
+import 'tables/user_tables.dart';
 import 'tables/company_tables.dart';
-import 'daos/company_dao.dart';
+import 'tables/registration_details_tables.dart';
+
+import 'daos/company_dao/company_dao.dart';
+import 'daos/user_dao/user_dao.dart';
 
 part 'app_db.g.dart';
 
@@ -66,21 +68,21 @@ part 'app_db.g.dart';
   ],
   daos: [
     CompanyDao,
+    UserDao,
   ],
 )
 class AppDb extends _$AppDb {
   AppDb() : super(_openConnection());
 
-  /// IMPORTANT: Schema version updated to 2
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 4;
 
-  /// MIGRATION: Ensures Companies table is created for existing DB files
   @override
   MigrationStrategy get migration => MigrationStrategy(
         onUpgrade: (m, from, to) async {
-          if (from == 1) {
+          if (from < 4) {
             await m.createTable(companies);
+            await m.alterTable(TableMigration(users));
           }
         },
       );
@@ -88,8 +90,8 @@ class AppDb extends _$AppDb {
 
 LazyDatabase _openConnection() {
   return LazyDatabase(() async {
-    final dbFolder = await getApplicationDocumentsDirectory();
-    final file = File(p.join(dbFolder.path, 'db.sqlite'));
+    final folder = await getApplicationDocumentsDirectory();
+    final file = File(p.join(folder.path, 'db.sqlite'));
 
     if (Platform.isAndroid) {
       await applyWorkaroundToOpenSqlite3OnOldAndroidVersions();

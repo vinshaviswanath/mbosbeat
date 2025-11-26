@@ -13,7 +13,7 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
   late final GeneratedColumn<int> userId = GeneratedColumn<int>(
     'user_id',
     aliasedName,
-    true,
+    false,
     type: DriftSqlType.int,
     requiredDuringInsert: false,
   );
@@ -350,7 +350,7 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => const {};
+  Set<GeneratedColumn> get $primaryKey => {userId};
   @override
   User map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
@@ -358,7 +358,7 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
       userId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}user_id'],
-      ),
+      )!,
       customerId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}customer_id'],
@@ -437,7 +437,7 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
 }
 
 class User extends DataClass implements Insertable<User> {
-  final int? userId;
+  final int userId;
   final int? customerId;
   final String? fullName;
   final String? mobile;
@@ -456,7 +456,7 @@ class User extends DataClass implements Insertable<User> {
   final String? token;
   final String? dbName;
   const User({
-    this.userId,
+    required this.userId,
     this.customerId,
     this.fullName,
     this.mobile,
@@ -478,9 +478,7 @@ class User extends DataClass implements Insertable<User> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (!nullToAbsent || userId != null) {
-      map['user_id'] = Variable<int>(userId);
-    }
+    map['user_id'] = Variable<int>(userId);
     if (!nullToAbsent || customerId != null) {
       map['customer_id'] = Variable<int>(customerId);
     }
@@ -537,9 +535,7 @@ class User extends DataClass implements Insertable<User> {
 
   UsersCompanion toCompanion(bool nullToAbsent) {
     return UsersCompanion(
-      userId: userId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(userId),
+      userId: Value(userId),
       customerId: customerId == null && nullToAbsent
           ? const Value.absent()
           : Value(customerId),
@@ -600,7 +596,7 @@ class User extends DataClass implements Insertable<User> {
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return User(
-      userId: serializer.fromJson<int?>(json['userId']),
+      userId: serializer.fromJson<int>(json['userId']),
       customerId: serializer.fromJson<int?>(json['customerId']),
       fullName: serializer.fromJson<String?>(json['fullName']),
       mobile: serializer.fromJson<String?>(json['mobile']),
@@ -624,7 +620,7 @@ class User extends DataClass implements Insertable<User> {
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'userId': serializer.toJson<int?>(userId),
+      'userId': serializer.toJson<int>(userId),
       'customerId': serializer.toJson<int?>(customerId),
       'fullName': serializer.toJson<String?>(fullName),
       'mobile': serializer.toJson<String?>(mobile),
@@ -646,7 +642,7 @@ class User extends DataClass implements Insertable<User> {
   }
 
   User copyWith({
-    Value<int?> userId = const Value.absent(),
+    int? userId,
     Value<int?> customerId = const Value.absent(),
     Value<String?> fullName = const Value.absent(),
     Value<String?> mobile = const Value.absent(),
@@ -665,7 +661,7 @@ class User extends DataClass implements Insertable<User> {
     Value<String?> token = const Value.absent(),
     Value<String?> dbName = const Value.absent(),
   }) => User(
-    userId: userId.present ? userId.value : this.userId,
+    userId: userId ?? this.userId,
     customerId: customerId.present ? customerId.value : this.customerId,
     fullName: fullName.present ? fullName.value : this.fullName,
     mobile: mobile.present ? mobile.value : this.mobile,
@@ -796,7 +792,7 @@ class User extends DataClass implements Insertable<User> {
 }
 
 class UsersCompanion extends UpdateCompanion<User> {
-  final Value<int?> userId;
+  final Value<int> userId;
   final Value<int?> customerId;
   final Value<String?> fullName;
   final Value<String?> mobile;
@@ -814,7 +810,6 @@ class UsersCompanion extends UpdateCompanion<User> {
   final Value<int?> custActive;
   final Value<String?> token;
   final Value<String?> dbName;
-  final Value<int> rowid;
   const UsersCompanion({
     this.userId = const Value.absent(),
     this.customerId = const Value.absent(),
@@ -834,7 +829,6 @@ class UsersCompanion extends UpdateCompanion<User> {
     this.custActive = const Value.absent(),
     this.token = const Value.absent(),
     this.dbName = const Value.absent(),
-    this.rowid = const Value.absent(),
   });
   UsersCompanion.insert({
     this.userId = const Value.absent(),
@@ -855,7 +849,6 @@ class UsersCompanion extends UpdateCompanion<User> {
     this.custActive = const Value.absent(),
     this.token = const Value.absent(),
     this.dbName = const Value.absent(),
-    this.rowid = const Value.absent(),
   });
   static Insertable<User> custom({
     Expression<int>? userId,
@@ -876,7 +869,6 @@ class UsersCompanion extends UpdateCompanion<User> {
     Expression<int>? custActive,
     Expression<String>? token,
     Expression<String>? dbName,
-    Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (userId != null) 'user_id': userId,
@@ -897,12 +889,11 @@ class UsersCompanion extends UpdateCompanion<User> {
       if (custActive != null) 'cust_active': custActive,
       if (token != null) 'token': token,
       if (dbName != null) 'db_name': dbName,
-      if (rowid != null) 'rowid': rowid,
     });
   }
 
   UsersCompanion copyWith({
-    Value<int?>? userId,
+    Value<int>? userId,
     Value<int?>? customerId,
     Value<String?>? fullName,
     Value<String?>? mobile,
@@ -920,7 +911,6 @@ class UsersCompanion extends UpdateCompanion<User> {
     Value<int?>? custActive,
     Value<String?>? token,
     Value<String?>? dbName,
-    Value<int>? rowid,
   }) {
     return UsersCompanion(
       userId: userId ?? this.userId,
@@ -941,7 +931,6 @@ class UsersCompanion extends UpdateCompanion<User> {
       custActive: custActive ?? this.custActive,
       token: token ?? this.token,
       dbName: dbName ?? this.dbName,
-      rowid: rowid ?? this.rowid,
     );
   }
 
@@ -1002,9 +991,6 @@ class UsersCompanion extends UpdateCompanion<User> {
     if (dbName.present) {
       map['db_name'] = Variable<String>(dbName.value);
     }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
     return map;
   }
 
@@ -1028,8 +1014,7 @@ class UsersCompanion extends UpdateCompanion<User> {
           ..write('expiryDate: $expiryDate, ')
           ..write('custActive: $custActive, ')
           ..write('token: $token, ')
-          ..write('dbName: $dbName, ')
-          ..write('rowid: $rowid')
+          ..write('dbName: $dbName')
           ..write(')'))
         .toString();
   }
@@ -3650,6 +3635,7 @@ abstract class _$AppDb extends GeneratedDatabase {
       $RegistrationDetailsTable(this);
   late final $CompaniesTable companies = $CompaniesTable(this);
   late final CompanyDao companyDao = CompanyDao(this as AppDb);
+  late final UserDao userDao = UserDao(this as AppDb);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -3663,7 +3649,7 @@ abstract class _$AppDb extends GeneratedDatabase {
 
 typedef $$UsersTableCreateCompanionBuilder =
     UsersCompanion Function({
-      Value<int?> userId,
+      Value<int> userId,
       Value<int?> customerId,
       Value<String?> fullName,
       Value<String?> mobile,
@@ -3681,11 +3667,10 @@ typedef $$UsersTableCreateCompanionBuilder =
       Value<int?> custActive,
       Value<String?> token,
       Value<String?> dbName,
-      Value<int> rowid,
     });
 typedef $$UsersTableUpdateCompanionBuilder =
     UsersCompanion Function({
-      Value<int?> userId,
+      Value<int> userId,
       Value<int?> customerId,
       Value<String?> fullName,
       Value<String?> mobile,
@@ -3703,7 +3688,6 @@ typedef $$UsersTableUpdateCompanionBuilder =
       Value<int?> custActive,
       Value<String?> token,
       Value<String?> dbName,
-      Value<int> rowid,
     });
 
 class $$UsersTableFilterComposer extends Composer<_$AppDb, $UsersTable> {
@@ -4011,7 +3995,7 @@ class $$UsersTableTableManager
               $$UsersTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
-                Value<int?> userId = const Value.absent(),
+                Value<int> userId = const Value.absent(),
                 Value<int?> customerId = const Value.absent(),
                 Value<String?> fullName = const Value.absent(),
                 Value<String?> mobile = const Value.absent(),
@@ -4029,7 +4013,6 @@ class $$UsersTableTableManager
                 Value<int?> custActive = const Value.absent(),
                 Value<String?> token = const Value.absent(),
                 Value<String?> dbName = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
               }) => UsersCompanion(
                 userId: userId,
                 customerId: customerId,
@@ -4049,11 +4032,10 @@ class $$UsersTableTableManager
                 custActive: custActive,
                 token: token,
                 dbName: dbName,
-                rowid: rowid,
               ),
           createCompanionCallback:
               ({
-                Value<int?> userId = const Value.absent(),
+                Value<int> userId = const Value.absent(),
                 Value<int?> customerId = const Value.absent(),
                 Value<String?> fullName = const Value.absent(),
                 Value<String?> mobile = const Value.absent(),
@@ -4071,7 +4053,6 @@ class $$UsersTableTableManager
                 Value<int?> custActive = const Value.absent(),
                 Value<String?> token = const Value.absent(),
                 Value<String?> dbName = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
               }) => UsersCompanion.insert(
                 userId: userId,
                 customerId: customerId,
@@ -4091,7 +4072,6 @@ class $$UsersTableTableManager
                 custActive: custActive,
                 token: token,
                 dbName: dbName,
-                rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))

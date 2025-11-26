@@ -52,12 +52,12 @@ class IAuthenticationImpl implements IAuthenticationFacad {
   }
 
   @override
-  ResultFuture<OtpResponse> otpValidation(BaseParams<OtpParams> params) {
+  ResultFuture<LoginResponse> otpValidation(BaseParams<OtpParams> params) {
     return otpValidate(params);
   }
 
   @override
-  ResultFuture<OtpResponse> resendOtp(BaseParams<ResendOtpParams> params) {
+  ResultFuture<LoginResponse> resendOtp(BaseParams<ResendOtpParams> params) {
     return resendOTP(params);
   }
 

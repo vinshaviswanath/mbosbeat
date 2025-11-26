@@ -7,6 +7,8 @@ import 'package:mpos_beat/core/serveice/http_client.dart';
 import 'package:mpos_beat/core/utils/extentions.dart';
 import 'package:mpos_beat/core/utils/typedefs.dart';
 import 'package:mpos_beat/core/utils/urls.dart';
+import 'package:mpos_beat/data/local_db/app_db.dart';
+import 'package:mpos_beat/data/models/login_response.dart';
 import 'package:mpos_beat/data/models/otp_response.dart';
 import 'package:mpos_beat/domain/request/otp_validation_params.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,9 +18,16 @@ class OtpValidation {
   final HttpClient httpClient;
   final RunSafely runSafely;
   final SharedPreferences sharedPreferences;
-  OtpValidation(this.httpClient, this.runSafely, this.sharedPreferences);
+  final AppDb appDb;
 
-  ResultFuture<OtpResponse> call(BaseParams<OtpParams> param) {
+  OtpValidation(
+    this.httpClient,
+    this.runSafely,
+    this.sharedPreferences, {
+    required this.appDb,
+  });
+
+  ResultFuture<LoginResponse> call(BaseParams<OtpParams> param) {
     return runSafely(
       () async {
         final response = await httpClient.post(
@@ -27,11 +36,13 @@ class OtpValidation {
         );
 
         if (response.isOk) {
-          final data = OtpResponse.fromJson(response.data);
+          final data = LoginResponse.fromJson(response.data);
           final token = data.loginData?.token;
           if (token != null && token.isNotEmpty && data.status != 10) {
             await sharedPreferences.setString("token", token);
           }
+          await appDb.userDao.insertUser(data.loginData!);
+          await appDb.userDao.printUsers();
           return data;
         }
 

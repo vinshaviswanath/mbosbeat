@@ -8,6 +8,7 @@ import 'package:mpos_beat/core/utils/extentions.dart';
 import 'package:mpos_beat/core/utils/logger.dart';
 import 'package:mpos_beat/core/utils/typedefs.dart';
 import 'package:mpos_beat/core/utils/urls.dart';
+import 'package:mpos_beat/data/models/login_response.dart';
 import 'package:mpos_beat/data/models/otp_response.dart';
 import 'package:mpos_beat/domain/request/resend_otp_params.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,7 +20,7 @@ class ResendOtp {
   final SharedPreferences sharedPreferences;
   ResendOtp(this.httpClient, this.runSafely, this.sharedPreferences);
 
-  ResultFuture<OtpResponse> call(BaseParams<ResendOtpParams> param) {
+  ResultFuture<LoginResponse> call(BaseParams<ResendOtpParams> param) {
     return runSafely(
       () async {
         final response = await httpClient.post(
@@ -28,7 +29,7 @@ class ResendOtp {
         );
 
         if (response.isOk) {
-          final data = OtpResponse.fromJson(response.data);
+          final data = LoginResponse.fromJson(response.data);
           return data;
         }
 

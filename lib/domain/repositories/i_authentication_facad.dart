@@ -18,11 +18,11 @@ interface class IAuthenticationFacad {
     throw UnimplementedError();
   }
 
-  ResultFuture<OtpResponse> otpValidation(BaseParams<OtpParams> params) {
+  ResultFuture<LoginResponse> otpValidation(BaseParams<OtpParams> params) {
     throw UnimplementedError();
   }
 
-  ResultFuture<OtpResponse> resendOtp(BaseParams<ResendOtpParams> params) {
+  ResultFuture<LoginResponse> resendOtp(BaseParams<ResendOtpParams> params) {
     throw UnimplementedError();
   }
 

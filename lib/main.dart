@@ -3,6 +3,7 @@ import 'package:mpos_beat/core/theme/app_theme.dart';
 import 'package:mpos_beat/core/theme/theme/theme_provider.dart';
 import 'package:mpos_beat/core/utils/app_details.dart';
 import 'package:mpos_beat/core/utils/isolates/init_parsers.dart';
+import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/domain/repositories/i_authentication_facad.dart';
 import 'package:mpos_beat/domain/repositories/i_company_creation_facad.dart';
 import 'package:mpos_beat/domain/repositories/i_user_management_facad.dart';
@@ -21,11 +22,13 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependency(env: Environment.test);
   initParsers();
-  runApp(const MyApp());
+  final db = sl<AppDb>();
+  runApp( MyApp(db: db,));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final AppDb db;
+  const MyApp({super.key, required this.db});
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +37,14 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(
-          create: (_) => AuthFormProvider(sl<IAuthenticationFacad>()),
+          create: (_) => AuthFormProvider(sl<IAuthenticationFacad>(),db: db),
         ),
         ChangeNotifierProvider(
           create: (_) => UserManagementProvider(sl<IUserManagementFacad>()),
         ),
         ChangeNotifierProvider(create: (_) => CustomerTransactionProvider()),
         ChangeNotifierProvider(
-          create: (_) => CompanyCreationProvider(sl<ICompanyCreationFacad>()),
+          create: (_) => CompanyCreationProvider(sl<ICompanyCreationFacad>(),db: db),
         ),
       ],
       child: Consumer<ThemeProvider>(
