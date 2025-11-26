@@ -97,7 +97,7 @@ class _CompanyCreationScreenState extends State<CompanyCreationScreen>
 
         provider.resetCompanyInfo();
         provider.getAllCompanies(context);
-        
+
         // final companyData = widget.companyData;
 
         // final hasIntegration =
