@@ -85,10 +85,10 @@ class _VoucherTypeWidgetState extends State<VoucherTypeWidget> {
                 padding: const EdgeInsets.all(15),
                 child: Container(
                   decoration: BoxDecoration(
-                    color:ColorResources.white,
+                    color: ColorResources.white,
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black  .withValues(alpha: 0.1),
+                        color: Colors.black.withValues(alpha: 0.1),
                         offset: Offset(0, 10),
 
                         blurRadius: 3,
@@ -162,6 +162,23 @@ class _VoucherTypeWidgetState extends State<VoucherTypeWidget> {
                         companyId: widget.companyData?.id!,
                       );
                       widget.onTap?.call();
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: const Text(
+                            "Please Complete voucher configuration",
+                            textAlign: TextAlign.center,
+                          ),
+                          behavior: SnackBarBehavior.floating,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 8,
+                          ),
+                        ),
+                      );
                     }
                   },
                 ),
