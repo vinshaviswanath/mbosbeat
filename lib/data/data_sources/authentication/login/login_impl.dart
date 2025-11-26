@@ -43,6 +43,8 @@ class LoginImpl {
 
           // await appDb.into(appDb.users).insert(User.fromJson(response.data));
           // appDb.select(appDb.users).watch();
+          await appDb.userDao.insertUser(data.loginData!);
+          await appDb.userDao.printUsers();
           return data;
         }
 

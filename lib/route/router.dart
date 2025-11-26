@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mpos_beat/core/utils/app_details.dart';
 import 'package:mpos_beat/core/utils/enums.dart';
+import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/data/models/godown_list_model.dart';
 import 'package:mpos_beat/data/models/route_list_model.dart';
@@ -375,7 +376,7 @@ class AppRouter {
         builder: (context, state) {
           final extra = state.extra as Map<String, dynamic>?;
           final tabIndex = extra?['tabIndex'] as int? ?? 0;
-          final companyData = extra?['companyData'] as CompanyViewList?;
+          final companyData = extra?['companyData'] as Company?;
           final isPop = extra?['isPop'] as bool? ?? false;
           return CompanyCreationScreen(
             initialTabIndex: tabIndex,

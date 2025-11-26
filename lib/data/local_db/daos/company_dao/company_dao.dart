@@ -1,6 +1,6 @@
 import 'dart:convert';
-
 import 'package:drift/drift.dart';
+import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/local_db/tables/company_tables.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
@@ -11,12 +11,21 @@ part 'company_dao.g.dart';
 class CompanyDao extends DatabaseAccessor<AppDb> with _$CompanyDaoMixin {
   CompanyDao(super.db);
 
+  // Convert empty string to null DateTime
+  DateTime? _safeDate(dynamic value) {
+    if (value == null || value == "" || value.toString().trim().isEmpty) {
+      return null;
+    }
+    if (value is DateTime) return value;
+    return DateTime.tryParse(value.toString());
+  }
+
   Future<void> insertCompanies(List<CompanyViewList> list) async {
     await batch((batch) {
       batch.insertAllOnConflictUpdate(
         companies,
         list.map((e) {
-          return CompaniesCompanion.insert(
+          return CompaniesCompanion(
             id: Value(e.id),
             companyName: Value(e.companyName),
             mailingName: Value(e.mailingName),
@@ -33,11 +42,11 @@ class CompanyDao extends DatabaseAccessor<AppDb> with _$CompanyDaoMixin {
             email: Value(e.email),
             regType: Value(e.regType),
             fssaiNo: Value(e.fssaiNo),
-            finYearStart: Value(e.finYearStart),
+            finYearStart: Value(_safeDate(e.finYearStart)),
             voucherRepeat: Value(e.voucherRepeat),
-            lastSyncDate: Value(e.lastSyncDate),
+            lastSyncDate: Value(_safeDate(e.lastSyncDate)),
             createBy: Value(e.createBy),
-            createdOn: Value(e.createdOn),
+            createdOn: Value(_safeDate(e.createdOn)),
             createdFrom: Value(e.createdFrom),
             bankName: Value(e.bankName),
             bankBranch: Value(e.bankBranch),
@@ -62,18 +71,32 @@ class CompanyDao extends DatabaseAccessor<AppDb> with _$CompanyDaoMixin {
     });
   }
 
+  /// 🔹 Get All Companies (one time)
   Future<List<Company>> getAllCompanies() async {
     return select(companies).get();
   }
 
+  /// 🔥 STREAM OF COMPANIES (LIVE UPDATES)
+  Stream<List<Company>> watchAllCompanies() {
+    return select(companies).watch();
+  }
+
+  /// SAFE JSON PRINTING
   Future<void> printCompaniesAsJson() async {
     final list = await select(companies).get();
-    final jsonList = list.map((c) => companyToJson(c)).toList();
 
-    final prettyJson = const JsonEncoder.withIndent('  ').convert(jsonList);
-
+    Logger.logInfo("COMPANY List Length :: ${list.length}");
     print("===== COMPANY TABLE JSON =====");
-    print(prettyJson);
+
+    for (var c in list) {
+      try {
+        final jsonMap = companyToJson(c);
+        print(const JsonEncoder.withIndent("  ").convert(jsonMap));
+      } catch (e) {
+        print("Error printing row with ID ${c.id}: $e");
+      }
+    }
+
     print("================================");
   }
 
@@ -127,3 +150,4 @@ class CompanyDao extends DatabaseAccessor<AppDb> with _$CompanyDaoMixin {
     await delete(companies).go();
   }
 }
+

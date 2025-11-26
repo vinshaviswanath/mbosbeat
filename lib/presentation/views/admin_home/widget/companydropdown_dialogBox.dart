@@ -1,12 +1,13 @@
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 import 'package:mpos_beat/presentation/views/admin_home/widget/company_card_widget.dart';
 
 class CompanyDropdown extends StatefulWidget {
-  final List<CompanyViewList> companyList;
-  final CompanyViewList? selectedCompany;
-  final Function(CompanyViewList)? onCompanySelected;
+  final List<Company> companyList;
+  final Company? selectedCompany;
+  final Function(Company)? onCompanySelected;
 
   const CompanyDropdown({
     super.key,
@@ -20,11 +21,11 @@ class CompanyDropdown extends StatefulWidget {
 }
 
 class _CompanyDropdownState extends State<CompanyDropdown> {
-  CompanyViewList? selectedCompany;
+  // Company? selectedCompany;
   TextEditingController searchController = TextEditingController();
 
   final GlobalKey _dropdownKey = GlobalKey();
-  List<CompanyViewList> filteredList = [];
+  List<Company> filteredList = [];
   bool isSearching = false;
 
   @override

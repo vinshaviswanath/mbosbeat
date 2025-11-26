@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
 
 class StatusView extends StatelessWidget {
@@ -12,7 +13,7 @@ class StatusView extends StatelessWidget {
   final double strokeWidth;
   final Color incompleteColor;
   final Color completeColor;
-  final CompanyViewList company;
+  final Company company;
 
   const StatusView({
     super.key,
@@ -26,7 +27,7 @@ class StatusView extends StatelessWidget {
     this.completeColor = ColorResources.indigoBlue,
     required this.company,
   }) : assert(centerImageUrl != null, "Please provide centerImageUrl");
-  int calculateCompletedSteps(CompanyViewList c) {
+  int calculateCompletedSteps(Company c) {
     int steps = 0;
 
     if (c.hasCompanySettings != 0) steps++;

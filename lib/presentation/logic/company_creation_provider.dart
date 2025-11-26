@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/failures/value_object/value_object.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/models/complete_voucher_settings_model.dart';
 import 'package:mpos_beat/data/models/create_companySettings_model.dart';
 import 'package:mpos_beat/data/models/create_company_voucher_model.dart';
@@ -42,7 +43,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class CompanyCreationProvider extends ChangeNotifier {
   final ICompanyCreationFacad iCompanyCreationFacad;
-  CompanyCreationProvider(this.iCompanyCreationFacad);
+  final AppDb db;
+  CompanyCreationProvider(this.iCompanyCreationFacad, {required this.db});
 
   String? _activePlan;
 
@@ -92,11 +94,10 @@ class CompanyCreationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  final _companyController =
-      StreamController<List<CompanyViewList>>.broadcast();
-  Stream<List<CompanyViewList>> get companyStream => _companyController.stream;
-  CompaniesListResponse? _companiesList;
-  CompaniesListResponse? get companiesList => _companiesList;
+  Stream<List<Company>> get companyStream =>
+      db.companyDao.watchAllCompanies();
+  List<Company>? _companiesList;
+  List<Company>? get companiesList => _companiesList;
 
   GodownResponse? _godownResponse;
   GodownResponse? get godownResponse => _godownResponse;
@@ -142,13 +143,13 @@ class CompanyCreationProvider extends ChangeNotifier {
   final List<VoucherNumber> _voucherNumberList = [];
   List<VoucherNumber>? get voucherNumberList => _voucherNumberList;
 
-  CompanyViewList? _selectedCompany;
+  Company? _selectedCompany;
   bool _isGodown = true;
 
-  CompanyViewList? get selectedCompany => _selectedCompany;
+  Company? get selectedCompany => _selectedCompany;
   bool get isGodown => _isGodown;
 
-  void setSelectedCompany({required CompanyViewList company}) {
+  void setSelectedCompany({required Company company}) {
     _selectedCompany = company;
     _isGodown =
         company.vchNumberingMode == null ||
@@ -240,7 +241,7 @@ class CompanyCreationProvider extends ChangeNotifier {
   bool isStageCompleted(int index) => stageCompleted[index];
 
   ///  Update stage completion based on backend data
-  void updateStageCompletionFromCompanyData(CompanyViewList company) {
+  void updateStageCompletionFromCompanyData(Company company) {
     // if company id > 0 → company info is completed
     stageCompleted[0] = company.id != null && company.id! > 0;
 
@@ -1320,37 +1321,40 @@ class CompanyCreationProvider extends ChangeNotifier {
 
   //========================= Users List =========================
 
-  Future<CompaniesListResponse?> getAllCompanies(BuildContext context) async {
-    setLoading(true);
+Future<void> getAllCompanies(BuildContext context) async {
+  setLoading(true);
 
-    final result = await iCompanyCreationFacad.getAllCompany();
+  final result = await iCompanyCreationFacad.getAllCompany();
 
-    result.fold(
-      (failure) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(failure.errorMsg, textAlign: TextAlign.center),
-            behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+  result.fold(
+    (failure) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            failure.errorMsg,
+            textAlign: TextAlign.center,
           ),
-        );
-      },
-      (response) async {
-        _companiesList = response;
-        _companyController.add(companiesList?.companyViewList ?? []);
-        Logger.logSuccess(
-          "Company List fetch successfull : ${response.toJson()}",
-        );
-        notifyListeners();
-      },
-    );
-    setLoading(false);
-    notifyListeners();
-    return _companiesList;
-  }
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        ),
+      );
+    },
+    (response) async {
+      /// Do NOT fetch manually → Drift stream handles updates by itself
+      /// No need to save in local list
+      /// No need to send to StreamController
+      // After API success, drift will automatically trigger `watchAllCompanies()`
+      // because you insert companies in CompanyDao.
+    },
+  );
+
+  setLoading(false);
+  notifyListeners();
+}
+
 
   //========================= Create Godown Or Vehicle Mapping =========================
 

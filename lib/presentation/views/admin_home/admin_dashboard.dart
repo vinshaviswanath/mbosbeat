@@ -1,11 +1,14 @@
 import 'package:flutter/foundation.dart';
+import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_divider.dart';
 import 'package:mpos_beat/presentation/dialogs/auth_dialogs.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/presentation/views/admin_home/widget/companydropdown_dialogBox.dart';
 import 'package:mpos_beat/presentation/views/admin_home/widget/custom_drawer.dart';
+import 'package:mpos_beat/presentation/views/admin_home/widget/shimmer/dropdown_shimmer.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_manage/widgets/option_item.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/widgets/end_to_end_text_widget.dart';
 
@@ -32,8 +35,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
       // Load list
       await provider.getAllCompanies(context);
-
-      final list = provider.companiesList?.companyViewList ?? [];
+      final db = sl<AppDb>();
+      final list = await db.companyDao.getAllCompanies();
 
       // Set selected company if not set
       if (list.isNotEmpty) {
@@ -53,6 +56,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
   @override
   Widget build(BuildContext context) {
     final appLocalization = context.l10n;
+    final appDb = sl<AppDb>();
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, result) async {
@@ -119,15 +123,39 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                             ColorResources.transparent,
                                         surfaceTintColor:
                                             ColorResources.transparent,
-                                        title: Text(
-                                          appLocalization.admin_dashboard_home,
-                                          style: context
-                                              .textStyle
-                                              .s20
-                                              .bold
-                                              .white
-                                              .roboto,
+
+                                        //<<<<<<<<<<<<<<<<<<<<<<<<<<< DO NOT CLEAR THIS >>>>>>>>>>>>>>>>>>>>>>>>>>
+                                        title: StreamBuilder(
+                                          stream: appDb.userDao
+                                              .watchLoggedInUser(),
+                                          builder: (context, snapshot) {
+                                            if (!snapshot.hasData) {
+                                              return const Text("");
+                                            }
+
+                                            final user = snapshot.data;
+
+                                            return Text(
+                                              user?.companyName ?? "Company",
+                                              style: context
+                                                  .textStyle
+                                                  .s20
+                                                  .bold
+                                                  .white
+                                                  .roboto,
+                                            );
+                                          },
                                         ),
+                                        //<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>
+                                        // title: Text(
+                                        //   appLocalization.admin_dashboard_home,
+                                        //   style: context
+                                        //       .textStyle
+                                        //       .s20
+                                        //       .bold
+                                        //       .white
+                                        //       .roboto,
+                                        // ),
                                         centerTitle: true,
                                         automaticallyImplyLeading: false,
                                       ),
@@ -144,27 +172,46 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                   color: ColorResources.white
                                                       .withValues(alpha: 0.1),
                                                 ),
-
                                                 child: Consumer<CompanyCreationProvider>(
                                                   builder: (context, provider, _) {
-                                                    final companyList =
-                                                        provider
-                                                            .companiesList
-                                                            ?.companyViewList ??
-                                                        [];
-                                                    final selectedCompany =
-                                                        provider
-                                                            .selectedCompany;
+                                                    return StreamBuilder<
+                                                      List<Company>
+                                                    >(
+                                                      stream: provider
+                                                          .companyStream,
+                                                      builder: (context, snapshot) {
+                                                        if (!snapshot.hasData) {
+                                                          return ShimmerBox(
+                                                            height:
+                                                                MediaQuery.of(
+                                                                  context,
+                                                                ).size.height *
+                                                                0.045,
+                                                            width:
+                                                                double.infinity,
+                                                          );
+                                                        }
 
-                                                    return CompanyDropdown(
-                                                      companyList: companyList,
-                                                      selectedCompany:
-                                                          selectedCompany,
-                                                      onCompanySelected: (company) {
-                                                        provider
-                                                            .setSelectedCompany(
-                                                              company: company,
-                                                            );
+                                                        final companyList =
+                                                            snapshot.data!;
+                                                        final selectedCompany =
+                                                            provider
+                                                                .selectedCompany;
+
+                                                        return CompanyDropdown(
+                                                          companyList:
+                                                              companyList,
+                                                          selectedCompany:
+                                                              selectedCompany,
+                                                          onCompanySelected:
+                                                              (company) {
+                                                                provider
+                                                                    .setSelectedCompany(
+                                                                      company:
+                                                                          company,
+                                                                    );
+                                                              },
+                                                        );
                                                       },
                                                     );
                                                   },
@@ -172,6 +219,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                               ),
                                             ),
                                           ),
+
                                           w4,
                                           GestureDetector(
                                             onTap: () {
@@ -184,8 +232,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                   'isPop': false,
                                                 },
                                               );
-
-                                              //
                                               provider.resetIntegration();
                                             },
                                             child: Container(
@@ -194,7 +240,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                     context,
                                                   ).size.height *
                                                   0.045,
-
                                               width:
                                                   MediaQuery.of(
                                                     context,

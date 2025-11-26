@@ -16,6 +16,9 @@ abstract class AppInjectionModule {
   http.Client get clent => http.Client();
 
   @lazySingleton
+  AppDb get appDb => AppDb();
+
+  @lazySingleton
   CompanyRegisteration companyRegisteration(
     HttpClient httpClient,
     RunSafely runSafely,

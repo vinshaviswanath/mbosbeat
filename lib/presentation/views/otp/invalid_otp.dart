@@ -59,12 +59,16 @@ class InvalidOtp extends StatelessWidget {
                                 width: 11,
                               ),
                               w10,
-                              Text(
-                                "${provider.otpError ?? provider.otp.getFailure?.errorMsg}",
-                                style: context.textStyle.s10.roseRed,
+                              Flexible(
+                                child: Text(
+                                  "${provider.otpError ?? provider.otp.getFailure?.errorMsg}",
+                                  style: context.textStyle.s10.roseRed,
+                                  softWrap: true,
+                                ),
                               ),
                             ],
                           ),
+
                         h24,
                         CustomButton(
                           buttonText: appLocalization.submit,
@@ -99,8 +103,8 @@ class InvalidOtp extends StatelessWidget {
                                       ),
                                     ),
                                   );
-                                } 
-                                
+                                }
+
                                 // else if (response.status == 0) {
                                 //   GoRouter.of(
                                 //     context,

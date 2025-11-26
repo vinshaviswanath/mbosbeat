@@ -1,7 +1,10 @@
 import 'package:drift/drift.dart';
 
 class Users extends Table {
-  IntColumn get userId => integer().nullable()();
+  // PRIMARY KEY
+  IntColumn get userId => integer()();
+
+  // Columns
   IntColumn get customerId => integer().nullable()();
   TextColumn get fullName => text().nullable()();
   TextColumn get mobile => text().nullable()();
@@ -19,4 +22,8 @@ class Users extends Table {
   IntColumn get custActive => integer().nullable()();
   TextColumn get token => text().nullable()();
   TextColumn get dbName => text().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {userId};
 }
+

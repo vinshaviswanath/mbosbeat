@@ -1,4 +1,5 @@
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/presentation/dialogs/auth_dialogs.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
@@ -7,7 +8,7 @@ import 'package:mpos_beat/presentation/views/company_creation/widget/integration
 import 'package:mpos_beat/presentation/views/company_creation/widget/company_vouchertype/voucher_type_widget.dart';
 
 class CompanyCreationScreen extends StatefulWidget {
-  final CompanyViewList? companyData;
+  final Company? companyData;
   final bool isPop;
   const CompanyCreationScreen({
     super.key,

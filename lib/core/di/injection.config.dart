@@ -128,9 +128,9 @@ Future<_i174.GetIt> init(
     () => _i275.EventManager(),
     dispose: (i) => i.dispose(),
   );
-  gh.singleton<_i264.AppDb>(() => _i264.AppDb());
   gh.lazySingleton<_i530.RunSafely>(() => _i530.RunSafely());
   gh.lazySingleton<_i519.Client>(() => appInjectionModule.clent);
+  gh.lazySingleton<_i264.AppDb>(() => appInjectionModule.appDb);
   gh.lazySingleton<_i816.HttpClient>(
     () => _i816.HttpClient(gh<_i519.Client>()),
   );
@@ -155,13 +155,6 @@ Future<_i174.GetIt> init(
       gh<_i275.EventManager>(),
       gh<_i816.HttpClient>(),
       gh<_i530.RunSafely>(),
-    ),
-  );
-  gh.lazySingleton<_i42.OtpValidation>(
-    () => _i42.OtpValidation(
-      gh<_i816.HttpClient>(),
-      gh<_i530.RunSafely>(),
-      gh<_i460.SharedPreferences>(),
     ),
   );
   gh.lazySingleton<_i13.ResendOtp>(
@@ -442,6 +435,14 @@ Future<_i174.GetIt> init(
       gh<_i816.HttpClient>(),
       gh<_i530.RunSafely>(),
       gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i42.OtpValidation>(
+    () => _i42.OtpValidation(
+      gh<_i816.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+      appDb: gh<_i264.AppDb>(),
     ),
   );
   gh.lazySingleton<_i284.GetCompanyList>(

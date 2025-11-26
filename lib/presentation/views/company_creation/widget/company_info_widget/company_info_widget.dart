@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/data/models/data/country_list_data.dart';
 import 'package:mpos_beat/data/models/data/registration_type_data.dart';
@@ -10,7 +11,7 @@ import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 
 class CompanyInfoWidget extends StatefulWidget {
-  final CompanyViewList? companyData;
+  final Company? companyData;
   const CompanyInfoWidget({super.key, this.onTap, this.companyData});
   final void Function()? onTap;
 

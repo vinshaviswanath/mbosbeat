@@ -1,5 +1,6 @@
 import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/data/models/godown_list_model.dart';
 import 'package:mpos_beat/data/models/route_list_model.dart';
@@ -243,11 +244,11 @@ class _SplashScreenState extends State<SplashScreen> {
           final companyProvider = context.read<CompanyCreationProvider>();
           await companyProvider.getAllCompanies(context);
           final companyList =
-              companyProvider.companiesList?.companyViewList ?? [];
+              companyProvider.companiesList ?? [];
 
           // IMPORTANT:
           // Even if companyList is empty, show dialogs for status 10/20.
-          CompanyViewList? companyData = companyList.isNotEmpty
+          Company? companyData = companyList.isNotEmpty
               ? companyList.first
               : null;
 
