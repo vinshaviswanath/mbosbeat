@@ -7,7 +7,6 @@ import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/domain/repositories/i_authentication_facad.dart';
 import 'package:mpos_beat/domain/repositories/i_company_creation_facad.dart';
 import 'package:mpos_beat/domain/repositories/i_user_management_facad.dart';
-
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mpos_beat/l10n/generated/app_localizations.dart';

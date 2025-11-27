@@ -14,12 +14,16 @@ class OtpAuthentication extends StatefulWidget {
 }
 
 class _OtpAuthenticationState extends State<OtpAuthentication> {
+  late TextEditingController otpController;
   @override
   void initState() {
+    otpController = TextEditingController();
+
     final provider = Provider.of<AuthFormProvider>(context, listen: false);
     provider.startOtpTimer();
     super.initState();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -85,6 +89,7 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
                               h16,
                               OtpInputField(
                                 borderColor: ColorResources.indigoBlue,
+                                controller: otpController,
                                 onCompleted: (otp) {
                                   debugPrint("Entered OTP: $otp");
                                   provider.updateOtp(otp);
@@ -192,6 +197,8 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
                                               id: provider.customerId,
                                             );
                                             wheelKey.currentState?.startSpin();
+                                                otpController.clear();
+        provider.updateOtp("");
                                           },
                                     child: Text(
                                       appLocalization.otp_auth_resend_otp,
