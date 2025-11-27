@@ -30,6 +30,7 @@ class _CompanyDropdownState extends State<CompanyDropdown> {
   @override
   void initState() {
     super.initState();
+    selectedCompany = widget.selectedCompany;
     filteredList = widget.companyList;
 
     searchController.addListener(() {
@@ -126,7 +127,9 @@ class _CompanyDropdownState extends State<CompanyDropdown> {
                                 shrinkWrap: true,
                                 itemCount: isSearching
                                     ? filteredList.length
-                                    : widget.companyList.length,
+                                    : (widget.companyList.length > 3
+                                          ? 3
+                                          : widget.companyList.length),
 
                                 separatorBuilder: (context, index) =>
                                     const Divider(
@@ -142,7 +145,14 @@ class _CompanyDropdownState extends State<CompanyDropdown> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: CompanyCard(
                                       company: company,
+                                      isSelected:
+                                          selectedCompany?.id == company.id,
+
                                       onTap: () {
+                                        setState(() {
+                                          selectedCompany = company;
+                                        });
+
                                         widget.onCompanySelected?.call(company);
                                         Navigator.pop(context);
                                       },
@@ -151,7 +161,7 @@ class _CompanyDropdownState extends State<CompanyDropdown> {
                                 },
                               ),
                             ),
-                            if (widget.companyList.length > 7)
+                            if (widget.companyList.length > 3)
                               GestureDetector(
                                 child: Padding(
                                   padding: const EdgeInsets.only(
@@ -280,7 +290,13 @@ class _CompanyDropdownState extends State<CompanyDropdown> {
                               padding: const EdgeInsets.all(8.0),
                               child: CompanyCard(
                                 company: company,
+                                isSelected: selectedCompany?.id == company.id,
+
                                 onTap: () {
+                                  setState(() {
+                                    selectedCompany = company;
+                                  });
+
                                   widget.onCompanySelected?.call(company);
                                   Navigator.pop(context);
                                 },

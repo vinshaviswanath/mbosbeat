@@ -115,13 +115,13 @@ class AppRouter {
           return const OtpAuthentication();
         },
       ),
-      GoRoute(
-        path: "/invalidOtp",
-        name: AppRouterConst.invalidOtp,
-        builder: (context, state) {
-          return const InvalidOtp();
-        },
-      ),
+      // GoRoute(
+      //   path: "/invalidOtp",
+      //   name: AppRouterConst.invalidOtp,
+      //   builder: (context, state) {
+      //     return const InvalidOtp();
+      //   },
+      // ),
       GoRoute(
         path: "/customRouteScreen",
         name: AppRouterConst.customRouteScreen,

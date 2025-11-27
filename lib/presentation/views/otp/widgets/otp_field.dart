@@ -4,8 +4,11 @@ import 'package:mpos_beat/core/utils/imports.dart';
 class OtpInputField extends StatelessWidget {
   final void Function(String)? onCompleted;
   final Color borderColor;
+    final TextEditingController? controller;  
 
-  const OtpInputField({super.key, this.onCompleted, required this.borderColor});
+  const OtpInputField({super.key, this.onCompleted, required this.borderColor,
+      this.controller,
+    });
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +27,7 @@ class OtpInputField extends StatelessWidget {
     );
 
     return Pinput(
+      controller: controller,
       length: 4,
       errorPinTheme: PinTheme(
           decoration: BoxDecoration(border: Border.all(color: Colors.red))),
