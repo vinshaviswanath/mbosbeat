@@ -228,6 +228,7 @@ class AuthFormProvider with ChangeNotifier {
     _otpError = null;
     notifyListeners();
   }
+  
 
   /// Resets invalid OTP flag and timer.
   void resetInvalidOtpFlag(bool value) {

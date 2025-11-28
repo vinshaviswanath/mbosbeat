@@ -24,7 +24,6 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     final appLocalization = context.l10n;
@@ -135,7 +134,7 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
                                             AppRouterConst.customRouteScreen,
                                             extra: NavigationType.success,
                                           );
-                                      
+
                                           ScaffoldMessenger.of(
                                             context,
                                           ).showSnackBar(
@@ -157,10 +156,7 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
                                                   ),
                                             ),
                                           );
-                                        } else if (response.status == 0) {
-
-
-                                        }
+                                        } else if (response.status == 0) {}
                                       },
                                     );
                                   },
@@ -197,8 +193,14 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
                                               id: provider.customerId,
                                             );
                                             wheelKey.currentState?.startSpin();
-                                                otpController.clear();
-        provider.updateOtp("");
+                                            otpController.clear();
+                                            provider.updateOtp("");
+                                            provider.otp.getFailure?.errorMsg ==
+                                                "";
+                                            provider.otpError == "";
+                                            provider.otpAutovalidateMode =
+                                                AutovalidateMode.disabled;  
+                                        
                                           },
                                     child: Text(
                                       appLocalization.otp_auth_resend_otp,

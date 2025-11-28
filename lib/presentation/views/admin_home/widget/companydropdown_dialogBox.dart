@@ -27,6 +27,16 @@ class _CompanyDropdownState extends State<CompanyDropdown> {
   final GlobalKey _dropdownKey = GlobalKey();
   List<Company> filteredList = [];
   bool isSearching = false;
+  @override
+  void didUpdateWidget(covariant CompanyDropdown oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.selectedCompany != oldWidget.selectedCompany) {
+      setState(() {
+        selectedCompany = widget.selectedCompany;
+      });
+    }
+  }
 
   @override
   void initState() {

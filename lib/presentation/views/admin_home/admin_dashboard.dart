@@ -219,7 +219,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                 ),
                                               ),
                                             ),
-                                          ),
+                                         ),
 
                                           w4,
                                           GestureDetector(
@@ -233,6 +233,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                   'isPop': false,
                                                 },
                                               );
+
+                                            
                                               provider.resetIntegration();
                                             },
                                             child: Container(
