@@ -32,18 +32,35 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
   @override
   void initState() {
     super.initState();
-    compnyNameController = TextEditingController();
-    displayNameController = TextEditingController();
-    address1Controller = TextEditingController();
-    address2Controller = TextEditingController();
-    address3Controller = TextEditingController();
-    pincodeController = TextEditingController();
-    countrytController = TextEditingController();
-    stateController = TextEditingController();
-    regTypeController = TextEditingController();
+       final provider = context.read<CompanyCreationProvider>();
+       //to keep all controller values when back from vouchertab
+  compnyNameController = TextEditingController(
+    text: widget.companyData?.companyName ??"",
+  );
+
+  displayNameController = TextEditingController(
+    text: widget.companyData?.mailingName ??  "",
+  );
+
+  address1Controller = TextEditingController(
+    text: widget.companyData?.address1 ??  "",
+  );
+
+  address2Controller = TextEditingController(
+    text: widget.companyData?.address2 ??"",
+  );
+
+  address3Controller = TextEditingController(
+    text: widget.companyData?.address3 ?? "",
+  );
+
+  pincodeController = TextEditingController(
+    text: widget.companyData?.pinCode ??  "",
+  );
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final provider = context.read<CompanyCreationProvider>();
+   
       await provider.fectchCountryList(context);
+    
       fillfeilds();
       print(" company data in compnay info ${widget.companyData?.id}");
     });

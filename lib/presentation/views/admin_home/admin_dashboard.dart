@@ -171,7 +171,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                 ),
                                               ),
                                             ),
-                                          ),
+                                         ),
                                           w4,
                                           GestureDetector(
                                             onTap: () {
@@ -185,7 +185,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                 },
                                               );
 
-                                              //
+                                            
                                               provider.resetIntegration();
                                             },
                                             child: Container(
