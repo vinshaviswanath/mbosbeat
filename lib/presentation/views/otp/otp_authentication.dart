@@ -5,6 +5,7 @@ import 'package:mpos_beat/presentation/common/widgets/sliverSpace.dart';
 import 'package:mpos_beat/presentation/logic/authentication_provider.dart';
 import 'package:mpos_beat/presentation/views/otp/widgets/otp_field.dart';
 
+
 class OtpAuthentication extends StatefulWidget {
   static const routeName = 'otp-auth';
   const OtpAuthentication({super.key});
@@ -36,7 +37,7 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
             if (didPop) return;
 
             provider.resetSignUpForm();
-            Navigator.pop(context);
+            // Navigator.pop(context);
           },
           child: BaseScaffold(
             widget: SizedBox(
@@ -87,6 +88,15 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
                               ),
                               h16,
                               OtpInputField(
+                                // errorPinTheme: PinTheme(
+                                //   decoration: BoxDecoration(
+                                //     borderRadius: BorderRadius.circular(16),
+                                //     border: Border.all(
+                                //       color: Colors.red,
+                                //       width: 1.5,
+                                //     ),
+                                //   ),
+                                // ),
                                 borderColor: ColorResources.indigoBlue,
                                 controller: otpController,
                                 onCompleted: (otp) {
@@ -128,7 +138,6 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
                                       context,
                                       onError: (p0) {},
                                       onResponse: (response) {
-                                        Navigator.pop(context);
                                         if (response.status == 1) {
                                           context.pushNamed(
                                             AppRouterConst.customRouteScreen,
@@ -156,7 +165,9 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
                                                   ),
                                             ),
                                           );
-                                        } else if (response.status == 0) {}
+                                        } else if (response.status == 0) {
+                                          return;
+                                        }
                                       },
                                     );
                                   },
@@ -194,13 +205,10 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
                                             );
                                             wheelKey.currentState?.startSpin();
                                             otpController.clear();
-                                            provider.updateOtp("");
-                                            provider.otp.getFailure?.errorMsg ==
-                                                "";
-                                            provider.otpError == "";
-                                            provider.otpAutovalidateMode =
-                                                AutovalidateMode.disabled;  
-                                        
+
+                                            provider.clearOtpValidation();
+                                            // provider.otpAutovalidateMode =
+                                            //     AutovalidateMode.disabled;
                                           },
                                     child: Text(
                                       appLocalization.otp_auth_resend_otp,

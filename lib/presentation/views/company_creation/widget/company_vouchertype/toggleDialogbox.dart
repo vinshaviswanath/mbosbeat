@@ -38,7 +38,7 @@ class _ToggleDialogBoxState extends State<ToggleDialogBox> {
 
   void fetchCompanyVoucherList() {
     final provider = context.read<CompanyCreationProvider>();
-    provider.fetchVoucherTypes(context, widget.companyId );
+    provider.fetchVoucherTypes(context, widget.companyId);
   }
 
   @override
@@ -90,7 +90,7 @@ class _ToggleDialogBoxState extends State<ToggleDialogBox> {
                           ),
                         );
                     if (response != null && response.status == 1) {
-                      CommonSnackBar.show(context, message: "");
+                      //    CommonSnackBar.show(context, message: "");
                       fetchCompanyVoucherList();
                       //  context.pop(true);
                     }

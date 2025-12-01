@@ -60,7 +60,7 @@ class AuthFormProvider with ChangeNotifier {
   String? _otpError;
   int _remainingSeconds = 0;
   Timer? _timer;
-  bool _alreadyNavigatedToInvalidOtp = false;
+  // bool _alreadyNavigatedToInvalidOtp = false;
 
   bool _isVisible = false;
   bool _isVisibleSignupPassword = false;
@@ -85,6 +85,9 @@ class AuthFormProvider with ChangeNotifier {
   bool get isVisibleSignupConfirmPassword => _isVisibleSignupConfirmPassword;
 
   final prefs = sl<SharedPreferences>();
+
+  bool _showOtpValidation = false;
+  bool get showOtpValidation => _showOtpValidation;
 
   //============================================================================
   //                              SETTERS
@@ -228,14 +231,13 @@ class AuthFormProvider with ChangeNotifier {
     _otpError = null;
     notifyListeners();
   }
-  
 
   /// Resets invalid OTP flag and timer.
-  void resetInvalidOtpFlag(bool value) {
-    _alreadyNavigatedToInvalidOtp = value;
-    resetOtpTimer();
-    _otpError = null;
-  }
+  // void resetInvalidOtpFlag(bool value) {
+  //   _alreadyNavigatedToInvalidOtp = value;
+  //   resetOtpTimer();
+  //   _otpError = null;
+  // }
 
   void clearOtpValidation() {
     _otp = Otp('');
@@ -249,6 +251,7 @@ class AuthFormProvider with ChangeNotifier {
     required void Function(LoginResponse) onResponse,
     required void Function(MainFailure) onError,
   }) async {
+    _showOtpValidation = true;
     otpAutovalidateMode = AutovalidateMode.always;
     notifyListeners();
     if (!_otp.isValid()) {
@@ -275,7 +278,7 @@ class AuthFormProvider with ChangeNotifier {
       return null;
     }
 
-    context.pushNamed(AppRouterConst.loadingScreen);
+    // context.pushNamed(AppRouterConst.loadingScreen);
     Logger.logSuccess("Customer ID : $_cusomerId");
     final result = await iAuthenticationFacad.otpValidation(
       BaseParams(
@@ -288,10 +291,10 @@ class AuthFormProvider with ChangeNotifier {
         _otpError = failure.errorMsg;
         Logger.logError(failure.errorMsg);
         // _otpError = "Please enter valid OTP";
-        if (!_alreadyNavigatedToInvalidOtp && _otp.isValid()) {
-          _alreadyNavigatedToInvalidOtp = true;
+        if (_otp.isValid()) {
+          // _alreadyNavigatedToInvalidOtp = true;
           startOtpTimer();
-          GoRouter.of(context).pushNamed(AppRouterConst.invalidOtp);
+          // GoRouter.of(context).pushNamed(AppRouterConst.invalidOtp);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -317,7 +320,7 @@ class AuthFormProvider with ChangeNotifier {
           notifyListeners();
 
           // Close loading screen
-          GoRouter.of(context).pop();
+          // GoRouter.of(context).pop();
 
           return; // stop flow – don’t go to success page
         }
@@ -326,7 +329,7 @@ class AuthFormProvider with ChangeNotifier {
 
         Logger.logSuccess("OTP verification success : ${response.toJson()}");
 
-        _alreadyNavigatedToInvalidOtp = false;
+        // _alreadyNavigatedToInvalidOtp = false;
 
         // await UserStorage.updateUser(verifiedUser);
 
@@ -380,6 +383,15 @@ class AuthFormProvider with ChangeNotifier {
     );
 
     return _loginResponse;
+  }
+
+  void clearOtpValidation() {
+    _otp = Otp("");
+    _otpError = null;
+    _otpResponse = null;
+    _showOtpValidation = false; 
+    otpAutovalidateMode = AutovalidateMode.disabled;
+    notifyListeners();
   }
 
   /// Starts OTP countdown timer.

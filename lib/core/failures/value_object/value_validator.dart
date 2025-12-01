@@ -208,12 +208,30 @@ Either<ValueFailure<String>, String> validateDisplayName(String value) {
   return right(value);
 }
 
-Either<ValueFailure<String>, String> validateAddress(String value) {
+Either<ValueFailure<String>, String> validateAddress1(String value) {
   if (value.isEmpty) {
-    return left(const ValueFailure.invalidValue('Select a valid Address!'));
+    return left(const ValueFailure.invalidValue('Select a valid Address1!'));
   }
   return right(value);
 }
+Either<ValueFailure<String>, String> validateAddress2(String value) {
+  if (value.isEmpty) {
+    return left(const ValueFailure.invalidValue('Select a valid Address2!'));
+  }
+  return right(value);
+}
+Either<ValueFailure<String>, String> validateAddress3(String value) {
+  if (value.isEmpty) {
+    return left(const ValueFailure.invalidValue('Select a valid Address3!'));
+  }
+  return right(value);
+}
+
+
+
+
+
+
 //
 
 Either<ValueFailure<String>, String> validatePinocde(String value) {

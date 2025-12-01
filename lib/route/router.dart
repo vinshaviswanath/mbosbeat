@@ -152,13 +152,13 @@ class AppRouter {
           return const MailedScreen();
         },
       ),
-      GoRoute(
-        path: "/loadingScreen",
-        name: AppRouterConst.loadingScreen,
-        builder: (context, state) {
-          return const LoadingScreen();
-        },
-      ),
+      // GoRoute(
+      //   path: "/loadingScreen",
+      //   name: AppRouterConst.loadingScreen,
+      //   builder: (context, state) {
+      //     return const LoadingScreen();
+      //   },
+      // ),
       GoRoute(
         path: "/userManagement",
         name: AppRouterConst.userManagement,
