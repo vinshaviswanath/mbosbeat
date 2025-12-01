@@ -295,6 +295,8 @@ class CompanyCreationProvider extends ChangeNotifier {
   CompanyName _companyName = CompanyName('');
   DisplayName _displayName = DisplayName("");
   Address1 _address1 = Address1("");
+  Address2 _address2 = Address2("");
+  Address3 _address3 = Address3("");
   Pincode _pincode = Pincode("");
   Country _country = Country("");
   CountryState _countryState = CountryState("");
@@ -304,6 +306,8 @@ class CompanyCreationProvider extends ChangeNotifier {
   CompanyName get companyName => _companyName;
   DisplayName get displayName => _displayName;
   Address1 get address1 => _address1;
+  Address2 get address2 => _address2;
+  Address3 get address3 => _address3;
   Pincode get pincode => _pincode;
   Country get country => _country;
   CountryState get countryState => _countryState;
@@ -334,6 +338,16 @@ class CompanyCreationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateAddress2(String input) {
+    _address1 = Address1(input);
+    notifyListeners();
+  }
+
+  void updateAddress3(String input) {
+    _address1 = Address1(input);
+    notifyListeners();
+  }
+
   void updatePincode(String input) {
     _pincode = Pincode(input);
     notifyListeners();
@@ -360,8 +374,27 @@ class CompanyCreationProvider extends ChangeNotifier {
     _address1 = Address1('');
     _pincode = Pincode('');
     _country = Country('');
-    _countryState = CountryState('');
-    _registrationType = RegistrationType('');
+    _selectedCountry = CountryListData(
+      id: 0,
+      countryName: "",
+      stateTitle: "",
+      pinTitle: "",
+      currency: "",
+      altCurrency: "",
+      currencyNod: 0,
+      currencySymbol: "",
+      taxApplicable: "",
+      taxType: "",
+      taxRegNoTitle: "",
+      cessApplicable: "",
+      exciseApplicable: "",
+    );
+    _selectedState = StateListData(id: 0, countryId: 0, stateName: "");
+    _selectedregistrationtype = RegistrationTypeData(
+      id: 0,
+      countryId: 0,
+      registrationType: "",
+    );
     companyinfoAutovalidateMode = AutovalidateMode.disabled;
   }
 
@@ -403,7 +436,7 @@ class CompanyCreationProvider extends ChangeNotifier {
         if (response.status == 1) {
           _companyCreationDtos = response;
           _companyid = _companyCreationDtos!.id;
-          resetCompanyInfo();
+          // resetCompanyInfo();
           WidgetsBinding.instance.addPostFrameCallback((_) async {
             // final prefs = sl<SharedPreferences>();
             // await prefs.setInt('selected_company_id', _companyCreationDtos!.id);

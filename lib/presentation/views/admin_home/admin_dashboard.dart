@@ -1,4 +1,3 @@
-
 import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_divider.dart';
@@ -171,10 +170,11 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                 ),
                                               ),
                                             ),
-                                         ),
+                                          ),
                                           w4,
                                           GestureDetector(
                                             onTap: () {
+                                              provider.resetCompanyInfo();
                                               context.pushNamed(
                                                 AppRouterConst
                                                     .companyCreationScreen,
@@ -185,7 +185,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                 },
                                               );
 
-                                            
                                               provider.resetIntegration();
                                             },
                                             child: Container(

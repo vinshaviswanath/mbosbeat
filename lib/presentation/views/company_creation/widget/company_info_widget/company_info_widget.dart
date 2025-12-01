@@ -28,41 +28,62 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
   late TextEditingController countrytController;
   late TextEditingController stateController;
   late TextEditingController regTypeController;
-
   @override
   void initState() {
     super.initState();
-       final provider = context.read<CompanyCreationProvider>();
-       //to keep all controller values when back from vouchertab
-  compnyNameController = TextEditingController(
-    text: widget.companyData?.companyName ??"",
-  );
+    final provider = context.read<CompanyCreationProvider>();
 
-  displayNameController = TextEditingController(
-    text: widget.companyData?.mailingName ??  "",
-  );
+    compnyNameController = TextEditingController(
+      text: provider.companyName.value.fold((l) => "", (r) => r),
+    );
+    displayNameController = TextEditingController(
+      text: provider.displayName.value.fold((l) => "", (r) => r),
+    );
+    address1Controller = TextEditingController(
+      text: provider.address1.value.fold((l) => "", (r) => r),
+    );
 
-  address1Controller = TextEditingController(
-    text: widget.companyData?.address1 ??  "",
-  );
+    pincodeController = TextEditingController(
+      text: provider.pincode.value.fold((l) => "", (r) => r),
+    );
 
-  address2Controller = TextEditingController(
-    text: widget.companyData?.address2 ??"",
-  );
-
-  address3Controller = TextEditingController(
-    text: widget.companyData?.address3 ?? "",
-  );
-
-  pincodeController = TextEditingController(
-    text: widget.companyData?.pinCode ??  "",
-  );
+    address2Controller = TextEditingController(
+      text: provider.address2.value.fold((l) => "", (r) => r),
+    );
+    address3Controller = TextEditingController(
+      text: provider.address3.value.fold((l) => "", (r) => r),
+    );
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-   
       await provider.fectchCountryList(context);
-    
-      fillfeilds();
-      print(" company data in compnay info ${widget.companyData?.id}");
+
+      compnyNameController.text = provider.companyName.value.fold(
+        (l) => "",
+        (r) => r,
+      );
+
+      displayNameController.text = provider.displayName.value.fold(
+        (l) => "",
+        (r) => r,
+      );
+
+      address1Controller.text = provider.address1.value.fold(
+        (l) => "",
+        (r) => r,
+      );
+      address2Controller.text = provider.address2.value.fold(
+        (l) => "",
+        (r) => r,
+      );
+      address3Controller.text = provider.address3.value.fold(
+        (l) => "",
+        (r) => r,
+      );
+
+      pincodeController.text = provider.pincode.value.fold((l) => "", (r) => r);
+
+      if (widget.companyData != null) {
+        fillfeilds();
+      }
     });
   }
 
@@ -70,7 +91,6 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
     if (widget.companyData == null) return;
 
     final provider = context.read<CompanyCreationProvider>();
-
     compnyNameController.text = widget.companyData!.companyName ?? "";
     displayNameController.text = widget.companyData!.mailingName ?? "";
     address1Controller.text = widget.companyData!.address1 ?? "";
@@ -305,6 +325,7 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
                       hint: appLocalizations.company_info_widget_enter_address,
                       hintTextStyle: context.textStyle.s12.silverGray.w300,
                       controller: address2Controller,
+                      onChange: provider.updateAddress2,
                       backgroundColor: ColorResources.lightGray,
                       inputType: TextInputType.emailAddress,
                       borderRadius: 12,
@@ -322,6 +343,7 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
                       hint: appLocalizations.company_info_widget_enter_address,
                       hintTextStyle: context.textStyle.s12.silverGray.w300,
                       controller: address3Controller,
+                      onChange: provider.updateAddress3,
                       backgroundColor: ColorResources.lightGray,
                       inputType: TextInputType.emailAddress,
                       borderRadius: 12,
@@ -440,8 +462,8 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
                             companyName: compnyNameController.text,
                             displayName: displayNameController.text,
                             address1: address1Controller.text,
-                            address2: address2Controller.text,
-                            address3: address3Controller.text,
+                             address2: address2Controller.text,
+                              address3: address3Controller.text,
                             pincode: pincodeController.text,
                             countryId:
                                 provider.selectedCountry?.id.toString() ?? '',

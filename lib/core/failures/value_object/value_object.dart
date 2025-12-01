@@ -205,9 +205,27 @@ class Address1 extends ValueObjet<String> {
   @override
   final Either<ValueFailure<String>, String> value;
 
-  factory Address1(String value) => Address1._(validateAddress(value));
+  factory Address1(String value) => Address1._(validateAddress1(value));
 
   const Address1._(this.value);
+}
+
+class Address2 extends ValueObjet<String> {
+  @override
+  final Either<ValueFailure<String>, String> value;
+
+  factory Address2(String value) => Address2._(validateAddress2(value));
+
+  const Address2._(this.value);
+}
+
+class Address3 extends ValueObjet<String> {
+  @override
+  final Either<ValueFailure<String>, String> value;
+
+  factory Address3(String value) => Address3._(validateAddress3(value));
+
+  const Address3._(this.value);
 }
 
 class Pincode extends ValueObjet<String> {
