@@ -101,135 +101,177 @@ class _CompanyUserMappingScreenState extends State<CompanyUserMappingScreen> {
                 (user.name ?? '').toLowerCase().contains(query);
           }).toList();
 
-          return CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: Column(
-                  children: [
-                    h12,
-                    Text(
-                      widget.name,
-                      style: context.textStyle.s12.w500.indigoBlue.roboto,
-                    ),
-                    h4,
-                    Text(
-                      widget.companyName,
-                      style: context.textStyle.s10.w400.dustyBlue.roboto,
-                    ),
-                    h12,
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: TextField(
-                        controller: _searchController,
-                        decoration: InputDecoration(
-                          hintText:
-                              appLocalization.manage_user_screen_search_user,
-                          hintStyle:
-                              context.textStyle.s12.w300.bluishGray.roboto,
-                          fillColor: ColorResources.cloudGray,
-                          filled: true,
-                          suffixIcon: const Icon(
-                            Icons.search,
-                            color: ColorResources.bluishGray,
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(
-                            vertical: 0,
-                            horizontal: 12,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide.none,
+          return Stack(
+            children: [
+              CustomScrollView(
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: Column(
+                      children: [
+                        h12,
+                        Text(
+                          widget.name,
+                          style: context.textStyle.s12.w500.indigoBlue.roboto,
+                        ),
+                        h4,
+                        Text(
+                          widget.companyName,
+                          style: context.textStyle.s10.w400.dustyBlue.roboto,
+                        ),
+                        h12,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: TextField(
+                            controller: _searchController,
+                            decoration: InputDecoration(
+                              hintText: appLocalization
+                                  .manage_user_screen_search_user,
+                              hintStyle:
+                                  context.textStyle.s12.w300.bluishGray.roboto,
+                              fillColor: ColorResources.cloudGray,
+                              filled: true,
+                              suffixIcon: const Icon(
+                                Icons.search,
+                                color: ColorResources.bluishGray,
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                vertical: 0,
+                                horizontal: 12,
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                            onChanged: (_) => setState(() {}),
                           ),
                         ),
-                        onChanged: (_) => setState(() {}),
-                      ),
-                    ),
-                    h5,
-                    Divider(thickness: 1, color: Colors.grey.shade200),
-                  ],
-                ),
-              ),
-              if (filteredUsers.isEmpty)
-                SliverFillRemaining(
-                  hasScrollBody: false,
-                  child: Center(
-                    child: Text(
-                      "No users available",
-                      style: context.textStyle.s14.w500.bluishGray.roboto,
+                        h5,
+                        Divider(thickness: 1, color: Colors.grey.shade200),
+                      ],
                     ),
                   ),
-                ),
-              if (filteredUsers.isNotEmpty)
-                SliverList(
-                  delegate: SliverChildBuilderDelegate((context, index) {
-                    final user = filteredUsers[index];
-                    final isSelected = selectedUserIds.contains(user.id);
-
-                    return AddCompanyWidget(
-                      title: user.name ?? "",
-                      subtitle: user.email ?? "",
-                      isSelected: isSelected,
-                      onTap: () {
-                        setState(() {
-                          if (isSelected) {
-                            selectedUserIds.remove(user.id);
-                            selectedUserList.removeWhere(
-                              (e) => e.userId == user.id,
-                            );
-                          } else {
-                            selectedUserIds.add(user.id!);
-                            selectedUserList.add(UserList(userId: user.id!));
-                          }
-                        });
-                        Logger.logSuccess(
-                          "Selected User IDs: ${selectedUserList.map((e) => e.userId).toList()}",
-                        );
-                      },
-                    );
-                  }, childCount: filteredUsers.length),
-                ),
-              if (filteredUsers.isNotEmpty)
-                SliverFillRemaining(
-                  hasScrollBody: false,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: context.getSize.width / 4,
-                          vertical: 12,
+                  if (filteredUsers.isEmpty)
+                    SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: Center(
+                        child: Text(
+                          "No users available",
+                          style: context.textStyle.s14.w500.bluishGray.roboto,
                         ),
-                        child: CustomButton(
-                          borderRadius: BorderRadius.circular(16),
-                          onTap: () async {
-                            final pref = sl<SharedPreferences>();
-                            await pref.setStringList(
-                              'company_users_${widget.companyId}',
-                              selectedUserList
-                                  .map((e) => e.userId.toString())
-                                  .toList(),
-                            );
+                      ),
+                    ),
+                  if (filteredUsers.isNotEmpty)
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate((context, index) {
+                        final user = filteredUsers[index];
+                        final isSelected = selectedUserIds.contains(user.id);
 
-                            provider
-                                .createCompanyMapping(
-                                  context: context,
-                                  companyId: widget.companyId,
-                                  userList: selectedUserList,
-                                )
-                                .then(
-                                  (_) => WidgetsBinding.instance
-                                      .addPostFrameCallback(
-                                        (_) => context.pop(),
-                                      ),
+                        return AddCompanyWidget(
+                          title: user.name ?? "",
+                          subtitle: user.email ?? "",
+                          isSelected: isSelected,
+                          onTap: () {
+                            setState(() {
+                              if (isSelected) {
+                                selectedUserIds.remove(user.id);
+                                selectedUserList.removeWhere(
+                                  (e) => e.userId == user.id,
                                 );
+                              } else {
+                                selectedUserIds.add(user.id!);
+                                selectedUserList.add(
+                                  UserList(userId: user.id!),
+                                );
+                              }
+                            });
+                            Logger.logSuccess(
+                              "Selected User IDs: ${selectedUserList.map((e) => e.userId).toList()}",
+                            );
                           },
-                          buttonText: appLocalization.save,
-                          isborderEnable: false,
-                        ),
-                      ),
-                    ],
+                        );
+                      }, childCount: filteredUsers.length),
+                    ),
+                  // if (filteredUsers.isNotEmpty)
+                  //   SliverFillRemaining(
+                  //     hasScrollBody: false,
+                  //     child: Column(
+                  //       mainAxisAlignment: MainAxisAlignment.end,
+                  //       children: [
+                  //         Padding(
+                  //           padding: EdgeInsets.symmetric(
+                  //             horizontal: context.getSize.width / 4,
+                  //             vertical: 12,
+                  //           ),
+                  //           child: CustomButton(
+                  //             borderRadius: BorderRadius.circular(16),
+                  //             onTap: () async {
+                  //               final pref = sl<SharedPreferences>();
+                  //               await pref.setStringList(
+                  //                 'company_users_${widget.companyId}',
+                  //                 selectedUserList
+                  //                     .map((e) => e.userId.toString())
+                  //                     .toList(),
+                  //               );
+
+                  //               provider
+                  //                   .createCompanyMapping(
+                  //                     context: context,
+                  //                     companyId: widget.companyId,
+                  //                     userList: selectedUserList,
+                  //                   )
+                  //                   .then(
+                  //                     (_) => WidgetsBinding.instance
+                  //                         .addPostFrameCallback(
+                  //                           (_) => context.pop(),
+                  //                         ),
+                  //                   );
+                  //             },
+                  //             buttonText: appLocalization.save,
+                  //             isborderEnable: false,
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: context.getSize.width / 4,
+                      vertical: 12,
+                    ),
+                    child: CustomButton(
+                      borderRadius: BorderRadius.circular(16),
+                      onTap: () async {
+                        final pref = sl<SharedPreferences>();
+                        await pref.setStringList(
+                          'company_users_${widget.companyId}',
+                          selectedUserList
+                              .map((e) => e.userId.toString())
+                              .toList(),
+                        );
+
+                        provider
+                            .createCompanyMapping(
+                              context: context,
+                              companyId: widget.companyId,
+                              userList: selectedUserList,
+                            )
+                            .then(
+                              (_) => WidgetsBinding.instance
+                                  .addPostFrameCallback((_) => context.pop()),
+                            );
+                      },
+                      buttonText: appLocalization.save,
+                      isborderEnable: false,
+                    ),
                   ),
-                ),
+                ],
+              ),
             ],
           );
         },

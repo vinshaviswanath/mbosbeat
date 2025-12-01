@@ -297,6 +297,31 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 16),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: CircleAvatar(
+                          backgroundColor: ColorResources.bluishGray.withValues(
+                            alpha: 0.15,
+                          ),
+                          radius: 12,
+                          child: const Icon(
+                            Icons.close,
+                            size: 12,
+                            color: ColorResources.bluishGray,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                h8,
                 OptionItem(
                   index: 0,
                   selectedIndex: optionIndex,

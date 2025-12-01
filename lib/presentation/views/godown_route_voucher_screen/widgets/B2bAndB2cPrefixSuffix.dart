@@ -3,6 +3,7 @@ import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/voucher_numbering_response.dart';
 import 'package:mpos_beat/domain/request/create_voucher_numbering_params.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
+import 'package:mpos_beat/presentation/views/transactions/sales_return/sales_return.dart';
 
 class B2bAndB2cPrefixSuffix extends StatefulWidget {
   final VoucherNumberingModel data;
@@ -116,12 +117,17 @@ class _B2bAndB2cPrefixSuffixState extends State<B2bAndB2cPrefixSuffix> {
         return Column(
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: widget.data.b2BPrefix == null
+                  ? .end
+                  : MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "B2B",
-                  style: context.textStyle.s10.w400.indigoBlue.roboto,
-                ),
+                if (widget.data.b2BPrefix == null) ...[
+                  Text(
+                    "B2B",
+                    style: context.textStyle.s10.w400.indigoBlue.roboto,
+                  ),
+                ],
+                w4,
                 GestureDetector(
                   onTap: () {
                     CustomDialog.showBottomCustomDialog(
@@ -178,7 +184,7 @@ class _B2bAndB2cPrefixSuffixState extends State<B2bAndB2cPrefixSuffix> {
                                         h12,
 
                                         Text(
-                                          "Sales Order B2B:",
+                                          widget.data.voucherMenuName ?? '',
                                           style: context
                                               .textStyle
                                               .s12
@@ -300,18 +306,22 @@ class _B2bAndB2cPrefixSuffixState extends State<B2bAndB2cPrefixSuffix> {
                                                     .keyboard_arrow_down_rounded,
                                               ),
                                               items: [
-                                                DropdownMenuItem(
-                                                  value: "B2B",
-                                                  child: Text(
-                                                    "B2B",
-                                                    style: context
-                                                        .textStyle
-                                                        .s11
-                                                        .w400
-                                                        .bluishGray
-                                                        .roboto,
+                                                if (prefixController
+                                                    .text
+                                                    .isNotEmpty) ...[
+                                                  DropdownMenuItem(
+                                                    value: "B2B",
+                                                    child: Text(
+                                                      "B2B",
+                                                      style: context
+                                                          .textStyle
+                                                          .s11
+                                                          .w400
+                                                          .bluishGray
+                                                          .roboto,
+                                                    ),
                                                   ),
-                                                ),
+                                                ],
                                                 DropdownMenuItem(
                                                   value: "B2C",
                                                   child: Text(
@@ -661,7 +671,40 @@ class _B2bAndB2cPrefixSuffixState extends State<B2bAndB2cPrefixSuffix> {
                                                         updatedVoucher,
                                                       );
                                                   if (!mounted) return;
-                                                  Navigator.pop(context);
+                                                  //New
+                                                  provider
+                                                      .createVoucherNumbering(
+                                                        context: context,
+                                                        companyId:
+                                                            provider
+                                                                .selectedCompany
+                                                                ?.id ??
+                                                            0,
+                                                        voucherModeId:
+                                                            provider.isGodown
+                                                            ? provider
+                                                                      .selectedVehicle
+                                                                      ?.id ??
+                                                                  0
+                                                            : provider
+                                                                      .selectedRoute
+                                                                      ?.id ??
+                                                                  0,
+                                                        voucherNumbers:
+                                                            provider
+                                                                .voucherNumberList ??
+                                                            [],
+                                                      )
+                                                      .then((value) {
+                                                        WidgetsBinding.instance
+                                                            .addPostFrameCallback(
+                                                              (timeStamp) {
+                                                                Navigator.pop(
+                                                                  context,
+                                                                );
+                                                              },
+                                                            );
+                                                      });
                                                 }
                                               },
                                             ),
@@ -703,51 +746,53 @@ class _B2bAndB2cPrefixSuffixState extends State<B2bAndB2cPrefixSuffix> {
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(right: 32),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        "Prefix: ",
-                        style: context.textStyle.s12.w400.bluishGray.roboto,
-                      ),
-                      Text(
-                        "${widget.data.b2BPrefix}",
-                        style: context.textStyle.s12.w400.bluishGray.roboto,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        "Suffix: ",
-                        style: context.textStyle.s12.w400.bluishGray.roboto,
-                      ),
-                      Text(
-                        "${widget.data.b2BSuffix}",
-                        style: context.textStyle.s12.w400.bluishGray.roboto,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        "Width: ",
-                        style: context.textStyle.s12.w400.bluishGray.roboto,
-                      ),
-                      Text(
-                        "${widget.data.b2BWidth}",
-                        style: context.textStyle.s12.w400.bluishGray.roboto,
-                      ),
-                    ],
-                  ),
-                ],
+            if (widget.data.b2BPrefix == null) ...[
+              Padding(
+                padding: const EdgeInsets.only(right: 32),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "Prefix: ",
+                          style: context.textStyle.s12.w400.bluishGray.roboto,
+                        ),
+                        Text(
+                          "${widget.data.b2BPrefix}",
+                          style: context.textStyle.s12.w400.bluishGray.roboto,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "Suffix: ",
+                          style: context.textStyle.s12.w400.bluishGray.roboto,
+                        ),
+                        Text(
+                          "${widget.data.b2BSuffix}",
+                          style: context.textStyle.s12.w400.bluishGray.roboto,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "Width: ",
+                          style: context.textStyle.s12.w400.bluishGray.roboto,
+                        ),
+                        Text(
+                          "${widget.data.b2BWidth}",
+                          style: context.textStyle.s12.w400.bluishGray.roboto,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-            h12,
+              h12,
+            ],
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

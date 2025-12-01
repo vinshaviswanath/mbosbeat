@@ -101,8 +101,18 @@ class UserManagementProvider with ChangeNotifier {
     notifyListeners();
   }
 
+   void resetVisibilityPassword() {
+    _isVisiblePassword = false;
+    notifyListeners();
+  }
+
   void toggleVisibilityConfirmPassword() {
     _isVisibleConfirmPassword = !_isVisibleConfirmPassword;
+    notifyListeners();
+  }
+
+     void resetVisibilityConfirmPassword() {
+    _isVisibleConfirmPassword = false;
     notifyListeners();
   }
 
@@ -136,12 +146,13 @@ class UserManagementProvider with ChangeNotifier {
   }
 
   bool validateUserCreationForm() {
-    return _userName.isValid() &&
-        _phone.isValid() &&
-        _email.isValid() &&
-        _password.isValid() &&
-        _designation.isValid() &&
-        _reportingTo.isValid();
+    return _userName.isValid();
+    //  &&
+    //     _phone.isValid() &&
+    //     _email.isValid() &&
+    //     _password.isValid() &&
+    //     _designation.isValid() &&
+    //     _reportingTo.isValid();
   }
 
   void updateUser(String input) {
@@ -179,15 +190,37 @@ class UserManagementProvider with ChangeNotifier {
     notifyListeners();
   }
 
+UserDesignationList? selectedDesignation;
+  UserMasterList? selectedReportingTo;
+
+  void updateSelectedDesignation(UserDesignationList? value) {
+    selectedDesignation = value;
+    notifyListeners();
+  }
+
+  void updateSelectedReportingTo(UserMasterList? value) {
+    selectedReportingTo = value;
+    notifyListeners();
+  }
+
+  void selectLastAddedDesignation() {
+  if (_designationList?.userDesignationList.isNotEmpty ?? false) {
+    selectedDesignation =
+        _designationList!.userDesignationList.last;
+    notifyListeners();
+  }
+}
+
+
   void resetUserCreateForm() {
-    _userName = UserName('');
-    _phone = PhoneNumber('');
-    _password = Password('');
-    _whatsAppNumber = WhatsAppNumber('');
-    _email = EmailAddress('');
-    _designation = Designation('');
-    _reportingTo = ReportingTo('');
-    userCreateAutovalidateMode = AutovalidateMode.disabled;
+    selectedDesignation = null;
+    selectedReportingTo = null;
+
+    updateUser('');
+    updatePhone('');
+    updateWhatsAppNumber('');
+    updateEmail('');
+    updatePassword('');
     notifyListeners();
   }
 
@@ -382,7 +415,8 @@ class UserManagementProvider with ChangeNotifier {
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           ),
         );
-        getDesignationList(context);
+       await getDesignationList(context);
+       selectLastAddedDesignation();
         notifyListeners();
       },
     );
@@ -569,6 +603,7 @@ class UserManagementProvider with ChangeNotifier {
     required int active,
   }) async {
     setLoading(true);
+
     final result = await iUserManagementFacad.createUser(
       BaseParams(
         data: UserCreationParams(
@@ -590,39 +625,32 @@ class UserManagementProvider with ChangeNotifier {
     result.fold(
       (failure) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(failure.errorMsg, textAlign: TextAlign.center),
-            behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          ),
+          SnackBar(content: Text(failure.errorMsg)),
         );
       },
       (response) async {
-        _designationResponse = response;
-        Logger.logSuccess("User created successfull : ${response.toJson()}");
+        if (response.status == 0) {
+          // ❗CLEAR ONLY ON SUCCESS
+          resetUserCreateForm();
+        }
+
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text("${response.message}", textAlign: TextAlign.center),
-            behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          ),
+          SnackBar(content: Text(response.message ?? '')),
         );
-        getAllUsersList(context);
+
         if (response.status != 0) {
           context.pop();
         }
+
+        getAllUsersList(context);
         notifyListeners();
       },
     );
+
     setLoading(false);
-    return _designationResponse;
+    return null;
   }
+
 
   //========================= Users List =========================
 

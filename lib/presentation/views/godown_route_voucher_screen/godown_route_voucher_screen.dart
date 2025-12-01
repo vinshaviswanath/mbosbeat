@@ -52,6 +52,12 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
   }
 
   @override
+  void dispose() {
+    Provider.of<CompanyCreationProvider>(context).resetSelections();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final appLocalizations = context.l10n;
     // final pref = sl<SharedPreferences>();
@@ -59,129 +65,206 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
 
     return Consumer<CompanyCreationProvider>(
       builder: (context, provider, _) {
-        return Scaffold(
-          resizeToAvoidBottomInset: false,
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            surfaceTintColor: Colors.transparent,
-            automaticallyImplyLeading: false,
-            elevation: 0,
-            centerTitle: true,
-            title: Text(
-              "Voucher Type",
-              style: context.textStyle.s22.bold.indigoBlue.roboto,
+        return PopScope(
+          canPop: true,
+          onPopInvokedWithResult: (didPop, result) async {
+            if (didPop) {
+              provider.resetSelections();
+            }
+            return;
+          },
+          child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              surfaceTintColor: Colors.transparent,
+              automaticallyImplyLeading: false,
+              elevation: 0,
+              centerTitle: true,
+              title: Text(
+                "Voucher Type",
+                style: context.textStyle.s22.bold.indigoBlue.roboto,
+              ),
             ),
-          ),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // 🔹 Switch Row
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 14,
-                    vertical: 14,
-                  ),
-                  decoration: BoxDecoration(
-                    color: ColorResources.indigoBlue.withValues(alpha: 0.05),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        appLocalizations.popover_body_godown_wise,
-                        style: context.textStyle.s12.bold.roboto.copyWith(
-                          color: ColorResources.indigoBlue.withValues(
-                            alpha: !provider.isGodown ? 0.5 : 1,
-                          ),
-                        ),
-                      ),
-                      SelectionSwitch(
-                        value: !provider.isGodown,
-                        onChanged: (value) {
-                          provider.toggleVoucher(context);
-                        },
-                      ),
-                      Text(
-                        appLocalizations.popover_body_route_wise,
-                        style: context.textStyle.s12.bold.roboto.copyWith(
-                          color: ColorResources.indigoBlue.withValues(
-                            alpha: provider.isGodown ? 0.5 : 1,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 20),
-
-                // 🔹 Dropdown label & edit
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      provider.isGodown
-                          ? appLocalizations.godown_route_voucher_godown_name
-                          : appLocalizations.godown_route_voucher_route_name,
-                      style: context.textStyle.s12.w400.bluishGray.roboto,
+            body: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // 🔹 Switch Row
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 14,
+                      vertical: 14,
                     ),
-                    if ((provider.isGodown &&
-                            (provider.selectedVehicle != null)) ||
-                        (!provider.isGodown &&
-                            (provider.selectedRoute != null)))
-                      GestureDetector(
-                        onTap: () {
-                          CustomDialog.showBottomCustomDialog(
-                            chid: provider.isGodown
-                                ? AddVehicle(
-                                    isEdit: true,
-                                    details: provider.selectedVehicle,
-                                  )
-                                : AddRoute(
-                                    isEdit: true,
-                                    details: provider.selectedRoute,
-                                  ),
-                          );
-                        },
-                        child: CircleAvatar(
-                          backgroundColor: ColorResources.indigoBlue.withValues(
-                            alpha: 0.2,
-                          ),
-                          radius: 12,
-                          child: SvgPicture.asset(
-                            AppAssets.edit,
-                            height: 8,
-                            colorFilter: const ColorFilter.mode(
-                              ColorResources.white,
-                              BlendMode.srcIn,
+                    decoration: BoxDecoration(
+                      color: ColorResources.indigoBlue.withValues(alpha: 0.05),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          appLocalizations.popover_body_godown_wise,
+                          style: context.textStyle.s12.bold.roboto.copyWith(
+                            color: ColorResources.indigoBlue.withValues(
+                              alpha: !provider.isGodown ? 0.5 : 1,
                             ),
                           ),
                         ),
+                        SelectionSwitch(
+                          value: !provider.isGodown,
+                          onChanged: (value) {
+                            provider.toggleVoucher(context);
+                          },
+                        ),
+                        Text(
+                          appLocalizations.popover_body_route_wise,
+                          style: context.textStyle.s12.bold.roboto.copyWith(
+                            color: ColorResources.indigoBlue.withValues(
+                              alpha: provider.isGodown ? 0.5 : 1,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  // 🔹 Dropdown label & edit
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        provider.isGodown
+                            ? appLocalizations.godown_route_voucher_godown_name
+                            : appLocalizations.godown_route_voucher_route_name,
+                        style: context.textStyle.s12.w400.bluishGray.roboto,
                       ),
-                  ],
-                ),
-                const SizedBox(height: 8),
+                      if ((provider.isGodown &&
+                              (provider.selectedVehicle != null)) ||
+                          (!provider.isGodown &&
+                              (provider.selectedRoute != null)))
+                        GestureDetector(
+                          onTap: () {
+                            CustomDialog.showBottomCustomDialog(
+                              chid: provider.isGodown
+                                  ? AddVehicle(
+                                      isEdit: true,
+                                      details: provider.selectedVehicle,
+                                    )
+                                  : AddRoute(
+                                      isEdit: true,
+                                      details: provider.selectedRoute,
+                                    ),
+                            );
+                          },
+                          child: CircleAvatar(
+                            backgroundColor: ColorResources.indigoBlue
+                                .withValues(alpha: 0.2),
+                            radius: 12,
+                            child: SvgPicture.asset(
+                              AppAssets.edit,
+                              height: 8,
+                              colorFilter: const ColorFilter.mode(
+                                ColorResources.white,
+                                BlendMode.srcIn,
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
 
-                // 🔹 Dropdown
-                Row(
-                  children: [
-                    Expanded(
-                      child: StreamBuilder(
-                        key: ValueKey(provider.isGodown),
-                        stream: provider.isGodown
-                            ? provider.godownStream
-                            : provider.routeStream,
-                        builder: (context, snapshot) {
-                          final connectionState = snapshot.connectionState;
-                          final dataList = snapshot.data;
+                  // 🔹 Dropdown
+                  Row(
+                    children: [
+                      Expanded(
+                        child: StreamBuilder(
+                          key: ValueKey(provider.isGodown),
+                          stream: provider.isGodown
+                              ? provider.godownStream
+                              : provider.routeStream,
+                          builder: (context, snapshot) {
+                            final connectionState = snapshot.connectionState;
+                            final dataList = snapshot.data;
 
-                          // CASE 1: Stream not yet ready (null data, waiting)
-                          if (connectionState == ConnectionState.waiting &&
-                              dataList == null) {
-                            // You can show nothing or a placeholder dropdown
+                            // CASE 1: Stream not yet ready (null data, waiting)
+                            if (connectionState == ConnectionState.waiting &&
+                                dataList == null) {
+                              // You can show nothing or a placeholder dropdown
+                              return CustomDropdown(
+                                hintText: provider.isGodown
+                                    ? appLocalizations
+                                          .godown_route_voucher_enter_godown_name
+                                    : appLocalizations
+                                          .godown_route_voucher_enter_route_name,
+                                value: null,
+                                items: const [],
+                                onChanged: (_) {},
+                              );
+                            }
+
+                            // CASE 2: Once data arrives (even later)
+                            if (dataList != null &&
+                                (dataList as List).isNotEmpty) {
+                              final items = provider.isGodown
+                                  ? (dataList as List<VehicleList>)
+                                        .map((e) => e.name ?? "")
+                                        .toList()
+                                  : (dataList as List<RouteList>)
+                                        .map((e) => e.routeName ?? "")
+                                        .toList();
+
+                              final selectedValue = provider.isGodown
+                                  ? provider.selectedVehicle?.name
+                                  : provider.selectedRoute?.routeName;
+
+                              return CustomDropdown(
+                                hintText: provider.isGodown
+                                    ? appLocalizations
+                                          .godown_route_voucher_enter_godown_name
+                                    : appLocalizations
+                                          .godown_route_voucher_enter_route_name,
+                                value: selectedValue,
+                                items: items,
+                                onChanged: (value) async {
+                                  if (provider.isGodown) {
+                                    final selected =
+                                        (dataList as List<VehicleList>)
+                                            .firstWhere((e) => e.name == value);
+                                    provider.setSelectedVehicle(selected);
+                                    await provider.getVoucherNumberingGodown(
+                                      context: context,
+                                      companyId:
+                                          provider.selectedCompany?.id
+                                              .toString() ??
+                                          '',
+                                      voucherModeId: selected.id ?? 0,
+                                    );
+                                  } else {
+                                    final selected =
+                                        (dataList as List<RouteList>)
+                                            .firstWhere(
+                                              (e) => e.routeName == value,
+                                            );
+                                    provider.setSelectedRoute(selected);
+                                    await provider.getVoucherNumberingRoute(
+                                      context: context,
+                                      companyId:
+                                          provider.selectedCompany?.id
+                                              .toString() ??
+                                          '',
+                                      voucherModeId: selected.id ?? 0,
+                                    );
+                                  }
+                                },
+                              );
+                            }
+
+                            // CASE 3: Empty or null list after stream completes
                             return CustomDropdown(
                               hintText: provider.isGodown
                                   ? appLocalizations
@@ -192,219 +275,172 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
                               items: const [],
                               onChanged: (_) {},
                             );
-                          }
+                          },
+                        ),
+                      ),
 
-                          // CASE 2: Once data arrives (even later)
-                          if (dataList != null &&
-                              (dataList as List).isNotEmpty) {
-                            final items = provider.isGodown
-                                ? (dataList as List<VehicleList>)
-                                      .map((e) => e.name ?? "")
-                                      .toList()
-                                : (dataList as List<RouteList>)
-                                      .map((e) => e.routeName ?? "")
-                                      .toList();
-
-                            final selectedValue = provider.isGodown
-                                ? provider.selectedVehicle?.name
-                                : provider.selectedRoute?.routeName;
-
-                            return CustomDropdown(
-                              hintText: provider.isGodown
-                                  ? appLocalizations
-                                        .godown_route_voucher_enter_godown_name
-                                  : appLocalizations
-                                        .godown_route_voucher_enter_route_name,
-                              value: selectedValue,
-                              items: items,
-                              onChanged: (value) async {
-                                if (provider.isGodown) {
-                                  final selected =
-                                      (dataList as List<VehicleList>)
-                                          .firstWhere((e) => e.name == value);
-                                  provider.setSelectedVehicle(selected);
-                                  await provider.getVoucherNumberingGodown(
-                                    context: context,
-                                    companyId:
-                                        provider.selectedCompany?.id
-                                            .toString() ??
-                                        '',
-                                    voucherModeId: selected.id ?? 0,
-                                  );
-                                } else {
-                                  final selected = (dataList as List<RouteList>)
-                                      .firstWhere((e) => e.routeName == value);
-                                  provider.setSelectedRoute(selected);
-                                  await provider.getVoucherNumberingRoute(
-                                    context: context,
-                                    companyId:
-                                        provider.selectedCompany?.id
-                                            .toString() ??
-                                        '',
-                                    voucherModeId: selected.id ?? 0,
-                                  );
-                                }
-                              },
-                            );
-                          }
-
-                          // CASE 3: Empty or null list after stream completes
-                          return CustomDropdown(
-                            hintText: provider.isGodown
-                                ? appLocalizations
-                                      .godown_route_voucher_enter_godown_name
-                                : appLocalizations
-                                      .godown_route_voucher_enter_route_name,
-                            value: null,
-                            items: const [],
-                            onChanged: (_) {},
+                      const SizedBox(width: 8),
+                      GestureDetector(
+                        onTap: () {
+                          CustomDialog.showBottomCustomDialog(
+                            chid: provider.isGodown
+                                ? const AddVehicle()
+                                : const AddRoute(),
                           );
                         },
-                      ),
-                    ),
-
-                    const SizedBox(width: 8),
-                    GestureDetector(
-                      onTap: () {
-                        CustomDialog.showBottomCustomDialog(
-                          chid: provider.isGodown
-                              ? const AddVehicle()
-                              : const AddRoute(),
-                        );
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          color: ColorResources.lightGray.withValues(
-                            alpha: 0.6,
+                        child: Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            color: ColorResources.lightGray.withValues(
+                              alpha: 0.6,
+                            ),
                           ),
-                        ),
-                        child: const CircleAvatar(
-                          backgroundColor: ColorResources.indigoBlue,
-                          radius: 12,
-                          child: Icon(
-                            Icons.add,
-                            color: ColorResources.white,
-                            size: 24,
+                          child: const CircleAvatar(
+                            backgroundColor: ColorResources.indigoBlue,
+                            radius: 12,
+                            child: Icon(
+                              Icons.add,
+                              color: ColorResources.white,
+                              size: 24,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 16),
-                Text(
-                  "Voucher Series Settings:",
-                  style: context.textStyle.s14.w500.bluishGray.roboto.copyWith(
-                    decoration: TextDecoration.underline,
-                    decorationColor: context.textStyle.dustyBlue.color,
+                    ],
                   ),
-                ),
-                const SizedBox(height: 8),
 
-                // 🔹 Voucher List Stream
-                Expanded(
-                  child: StreamBuilder<List<VoucherNumberingModel>>(
-                    key: ValueKey(provider.isGodown),
-                    stream: provider.isGodown
-                        ? provider.voucherNumberingGodownStream
-                        : provider.voucherNumberingRouteStream,
-                    builder: (context, snapshot) {
-                      // if (snapshot.connectionState == ConnectionState.waiting) {
-                      //   return const Center(child: CircularProgressIndicator());
-                      // }
+                  const SizedBox(height: 16),
+                  Text(
+                    "Voucher Series Settings:",
+                    style: context.textStyle.s14.w500.bluishGray.roboto
+                        .copyWith(
+                          decoration: TextDecoration.underline,
+                          decorationColor: context.textStyle.dustyBlue.color,
+                        ),
+                  ),
+                  const SizedBox(height: 8),
 
-                      if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                        return Center(
-                          child: Text(
-                            "No vouchers available",
-                            style: context.textStyle.s12.w500.dustyBlue.roboto,
-                          ),
-                        );
-                      }
+                  // 🔹 Voucher List Stream
+                  Expanded(
+                    child: StreamBuilder<List<VoucherNumberingModel>>(
+                      key: ValueKey(provider.isGodown),
+                      stream: provider.isGodown
+                          ? provider.voucherNumberingGodownStream
+                          : provider.voucherNumberingRouteStream,
+                      builder: (context, snapshot) {
+                        // if (snapshot.connectionState == ConnectionState.waiting) {
+                        //   return const Center(child: CircularProgressIndicator());
+                        // }
 
-                      final voucherData = snapshot.data!;
-                      return ListView.builder(
-                        padding: const EdgeInsets.only(top: 8, bottom: 16),
-                        itemCount: voucherData.length,
-                        itemBuilder: (context, index) {
-                          final data = voucherData[index];
-                          final isExpanded = expandedIndex == index;
+                        if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    AppAssets.noData,
+                                    height: context.getSize.height * 0.27,
+                                  ),
+                                  Text(
+                                    "No vouchers available",
+                                    style: context
+                                        .textStyle
+                                        .s12
+                                        .w500
+                                        .dustyBlue
+                                        .roboto,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          );
+                        }
 
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4),
-                            child: CustomDropdownWidget(
-                              isExpand: isExpanded,
-                              title: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    expandedIndex = isExpanded ? -1 : index;
-                                  });
-                                },
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                        final voucherData = snapshot.data!;
+                        return ListView.builder(
+                          padding: const EdgeInsets.only(top: 8, bottom: 16),
+                          itemCount: voucherData.length,
+                          itemBuilder: (context, index) {
+                            final data = voucherData[index];
+                            final isExpanded = expandedIndex == index;
+
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 4),
+                              child: CustomDropdownWidget(
+                                isExpand: isExpanded,
+                                title: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      expandedIndex = isExpanded ? -1 : index;
+                                    });
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        data.voucherMenuName ?? '',
+                                        style: context
+                                            .textStyle
+                                            .s12
+                                            .w400
+                                            .bluishGray
+                                            .roboto,
+                                      ),
+                                      Icon(
+                                        isExpanded
+                                            ? Icons.keyboard_arrow_up
+                                            : Icons.keyboard_arrow_down,
+                                        color: ColorResources.indigoBlue,
+                                        size: 24,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                child: Column(
                                   children: [
-                                    Text(
-                                      data.voucherMenuName ?? '',
-                                      style: context
-                                          .textStyle
-                                          .s12
-                                          .w400
-                                          .bluishGray
-                                          .roboto,
-                                    ),
-                                    Icon(
-                                      isExpanded
-                                          ? Icons.keyboard_arrow_up
-                                          : Icons.keyboard_arrow_down,
-                                      color: ColorResources.indigoBlue,
-                                      size: 24,
-                                    ),
+                                    if (data.hasB2B == 0) ...[
+                                      h16,
+                                      SingleCompanyPrefixSuffix(data: data),
+                                    ],
+                                    if (data.hasB2B == 1) ...[
+                                      h6,
+                                      B2bAndB2cPrefixSuffix(data: data),
+                                    ],
+                                    h16,
+                                    const CustomDivider(),
                                   ],
                                 ),
                               ),
-                              child: Column(
-                                children: [
-                                  if (data.hasB2B == 0) ...[
-                                    h16,
-                                    SingleCompanyPrefixSuffix(data: data),
-                                  ],
-                                  if (data.hasB2B == 1) ...[
-                                    h6,
-                                    B2bAndB2cPrefixSuffix(data: data),
-                                  ],
-                                  h16,
-                                  const CustomDivider(),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    },
+                            );
+                          },
+                        );
+                      },
+                    ),
                   ),
-                ),
 
-                // 🔹 Save Button
-                CustomButton(
-                  onTap: () {
-                    provider.createVoucherNumbering(
-                      context: context,
-                      companyId: provider.selectedCompany?.id ?? 0,
-                      voucherModeId: provider.isGodown
-                          ? provider.selectedVehicle?.id ?? 0
-                          : provider.selectedRoute?.id ?? 0,
-                      voucherNumbers: provider.voucherNumberList ?? [],
-                    );
-                    // context.pop();
-                  },
-                  buttonText: "Save",
-                  isborderEnable: false,
-                ),
-              ],
+                  // 🔹 Save Button
+                  CustomButton(
+                    onTap: () {
+                      // provider.createVoucherNumbering(
+                      //   context: context,
+                      //   companyId: provider.selectedCompany?.id ?? 0,
+                      //   voucherModeId: provider.isGodown
+                      //       ? provider.selectedVehicle?.id ?? 0
+                      //       : provider.selectedRoute?.id ?? 0,
+                      //   voucherNumbers: provider.voucherNumberList ?? [],
+                      // );
+                      context.pop();
+                    },
+                    buttonText: "Save",
+                    isborderEnable: false,
+                  ),
+                ],
+              ),
             ),
           ),
         );

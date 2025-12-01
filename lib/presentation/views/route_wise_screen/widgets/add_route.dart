@@ -191,7 +191,9 @@ class _AddRouteState extends State<AddRoute> {
                                   routeNameError = null;
                                   routeCodeError = null;
                                 });
-                                Navigator.pop(context);
+                                if (provider.routeResponse?.status == 1) {
+                                  Navigator.pop(context);
+                                }
                               });
                             });
                       } else {
@@ -209,10 +211,12 @@ class _AddRouteState extends State<AddRoute> {
                               routeName: routeName,
                             )
                             .then((_) {
-                              routeNameController.clear();
-                              routeCodeController.clear();
                               WidgetsBinding.instance.addPostFrameCallback((_) {
-                                Navigator.pop(context);
+                                if (provider.routeResponse?.status == 1) {
+                                  routeNameController.clear();
+                                  routeCodeController.clear();
+                                  Navigator.pop(context);
+                                }
                               });
                             });
                       }

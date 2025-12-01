@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mpos_beat/core/base/run_safely.dart';
 import 'package:mpos_beat/core/exception/custom_exception.dart';
@@ -43,8 +44,12 @@ class LoginImpl {
 
           // await appDb.into(appDb.users).insert(User.fromJson(response.data));
           // appDb.select(appDb.users).watch();
-          await appDb.userDao.insertUser(data.loginData!);
-          await appDb.userDao.printUsers();
+          if (data.loginData != null) {
+            await appDb.userDao.insertUser(data.loginData!);
+            await appDb.userDao.printUsers();
+          } else {
+            debugPrint("loginData is null — skipping DB insert");
+          }
           return data;
         }
 

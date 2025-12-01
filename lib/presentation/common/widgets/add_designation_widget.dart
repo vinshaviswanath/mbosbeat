@@ -124,6 +124,7 @@ class _AddDesignationWidgetState extends State<AddDesignationWidget> {
                             .then((_) {
                               widget.designationController.clear();
                               WidgetsBinding.instance.addPostFrameCallback((_) {
+                                provider.selectLastAddedDesignation();
                                 Navigator.pop(context);
                               });
                             });
@@ -143,7 +144,10 @@ class _AddDesignationWidgetState extends State<AddDesignationWidget> {
                         // });
 
                         provider.resetDesignation();
-                        widget.designationController.clear();
+                        if (provider.designationResponse?.status == 1) {
+                          widget.designationController.clear();
+                          // Navigator.pop(context);
+                        }
                         Navigator.pop(context);
                       },
                       borderRadius: BorderRadius.circular(16),
@@ -200,7 +204,9 @@ class _AddDesignationWidgetState extends State<AddDesignationWidget> {
                                   _submitted = false;
                                   designationError = null;
                                 });
-                                Navigator.pop(context);
+                                if (provider.designationResponse?.status == 1) {
+                                  Navigator.pop(context);
+                                }
                               });
                             });
                       },

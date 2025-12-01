@@ -22,6 +22,7 @@ class AppAssets {
   static const powerButton = "$basePngDir/powerButton.png";
   static const alreadyRegistered = "$basePngDir/already_registered.png";
   static const companyImage = "$basePngDir/companyImage.png";
+  static const noData = "$basePngDir/noData.png";
 
   //SVG
   static const refresh = "$baseDir/refresh.svg";

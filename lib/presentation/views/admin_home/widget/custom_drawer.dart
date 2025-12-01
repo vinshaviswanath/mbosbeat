@@ -1,8 +1,13 @@
+import 'dart:convert';
+
+import 'package:flutter/services.dart';
 import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/presentation/dialogs/logout_dialog.dart';
 import 'package:mpos_beat/presentation/views/admin_home/admin_dashboard.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:yaml/yaml.dart';
 
 class CustomDrawer extends StatefulWidget {
   final Widget child;
@@ -19,6 +24,7 @@ class _CustomDrawerState extends State<CustomDrawer>
   late AnimationController _controller;
   late Animation<double> _drawerAnimation;
   double _drawerWidth = 0.0;
+  String appVersion = "";
 
   @override
   void initState() {
@@ -27,6 +33,14 @@ class _CustomDrawerState extends State<CustomDrawer>
       vsync: this,
       duration: const Duration(milliseconds: 400),
     );
+    loadVersion();
+  }
+
+  Future<void> loadVersion() async {
+    final info = await PackageInfo.fromPlatform();
+    setState(() {
+      appVersion = "${info.version}+${info.buildNumber}";
+    });
   }
 
   @override
@@ -45,8 +59,14 @@ class _CustomDrawerState extends State<CustomDrawer>
       _isDrawerOpen = !_isDrawerOpen;
       if (_isDrawerOpen) {
         _controller.forward();
+        setState(() {
+          _isExpand = false;
+        });
       } else {
         _controller.reverse();
+        setState(() {
+          _isExpand = false;
+        });
       }
     });
   }
@@ -63,17 +83,29 @@ class _CustomDrawerState extends State<CustomDrawer>
       if (vx > 0) {
         _controller.fling(velocity: 1.0);
         _isDrawerOpen = true;
+        setState(() {
+          _isExpand = false;
+        });
       } else {
         _controller.fling(velocity: -1.0);
         _isDrawerOpen = false;
+        setState(() {
+          _isExpand = false;
+        });
       }
     } else {
       if (_controller.value > 0.5) {
         _controller.forward();
         _isDrawerOpen = true;
+        setState(() {
+          _isExpand = false;
+        });
       } else {
         _controller.reverse();
         _isDrawerOpen = false;
+        setState(() {
+          _isExpand = false;
+        });
       }
     }
     setState(() {});
@@ -122,7 +154,7 @@ class _CustomDrawerState extends State<CustomDrawer>
                 onTap: toggleDrawer,
                 onHorizontalDragUpdate: _onDragUpdate,
                 onHorizontalDragEnd: _onDragEnd,
-                child: Container(color: Colors.black. withValues(alpha: 0.3),),
+                child: Container(color: Colors.black.withValues(alpha: 0.3)),
               ),
 
             // Drawer itself
@@ -615,7 +647,21 @@ class _CustomDrawerState extends State<CustomDrawer>
                                     ],
                                   ),
                                 ),
-                                h16,
+                                h8,
+                                Row(
+                                  mainAxisAlignment: .center,
+                                  children: [
+                                    Text(
+                                      "Version: $appVersion",
+                                      style: context
+                                          .textStyle
+                                          .s10
+                                          .w300
+                                          .bluishGray
+                                          .bluishGray,
+                                    ),
+                                  ],
+                                ),
                               ],
                             ),
                           ],
