@@ -190,13 +190,19 @@ class _GodownWiseScreenState extends State<GodownWiseScreen> {
                                                   InkWell(
                                                     onTap: () =>
                                                         Navigator.pop(context),
-                                                    child: const CircleAvatar(
+                                                    child: CircleAvatar(
+                                                      backgroundColor:
+                                                          ColorResources
+                                                              .bluishGray
+                                                              .withValues(
+                                                                alpha: 0.15,
+                                                              ),
                                                       radius: 12,
-                                                      child: Icon(
+                                                      child: const Icon(
                                                         Icons.close,
-                                                        size: 16,
+                                                        size: 12,
                                                         color: ColorResources
-                                                            .dustyBlue,
+                                                            .bluishGray,
                                                       ),
                                                     ),
                                                   ),

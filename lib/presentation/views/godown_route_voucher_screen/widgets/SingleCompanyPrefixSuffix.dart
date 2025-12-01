@@ -208,6 +208,17 @@ class _SingleCompanyPrefixSuffixState extends State<SingleCompanyPrefixSuffix> {
                                       ),
                                       h12,
                                       Text(
+                                        widget.data.voucherMenuName ?? '',
+                                        style: context
+                                            .textStyle
+                                            .s12
+                                            .w400
+                                            .bluishGray
+                                            .roboto,
+                                      ),
+                                      h12,
+
+                                      Text(
                                         "Applicable From",
                                         style: context
                                             .textStyle
@@ -619,7 +630,34 @@ class _SingleCompanyPrefixSuffixState extends State<SingleCompanyPrefixSuffix> {
                                                       updatedVoucher,
                                                     );
                                                 if (!mounted) return;
-                                                Navigator.pop(context);
+                                                //New
+                                                provider.createVoucherNumbering(
+                                                  context: context,
+                                                  companyId:
+                                                      provider
+                                                          .selectedCompany
+                                                          ?.id ??
+                                                      0,
+                                                  voucherModeId:
+                                                      provider.isGodown
+                                                      ? provider
+                                                                .selectedVehicle
+                                                                ?.id ??
+                                                            0
+                                                      : provider
+                                                                .selectedRoute
+                                                                ?.id ??
+                                                            0,
+                                                  voucherNumbers:
+                                                      provider
+                                                          .voucherNumberList ??
+                                                      [],
+                                                ).then((value) {
+                                                  WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                                                    Navigator.pop(context);
+                                                  },);
+                                                },);
+                                                
                                               }
                                             },
                                           ),

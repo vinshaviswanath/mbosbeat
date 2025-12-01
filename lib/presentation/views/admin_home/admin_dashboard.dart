@@ -125,37 +125,37 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                             ColorResources.transparent,
 
                                         //<<<<<<<<<<<<<<<<<<<<<<<<<<< DO NOT CLEAR THIS >>>>>>>>>>>>>>>>>>>>>>>>>>
-                                        title: StreamBuilder(
-                                          stream: appDb.userDao
-                                              .watchLoggedInUser(),
-                                          builder: (context, snapshot) {
-                                            if (!snapshot.hasData) {
-                                              return const Text("");
-                                            }
+                                        // title: StreamBuilder(
+                                        //   stream: appDb.userDao
+                                        //       .watchLoggedInUser(),
+                                        //   builder: (context, snapshot) {
+                                        //     if (!snapshot.hasData) {
+                                        //       return const Text("");
+                                        //     }
 
-                                            final user = snapshot.data;
+                                        //     final user = snapshot.data;
 
-                                            return Text(
-                                              user?.companyName ?? "Company",
-                                              style: context
-                                                  .textStyle
-                                                  .s20
-                                                  .bold
-                                                  .white
-                                                  .roboto,
-                                            );
-                                          },
-                                        ),
-                                        //<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>
-                                        // title: Text(
-                                        //   appLocalization.admin_dashboard_home,
-                                        //   style: context
-                                        //       .textStyle
-                                        //       .s20
-                                        //       .bold
-                                        //       .white
-                                        //       .roboto,
+                                        //     return Text(
+                                        //       user?.companyName ?? "Company",
+                                        //       style: context
+                                        //           .textStyle
+                                        //           .s20
+                                        //           .bold
+                                        //           .white
+                                        //           .roboto,
+                                        //     );
+                                        //   },
                                         // ),
+                                        //<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>
+                                        title: Text(
+                                          appLocalization.admin_dashboard_home,
+                                          style: context
+                                              .textStyle
+                                              .s20
+                                              .bold
+                                              .white
+                                              .roboto,
+                                        ),
                                         centerTitle: true,
                                         automaticallyImplyLeading: false,
                                       ),
@@ -270,6 +270,27 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                         builder: (context, provider, _) {
                                           final selectedCompany =
                                               provider.selectedCompany;
+
+                                          final addressParts = [
+                                            selectedCompany?.address1,
+                                            selectedCompany?.address2,
+                                            selectedCompany?.address3,
+                                            // selectedCompany?.state,
+                                            // selectedCompany?.country,
+                                          ];
+
+                                          // Remove null or empty values
+                                          final filteredAddress = addressParts
+                                              .where(
+                                                (e) =>
+                                                    e != null &&
+                                                    e!.trim().isNotEmpty,
+                                              )
+                                              .toList();
+
+                                          // Join with commas
+                                          final addressText = filteredAddress
+                                              .join(", ");
                                           return Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
@@ -292,14 +313,21 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                           .white
                                                           .roboto,
                                                     ),
-                                                    Text(
-                                                      "${selectedCompany?.address1},${selectedCompany?.address2},${selectedCompany?.address3},${selectedCompany?.state},${selectedCompany?.country}",
-                                                      style: context
-                                                          .textStyle
-                                                          .s10
-                                                          .w400
-                                                          .white
-                                                          .roboto,
+                                                    SizedBox(
+                                                      width:
+                                                          context
+                                                              .getSize
+                                                              .width /
+                                                          1.4,
+                                                      child: Text(
+                                                        addressText,
+                                                        style: context
+                                                            .textStyle
+                                                            .s10
+                                                            .w400
+                                                            .white
+                                                            .roboto,
+                                                      ),
                                                     ),
                                                   ],
                                                 ),
@@ -427,7 +455,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                           ),
                                                                           h4,
                                                                           Text(
-                                                                            "${selectedCompany?.address1},${selectedCompany?.address2},${selectedCompany?.address3},${selectedCompany?.state},${selectedCompany?.country}",
+                                                                            addressText,
                                                                             style:
                                                                                 context.textStyle.s10.w400.dustyBlue.roboto,
                                                                           ),

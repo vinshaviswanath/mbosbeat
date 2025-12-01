@@ -463,11 +463,17 @@ class AuthFormProvider with ChangeNotifier {
 
     await result.fold(
       (failure) async {
-        _errorMessage = failure.errorMsg.toString();
+        _errorMessage = failure.errorMsg?.toString();
+        final safeMsg = _errorMessage?.isNotEmpty == true
+            ? _errorMessage!
+            : "Login failed. Please try again.";
+
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
-        Logger.logError("Login failed : $_errorMessage");
+        ).showSnackBar(SnackBar(content: Text(safeMsg)));
+
+        Logger.logError("Login failed : $safeMsg");
+
         _setLoading(false);
         notifyListeners();
       },
@@ -485,7 +491,11 @@ class AuthFormProvider with ChangeNotifier {
         if (response.status == 0 || response.loginData == null) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(response.message ?? ""),
+              content: Text(
+                response.message?.isNotEmpty == true
+                    ? response.message!
+                    : "Invalid credentials",
+              ),
               behavior: SnackBarBehavior.floating,
             ),
           );
@@ -805,6 +815,11 @@ class AuthFormProvider with ChangeNotifier {
   /// Toggles password visibility.
   void toggleVisibility() {
     _isVisible = !_isVisible;
+    notifyListeners();
+  }
+
+  void resetVisibility() {
+    _isVisible = false;
     notifyListeners();
   }
 

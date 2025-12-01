@@ -191,7 +191,9 @@ class _AddVehicleState extends State<AddVehicle> {
                                   vehicleNameError = null;
                                   vehicleCodeError = null;
                                 });
-                                Navigator.pop(context);
+                                if (provider.godownResponse?.status == 1) {
+                                  Navigator.pop(context);
+                                }
                               });
                             });
                       } else {
@@ -205,10 +207,12 @@ class _AddVehicleState extends State<AddVehicle> {
                               name: vehicleName,
                             )
                             .then((_) {
-                              vehicleNameController.clear();
-                              vehicleCodeController.clear();
                               WidgetsBinding.instance.addPostFrameCallback((_) {
-                                Navigator.pop(context);
+                                if (provider.godownResponse?.status == 1) {
+                                  vehicleNameController.clear();
+                                  vehicleCodeController.clear();
+                                  Navigator.pop(context);
+                                }
                               });
                             });
                       }

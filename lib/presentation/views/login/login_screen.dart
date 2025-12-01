@@ -213,10 +213,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     TextButton(
-                                      onPressed: () {
+                                      onPressed: () async {
                                         reset();
-
-                                        context.pushNamed(
+                                        provider.resetVisibility();
+                                        await context.pushNamed(
                                           AppRouterConst.forgotPassword,
                                         );
                                       },
@@ -252,9 +252,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               InkWell(
                                 onTap: () async {
                                   reset();
-                                  GoRouter.of(
+                                  await GoRouter.of(
                                     context,
                                   ).push(AppRouterConst.signup);
+                                  provider.resetVisibility();
                                 },
                                 child: Text(
                                   appLocalization.sign_up,

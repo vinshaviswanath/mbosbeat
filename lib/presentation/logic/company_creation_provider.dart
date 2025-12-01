@@ -39,6 +39,7 @@ import 'package:mpos_beat/domain/request/integration_request.dart';
 import 'package:mpos_beat/presentation/views/godown_wise_screen/godown_wise_screen.dart';
 import 'package:mpos_beat/presentation/views/route_wise_screen/route_wise_screen.dart';
 import 'package:mpos_beat/presentation/views/route_wise_screen/widgets/add_route.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CompanyCreationProvider extends ChangeNotifier {
@@ -94,8 +95,7 @@ class CompanyCreationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Stream<List<Company>> get companyStream =>
-      db.companyDao.watchAllCompanies();
+  Stream<List<Company>> get companyStream => db.companyDao.watchAllCompanies();
   List<Company>? _companiesList;
   List<Company>? get companiesList => _companiesList;
 
@@ -149,6 +149,14 @@ class CompanyCreationProvider extends ChangeNotifier {
   Company? get selectedCompany => _selectedCompany;
   bool get isGodown => _isGodown;
 
+  String version = "";
+
+  Future<void> fetchVersion() async {
+    final info = await PackageInfo.fromPlatform();
+    version = "${info.version}+${info.buildNumber}";
+    notifyListeners();
+  }
+
   void setSelectedCompany({required Company company}) {
     _selectedCompany = company;
     _isGodown =
@@ -187,6 +195,13 @@ class CompanyCreationProvider extends ChangeNotifier {
     Logger.logSuccess("Selected Route : ${selectedRoute?.toJson()}");
     notifyListeners();
   }
+
+  void resetSelections() {
+  _selectedVehicle = null;
+  _selectedRoute = null;
+  notifyListeners();
+}
+
 
   void toggleVoucher(BuildContext context) {
     _isGodown = !_isGodown;
@@ -943,7 +958,7 @@ class CompanyCreationProvider extends ChangeNotifier {
   }) async {
     setLoading(true);
 
-    final result = await iCompanyCreationFacad.completeVouchers(companyId!);
+    final result = await iCompanyCreationFacad.completeVouchers(companyId ?? 0);
 
     result.fold(
       (failure) {
@@ -1321,40 +1336,36 @@ class CompanyCreationProvider extends ChangeNotifier {
 
   //========================= Users List =========================
 
-Future<void> getAllCompanies(BuildContext context) async {
-  setLoading(true);
+  Future<void> getAllCompanies(BuildContext context) async {
+    setLoading(true);
 
-  final result = await iCompanyCreationFacad.getAllCompany();
+    final result = await iCompanyCreationFacad.getAllCompany();
 
-  result.fold(
-    (failure) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            failure.errorMsg,
-            textAlign: TextAlign.center,
+    result.fold(
+      (failure) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(failure.errorMsg, textAlign: TextAlign.center),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           ),
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        ),
-      );
-    },
-    (response) async {
-      /// Do NOT fetch manually → Drift stream handles updates by itself
-      /// No need to save in local list
-      /// No need to send to StreamController
-      // After API success, drift will automatically trigger `watchAllCompanies()`
-      // because you insert companies in CompanyDao.
-    },
-  );
+        );
+      },
+      (response) async {
+        /// Do NOT fetch manually → Drift stream handles updates by itself
+        /// No need to save in local list
+        /// No need to send to StreamController
+        // After API success, drift will automatically trigger `watchAllCompanies()`
+        // because you insert companies in CompanyDao.
+      },
+    );
 
-  setLoading(false);
-  notifyListeners();
-}
-
+    setLoading(false);
+    notifyListeners();
+  }
 
   //========================= Create Godown Or Vehicle Mapping =========================
 
@@ -1619,9 +1630,13 @@ Future<void> getAllCompanies(BuildContext context) async {
 
     result.fold(
       (failure) {
+        final message = failure.errorMsg?.isNotEmpty == true
+            ? failure.errorMsg!
+            : "Something went wrong";
+
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(failure.errorMsg, textAlign: TextAlign.center),
+            content: Text(message, textAlign: TextAlign.center),
             behavior: SnackBarBehavior.floating,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
@@ -1630,6 +1645,7 @@ Future<void> getAllCompanies(BuildContext context) async {
           ),
         );
       },
+
       (response) async {
         _routeResponse = response;
         Logger.logSuccess("Route Created successfull : ${response.toJson()}");

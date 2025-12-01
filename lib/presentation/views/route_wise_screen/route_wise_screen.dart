@@ -30,7 +30,10 @@ class _RouteWiseScreenState extends State<RouteWiseScreen> {
     // final companyId = pref.getInt('selected_company_id').toString();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final provider = context.read<CompanyCreationProvider>();
-      provider.getAllRoutess(context: context, companyId:  provider.selectedCompany?.id.toString() ?? '');
+      provider.getAllRoutess(
+        context: context,
+        companyId: provider.selectedCompany?.id.toString() ?? '',
+      );
     });
     super.initState();
   }
@@ -75,7 +78,7 @@ class _RouteWiseScreenState extends State<RouteWiseScreen> {
           body: StreamBuilder<List<RouteList>>(
             stream: provider.routeStream,
             builder: (context, snapshot) {
-               if (provider.isLoading) {
+              if (provider.isLoading) {
                 return const UserListShimmer();
               }
               if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -138,7 +141,7 @@ class _RouteWiseScreenState extends State<RouteWiseScreen> {
                                     builder: (context, setStateDialog) {
                                       return Container(
                                         decoration: BoxDecoration(
-                                          color:ColorResources.white,
+                                          color: ColorResources.white,
                                           borderRadius: BorderRadius.circular(
                                             12,
                                           ),
@@ -189,13 +192,19 @@ class _RouteWiseScreenState extends State<RouteWiseScreen> {
                                                   InkWell(
                                                     onTap: () =>
                                                         Navigator.pop(context),
-                                                    child: const CircleAvatar(
+                                                    child: CircleAvatar(
+                                                      backgroundColor:
+                                                          ColorResources
+                                                              .bluishGray
+                                                              .withValues(
+                                                                alpha: 0.15,
+                                                              ),
                                                       radius: 12,
-                                                      child: Icon(
+                                                      child: const Icon(
                                                         Icons.close,
-                                                        size: 16,
+                                                        size: 12,
                                                         color: ColorResources
-                                                            .dustyBlue,
+                                                            .bluishGray,
                                                       ),
                                                     ),
                                                   ),
@@ -208,7 +217,7 @@ class _RouteWiseScreenState extends State<RouteWiseScreen> {
                                               selectedIndex: optionIndex,
                                               title: appLocalization
                                                   .user_designation_screen_edit,
-                                              icon:  AppAssets.editIcon,
+                                              icon: AppAssets.editIcon,
                                               onTap: (i) {
                                                 setStateDialog(
                                                   () => optionIndex = i,
@@ -233,7 +242,7 @@ class _RouteWiseScreenState extends State<RouteWiseScreen> {
                                               selectedIndex: optionIndex,
                                               title: appLocalization
                                                   .user_designation_screen_delete,
-                                              icon:  AppAssets.refresh,
+                                              icon: AppAssets.refresh,
                                               onTap: (i) {
                                                 setStateDialog(
                                                   () => optionIndex = i,
@@ -276,7 +285,7 @@ class _RouteWiseScreenState extends State<RouteWiseScreen> {
                                               selectedIndex: optionIndex,
                                               title: appLocalization
                                                   .user_designation_screen_deactivate,
-                                              icon:  AppAssets.palm,
+                                              icon: AppAssets.palm,
                                               onTap: (i) {
                                                 setStateDialog(
                                                   () => optionIndex = i,
