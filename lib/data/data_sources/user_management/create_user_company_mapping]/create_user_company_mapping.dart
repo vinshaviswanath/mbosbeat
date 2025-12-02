@@ -3,7 +3,7 @@ import 'package:mpos_beat/core/base/run_safely.dart';
 import 'package:mpos_beat/core/exception/custom_exception.dart';
 import 'package:mpos_beat/core/failures/failures.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
-import 'package:mpos_beat/core/serveice/http_client.dart';
+import 'package:mpos_beat/core/service/http_client.dart';
 import 'package:mpos_beat/core/utils/extentions.dart';
 import 'package:mpos_beat/core/utils/logger.dart';
 import 'package:mpos_beat/core/utils/typedefs.dart';

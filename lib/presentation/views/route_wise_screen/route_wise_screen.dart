@@ -62,7 +62,7 @@ class _RouteWiseScreenState extends State<RouteWiseScreen> {
             actions: [
               InkWell(
                 onTap: () {
-                  CustomDialog.showBottomCustomDialog(chid: const AddRoute());
+                  CustomDialog.showBottomCustomDialog(child: const AddRoute());
                 },
                 child: const Padding(
                   padding: EdgeInsets.only(right: 20),
@@ -116,7 +116,7 @@ class _RouteWiseScreenState extends State<RouteWiseScreen> {
                                   padding: const EdgeInsets.symmetric(
                                     vertical: 16,
                                   ),
-                                  chid: ActivateWidget(
+                                  child: ActivateWidget(
                                     onActivate: () {
                                       // provider.activateRoute(index);
                                       provider.activateRoute(
@@ -137,7 +137,7 @@ class _RouteWiseScreenState extends State<RouteWiseScreen> {
                                   padding: const EdgeInsets.symmetric(
                                     vertical: 16,
                                   ),
-                                  chid: StatefulBuilder(
+                                  child: StatefulBuilder(
                                     builder: (context, setStateDialog) {
                                       return Container(
                                         decoration: BoxDecoration(
@@ -228,7 +228,7 @@ class _RouteWiseScreenState extends State<RouteWiseScreen> {
                                                 );
 
                                                 CustomDialog.showBottomCustomDialog(
-                                                  chid: AddRoute(
+                                                  child: AddRoute(
                                                     isEdit: true,
                                                     index: selectedIndex,
                                                     details: item,
@@ -252,7 +252,7 @@ class _RouteWiseScreenState extends State<RouteWiseScreen> {
                                                   () => optionIndex = -1,
                                                 );
                                                 CustomDialog.showBottomCustomDialog(
-                                                  chid: Builder(
+                                                  child: Builder(
                                                     builder: (dialogContext) {
                                                       return DeleteWidget(
                                                         onDelete: () {
@@ -295,7 +295,7 @@ class _RouteWiseScreenState extends State<RouteWiseScreen> {
                                                   () => optionIndex = -1,
                                                 );
                                                 CustomDialog.showBottomCustomDialog(
-                                                  chid: Builder(
+                                                  child: Builder(
                                                     builder: (dialogContext) {
                                                       return DeactivateWidget(
                                                         onDeactivate: () {

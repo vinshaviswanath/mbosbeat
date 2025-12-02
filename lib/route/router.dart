@@ -11,6 +11,7 @@ import 'package:mpos_beat/presentation/common/widgets/custom_route_screen.dart';
 import 'package:mpos_beat/presentation/common/widgets/loading_screen.dart';
 import 'package:mpos_beat/presentation/views/admin_home/admin_dashboard.dart';
 import 'package:mpos_beat/presentation/views/admin_voucher_settings/voucher_settings_screen.dart';
+import 'package:mpos_beat/presentation/views/company_creation/company_creation_success_Screen.dart';
 import 'package:mpos_beat/presentation/views/company_settings/company_settings.dart';
 import 'package:mpos_beat/presentation/views/company_user_mapping/company_user_mapping_screen.dart';
 import 'package:mpos_beat/presentation/views/godown_route_voucher_screen/godown_route_voucher_screen.dart';
@@ -385,6 +386,13 @@ class AppRouter {
           );
         },
       ),
+      GoRoute(name: AppRouterConst.companyscreationsuccess,
+        
+        path: '/CompanyCreationSuccessScreen',
+        builder: (context, state) {
+          return CompanyCreationSuccessScreen();
+        },
+        ),
       GoRoute(
         path: "/adminDashboard",
         name: AppRouterConst.adminDashboard,

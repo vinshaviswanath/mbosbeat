@@ -109,7 +109,7 @@ import '../../domain/repositories/i_company_creation_facad.dart' as _i483;
 import '../../domain/repositories/i_user_management_facad.dart' as _i172;
 import '../base/run_safely.dart' as _i530;
 import '../event/event_manager.dart' as _i275;
-import '../serveice/http_client.dart' as _i816;
+import '../service/http_client.dart' as _i816;
 import 'app_injection_module.dart' as _i975;
 
 // initializes the registration of main-scope dependencies inside of GetIt

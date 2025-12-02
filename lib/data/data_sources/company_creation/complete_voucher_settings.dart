@@ -7,7 +7,7 @@ import 'package:mpos_beat/core/utils/typedefs.dart';
 import 'package:mpos_beat/core/utils/urls.dart';
 import 'package:mpos_beat/data/models/complete_voucher_settings_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:mpos_beat/core/serveice/http_client.dart';
+import 'package:mpos_beat/core/service/http_client.dart';
 
 @lazySingleton
 class CompleteVoucherSettings {

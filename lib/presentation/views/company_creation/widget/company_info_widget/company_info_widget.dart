@@ -356,26 +356,7 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
                       hintColor: ColorResources.silverGray,
                       borderColor: ColorResources.transparent,
                     ),
-                    h16,
-                    Text(
-                      pinTitle,
-                      style: context.textStyle.s12.bluishGray.w400.roboto,
-                    ),
-                    CustomTextField(
-                      hint: appLocalizations.company_info_widget_enter_pincode,
-                      hintTextStyle: context.textStyle.s12.silverGray.w300,
-                      controller: pincodeController,
-                      backgroundColor: ColorResources.lightGray,
-                      autovalidateMode: provider.companyinfoAutovalidateMode,
-                      failure: provider.pincode.getFailure,
-                      onChange: provider.updatePincode,
-                      inputType: TextInputType.phone,
-                      borderRadius: 12,
-                      hintColor: ColorResources.silverGray,
-                      borderColor: ColorResources.transparent,
-                      maxLength: 6,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    ),
+
                     h16,
                     // Country & State side-by-side
                     Row(
@@ -433,8 +414,28 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
                         ),
                       ],
                     ),
-                    h16,
 
+                    h16,
+                    Text(
+                      pinTitle,
+                      style: context.textStyle.s12.bluishGray.w400.roboto,
+                    ),
+                    CustomTextField(
+                      hint: appLocalizations.company_info_widget_enter_pincode,
+                      hintTextStyle: context.textStyle.s12.silverGray.w300,
+                      controller: pincodeController,
+                      backgroundColor: ColorResources.lightGray,
+                      autovalidateMode: provider.companyinfoAutovalidateMode,
+                      failure: provider.pincode.getFailure,
+                      onChange: provider.updatePincode,
+                      inputType: TextInputType.phone,
+                      borderRadius: 12,
+                      hintColor: ColorResources.silverGray,
+                      borderColor: ColorResources.transparent,
+                      maxLength: 6,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    ),
+                    h16,
                     CustomDropdown(
                       label: appLocalizations
                           .company_info_widget_registration_type,
@@ -471,8 +472,8 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
                             companyName: compnyNameController.text,
                             displayName: displayNameController.text,
                             address1: address1Controller.text,
-                             address2: address2Controller.text,
-                              address3: address3Controller.text,
+                            address2: address2Controller.text,
+                            address3: address3Controller.text,
                             pincode: pincodeController.text,
                             countryId:
                                 provider.selectedCountry?.id.toString() ?? '',

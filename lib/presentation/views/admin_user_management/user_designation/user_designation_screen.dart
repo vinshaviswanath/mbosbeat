@@ -54,7 +54,7 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
               InkWell(
                 onTap: () {
                   CustomDialog.showBottomCustomDialog(
-                    chid: AddDesignationWidget(
+                    child: AddDesignationWidget(
                       designationController: designationController,
                       isEdit: false,
                     ),
@@ -109,7 +109,7 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
                                     padding: const EdgeInsets.symmetric(
                                       vertical: 16,
                                     ),
-                                    chid: ActivateUserDesignationWidget(
+                                    child: ActivateUserDesignationWidget(
                                       designation: item?.name ?? "",
                                       onActivate: () {
                                         // provider.activateDesignation(index);
@@ -128,7 +128,7 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
                                     padding: const EdgeInsets.symmetric(
                                       vertical: 16,
                                     ),
-                                    chid: StatefulBuilder(
+                                    child: StatefulBuilder(
                                       builder: (context, setStateDialog) {
                                         return Container(
                                           decoration: BoxDecoration(
@@ -185,21 +185,23 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
                                                           Navigator.pop(
                                                             context,
                                                           ),
-                                                      child: CircleAvatar(
-                                                        backgroundColor:
-                                                            ColorResources
-                                                                .bluishGray
-                                                                .withValues(
-                                                                  alpha: 0.15,
-                                                                ),
-                                                        radius: 12,
-                                                        child: const Icon(
-                                                          Icons.close,
-                                                          size: 12,
+                                                   
+                                                     child: CircleAvatar(
+                                                                                        backgroundColor: ColorResources.bluishGray.withValues(
+                                                                                          alpha: 0.15,
+                                                                                        ),
+
+                                                                                        radius: 12,
+                                                  child: const Icon(
+                                                                                        child: const Icon(
+                                                                                         Icons.close,
+                                                         size: 12,
                                                           color: ColorResources
                                                               .bluishGray,
-                                                        ),
-                                                      ),
+                                                                                         size: 12,
+                                                                                          color: ColorResources.bluishGray,
+                                                                                       ),
+                                                                                      ),
                                                     ),
                                                   ],
                                                 ),
@@ -223,7 +225,7 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
                                                       item?.name ?? '';
 
                                                   CustomDialog.showBottomCustomDialog(
-                                                    chid: AddDesignationWidget(
+                                                    child: AddDesignationWidget(
                                                       index: index,
                                                       designationController:
                                                           designationController,
@@ -255,7 +257,7 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
                                                     () => optionIndex = -1,
                                                   );
                                                   CustomDialog.showBottomCustomDialog(
-                                                    chid: Builder(
+                                                    child: Builder(
                                                       builder: (dialogContext) {
                                                         return DeleteUserDesignationWidget(
                                                           designation:
@@ -291,7 +293,7 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
                                                     () => optionIndex = -1,
                                                   );
                                                   CustomDialog.showBottomCustomDialog(
-                                                    chid: Builder(
+                                                    child: Builder(
                                                       builder: (dialogContext) {
                                                         return DeactivateUserDesignationWidget(
                                                           designation:

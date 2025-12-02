@@ -28,6 +28,7 @@ class AppRouterConst {
   static const paymentScreen = "/paymentScreen";
   static const replacementScreen = "/replacementScreen";
   static const companyCreationScreen = "/companyCreationScreen";
+  static const companyscreationsuccess = "/CompanyCreationSuccessScreen";
   static const adminDashboard = "/adminDashboard";
   static const godownWiseScreen = "/godownWiseScreen";
   static const routeWiseScreen = "/routeWiseScreen";
@@ -54,9 +55,6 @@ class AppRouterConst {
   static const priceListScreen = "/priceListScreen";
   static const itemNameScreen = "/itemNameScreen";
   static const addItemName = "/addItemName";
-
-
-  // anver
   static const homeScreen = "/homescreen";
   static const otherTransaction = "/othertransactions";
   static const customerTransactions = "/customerTransactions";

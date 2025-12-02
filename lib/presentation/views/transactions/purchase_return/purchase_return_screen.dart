@@ -391,7 +391,7 @@ class _PurchaseReturnScreenState extends State<PurchaseReturnScreen> {
                         onChanged: (value) {
                           value == true
                               ? CustomDialog.showBottomCustomDialog(
-                                  chid: const DiscountAlertWidget(),
+                                  child: const DiscountAlertWidget(),
                                 )
                               : null;
                         },

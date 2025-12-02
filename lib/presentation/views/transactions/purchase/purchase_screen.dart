@@ -390,7 +390,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
                         onChanged: (value) {
                           value == true
                               ? CustomDialog.showBottomCustomDialog(
-                                  chid: const DiscountAlertWidget(),
+                                  child: const DiscountAlertWidget(),
                                 )
                               : null;
                         },

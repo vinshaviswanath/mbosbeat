@@ -63,7 +63,7 @@ class _GodownWiseScreenState extends State<GodownWiseScreen> {
             actions: [
               InkWell(
                 onTap: () {
-                  CustomDialog.showBottomCustomDialog(chid: const AddVehicle());
+                  CustomDialog.showBottomCustomDialog(child: const AddVehicle());
                 },
                 child: const Padding(
                   padding: EdgeInsets.only(right: 20),
@@ -115,7 +115,7 @@ class _GodownWiseScreenState extends State<GodownWiseScreen> {
                                   padding: const EdgeInsets.symmetric(
                                     vertical: 16,
                                   ),
-                                  chid: ActivateWidget(
+                                  child: ActivateWidget(
                                     onActivate: () {
                                       provider.activateGodown(
                                         context,
@@ -135,7 +135,7 @@ class _GodownWiseScreenState extends State<GodownWiseScreen> {
                                   padding: const EdgeInsets.symmetric(
                                     vertical: 16,
                                   ),
-                                  chid: StatefulBuilder(
+                                  child: StatefulBuilder(
                                     builder: (context, setStateDialog) {
                                       return Container(
                                         decoration: BoxDecoration(
@@ -190,21 +190,21 @@ class _GodownWiseScreenState extends State<GodownWiseScreen> {
                                                   InkWell(
                                                     onTap: () =>
                                                         Navigator.pop(context),
-                                                    child: CircleAvatar(
-                                                      backgroundColor:
-                                                          ColorResources
-                                                              .bluishGray
-                                                              .withValues(
-                                                                alpha: 0.15,
-                                                              ),
-                                                      radius: 12,
-                                                      child: const Icon(
-                                                        Icons.close,
-                                                        size: 12,
+                                                      child: CircleAvatar(
+                                                                                        backgroundColor: ColorResources.bluishGray.withValues(
+                                                                                          alpha: 0.15,
+                                                                                        ),
+                                                                     radius: 12,
+                                                    child: const Icon(
+                                                                                      child: const Icon(
+                                                                                         Icons.close,
+                                                       size: 12,
                                                         color: ColorResources
                                                             .bluishGray,
-                                                      ),
-                                                    ),
+                                                                                         size: 12,
+                                                                                          color: ColorResources.bluishGray,
+                                                                                        ),
+                                                                                      ),
                                                   ),
                                                 ],
                                               ),
@@ -226,7 +226,7 @@ class _GodownWiseScreenState extends State<GodownWiseScreen> {
                                                 );
 
                                                 CustomDialog.showBottomCustomDialog(
-                                                  chid: AddVehicle(
+                                                  child: AddVehicle(
                                                     isEdit: true,
                                                     index: selectedIndex,
                                                     details: item,
@@ -251,7 +251,7 @@ class _GodownWiseScreenState extends State<GodownWiseScreen> {
                                                 );
 
                                                 CustomDialog.showBottomCustomDialog(
-                                                  chid: Builder(
+                                                  child: Builder(
                                                     builder: (dialogContext) {
                                                       return DeleteWidget(
                                                         onDelete: () {
@@ -291,7 +291,7 @@ class _GodownWiseScreenState extends State<GodownWiseScreen> {
                                                 );
 
                                                 CustomDialog.showBottomCustomDialog(
-                                                  chid: Builder(
+                                                  child: Builder(
                                                     builder: (dialogContext) {
                                                       return DeactivateWidget(
                                                         onDeactivate: () {
