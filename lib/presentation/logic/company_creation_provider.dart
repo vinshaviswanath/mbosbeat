@@ -728,18 +728,18 @@ class CompanyCreationProvider extends ChangeNotifier {
         if (response.status == 1) {
           _integrationDtos = response;
           markStageCompleted(2);
-          context.pushNamed(AppRouterConst.adminDashboard);
+          context.pushNamed(AppRouterConst.companyscreationsuccess);
           onSuccess?.call();
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(response.message, textAlign: TextAlign.center),
-              behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            ),
-          );
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(
+          //     content: Text(response.message, textAlign: TextAlign.center),
+          //     behavior: SnackBarBehavior.floating,
+          //     shape: RoundedRectangleBorder(
+          //       borderRadius: BorderRadius.circular(16),
+          //     ),
+          //     margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          //   ),
+          // );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(

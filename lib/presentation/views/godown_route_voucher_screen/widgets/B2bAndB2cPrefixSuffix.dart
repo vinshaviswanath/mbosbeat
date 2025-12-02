@@ -125,7 +125,7 @@ class _B2bAndB2cPrefixSuffixState extends State<B2bAndB2cPrefixSuffix> {
                 GestureDetector(
                   onTap: () {
                     CustomDialog.showBottomCustomDialog(
-                      chid: StatefulBuilder(
+                      child: StatefulBuilder(
                         builder: (context, setDialogState) {
                           return Container(
                             constraints: const BoxConstraints(maxWidth: 400),
@@ -147,15 +147,17 @@ class _B2bAndB2cPrefixSuffixState extends State<B2bAndB2cPrefixSuffix> {
                                               onTap: () {
                                                 Navigator.pop(context);
                                               },
-                                              child: const CircleAvatar(
-                                                radius: 12,
-                                                child: Icon(
-                                                  Icons.close,
-                                                  color:
-                                                      ColorResources.bluishGray,
-                                                  size: 16,
-                                                ),
-                                              ),
+                                              child:  CircleAvatar(
+                                                                                        backgroundColor: ColorResources.bluishGray.withValues(
+                                                                                          alpha: 0.15,
+                                                                                        ),
+                                                                                        radius: 12,
+                                                                                        child: const Icon(
+                                                                                          Icons.close,
+                                                                                          size: 12,
+                                                                                          color: ColorResources.bluishGray,
+                                                                                        ),
+                                                                                      ),
                                             ),
                                           ],
                                         ),
@@ -206,6 +208,26 @@ class _B2bAndB2cPrefixSuffixState extends State<B2bAndB2cPrefixSuffix> {
                                               firstDate: DateTime(2000),
                                               lastDate: DateTime(2100),
                                               initialDate: DateTime.now(),
+                                              builder: (context, child) {
+                                                return Theme(
+                                                  data: Theme.of(context).copyWith(
+                                                    colorScheme: const ColorScheme.light(
+                                                      surface: ColorResources
+                                                          .indigoBlue, // Calendar background
+                                                      primary: ColorResources
+                                                          .indigoBlue, // Header & selected date
+                                                      onPrimary: ColorResources
+                                                          .indigoBlue, // Header text color
+                                                      onSurface: ColorResources
+                                                          .indigoBlue, // Default text color
+                                                    ),
+                                                    // ignore: deprecated_member_use
+                                                    dialogBackgroundColor: Colors
+                                                        .white, // whole dialog background
+                                                  ),
+                                                  child: child!,
+                                                );
+                                              },
                                             );
                                             if (picked != null) {
                                               Logger.logInfo(
@@ -224,8 +246,12 @@ class _B2bAndB2cPrefixSuffixState extends State<B2bAndB2cPrefixSuffix> {
                                               horizontal: 12,
                                             ),
                                             decoration: BoxDecoration(
-                                              color: ColorResources.lightGray
-                                                  .withValues(alpha: 0.65),
+                                              color: const Color.fromARGB(
+                                                255,
+                                                244,
+                                                247,
+                                                244,
+                                              ).withValues(alpha: 0.65),
 
                                               borderRadius:
                                                   BorderRadius.circular(15),

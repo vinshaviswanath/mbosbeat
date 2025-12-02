@@ -318,7 +318,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                 const EdgeInsets.symmetric(
                                                                   vertical: 16,
                                                                 ),
-                                                            chid: StatefulBuilder(
+                                                            child: StatefulBuilder(
                                                               builder:
                                                                   (
                                                                     context,

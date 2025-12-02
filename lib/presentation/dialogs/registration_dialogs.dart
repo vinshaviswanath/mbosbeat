@@ -19,7 +19,7 @@ class RegistrationDialogs {
     int? id,
   }) {
     return CustomDialog.showBottomCustomDialog(
-      chid: Consumer<AuthFormProvider>(
+      child: Consumer<AuthFormProvider>(
         builder: (context, provider, _) {
           final appLocalization = context.l10n;
           return Column(
@@ -90,7 +90,7 @@ class RegistrationDialogs {
     final appLocalization = context.l10n;
 
     return CustomDialog.showBottomCustomDialog(
-      chid: Column(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           h20,
@@ -162,7 +162,7 @@ class RegistrationDialogs {
     final appLocalization = context.l10n;
 
     return CustomDialog.showBottomCustomDialog(
-      chid: Column(
+      child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(heading, style: context.textStyle.s14.w500.indigoBlue),

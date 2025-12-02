@@ -16,7 +16,7 @@ class UserManageDialog {
 
     return CustomDialog.showBottomCustomDialog(
       padding: const EdgeInsets.symmetric(vertical: 16),
-      chid: StatefulBuilder(
+      child: StatefulBuilder(
         builder: (context, setStateDialog) {
           return Container(
             decoration: BoxDecoration(

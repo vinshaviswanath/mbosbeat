@@ -73,20 +73,20 @@ class _DefaultContainerState extends State<DefaultContainer> {
     }
 
     // Check if suffix is empty
-    if (defaultsuffixcontroller.text.isEmpty) {
-      setState(() {
-        _isSuffixValid = false;
-        _errorText = "Suffix cannot be empty!";
-      });
+    // if (defaultsuffixcontroller.text.isEmpty) {
+    //   setState(() {
+    //     _isSuffixValid = false;
+    //     _errorText = "Suffix cannot be empty!";
+    //   });
 
-      Future.delayed(const Duration(seconds: 2), () {
-        setState(() {
-          _isSuffixValid = true;
-          _errorText = "";
-        });
-      });
-      return;
-    }
+    //   Future.delayed(const Duration(seconds: 2), () {
+    //     setState(() {
+    //       _isSuffixValid = true;
+    //       _errorText = "";
+    //     });
+    //   });
+    //   return;
+    // }
     setState(() {
       _isPrefixValid = true;
       _isSuffixValid = true;
@@ -517,7 +517,10 @@ class _DefaultContainerState extends State<DefaultContainer> {
                         },
                         child: Text(
                           'Save',
-                          style: TextStyle(fontSize: 14, color: ColorResources.white),
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: ColorResources.white,
+                          ),
                         ),
                       ),
                     ),

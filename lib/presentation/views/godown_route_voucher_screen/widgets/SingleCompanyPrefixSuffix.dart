@@ -160,7 +160,7 @@ class _SingleCompanyPrefixSuffixState extends State<SingleCompanyPrefixSuffix> {
                           text: data.b2BStartFrom.toString(),
                         );
                         CustomDialog.showBottomCustomDialog(
-                          chid: StatefulBuilder(
+                          child: StatefulBuilder(
                             builder: (context, setDialogState) {
                               return Container(
                                 constraints: const BoxConstraints(
@@ -178,15 +178,17 @@ class _SingleCompanyPrefixSuffixState extends State<SingleCompanyPrefixSuffix> {
                                         children: [
                                           GestureDetector(
                                             onTap: () => Navigator.pop(context),
-                                            child: const CircleAvatar(
-                                              radius: 12,
-                                              child: Icon(
-                                                Icons.close,
-                                                color:
-                                                    ColorResources.bluishGray,
-                                                size: 16,
-                                              ),
-                                            ),
+                                            child:  CircleAvatar(
+                                                                                        backgroundColor: ColorResources.bluishGray.withValues(
+                                                                                          alpha: 0.15,
+                                                                                        ),
+                                                                                        radius: 12,
+                                                                                        child: const Icon(
+                                                                                          Icons.close,
+                                                                                          size: 12,
+                                                                                          color: ColorResources.bluishGray,
+                                                                                        ),
+                                                                                      ),
                                           ),
                                         ],
                                       ),
@@ -225,6 +227,26 @@ class _SingleCompanyPrefixSuffixState extends State<SingleCompanyPrefixSuffix> {
                                             lastDate: DateTime(2100),
                                             initialDate:
                                                 selectedDate ?? DateTime.now(),
+                                            builder: (context, child) {
+                                              return Theme(
+                                                data: Theme.of(context).copyWith(
+                                                  colorScheme: const ColorScheme.light(
+                                                    surface: ColorResources
+                                                        .indigoBlue, // Calendar background
+                                                    primary: ColorResources
+                                                        .indigoBlue, // Header & selected date
+                                                    onPrimary: ColorResources
+                                                        .indigoBlue, // Header text color
+                                                    onSurface: ColorResources
+                                                        .indigoBlue, // Default text color
+                                                  ),
+                                                  // ignore: deprecated_member_use
+                                                  dialogBackgroundColor: Colors
+                                                      .white, // whole dialog background
+                                                ),
+                                                child: child!,
+                                              );
+                                            },
                                           );
                                           if (picked != null) {
                                             if (!mounted) return;

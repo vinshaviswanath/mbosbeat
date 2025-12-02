@@ -271,7 +271,7 @@ class _PartyGroupScreenState extends State<PartyGroupScreen> {
     if (item.isBlocked) {
       setState(() => selectedIndex = index);
       CustomDialog.showBottomCustomDialog(
-        chid: Builder(
+        child: Builder(
           builder: (context) {
             return UnblockUserWidget(
               onConfirm: () {
@@ -299,7 +299,7 @@ class _PartyGroupScreenState extends State<PartyGroupScreen> {
 
     CustomDialog.showBottomCustomDialog(
       padding: const EdgeInsets.symmetric(vertical: 16),
-      chid: StatefulBuilder(
+      child: StatefulBuilder(
         builder: (context, setStateDialog) {
           return Container(
             decoration: BoxDecoration(
@@ -346,7 +346,7 @@ class _PartyGroupScreenState extends State<PartyGroupScreen> {
                   onTap: (i) {
                     Navigator.pop(context);
                     CustomDialog.showBottomCustomDialog(
-                      chid: Builder(
+                      child: Builder(
                         builder: (dialogContext) {
                           return BlockUserWidget(
                             onBlock: () {

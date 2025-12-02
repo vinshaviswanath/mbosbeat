@@ -8,7 +8,7 @@ import 'package:mpos_beat/core/utils/typedefs.dart';
 import 'package:mpos_beat/core/utils/urls.dart';
 import 'package:mpos_beat/data/models/get_company_voucher_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:mpos_beat/core/serveice/http_client.dart';
+import 'package:mpos_beat/core/service/http_client.dart';
 
 @lazySingleton
 class GetCompanyvoucherTypeListDatasource {

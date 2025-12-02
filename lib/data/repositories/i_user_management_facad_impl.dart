@@ -1,7 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:mpos_beat/core/base/run_safely.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
-import 'package:mpos_beat/core/serveice/http_client.dart';
+import 'package:mpos_beat/core/service/http_client.dart';
 import 'package:mpos_beat/core/utils/typedefs.dart';
 import 'package:mpos_beat/data/data_sources/user_management/company_user_mapping/company_user_mapping.dart';
 import 'package:mpos_beat/data/data_sources/user_management/activate_designation/activate_designation.dart';

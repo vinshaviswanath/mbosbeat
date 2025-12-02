@@ -448,7 +448,7 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                                   InkWell(
                                     onTap: () {
                                       CustomDialog.showBottomCustomDialog(
-                                        chid: AddDesignationWidget(
+                                        child: AddDesignationWidget(
                                           designationController:
                                               designationController,
                                         ),

@@ -87,7 +87,7 @@ class CustomDialog {
 
   /// Bottom custom dialog with blur background
   static Future<T?> showBottomCustomDialog<T>({
-    required Widget chid,
+    required Widget child,
     double? margin,
     double? borderRadius,
     MainAxisAlignment? mainAxisAlignment,
@@ -129,7 +129,7 @@ class CustomDialog {
                             borderRadius ?? 24,
                           ),
                         ),
-                        child: chid,
+                        child: child,
                       ),
                     ),
                   ),

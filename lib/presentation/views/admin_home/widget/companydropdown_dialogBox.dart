@@ -196,16 +196,17 @@ class _CompanyDropdownState extends State<CompanyDropdown> {
                               ),
 
                             GestureDetector(
-                              child: CircleAvatar(
-                                radius: 10,
-                                backgroundColor: ColorResources.dustyBlue
-                                    .withValues(alpha: 0.15),
-                                child: const Icon(
-                                  Icons.close,
-                                  color: ColorResources.bluishGray,
-                                  size: 12,
-                                ),
-                              ),
+                              child:  CircleAvatar(
+                                                                                        backgroundColor: ColorResources.bluishGray.withValues(
+                                                                                          alpha: 0.15,
+                                                                                        ),
+                                                                                        radius: 12,
+                                                                                        child: const Icon(
+                                                                                          Icons.close,
+                                                                                          size: 12,
+                                                                                          color: ColorResources.bluishGray,
+                                                                                        ),
+                                                                                      ),
                               onTap: () => Navigator.pop(context),
                             ),
                           ],
@@ -318,17 +319,17 @@ class _CompanyDropdownState extends State<CompanyDropdown> {
 
                       // Close button
                       GestureDetector(
-                        child: CircleAvatar(
-                          radius: 10,
-                          backgroundColor: ColorResources.dustyBlue.withValues(
-                            alpha: 0.15,
-                          ),
-                          child: const Icon(
-                            Icons.close,
-                            color: ColorResources.bluishGray,
-                            size: 12,
-                          ),
-                        ),
+                        child:  CircleAvatar(
+                                                                                        backgroundColor: ColorResources.bluishGray.withValues(
+                                                                                          alpha: 0.15,
+                                                                                        ),
+                                                                                        radius: 12,
+                                                                                        child: const Icon(
+                                                                                          Icons.close,
+                                                                                          size: 12,
+                                                                                          color: ColorResources.bluishGray,
+                                                                                        ),
+                                                                                      ),
                         onTap: () => Navigator.pop(context),
                       ),
                     ],

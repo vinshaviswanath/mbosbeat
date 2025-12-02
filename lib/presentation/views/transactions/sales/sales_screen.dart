@@ -423,7 +423,7 @@ class _SalesScreenState extends State<SalesScreen> {
                         onChanged: (value) {
                           if (value == true) {
                             CustomDialog.showBottomCustomDialog(
-                              chid: const PaymentModeAlertWidget(),
+                              child: const PaymentModeAlertWidget(),
                             );
                           }
                         },

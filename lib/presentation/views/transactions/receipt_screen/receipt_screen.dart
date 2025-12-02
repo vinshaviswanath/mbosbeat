@@ -184,7 +184,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                                   selected = option;
                                 });
                                 CustomDialog.showBottomCustomDialog(
-                                  chid: selected == 'Cash'
+                                  child: selected == 'Cash'
                                       ? const ReceiptCashAlertWidget()
                                       : selected == 'Cheque'
                                       ? const ReceiptChequeAlertWidget()

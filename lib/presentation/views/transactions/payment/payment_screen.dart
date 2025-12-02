@@ -185,8 +185,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                   selected = option;
                                 });
                                 CustomDialog.showBottomCustomDialog(
-                                  chid: selected == 'Cash'
-                                      ? const ReceiptCashAlertWidget()
+                                  child: selected == 'Cash'
+                                     ? const ReceiptCashAlertWidget()
                                       : selected == 'Cheque'
                                       ? const ReceiptChequeAlertWidget()
                                       : const SizedBox.shrink(),

@@ -10,7 +10,7 @@ import 'package:mpos_beat/core/utils/urls.dart';
 import 'package:mpos_beat/data/models/company_creation_response.dart';
 import 'package:mpos_beat/domain/request/company_creation_params.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:mpos_beat/core/serveice/http_client.dart';
+import 'package:mpos_beat/core/service/http_client.dart';
 
 @lazySingleton
 class CompanyInfo {

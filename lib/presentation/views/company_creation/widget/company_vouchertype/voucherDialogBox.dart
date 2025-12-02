@@ -74,19 +74,16 @@ class _VoucherDialogboxState extends State<VoucherDialogbox> {
                               context.pop();
                             },
                             child: CircleAvatar(
-                              backgroundColor: Color.fromARGB(
-                                255,
-                                202,
-                                211,
-                                224,
-                              ),
-                              radius: 10,
-                              child: Icon(
-                                Icons.close,
-                                color: Color.fromARGB(255, 100, 114, 145),
-                                size: 12,
-                              ),
-                            ),
+                                                                                        backgroundColor: ColorResources.bluishGray.withValues(
+                                                                                          alpha: 0.15,
+                                                                                        ),
+                                                                                        radius: 12,
+                                                                                        child: const Icon(
+                                                                                          Icons.close,
+                                                                                          size: 12,
+                                                                                          color: ColorResources.bluishGray,
+                                                                                        ),
+                                                                                      ),
                           ),
                         ),
                       ),
