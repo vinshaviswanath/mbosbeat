@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mpos_beat/core/theme/colors.dart';
 import 'package:mpos_beat/core/theme/text_styles.dart';
 import 'package:mpos_beat/core/utils/extentions.dart';
-import 'package:mpos_beat/l10n/generated/app_localizations.dart';
+import 'package:mpos_beat/l10n/app_localizations.dart';
 import 'package:mpos_beat/presentation/views/admin_home/widget/common_logoutdialogbox.dart';
 import 'package:mpos_beat/presentation/views/home_screen/endTrip_dialogbox.dart';
 import 'package:mpos_beat/presentation/views/home_screen/markEndDay_dialogobox.dart';

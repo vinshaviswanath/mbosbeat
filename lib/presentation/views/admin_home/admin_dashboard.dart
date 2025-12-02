@@ -1,10 +1,10 @@
-
 import 'package:flutter/foundation.dart';
 import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
+import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_divider.dart';
 import 'package:mpos_beat/presentation/dialogs/auth_dialogs.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
@@ -25,6 +25,36 @@ class _AdminDashboardState extends State<AdminDashboard> {
   int? selectedIndex;
   int? optionIndex;
 
+  // @override
+  // void initState() {
+  //   super.initState();
+
+  //   WidgetsBinding.instance.addPostFrameCallback((_) async {
+  //     final provider = Provider.of<CompanyCreationProvider>(
+  //       context,
+  //       listen: false,
+  //     );
+
+  //     // Load list
+  //     await provider.getAllCompanies(context);
+  //     // final db = sl<AppDb>();
+  //     // final list = await db.companyDao.getAllCompanies();
+
+  //     // Set selected company if not set
+  //     if (list.isNotEmpty) {
+  //       if (provider.selectedCompany == null) {
+  //         provider.setSelectedCompany(company: list.first);
+  //       } else {
+  //         final matched = list.firstWhere(
+  //           (c) => c.id == provider.selectedCompany!.id,
+  //           orElse: () => list.first,
+  //         );
+  //         provider.setSelectedCompany(company: matched);
+  //       }
+  //     }
+  //   });
+  // }
+
   @override
   void initState() {
     super.initState();
@@ -37,8 +67,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
       // Load list
       await provider.getAllCompanies(context);
-      final db = sl<AppDb>();
-      final list = await db.companyDao.getAllCompanies();
+
+      final list = provider.companiesList?.companyViewList ?? [];
 
       // Set selected company if not set
       if (list.isNotEmpty) {
@@ -58,7 +88,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
   @override
   Widget build(BuildContext context) {
     final appLocalization = context.l10n;
-    final appDb = sl<AppDb>();
+
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, result) async {
@@ -177,7 +207,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                 child: Consumer<CompanyCreationProvider>(
                                                   builder: (context, provider, _) {
                                                     return StreamBuilder<
-                                                      List<Company>
+                                                      List<CompanyViewList>
                                                     >(
                                                       stream: provider
                                                           .companyStream,

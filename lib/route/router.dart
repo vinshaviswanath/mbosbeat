@@ -377,7 +377,7 @@ class AppRouter {
         builder: (context, state) {
           final extra = state.extra as Map<String, dynamic>?;
           final tabIndex = extra?['tabIndex'] as int? ?? 0;
-          final companyData = extra?['companyData'] as Company?;
+          final companyData = extra?['companyData'] as CompanyViewList?;
           final isPop = extra?['isPop'] as bool? ?? false;
           return CompanyCreationScreen(
             initialTabIndex: tabIndex,

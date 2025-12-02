@@ -95,9 +95,11 @@ class CompanyCreationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Stream<List<Company>> get companyStream => db.companyDao.watchAllCompanies();
-  List<Company>? _companiesList;
-  List<Company>? get companiesList => _companiesList;
+  final _companyController =
+      StreamController<List<CompanyViewList>>.broadcast();
+  Stream<List<CompanyViewList>> get companyStream => _companyController.stream;
+  CompaniesListResponse? _companiesList;
+  CompaniesListResponse? get companiesList => _companiesList;
 
   GodownResponse? _godownResponse;
   GodownResponse? get godownResponse => _godownResponse;
@@ -143,10 +145,10 @@ class CompanyCreationProvider extends ChangeNotifier {
   final List<VoucherNumber> _voucherNumberList = [];
   List<VoucherNumber>? get voucherNumberList => _voucherNumberList;
 
-  Company? _selectedCompany;
+  CompanyViewList? _selectedCompany;
   bool _isGodown = true;
 
-  Company? get selectedCompany => _selectedCompany;
+  CompanyViewList? get selectedCompany => _selectedCompany;
   bool get isGodown => _isGodown;
 
   String version = "";
@@ -157,7 +159,7 @@ class CompanyCreationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setSelectedCompany({required Company company}) {
+  void setSelectedCompany({required CompanyViewList company}) {
     _selectedCompany = company;
     _isGodown =
         company.vchNumberingMode == null ||
@@ -256,7 +258,7 @@ class CompanyCreationProvider extends ChangeNotifier {
   bool isStageCompleted(int index) => stageCompleted[index];
 
   ///  Update stage completion based on backend data
-  void updateStageCompletionFromCompanyData(Company company) {
+  void updateStageCompletionFromCompanyData(CompanyViewList company) {
     // if company id > 0 → company info is completed
     stageCompleted[0] = company.id != null && company.id! > 0;
 
@@ -1392,9 +1394,7 @@ class CompanyCreationProvider extends ChangeNotifier {
 
   //========================= Users List =========================
 
-  Future<void> getAllCompanies(BuildContext context) async {
-    setLoading(true);
-
+  Future<CompaniesListResponse?> getAllCompanies(BuildContext context) async {
     final result = await iCompanyCreationFacad.getAllCompany();
 
     result.fold(
@@ -1411,16 +1411,15 @@ class CompanyCreationProvider extends ChangeNotifier {
         );
       },
       (response) async {
-        /// Do NOT fetch manually → Drift stream handles updates by itself
-        /// No need to save in local list
-        /// No need to send to StreamController
-        // After API success, drift will automatically trigger `watchAllCompanies()`
-        // because you insert companies in CompanyDao.
+        _companiesList = response;
+        _companyController.add(companiesList?.companyViewList ?? []);
+        Logger.logSuccess(
+          "Company List fetch successfull : ${response.toJson()}",
+        );
+        notifyListeners();
       },
     );
-
-    setLoading(false);
-    notifyListeners();
+    return _companiesList;
   }
 
   //========================= Create Godown Or Vehicle Mapping =========================

@@ -1,6 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
-import 'package:mpos_beat/l10n/generated/app_localizations.dart';
+import 'package:mpos_beat/l10n/app_localizations.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 
 class StockJournalScreen extends StatefulWidget {

@@ -39,10 +39,10 @@ class AuthFormProvider with ChangeNotifier {
   CompanyRegistrationResponse? _companyRegistrationResponse;
   CompanyRegistrationResponse? get companyRegistrationResponse =>
       _companyRegistrationResponse;
-  // OtpResponse? _otpResponse;
-  // OtpResponse? get otpResponse => _otpResponse;
-  // OtpResponseData? _otpResponseData;
-  // OtpResponseData? get otpResponsData => _otpResponseData;
+  OtpResponse? _otpResponse;
+  OtpResponse? get otpResponse => _otpResponse;
+  OtpResponseData? _otpResponseData;
+  OtpResponseData? get otpResponsData => _otpResponseData;
   ResponseData? _responseData;
   ResponseData? get responseData => _responseData;
   LoginResponse? _loginResponse;
@@ -385,14 +385,14 @@ class AuthFormProvider with ChangeNotifier {
     return _loginResponse;
   }
 
-  void clearOtpValidation() {
-    _otp = Otp("");
-    _otpError = null;
-    _otpResponse = null;
-    _showOtpValidation = false; 
-    otpAutovalidateMode = AutovalidateMode.disabled;
-    notifyListeners();
-  }
+  // void clearOtpValidation() {
+  //   _otp = Otp("");
+  //   _otpError = null;
+  //   _otpResponse = null;
+  //   _showOtpValidation = false; 
+  //   otpAutovalidateMode = AutovalidateMode.disabled;
+  //   notifyListeners();
+  // }
 
   /// Starts OTP countdown timer.
   void startOtpTimer() {
@@ -524,13 +524,13 @@ class AuthFormProvider with ChangeNotifier {
 
         //Fetch company list using valid token
         final companyProvider = context.read<CompanyCreationProvider>();
-        List<Company> companyList = [];
-        Company? companyData;
+        List<CompanyViewList> companyList = [];
+        CompanyViewList? companyData;
         bool hasCompany = false;
 
         try {
           await companyProvider.getAllCompanies(context);
-          companyList = companyProvider.companiesList ?? [];
+          companyList = companyProvider.companiesList?.companyViewList ?? [];
           hasCompany = companyList.isNotEmpty;
           companyData = hasCompany ? companyList.first : null;
         } catch (e) {

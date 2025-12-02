@@ -13,7 +13,7 @@ class StatusView extends StatelessWidget {
   final double strokeWidth;
   final Color incompleteColor;
   final Color completeColor;
-  final Company company;
+  final CompanyViewList company;
 
   const StatusView({
     super.key,
@@ -27,7 +27,7 @@ class StatusView extends StatelessWidget {
     this.completeColor = ColorResources.indigoBlue,
     required this.company,
   }) : assert(centerImageUrl != null, "Please provide centerImageUrl");
-  int calculateCompletedSteps(Company c) {
+  int calculateCompletedSteps(CompanyViewList c) {
     int steps = 0;
 
     if (c.hasCompanySettings != 0) steps++;

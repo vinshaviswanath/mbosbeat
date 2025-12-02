@@ -8,7 +8,7 @@ import 'package:mpos_beat/presentation/views/company_creation/widget/integration
 import 'package:mpos_beat/presentation/views/company_creation/widget/company_vouchertype/voucher_type_widget.dart';
 
 class CompanyCreationScreen extends StatefulWidget {
-  final Company? companyData;
+  final CompanyViewList? companyData;
   final bool isPop;
   const CompanyCreationScreen({
     super.key,

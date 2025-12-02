@@ -244,11 +244,11 @@ class _SplashScreenState extends State<SplashScreen> {
           final companyProvider = context.read<CompanyCreationProvider>();
           await companyProvider.getAllCompanies(context);
           final companyList =
-              companyProvider.companiesList ?? [];
+              companyProvider.companiesList?.companyViewList ?? [];
 
           // IMPORTANT:
           // Even if companyList is empty, show dialogs for status 10/20.
-          Company? companyData = companyList.isNotEmpty
+          CompanyViewList? companyData = companyList.isNotEmpty
               ? companyList.first
               : null;
 

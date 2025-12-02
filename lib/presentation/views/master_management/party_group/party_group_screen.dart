@@ -2,7 +2,7 @@ import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/users_list_model.dart';
-import 'package:mpos_beat/l10n/generated/app_localizations.dart';
+import 'package:mpos_beat/l10n/app_localizations.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_divider.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 import 'package:mpos_beat/presentation/logic/user_management_provider.dart';

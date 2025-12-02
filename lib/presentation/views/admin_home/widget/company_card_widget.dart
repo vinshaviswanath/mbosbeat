@@ -4,13 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:mpos_beat/core/theme/colors.dart';
 import 'package:mpos_beat/core/theme/text_styles.dart';
 import 'package:mpos_beat/core/utils/extentions.dart';
-import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/presentation/views/admin_home/widget/completed_TickMark.dart';
 import 'package:mpos_beat/presentation/views/admin_home/widget/stataus_view_widget.dart';
 
 class CompanyCard extends StatelessWidget {
-  final Company company;
+  // final Company company;
   final CompanyViewList company;
   final bool isSelected;
   final VoidCallback? onTap;
