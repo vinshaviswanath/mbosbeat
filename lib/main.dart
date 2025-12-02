@@ -9,7 +9,7 @@ import 'package:mpos_beat/domain/repositories/i_company_creation_facad.dart';
 import 'package:mpos_beat/domain/repositories/i_user_management_facad.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:mpos_beat/l10n/generated/app_localizations.dart';
+import 'package:mpos_beat/l10n/app_localizations.dart';
 import 'package:mpos_beat/presentation/logic/authentication_provider.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/presentation/logic/customer_transaction_provider.dart';
@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
     AppDetails.screenSize = MediaQuery.sizeOf(context);
     return MultiProvider(
       providers: [
+        Provider<AppDb>.value(value: db),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(
           create: (_) => AuthFormProvider(sl<IAuthenticationFacad>(),db: db),

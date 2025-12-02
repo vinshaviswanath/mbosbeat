@@ -9,7 +9,7 @@ class VoucherCard extends StatefulWidget {
   final String title;
   final String description;
   final String logoUrl;
-  final Company? companyData;
+  final CompanyViewList? companyData;
 
   const VoucherCard({
     super.key,
@@ -24,7 +24,6 @@ class VoucherCard extends StatefulWidget {
 }
 
 class _VoucherCardState extends State<VoucherCard> {
-  late Company? localCompanyData;
   int lastResetKey = 0;
   late TextEditingController integrationSerialNoController;
 
@@ -55,7 +54,6 @@ class _VoucherCardState extends State<VoucherCard> {
   @override
   void initState() {
     super.initState();
-    localCompanyData = widget.companyData;
     integrationSerialNoController = TextEditingController();
     integrationSerialNoController.addListener(() {
       setState(() {
@@ -309,8 +307,8 @@ class _VoucherCardState extends State<VoucherCard> {
                                                     ).size.height *
                                                     0.056,
                                               ),
-                                              backgroundColor:
-                                                  ColorResources.indigoBlue,
+                                              backgroundColor: ColorResources
+                                                  .indigoBlue,
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(15),
@@ -348,13 +346,10 @@ class _VoucherCardState extends State<VoucherCard> {
                                 provider.setIntegrationType(widget.title);
 
                                 // Clear old integration data from companyData
-                                if (localCompanyData  != null) {
-                                  localCompanyData  = widget.companyData!
-                                      .copyWith(
-                                        integrationType: Value(widget.title),
-
-                                        serialNumber: Value(null),
-                                      );
+                                if (widget.companyData != null) {
+                                  widget.companyData!.integrationType =
+                                      widget.title;
+                                  widget.companyData!.serialNumber = null;
                                 }
 
                                 // If switching TO Stand Alone → instantly activate

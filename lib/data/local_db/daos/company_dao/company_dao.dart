@@ -82,23 +82,23 @@ class CompanyDao extends DatabaseAccessor<AppDb> with _$CompanyDaoMixin {
   }
 
   /// SAFE JSON PRINTING
-  // Future<void> printCompaniesAsJson() async {
-  //   final list = await select(companies).get();
+  Future<void> printCompaniesAsJson() async {
+    final list = await select(companies).get();
 
-  //   Logger.logInfo("COMPANY List Length :: ${list.length}");
-  //   print("===== COMPANY TABLE JSON =====");
+    Logger.logInfo("COMPANY List Length :: ${list.length}");
+    print("===== COMPANY TABLE JSON =====");
 
-  //   for (var c in list) {
-  //     try {
-  //       final jsonMap = companyToJson(c);
-  //       print(const JsonEncoder.withIndent("  ").convert(jsonMap));
-  //     } catch (e) {
-  //       print("Error printing row with ID ${c.id}: $e");
-  //     }
-  //   }
+    for (var c in list) {
+      try {
+        final jsonMap = companyToJson(c);
+        print(const JsonEncoder.withIndent("  ").convert(jsonMap));
+      } catch (e) {
+        print("Error printing row with ID ${c.id}: $e");
+      }
+    }
 
-  //   print("================================");
-  // }
+    print("================================");
+  }
 
   Map<String, dynamic> companyToJson(Company c) {
     String? _d(DateTime? d) => d?.toIso8601String();

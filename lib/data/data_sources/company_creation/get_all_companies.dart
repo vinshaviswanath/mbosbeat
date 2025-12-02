@@ -37,8 +37,8 @@ class GetCompanyList {
 
           await appDb.companyDao.clearAll();
           await appDb.companyDao.insertCompanies(data.companyViewList);
-          /// Print Local DB
-          // await appDb.companyDao.printCompaniesAsJson();
+          // / Print Local DB
+          await appDb.companyDao.printCompaniesAsJson();
           appDb.select(appDb.users).watch();
 
           return data;

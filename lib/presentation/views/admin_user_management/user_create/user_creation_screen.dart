@@ -209,7 +209,7 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
         }
 
         final bool showNameErrorBorder =
-            (_submitted && _nameFieldTouched && userController.text.isEmpty);
+            (_submitted && userController.text.isEmpty);
 
         return PopScope(
           canPop: true,
@@ -308,7 +308,7 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                           ),
                           autovalidateMode: provider.userCreateAutovalidateMode,
                           validator: (_) {
-                            return null; // Disable built-in error display
+                            return null;
                           },
                           keyboardType: TextInputType.emailAddress,
                           onChanged: (value) {

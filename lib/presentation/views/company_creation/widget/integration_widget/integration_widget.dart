@@ -6,7 +6,7 @@ import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/presentation/views/company_creation/widget/integration_widget/integration_card.dart';
 
 class IntegrationWidget extends StatefulWidget {
-  final Company? companyData;
+  final CompanyViewList? companyData;
   const IntegrationWidget({super.key, this.onTap, this.companyData});
   final void Function()? onTap;
 

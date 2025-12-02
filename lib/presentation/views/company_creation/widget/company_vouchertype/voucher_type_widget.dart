@@ -5,7 +5,7 @@ import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/presentation/views/company_creation/widget/company_vouchertype/vouchertypeTile.dart';
 
 class VoucherTypeWidget extends StatefulWidget {
-  final Company? companyData;
+  final CompanyViewList? companyData;
   const VoucherTypeWidget({super.key, this.onTap, this.companyData});
   final void Function()? onTap;
 
