@@ -185,23 +185,25 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
                                                           Navigator.pop(
                                                             context,
                                                           ),
-                                                   
-                                                     child: CircleAvatar(
-                                                                                        backgroundColor: ColorResources.bluishGray.withValues(
-                                                                                          alpha: 0.15,
-                                                                                        ),
 
-                                                                                        radius: 12,
-                                                  child: const Icon(
-                                                                                        child: const Icon(
-                                                                                         Icons.close,
-                                                         size: 12,
+                                                      child: CircleAvatar(
+                                                        backgroundColor:
+                                                            ColorResources
+                                                                .bluishGray
+                                                                .withValues(
+                                                                  alpha: 0.15,
+                                                                ),
+
+                                                        radius: 12,
+
+                                                        child: const Icon(
+                                                          Icons.close,
+
+                                                          size: 12,
                                                           color: ColorResources
                                                               .bluishGray,
-                                                                                         size: 12,
-                                                                                          color: ColorResources.bluishGray,
-                                                                                       ),
-                                                                                      ),
+                                                        ),
+                                                      ),
                                                     ),
                                                   ],
                                                 ),

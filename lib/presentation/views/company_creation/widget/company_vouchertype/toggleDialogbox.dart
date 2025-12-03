@@ -35,11 +35,6 @@ class _ToggleDialogBoxState extends State<ToggleDialogBox> {
     super.initState();
   }
 
-  void fetchCompanyVoucherList() {
-    final provider = context.read<CompanyCreationProvider>();
-    provider.fetchVoucherTypes(context, widget.companyId);
-  }
-
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<CompanyCreationProvider>(
@@ -68,7 +63,10 @@ class _ToggleDialogBoxState extends State<ToggleDialogBox> {
               children: [
                 ElevatedButton(
                   onPressed: () async {
+                    provider.clearB2C();
+                    
                     context.pop(true);
+                    
                     CreateCompanyvochertypeDtos? response = await provider
                         .createCompanyVoucherTypes(
                           onSuccess: widget.onTap,
@@ -77,21 +75,19 @@ class _ToggleDialogBoxState extends State<ToggleDialogBox> {
                             id: widget.id,
                             companyid: widget.companyId,
                             hasB2B: 0,
-                            b2Bprefix: "",
-                            b2Bsuffix: "",
-                            b2Bwidth: 0,
-                            b2Bdeclaration: "",
+                            b2Bprefix: provider.b2bPrefix.text,
+                            b2Bsuffix: provider.b2bSuffix.text,
+                            b2Bwidth: int.tryParse(provider.b2bWidth.text) ?? 0,
+                            b2Bdeclaration: provider.b2bDeclaration.text,
                             b2Cprefix: "",
                             b2Csuffix: "",
                             b2Cwidth: 0,
                             b2Cdeclaration: "",
-                            isenabled: 0,
+                            isenabled: 1,
                           ),
                         );
                     if (response != null && response.status == 1) {
-                      //    CommonSnackBar.show(context, message: "");
-                      fetchCompanyVoucherList();
-                      //  context.pop(true);
+                      provider.fetchVoucherTypes(context, widget.companyId);
                     }
                   },
                   child: Text(

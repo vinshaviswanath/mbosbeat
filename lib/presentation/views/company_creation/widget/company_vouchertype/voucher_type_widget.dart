@@ -45,149 +45,141 @@ class _VoucherTypeWidgetState extends State<VoucherTypeWidget> {
   Widget build(BuildContext context) {
     final appLocalization = context.l10n;
 
-    return CustomScrollView(
-      slivers: [
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  appLocalization.voucher_type_voucher_type_activation,
-                  style: context.textStyle.s12.w400.bluishGray.roboto,
-                ),
-                //h6,
-              ],
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    appLocalization.voucher_type_voucher_type_activation,
+                    style: context.textStyle.s12.w400.bluishGray.roboto,
+                  ),
+                  //h6,
+                ],
+              ),
             ),
           ),
-        ),
 
-        /// Vouchers List
-        Consumer<CompanyCreationProvider>(
-          builder: (context, provider, _) {
-            if (provider.isLoading) {
-              return const SliverFillRemaining(
-                child: Center(child: CircularProgressIndicator()),
-              );
-            }
+          /// Vouchers List
+          Consumer<CompanyCreationProvider>(
+            builder: (context, provider, _) {
+              if (provider.isLoading) {
+                return const SliverFillRemaining(
+                  child: Center(child: CircularProgressIndicator()),
+                );
+              }
 
-            final voucherList = provider.voucherTypes;
-            //final companyId = provider.companyid;
+              final voucherList = provider.voucherTypes;
+              //final companyId = provider.companyid;
 
-            if (voucherList.isEmpty) {
-              return const SliverFillRemaining(
-                child: Center(child: Text("No voucher types available")),
-              );
-            }
+              if (voucherList.isEmpty) {
+                return const SliverFillRemaining(
+                  child: Center(child: Text("No voucher types available")),
+                );
+              }
 
-            return SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.all(15),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: ColorResources.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.1),
-                        offset: Offset(0, 10),
+              return SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: ColorResources.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.1),
+                          offset: Offset(0, 10),
 
-                        blurRadius: 3,
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(10),
-                  ),
+                          blurRadius: 3,
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(10),
+                    ),
 
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: voucherList.length,
-                    itemBuilder: (context, index) {
-                      final voucher = voucherList[index];
-                      final isCheckOnInt =
-                          (checkStates[voucher.id] ?? voucher.isEnabled) == 1
-                          ? 1
-                          : 0;
-                      final isToggleOnInt =
-                          (toggleStates[voucher.id] ?? voucher.hasB2B) == 1
-                          ? 1
-                          : 0;
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: voucherList.length,
+                      itemBuilder: (context, index) {
+                        final voucher = voucherList[index];
+                        final isCheckOnInt =
+                            (checkStates[voucher.id] ?? voucher.isEnabled) == 1
+                            ? 1
+                            : 0;
+                        final isToggleOnInt =
+                            (toggleStates[voucher.id] ?? voucher.hasB2B) == 1
+                            ? 1
+                            : 0;
 
-                      return VoucherTypeTile(
-                        companyId: companyId ?? 0,
-                        voucher: voucher,
-                        isCheckOnInt: isCheckOnInt,
-                        isToggleOnInt: isToggleOnInt,
-                        onEdit: () {},
-                        onChanged: (newValue) {
-                          setState(() {
-                            checkStates[voucher.id] = newValue;
-                          });
-                        },
-                      );
-                    },
+                        return VoucherTypeTile(
+                          companyId: companyId ?? 0,
+                          voucher: voucher,
+                          isCheckOnInt: isCheckOnInt,
+                          isToggleOnInt: isToggleOnInt,
+                          onEdit: () {},
+                          onChanged: (newValue) {
+                            setState(() {
+                              checkStates[voucher.id] = newValue;
+                            });
+                          },
+                        );
+                      },
+                    ),
                   ),
                 ),
-              ),
+              );
+            },
+          ),
+        ],
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(16),
+        child: CustomButton(
+          buttonText: appLocalization.company_info_widget_next,
+          isborderEnable: false,
+          onTap: () {
+            final provider = Provider.of<CompanyCreationProvider>(
+              context,
+              listen: false,
             );
+
+            // Check if any voucher has isEnabled == 1
+            final hasEnabledVoucher = provider.voucherTypes.any(
+              (voucher) => voucher.isEnabled == 1,
+            );
+
+            print("hasEnabledVoucher: $hasEnabledVoucher");
+
+            if (hasEnabledVoucher) {
+              provider.completeVouchers(
+                context,
+                companyId: widget.companyData?.id!,
+              );
+              widget.onTap?.call();
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: const Text(
+                    "Please Complete voucher configuration",
+                    textAlign: TextAlign.center,
+                  ),
+                  behavior: SnackBarBehavior.floating,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
+                ),
+              );
+            }
           },
         ),
-
-        /// Next Button at bottom
-        SliverFillRemaining(
-          hasScrollBody: false,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: CustomButton(
-                  buttonText: appLocalization.company_info_widget_next,
-                  isborderEnable: false,
-                  onTap: () {
-                    final provider = Provider.of<CompanyCreationProvider>(
-                      context,
-                      listen: false,
-                    );
-
-                    // Check if any voucher has isEnabled == 1
-                    final hasEnabledVoucher = provider.voucherTypes.any(
-                      (voucher) => voucher.isEnabled == 1,
-                    );
-
-                    print("hasEnabledVoucher: $hasEnabledVoucher");
-
-                    if (hasEnabledVoucher) {
-                      provider.completeVouchers(
-                        context,
-                        companyId: widget.companyData?.id!,
-                      );
-                      widget.onTap?.call();
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: const Text(
-                            "Please Complete voucher configuration",
-                            textAlign: TextAlign.center,
-                          ),
-                          behavior: SnackBarBehavior.floating,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          margin: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 8,
-                          ),
-                        ),
-                      );
-                    }
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

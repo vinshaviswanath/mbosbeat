@@ -1,9 +1,7 @@
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/data/company_voucher_data.dart';
 import 'package:mpos_beat/domain/request/create_company_voucher_request.dart';
-import 'package:mpos_beat/l10n/app_localizations.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
-import 'package:mpos_beat/presentation/views/admin_home/widget/common_snackbar.dart';
 
 class B2bContainer extends StatefulWidget {
   final int companyId;
@@ -25,6 +23,7 @@ class B2bContainer extends StatefulWidget {
 
 class _B2bContainerState extends State<B2bContainer> {
   final _formKey = GlobalKey<FormState>();
+
   TextEditingController b2bprefixcontroller = TextEditingController();
   TextEditingController b2bwidthcontroller = TextEditingController();
   TextEditingController b2bsuffixcontroller = TextEditingController();
@@ -33,15 +32,19 @@ class _B2bContainerState extends State<B2bContainer> {
   bool _isPrefixValid = true;
   bool _isSuffixValid = true;
   String _errorText = "";
-  // String _errorText2 = "";
 
   @override
   void initState() {
-    print("companyid in b2bContainer ....${widget.companyId}");
-    print("hasb2b toggle in  b2bContainer ....${widget.isToggleOn}");
-    print("checkbox  in  b2bContainer ....${widget.isCheckOn}");
-    print("companydata  in  b2bContainer ....${widget.companydata}");
+    final provider = Provider.of<CompanyCreationProvider>(
+      context,
+      listen: false,
+    );
 
+    // link UI controllers to provider controllers
+    b2bprefixcontroller = provider.b2bPrefix;
+    b2bwidthcontroller = provider.b2bWidth;
+    b2bsuffixcontroller = provider.b2bSuffix;
+    b2bdeclarationcontroller = provider.b2bDeclaration;
     fillFields();
     super.initState();
   }
@@ -67,22 +70,6 @@ class _B2bContainerState extends State<B2bContainer> {
 
       return;
     }
-
-    // Check if suffix is empty
-    // if (b2bsuffixcontroller.text.isEmpty) {
-    //   setState(() {
-    //     _isSuffixValid = false;
-    //     _errorText = "Suffix cannot be empty!";
-    //   });
-
-    //   Future.delayed(const Duration(seconds: 2), () {
-    //     setState(() {
-    //       _isSuffixValid = true;
-    //       _errorText = "";
-    //     });
-    //   });
-    //   return;
-    // }
     setState(() {
       _isPrefixValid = true;
       _isSuffixValid = true;
@@ -151,16 +138,10 @@ class _B2bContainerState extends State<B2bContainer> {
 
     final b2bDeclaration = widget.companydata!.b2BDeclaration =
         b2bdeclarationcontroller.text;
-
-    print("B2B prefix....${b2bprefix}");
-    print("B2B width....${b2bwidth}");
-    print("B2B suffix....${b2bsuffix}");
-    print("B2B declaration....${b2bDeclaration}");
   }
 
   @override
   Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context);
     final provider = Provider.of<CompanyCreationProvider>(
       context,
       listen: false,
@@ -428,7 +409,7 @@ class _B2bContainerState extends State<B2bContainer> {
 
                       await provider.fetchVoucherTypes(
                         context,
-                        widget.companyId ?? 0,
+                        widget.companyId,
                       );
                       context.pop();
                     }
@@ -437,7 +418,7 @@ class _B2bContainerState extends State<B2bContainer> {
                 },
                 child: Text(
                   "Save",
-                  style: TextStyle(fontSize: 14, color:ColorResources.white),
+                  style: TextStyle(fontSize: 14, color: ColorResources.white),
                 ),
               ),
             ),
