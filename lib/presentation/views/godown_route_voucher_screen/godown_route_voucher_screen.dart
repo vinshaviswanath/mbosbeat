@@ -149,7 +149,7 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
                         GestureDetector(
                           onTap: () {
                             CustomDialog.showBottomCustomDialog(
-                             chid: provider.isGodown
+                             child: provider.isGodown
                                  ? AddVehicle(
                                       isEdit: true,
                                       details: provider.selectedVehicle,

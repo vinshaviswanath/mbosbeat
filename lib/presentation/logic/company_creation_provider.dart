@@ -199,11 +199,10 @@ class CompanyCreationProvider extends ChangeNotifier {
   }
 
   void resetSelections() {
-  _selectedVehicle = null;
-  _selectedRoute = null;
-  notifyListeners();
-}
-
+    _selectedVehicle = null;
+    _selectedRoute = null;
+    notifyListeners();
+  }
 
   void toggleVoucher(BuildContext context) {
     _isGodown = !_isGodown;
@@ -857,22 +856,11 @@ class CompanyCreationProvider extends ChangeNotifier {
           if (response.status == 1) {
             _integrationDtos = response;
             markStageCompleted(2);
-        context.pushNamed(AppRouterConst.adminDashboard);
-          context.pushNamed(AppRouterConst.companyscreationsuccess);
-           onSuccess?.call();
-         }
+            context.go(AppRouterConst.companyscreationsuccess);
+            onSuccess?.call();
+          }
 
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(response.message, textAlign: TextAlign.center),
-              behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            ),
-          );
-         // ScaffoldMessenger.of(context).showSnackBar(
+          // ScaffoldMessenger.of(context).showSnackBar(
           //   SnackBar(
           //     content: Text(response.message, textAlign: TextAlign.center),
           //     behavior: SnackBarBehavior.floating,
@@ -882,18 +870,6 @@ class CompanyCreationProvider extends ChangeNotifier {
           //     margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           //   ),
           // );
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(response.message, textAlign: TextAlign.center),
-              behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            ),
-          );
-        }
         },
       );
     } catch (e) {
@@ -2095,5 +2071,28 @@ class CompanyCreationProvider extends ChangeNotifier {
     setLoading(false);
     notifyListeners();
     return _voucherNumberingRouteResponse;
+  }
+
+  // B2B Controllers
+  TextEditingController b2bPrefix = TextEditingController();
+  TextEditingController b2bWidth = TextEditingController();
+  TextEditingController b2bSuffix = TextEditingController();
+  TextEditingController b2bDeclaration = TextEditingController();
+  
+
+  // B2C Controllers
+  TextEditingController b2cPrefix = TextEditingController();
+  TextEditingController b2cWidth = TextEditingController();
+  TextEditingController b2cSuffix = TextEditingController();
+  TextEditingController b2cDeclaration = TextEditingController();
+
+  // ---- RESET ONLY B2C ----
+  void clearB2C() {
+ 
+    b2cPrefix.clear();
+    b2cWidth.clear();
+    b2cSuffix.clear();
+    b2cDeclaration.clear();
+    notifyListeners();
   }
 }

@@ -54,10 +54,9 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
       text: provider.address3.value.fold((l) => "", (r) => r),
     );
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-  if (widget.companyData == null) {
+      if (widget.companyData == null) {
         provider.clearSelections();
       }
-
 
       await provider.fectchCountryList(context);
 
@@ -250,247 +249,257 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
             ? selectedCountry!.stateTitle
             : "State";
 
-        return CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 20,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      appLocalizations.sign_up_company_name,
-                      style: context.textStyle.s12.bluishGray.w400.roboto,
-                    ),
-                    h4,
-                    CustomTextField(
-                      controller: compnyNameController,
-                      hint: appLocalizations.sign_up_enter_company_name,
-                      hintTextStyle: context.textStyle.s12.silverGray.w300,
-                      backgroundColor: ColorResources.lightGray,
-                      onChange: provider.updateCompanyName,
-                      inputType: TextInputType.emailAddress,
-                      borderRadius: 12,
-                      hintColor: ColorResources.silverGray,
-                      borderColor: ColorResources.transparent,
-                      autovalidateMode: provider.companyinfoAutovalidateMode,
-                      failure: provider.companyName.getFailure,
-                    ),
-                    h16,
-                    Text(
-                      appLocalizations.company_info_widget_display_name,
-                      style: context.textStyle.s12.bluishGray.w400.roboto,
-                    ),
-                    h4,
-                    CustomTextField(
-                      hint: appLocalizations
-                          .company_info_widget_enter_display_name,
-                      hintTextStyle: context.textStyle.s12.silverGray.w300,
-                      controller: displayNameController,
-                      backgroundColor: ColorResources.lightGray,
-                      onChange: provider.updateDisplayName,
-                      inputType: TextInputType.emailAddress,
-                      borderRadius: 12,
-                      hintColor: ColorResources.silverGray,
-                      borderColor: ColorResources.transparent,
-                      autovalidateMode: provider.companyinfoAutovalidateMode,
-                      failure: provider.displayName.getFailure,
-                    ),
-                    h16,
+        return Scaffold(
+          body: CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 20,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        appLocalizations.sign_up_company_name,
+                        style: context.textStyle.s12.bluishGray.w400.roboto,
+                      ),
+                      h4,
+                      CustomTextField(
+                        controller: compnyNameController,
+                        hint: appLocalizations.sign_up_enter_company_name,
+                        hintTextStyle: context.textStyle.s12.silverGray.w300,
+                        backgroundColor: ColorResources.lightGray,
+                        onChange: provider.updateCompanyName,
+                        inputType: TextInputType.emailAddress,
+                        borderRadius: 12,
+                        hintColor: ColorResources.silverGray,
+                        borderColor: ColorResources.transparent,
+                        autovalidateMode: provider.companyinfoAutovalidateMode,
+                        failure: provider.companyName.getFailure,
+                      ),
+                      h16,
+                      Text(
+                        appLocalizations.company_info_widget_display_name,
+                        style: context.textStyle.s12.bluishGray.w400.roboto,
+                      ),
+                      h4,
+                      CustomTextField(
+                        hint: appLocalizations
+                            .company_info_widget_enter_display_name,
+                        hintTextStyle: context.textStyle.s12.silverGray.w300,
+                        controller: displayNameController,
+                        backgroundColor: ColorResources.lightGray,
+                        onChange: provider.updateDisplayName,
+                        inputType: TextInputType.emailAddress,
+                        borderRadius: 12,
+                        hintColor: ColorResources.silverGray,
+                        borderColor: ColorResources.transparent,
+                        autovalidateMode: provider.companyinfoAutovalidateMode,
+                        failure: provider.displayName.getFailure,
+                      ),
+                      h16,
 
-                    Text(
-                      appLocalizations.company_info_widget_address_1,
-                      style: context.textStyle.s12.bluishGray.w400.roboto,
-                    ),
-                    h4,
-                    CustomTextField(
-                      hint: appLocalizations.company_info_widget_enter_address,
-                      hintTextStyle: context.textStyle.s12.silverGray.w300,
-                      controller: address1Controller,
-                      backgroundColor: ColorResources.lightGray,
-                      onChange: provider.updateAddress1,
-                      inputType: TextInputType.emailAddress,
-                      borderRadius: 12,
-                      hintColor: ColorResources.silverGray,
-                      borderColor: ColorResources.transparent,
-                      autovalidateMode: provider.companyinfoAutovalidateMode,
-                      failure: provider.address1.getFailure,
-                    ),
-                    h16,
+                      Text(
+                        appLocalizations.company_info_widget_address_1,
+                        style: context.textStyle.s12.bluishGray.w400.roboto,
+                      ),
+                      h4,
+                      CustomTextField(
+                        hint:
+                            appLocalizations.company_info_widget_enter_address,
+                        hintTextStyle: context.textStyle.s12.silverGray.w300,
+                        controller: address1Controller,
+                        backgroundColor: ColorResources.lightGray,
+                        onChange: provider.updateAddress1,
+                        inputType: TextInputType.emailAddress,
+                        borderRadius: 12,
+                        hintColor: ColorResources.silverGray,
+                        borderColor: ColorResources.transparent,
+                        autovalidateMode: provider.companyinfoAutovalidateMode,
+                        failure: provider.address1.getFailure,
+                      ),
+                      h16,
 
-                    Text(
-                      appLocalizations.company_info_widget_address_2,
-                      style: context.textStyle.s12.bluishGray.w400.roboto,
-                    ),
-                    h4,
-                    CustomTextField(
-                      hint: appLocalizations.company_info_widget_enter_address,
-                      hintTextStyle: context.textStyle.s12.silverGray.w300,
-                      controller: address2Controller,
-                      onChange: provider.updateAddress2,
-                      backgroundColor: ColorResources.lightGray,
-                      inputType: TextInputType.emailAddress,
-                      borderRadius: 12,
-                      hintColor: ColorResources.silverGray,
-                      borderColor: ColorResources.transparent,
-                    ),
-                    h16,
+                      Text(
+                        appLocalizations.company_info_widget_address_2,
+                        style: context.textStyle.s12.bluishGray.w400.roboto,
+                      ),
+                      h4,
+                      CustomTextField(
+                        hint:
+                            appLocalizations.company_info_widget_enter_address,
+                        hintTextStyle: context.textStyle.s12.silverGray.w300,
+                        controller: address2Controller,
+                        onChange: provider.updateAddress2,
+                        backgroundColor: ColorResources.lightGray,
+                        inputType: TextInputType.emailAddress,
+                        borderRadius: 12,
+                        hintColor: ColorResources.silverGray,
+                        borderColor: ColorResources.transparent,
+                      ),
+                      h16,
 
-                    Text(
-                      appLocalizations.company_info_widget_address_3,
-                      style: context.textStyle.s12.bluishGray.w400.roboto,
-                    ),
-                    h4,
-                    CustomTextField(
-                      hint: appLocalizations.company_info_widget_enter_address,
-                      hintTextStyle: context.textStyle.s12.silverGray.w300,
-                      controller: address3Controller,
-                      onChange: provider.updateAddress3,
-                      backgroundColor: ColorResources.lightGray,
-                      inputType: TextInputType.emailAddress,
-                      borderRadius: 12,
-                      hintColor: ColorResources.silverGray,
-                      borderColor: ColorResources.transparent,
-                    ),
+                      Text(
+                        appLocalizations.company_info_widget_address_3,
+                        style: context.textStyle.s12.bluishGray.w400.roboto,
+                      ),
+                      h4,
+                      CustomTextField(
+                        hint:
+                            appLocalizations.company_info_widget_enter_address,
+                        hintTextStyle: context.textStyle.s12.silverGray.w300,
+                        controller: address3Controller,
+                        onChange: provider.updateAddress3,
+                        backgroundColor: ColorResources.lightGray,
+                        inputType: TextInputType.emailAddress,
+                        borderRadius: 12,
+                        hintColor: ColorResources.silverGray,
+                        borderColor: ColorResources.transparent,
+                      ),
 
-                    h16,
-                    // Country & State side-by-side
-                    Row(
-                      children: [
-                        Expanded(
-                          child: CustomDropdown(
-                            label: appLocalizations.company_info_widget_country,
-                            hintText: appLocalizations
-                                .company_info_widget_enter_country,
-                            items: items,
-                            value: selectedValue,
+                      h16,
+                      // Country & State side-by-side
+                      Row(
+                        children: [
+                          Expanded(
+                            child: CustomDropdown(
+                              label:
+                                  appLocalizations.company_info_widget_country,
+                              hintText: appLocalizations
+                                  .company_info_widget_enter_country,
+                              items: items,
+                              value: selectedValue,
 
-                            onChanged: (value) {
-                              if (value != null) {
-                                final selected = countries.firstWhere(
-                                  (element) =>
-                                      element.countryName.trim() ==
-                                      value.trim(),
-                                );
-                                provider.selectCountry(context, selected);
-                                provider.updateCountry(value);
+                              onChanged: (value) {
+                                if (value != null) {
+                                  final selected = countries.firstWhere(
+                                    (element) =>
+                                        element.countryName.trim() ==
+                                        value.trim(),
+                                  );
+                                  provider.selectCountry(context, selected);
+                                  provider.updateCountry(value);
 
-                                provider.updateCountryState("");
-                                provider.updateRegType("");
-                              }
-                            },
-                            autovalidateMode:
-                                provider.companyinfoAutovalidateMode,
-                            failure: provider.country.getFailure,
+                                  provider.updateCountryState("");
+                                  provider.updateRegType("");
+                                }
+                              },
+                              autovalidateMode:
+                                  provider.companyinfoAutovalidateMode,
+                              failure: provider.country.getFailure,
+                            ),
                           ),
-                        ),
-                        w12,
-                        Expanded(
-                          child: CustomDropdown(
-                            autovalidateMode:
-                                provider.companyinfoAutovalidateMode,
-                            failure: provider.countryState.getFailure,
-                            label: stateTitle,
-                            hintText:
-                                appLocalizations.company_info_widget_state,
-                            items: stateItems,
-                            value: selectedStateValue,
+                          w12,
+                          Expanded(
+                            child: CustomDropdown(
+                              autovalidateMode:
+                                  provider.companyinfoAutovalidateMode,
+                              failure: provider.countryState.getFailure,
+                              label: stateTitle,
+                              hintText:
+                                  appLocalizations.company_info_widget_state,
+                              items: stateItems,
+                              value: selectedStateValue,
 
-                            onChanged: (value) {
-                              if (value != null) {
-                                final selectedState = provider.statelists
-                                    .firstWhere(
-                                      (e) => e.stateName.trim() == value.trim(),
-                                    );
-                                provider.selectState(selectedState);
-                                provider.updateCountryState(value);
-                              }
-                            },
+                              onChanged: (value) {
+                                if (value != null) {
+                                  final selectedState = provider.statelists
+                                      .firstWhere(
+                                        (e) =>
+                                            e.stateName.trim() == value.trim(),
+                                      );
+                                  provider.selectState(selectedState);
+                                  provider.updateCountryState(value);
+                                }
+                              },
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
 
-                    h16,
-                    Text(
-                      pinTitle,
-                      style: context.textStyle.s12.bluishGray.w400.roboto,
-                    ),
-                    CustomTextField(
-                      hint: appLocalizations.company_info_widget_enter_pincode,
-                      hintTextStyle: context.textStyle.s12.silverGray.w300,
-                      controller: pincodeController,
-                      backgroundColor: ColorResources.lightGray,
-                      autovalidateMode: provider.companyinfoAutovalidateMode,
-                      failure: provider.pincode.getFailure,
-                      onChange: provider.updatePincode,
-                      inputType: TextInputType.phone,
-                      borderRadius: 12,
-                      hintColor: ColorResources.silverGray,
-                      borderColor: ColorResources.transparent,
-                      maxLength: 6,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    ),
-                    h16,
-                    CustomDropdown(
-                      label: appLocalizations
-                          .company_info_widget_registration_type,
-                      hintText: appLocalizations
-                          .company_info_widget_enter_registration_type,
-                      items: regItems,
-                      value: selectRegType,
+                      h16,
+                      Text(
+                        pinTitle,
+                        style: context.textStyle.s12.bluishGray.w400.roboto,
+                      ),
+                      CustomTextField(
+                        hint:
+                            appLocalizations.company_info_widget_enter_pincode,
+                        hintTextStyle: context.textStyle.s12.silverGray.w300,
+                        controller: pincodeController,
+                        backgroundColor: ColorResources.lightGray,
+                        autovalidateMode: provider.companyinfoAutovalidateMode,
+                        failure: provider.pincode.getFailure,
+                        onChange: provider.updatePincode,
+                        inputType: TextInputType.phone,
+                        borderRadius: 12,
+                        hintColor: ColorResources.silverGray,
+                        borderColor: ColorResources.transparent,
+                        maxLength: 6,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
+                      ),
+                      h16,
+                      CustomDropdown(
+                        label: appLocalizations
+                            .company_info_widget_registration_type,
+                        hintText: appLocalizations
+                            .company_info_widget_enter_registration_type,
+                        items: regItems,
+                        value: selectRegType,
 
-                      onChanged: (value) {
-                        if (value != null) {
-                          final selected = regtypelist.firstWhere(
-                            (element) =>
-                                element.registrationType.trim() == value.trim(),
-                          );
-                          provider.selectRegistrationType(selected);
-                          provider.updateRegType(value);
-                        }
-                      },
-                      autovalidateMode: provider.companyinfoAutovalidateMode,
-                      failure: provider.registrationType.getFailure,
-                    ),
-                    h40,
-                    CustomButton(
-                      buttonText: appLocalizations.company_info_widget_next,
-                      isborderEnable: false,
-                      onTap: () async {
-                        provider.companyinfo(
-                          onSuccess: widget.onTap,
-
-                          context,
-                          params: CompanyInfoParams(
-                            id: widget.companyData?.id ?? 0,
-                            companyCode: "1",
-                            companyName: compnyNameController.text,
-                            displayName: displayNameController.text,
-                            address1: address1Controller.text,
-                            address2: address2Controller.text,
-                            address3: address3Controller.text,
-                            pincode: pincodeController.text,
-                            countryId:
-                                provider.selectedCountry?.id.toString() ?? '',
-                            stateId:
-                                provider.selectedState?.id.toString() ?? "",
-                            regType:
-                                provider.selectedregistrationtype?.id
-                                    .toString() ??
-                                "",
-                          ),
-                        );
-                      },
-                    ),
-                  ],
+                        onChanged: (value) {
+                          if (value != null) {
+                            final selected = regtypelist.firstWhere(
+                              (element) =>
+                                  element.registrationType.trim() ==
+                                  value.trim(),
+                            );
+                            provider.selectRegistrationType(selected);
+                            provider.updateRegType(value);
+                          }
+                        },
+                        autovalidateMode: provider.companyinfoAutovalidateMode,
+                        failure: provider.registrationType.getFailure,
+                      ),
+                      h40,
+                    ],
+                  ),
                 ),
               ),
+            ],
+          ),
+          bottomNavigationBar: Padding(
+            padding: const EdgeInsets.all(16),
+            child: CustomButton(
+              buttonText: appLocalizations.company_info_widget_next,
+              isborderEnable: false,
+              onTap: () async {
+                provider.companyinfo(
+                  onSuccess: widget.onTap,
+
+                  context,
+                  params: CompanyInfoParams(
+                    id: widget.companyData?.id ?? 0,
+                    companyCode: "1",
+                    companyName: compnyNameController.text,
+                    displayName: displayNameController.text,
+                    address1: address1Controller.text,
+                    address2: address2Controller.text,
+                    address3: address3Controller.text,
+                    pincode: pincodeController.text,
+                    countryId: provider.selectedCountry?.id.toString() ?? '',
+                    stateId: provider.selectedState?.id.toString() ?? "",
+                    regType:
+                        provider.selectedregistrationtype?.id.toString() ?? "",
+                  ),
+                );
+              },
             ),
-          ],
+          ),
         );
       },
     );

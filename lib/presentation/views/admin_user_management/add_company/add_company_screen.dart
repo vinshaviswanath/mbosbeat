@@ -2,6 +2,7 @@ import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/domain/request/create_user_company_mapping_params.dart';
+import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/presentation/logic/user_management_provider.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/add_company/widgets/add_company_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -52,6 +53,20 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
   Widget build(BuildContext context) {
     final appLocalization = context.l10n;
     final provider = context.watch<UserManagementProvider>();
+    final companyprovider = context.read<CompanyCreationProvider>();
+    final selectedCompany = companyprovider.selectedCompany;
+    final addressParts = [
+      selectedCompany?.address1,
+      selectedCompany?.address2,
+      selectedCompany?.address3,
+    
+    ];
+    final filteredAddress = addressParts
+        .where((e) => e != null && e!.trim().isNotEmpty)
+        .toList();
+
+    // Join with commas
+    final addressText = filteredAddress.join(", ");
     final filteredCompanies =
         provider.companiesList?.companyViewList.where((company) {
           final query = _searchController.text.toLowerCase();
@@ -61,21 +76,7 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
         [];
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: ColorResources.cloudGray,
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: const Icon(
-            Icons.keyboard_arrow_left,
-            color: ColorResources.indigoBlue,
-          ),
-        ),
-        title: Text(
-          appLocalization.add_company_screen_add_company,
-          style: context.textStyle.s20.indigoBlue.bold.roboto,
-        ),
-        centerTitle: true,
-      ),
+     
       body: StreamBuilder<CompaniesListResponse?>(
         stream: provider.companyListStream,
         builder: (context, snapshot) {
@@ -89,19 +90,45 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
 
           return CustomScrollView(
             slivers: [
+              SliverAppBar(
+                backgroundColor: ColorResources.cloudGray,
+                leading: IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(
+                    Icons.keyboard_arrow_left,
+                    color: ColorResources.indigoBlue,
+                  ),
+                ),
+                title: Text(
+                  appLocalization.add_company_screen_add_company,
+                  style: context.textStyle.s20.indigoBlue.bold.roboto,
+                ),
+                centerTitle: true,
+
+              
+                bottom: PreferredSize(
+                  preferredSize: const Size.fromHeight(30),
+                  child: Column(
+                    children: [
+                      Text(
+                        widget.name,
+                        style: context.textStyle.s12.w500.indigoBlue.roboto,
+                      ),
+                      SizedBox(height: 4),
+                      Text(
+                        addressText,
+                        style: context.textStyle.s10.w400.dustyBlue.roboto,
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 8),
+                    ],
+                  ),
+                ),
+              ),
+
               SliverToBoxAdapter(
                 child: Column(
                   children: [
-                    h12,
-                    Text(
-                      widget.name,
-                      style: context.textStyle.s12.w500.indigoBlue.roboto,
-                    ),
-                    h4,
-                    Text(
-                      widget.companyName,
-                      style: context.textStyle.s10.w400.dustyBlue.roboto,
-                    ),
                     h12,
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -176,43 +203,38 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
                     );
                   }, childCount: filteredCompanies.length),
                 ),
-              if (filteredCompanies.isNotEmpty)
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: context.getSize.width / 4,
-                      vertical: 16,
-                    ),
-                    child: CustomButton(
-                      borderRadius: BorderRadius.circular(16),
-                      onTap: () async {
-                        final pref = sl<SharedPreferences>();
-                        await pref.setStringList(
-                          'companies',
-                          selectedCompanyList
-                              .map((e) => e.companyId.toString())
-                              .toList(),
-                        );
-                        provider
-                            .createUserCompanyMapping(
-                              context: context,
-                              userId: widget.userId,
-                              companyList: selectedCompanyList,
-                            )
-                            .then((_) {
-                              WidgetsBinding.instance.addPostFrameCallback(
-                                (_) => context.pop(),
-                              );
-                            });
-                      },
-                      buttonText: appLocalization.save,
-                      isborderEnable: false,
-                    ),
-                  ),
-                ),
             ],
           );
         },
+      ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: context.getSize.width / 4,
+          vertical: 16,
+        ),
+        child: CustomButton(
+          borderRadius: BorderRadius.circular(16),
+          onTap: () async {
+            final pref = sl<SharedPreferences>();
+            await pref.setStringList(
+              'companies',
+              selectedCompanyList.map((e) => e.companyId.toString()).toList(),
+            );
+            provider
+                .createUserCompanyMapping(
+                  context: context,
+                  userId: widget.userId,
+                  companyList: selectedCompanyList,
+                )
+                .then((_) {
+                  WidgetsBinding.instance.addPostFrameCallback(
+                    (_) => context.pop(),
+                  );
+                });
+          },
+          buttonText: appLocalization.save,
+          isborderEnable: false,
+        ),
       ),
     );
   }

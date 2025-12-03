@@ -33,7 +33,6 @@ class _B2cContainerState extends State<B2cContainer> {
   bool _isPrefixValid = true;
   bool _isSuffixValid = true;
   String _errorText = "";
-  // String _errorText2 = "";
 
   void _validateInput() {
     final prefixLength = b2cprefixcontroller.text.length;
@@ -56,21 +55,6 @@ class _B2cContainerState extends State<B2cContainer> {
 
       return;
     }
-    // Check if suffix is empty
-    // if (b2csuffixcontroller.text.isEmpty) {
-    //   setState(() {
-    //     _isSuffixValid = false;
-    //     _errorText = "Suffix cannot be empty!";
-    //   });
-
-    //   Future.delayed(const Duration(seconds: 2), () {
-    //     setState(() {
-    //       _isSuffixValid = true;
-    //       _errorText = "";
-    //     });
-    //   });
-    //   return;
-    // }
     setState(() {
       _isPrefixValid = true;
       _isSuffixValid = true;

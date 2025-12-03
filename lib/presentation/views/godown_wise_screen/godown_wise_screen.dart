@@ -195,12 +195,11 @@ class _GodownWiseScreenState extends State<GodownWiseScreen> {
                                                                                           alpha: 0.15,
                                                                                         ),
                                                                      radius: 12,
-                                                    child: const Icon(
+                                              
                                                                                       child: const Icon(
                                                                                          Icons.close,
-                                                       size: 12,
-                                                        color: ColorResources
-                                                            .bluishGray,
+                                                     
+                                                     
                                                                                          size: 12,
                                                                                           color: ColorResources.bluishGray,
                                                                                         ),
