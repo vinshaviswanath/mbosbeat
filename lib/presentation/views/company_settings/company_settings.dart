@@ -1,6 +1,6 @@
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/data/get_all_company_settings_data.dart';
-
+import 'package:mpos_beat/domain/request/create_company_settings_request.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_settings/tooltip_overlay_manager.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_settings/widgets/info_tool_tip.dart';
@@ -58,34 +58,42 @@ class _CompanySettingsScreenState extends State<CompanySettingsScreen> {
           ),
         ),
         body: Consumer<CompanyCreationProvider>(
-          builder: (context, provider, _) {
-            final appLocalizations = context.l10n;
-
-            // STREAM DATA
-            final settings = context.watch<List<CompanySettingsListData>>();
-
-            if (provider.isLoading && settings.isEmpty) {
-              return const Center(child: CircularProgressIndicator());
+          builder: (context, companysettings, child) {
+            if (companysettings.isLoading) {
+              return Center(child: CircularProgressIndicator());
+            }
+            if (companysettings.comapanySettingsListData.isEmpty) {
+              return Center(child: Text("No settings found"));
             }
 
-            if (settings.isEmpty) {
-              return const Center(child: Text("No settings found"));
-            }
+            final allSettings = companysettings.comapanySettingsListData;
 
             return CustomScrollView(
               slivers: [
                 SliverPadding(
                   padding: const EdgeInsets.all(7),
+
                   sliver: SliverList(
                     delegate: SliverChildBuilderDelegate(
-                      childCount: settings.length,
+                      childCount:
+                          companysettings.comapanySettingsListData.length,
                       (context, index) {
-                        final setting = settings[index];
-                        // child check
-                        final bool isChild = setting.parentId > 1;
-                        // parent enabled check
+                        final setting = allSettings[index];
+
+                        bool isChild = setting.parentId > 1;
+
+                        // get current toggle state
+                        final bool isOn =
+                            switchStates[setting.id] ??
+                            (setting.settingsValue == "Yes");
+
+                        final bool isFree =
+                            setting.menuType.toString().trim().toLowerCase() !=
+                            'menutype.free';
+
+                        // parent toggle check
                         final bool parentEnabled =
-                            settings
+                            allSettings
                                 .firstWhere(
                                   (e) => e.id == setting.parentId,
                                   orElse: () => CompanySettingsListData(
@@ -103,6 +111,7 @@ class _CompanySettingsScreenState extends State<CompanySettingsScreen> {
                                 .settingsValue ==
                             "Yes";
 
+                        // if child and parent is OFF, hide it
                         if (isChild && !parentEnabled) {
                           return const SizedBox.shrink();
                         }
@@ -116,12 +125,10 @@ class _CompanySettingsScreenState extends State<CompanySettingsScreen> {
                           child: InfoTooltip(
                             title: setting.settingsMenuName,
                             description: setting.description,
-                            ispremium:
-                                setting.menuType.toString().toLowerCase() !=
-                                "menutype.free",
-                            initialValue: setting.settingsValue == "Yes",
-                            onToggle: (val) {
-                              provider.updateParentAndChildren(
+                            ispremium: isFree,
+                            initialValue: isOn,
+                            onToggle: (val) async {
+                              companysettings.updateParentAndChildren(
                                 context,
                                 setting.id,
                                 val,
@@ -133,11 +140,11 @@ class _CompanySettingsScreenState extends State<CompanySettingsScreen> {
                       },
                     ),
                   ),
-
-                SliverToBoxAdapter(child: SizedBox(height: 50)),
                 ),
-                SliverToBoxAdapter(child: SizedBox(height: 50)),
-
+                // Extra bottom space so last tooltip is fully visible
+                SliverToBoxAdapter(
+                  child: SizedBox(height: 50), // adjust height as needed
+                ),
               ],
             );
           },

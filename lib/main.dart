@@ -47,11 +47,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => CompanyCreationProvider(sl<ICompanyCreationFacad>(),db: db),
         ),
-         StreamProvider<List<CompanySettingsListData>>(
-          create: (context) =>
-              context.read<CompanyCreationProvider>().settingsStream,
-          initialData: const [],
-        ),
+        //  StreamProvider<List<CompanySettingsListData>>(
+        //   create: (context) =>
+        //       context.read<CompanyCreationProvider>().settingsStream,
+        //   initialData: const [],
+        // ),
       ],
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, _) {
