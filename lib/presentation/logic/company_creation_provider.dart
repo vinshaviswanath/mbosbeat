@@ -1170,10 +1170,13 @@ final _settingsController =
   CreateCompanySettingsDtos? get createCompanySettingsDtos =>
       _createCompanySettingsDtos;
   //create company settings
-    Future<CreateCompanySettingsDtos?> createCompanySettings(
+  Future<CreateCompanySettingsDtos?> createCompanySettings(
     BuildContext context, {
     required CreateCompanysettingsParams param,
+    VoidCallback? onSuccess,
   }) async {
+    setLoading(true);
+
     final result = await iCompanyCreationFacad.createCompanySettings(
       BaseParams(data: param),
     );
@@ -1181,18 +1184,51 @@ final _settingsController =
     result.fold(
       (failure) {
         _errorMessage = failure.errorMsg.toString();
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(_errorMessage!)));
-        Logger.logError("Create Setting failed: $_errorMessage");
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
+        Logger.logError("Create Company Settings failed: $_errorMessage");
+        notifyListeners();
       },
       (response) {
-        Logger.logSuccess("Setting updated: ${response.message}");
+        Logger.logSuccess(
+          "Create Company Settings success : ${response.toJson()}",
+        );
+        Logger.logSuccess("Status : ${response.status}");
+        notifyListeners();
+
+        if (response.status == 1) {
+          _createCompanySettingsDtos = response;
+          onSuccess?.call();
+
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(
+          //     content: Text(response.message, textAlign: TextAlign.center),
+          //     behavior: SnackBarBehavior.floating,
+          //     shape: RoundedRectangleBorder(
+          //       borderRadius: BorderRadius.circular(16),
+          //     ),
+          //     margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          //   ),
+          // );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(response.message, textAlign: TextAlign.center),
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            ),
+          );
+        }
       },
     );
-
+    setLoading(false);
+    notifyListeners();
     return _createCompanySettingsDtos;
   }
-
 
   Future<void> updateParentAndChildren(
     BuildContext context,
@@ -1202,17 +1238,15 @@ final _settingsController =
   ) async {
     String parentValue = newValue ? "Yes" : "No";
 
-    // UPDATE PARENT LOCALLY
+    // 1. Update Parent Locally
     for (var item in _comapanySettingsListData) {
       if (item.id == parentId) {
         item.settingsValue = parentValue;
       }
     }
+    notifyListeners();
 
-    // STREAM UPDATE
-    _settingsController.add(_comapanySettingsListData);
-
-    // API UPDATE FOR PARENT
+    // 2. Call API for Parent
     await createCompanySettings(
       context,
       param: CreateCompanysettingsParams(
@@ -1222,7 +1256,7 @@ final _settingsController =
       ),
     );
 
-    // IF PARENT TURNED OFF → TURN OFF CHILDREN
+    //  3. If Parent is OFF → Turn Off ALL children
     if (!newValue) {
       final children = _comapanySettingsListData
           .where((item) => item.parentId == parentId)
@@ -1230,13 +1264,9 @@ final _settingsController =
 
       for (var child in children) {
         child.settingsValue = "No";
-      }
+        notifyListeners();
 
-      // STREAM UPDATE
-      _settingsController.add(_comapanySettingsListData);
-
-      // API UPDATE
-      for (var child in children) {
+        //  4. API update for each child
         await createCompanySettings(
           context,
           param: CreateCompanysettingsParams(
