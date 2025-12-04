@@ -946,12 +946,18 @@ class CompanyCreationProvider extends ChangeNotifier {
   }
 
   //GetAllCompanySettings
-  List<CompanySettingsListData> _comapanySettingsListData = [];
+final _settingsController =
+      StreamController<List<CompanySettingsListData>>.broadcast();
+
+  Stream<List<CompanySettingsListData>> get settingsStream =>
+      _settingsController.stream;
+
+        List<CompanySettingsListData> _comapanySettingsListData = [];
   List<CompanySettingsListData> get comapanySettingsListData =>
       _comapanySettingsListData;
+
   CompanysettingslistDtos? _companySettingslistDtos;
-  CompanysettingslistDtos? get companySettingslistDtos =>
-      _companySettingslistDtos;
+
   Future<CompanysettingslistDtos?> getCompanySettings(
     BuildContext context,
     int companyID,
@@ -973,11 +979,11 @@ class CompanyCreationProvider extends ChangeNotifier {
         Logger.logSuccess("Status : ${response.status}");
         _companySettingslistDtos = response;
         _comapanySettingsListData = response.companySettingsList;
-        notifyListeners();
+        _settingsController.add(_comapanySettingsListData);
       },
     );
     setLoading(false);
-    notifyListeners();
+    // notifyListeners();
     return _companySettingslistDtos;
   }
 
@@ -1260,13 +1266,10 @@ class CompanyCreationProvider extends ChangeNotifier {
   CreateCompanySettingsDtos? get createCompanySettingsDtos =>
       _createCompanySettingsDtos;
   //create company settings
-  Future<CreateCompanySettingsDtos?> createCompanySettings(
+    Future<CreateCompanySettingsDtos?> createCompanySettings(
     BuildContext context, {
     required CreateCompanysettingsParams param,
-    VoidCallback? onSuccess,
   }) async {
-    setLoading(true);
-
     final result = await iCompanyCreationFacad.createCompanySettings(
       BaseParams(data: param),
     );
@@ -1274,51 +1277,18 @@ class CompanyCreationProvider extends ChangeNotifier {
     result.fold(
       (failure) {
         _errorMessage = failure.errorMsg.toString();
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
-        Logger.logError("Create Company Settings failed: $_errorMessage");
-        notifyListeners();
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(_errorMessage!)));
+        Logger.logError("Create Setting failed: $_errorMessage");
       },
       (response) {
-        Logger.logSuccess(
-          "Create Company Settings success : ${response.toJson()}",
-        );
-        Logger.logSuccess("Status : ${response.status}");
-        notifyListeners();
-
-        if (response.status == 1) {
-          _createCompanySettingsDtos = response;
-          onSuccess?.call();
-
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //   SnackBar(
-          //     content: Text(response.message, textAlign: TextAlign.center),
-          //     behavior: SnackBarBehavior.floating,
-          //     shape: RoundedRectangleBorder(
-          //       borderRadius: BorderRadius.circular(16),
-          //     ),
-          //     margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          //   ),
-          // );
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(response.message, textAlign: TextAlign.center),
-              behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            ),
-          );
-        }
+        Logger.logSuccess("Setting updated: ${response.message}");
       },
     );
-    setLoading(false);
-    notifyListeners();
+
     return _createCompanySettingsDtos;
   }
+
 
   Future<void> updateParentAndChildren(
     BuildContext context,
@@ -1328,15 +1298,17 @@ class CompanyCreationProvider extends ChangeNotifier {
   ) async {
     String parentValue = newValue ? "Yes" : "No";
 
-    // 1. Update Parent Locally
+    // UPDATE PARENT LOCALLY
     for (var item in _comapanySettingsListData) {
       if (item.id == parentId) {
         item.settingsValue = parentValue;
       }
     }
-    notifyListeners();
 
-    // 2. Call API for Parent
+    // STREAM UPDATE
+    _settingsController.add(_comapanySettingsListData);
+
+    // API UPDATE FOR PARENT
     await createCompanySettings(
       context,
       param: CreateCompanysettingsParams(
@@ -1346,7 +1318,7 @@ class CompanyCreationProvider extends ChangeNotifier {
       ),
     );
 
-    //  3. If Parent is OFF → Turn Off ALL children
+    // IF PARENT TURNED OFF → TURN OFF CHILDREN
     if (!newValue) {
       final children = _comapanySettingsListData
           .where((item) => item.parentId == parentId)
@@ -1354,9 +1326,13 @@ class CompanyCreationProvider extends ChangeNotifier {
 
       for (var child in children) {
         child.settingsValue = "No";
-        notifyListeners();
+      }
 
-        //  4. API update for each child
+      // STREAM UPDATE
+      _settingsController.add(_comapanySettingsListData);
+
+      // API UPDATE
+      for (var child in children) {
         await createCompanySettings(
           context,
           param: CreateCompanysettingsParams(
@@ -2072,5 +2048,11 @@ class CompanyCreationProvider extends ChangeNotifier {
     setLoading(false);
     notifyListeners();
     return _voucherNumberingRouteResponse;
+  }
+
+    @override
+  void dispose() {
+    _settingsController.close();
+    super.dispose();
   }
 }
