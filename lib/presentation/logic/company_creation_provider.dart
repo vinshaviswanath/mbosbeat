@@ -686,109 +686,6 @@ class CompanyCreationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Future<IntegrationDtos?> integration(
-  //   BuildContext context, {
-  //   required IntegrationParams params,
-  //   VoidCallback? onSuccess,
-  // }) async {
-  //       setLoading(true);
-
-  //   final integrationType = _selectedIntegrationType;
-  //   final isStandAlone = integrationType == "Stand Alone";
-  //   final isValid = validateIntegrationSerialNo();
-
-  //   if (!isValid && !isStandAlone) {
-  //     integrationSerialNoAutovalidateMode = AutovalidateMode.always;
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(
-  //         content: Text(
-  //           "Please select any one integration",
-  //           textAlign: TextAlign.center,
-  //         ),
-  //         behavior: SnackBarBehavior.floating,
-  //         shape: RoundedRectangleBorder(
-  //           borderRadius: BorderRadius.circular(16),
-  //         ),
-  //         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-  //       ),
-  //     );
-
-  //     notifyListeners();
-  //       setLoading(false);
-  //     return null;
-  //   } else if (!_isIntegrationActive && !isStandAlone) {
-  //     print('isIntegrationActive......$isIntegrationActive');
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(
-  //         content: Text(
-  //           "Please activate the selected integration",
-  //           textAlign: TextAlign.center,
-  //         ),
-  //         behavior: SnackBarBehavior.floating,
-  //         shape: RoundedRectangleBorder(
-  //           borderRadius: BorderRadius.circular(16),
-  //         ),
-  //         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-  //       ),
-  //     );
-
-  //     notifyListeners();
-  //       setLoading(false);
-  //     return null;
-  //   }
-
-  //   final result = await iCompanyCreationFacad.integartion(
-  //     BaseParams(data: params),
-  //   );
-
-  //   result.fold(
-  //     (failure) {
-  //       _errorMessage = failure.errorMsg.toString();
-  //       ScaffoldMessenger.of(
-  //         context,
-  //       ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
-  //       Logger.logError("Integration Type failed : $_errorMessage");
-  //       notifyListeners();
-  //     },
-  //     (response) {
-  //       Logger.logSuccess("Integration Type success : ${response.toJson()}");
-  //       Logger.logSuccess("Status : ${response.status}");
-  //       notifyListeners();
-
-  //       if (response.status == 1) {
-  //         _integrationDtos = response;
-  //         markStageCompleted(2);
-  //         context.pushNamed(AppRouterConst.adminDashboard);
-  //         onSuccess?.call();
-  //         ScaffoldMessenger.of(context).showSnackBar(
-  //           SnackBar(
-  //             content: Text(response.message, textAlign: TextAlign.center),
-  //             behavior: SnackBarBehavior.floating,
-  //             shape: RoundedRectangleBorder(
-  //               borderRadius: BorderRadius.circular(16),
-  //             ),
-  //             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-  //           ),
-  //         );
-  //       } else {
-  //         ScaffoldMessenger.of(context).showSnackBar(
-  //           SnackBar(
-  //             content: Text(response.message, textAlign: TextAlign.center),
-  //             behavior: SnackBarBehavior.floating,
-  //             shape: RoundedRectangleBorder(
-  //               borderRadius: BorderRadius.circular(16),
-  //             ),
-  //             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-  //           ),
-  //         );
-  //       }
-  //     },
-  //   );
-  //       setLoading(false);
-
-  //   return _integrationDtos;
-  // }
-
   Future<IntegrationDtos?> integration(
     BuildContext context, {
     required IntegrationParams params,
@@ -853,23 +750,30 @@ class CompanyCreationProvider extends ChangeNotifier {
         (response) {
           Logger.logSuccess("Integration Type success : ${response.toJson()}");
 
-          if (response.status == 1) {
+          if (response.status == 1 &&
+              (voucherTypes.any((voucher) => voucher.isEnabled == 1))) {
             _integrationDtos = response;
             markStageCompleted(2);
+
             context.go(AppRouterConst.companyscreationsuccess);
             onSuccess?.call();
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text(
+                  "Please Complete voucher configuration",
+                  textAlign: TextAlign.center,
+                ),
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              ),
+            );
           }
 
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //   SnackBar(
-          //     content: Text(response.message, textAlign: TextAlign.center),
-          //     behavior: SnackBarBehavior.floating,
-          //     shape: RoundedRectangleBorder(
-          //       borderRadius: BorderRadius.circular(16),
-          //     ),
-          //     margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          //   ),
-          // );
+      
         },
       );
     } catch (e) {
@@ -913,6 +817,7 @@ class CompanyCreationProvider extends ChangeNotifier {
         if (response.status == 1) {
           _createdVouchers = response;
           markStageCompleted(1);
+
           onSuccess?.call();
 
           ScaffoldMessenger.of(context).showSnackBar(
@@ -2078,7 +1983,6 @@ class CompanyCreationProvider extends ChangeNotifier {
   TextEditingController b2bWidth = TextEditingController();
   TextEditingController b2bSuffix = TextEditingController();
   TextEditingController b2bDeclaration = TextEditingController();
-  
 
   // B2C Controllers
   TextEditingController b2cPrefix = TextEditingController();
@@ -2088,7 +1992,6 @@ class CompanyCreationProvider extends ChangeNotifier {
 
   // ---- RESET ONLY B2C ----
   void clearB2C() {
- 
     b2cPrefix.clear();
     b2cWidth.clear();
     b2cSuffix.clear();
