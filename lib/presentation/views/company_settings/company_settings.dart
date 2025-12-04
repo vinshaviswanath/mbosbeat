@@ -1,6 +1,6 @@
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/data/get_all_company_settings_data.dart';
-import 'package:mpos_beat/domain/request/create_company_settings_request.dart';
+
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_settings/tooltip_overlay_manager.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_settings/widgets/info_tool_tip.dart';
@@ -111,7 +111,6 @@ class _CompanySettingsScreenState extends State<CompanySettingsScreen> {
                                 .settingsValue ==
                             "Yes";
 
-                        // if child and parent is OFF, hide it
                         if (isChild && !parentEnabled) {
                           return const SizedBox.shrink();
                         }
@@ -141,10 +140,8 @@ class _CompanySettingsScreenState extends State<CompanySettingsScreen> {
                     ),
                   ),
                 ),
-                // Extra bottom space so last tooltip is fully visible
-                SliverToBoxAdapter(
-                  child: SizedBox(height: 50), // adjust height as needed
-                ),
+
+                SliverToBoxAdapter(child: SizedBox(height: 50)),
               ],
             );
           },
