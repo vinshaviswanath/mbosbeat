@@ -58,42 +58,34 @@ class _CompanySettingsScreenState extends State<CompanySettingsScreen> {
           ),
         ),
         body: Consumer<CompanyCreationProvider>(
-          builder: (context, companysettings, child) {
-            if (companysettings.isLoading) {
-              return Center(child: CircularProgressIndicator());
-            }
-            if (companysettings.comapanySettingsListData.isEmpty) {
-              return Center(child: Text("No settings found"));
+          builder: (context, provider, _) {
+            final appLocalizations = context.l10n;
+
+            // STREAM DATA
+            final settings = context.watch<List<CompanySettingsListData>>();
+
+            if (provider.isLoading && settings.isEmpty) {
+              return const Center(child: CircularProgressIndicator());
             }
 
-            final allSettings = companysettings.comapanySettingsListData;
+            if (settings.isEmpty) {
+              return const Center(child: Text("No settings found"));
+            }
 
             return CustomScrollView(
               slivers: [
                 SliverPadding(
                   padding: const EdgeInsets.all(7),
-
                   sliver: SliverList(
                     delegate: SliverChildBuilderDelegate(
-                      childCount:
-                          companysettings.comapanySettingsListData.length,
+                      childCount: settings.length,
                       (context, index) {
-                        final setting = allSettings[index];
-
-                        bool isChild = setting.parentId > 1;
-
-                        // get current toggle state
-                        final bool isOn =
-                            switchStates[setting.id] ??
-                            (setting.settingsValue == "Yes");
-
-                        final bool isFree =
-                            setting.menuType.toString().trim().toLowerCase() !=
-                            'menutype.free';
-
-                        // parent toggle check
+                        final setting = settings[index];
+                        // child check
+                        final bool isChild = setting.parentId > 1;
+                        // parent enabled check
                         final bool parentEnabled =
-                            allSettings
+                            settings
                                 .firstWhere(
                                   (e) => e.id == setting.parentId,
                                   orElse: () => CompanySettingsListData(
@@ -124,10 +116,12 @@ class _CompanySettingsScreenState extends State<CompanySettingsScreen> {
                           child: InfoTooltip(
                             title: setting.settingsMenuName,
                             description: setting.description,
-                            ispremium: isFree,
-                            initialValue: isOn,
-                            onToggle: (val) async {
-                              companysettings.updateParentAndChildren(
+                            ispremium:
+                                setting.menuType.toString().toLowerCase() !=
+                                "menutype.free",
+                            initialValue: setting.settingsValue == "Yes",
+                            onToggle: (val) {
+                              provider.updateParentAndChildren(
                                 context,
                                 setting.id,
                                 val,
@@ -139,9 +133,11 @@ class _CompanySettingsScreenState extends State<CompanySettingsScreen> {
                       },
                     ),
                   ),
-                ),
 
                 SliverToBoxAdapter(child: SizedBox(height: 50)),
+                ),
+                SliverToBoxAdapter(child: SizedBox(height: 50)),
+
               ],
             );
           },

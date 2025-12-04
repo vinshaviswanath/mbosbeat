@@ -186,30 +186,33 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
                                     await _handleUserTap(item, index, provider);
                                   },
                                   child: ListCard(
-                                    suffixWidget: InkWell(
-                                      onTap: item.isBlocked
-                                          ? null
-                                          : () async {
-                                              await _showUserOptionsDialog(
-                                                context,
-                                                index,
-                                                item,
-                                                provider,
-                                                appLocalizations,
-                                              );
-                                            },
-                                      child: CircleAvatar(
-                                        radius: 12,
-                                        backgroundColor: isSelected
-                                            ? ColorResources.amber
-                                            : ColorResources.dustyBlue,
-                                        child: const Icon(
-                                          Icons.settings,
-                                          size: 16,
-                                          color: ColorResources.white,
-                                        ),
-                                      ),
-                                    ),
+                                    suffixWidget:
+                                        item.name?.toLowerCase() != 'admin'
+                                        ? InkWell(
+                                            onTap: item.isBlocked
+                                                ? null
+                                                : () async {
+                                                    await _showUserOptionsDialog(
+                                                      context,
+                                                      index,
+                                                      item,
+                                                      provider,
+                                                      appLocalizations,
+                                                    );
+                                                  },
+                                            child: CircleAvatar(
+                                              radius: 12,
+                                              backgroundColor: isSelected
+                                                  ? ColorResources.amber
+                                                  : ColorResources.dustyBlue,
+                                              child: const Icon(
+                                                Icons.settings,
+                                                size: 16,
+                                                color: ColorResources.white,
+                                              ),
+                                            ),
+                                          )
+                                        : SizedBox.shrink(),
                                     isSelected: isSelected,
                                     // item: item,
                                     title: item.name ?? '',

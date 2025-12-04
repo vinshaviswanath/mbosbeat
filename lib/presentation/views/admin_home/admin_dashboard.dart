@@ -8,6 +8,7 @@ import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_divider.dart';
 import 'package:mpos_beat/presentation/dialogs/auth_dialogs.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
+import 'package:mpos_beat/presentation/views/admin_home/company_list_screen.dart';
 import 'package:mpos_beat/presentation/views/admin_home/widget/companydropdown_dialogBox.dart';
 import 'package:mpos_beat/presentation/views/admin_home/widget/custom_drawer.dart';
 import 'package:mpos_beat/presentation/views/admin_home/widget/shimmer/dropdown_shimmer.dart';
@@ -369,6 +370,43 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
                                               Row(
                                                 children: [
+                                                  // Consumer<
+                                                  //   CompanyCreationProvider
+                                                  // >(
+                                                  //   builder: (context, provider, _) {
+                                                  //     return Builder(
+                                                  //       builder: (context) {
+                                                  //         return GestureDetector(
+                                                  //           onTap: () {
+                                                  //             Navigator.push(
+                                                  //               context,
+                                                  //               MaterialPageRoute(
+                                                  //                 builder:
+                                                  //                     (
+                                                  //                       context,
+                                                  //                     ) =>
+                                                  //                         CompanyListScreen(),
+                                                  //               ),
+                                                  //             );
+                                                  //             // });
+                                                  //           },
+                                                  //           child: CircleAvatar(
+                                                  //             backgroundColor:
+                                                  //                 ColorResources
+                                                  //                     .rosePink,
+                                                  //             radius: 15,
+                                                  //             child: SvgPicture.asset(
+                                                  //               AppAssets
+                                                  //                   .locationPin,
+                                                  //               height: 16,
+                                                  //             ),
+                                                  //           ),
+                                                  //         );
+                                                  //       },
+                                                  //     );
+                                                  //   },
+                                                  // ),
+                                                  // w8,
                                                   Consumer<
                                                     CompanyCreationProvider
                                                   >(

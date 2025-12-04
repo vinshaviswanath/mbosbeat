@@ -209,7 +209,7 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
         }
 
         final bool showNameErrorBorder =
-            (_submitted && userController.text.isEmpty);
+            _submitted && userController.text.trim().isEmpty;
 
         return PopScope(
           canPop: true,
@@ -483,8 +483,13 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                                       ),
                                       focusedBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(12),
-                                        borderSide: const BorderSide(
-                                          color: Colors.transparent,
+                                        borderSide: BorderSide(
+                                          color:
+                                              _submitted &&
+                                                  provider.selectedDesignation ==
+                                                      null
+                                              ? ColorResources.roseRed
+                                              : Colors.transparent,
                                         ),
                                       ),
                                     ),
@@ -552,15 +557,16 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                                     color: ColorResources.indigoBlue,
                                   ),
                                 ),
-                                provider.userCreateAutovalidateMode ==
-                                        AutovalidateMode.disabled
+                                !_submitted ||
+                                        _submitted &&
+                                            (provider.selectedDesignation !=
+                                                null)
                                     ? h10
                                     : h32,
                               ],
                             ),
                           ],
                         ),
-
                         h16,
                         // Text(
                         //   appLocalizations.user_creation_screen_reporting_to,
@@ -609,7 +615,13 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide(color: Colors.transparent),
+                              borderSide: BorderSide(
+                                color:
+                                    _submitted &&
+                                        provider.selectedReportingTo == null
+                                    ? ColorResources.roseRed
+                                    : Colors.transparent,
+                              ),
                             ),
                           ),
                           initialValue: provider.selectedReportingTo,

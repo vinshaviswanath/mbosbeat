@@ -136,7 +136,7 @@ class _VoucherCardState extends State<VoucherCard> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: context.getSize.height * 0.145),
+                SizedBox(height: context.getSize.height * 0.152),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -307,8 +307,8 @@ class _VoucherCardState extends State<VoucherCard> {
                                                     ).size.height *
                                                     0.056,
                                               ),
-                                              backgroundColor: ColorResources
-                                                  .indigoBlue,
+                                              backgroundColor:
+                                                  ColorResources.indigoBlue,
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(15),
