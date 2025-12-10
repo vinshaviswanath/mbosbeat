@@ -362,16 +362,14 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
                                 provider.updateRegType("");
                               }
                             },
-                            autovalidateMode:
-                                provider.companyinfoAutovalidateMode,
+                            autovalidateMode: provider.effectiveMode,
                             failure: provider.country.getFailure,
                           ),
                         ),
                         w12,
                         Expanded(
                           child: CustomDropdown(
-                            autovalidateMode:
-                                provider.companyinfoAutovalidateMode,
+                            autovalidateMode: provider.effectiveMode,
                             failure: provider.countryState.getFailure,
                             label: stateTitle,
                             hintText:
@@ -413,7 +411,7 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
                           provider.updateRegType(value);
                         }
                       },
-                      autovalidateMode: provider.companyinfoAutovalidateMode,
+                      autovalidateMode: provider.effectiveMode,
                       failure: provider.registrationType.getFailure,
                     ),
                     h40,
@@ -423,7 +421,6 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
                       onTap: () async {
                         provider.companyinfo(
                           onSuccess: widget.onTap,
-
                           context,
                           params: CompanyInfoParams(
                             id: widget.companyData?.id ?? 0,

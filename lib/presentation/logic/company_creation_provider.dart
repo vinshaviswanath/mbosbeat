@@ -293,7 +293,26 @@ class CompanyCreationProvider extends ChangeNotifier {
   CountryState _countryState = CountryState("");
   RegistrationType _registrationType = RegistrationType("");
 
+  bool _allowValidation = false;
+  bool get allowValidation => _allowValidation;
+
+  void enableValidation() {
+    _allowValidation = true;
+    notifyListeners();
+  }
+
+  void disableValidation() {
+    _allowValidation = false;
+    notifyListeners();
+  }
+
   AutovalidateMode companyinfoAutovalidateMode = AutovalidateMode.disabled;
+  AutovalidateMode get effectiveMode {
+    return _allowValidation
+        ? companyinfoAutovalidateMode
+        : AutovalidateMode.disabled;
+  }
+
   CompanyName get companyName => _companyName;
   DisplayName get displayName => _displayName;
   Address1 get address1 => _address1;
@@ -334,16 +353,19 @@ class CompanyCreationProvider extends ChangeNotifier {
 
   void updateCountry(String input) {
     _country = Country(input);
+    disableValidation();
     notifyListeners();
   }
 
   void updateCountryState(String input) {
     _countryState = CountryState(input);
+    disableValidation();
     notifyListeners();
   }
 
   void updateRegType(String input) {
     _registrationType = RegistrationType(input);
+    disableValidation();
     notifyListeners();
   }
 
@@ -364,6 +386,8 @@ class CompanyCreationProvider extends ChangeNotifier {
     required CompanyInfoParams params,
     VoidCallback? onSuccess,
   }) async {
+    // Enable validation only when Save is clicked
+    enableValidation();
     final isValid = validateCompanyInfoFields();
     if (!isValid) {
       companyinfoAutovalidateMode = AutovalidateMode.always;
