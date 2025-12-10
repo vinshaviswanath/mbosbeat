@@ -386,17 +386,17 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
                                   provider.updateRegType("");
                                 }
                               },
-                              autovalidateMode:
-                                  provider.companyinfoAutovalidateMode,
-                              failure: provider.country.getFailure,
+
+autovalidateMode: provider.effectiveMode,
+ failure: provider.country.getFailure,
                             ),
                           ),
                           w12,
                           Expanded(
                             child: CustomDropdown(
-                              autovalidateMode:
-                                  provider.companyinfoAutovalidateMode,
-                              failure: provider.countryState.getFailure,
+
+                            autovalidateMode: provider.effectiveMode,
+ failure: provider.countryState.getFailure,
                               label: stateTitle,
                               hintText:
                                   appLocalizations.company_info_widget_state,
@@ -462,8 +462,9 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
                             provider.updateRegType(value);
                           }
                         },
-                        autovalidateMode: provider.companyinfoAutovalidateMode,
-                        failure: provider.registrationType.getFailure,
+
+                      autovalidateMode: provider.effectiveMode,
+failure: provider.registrationType.getFailure,
                       ),
                       h40,
                     ],
@@ -480,7 +481,6 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
               onTap: () async {
                 provider.companyinfo(
                   onSuccess: widget.onTap,
-
                   context,
                   params: CompanyInfoParams(
                     id: widget.companyData?.id ?? 0,
