@@ -53,12 +53,24 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
     address3Controller = TextEditingController(
       text: provider.address3.value.fold((l) => "", (r) => r),
     );
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      if (widget.companyData == null) {
-        provider.clearSelections();
-      }
+    stateController = TextEditingController(
+      text: provider.selectedState?.stateName ?? "",
+    );
 
-      await provider.fectchCountryList(context);
+    countrytController = TextEditingController(
+      text: provider.selectedCountry?.countryName ?? "",
+    );
+    regTypeController = TextEditingController(
+      text: provider.selectedregistrationtype?.registrationType ?? "",
+    );
+
+    ///print("country statet regtype..................${countrytController.text} ${stateController.text} ${regTypeController.text}");
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      // if (widget.companyData == null) {
+      //   provider.clearSelections();
+      // }
+
+      await provider.fetchCountryList(context);
 
       compnyNameController.text = provider.companyName.value.fold(
         (l) => "",
@@ -84,7 +96,10 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
       );
 
       pincodeController.text = provider.pincode.value.fold((l) => "", (r) => r);
-
+      stateController.text = provider.selectedState?.stateName ?? "";
+      countrytController.text = provider.selectedCountry?.countryName ?? "";
+      regTypeController.text =
+          provider.selectedregistrationtype?.registrationType ?? "";
       if (widget.companyData != null) {
         fillfeilds();
       }
@@ -101,6 +116,9 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
     address2Controller.text = widget.companyData!.address2 ?? "";
     address3Controller.text = widget.companyData!.address3 ?? "";
     pincodeController.text = widget.companyData!.pinCode ?? "";
+    countrytController.text = widget.companyData!.country ?? "";
+    stateController.text = widget.companyData!.state ?? "";
+    regTypeController.text = widget.companyData!.regType ?? "";
 
     debugPrint(
       " fillFields(): Starting for company ID: ${widget.companyData!.id}",
@@ -193,7 +211,7 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
       provider.selectedregistrationtype?.registrationType ?? "",
     );
 
-    setState(() {}); // refresh UI with selected dropdown values
+    setState(() {});
   }
 
   @override
