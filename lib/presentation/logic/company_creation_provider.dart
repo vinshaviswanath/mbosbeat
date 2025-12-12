@@ -484,7 +484,7 @@ class CompanyCreationProvider extends ChangeNotifier {
 
   //fetchCountryList........
 
-  Future<CountryListDtos?> fectchCountryList(BuildContext context) async {
+  Future<CountryListDtos?> fetchCountryList(BuildContext context) async {
     setLoading(true);
 
     final result = await iCompanyCreationFacad.countryList();
@@ -772,8 +772,6 @@ class CompanyCreationProvider extends ChangeNotifier {
               ),
             );
           }
-
-      
         },
       );
     } catch (e) {
@@ -850,13 +848,13 @@ class CompanyCreationProvider extends ChangeNotifier {
   }
 
   //GetAllCompanySettings
-final _settingsController =
+  final _settingsController =
       StreamController<List<CompanySettingsListData>>.broadcast();
 
   Stream<List<CompanySettingsListData>> get settingsStream =>
       _settingsController.stream;
 
-        List<CompanySettingsListData> _comapanySettingsListData = [];
+  List<CompanySettingsListData> _comapanySettingsListData = [];
   List<CompanySettingsListData> get comapanySettingsListData =>
       _comapanySettingsListData;
 
@@ -2005,7 +2003,7 @@ final _settingsController =
     notifyListeners();
   }
 
-    @override
+  @override
   void dispose() {
     _settingsController.close();
     super.dispose();

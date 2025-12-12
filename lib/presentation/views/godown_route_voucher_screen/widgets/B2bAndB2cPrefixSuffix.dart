@@ -153,17 +153,18 @@ class _B2bAndB2cPrefixSuffixState extends State<B2bAndB2cPrefixSuffix> {
                                               onTap: () {
                                                 Navigator.pop(context);
                                               },
-                                              child:  CircleAvatar(
-                                                                                        backgroundColor: ColorResources.bluishGray.withValues(
-                                                                                          alpha: 0.15,
-                                                                                        ),
-                                                                                        radius: 12,
-                                                                                        child: const Icon(
-                                                                                          Icons.close,
-                                                                                          size: 12,
-                                                                                          color: ColorResources.bluishGray,
-                                                                                        ),
-                                                                                      ),
+                                              child: CircleAvatar(
+                                                backgroundColor: ColorResources
+                                                    .bluishGray
+                                                    .withValues(alpha: 0.15),
+                                                radius: 12,
+                                                child: const Icon(
+                                                  Icons.close,
+                                                  size: 12,
+                                                  color:
+                                                      ColorResources.bluishGray,
+                                                ),
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -219,11 +220,11 @@ class _B2bAndB2cPrefixSuffixState extends State<B2bAndB2cPrefixSuffix> {
                                                   data: Theme.of(context).copyWith(
                                                     colorScheme: const ColorScheme.light(
                                                       surface: ColorResources
-                                                          .indigoBlue, // Calendar background
+                                                          .white, // Calendar background
                                                       primary: ColorResources
                                                           .indigoBlue, // Header & selected date
                                                       onPrimary: ColorResources
-                                                          .indigoBlue, // Header text color
+                                                          .white, // Header text color
                                                       onSurface: ColorResources
                                                           .indigoBlue, // Default text color
                                                     ),

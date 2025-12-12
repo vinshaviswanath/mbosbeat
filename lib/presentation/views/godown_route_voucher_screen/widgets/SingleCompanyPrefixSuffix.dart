@@ -178,17 +178,18 @@ class _SingleCompanyPrefixSuffixState extends State<SingleCompanyPrefixSuffix> {
                                         children: [
                                           GestureDetector(
                                             onTap: () => Navigator.pop(context),
-                                            child:  CircleAvatar(
-                                                                                        backgroundColor: ColorResources.bluishGray.withValues(
-                                                                                          alpha: 0.15,
-                                                                                        ),
-                                                                                        radius: 12,
-                                                                                        child: const Icon(
-                                                                                          Icons.close,
-                                                                                          size: 12,
-                                                                                          color: ColorResources.bluishGray,
-                                                                                        ),
-                                                                                      ),
+                                            child: CircleAvatar(
+                                              backgroundColor: ColorResources
+                                                  .bluishGray
+                                                  .withValues(alpha: 0.15),
+                                              radius: 12,
+                                              child: const Icon(
+                                                Icons.close,
+                                                size: 12,
+                                                color:
+                                                    ColorResources.bluishGray,
+                                              ),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -243,11 +244,11 @@ class _SingleCompanyPrefixSuffixState extends State<SingleCompanyPrefixSuffix> {
                                                 data: Theme.of(context).copyWith(
                                                   colorScheme: const ColorScheme.light(
                                                     surface: ColorResources
-                                                        .indigoBlue, // Calendar background
+                                                        .white, // Calendar background
                                                     primary: ColorResources
                                                         .indigoBlue, // Header & selected date
                                                     onPrimary: ColorResources
-                                                        .indigoBlue, // Header text color
+                                                        .white, // Header text color
                                                     onSurface: ColorResources
                                                         .indigoBlue, // Default text color
                                                   ),
@@ -653,33 +654,39 @@ class _SingleCompanyPrefixSuffixState extends State<SingleCompanyPrefixSuffix> {
                                                     );
                                                 if (!mounted) return;
                                                 //New
-                                                provider.createVoucherNumbering(
-                                                  context: context,
-                                                  companyId:
-                                                      provider
-                                                          .selectedCompany
-                                                          ?.id ??
-                                                      0,
-                                                  voucherModeId:
-                                                      provider.isGodown
-                                                      ? provider
-                                                                .selectedVehicle
-                                                                ?.id ??
-                                                            0
-                                                      : provider
-                                                                .selectedRoute
-                                                                ?.id ??
-                                                            0,
-                                                  voucherNumbers:
-                                                      provider
-                                                          .voucherNumberList ??
-                                                      [],
-                                                ).then((value) {
-                                                  WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                                                    Navigator.pop(context);
-                                                  },);
-                                                },);
-                                                
+                                                provider
+                                                    .createVoucherNumbering(
+                                                      context: context,
+                                                      companyId:
+                                                          provider
+                                                              .selectedCompany
+                                                              ?.id ??
+                                                          0,
+                                                      voucherModeId:
+                                                          provider.isGodown
+                                                          ? provider
+                                                                    .selectedVehicle
+                                                                    ?.id ??
+                                                                0
+                                                          : provider
+                                                                    .selectedRoute
+                                                                    ?.id ??
+                                                                0,
+                                                      voucherNumbers:
+                                                          provider
+                                                              .voucherNumberList ??
+                                                          [],
+                                                    )
+                                                    .then((value) {
+                                                      WidgetsBinding.instance
+                                                          .addPostFrameCallback(
+                                                            (timeStamp) {
+                                                              Navigator.pop(
+                                                                context,
+                                                              );
+                                                            },
+                                                          );
+                                                    });
                                               }
                                             },
                                           ),
