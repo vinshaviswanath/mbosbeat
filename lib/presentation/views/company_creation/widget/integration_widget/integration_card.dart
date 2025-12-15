@@ -136,7 +136,7 @@ class _VoucherCardState extends State<VoucherCard> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: context.getSize.height * 0.152),
+                SizedBox(height: context.getSize.height * 0.148),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

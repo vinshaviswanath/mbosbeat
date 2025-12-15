@@ -1,14 +1,9 @@
-import 'package:flutter/foundation.dart';
-import 'package:mpos_beat/core/di/injection.dart';
-import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
-import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_divider.dart';
 import 'package:mpos_beat/presentation/dialogs/auth_dialogs.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
-import 'package:mpos_beat/presentation/views/admin_home/company_list_screen.dart';
 import 'package:mpos_beat/presentation/views/admin_home/widget/companydropdown_dialogBox.dart';
 import 'package:mpos_beat/presentation/views/admin_home/widget/custom_drawer.dart';
 import 'package:mpos_beat/presentation/views/admin_home/widget/shimmer/dropdown_shimmer.dart';

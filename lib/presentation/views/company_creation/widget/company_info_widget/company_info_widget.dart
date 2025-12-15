@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:mpos_beat/core/failures/value_object/value_failure.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/data/models/data/country_list_data.dart';
@@ -18,7 +19,8 @@ class CompanyInfoWidget extends StatefulWidget {
   State<CompanyInfoWidget> createState() => _CompanyInfoWidgetState();
 }
 
-class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
+class _CompanyInfoWidgetState extends State<CompanyInfoWidget>
+    with AutomaticKeepAliveClientMixin {
   late TextEditingController compnyNameController;
   late TextEditingController displayNameController;
   late TextEditingController address1Controller;
@@ -28,31 +30,27 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
   late TextEditingController countrytController;
   late TextEditingController stateController;
   late TextEditingController regTypeController;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
+
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   void initState() {
     super.initState();
     final provider = context.read<CompanyCreationProvider>();
 
-    compnyNameController = TextEditingController(
-      text: provider.companyName.value.fold((l) => "", (r) => r),
-    );
-    displayNameController = TextEditingController(
-      text: provider.displayName.value.fold((l) => "", (r) => r),
-    );
-    address1Controller = TextEditingController(
-      text: provider.address1.value.fold((l) => "", (r) => r),
-    );
+    compnyNameController = TextEditingController();
+    displayNameController = TextEditingController();
+    address1Controller = TextEditingController();
+    address2Controller = TextEditingController();
+    address3Controller = TextEditingController();
+    pincodeController = TextEditingController();
 
-    pincodeController = TextEditingController(
-      text: provider.pincode.value.fold((l) => "", (r) => r),
-    );
-
-    address2Controller = TextEditingController(
-      text: provider.address2.value.fold((l) => "", (r) => r),
-    );
-    address3Controller = TextEditingController(
-      text: provider.address3.value.fold((l) => "", (r) => r),
-    );
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (widget.companyData == null) {
         provider.clearSelections();
@@ -85,9 +83,9 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
 
       pincodeController.text = provider.pincode.value.fold((l) => "", (r) => r);
 
-      if (widget.companyData != null) {
-        fillfeilds();
-      }
+      // if (widget.companyData != null) {
+      fillfeilds();
+      //  }
     });
   }
 
@@ -95,6 +93,15 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
     if (widget.companyData == null) return;
 
     final provider = context.read<CompanyCreationProvider>();
+
+    // 🔥 UPDATE PROVIDER FIRST (this fixes validation)
+    provider.updateCompanyName(widget.companyData!.companyName ?? "");
+    provider.updateDisplayName(widget.companyData!.mailingName ?? "");
+    provider.updateAddress1(widget.companyData!.address1 ?? "");
+    provider.updateAddress2(widget.companyData!.address2 ?? "");
+    provider.updateAddress3(widget.companyData!.address3 ?? "");
+    provider.updatePincode(widget.companyData!.pinCode ?? "");
+
     compnyNameController.text = widget.companyData!.companyName ?? "";
     displayNameController.text = widget.companyData!.mailingName ?? "";
     address1Controller.text = widget.companyData!.address1 ?? "";
@@ -183,17 +190,68 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
 
     debugPrint("🎯 Field filling completed.");
 
-    provider.updateCompanyName(compnyNameController.text);
-    provider.updateDisplayName(displayNameController.text);
-    provider.updateAddress1(address1Controller.text);
-    provider.updatePincode(pincodeController.text);
-    provider.updateCountry(provider.selectedCountry?.countryName ?? "");
-    provider.updateCountryState(provider.selectedState?.stateName ?? "");
-    provider.updateRegType(
-      provider.selectedregistrationtype?.registrationType ?? "",
+    // provider.updateCompanyName(compnyNameController.text);
+    // provider.updateDisplayName(displayNameController.text);
+    // provider.updateAddress1(address1Controller.text);
+    // provider.updatePincode(pincodeController.text);
+    // provider.updateCountry(provider.selectedCountry?.countryName ?? "");
+    // provider.updateCountryState(provider.selectedState?.stateName ?? "");
+    // provider.updateRegType(
+    //   provider.selectedregistrationtype?.registrationType ?? "",
+    // );
+
+    // setState(() {}); // refresh UI with selected dropdown values
+  }
+
+  void _debugPrintAllFields(CompanyCreationProvider provider) {
+    debugPrint("📋 -------- Company Info Debug --------");
+
+    debugPrint("Company Name      : '${compnyNameController.text}'");
+    debugPrint("Display Name      : '${displayNameController.text}'");
+    debugPrint("Address 1         : '${address1Controller.text}'");
+    debugPrint("Address 2         : '${address2Controller.text}'");
+    debugPrint("Address 3         : '${address3Controller.text}'");
+    debugPrint("Pincode           : '${pincodeController.text}'");
+
+    debugPrint(
+      "Country (ID/Name) : "
+      "${provider.selectedCountry?.id} / ${provider.selectedCountry?.countryName}",
     );
 
-    setState(() {}); // refresh UI with selected dropdown values
+    debugPrint(
+      "State (ID/Name)   : "
+      "${provider.selectedState?.id} / ${provider.selectedState?.stateName}",
+    );
+
+    debugPrint(
+      "RegType (ID/Name) : "
+      "${provider.selectedregistrationtype?.id} / "
+      "${provider.selectedregistrationtype?.registrationType}",
+    );
+
+    debugPrint("📋 ----------------------------------");
+  }
+
+  void _debugPrintValidationErrors(CompanyCreationProvider provider) {
+    debugPrint("❌ -------- Validation Errors --------");
+
+    void check(String fieldName, ValueFailure? failure) {
+      if (failure != null) {
+        debugPrint("❌ $fieldName → ${failure.toString()}");
+      } else {
+        debugPrint("✅ $fieldName → OK");
+      }
+    }
+
+    check("Company Name", provider.companyName.getFailure);
+    check("Display Name", provider.displayName.getFailure);
+    check("Address 1", provider.address1.getFailure);
+    check("Pincode", provider.pincode.getFailure);
+    check("Country", provider.country.getFailure);
+    check("State", provider.countryState.getFailure);
+    check("Registration Type", provider.registrationType.getFailure);
+
+    debugPrint("❌ ----------------------------------");
   }
 
   @override
@@ -387,16 +445,15 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
                                 }
                               },
 
-autovalidateMode: provider.effectiveMode,
- failure: provider.country.getFailure,
+                              autovalidateMode: provider.effectiveMode,
+                              failure: provider.country.getFailure,
                             ),
                           ),
                           w12,
                           Expanded(
                             child: CustomDropdown(
-
-                            autovalidateMode: provider.effectiveMode,
- failure: provider.countryState.getFailure,
+                              autovalidateMode: provider.effectiveMode,
+                              failure: provider.countryState.getFailure,
                               label: stateTitle,
                               hintText:
                                   appLocalizations.company_info_widget_state,
@@ -463,8 +520,8 @@ autovalidateMode: provider.effectiveMode,
                           }
                         },
 
-                      autovalidateMode: provider.effectiveMode,
-failure: provider.registrationType.getFailure,
+                        autovalidateMode: provider.effectiveMode,
+                        failure: provider.registrationType.getFailure,
                       ),
                       h40,
                     ],
@@ -479,6 +536,9 @@ failure: provider.registrationType.getFailure,
               buttonText: appLocalizations.company_info_widget_next,
               isborderEnable: false,
               onTap: () async {
+                _debugPrintAllFields(provider);
+                _debugPrintValidationErrors(provider);
+
                 provider.companyinfo(
                   onSuccess: widget.onTap,
                   context,
