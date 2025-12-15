@@ -342,13 +342,24 @@ class CompanyCreationProvider extends ChangeNotifier {
   CountryState get countryState => _countryState;
   RegistrationType get registrationType => _registrationType;
 
+  // bool validateCompanyInfoFields() {
+  //   return _companyName.isValid() &&
+  //       _displayName.isValid() &&
+  //       _address1.isValid() &&
+  //       _pincode.isValid() &&
+  //       _country.isValid() &&
+  //       _countryState.isValid() &&
+  //       _registrationType.isValid();
+  // }
+
   bool validateCompanyInfoFields() {
-    return _companyName.isValid() & _displayName.isValid() &&
+    return _companyName.isValid() &&
+        _displayName.isValid() &&
         _address1.isValid() &&
         _pincode.isValid() &&
-        _country.isValid() &&
-        _countryState.isValid() &&
-        _registrationType.isValid();
+        _selectedCountry != null &&
+        _selectedState != null &&
+        _selectedregistrationtype != null;
   }
 
   void updateCompanyName(String input) {
@@ -368,12 +379,12 @@ class CompanyCreationProvider extends ChangeNotifier {
   }
 
   void updateAddress2(String input) {
-    _address1 = Address1(input);
+    _address2 = Address2(input);
     notifyListeners();
   }
 
   void updateAddress3(String input) {
-    _address1 = Address1(input);
+    _address3 = Address3(input);
     notifyListeners();
   }
 
@@ -406,6 +417,8 @@ class CompanyCreationProvider extends ChangeNotifier {
     _address1 = Address1('');
     _pincode = Pincode('');
     _country = Country('');
+    _countryState = CountryState('');
+    _registrationType = RegistrationType('');
     _selectedCountry = CountryListData(
       id: 0,
       countryName: "",
@@ -436,11 +449,11 @@ class CompanyCreationProvider extends ChangeNotifier {
     required CompanyInfoParams params,
     VoidCallback? onSuccess,
   }) async {
- setLoading(true);
+    setLoading(true);
 
-// Enable validation only when Save is clicked
+    // Enable validation only when Save is clicked
     enableValidation();
- final isValid = validateCompanyInfoFields();
+    final isValid = validateCompanyInfoFields();
     if (!isValid) {
       companyinfoAutovalidateMode = AutovalidateMode.always;
       notifyListeners();
@@ -502,14 +515,13 @@ class CompanyCreationProvider extends ChangeNotifier {
     );
     setLoading(false);
     notifyListeners();
-
     return _companyCreationDtos;
   }
 
   //fetchCountryList........
 
-  Future<CountryListDtos?> fetchCountryList(BuildContext context) async {
-    setLoading(true);
+Future<CountryListDtos?> fetchCountryList(BuildContext context) async {
+setLoading(true);
 
     final result = await iCompanyCreationFacad.countryList();
 
@@ -538,17 +550,35 @@ class CompanyCreationProvider extends ChangeNotifier {
     return _countryListDtos;
   }
 
+  // void selectCountry(BuildContext context, CountryListData? country) {
+  //   _selectedCountry = country;
+  //   _selectedState = null; // reset state selection
+  //   _statelists = []; // clear previous states
+  //   _registrationlists = []; // clear previous registration types
+  //   _selectedregistrationtype = null; // reset registration type selection
+  //   if (country != null) {
+  //     fetchStateList(context, country.id); // fetch states for this country
+  //     getRegistrationType(context, country.id);
+  //   }
+  //   notifyListeners();
+  // }
+
   void selectCountry(BuildContext context, CountryListData? country) {
     _selectedCountry = country;
-    _selectedState = null; // reset state selection
-    _statelists = []; // clear previous states
-    _registrationlists = []; // clear previous registration types
-    _selectedregistrationtype = null; // reset registration type selection
+
+    _country = Country(country?.countryName ?? "");
+    _countryState = CountryState("");
+    _registrationType = RegistrationType("");
+
+    _selectedState = null;
+    _selectedregistrationtype = null;
+
+    notifyListeners();
+
     if (country != null) {
-      fetchStateList(context, country.id); // fetch states for this country
+      fetchStateList(context, country.id);
       getRegistrationType(context, country.id);
     }
-    notifyListeners();
   }
 
   //FetchStateList
@@ -585,8 +615,14 @@ class CompanyCreationProvider extends ChangeNotifier {
     return _stateListDtos;
   }
 
-  void selectState(StateListData? states) {
-    _selectedState = states;
+  // void selectState(StateListData? states) {
+  //   _selectedState = states;
+  //   notifyListeners();
+  // }
+
+  void selectState(StateListData? state) {
+    _selectedState = state;
+    _countryState = CountryState(state?.stateName ?? "");
     notifyListeners();
   }
 
@@ -636,8 +672,14 @@ class CompanyCreationProvider extends ChangeNotifier {
     return _registrationTypeDtos;
   }
 
-  void selectRegistrationType(RegistrationTypeData? registrationTypelist) {
-    _selectedregistrationtype = registrationTypelist;
+  // void selectRegistrationType(RegistrationTypeData? registrationTypelist) {
+  //   _selectedregistrationtype = registrationTypelist;
+  //   notifyListeners();
+  // }
+
+  void selectRegistrationType(RegistrationTypeData? reg) {
+    _selectedregistrationtype = reg;
+    _registrationType = RegistrationType(reg?.registrationType ?? "");
     notifyListeners();
   }
 
@@ -871,14 +913,14 @@ class CompanyCreationProvider extends ChangeNotifier {
     return _createdVouchers;
   }
 
-  //GetAllCompanySettings
+ //GetAllCompanySettings
   final _settingsController =
       StreamController<List<CompanySettingsListData>>.broadcast();
 
   Stream<List<CompanySettingsListData>> get settingsStream =>
       _settingsController.stream;
 
-  List<CompanySettingsListData> _comapanySettingsListData = [];
+List<CompanySettingsListData> _comapanySettingsListData = [];
   List<CompanySettingsListData> get comapanySettingsListData =>
       _comapanySettingsListData;
 
@@ -905,11 +947,9 @@ class CompanyCreationProvider extends ChangeNotifier {
         Logger.logSuccess("Status : ${response.status}");
         _companySettingslistDtos = response;
         _comapanySettingsListData = response.companySettingsList;
-        _settingsController.add(_comapanySettingsListData);
       },
     );
     setLoading(false);
-    // notifyListeners();
     return _companySettingslistDtos;
   }
 
@@ -1183,11 +1223,6 @@ class CompanyCreationProvider extends ChangeNotifier {
     return _companyvouchertypeslistDtos;
   }
 
-  // void _setLoading(bool value) {
-  //   _isLoading = value;
-  //   notifyListeners();
-  // }
-
   CreateCompanySettingsDtos? _createCompanySettingsDtos;
   CreateCompanySettingsDtos? get createCompanySettingsDtos =>
       _createCompanySettingsDtos;
@@ -1197,7 +1232,7 @@ class CompanyCreationProvider extends ChangeNotifier {
     required CreateCompanysettingsParams param,
     VoidCallback? onSuccess,
   }) async {
-    setLoading(true);
+    //setLoading(true);
 
     final result = await iCompanyCreationFacad.createCompanySettings(
       BaseParams(data: param),
@@ -1210,6 +1245,7 @@ class CompanyCreationProvider extends ChangeNotifier {
           context,
         ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
         Logger.logError("Create Company Settings failed: $_errorMessage");
+        setLoading(false);
         notifyListeners();
       },
       (response) {
@@ -1217,6 +1253,7 @@ class CompanyCreationProvider extends ChangeNotifier {
           "Create Company Settings success : ${response.toJson()}",
         );
         Logger.logSuccess("Status : ${response.status}");
+        setLoading(false);
         notifyListeners();
 
         if (response.status == 1) {
@@ -1247,8 +1284,8 @@ class CompanyCreationProvider extends ChangeNotifier {
         }
       },
     );
-    setLoading(false);
-    notifyListeners();
+    // setLoading(false);
+    //notifyListeners();
     return _createCompanySettingsDtos;
   }
 
@@ -1321,7 +1358,20 @@ class CompanyCreationProvider extends ChangeNotifier {
       },
       (response) async {
         _companiesList = response;
-        _companyController.add(companiesList?.companyViewList ?? []);
+
+        final list = response.companyViewList;
+
+        // IMPORTANT FIX — RE-SYNC SELECTED COMPANY
+        if (selectedCompany != null && list.isNotEmpty) {
+          _selectedCompany = list.firstWhere(
+            (c) => c.id == selectedCompany!.id,
+            orElse: () => list.first,
+          );
+        } else if (list.isNotEmpty) {
+          _selectedCompany = list.first;
+        }
+
+        _companyController.add(list);
         Logger.logSuccess(
           "Company List fetch successfull : ${response.toJson()}",
         );
@@ -2026,8 +2076,7 @@ class CompanyCreationProvider extends ChangeNotifier {
     b2cDeclaration.clear();
     notifyListeners();
   }
-
-  @override
+ @override
   void dispose() {
     _settingsController.close();
     super.dispose();
