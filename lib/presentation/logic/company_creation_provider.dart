@@ -395,19 +395,19 @@ class CompanyCreationProvider extends ChangeNotifier {
 
   void updateCountry(String input) {
     _country = Country(input);
-    //disableValidation();
+    disableValidation();
     notifyListeners();
   }
 
   void updateCountryState(String input) {
     _countryState = CountryState(input);
-    //disableValidation();
+    disableValidation();
     notifyListeners();
   }
 
   void updateRegType(String input) {
     _registrationType = RegistrationType(input);
-    //disableValidation();
+    disableValidation();
     notifyListeners();
   }
 
