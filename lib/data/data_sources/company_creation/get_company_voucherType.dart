@@ -6,6 +6,7 @@ import 'package:mpos_beat/core/utils/extentions.dart';
 import 'package:mpos_beat/core/utils/logger.dart';
 import 'package:mpos_beat/core/utils/typedefs.dart';
 import 'package:mpos_beat/core/utils/urls.dart';
+import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/models/get_company_voucher_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mpos_beat/core/service/http_client.dart';
@@ -15,11 +16,12 @@ class GetCompanyvoucherTypeListDatasource {
   final HttpClient httpClient;
   final RunSafely runSafely;
   final SharedPreferences sharedPreferences;
-
+  final AppDb appDb;
   GetCompanyvoucherTypeListDatasource(
     this.httpClient,
     this.runSafely,
     this.sharedPreferences,
+    this.appDb,
   );
 
   ResultFuture<CompanyvouchertypeslistDtos> call(int companyID) {
@@ -38,6 +40,7 @@ class GetCompanyvoucherTypeListDatasource {
         if (response.isOk) {
           final data = CompanyvouchertypeslistDtos.fromJson(response.data);
           Logger.logInfo('Parsed voucher type list successfully.');
+          
           return data;
         }
 

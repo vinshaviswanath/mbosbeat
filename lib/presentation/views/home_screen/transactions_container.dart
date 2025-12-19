@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mpos_beat/core/theme/colors.dart';
 import 'package:mpos_beat/core/theme/text_styles.dart';
 import 'package:mpos_beat/core/utils/extentions.dart';
+import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/route/app_router_const.dart';
 
 class TransactionsContainers extends StatelessWidget {
-  const TransactionsContainers({super.key});
+  final RegistrationDetail userDetails;
+  const TransactionsContainers({super.key, required this.userDetails});
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +24,7 @@ class TransactionsContainers extends StatelessWidget {
         avatarColor: const Color.fromARGB(255, 117, 188, 247),
         icon: Icons.person_pin_outlined,
         routeName: AppRouterConst.customerTransactions,
+        userDetails: userDetails,
       ),
       TransactionItem(
         title: "Other",
@@ -32,6 +36,8 @@ class TransactionsContainers extends StatelessWidget {
         avatarColor: const Color.fromARGB(255, 245, 159, 199),
         icon: Icons.event_note_outlined,
         routeName: AppRouterConst.otherTransaction,
+        userDetails: userDetails,
+
       ),
       TransactionItem(
         title: "Dashboard",
@@ -42,6 +48,8 @@ class TransactionsContainers extends StatelessWidget {
         ],
         avatarColor: const Color.fromARGB(255, 245, 216, 160),
         icon: Icons.now_widgets_outlined,
+        userDetails: userDetails,
+
       ),
       TransactionItem(
         title: "Other",
@@ -52,6 +60,7 @@ class TransactionsContainers extends StatelessWidget {
         ],
         avatarColor: const Color.fromARGB(255, 201, 155, 245),
         icon: Icons.receipt_outlined,
+        userDetails: userDetails,
       ),
     ];
 
@@ -82,6 +91,8 @@ class TransactionItem {
   final Color avatarColor;
   final IconData icon;
   final String? routeName;
+  final RegistrationDetail userDetails;
+
 
   TransactionItem({
     required this.title,
@@ -90,6 +101,7 @@ class TransactionItem {
     required this.avatarColor,
     required this.icon,
     this.routeName,
+    required this.userDetails,
   });
 }
 
@@ -106,7 +118,7 @@ class TransactionCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (item.routeName != null) {
-          context.pushNamed(item.routeName!);
+          context.pushNamed(item.routeName!,extra: item.userDetails);
         }
       },
       child: Stack(

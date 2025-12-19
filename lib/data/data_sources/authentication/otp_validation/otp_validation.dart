@@ -41,9 +41,9 @@ class OtpValidation {
           if (token != null && token.isNotEmpty && data.status != 10) {
             await sharedPreferences.setString("token", token);
           }
-          await appDb.userDao.clearAll();
-          await appDb.userDao.insertUser(data.loginData!);
-          await appDb.userDao.printUsers();
+          await appDb.registrationDetailDao.clearAll();
+          await appDb.registrationDetailDao.insertUser(data.loginData!);
+          await appDb.registrationDetailDao.printUsers();
           return data;
         }
 

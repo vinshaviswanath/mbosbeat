@@ -37,6 +37,7 @@ class ColorResources {
   static const lightIndigo = Color(0xFF8FACFF);
   static const veryLightGray = Color(0xFFFAFAFA);
   static const deepIndigo  = Color(0xFF492D8B);
+  static const softLavender = Color(0xFFE9E7F5);
 
 
   static const lavenderMist = Color(0xFFE3D7FE);

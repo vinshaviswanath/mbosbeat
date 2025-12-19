@@ -3,11 +3,12 @@
 part of 'app_db.dart';
 
 // ignore_for_file: type=lint
-class $UsersTable extends Users with TableInfo<$UsersTable, User> {
+class $RegistrationDetailsTable extends RegistrationDetails
+    with TableInfo<$RegistrationDetailsTable, RegistrationDetail> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $UsersTable(this.attachedDatabase, [this._alias]);
+  $RegistrationDetailsTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
   @override
   late final GeneratedColumn<int> userId = GeneratedColumn<int>(
@@ -221,10 +222,10 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'users';
+  static const String $name = 'registration_details';
   @override
   VerificationContext validateIntegrity(
-    Insertable<User> instance, {
+    Insertable<RegistrationDetail> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -352,9 +353,9 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
   @override
   Set<GeneratedColumn> get $primaryKey => {userId};
   @override
-  User map(Map<String, dynamic> data, {String? tablePrefix}) {
+  RegistrationDetail map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return User(
+    return RegistrationDetail(
       userId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}user_id'],
@@ -431,12 +432,13 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
   }
 
   @override
-  $UsersTable createAlias(String alias) {
-    return $UsersTable(attachedDatabase, alias);
+  $RegistrationDetailsTable createAlias(String alias) {
+    return $RegistrationDetailsTable(attachedDatabase, alias);
   }
 }
 
-class User extends DataClass implements Insertable<User> {
+class RegistrationDetail extends DataClass
+    implements Insertable<RegistrationDetail> {
   final int userId;
   final int? customerId;
   final String? fullName;
@@ -455,7 +457,7 @@ class User extends DataClass implements Insertable<User> {
   final int? custActive;
   final String? token;
   final String? dbName;
-  const User({
+  const RegistrationDetail({
     required this.userId,
     this.customerId,
     this.fullName,
@@ -533,8 +535,8 @@ class User extends DataClass implements Insertable<User> {
     return map;
   }
 
-  UsersCompanion toCompanion(bool nullToAbsent) {
-    return UsersCompanion(
+  RegistrationDetailsCompanion toCompanion(bool nullToAbsent) {
+    return RegistrationDetailsCompanion(
       userId: Value(userId),
       customerId: customerId == null && nullToAbsent
           ? const Value.absent()
@@ -590,12 +592,12 @@ class User extends DataClass implements Insertable<User> {
     );
   }
 
-  factory User.fromJson(
+  factory RegistrationDetail.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return User(
+    return RegistrationDetail(
       userId: serializer.fromJson<int>(json['userId']),
       customerId: serializer.fromJson<int?>(json['customerId']),
       fullName: serializer.fromJson<String?>(json['fullName']),
@@ -641,7 +643,7 @@ class User extends DataClass implements Insertable<User> {
     };
   }
 
-  User copyWith({
+  RegistrationDetail copyWith({
     int? userId,
     Value<int?> customerId = const Value.absent(),
     Value<String?> fullName = const Value.absent(),
@@ -660,7 +662,7 @@ class User extends DataClass implements Insertable<User> {
     Value<int?> custActive = const Value.absent(),
     Value<String?> token = const Value.absent(),
     Value<String?> dbName = const Value.absent(),
-  }) => User(
+  }) => RegistrationDetail(
     userId: userId ?? this.userId,
     customerId: customerId.present ? customerId.value : this.customerId,
     fullName: fullName.present ? fullName.value : this.fullName,
@@ -682,8 +684,8 @@ class User extends DataClass implements Insertable<User> {
     token: token.present ? token.value : this.token,
     dbName: dbName.present ? dbName.value : this.dbName,
   );
-  User copyWithCompanion(UsersCompanion data) {
-    return User(
+  RegistrationDetail copyWithCompanion(RegistrationDetailsCompanion data) {
+    return RegistrationDetail(
       userId: data.userId.present ? data.userId.value : this.userId,
       customerId: data.customerId.present
           ? data.customerId.value
@@ -723,7 +725,7 @@ class User extends DataClass implements Insertable<User> {
 
   @override
   String toString() {
-    return (StringBuffer('User(')
+    return (StringBuffer('RegistrationDetail(')
           ..write('userId: $userId, ')
           ..write('customerId: $customerId, ')
           ..write('fullName: $fullName, ')
@@ -770,7 +772,7 @@ class User extends DataClass implements Insertable<User> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is User &&
+      (other is RegistrationDetail &&
           other.userId == this.userId &&
           other.customerId == this.customerId &&
           other.fullName == this.fullName &&
@@ -791,7 +793,7 @@ class User extends DataClass implements Insertable<User> {
           other.dbName == this.dbName);
 }
 
-class UsersCompanion extends UpdateCompanion<User> {
+class RegistrationDetailsCompanion extends UpdateCompanion<RegistrationDetail> {
   final Value<int> userId;
   final Value<int?> customerId;
   final Value<String?> fullName;
@@ -810,7 +812,7 @@ class UsersCompanion extends UpdateCompanion<User> {
   final Value<int?> custActive;
   final Value<String?> token;
   final Value<String?> dbName;
-  const UsersCompanion({
+  const RegistrationDetailsCompanion({
     this.userId = const Value.absent(),
     this.customerId = const Value.absent(),
     this.fullName = const Value.absent(),
@@ -830,7 +832,7 @@ class UsersCompanion extends UpdateCompanion<User> {
     this.token = const Value.absent(),
     this.dbName = const Value.absent(),
   });
-  UsersCompanion.insert({
+  RegistrationDetailsCompanion.insert({
     this.userId = const Value.absent(),
     this.customerId = const Value.absent(),
     this.fullName = const Value.absent(),
@@ -850,7 +852,7 @@ class UsersCompanion extends UpdateCompanion<User> {
     this.token = const Value.absent(),
     this.dbName = const Value.absent(),
   });
-  static Insertable<User> custom({
+  static Insertable<RegistrationDetail> custom({
     Expression<int>? userId,
     Expression<int>? customerId,
     Expression<String>? fullName,
@@ -892,7 +894,7 @@ class UsersCompanion extends UpdateCompanion<User> {
     });
   }
 
-  UsersCompanion copyWith({
+  RegistrationDetailsCompanion copyWith({
     Value<int>? userId,
     Value<int?>? customerId,
     Value<String?>? fullName,
@@ -912,7 +914,7 @@ class UsersCompanion extends UpdateCompanion<User> {
     Value<String?>? token,
     Value<String?>? dbName,
   }) {
-    return UsersCompanion(
+    return RegistrationDetailsCompanion(
       userId: userId ?? this.userId,
       customerId: customerId ?? this.customerId,
       fullName: fullName ?? this.fullName,
@@ -996,7 +998,7 @@ class UsersCompanion extends UpdateCompanion<User> {
 
   @override
   String toString() {
-    return (StringBuffer('UsersCompanion(')
+    return (StringBuffer('RegistrationDetailsCompanion(')
           ..write('userId: $userId, ')
           ..write('customerId: $customerId, ')
           ..write('fullName: $fullName, ')
@@ -1015,486 +1017,6 @@ class UsersCompanion extends UpdateCompanion<User> {
           ..write('custActive: $custActive, ')
           ..write('token: $token, ')
           ..write('dbName: $dbName')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $RegistrationDetailsTable extends RegistrationDetails
-    with TableInfo<$RegistrationDetailsTable, RegistrationDetail> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $RegistrationDetailsTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultValue: const Variable(0),
-  );
-  static const VerificationMeta _productNameMeta = const VerificationMeta(
-    'productName',
-  );
-  @override
-  late final GeneratedColumn<String> productName = GeneratedColumn<String>(
-    'product_name',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-    defaultValue: const Variable("mPosBeat"),
-  );
-  static const VerificationMeta _companyNameMeta = const VerificationMeta(
-    'companyName',
-  );
-  @override
-  late final GeneratedColumn<String> companyName = GeneratedColumn<String>(
-    'company_name',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _mobileMeta = const VerificationMeta('mobile');
-  @override
-  late final GeneratedColumn<String> mobile = GeneratedColumn<String>(
-    'mobile',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _emailMeta = const VerificationMeta('email');
-  @override
-  late final GeneratedColumn<String> email = GeneratedColumn<String>(
-    'email',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _adminUsernameMeta = const VerificationMeta(
-    'adminUsername',
-  );
-  @override
-  late final GeneratedColumn<String> adminUsername = GeneratedColumn<String>(
-    'admin_username',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _passwordMeta = const VerificationMeta(
-    'password',
-  );
-  @override
-  late final GeneratedColumn<String> password = GeneratedColumn<String>(
-    'password',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  @override
-  List<GeneratedColumn> get $columns => [
-    id,
-    productName,
-    companyName,
-    mobile,
-    email,
-    adminUsername,
-    password,
-  ];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'registration_details';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<RegistrationDetail> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('product_name')) {
-      context.handle(
-        _productNameMeta,
-        productName.isAcceptableOrUnknown(
-          data['product_name']!,
-          _productNameMeta,
-        ),
-      );
-    }
-    if (data.containsKey('company_name')) {
-      context.handle(
-        _companyNameMeta,
-        companyName.isAcceptableOrUnknown(
-          data['company_name']!,
-          _companyNameMeta,
-        ),
-      );
-    }
-    if (data.containsKey('mobile')) {
-      context.handle(
-        _mobileMeta,
-        mobile.isAcceptableOrUnknown(data['mobile']!, _mobileMeta),
-      );
-    }
-    if (data.containsKey('email')) {
-      context.handle(
-        _emailMeta,
-        email.isAcceptableOrUnknown(data['email']!, _emailMeta),
-      );
-    }
-    if (data.containsKey('admin_username')) {
-      context.handle(
-        _adminUsernameMeta,
-        adminUsername.isAcceptableOrUnknown(
-          data['admin_username']!,
-          _adminUsernameMeta,
-        ),
-      );
-    }
-    if (data.containsKey('password')) {
-      context.handle(
-        _passwordMeta,
-        password.isAcceptableOrUnknown(data['password']!, _passwordMeta),
-      );
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => const {};
-  @override
-  RegistrationDetail map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return RegistrationDetail(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      productName: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}product_name'],
-      )!,
-      companyName: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}company_name'],
-      ),
-      mobile: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}mobile'],
-      ),
-      email: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}email'],
-      ),
-      adminUsername: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}admin_username'],
-      ),
-      password: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}password'],
-      ),
-    );
-  }
-
-  @override
-  $RegistrationDetailsTable createAlias(String alias) {
-    return $RegistrationDetailsTable(attachedDatabase, alias);
-  }
-}
-
-class RegistrationDetail extends DataClass
-    implements Insertable<RegistrationDetail> {
-  final int id;
-  final String productName;
-  final String? companyName;
-  final String? mobile;
-  final String? email;
-  final String? adminUsername;
-  final String? password;
-  const RegistrationDetail({
-    required this.id,
-    required this.productName,
-    this.companyName,
-    this.mobile,
-    this.email,
-    this.adminUsername,
-    this.password,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['product_name'] = Variable<String>(productName);
-    if (!nullToAbsent || companyName != null) {
-      map['company_name'] = Variable<String>(companyName);
-    }
-    if (!nullToAbsent || mobile != null) {
-      map['mobile'] = Variable<String>(mobile);
-    }
-    if (!nullToAbsent || email != null) {
-      map['email'] = Variable<String>(email);
-    }
-    if (!nullToAbsent || adminUsername != null) {
-      map['admin_username'] = Variable<String>(adminUsername);
-    }
-    if (!nullToAbsent || password != null) {
-      map['password'] = Variable<String>(password);
-    }
-    return map;
-  }
-
-  RegistrationDetailsCompanion toCompanion(bool nullToAbsent) {
-    return RegistrationDetailsCompanion(
-      id: Value(id),
-      productName: Value(productName),
-      companyName: companyName == null && nullToAbsent
-          ? const Value.absent()
-          : Value(companyName),
-      mobile: mobile == null && nullToAbsent
-          ? const Value.absent()
-          : Value(mobile),
-      email: email == null && nullToAbsent
-          ? const Value.absent()
-          : Value(email),
-      adminUsername: adminUsername == null && nullToAbsent
-          ? const Value.absent()
-          : Value(adminUsername),
-      password: password == null && nullToAbsent
-          ? const Value.absent()
-          : Value(password),
-    );
-  }
-
-  factory RegistrationDetail.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return RegistrationDetail(
-      id: serializer.fromJson<int>(json['id']),
-      productName: serializer.fromJson<String>(json['productName']),
-      companyName: serializer.fromJson<String?>(json['companyName']),
-      mobile: serializer.fromJson<String?>(json['mobile']),
-      email: serializer.fromJson<String?>(json['email']),
-      adminUsername: serializer.fromJson<String?>(json['adminUsername']),
-      password: serializer.fromJson<String?>(json['password']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'productName': serializer.toJson<String>(productName),
-      'companyName': serializer.toJson<String?>(companyName),
-      'mobile': serializer.toJson<String?>(mobile),
-      'email': serializer.toJson<String?>(email),
-      'adminUsername': serializer.toJson<String?>(adminUsername),
-      'password': serializer.toJson<String?>(password),
-    };
-  }
-
-  RegistrationDetail copyWith({
-    int? id,
-    String? productName,
-    Value<String?> companyName = const Value.absent(),
-    Value<String?> mobile = const Value.absent(),
-    Value<String?> email = const Value.absent(),
-    Value<String?> adminUsername = const Value.absent(),
-    Value<String?> password = const Value.absent(),
-  }) => RegistrationDetail(
-    id: id ?? this.id,
-    productName: productName ?? this.productName,
-    companyName: companyName.present ? companyName.value : this.companyName,
-    mobile: mobile.present ? mobile.value : this.mobile,
-    email: email.present ? email.value : this.email,
-    adminUsername: adminUsername.present
-        ? adminUsername.value
-        : this.adminUsername,
-    password: password.present ? password.value : this.password,
-  );
-  RegistrationDetail copyWithCompanion(RegistrationDetailsCompanion data) {
-    return RegistrationDetail(
-      id: data.id.present ? data.id.value : this.id,
-      productName: data.productName.present
-          ? data.productName.value
-          : this.productName,
-      companyName: data.companyName.present
-          ? data.companyName.value
-          : this.companyName,
-      mobile: data.mobile.present ? data.mobile.value : this.mobile,
-      email: data.email.present ? data.email.value : this.email,
-      adminUsername: data.adminUsername.present
-          ? data.adminUsername.value
-          : this.adminUsername,
-      password: data.password.present ? data.password.value : this.password,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('RegistrationDetail(')
-          ..write('id: $id, ')
-          ..write('productName: $productName, ')
-          ..write('companyName: $companyName, ')
-          ..write('mobile: $mobile, ')
-          ..write('email: $email, ')
-          ..write('adminUsername: $adminUsername, ')
-          ..write('password: $password')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(
-    id,
-    productName,
-    companyName,
-    mobile,
-    email,
-    adminUsername,
-    password,
-  );
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is RegistrationDetail &&
-          other.id == this.id &&
-          other.productName == this.productName &&
-          other.companyName == this.companyName &&
-          other.mobile == this.mobile &&
-          other.email == this.email &&
-          other.adminUsername == this.adminUsername &&
-          other.password == this.password);
-}
-
-class RegistrationDetailsCompanion extends UpdateCompanion<RegistrationDetail> {
-  final Value<int> id;
-  final Value<String> productName;
-  final Value<String?> companyName;
-  final Value<String?> mobile;
-  final Value<String?> email;
-  final Value<String?> adminUsername;
-  final Value<String?> password;
-  final Value<int> rowid;
-  const RegistrationDetailsCompanion({
-    this.id = const Value.absent(),
-    this.productName = const Value.absent(),
-    this.companyName = const Value.absent(),
-    this.mobile = const Value.absent(),
-    this.email = const Value.absent(),
-    this.adminUsername = const Value.absent(),
-    this.password = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  RegistrationDetailsCompanion.insert({
-    this.id = const Value.absent(),
-    this.productName = const Value.absent(),
-    this.companyName = const Value.absent(),
-    this.mobile = const Value.absent(),
-    this.email = const Value.absent(),
-    this.adminUsername = const Value.absent(),
-    this.password = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  static Insertable<RegistrationDetail> custom({
-    Expression<int>? id,
-    Expression<String>? productName,
-    Expression<String>? companyName,
-    Expression<String>? mobile,
-    Expression<String>? email,
-    Expression<String>? adminUsername,
-    Expression<String>? password,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (productName != null) 'product_name': productName,
-      if (companyName != null) 'company_name': companyName,
-      if (mobile != null) 'mobile': mobile,
-      if (email != null) 'email': email,
-      if (adminUsername != null) 'admin_username': adminUsername,
-      if (password != null) 'password': password,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  RegistrationDetailsCompanion copyWith({
-    Value<int>? id,
-    Value<String>? productName,
-    Value<String?>? companyName,
-    Value<String?>? mobile,
-    Value<String?>? email,
-    Value<String?>? adminUsername,
-    Value<String?>? password,
-    Value<int>? rowid,
-  }) {
-    return RegistrationDetailsCompanion(
-      id: id ?? this.id,
-      productName: productName ?? this.productName,
-      companyName: companyName ?? this.companyName,
-      mobile: mobile ?? this.mobile,
-      email: email ?? this.email,
-      adminUsername: adminUsername ?? this.adminUsername,
-      password: password ?? this.password,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (productName.present) {
-      map['product_name'] = Variable<String>(productName.value);
-    }
-    if (companyName.present) {
-      map['company_name'] = Variable<String>(companyName.value);
-    }
-    if (mobile.present) {
-      map['mobile'] = Variable<String>(mobile.value);
-    }
-    if (email.present) {
-      map['email'] = Variable<String>(email.value);
-    }
-    if (adminUsername.present) {
-      map['admin_username'] = Variable<String>(adminUsername.value);
-    }
-    if (password.present) {
-      map['password'] = Variable<String>(password.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('RegistrationDetailsCompanion(')
-          ..write('id: $id, ')
-          ..write('productName: $productName, ')
-          ..write('companyName: $companyName, ')
-          ..write('mobile: $mobile, ')
-          ..write('email: $email, ')
-          ..write('adminUsername: $adminUsername, ')
-          ..write('password: $password, ')
-          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }
@@ -3627,28 +3149,4439 @@ class CompaniesCompanion extends UpdateCompanion<Company> {
   }
 }
 
+class $UserSettingsTableTable extends UserSettingsTable
+    with TableInfo<$UserSettingsTableTable, UserSettingsTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $UserSettingsTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<int> userId = GeneratedColumn<int>(
+    'user_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _menuNameMeta = const VerificationMeta(
+    'menuName',
+  );
+  @override
+  late final GeneratedColumn<String> menuName = GeneratedColumn<String>(
+    'menu_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _buttonTypeMeta = const VerificationMeta(
+    'buttonType',
+  );
+  @override
+  late final GeneratedColumn<String> buttonType = GeneratedColumn<String>(
+    'button_type',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'description',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _orderNoMeta = const VerificationMeta(
+    'orderNo',
+  );
+  @override
+  late final GeneratedColumn<int> orderNo = GeneratedColumn<int>(
+    'order_no',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _activeMeta = const VerificationMeta('active');
+  @override
+  late final GeneratedColumn<int> active = GeneratedColumn<int>(
+    'active',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _valueMeta = const VerificationMeta('value');
+  @override
+  late final GeneratedColumn<String> value = GeneratedColumn<String>(
+    'value',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    userId,
+    menuName,
+    buttonType,
+    description,
+    orderNo,
+    active,
+    value,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'user_settings_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<UserSettingsTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(
+        _userIdMeta,
+        userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta),
+      );
+    }
+    if (data.containsKey('menu_name')) {
+      context.handle(
+        _menuNameMeta,
+        menuName.isAcceptableOrUnknown(data['menu_name']!, _menuNameMeta),
+      );
+    }
+    if (data.containsKey('button_type')) {
+      context.handle(
+        _buttonTypeMeta,
+        buttonType.isAcceptableOrUnknown(data['button_type']!, _buttonTypeMeta),
+      );
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
+          _descriptionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('order_no')) {
+      context.handle(
+        _orderNoMeta,
+        orderNo.isAcceptableOrUnknown(data['order_no']!, _orderNoMeta),
+      );
+    }
+    if (data.containsKey('active')) {
+      context.handle(
+        _activeMeta,
+        active.isAcceptableOrUnknown(data['active']!, _activeMeta),
+      );
+    }
+    if (data.containsKey('value')) {
+      context.handle(
+        _valueMeta,
+        value.isAcceptableOrUnknown(data['value']!, _valueMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  UserSettingsTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return UserSettingsTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      ),
+      userId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}user_id'],
+      ),
+      menuName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}menu_name'],
+      ),
+      buttonType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}button_type'],
+      ),
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      ),
+      orderNo: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}order_no'],
+      ),
+      active: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}active'],
+      ),
+      value: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}value'],
+      ),
+    );
+  }
+
+  @override
+  $UserSettingsTableTable createAlias(String alias) {
+    return $UserSettingsTableTable(attachedDatabase, alias);
+  }
+}
+
+class UserSettingsTableData extends DataClass
+    implements Insertable<UserSettingsTableData> {
+  final int? id;
+  final int? userId;
+  final String? menuName;
+  final String? buttonType;
+  final String? description;
+  final int? orderNo;
+  final int? active;
+  final String? value;
+  const UserSettingsTableData({
+    this.id,
+    this.userId,
+    this.menuName,
+    this.buttonType,
+    this.description,
+    this.orderNo,
+    this.active,
+    this.value,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || id != null) {
+      map['id'] = Variable<int>(id);
+    }
+    if (!nullToAbsent || userId != null) {
+      map['user_id'] = Variable<int>(userId);
+    }
+    if (!nullToAbsent || menuName != null) {
+      map['menu_name'] = Variable<String>(menuName);
+    }
+    if (!nullToAbsent || buttonType != null) {
+      map['button_type'] = Variable<String>(buttonType);
+    }
+    if (!nullToAbsent || description != null) {
+      map['description'] = Variable<String>(description);
+    }
+    if (!nullToAbsent || orderNo != null) {
+      map['order_no'] = Variable<int>(orderNo);
+    }
+    if (!nullToAbsent || active != null) {
+      map['active'] = Variable<int>(active);
+    }
+    if (!nullToAbsent || value != null) {
+      map['value'] = Variable<String>(value);
+    }
+    return map;
+  }
+
+  UserSettingsTableCompanion toCompanion(bool nullToAbsent) {
+    return UserSettingsTableCompanion(
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      userId: userId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(userId),
+      menuName: menuName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(menuName),
+      buttonType: buttonType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(buttonType),
+      description: description == null && nullToAbsent
+          ? const Value.absent()
+          : Value(description),
+      orderNo: orderNo == null && nullToAbsent
+          ? const Value.absent()
+          : Value(orderNo),
+      active: active == null && nullToAbsent
+          ? const Value.absent()
+          : Value(active),
+      value: value == null && nullToAbsent
+          ? const Value.absent()
+          : Value(value),
+    );
+  }
+
+  factory UserSettingsTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return UserSettingsTableData(
+      id: serializer.fromJson<int?>(json['id']),
+      userId: serializer.fromJson<int?>(json['userId']),
+      menuName: serializer.fromJson<String?>(json['menuName']),
+      buttonType: serializer.fromJson<String?>(json['buttonType']),
+      description: serializer.fromJson<String?>(json['description']),
+      orderNo: serializer.fromJson<int?>(json['orderNo']),
+      active: serializer.fromJson<int?>(json['active']),
+      value: serializer.fromJson<String?>(json['value']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int?>(id),
+      'userId': serializer.toJson<int?>(userId),
+      'menuName': serializer.toJson<String?>(menuName),
+      'buttonType': serializer.toJson<String?>(buttonType),
+      'description': serializer.toJson<String?>(description),
+      'orderNo': serializer.toJson<int?>(orderNo),
+      'active': serializer.toJson<int?>(active),
+      'value': serializer.toJson<String?>(value),
+    };
+  }
+
+  UserSettingsTableData copyWith({
+    Value<int?> id = const Value.absent(),
+    Value<int?> userId = const Value.absent(),
+    Value<String?> menuName = const Value.absent(),
+    Value<String?> buttonType = const Value.absent(),
+    Value<String?> description = const Value.absent(),
+    Value<int?> orderNo = const Value.absent(),
+    Value<int?> active = const Value.absent(),
+    Value<String?> value = const Value.absent(),
+  }) => UserSettingsTableData(
+    id: id.present ? id.value : this.id,
+    userId: userId.present ? userId.value : this.userId,
+    menuName: menuName.present ? menuName.value : this.menuName,
+    buttonType: buttonType.present ? buttonType.value : this.buttonType,
+    description: description.present ? description.value : this.description,
+    orderNo: orderNo.present ? orderNo.value : this.orderNo,
+    active: active.present ? active.value : this.active,
+    value: value.present ? value.value : this.value,
+  );
+  UserSettingsTableData copyWithCompanion(UserSettingsTableCompanion data) {
+    return UserSettingsTableData(
+      id: data.id.present ? data.id.value : this.id,
+      userId: data.userId.present ? data.userId.value : this.userId,
+      menuName: data.menuName.present ? data.menuName.value : this.menuName,
+      buttonType: data.buttonType.present
+          ? data.buttonType.value
+          : this.buttonType,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
+      orderNo: data.orderNo.present ? data.orderNo.value : this.orderNo,
+      active: data.active.present ? data.active.value : this.active,
+      value: data.value.present ? data.value.value : this.value,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('UserSettingsTableData(')
+          ..write('id: $id, ')
+          ..write('userId: $userId, ')
+          ..write('menuName: $menuName, ')
+          ..write('buttonType: $buttonType, ')
+          ..write('description: $description, ')
+          ..write('orderNo: $orderNo, ')
+          ..write('active: $active, ')
+          ..write('value: $value')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    userId,
+    menuName,
+    buttonType,
+    description,
+    orderNo,
+    active,
+    value,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is UserSettingsTableData &&
+          other.id == this.id &&
+          other.userId == this.userId &&
+          other.menuName == this.menuName &&
+          other.buttonType == this.buttonType &&
+          other.description == this.description &&
+          other.orderNo == this.orderNo &&
+          other.active == this.active &&
+          other.value == this.value);
+}
+
+class UserSettingsTableCompanion
+    extends UpdateCompanion<UserSettingsTableData> {
+  final Value<int?> id;
+  final Value<int?> userId;
+  final Value<String?> menuName;
+  final Value<String?> buttonType;
+  final Value<String?> description;
+  final Value<int?> orderNo;
+  final Value<int?> active;
+  final Value<String?> value;
+  const UserSettingsTableCompanion({
+    this.id = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.menuName = const Value.absent(),
+    this.buttonType = const Value.absent(),
+    this.description = const Value.absent(),
+    this.orderNo = const Value.absent(),
+    this.active = const Value.absent(),
+    this.value = const Value.absent(),
+  });
+  UserSettingsTableCompanion.insert({
+    this.id = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.menuName = const Value.absent(),
+    this.buttonType = const Value.absent(),
+    this.description = const Value.absent(),
+    this.orderNo = const Value.absent(),
+    this.active = const Value.absent(),
+    this.value = const Value.absent(),
+  });
+  static Insertable<UserSettingsTableData> custom({
+    Expression<int>? id,
+    Expression<int>? userId,
+    Expression<String>? menuName,
+    Expression<String>? buttonType,
+    Expression<String>? description,
+    Expression<int>? orderNo,
+    Expression<int>? active,
+    Expression<String>? value,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (userId != null) 'user_id': userId,
+      if (menuName != null) 'menu_name': menuName,
+      if (buttonType != null) 'button_type': buttonType,
+      if (description != null) 'description': description,
+      if (orderNo != null) 'order_no': orderNo,
+      if (active != null) 'active': active,
+      if (value != null) 'value': value,
+    });
+  }
+
+  UserSettingsTableCompanion copyWith({
+    Value<int?>? id,
+    Value<int?>? userId,
+    Value<String?>? menuName,
+    Value<String?>? buttonType,
+    Value<String?>? description,
+    Value<int?>? orderNo,
+    Value<int?>? active,
+    Value<String?>? value,
+  }) {
+    return UserSettingsTableCompanion(
+      id: id ?? this.id,
+      userId: userId ?? this.userId,
+      menuName: menuName ?? this.menuName,
+      buttonType: buttonType ?? this.buttonType,
+      description: description ?? this.description,
+      orderNo: orderNo ?? this.orderNo,
+      active: active ?? this.active,
+      value: value ?? this.value,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<int>(userId.value);
+    }
+    if (menuName.present) {
+      map['menu_name'] = Variable<String>(menuName.value);
+    }
+    if (buttonType.present) {
+      map['button_type'] = Variable<String>(buttonType.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (orderNo.present) {
+      map['order_no'] = Variable<int>(orderNo.value);
+    }
+    if (active.present) {
+      map['active'] = Variable<int>(active.value);
+    }
+    if (value.present) {
+      map['value'] = Variable<String>(value.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('UserSettingsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('userId: $userId, ')
+          ..write('menuName: $menuName, ')
+          ..write('buttonType: $buttonType, ')
+          ..write('description: $description, ')
+          ..write('orderNo: $orderNo, ')
+          ..write('active: $active, ')
+          ..write('value: $value')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $VoucherTypesTable extends VoucherTypes
+    with TableInfo<$VoucherTypesTable, VoucherType> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $VoucherTypesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _companyIdMeta = const VerificationMeta(
+    'companyId',
+  );
+  @override
+  late final GeneratedColumn<int> companyId = GeneratedColumn<int>(
+    'company_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _voucherMenuNameMeta = const VerificationMeta(
+    'voucherMenuName',
+  );
+  @override
+  late final GeneratedColumn<String> voucherMenuName = GeneratedColumn<String>(
+    'voucher_menu_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'description',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _hasB2BB2CMeta = const VerificationMeta(
+    'hasB2BB2C',
+  );
+  @override
+  late final GeneratedColumn<String> hasB2BB2C = GeneratedColumn<String>(
+    'has_b2_b_b2_c',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _requireDeclarationMeta =
+      const VerificationMeta('requireDeclaration');
+  @override
+  late final GeneratedColumn<String> requireDeclaration =
+      GeneratedColumn<String>(
+        'require_declaration',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _orderNoMeta = const VerificationMeta(
+    'orderNo',
+  );
+  @override
+  late final GeneratedColumn<int> orderNo = GeneratedColumn<int>(
+    'order_no',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _hasB2BMeta = const VerificationMeta('hasB2B');
+  @override
+  late final GeneratedColumn<int> hasB2B = GeneratedColumn<int>(
+    'has_b2_b',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _b2BPrefixMeta = const VerificationMeta(
+    'b2BPrefix',
+  );
+  @override
+  late final GeneratedColumn<String> b2BPrefix = GeneratedColumn<String>(
+    'b2_b_prefix',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _b2BSuffixMeta = const VerificationMeta(
+    'b2BSuffix',
+  );
+  @override
+  late final GeneratedColumn<String> b2BSuffix = GeneratedColumn<String>(
+    'b2_b_suffix',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _b2BWidthMeta = const VerificationMeta(
+    'b2BWidth',
+  );
+  @override
+  late final GeneratedColumn<int> b2BWidth = GeneratedColumn<int>(
+    'b2_b_width',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _b2BStartFromMeta = const VerificationMeta(
+    'b2BStartFrom',
+  );
+  @override
+  late final GeneratedColumn<int> b2BStartFrom = GeneratedColumn<int>(
+    'b2_b_start_from',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _b2CPrefixMeta = const VerificationMeta(
+    'b2CPrefix',
+  );
+  @override
+  late final GeneratedColumn<String> b2CPrefix = GeneratedColumn<String>(
+    'b2_c_prefix',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _b2CSuffixMeta = const VerificationMeta(
+    'b2CSuffix',
+  );
+  @override
+  late final GeneratedColumn<String> b2CSuffix = GeneratedColumn<String>(
+    'b2_c_suffix',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _b2CWidthMeta = const VerificationMeta(
+    'b2CWidth',
+  );
+  @override
+  late final GeneratedColumn<int> b2CWidth = GeneratedColumn<int>(
+    'b2_c_width',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _b2CStartFromMeta = const VerificationMeta(
+    'b2CStartFrom',
+  );
+  @override
+  late final GeneratedColumn<int> b2CStartFrom = GeneratedColumn<int>(
+    'b2_c_start_from',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _b2BDeclarationMeta = const VerificationMeta(
+    'b2BDeclaration',
+  );
+  @override
+  late final GeneratedColumn<String> b2BDeclaration = GeneratedColumn<String>(
+    'b2_b_declaration',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _b2CDeclarationMeta = const VerificationMeta(
+    'b2CDeclaration',
+  );
+  @override
+  late final GeneratedColumn<String> b2CDeclaration = GeneratedColumn<String>(
+    'b2_c_declaration',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _isEnabledMeta = const VerificationMeta(
+    'isEnabled',
+  );
+  @override
+  late final GeneratedColumn<int> isEnabled = GeneratedColumn<int>(
+    'is_enabled',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    companyId,
+    voucherMenuName,
+    description,
+    hasB2BB2C,
+    requireDeclaration,
+    orderNo,
+    hasB2B,
+    b2BPrefix,
+    b2BSuffix,
+    b2BWidth,
+    b2BStartFrom,
+    b2CPrefix,
+    b2CSuffix,
+    b2CWidth,
+    b2CStartFrom,
+    b2BDeclaration,
+    b2CDeclaration,
+    isEnabled,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'voucher_types';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<VoucherType> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('company_id')) {
+      context.handle(
+        _companyIdMeta,
+        companyId.isAcceptableOrUnknown(data['company_id']!, _companyIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_companyIdMeta);
+    }
+    if (data.containsKey('voucher_menu_name')) {
+      context.handle(
+        _voucherMenuNameMeta,
+        voucherMenuName.isAcceptableOrUnknown(
+          data['voucher_menu_name']!,
+          _voucherMenuNameMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_voucherMenuNameMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
+          _descriptionMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_descriptionMeta);
+    }
+    if (data.containsKey('has_b2_b_b2_c')) {
+      context.handle(
+        _hasB2BB2CMeta,
+        hasB2BB2C.isAcceptableOrUnknown(data['has_b2_b_b2_c']!, _hasB2BB2CMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_hasB2BB2CMeta);
+    }
+    if (data.containsKey('require_declaration')) {
+      context.handle(
+        _requireDeclarationMeta,
+        requireDeclaration.isAcceptableOrUnknown(
+          data['require_declaration']!,
+          _requireDeclarationMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_requireDeclarationMeta);
+    }
+    if (data.containsKey('order_no')) {
+      context.handle(
+        _orderNoMeta,
+        orderNo.isAcceptableOrUnknown(data['order_no']!, _orderNoMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_orderNoMeta);
+    }
+    if (data.containsKey('has_b2_b')) {
+      context.handle(
+        _hasB2BMeta,
+        hasB2B.isAcceptableOrUnknown(data['has_b2_b']!, _hasB2BMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_hasB2BMeta);
+    }
+    if (data.containsKey('b2_b_prefix')) {
+      context.handle(
+        _b2BPrefixMeta,
+        b2BPrefix.isAcceptableOrUnknown(data['b2_b_prefix']!, _b2BPrefixMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_b2BPrefixMeta);
+    }
+    if (data.containsKey('b2_b_suffix')) {
+      context.handle(
+        _b2BSuffixMeta,
+        b2BSuffix.isAcceptableOrUnknown(data['b2_b_suffix']!, _b2BSuffixMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_b2BSuffixMeta);
+    }
+    if (data.containsKey('b2_b_width')) {
+      context.handle(
+        _b2BWidthMeta,
+        b2BWidth.isAcceptableOrUnknown(data['b2_b_width']!, _b2BWidthMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_b2BWidthMeta);
+    }
+    if (data.containsKey('b2_b_start_from')) {
+      context.handle(
+        _b2BStartFromMeta,
+        b2BStartFrom.isAcceptableOrUnknown(
+          data['b2_b_start_from']!,
+          _b2BStartFromMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_b2BStartFromMeta);
+    }
+    if (data.containsKey('b2_c_prefix')) {
+      context.handle(
+        _b2CPrefixMeta,
+        b2CPrefix.isAcceptableOrUnknown(data['b2_c_prefix']!, _b2CPrefixMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_b2CPrefixMeta);
+    }
+    if (data.containsKey('b2_c_suffix')) {
+      context.handle(
+        _b2CSuffixMeta,
+        b2CSuffix.isAcceptableOrUnknown(data['b2_c_suffix']!, _b2CSuffixMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_b2CSuffixMeta);
+    }
+    if (data.containsKey('b2_c_width')) {
+      context.handle(
+        _b2CWidthMeta,
+        b2CWidth.isAcceptableOrUnknown(data['b2_c_width']!, _b2CWidthMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_b2CWidthMeta);
+    }
+    if (data.containsKey('b2_c_start_from')) {
+      context.handle(
+        _b2CStartFromMeta,
+        b2CStartFrom.isAcceptableOrUnknown(
+          data['b2_c_start_from']!,
+          _b2CStartFromMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_b2CStartFromMeta);
+    }
+    if (data.containsKey('b2_b_declaration')) {
+      context.handle(
+        _b2BDeclarationMeta,
+        b2BDeclaration.isAcceptableOrUnknown(
+          data['b2_b_declaration']!,
+          _b2BDeclarationMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_b2BDeclarationMeta);
+    }
+    if (data.containsKey('b2_c_declaration')) {
+      context.handle(
+        _b2CDeclarationMeta,
+        b2CDeclaration.isAcceptableOrUnknown(
+          data['b2_c_declaration']!,
+          _b2CDeclarationMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_b2CDeclarationMeta);
+    }
+    if (data.containsKey('is_enabled')) {
+      context.handle(
+        _isEnabledMeta,
+        isEnabled.isAcceptableOrUnknown(data['is_enabled']!, _isEnabledMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_isEnabledMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  VoucherType map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return VoucherType(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      companyId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}company_id'],
+      )!,
+      voucherMenuName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}voucher_menu_name'],
+      )!,
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      )!,
+      hasB2BB2C: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}has_b2_b_b2_c'],
+      )!,
+      requireDeclaration: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}require_declaration'],
+      )!,
+      orderNo: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}order_no'],
+      )!,
+      hasB2B: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}has_b2_b'],
+      )!,
+      b2BPrefix: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}b2_b_prefix'],
+      )!,
+      b2BSuffix: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}b2_b_suffix'],
+      )!,
+      b2BWidth: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}b2_b_width'],
+      )!,
+      b2BStartFrom: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}b2_b_start_from'],
+      )!,
+      b2CPrefix: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}b2_c_prefix'],
+      )!,
+      b2CSuffix: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}b2_c_suffix'],
+      )!,
+      b2CWidth: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}b2_c_width'],
+      )!,
+      b2CStartFrom: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}b2_c_start_from'],
+      )!,
+      b2BDeclaration: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}b2_b_declaration'],
+      )!,
+      b2CDeclaration: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}b2_c_declaration'],
+      )!,
+      isEnabled: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}is_enabled'],
+      )!,
+    );
+  }
+
+  @override
+  $VoucherTypesTable createAlias(String alias) {
+    return $VoucherTypesTable(attachedDatabase, alias);
+  }
+}
+
+class VoucherType extends DataClass implements Insertable<VoucherType> {
+  final int id;
+  final int companyId;
+  final String voucherMenuName;
+  final String description;
+  final String hasB2BB2C;
+  final String requireDeclaration;
+  final int orderNo;
+  final int hasB2B;
+  final String b2BPrefix;
+  final String b2BSuffix;
+  final int b2BWidth;
+  final int b2BStartFrom;
+  final String b2CPrefix;
+  final String b2CSuffix;
+  final int b2CWidth;
+  final int b2CStartFrom;
+  final String b2BDeclaration;
+  final String b2CDeclaration;
+  final int isEnabled;
+  const VoucherType({
+    required this.id,
+    required this.companyId,
+    required this.voucherMenuName,
+    required this.description,
+    required this.hasB2BB2C,
+    required this.requireDeclaration,
+    required this.orderNo,
+    required this.hasB2B,
+    required this.b2BPrefix,
+    required this.b2BSuffix,
+    required this.b2BWidth,
+    required this.b2BStartFrom,
+    required this.b2CPrefix,
+    required this.b2CSuffix,
+    required this.b2CWidth,
+    required this.b2CStartFrom,
+    required this.b2BDeclaration,
+    required this.b2CDeclaration,
+    required this.isEnabled,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['company_id'] = Variable<int>(companyId);
+    map['voucher_menu_name'] = Variable<String>(voucherMenuName);
+    map['description'] = Variable<String>(description);
+    map['has_b2_b_b2_c'] = Variable<String>(hasB2BB2C);
+    map['require_declaration'] = Variable<String>(requireDeclaration);
+    map['order_no'] = Variable<int>(orderNo);
+    map['has_b2_b'] = Variable<int>(hasB2B);
+    map['b2_b_prefix'] = Variable<String>(b2BPrefix);
+    map['b2_b_suffix'] = Variable<String>(b2BSuffix);
+    map['b2_b_width'] = Variable<int>(b2BWidth);
+    map['b2_b_start_from'] = Variable<int>(b2BStartFrom);
+    map['b2_c_prefix'] = Variable<String>(b2CPrefix);
+    map['b2_c_suffix'] = Variable<String>(b2CSuffix);
+    map['b2_c_width'] = Variable<int>(b2CWidth);
+    map['b2_c_start_from'] = Variable<int>(b2CStartFrom);
+    map['b2_b_declaration'] = Variable<String>(b2BDeclaration);
+    map['b2_c_declaration'] = Variable<String>(b2CDeclaration);
+    map['is_enabled'] = Variable<int>(isEnabled);
+    return map;
+  }
+
+  VoucherTypesCompanion toCompanion(bool nullToAbsent) {
+    return VoucherTypesCompanion(
+      id: Value(id),
+      companyId: Value(companyId),
+      voucherMenuName: Value(voucherMenuName),
+      description: Value(description),
+      hasB2BB2C: Value(hasB2BB2C),
+      requireDeclaration: Value(requireDeclaration),
+      orderNo: Value(orderNo),
+      hasB2B: Value(hasB2B),
+      b2BPrefix: Value(b2BPrefix),
+      b2BSuffix: Value(b2BSuffix),
+      b2BWidth: Value(b2BWidth),
+      b2BStartFrom: Value(b2BStartFrom),
+      b2CPrefix: Value(b2CPrefix),
+      b2CSuffix: Value(b2CSuffix),
+      b2CWidth: Value(b2CWidth),
+      b2CStartFrom: Value(b2CStartFrom),
+      b2BDeclaration: Value(b2BDeclaration),
+      b2CDeclaration: Value(b2CDeclaration),
+      isEnabled: Value(isEnabled),
+    );
+  }
+
+  factory VoucherType.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return VoucherType(
+      id: serializer.fromJson<int>(json['id']),
+      companyId: serializer.fromJson<int>(json['companyId']),
+      voucherMenuName: serializer.fromJson<String>(json['voucherMenuName']),
+      description: serializer.fromJson<String>(json['description']),
+      hasB2BB2C: serializer.fromJson<String>(json['hasB2BB2C']),
+      requireDeclaration: serializer.fromJson<String>(
+        json['requireDeclaration'],
+      ),
+      orderNo: serializer.fromJson<int>(json['orderNo']),
+      hasB2B: serializer.fromJson<int>(json['hasB2B']),
+      b2BPrefix: serializer.fromJson<String>(json['b2BPrefix']),
+      b2BSuffix: serializer.fromJson<String>(json['b2BSuffix']),
+      b2BWidth: serializer.fromJson<int>(json['b2BWidth']),
+      b2BStartFrom: serializer.fromJson<int>(json['b2BStartFrom']),
+      b2CPrefix: serializer.fromJson<String>(json['b2CPrefix']),
+      b2CSuffix: serializer.fromJson<String>(json['b2CSuffix']),
+      b2CWidth: serializer.fromJson<int>(json['b2CWidth']),
+      b2CStartFrom: serializer.fromJson<int>(json['b2CStartFrom']),
+      b2BDeclaration: serializer.fromJson<String>(json['b2BDeclaration']),
+      b2CDeclaration: serializer.fromJson<String>(json['b2CDeclaration']),
+      isEnabled: serializer.fromJson<int>(json['isEnabled']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'companyId': serializer.toJson<int>(companyId),
+      'voucherMenuName': serializer.toJson<String>(voucherMenuName),
+      'description': serializer.toJson<String>(description),
+      'hasB2BB2C': serializer.toJson<String>(hasB2BB2C),
+      'requireDeclaration': serializer.toJson<String>(requireDeclaration),
+      'orderNo': serializer.toJson<int>(orderNo),
+      'hasB2B': serializer.toJson<int>(hasB2B),
+      'b2BPrefix': serializer.toJson<String>(b2BPrefix),
+      'b2BSuffix': serializer.toJson<String>(b2BSuffix),
+      'b2BWidth': serializer.toJson<int>(b2BWidth),
+      'b2BStartFrom': serializer.toJson<int>(b2BStartFrom),
+      'b2CPrefix': serializer.toJson<String>(b2CPrefix),
+      'b2CSuffix': serializer.toJson<String>(b2CSuffix),
+      'b2CWidth': serializer.toJson<int>(b2CWidth),
+      'b2CStartFrom': serializer.toJson<int>(b2CStartFrom),
+      'b2BDeclaration': serializer.toJson<String>(b2BDeclaration),
+      'b2CDeclaration': serializer.toJson<String>(b2CDeclaration),
+      'isEnabled': serializer.toJson<int>(isEnabled),
+    };
+  }
+
+  VoucherType copyWith({
+    int? id,
+    int? companyId,
+    String? voucherMenuName,
+    String? description,
+    String? hasB2BB2C,
+    String? requireDeclaration,
+    int? orderNo,
+    int? hasB2B,
+    String? b2BPrefix,
+    String? b2BSuffix,
+    int? b2BWidth,
+    int? b2BStartFrom,
+    String? b2CPrefix,
+    String? b2CSuffix,
+    int? b2CWidth,
+    int? b2CStartFrom,
+    String? b2BDeclaration,
+    String? b2CDeclaration,
+    int? isEnabled,
+  }) => VoucherType(
+    id: id ?? this.id,
+    companyId: companyId ?? this.companyId,
+    voucherMenuName: voucherMenuName ?? this.voucherMenuName,
+    description: description ?? this.description,
+    hasB2BB2C: hasB2BB2C ?? this.hasB2BB2C,
+    requireDeclaration: requireDeclaration ?? this.requireDeclaration,
+    orderNo: orderNo ?? this.orderNo,
+    hasB2B: hasB2B ?? this.hasB2B,
+    b2BPrefix: b2BPrefix ?? this.b2BPrefix,
+    b2BSuffix: b2BSuffix ?? this.b2BSuffix,
+    b2BWidth: b2BWidth ?? this.b2BWidth,
+    b2BStartFrom: b2BStartFrom ?? this.b2BStartFrom,
+    b2CPrefix: b2CPrefix ?? this.b2CPrefix,
+    b2CSuffix: b2CSuffix ?? this.b2CSuffix,
+    b2CWidth: b2CWidth ?? this.b2CWidth,
+    b2CStartFrom: b2CStartFrom ?? this.b2CStartFrom,
+    b2BDeclaration: b2BDeclaration ?? this.b2BDeclaration,
+    b2CDeclaration: b2CDeclaration ?? this.b2CDeclaration,
+    isEnabled: isEnabled ?? this.isEnabled,
+  );
+  VoucherType copyWithCompanion(VoucherTypesCompanion data) {
+    return VoucherType(
+      id: data.id.present ? data.id.value : this.id,
+      companyId: data.companyId.present ? data.companyId.value : this.companyId,
+      voucherMenuName: data.voucherMenuName.present
+          ? data.voucherMenuName.value
+          : this.voucherMenuName,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
+      hasB2BB2C: data.hasB2BB2C.present ? data.hasB2BB2C.value : this.hasB2BB2C,
+      requireDeclaration: data.requireDeclaration.present
+          ? data.requireDeclaration.value
+          : this.requireDeclaration,
+      orderNo: data.orderNo.present ? data.orderNo.value : this.orderNo,
+      hasB2B: data.hasB2B.present ? data.hasB2B.value : this.hasB2B,
+      b2BPrefix: data.b2BPrefix.present ? data.b2BPrefix.value : this.b2BPrefix,
+      b2BSuffix: data.b2BSuffix.present ? data.b2BSuffix.value : this.b2BSuffix,
+      b2BWidth: data.b2BWidth.present ? data.b2BWidth.value : this.b2BWidth,
+      b2BStartFrom: data.b2BStartFrom.present
+          ? data.b2BStartFrom.value
+          : this.b2BStartFrom,
+      b2CPrefix: data.b2CPrefix.present ? data.b2CPrefix.value : this.b2CPrefix,
+      b2CSuffix: data.b2CSuffix.present ? data.b2CSuffix.value : this.b2CSuffix,
+      b2CWidth: data.b2CWidth.present ? data.b2CWidth.value : this.b2CWidth,
+      b2CStartFrom: data.b2CStartFrom.present
+          ? data.b2CStartFrom.value
+          : this.b2CStartFrom,
+      b2BDeclaration: data.b2BDeclaration.present
+          ? data.b2BDeclaration.value
+          : this.b2BDeclaration,
+      b2CDeclaration: data.b2CDeclaration.present
+          ? data.b2CDeclaration.value
+          : this.b2CDeclaration,
+      isEnabled: data.isEnabled.present ? data.isEnabled.value : this.isEnabled,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VoucherType(')
+          ..write('id: $id, ')
+          ..write('companyId: $companyId, ')
+          ..write('voucherMenuName: $voucherMenuName, ')
+          ..write('description: $description, ')
+          ..write('hasB2BB2C: $hasB2BB2C, ')
+          ..write('requireDeclaration: $requireDeclaration, ')
+          ..write('orderNo: $orderNo, ')
+          ..write('hasB2B: $hasB2B, ')
+          ..write('b2BPrefix: $b2BPrefix, ')
+          ..write('b2BSuffix: $b2BSuffix, ')
+          ..write('b2BWidth: $b2BWidth, ')
+          ..write('b2BStartFrom: $b2BStartFrom, ')
+          ..write('b2CPrefix: $b2CPrefix, ')
+          ..write('b2CSuffix: $b2CSuffix, ')
+          ..write('b2CWidth: $b2CWidth, ')
+          ..write('b2CStartFrom: $b2CStartFrom, ')
+          ..write('b2BDeclaration: $b2BDeclaration, ')
+          ..write('b2CDeclaration: $b2CDeclaration, ')
+          ..write('isEnabled: $isEnabled')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    companyId,
+    voucherMenuName,
+    description,
+    hasB2BB2C,
+    requireDeclaration,
+    orderNo,
+    hasB2B,
+    b2BPrefix,
+    b2BSuffix,
+    b2BWidth,
+    b2BStartFrom,
+    b2CPrefix,
+    b2CSuffix,
+    b2CWidth,
+    b2CStartFrom,
+    b2BDeclaration,
+    b2CDeclaration,
+    isEnabled,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is VoucherType &&
+          other.id == this.id &&
+          other.companyId == this.companyId &&
+          other.voucherMenuName == this.voucherMenuName &&
+          other.description == this.description &&
+          other.hasB2BB2C == this.hasB2BB2C &&
+          other.requireDeclaration == this.requireDeclaration &&
+          other.orderNo == this.orderNo &&
+          other.hasB2B == this.hasB2B &&
+          other.b2BPrefix == this.b2BPrefix &&
+          other.b2BSuffix == this.b2BSuffix &&
+          other.b2BWidth == this.b2BWidth &&
+          other.b2BStartFrom == this.b2BStartFrom &&
+          other.b2CPrefix == this.b2CPrefix &&
+          other.b2CSuffix == this.b2CSuffix &&
+          other.b2CWidth == this.b2CWidth &&
+          other.b2CStartFrom == this.b2CStartFrom &&
+          other.b2BDeclaration == this.b2BDeclaration &&
+          other.b2CDeclaration == this.b2CDeclaration &&
+          other.isEnabled == this.isEnabled);
+}
+
+class VoucherTypesCompanion extends UpdateCompanion<VoucherType> {
+  final Value<int> id;
+  final Value<int> companyId;
+  final Value<String> voucherMenuName;
+  final Value<String> description;
+  final Value<String> hasB2BB2C;
+  final Value<String> requireDeclaration;
+  final Value<int> orderNo;
+  final Value<int> hasB2B;
+  final Value<String> b2BPrefix;
+  final Value<String> b2BSuffix;
+  final Value<int> b2BWidth;
+  final Value<int> b2BStartFrom;
+  final Value<String> b2CPrefix;
+  final Value<String> b2CSuffix;
+  final Value<int> b2CWidth;
+  final Value<int> b2CStartFrom;
+  final Value<String> b2BDeclaration;
+  final Value<String> b2CDeclaration;
+  final Value<int> isEnabled;
+  const VoucherTypesCompanion({
+    this.id = const Value.absent(),
+    this.companyId = const Value.absent(),
+    this.voucherMenuName = const Value.absent(),
+    this.description = const Value.absent(),
+    this.hasB2BB2C = const Value.absent(),
+    this.requireDeclaration = const Value.absent(),
+    this.orderNo = const Value.absent(),
+    this.hasB2B = const Value.absent(),
+    this.b2BPrefix = const Value.absent(),
+    this.b2BSuffix = const Value.absent(),
+    this.b2BWidth = const Value.absent(),
+    this.b2BStartFrom = const Value.absent(),
+    this.b2CPrefix = const Value.absent(),
+    this.b2CSuffix = const Value.absent(),
+    this.b2CWidth = const Value.absent(),
+    this.b2CStartFrom = const Value.absent(),
+    this.b2BDeclaration = const Value.absent(),
+    this.b2CDeclaration = const Value.absent(),
+    this.isEnabled = const Value.absent(),
+  });
+  VoucherTypesCompanion.insert({
+    this.id = const Value.absent(),
+    required int companyId,
+    required String voucherMenuName,
+    required String description,
+    required String hasB2BB2C,
+    required String requireDeclaration,
+    required int orderNo,
+    required int hasB2B,
+    required String b2BPrefix,
+    required String b2BSuffix,
+    required int b2BWidth,
+    required int b2BStartFrom,
+    required String b2CPrefix,
+    required String b2CSuffix,
+    required int b2CWidth,
+    required int b2CStartFrom,
+    required String b2BDeclaration,
+    required String b2CDeclaration,
+    required int isEnabled,
+  }) : companyId = Value(companyId),
+       voucherMenuName = Value(voucherMenuName),
+       description = Value(description),
+       hasB2BB2C = Value(hasB2BB2C),
+       requireDeclaration = Value(requireDeclaration),
+       orderNo = Value(orderNo),
+       hasB2B = Value(hasB2B),
+       b2BPrefix = Value(b2BPrefix),
+       b2BSuffix = Value(b2BSuffix),
+       b2BWidth = Value(b2BWidth),
+       b2BStartFrom = Value(b2BStartFrom),
+       b2CPrefix = Value(b2CPrefix),
+       b2CSuffix = Value(b2CSuffix),
+       b2CWidth = Value(b2CWidth),
+       b2CStartFrom = Value(b2CStartFrom),
+       b2BDeclaration = Value(b2BDeclaration),
+       b2CDeclaration = Value(b2CDeclaration),
+       isEnabled = Value(isEnabled);
+  static Insertable<VoucherType> custom({
+    Expression<int>? id,
+    Expression<int>? companyId,
+    Expression<String>? voucherMenuName,
+    Expression<String>? description,
+    Expression<String>? hasB2BB2C,
+    Expression<String>? requireDeclaration,
+    Expression<int>? orderNo,
+    Expression<int>? hasB2B,
+    Expression<String>? b2BPrefix,
+    Expression<String>? b2BSuffix,
+    Expression<int>? b2BWidth,
+    Expression<int>? b2BStartFrom,
+    Expression<String>? b2CPrefix,
+    Expression<String>? b2CSuffix,
+    Expression<int>? b2CWidth,
+    Expression<int>? b2CStartFrom,
+    Expression<String>? b2BDeclaration,
+    Expression<String>? b2CDeclaration,
+    Expression<int>? isEnabled,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (companyId != null) 'company_id': companyId,
+      if (voucherMenuName != null) 'voucher_menu_name': voucherMenuName,
+      if (description != null) 'description': description,
+      if (hasB2BB2C != null) 'has_b2_b_b2_c': hasB2BB2C,
+      if (requireDeclaration != null) 'require_declaration': requireDeclaration,
+      if (orderNo != null) 'order_no': orderNo,
+      if (hasB2B != null) 'has_b2_b': hasB2B,
+      if (b2BPrefix != null) 'b2_b_prefix': b2BPrefix,
+      if (b2BSuffix != null) 'b2_b_suffix': b2BSuffix,
+      if (b2BWidth != null) 'b2_b_width': b2BWidth,
+      if (b2BStartFrom != null) 'b2_b_start_from': b2BStartFrom,
+      if (b2CPrefix != null) 'b2_c_prefix': b2CPrefix,
+      if (b2CSuffix != null) 'b2_c_suffix': b2CSuffix,
+      if (b2CWidth != null) 'b2_c_width': b2CWidth,
+      if (b2CStartFrom != null) 'b2_c_start_from': b2CStartFrom,
+      if (b2BDeclaration != null) 'b2_b_declaration': b2BDeclaration,
+      if (b2CDeclaration != null) 'b2_c_declaration': b2CDeclaration,
+      if (isEnabled != null) 'is_enabled': isEnabled,
+    });
+  }
+
+  VoucherTypesCompanion copyWith({
+    Value<int>? id,
+    Value<int>? companyId,
+    Value<String>? voucherMenuName,
+    Value<String>? description,
+    Value<String>? hasB2BB2C,
+    Value<String>? requireDeclaration,
+    Value<int>? orderNo,
+    Value<int>? hasB2B,
+    Value<String>? b2BPrefix,
+    Value<String>? b2BSuffix,
+    Value<int>? b2BWidth,
+    Value<int>? b2BStartFrom,
+    Value<String>? b2CPrefix,
+    Value<String>? b2CSuffix,
+    Value<int>? b2CWidth,
+    Value<int>? b2CStartFrom,
+    Value<String>? b2BDeclaration,
+    Value<String>? b2CDeclaration,
+    Value<int>? isEnabled,
+  }) {
+    return VoucherTypesCompanion(
+      id: id ?? this.id,
+      companyId: companyId ?? this.companyId,
+      voucherMenuName: voucherMenuName ?? this.voucherMenuName,
+      description: description ?? this.description,
+      hasB2BB2C: hasB2BB2C ?? this.hasB2BB2C,
+      requireDeclaration: requireDeclaration ?? this.requireDeclaration,
+      orderNo: orderNo ?? this.orderNo,
+      hasB2B: hasB2B ?? this.hasB2B,
+      b2BPrefix: b2BPrefix ?? this.b2BPrefix,
+      b2BSuffix: b2BSuffix ?? this.b2BSuffix,
+      b2BWidth: b2BWidth ?? this.b2BWidth,
+      b2BStartFrom: b2BStartFrom ?? this.b2BStartFrom,
+      b2CPrefix: b2CPrefix ?? this.b2CPrefix,
+      b2CSuffix: b2CSuffix ?? this.b2CSuffix,
+      b2CWidth: b2CWidth ?? this.b2CWidth,
+      b2CStartFrom: b2CStartFrom ?? this.b2CStartFrom,
+      b2BDeclaration: b2BDeclaration ?? this.b2BDeclaration,
+      b2CDeclaration: b2CDeclaration ?? this.b2CDeclaration,
+      isEnabled: isEnabled ?? this.isEnabled,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (companyId.present) {
+      map['company_id'] = Variable<int>(companyId.value);
+    }
+    if (voucherMenuName.present) {
+      map['voucher_menu_name'] = Variable<String>(voucherMenuName.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (hasB2BB2C.present) {
+      map['has_b2_b_b2_c'] = Variable<String>(hasB2BB2C.value);
+    }
+    if (requireDeclaration.present) {
+      map['require_declaration'] = Variable<String>(requireDeclaration.value);
+    }
+    if (orderNo.present) {
+      map['order_no'] = Variable<int>(orderNo.value);
+    }
+    if (hasB2B.present) {
+      map['has_b2_b'] = Variable<int>(hasB2B.value);
+    }
+    if (b2BPrefix.present) {
+      map['b2_b_prefix'] = Variable<String>(b2BPrefix.value);
+    }
+    if (b2BSuffix.present) {
+      map['b2_b_suffix'] = Variable<String>(b2BSuffix.value);
+    }
+    if (b2BWidth.present) {
+      map['b2_b_width'] = Variable<int>(b2BWidth.value);
+    }
+    if (b2BStartFrom.present) {
+      map['b2_b_start_from'] = Variable<int>(b2BStartFrom.value);
+    }
+    if (b2CPrefix.present) {
+      map['b2_c_prefix'] = Variable<String>(b2CPrefix.value);
+    }
+    if (b2CSuffix.present) {
+      map['b2_c_suffix'] = Variable<String>(b2CSuffix.value);
+    }
+    if (b2CWidth.present) {
+      map['b2_c_width'] = Variable<int>(b2CWidth.value);
+    }
+    if (b2CStartFrom.present) {
+      map['b2_c_start_from'] = Variable<int>(b2CStartFrom.value);
+    }
+    if (b2BDeclaration.present) {
+      map['b2_b_declaration'] = Variable<String>(b2BDeclaration.value);
+    }
+    if (b2CDeclaration.present) {
+      map['b2_c_declaration'] = Variable<String>(b2CDeclaration.value);
+    }
+    if (isEnabled.present) {
+      map['is_enabled'] = Variable<int>(isEnabled.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VoucherTypesCompanion(')
+          ..write('id: $id, ')
+          ..write('companyId: $companyId, ')
+          ..write('voucherMenuName: $voucherMenuName, ')
+          ..write('description: $description, ')
+          ..write('hasB2BB2C: $hasB2BB2C, ')
+          ..write('requireDeclaration: $requireDeclaration, ')
+          ..write('orderNo: $orderNo, ')
+          ..write('hasB2B: $hasB2B, ')
+          ..write('b2BPrefix: $b2BPrefix, ')
+          ..write('b2BSuffix: $b2BSuffix, ')
+          ..write('b2BWidth: $b2BWidth, ')
+          ..write('b2BStartFrom: $b2BStartFrom, ')
+          ..write('b2CPrefix: $b2CPrefix, ')
+          ..write('b2CSuffix: $b2CSuffix, ')
+          ..write('b2CWidth: $b2CWidth, ')
+          ..write('b2CStartFrom: $b2CStartFrom, ')
+          ..write('b2BDeclaration: $b2BDeclaration, ')
+          ..write('b2CDeclaration: $b2CDeclaration, ')
+          ..write('isEnabled: $isEnabled')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $GodownVoucherTypesTable extends GodownVoucherTypes
+    with TableInfo<$GodownVoucherTypesTable, GodownVoucherType> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $GodownVoucherTypesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _companyIdMeta = const VerificationMeta(
+    'companyId',
+  );
+  @override
+  late final GeneratedColumn<int> companyId = GeneratedColumn<int>(
+    'company_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _voucherTypeIdMeta = const VerificationMeta(
+    'voucherTypeId',
+  );
+  @override
+  late final GeneratedColumn<int> voucherTypeId = GeneratedColumn<int>(
+    'voucher_type_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _voucherMenuNameMeta = const VerificationMeta(
+    'voucherMenuName',
+  );
+  @override
+  late final GeneratedColumn<String> voucherMenuName = GeneratedColumn<String>(
+    'voucher_menu_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _voucherModeMeta = const VerificationMeta(
+    'voucherMode',
+  );
+  @override
+  late final GeneratedColumn<String> voucherMode = GeneratedColumn<String>(
+    'voucher_mode',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _voucherModeIdMeta = const VerificationMeta(
+    'voucherModeId',
+  );
+  @override
+  late final GeneratedColumn<int> voucherModeId = GeneratedColumn<int>(
+    'voucher_mode_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _voucherModeNameMeta = const VerificationMeta(
+    'voucherModeName',
+  );
+  @override
+  late final GeneratedColumn<String> voucherModeName = GeneratedColumn<String>(
+    'voucher_mode_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _applicableFromMeta = const VerificationMeta(
+    'applicableFrom',
+  );
+  @override
+  late final GeneratedColumn<DateTime> applicableFrom =
+      GeneratedColumn<DateTime>(
+        'applicable_from',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _hasB2BMeta = const VerificationMeta('hasB2B');
+  @override
+  late final GeneratedColumn<int> hasB2B = GeneratedColumn<int>(
+    'has_b2_b',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _b2BPrefixMeta = const VerificationMeta(
+    'b2BPrefix',
+  );
+  @override
+  late final GeneratedColumn<String> b2BPrefix = GeneratedColumn<String>(
+    'b2_b_prefix',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _b2BSuffixMeta = const VerificationMeta(
+    'b2BSuffix',
+  );
+  @override
+  late final GeneratedColumn<String> b2BSuffix = GeneratedColumn<String>(
+    'b2_b_suffix',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _b2BWidthMeta = const VerificationMeta(
+    'b2BWidth',
+  );
+  @override
+  late final GeneratedColumn<int> b2BWidth = GeneratedColumn<int>(
+    'b2_b_width',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _b2BStartFromMeta = const VerificationMeta(
+    'b2BStartFrom',
+  );
+  @override
+  late final GeneratedColumn<int> b2BStartFrom = GeneratedColumn<int>(
+    'b2_b_start_from',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _b2CPrefixMeta = const VerificationMeta(
+    'b2CPrefix',
+  );
+  @override
+  late final GeneratedColumn<String> b2CPrefix = GeneratedColumn<String>(
+    'b2_c_prefix',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _b2CSuffixMeta = const VerificationMeta(
+    'b2CSuffix',
+  );
+  @override
+  late final GeneratedColumn<String> b2CSuffix = GeneratedColumn<String>(
+    'b2_c_suffix',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _b2CWidthMeta = const VerificationMeta(
+    'b2CWidth',
+  );
+  @override
+  late final GeneratedColumn<int> b2CWidth = GeneratedColumn<int>(
+    'b2_c_width',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _b2CStartFromMeta = const VerificationMeta(
+    'b2CStartFrom',
+  );
+  @override
+  late final GeneratedColumn<int> b2CStartFrom = GeneratedColumn<int>(
+    'b2_c_start_from',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _b2BDeclarationMeta = const VerificationMeta(
+    'b2BDeclaration',
+  );
+  @override
+  late final GeneratedColumn<String> b2BDeclaration = GeneratedColumn<String>(
+    'b2_b_declaration',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _b2CDeclarationMeta = const VerificationMeta(
+    'b2CDeclaration',
+  );
+  @override
+  late final GeneratedColumn<String> b2CDeclaration = GeneratedColumn<String>(
+    'b2_c_declaration',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    companyId,
+    voucherTypeId,
+    voucherMenuName,
+    voucherMode,
+    voucherModeId,
+    voucherModeName,
+    applicableFrom,
+    hasB2B,
+    b2BPrefix,
+    b2BSuffix,
+    b2BWidth,
+    b2BStartFrom,
+    b2CPrefix,
+    b2CSuffix,
+    b2CWidth,
+    b2CStartFrom,
+    b2BDeclaration,
+    b2CDeclaration,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'godown_voucher_types';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<GodownVoucherType> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('company_id')) {
+      context.handle(
+        _companyIdMeta,
+        companyId.isAcceptableOrUnknown(data['company_id']!, _companyIdMeta),
+      );
+    }
+    if (data.containsKey('voucher_type_id')) {
+      context.handle(
+        _voucherTypeIdMeta,
+        voucherTypeId.isAcceptableOrUnknown(
+          data['voucher_type_id']!,
+          _voucherTypeIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('voucher_menu_name')) {
+      context.handle(
+        _voucherMenuNameMeta,
+        voucherMenuName.isAcceptableOrUnknown(
+          data['voucher_menu_name']!,
+          _voucherMenuNameMeta,
+        ),
+      );
+    }
+    if (data.containsKey('voucher_mode')) {
+      context.handle(
+        _voucherModeMeta,
+        voucherMode.isAcceptableOrUnknown(
+          data['voucher_mode']!,
+          _voucherModeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('voucher_mode_id')) {
+      context.handle(
+        _voucherModeIdMeta,
+        voucherModeId.isAcceptableOrUnknown(
+          data['voucher_mode_id']!,
+          _voucherModeIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('voucher_mode_name')) {
+      context.handle(
+        _voucherModeNameMeta,
+        voucherModeName.isAcceptableOrUnknown(
+          data['voucher_mode_name']!,
+          _voucherModeNameMeta,
+        ),
+      );
+    }
+    if (data.containsKey('applicable_from')) {
+      context.handle(
+        _applicableFromMeta,
+        applicableFrom.isAcceptableOrUnknown(
+          data['applicable_from']!,
+          _applicableFromMeta,
+        ),
+      );
+    }
+    if (data.containsKey('has_b2_b')) {
+      context.handle(
+        _hasB2BMeta,
+        hasB2B.isAcceptableOrUnknown(data['has_b2_b']!, _hasB2BMeta),
+      );
+    }
+    if (data.containsKey('b2_b_prefix')) {
+      context.handle(
+        _b2BPrefixMeta,
+        b2BPrefix.isAcceptableOrUnknown(data['b2_b_prefix']!, _b2BPrefixMeta),
+      );
+    }
+    if (data.containsKey('b2_b_suffix')) {
+      context.handle(
+        _b2BSuffixMeta,
+        b2BSuffix.isAcceptableOrUnknown(data['b2_b_suffix']!, _b2BSuffixMeta),
+      );
+    }
+    if (data.containsKey('b2_b_width')) {
+      context.handle(
+        _b2BWidthMeta,
+        b2BWidth.isAcceptableOrUnknown(data['b2_b_width']!, _b2BWidthMeta),
+      );
+    }
+    if (data.containsKey('b2_b_start_from')) {
+      context.handle(
+        _b2BStartFromMeta,
+        b2BStartFrom.isAcceptableOrUnknown(
+          data['b2_b_start_from']!,
+          _b2BStartFromMeta,
+        ),
+      );
+    }
+    if (data.containsKey('b2_c_prefix')) {
+      context.handle(
+        _b2CPrefixMeta,
+        b2CPrefix.isAcceptableOrUnknown(data['b2_c_prefix']!, _b2CPrefixMeta),
+      );
+    }
+    if (data.containsKey('b2_c_suffix')) {
+      context.handle(
+        _b2CSuffixMeta,
+        b2CSuffix.isAcceptableOrUnknown(data['b2_c_suffix']!, _b2CSuffixMeta),
+      );
+    }
+    if (data.containsKey('b2_c_width')) {
+      context.handle(
+        _b2CWidthMeta,
+        b2CWidth.isAcceptableOrUnknown(data['b2_c_width']!, _b2CWidthMeta),
+      );
+    }
+    if (data.containsKey('b2_c_start_from')) {
+      context.handle(
+        _b2CStartFromMeta,
+        b2CStartFrom.isAcceptableOrUnknown(
+          data['b2_c_start_from']!,
+          _b2CStartFromMeta,
+        ),
+      );
+    }
+    if (data.containsKey('b2_b_declaration')) {
+      context.handle(
+        _b2BDeclarationMeta,
+        b2BDeclaration.isAcceptableOrUnknown(
+          data['b2_b_declaration']!,
+          _b2BDeclarationMeta,
+        ),
+      );
+    }
+    if (data.containsKey('b2_c_declaration')) {
+      context.handle(
+        _b2CDeclarationMeta,
+        b2CDeclaration.isAcceptableOrUnknown(
+          data['b2_c_declaration']!,
+          _b2CDeclarationMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  GodownVoucherType map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return GodownVoucherType(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      companyId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}company_id'],
+      ),
+      voucherTypeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}voucher_type_id'],
+      ),
+      voucherMenuName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}voucher_menu_name'],
+      ),
+      voucherMode: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}voucher_mode'],
+      ),
+      voucherModeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}voucher_mode_id'],
+      ),
+      voucherModeName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}voucher_mode_name'],
+      ),
+      applicableFrom: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}applicable_from'],
+      ),
+      hasB2B: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}has_b2_b'],
+      ),
+      b2BPrefix: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}b2_b_prefix'],
+      ),
+      b2BSuffix: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}b2_b_suffix'],
+      ),
+      b2BWidth: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}b2_b_width'],
+      ),
+      b2BStartFrom: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}b2_b_start_from'],
+      ),
+      b2CPrefix: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}b2_c_prefix'],
+      ),
+      b2CSuffix: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}b2_c_suffix'],
+      ),
+      b2CWidth: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}b2_c_width'],
+      ),
+      b2CStartFrom: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}b2_c_start_from'],
+      ),
+      b2BDeclaration: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}b2_b_declaration'],
+      ),
+      b2CDeclaration: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}b2_c_declaration'],
+      ),
+    );
+  }
+
+  @override
+  $GodownVoucherTypesTable createAlias(String alias) {
+    return $GodownVoucherTypesTable(attachedDatabase, alias);
+  }
+}
+
+class GodownVoucherType extends DataClass
+    implements Insertable<GodownVoucherType> {
+  final int id;
+  final int? companyId;
+  final int? voucherTypeId;
+  final String? voucherMenuName;
+  final String? voucherMode;
+  final int? voucherModeId;
+  final String? voucherModeName;
+  final DateTime? applicableFrom;
+  final int? hasB2B;
+  final String? b2BPrefix;
+  final String? b2BSuffix;
+  final int? b2BWidth;
+  final int? b2BStartFrom;
+  final String? b2CPrefix;
+  final String? b2CSuffix;
+  final int? b2CWidth;
+  final int? b2CStartFrom;
+  final String? b2BDeclaration;
+  final String? b2CDeclaration;
+  const GodownVoucherType({
+    required this.id,
+    this.companyId,
+    this.voucherTypeId,
+    this.voucherMenuName,
+    this.voucherMode,
+    this.voucherModeId,
+    this.voucherModeName,
+    this.applicableFrom,
+    this.hasB2B,
+    this.b2BPrefix,
+    this.b2BSuffix,
+    this.b2BWidth,
+    this.b2BStartFrom,
+    this.b2CPrefix,
+    this.b2CSuffix,
+    this.b2CWidth,
+    this.b2CStartFrom,
+    this.b2BDeclaration,
+    this.b2CDeclaration,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    if (!nullToAbsent || companyId != null) {
+      map['company_id'] = Variable<int>(companyId);
+    }
+    if (!nullToAbsent || voucherTypeId != null) {
+      map['voucher_type_id'] = Variable<int>(voucherTypeId);
+    }
+    if (!nullToAbsent || voucherMenuName != null) {
+      map['voucher_menu_name'] = Variable<String>(voucherMenuName);
+    }
+    if (!nullToAbsent || voucherMode != null) {
+      map['voucher_mode'] = Variable<String>(voucherMode);
+    }
+    if (!nullToAbsent || voucherModeId != null) {
+      map['voucher_mode_id'] = Variable<int>(voucherModeId);
+    }
+    if (!nullToAbsent || voucherModeName != null) {
+      map['voucher_mode_name'] = Variable<String>(voucherModeName);
+    }
+    if (!nullToAbsent || applicableFrom != null) {
+      map['applicable_from'] = Variable<DateTime>(applicableFrom);
+    }
+    if (!nullToAbsent || hasB2B != null) {
+      map['has_b2_b'] = Variable<int>(hasB2B);
+    }
+    if (!nullToAbsent || b2BPrefix != null) {
+      map['b2_b_prefix'] = Variable<String>(b2BPrefix);
+    }
+    if (!nullToAbsent || b2BSuffix != null) {
+      map['b2_b_suffix'] = Variable<String>(b2BSuffix);
+    }
+    if (!nullToAbsent || b2BWidth != null) {
+      map['b2_b_width'] = Variable<int>(b2BWidth);
+    }
+    if (!nullToAbsent || b2BStartFrom != null) {
+      map['b2_b_start_from'] = Variable<int>(b2BStartFrom);
+    }
+    if (!nullToAbsent || b2CPrefix != null) {
+      map['b2_c_prefix'] = Variable<String>(b2CPrefix);
+    }
+    if (!nullToAbsent || b2CSuffix != null) {
+      map['b2_c_suffix'] = Variable<String>(b2CSuffix);
+    }
+    if (!nullToAbsent || b2CWidth != null) {
+      map['b2_c_width'] = Variable<int>(b2CWidth);
+    }
+    if (!nullToAbsent || b2CStartFrom != null) {
+      map['b2_c_start_from'] = Variable<int>(b2CStartFrom);
+    }
+    if (!nullToAbsent || b2BDeclaration != null) {
+      map['b2_b_declaration'] = Variable<String>(b2BDeclaration);
+    }
+    if (!nullToAbsent || b2CDeclaration != null) {
+      map['b2_c_declaration'] = Variable<String>(b2CDeclaration);
+    }
+    return map;
+  }
+
+  GodownVoucherTypesCompanion toCompanion(bool nullToAbsent) {
+    return GodownVoucherTypesCompanion(
+      id: Value(id),
+      companyId: companyId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(companyId),
+      voucherTypeId: voucherTypeId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(voucherTypeId),
+      voucherMenuName: voucherMenuName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(voucherMenuName),
+      voucherMode: voucherMode == null && nullToAbsent
+          ? const Value.absent()
+          : Value(voucherMode),
+      voucherModeId: voucherModeId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(voucherModeId),
+      voucherModeName: voucherModeName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(voucherModeName),
+      applicableFrom: applicableFrom == null && nullToAbsent
+          ? const Value.absent()
+          : Value(applicableFrom),
+      hasB2B: hasB2B == null && nullToAbsent
+          ? const Value.absent()
+          : Value(hasB2B),
+      b2BPrefix: b2BPrefix == null && nullToAbsent
+          ? const Value.absent()
+          : Value(b2BPrefix),
+      b2BSuffix: b2BSuffix == null && nullToAbsent
+          ? const Value.absent()
+          : Value(b2BSuffix),
+      b2BWidth: b2BWidth == null && nullToAbsent
+          ? const Value.absent()
+          : Value(b2BWidth),
+      b2BStartFrom: b2BStartFrom == null && nullToAbsent
+          ? const Value.absent()
+          : Value(b2BStartFrom),
+      b2CPrefix: b2CPrefix == null && nullToAbsent
+          ? const Value.absent()
+          : Value(b2CPrefix),
+      b2CSuffix: b2CSuffix == null && nullToAbsent
+          ? const Value.absent()
+          : Value(b2CSuffix),
+      b2CWidth: b2CWidth == null && nullToAbsent
+          ? const Value.absent()
+          : Value(b2CWidth),
+      b2CStartFrom: b2CStartFrom == null && nullToAbsent
+          ? const Value.absent()
+          : Value(b2CStartFrom),
+      b2BDeclaration: b2BDeclaration == null && nullToAbsent
+          ? const Value.absent()
+          : Value(b2BDeclaration),
+      b2CDeclaration: b2CDeclaration == null && nullToAbsent
+          ? const Value.absent()
+          : Value(b2CDeclaration),
+    );
+  }
+
+  factory GodownVoucherType.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return GodownVoucherType(
+      id: serializer.fromJson<int>(json['id']),
+      companyId: serializer.fromJson<int?>(json['companyId']),
+      voucherTypeId: serializer.fromJson<int?>(json['voucherTypeId']),
+      voucherMenuName: serializer.fromJson<String?>(json['voucherMenuName']),
+      voucherMode: serializer.fromJson<String?>(json['voucherMode']),
+      voucherModeId: serializer.fromJson<int?>(json['voucherModeId']),
+      voucherModeName: serializer.fromJson<String?>(json['voucherModeName']),
+      applicableFrom: serializer.fromJson<DateTime?>(json['applicableFrom']),
+      hasB2B: serializer.fromJson<int?>(json['hasB2B']),
+      b2BPrefix: serializer.fromJson<String?>(json['b2BPrefix']),
+      b2BSuffix: serializer.fromJson<String?>(json['b2BSuffix']),
+      b2BWidth: serializer.fromJson<int?>(json['b2BWidth']),
+      b2BStartFrom: serializer.fromJson<int?>(json['b2BStartFrom']),
+      b2CPrefix: serializer.fromJson<String?>(json['b2CPrefix']),
+      b2CSuffix: serializer.fromJson<String?>(json['b2CSuffix']),
+      b2CWidth: serializer.fromJson<int?>(json['b2CWidth']),
+      b2CStartFrom: serializer.fromJson<int?>(json['b2CStartFrom']),
+      b2BDeclaration: serializer.fromJson<String?>(json['b2BDeclaration']),
+      b2CDeclaration: serializer.fromJson<String?>(json['b2CDeclaration']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'companyId': serializer.toJson<int?>(companyId),
+      'voucherTypeId': serializer.toJson<int?>(voucherTypeId),
+      'voucherMenuName': serializer.toJson<String?>(voucherMenuName),
+      'voucherMode': serializer.toJson<String?>(voucherMode),
+      'voucherModeId': serializer.toJson<int?>(voucherModeId),
+      'voucherModeName': serializer.toJson<String?>(voucherModeName),
+      'applicableFrom': serializer.toJson<DateTime?>(applicableFrom),
+      'hasB2B': serializer.toJson<int?>(hasB2B),
+      'b2BPrefix': serializer.toJson<String?>(b2BPrefix),
+      'b2BSuffix': serializer.toJson<String?>(b2BSuffix),
+      'b2BWidth': serializer.toJson<int?>(b2BWidth),
+      'b2BStartFrom': serializer.toJson<int?>(b2BStartFrom),
+      'b2CPrefix': serializer.toJson<String?>(b2CPrefix),
+      'b2CSuffix': serializer.toJson<String?>(b2CSuffix),
+      'b2CWidth': serializer.toJson<int?>(b2CWidth),
+      'b2CStartFrom': serializer.toJson<int?>(b2CStartFrom),
+      'b2BDeclaration': serializer.toJson<String?>(b2BDeclaration),
+      'b2CDeclaration': serializer.toJson<String?>(b2CDeclaration),
+    };
+  }
+
+  GodownVoucherType copyWith({
+    int? id,
+    Value<int?> companyId = const Value.absent(),
+    Value<int?> voucherTypeId = const Value.absent(),
+    Value<String?> voucherMenuName = const Value.absent(),
+    Value<String?> voucherMode = const Value.absent(),
+    Value<int?> voucherModeId = const Value.absent(),
+    Value<String?> voucherModeName = const Value.absent(),
+    Value<DateTime?> applicableFrom = const Value.absent(),
+    Value<int?> hasB2B = const Value.absent(),
+    Value<String?> b2BPrefix = const Value.absent(),
+    Value<String?> b2BSuffix = const Value.absent(),
+    Value<int?> b2BWidth = const Value.absent(),
+    Value<int?> b2BStartFrom = const Value.absent(),
+    Value<String?> b2CPrefix = const Value.absent(),
+    Value<String?> b2CSuffix = const Value.absent(),
+    Value<int?> b2CWidth = const Value.absent(),
+    Value<int?> b2CStartFrom = const Value.absent(),
+    Value<String?> b2BDeclaration = const Value.absent(),
+    Value<String?> b2CDeclaration = const Value.absent(),
+  }) => GodownVoucherType(
+    id: id ?? this.id,
+    companyId: companyId.present ? companyId.value : this.companyId,
+    voucherTypeId: voucherTypeId.present
+        ? voucherTypeId.value
+        : this.voucherTypeId,
+    voucherMenuName: voucherMenuName.present
+        ? voucherMenuName.value
+        : this.voucherMenuName,
+    voucherMode: voucherMode.present ? voucherMode.value : this.voucherMode,
+    voucherModeId: voucherModeId.present
+        ? voucherModeId.value
+        : this.voucherModeId,
+    voucherModeName: voucherModeName.present
+        ? voucherModeName.value
+        : this.voucherModeName,
+    applicableFrom: applicableFrom.present
+        ? applicableFrom.value
+        : this.applicableFrom,
+    hasB2B: hasB2B.present ? hasB2B.value : this.hasB2B,
+    b2BPrefix: b2BPrefix.present ? b2BPrefix.value : this.b2BPrefix,
+    b2BSuffix: b2BSuffix.present ? b2BSuffix.value : this.b2BSuffix,
+    b2BWidth: b2BWidth.present ? b2BWidth.value : this.b2BWidth,
+    b2BStartFrom: b2BStartFrom.present ? b2BStartFrom.value : this.b2BStartFrom,
+    b2CPrefix: b2CPrefix.present ? b2CPrefix.value : this.b2CPrefix,
+    b2CSuffix: b2CSuffix.present ? b2CSuffix.value : this.b2CSuffix,
+    b2CWidth: b2CWidth.present ? b2CWidth.value : this.b2CWidth,
+    b2CStartFrom: b2CStartFrom.present ? b2CStartFrom.value : this.b2CStartFrom,
+    b2BDeclaration: b2BDeclaration.present
+        ? b2BDeclaration.value
+        : this.b2BDeclaration,
+    b2CDeclaration: b2CDeclaration.present
+        ? b2CDeclaration.value
+        : this.b2CDeclaration,
+  );
+  GodownVoucherType copyWithCompanion(GodownVoucherTypesCompanion data) {
+    return GodownVoucherType(
+      id: data.id.present ? data.id.value : this.id,
+      companyId: data.companyId.present ? data.companyId.value : this.companyId,
+      voucherTypeId: data.voucherTypeId.present
+          ? data.voucherTypeId.value
+          : this.voucherTypeId,
+      voucherMenuName: data.voucherMenuName.present
+          ? data.voucherMenuName.value
+          : this.voucherMenuName,
+      voucherMode: data.voucherMode.present
+          ? data.voucherMode.value
+          : this.voucherMode,
+      voucherModeId: data.voucherModeId.present
+          ? data.voucherModeId.value
+          : this.voucherModeId,
+      voucherModeName: data.voucherModeName.present
+          ? data.voucherModeName.value
+          : this.voucherModeName,
+      applicableFrom: data.applicableFrom.present
+          ? data.applicableFrom.value
+          : this.applicableFrom,
+      hasB2B: data.hasB2B.present ? data.hasB2B.value : this.hasB2B,
+      b2BPrefix: data.b2BPrefix.present ? data.b2BPrefix.value : this.b2BPrefix,
+      b2BSuffix: data.b2BSuffix.present ? data.b2BSuffix.value : this.b2BSuffix,
+      b2BWidth: data.b2BWidth.present ? data.b2BWidth.value : this.b2BWidth,
+      b2BStartFrom: data.b2BStartFrom.present
+          ? data.b2BStartFrom.value
+          : this.b2BStartFrom,
+      b2CPrefix: data.b2CPrefix.present ? data.b2CPrefix.value : this.b2CPrefix,
+      b2CSuffix: data.b2CSuffix.present ? data.b2CSuffix.value : this.b2CSuffix,
+      b2CWidth: data.b2CWidth.present ? data.b2CWidth.value : this.b2CWidth,
+      b2CStartFrom: data.b2CStartFrom.present
+          ? data.b2CStartFrom.value
+          : this.b2CStartFrom,
+      b2BDeclaration: data.b2BDeclaration.present
+          ? data.b2BDeclaration.value
+          : this.b2BDeclaration,
+      b2CDeclaration: data.b2CDeclaration.present
+          ? data.b2CDeclaration.value
+          : this.b2CDeclaration,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GodownVoucherType(')
+          ..write('id: $id, ')
+          ..write('companyId: $companyId, ')
+          ..write('voucherTypeId: $voucherTypeId, ')
+          ..write('voucherMenuName: $voucherMenuName, ')
+          ..write('voucherMode: $voucherMode, ')
+          ..write('voucherModeId: $voucherModeId, ')
+          ..write('voucherModeName: $voucherModeName, ')
+          ..write('applicableFrom: $applicableFrom, ')
+          ..write('hasB2B: $hasB2B, ')
+          ..write('b2BPrefix: $b2BPrefix, ')
+          ..write('b2BSuffix: $b2BSuffix, ')
+          ..write('b2BWidth: $b2BWidth, ')
+          ..write('b2BStartFrom: $b2BStartFrom, ')
+          ..write('b2CPrefix: $b2CPrefix, ')
+          ..write('b2CSuffix: $b2CSuffix, ')
+          ..write('b2CWidth: $b2CWidth, ')
+          ..write('b2CStartFrom: $b2CStartFrom, ')
+          ..write('b2BDeclaration: $b2BDeclaration, ')
+          ..write('b2CDeclaration: $b2CDeclaration')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    companyId,
+    voucherTypeId,
+    voucherMenuName,
+    voucherMode,
+    voucherModeId,
+    voucherModeName,
+    applicableFrom,
+    hasB2B,
+    b2BPrefix,
+    b2BSuffix,
+    b2BWidth,
+    b2BStartFrom,
+    b2CPrefix,
+    b2CSuffix,
+    b2CWidth,
+    b2CStartFrom,
+    b2BDeclaration,
+    b2CDeclaration,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is GodownVoucherType &&
+          other.id == this.id &&
+          other.companyId == this.companyId &&
+          other.voucherTypeId == this.voucherTypeId &&
+          other.voucherMenuName == this.voucherMenuName &&
+          other.voucherMode == this.voucherMode &&
+          other.voucherModeId == this.voucherModeId &&
+          other.voucherModeName == this.voucherModeName &&
+          other.applicableFrom == this.applicableFrom &&
+          other.hasB2B == this.hasB2B &&
+          other.b2BPrefix == this.b2BPrefix &&
+          other.b2BSuffix == this.b2BSuffix &&
+          other.b2BWidth == this.b2BWidth &&
+          other.b2BStartFrom == this.b2BStartFrom &&
+          other.b2CPrefix == this.b2CPrefix &&
+          other.b2CSuffix == this.b2CSuffix &&
+          other.b2CWidth == this.b2CWidth &&
+          other.b2CStartFrom == this.b2CStartFrom &&
+          other.b2BDeclaration == this.b2BDeclaration &&
+          other.b2CDeclaration == this.b2CDeclaration);
+}
+
+class GodownVoucherTypesCompanion extends UpdateCompanion<GodownVoucherType> {
+  final Value<int> id;
+  final Value<int?> companyId;
+  final Value<int?> voucherTypeId;
+  final Value<String?> voucherMenuName;
+  final Value<String?> voucherMode;
+  final Value<int?> voucherModeId;
+  final Value<String?> voucherModeName;
+  final Value<DateTime?> applicableFrom;
+  final Value<int?> hasB2B;
+  final Value<String?> b2BPrefix;
+  final Value<String?> b2BSuffix;
+  final Value<int?> b2BWidth;
+  final Value<int?> b2BStartFrom;
+  final Value<String?> b2CPrefix;
+  final Value<String?> b2CSuffix;
+  final Value<int?> b2CWidth;
+  final Value<int?> b2CStartFrom;
+  final Value<String?> b2BDeclaration;
+  final Value<String?> b2CDeclaration;
+  const GodownVoucherTypesCompanion({
+    this.id = const Value.absent(),
+    this.companyId = const Value.absent(),
+    this.voucherTypeId = const Value.absent(),
+    this.voucherMenuName = const Value.absent(),
+    this.voucherMode = const Value.absent(),
+    this.voucherModeId = const Value.absent(),
+    this.voucherModeName = const Value.absent(),
+    this.applicableFrom = const Value.absent(),
+    this.hasB2B = const Value.absent(),
+    this.b2BPrefix = const Value.absent(),
+    this.b2BSuffix = const Value.absent(),
+    this.b2BWidth = const Value.absent(),
+    this.b2BStartFrom = const Value.absent(),
+    this.b2CPrefix = const Value.absent(),
+    this.b2CSuffix = const Value.absent(),
+    this.b2CWidth = const Value.absent(),
+    this.b2CStartFrom = const Value.absent(),
+    this.b2BDeclaration = const Value.absent(),
+    this.b2CDeclaration = const Value.absent(),
+  });
+  GodownVoucherTypesCompanion.insert({
+    this.id = const Value.absent(),
+    this.companyId = const Value.absent(),
+    this.voucherTypeId = const Value.absent(),
+    this.voucherMenuName = const Value.absent(),
+    this.voucherMode = const Value.absent(),
+    this.voucherModeId = const Value.absent(),
+    this.voucherModeName = const Value.absent(),
+    this.applicableFrom = const Value.absent(),
+    this.hasB2B = const Value.absent(),
+    this.b2BPrefix = const Value.absent(),
+    this.b2BSuffix = const Value.absent(),
+    this.b2BWidth = const Value.absent(),
+    this.b2BStartFrom = const Value.absent(),
+    this.b2CPrefix = const Value.absent(),
+    this.b2CSuffix = const Value.absent(),
+    this.b2CWidth = const Value.absent(),
+    this.b2CStartFrom = const Value.absent(),
+    this.b2BDeclaration = const Value.absent(),
+    this.b2CDeclaration = const Value.absent(),
+  });
+  static Insertable<GodownVoucherType> custom({
+    Expression<int>? id,
+    Expression<int>? companyId,
+    Expression<int>? voucherTypeId,
+    Expression<String>? voucherMenuName,
+    Expression<String>? voucherMode,
+    Expression<int>? voucherModeId,
+    Expression<String>? voucherModeName,
+    Expression<DateTime>? applicableFrom,
+    Expression<int>? hasB2B,
+    Expression<String>? b2BPrefix,
+    Expression<String>? b2BSuffix,
+    Expression<int>? b2BWidth,
+    Expression<int>? b2BStartFrom,
+    Expression<String>? b2CPrefix,
+    Expression<String>? b2CSuffix,
+    Expression<int>? b2CWidth,
+    Expression<int>? b2CStartFrom,
+    Expression<String>? b2BDeclaration,
+    Expression<String>? b2CDeclaration,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (companyId != null) 'company_id': companyId,
+      if (voucherTypeId != null) 'voucher_type_id': voucherTypeId,
+      if (voucherMenuName != null) 'voucher_menu_name': voucherMenuName,
+      if (voucherMode != null) 'voucher_mode': voucherMode,
+      if (voucherModeId != null) 'voucher_mode_id': voucherModeId,
+      if (voucherModeName != null) 'voucher_mode_name': voucherModeName,
+      if (applicableFrom != null) 'applicable_from': applicableFrom,
+      if (hasB2B != null) 'has_b2_b': hasB2B,
+      if (b2BPrefix != null) 'b2_b_prefix': b2BPrefix,
+      if (b2BSuffix != null) 'b2_b_suffix': b2BSuffix,
+      if (b2BWidth != null) 'b2_b_width': b2BWidth,
+      if (b2BStartFrom != null) 'b2_b_start_from': b2BStartFrom,
+      if (b2CPrefix != null) 'b2_c_prefix': b2CPrefix,
+      if (b2CSuffix != null) 'b2_c_suffix': b2CSuffix,
+      if (b2CWidth != null) 'b2_c_width': b2CWidth,
+      if (b2CStartFrom != null) 'b2_c_start_from': b2CStartFrom,
+      if (b2BDeclaration != null) 'b2_b_declaration': b2BDeclaration,
+      if (b2CDeclaration != null) 'b2_c_declaration': b2CDeclaration,
+    });
+  }
+
+  GodownVoucherTypesCompanion copyWith({
+    Value<int>? id,
+    Value<int?>? companyId,
+    Value<int?>? voucherTypeId,
+    Value<String?>? voucherMenuName,
+    Value<String?>? voucherMode,
+    Value<int?>? voucherModeId,
+    Value<String?>? voucherModeName,
+    Value<DateTime?>? applicableFrom,
+    Value<int?>? hasB2B,
+    Value<String?>? b2BPrefix,
+    Value<String?>? b2BSuffix,
+    Value<int?>? b2BWidth,
+    Value<int?>? b2BStartFrom,
+    Value<String?>? b2CPrefix,
+    Value<String?>? b2CSuffix,
+    Value<int?>? b2CWidth,
+    Value<int?>? b2CStartFrom,
+    Value<String?>? b2BDeclaration,
+    Value<String?>? b2CDeclaration,
+  }) {
+    return GodownVoucherTypesCompanion(
+      id: id ?? this.id,
+      companyId: companyId ?? this.companyId,
+      voucherTypeId: voucherTypeId ?? this.voucherTypeId,
+      voucherMenuName: voucherMenuName ?? this.voucherMenuName,
+      voucherMode: voucherMode ?? this.voucherMode,
+      voucherModeId: voucherModeId ?? this.voucherModeId,
+      voucherModeName: voucherModeName ?? this.voucherModeName,
+      applicableFrom: applicableFrom ?? this.applicableFrom,
+      hasB2B: hasB2B ?? this.hasB2B,
+      b2BPrefix: b2BPrefix ?? this.b2BPrefix,
+      b2BSuffix: b2BSuffix ?? this.b2BSuffix,
+      b2BWidth: b2BWidth ?? this.b2BWidth,
+      b2BStartFrom: b2BStartFrom ?? this.b2BStartFrom,
+      b2CPrefix: b2CPrefix ?? this.b2CPrefix,
+      b2CSuffix: b2CSuffix ?? this.b2CSuffix,
+      b2CWidth: b2CWidth ?? this.b2CWidth,
+      b2CStartFrom: b2CStartFrom ?? this.b2CStartFrom,
+      b2BDeclaration: b2BDeclaration ?? this.b2BDeclaration,
+      b2CDeclaration: b2CDeclaration ?? this.b2CDeclaration,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (companyId.present) {
+      map['company_id'] = Variable<int>(companyId.value);
+    }
+    if (voucherTypeId.present) {
+      map['voucher_type_id'] = Variable<int>(voucherTypeId.value);
+    }
+    if (voucherMenuName.present) {
+      map['voucher_menu_name'] = Variable<String>(voucherMenuName.value);
+    }
+    if (voucherMode.present) {
+      map['voucher_mode'] = Variable<String>(voucherMode.value);
+    }
+    if (voucherModeId.present) {
+      map['voucher_mode_id'] = Variable<int>(voucherModeId.value);
+    }
+    if (voucherModeName.present) {
+      map['voucher_mode_name'] = Variable<String>(voucherModeName.value);
+    }
+    if (applicableFrom.present) {
+      map['applicable_from'] = Variable<DateTime>(applicableFrom.value);
+    }
+    if (hasB2B.present) {
+      map['has_b2_b'] = Variable<int>(hasB2B.value);
+    }
+    if (b2BPrefix.present) {
+      map['b2_b_prefix'] = Variable<String>(b2BPrefix.value);
+    }
+    if (b2BSuffix.present) {
+      map['b2_b_suffix'] = Variable<String>(b2BSuffix.value);
+    }
+    if (b2BWidth.present) {
+      map['b2_b_width'] = Variable<int>(b2BWidth.value);
+    }
+    if (b2BStartFrom.present) {
+      map['b2_b_start_from'] = Variable<int>(b2BStartFrom.value);
+    }
+    if (b2CPrefix.present) {
+      map['b2_c_prefix'] = Variable<String>(b2CPrefix.value);
+    }
+    if (b2CSuffix.present) {
+      map['b2_c_suffix'] = Variable<String>(b2CSuffix.value);
+    }
+    if (b2CWidth.present) {
+      map['b2_c_width'] = Variable<int>(b2CWidth.value);
+    }
+    if (b2CStartFrom.present) {
+      map['b2_c_start_from'] = Variable<int>(b2CStartFrom.value);
+    }
+    if (b2BDeclaration.present) {
+      map['b2_b_declaration'] = Variable<String>(b2BDeclaration.value);
+    }
+    if (b2CDeclaration.present) {
+      map['b2_c_declaration'] = Variable<String>(b2CDeclaration.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GodownVoucherTypesCompanion(')
+          ..write('id: $id, ')
+          ..write('companyId: $companyId, ')
+          ..write('voucherTypeId: $voucherTypeId, ')
+          ..write('voucherMenuName: $voucherMenuName, ')
+          ..write('voucherMode: $voucherMode, ')
+          ..write('voucherModeId: $voucherModeId, ')
+          ..write('voucherModeName: $voucherModeName, ')
+          ..write('applicableFrom: $applicableFrom, ')
+          ..write('hasB2B: $hasB2B, ')
+          ..write('b2BPrefix: $b2BPrefix, ')
+          ..write('b2BSuffix: $b2BSuffix, ')
+          ..write('b2BWidth: $b2BWidth, ')
+          ..write('b2BStartFrom: $b2BStartFrom, ')
+          ..write('b2CPrefix: $b2CPrefix, ')
+          ..write('b2CSuffix: $b2CSuffix, ')
+          ..write('b2CWidth: $b2CWidth, ')
+          ..write('b2CStartFrom: $b2CStartFrom, ')
+          ..write('b2BDeclaration: $b2BDeclaration, ')
+          ..write('b2CDeclaration: $b2CDeclaration')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $RouteVoucherTypesTable extends RouteVoucherTypes
+    with TableInfo<$RouteVoucherTypesTable, RouteVoucherType> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $RouteVoucherTypesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _companyIdMeta = const VerificationMeta(
+    'companyId',
+  );
+  @override
+  late final GeneratedColumn<int> companyId = GeneratedColumn<int>(
+    'company_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _voucherTypeIdMeta = const VerificationMeta(
+    'voucherTypeId',
+  );
+  @override
+  late final GeneratedColumn<int> voucherTypeId = GeneratedColumn<int>(
+    'voucher_type_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _voucherMenuNameMeta = const VerificationMeta(
+    'voucherMenuName',
+  );
+  @override
+  late final GeneratedColumn<String> voucherMenuName = GeneratedColumn<String>(
+    'voucher_menu_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _voucherModeMeta = const VerificationMeta(
+    'voucherMode',
+  );
+  @override
+  late final GeneratedColumn<String> voucherMode = GeneratedColumn<String>(
+    'voucher_mode',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _voucherModeIdMeta = const VerificationMeta(
+    'voucherModeId',
+  );
+  @override
+  late final GeneratedColumn<int> voucherModeId = GeneratedColumn<int>(
+    'voucher_mode_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _voucherModeNameMeta = const VerificationMeta(
+    'voucherModeName',
+  );
+  @override
+  late final GeneratedColumn<String> voucherModeName = GeneratedColumn<String>(
+    'voucher_mode_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _applicableFromMeta = const VerificationMeta(
+    'applicableFrom',
+  );
+  @override
+  late final GeneratedColumn<DateTime> applicableFrom =
+      GeneratedColumn<DateTime>(
+        'applicable_from',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _hasB2BMeta = const VerificationMeta('hasB2B');
+  @override
+  late final GeneratedColumn<int> hasB2B = GeneratedColumn<int>(
+    'has_b2_b',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _b2BPrefixMeta = const VerificationMeta(
+    'b2BPrefix',
+  );
+  @override
+  late final GeneratedColumn<String> b2BPrefix = GeneratedColumn<String>(
+    'b2_b_prefix',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _b2BSuffixMeta = const VerificationMeta(
+    'b2BSuffix',
+  );
+  @override
+  late final GeneratedColumn<String> b2BSuffix = GeneratedColumn<String>(
+    'b2_b_suffix',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _b2BWidthMeta = const VerificationMeta(
+    'b2BWidth',
+  );
+  @override
+  late final GeneratedColumn<int> b2BWidth = GeneratedColumn<int>(
+    'b2_b_width',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _b2BStartFromMeta = const VerificationMeta(
+    'b2BStartFrom',
+  );
+  @override
+  late final GeneratedColumn<int> b2BStartFrom = GeneratedColumn<int>(
+    'b2_b_start_from',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _b2CPrefixMeta = const VerificationMeta(
+    'b2CPrefix',
+  );
+  @override
+  late final GeneratedColumn<String> b2CPrefix = GeneratedColumn<String>(
+    'b2_c_prefix',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _b2CSuffixMeta = const VerificationMeta(
+    'b2CSuffix',
+  );
+  @override
+  late final GeneratedColumn<String> b2CSuffix = GeneratedColumn<String>(
+    'b2_c_suffix',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _b2CWidthMeta = const VerificationMeta(
+    'b2CWidth',
+  );
+  @override
+  late final GeneratedColumn<int> b2CWidth = GeneratedColumn<int>(
+    'b2_c_width',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _b2CStartFromMeta = const VerificationMeta(
+    'b2CStartFrom',
+  );
+  @override
+  late final GeneratedColumn<int> b2CStartFrom = GeneratedColumn<int>(
+    'b2_c_start_from',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _b2BDeclarationMeta = const VerificationMeta(
+    'b2BDeclaration',
+  );
+  @override
+  late final GeneratedColumn<String> b2BDeclaration = GeneratedColumn<String>(
+    'b2_b_declaration',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _b2CDeclarationMeta = const VerificationMeta(
+    'b2CDeclaration',
+  );
+  @override
+  late final GeneratedColumn<String> b2CDeclaration = GeneratedColumn<String>(
+    'b2_c_declaration',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    companyId,
+    voucherTypeId,
+    voucherMenuName,
+    voucherMode,
+    voucherModeId,
+    voucherModeName,
+    applicableFrom,
+    hasB2B,
+    b2BPrefix,
+    b2BSuffix,
+    b2BWidth,
+    b2BStartFrom,
+    b2CPrefix,
+    b2CSuffix,
+    b2CWidth,
+    b2CStartFrom,
+    b2BDeclaration,
+    b2CDeclaration,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'route_voucher_types';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<RouteVoucherType> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('company_id')) {
+      context.handle(
+        _companyIdMeta,
+        companyId.isAcceptableOrUnknown(data['company_id']!, _companyIdMeta),
+      );
+    }
+    if (data.containsKey('voucher_type_id')) {
+      context.handle(
+        _voucherTypeIdMeta,
+        voucherTypeId.isAcceptableOrUnknown(
+          data['voucher_type_id']!,
+          _voucherTypeIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('voucher_menu_name')) {
+      context.handle(
+        _voucherMenuNameMeta,
+        voucherMenuName.isAcceptableOrUnknown(
+          data['voucher_menu_name']!,
+          _voucherMenuNameMeta,
+        ),
+      );
+    }
+    if (data.containsKey('voucher_mode')) {
+      context.handle(
+        _voucherModeMeta,
+        voucherMode.isAcceptableOrUnknown(
+          data['voucher_mode']!,
+          _voucherModeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('voucher_mode_id')) {
+      context.handle(
+        _voucherModeIdMeta,
+        voucherModeId.isAcceptableOrUnknown(
+          data['voucher_mode_id']!,
+          _voucherModeIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('voucher_mode_name')) {
+      context.handle(
+        _voucherModeNameMeta,
+        voucherModeName.isAcceptableOrUnknown(
+          data['voucher_mode_name']!,
+          _voucherModeNameMeta,
+        ),
+      );
+    }
+    if (data.containsKey('applicable_from')) {
+      context.handle(
+        _applicableFromMeta,
+        applicableFrom.isAcceptableOrUnknown(
+          data['applicable_from']!,
+          _applicableFromMeta,
+        ),
+      );
+    }
+    if (data.containsKey('has_b2_b')) {
+      context.handle(
+        _hasB2BMeta,
+        hasB2B.isAcceptableOrUnknown(data['has_b2_b']!, _hasB2BMeta),
+      );
+    }
+    if (data.containsKey('b2_b_prefix')) {
+      context.handle(
+        _b2BPrefixMeta,
+        b2BPrefix.isAcceptableOrUnknown(data['b2_b_prefix']!, _b2BPrefixMeta),
+      );
+    }
+    if (data.containsKey('b2_b_suffix')) {
+      context.handle(
+        _b2BSuffixMeta,
+        b2BSuffix.isAcceptableOrUnknown(data['b2_b_suffix']!, _b2BSuffixMeta),
+      );
+    }
+    if (data.containsKey('b2_b_width')) {
+      context.handle(
+        _b2BWidthMeta,
+        b2BWidth.isAcceptableOrUnknown(data['b2_b_width']!, _b2BWidthMeta),
+      );
+    }
+    if (data.containsKey('b2_b_start_from')) {
+      context.handle(
+        _b2BStartFromMeta,
+        b2BStartFrom.isAcceptableOrUnknown(
+          data['b2_b_start_from']!,
+          _b2BStartFromMeta,
+        ),
+      );
+    }
+    if (data.containsKey('b2_c_prefix')) {
+      context.handle(
+        _b2CPrefixMeta,
+        b2CPrefix.isAcceptableOrUnknown(data['b2_c_prefix']!, _b2CPrefixMeta),
+      );
+    }
+    if (data.containsKey('b2_c_suffix')) {
+      context.handle(
+        _b2CSuffixMeta,
+        b2CSuffix.isAcceptableOrUnknown(data['b2_c_suffix']!, _b2CSuffixMeta),
+      );
+    }
+    if (data.containsKey('b2_c_width')) {
+      context.handle(
+        _b2CWidthMeta,
+        b2CWidth.isAcceptableOrUnknown(data['b2_c_width']!, _b2CWidthMeta),
+      );
+    }
+    if (data.containsKey('b2_c_start_from')) {
+      context.handle(
+        _b2CStartFromMeta,
+        b2CStartFrom.isAcceptableOrUnknown(
+          data['b2_c_start_from']!,
+          _b2CStartFromMeta,
+        ),
+      );
+    }
+    if (data.containsKey('b2_b_declaration')) {
+      context.handle(
+        _b2BDeclarationMeta,
+        b2BDeclaration.isAcceptableOrUnknown(
+          data['b2_b_declaration']!,
+          _b2BDeclarationMeta,
+        ),
+      );
+    }
+    if (data.containsKey('b2_c_declaration')) {
+      context.handle(
+        _b2CDeclarationMeta,
+        b2CDeclaration.isAcceptableOrUnknown(
+          data['b2_c_declaration']!,
+          _b2CDeclarationMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  RouteVoucherType map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return RouteVoucherType(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      companyId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}company_id'],
+      ),
+      voucherTypeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}voucher_type_id'],
+      ),
+      voucherMenuName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}voucher_menu_name'],
+      ),
+      voucherMode: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}voucher_mode'],
+      ),
+      voucherModeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}voucher_mode_id'],
+      ),
+      voucherModeName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}voucher_mode_name'],
+      ),
+      applicableFrom: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}applicable_from'],
+      ),
+      hasB2B: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}has_b2_b'],
+      ),
+      b2BPrefix: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}b2_b_prefix'],
+      ),
+      b2BSuffix: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}b2_b_suffix'],
+      ),
+      b2BWidth: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}b2_b_width'],
+      ),
+      b2BStartFrom: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}b2_b_start_from'],
+      ),
+      b2CPrefix: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}b2_c_prefix'],
+      ),
+      b2CSuffix: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}b2_c_suffix'],
+      ),
+      b2CWidth: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}b2_c_width'],
+      ),
+      b2CStartFrom: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}b2_c_start_from'],
+      ),
+      b2BDeclaration: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}b2_b_declaration'],
+      ),
+      b2CDeclaration: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}b2_c_declaration'],
+      ),
+    );
+  }
+
+  @override
+  $RouteVoucherTypesTable createAlias(String alias) {
+    return $RouteVoucherTypesTable(attachedDatabase, alias);
+  }
+}
+
+class RouteVoucherType extends DataClass
+    implements Insertable<RouteVoucherType> {
+  final int id;
+  final int? companyId;
+  final int? voucherTypeId;
+  final String? voucherMenuName;
+  final String? voucherMode;
+  final int? voucherModeId;
+  final String? voucherModeName;
+  final DateTime? applicableFrom;
+  final int? hasB2B;
+  final String? b2BPrefix;
+  final String? b2BSuffix;
+  final int? b2BWidth;
+  final int? b2BStartFrom;
+  final String? b2CPrefix;
+  final String? b2CSuffix;
+  final int? b2CWidth;
+  final int? b2CStartFrom;
+  final String? b2BDeclaration;
+  final String? b2CDeclaration;
+  const RouteVoucherType({
+    required this.id,
+    this.companyId,
+    this.voucherTypeId,
+    this.voucherMenuName,
+    this.voucherMode,
+    this.voucherModeId,
+    this.voucherModeName,
+    this.applicableFrom,
+    this.hasB2B,
+    this.b2BPrefix,
+    this.b2BSuffix,
+    this.b2BWidth,
+    this.b2BStartFrom,
+    this.b2CPrefix,
+    this.b2CSuffix,
+    this.b2CWidth,
+    this.b2CStartFrom,
+    this.b2BDeclaration,
+    this.b2CDeclaration,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    if (!nullToAbsent || companyId != null) {
+      map['company_id'] = Variable<int>(companyId);
+    }
+    if (!nullToAbsent || voucherTypeId != null) {
+      map['voucher_type_id'] = Variable<int>(voucherTypeId);
+    }
+    if (!nullToAbsent || voucherMenuName != null) {
+      map['voucher_menu_name'] = Variable<String>(voucherMenuName);
+    }
+    if (!nullToAbsent || voucherMode != null) {
+      map['voucher_mode'] = Variable<String>(voucherMode);
+    }
+    if (!nullToAbsent || voucherModeId != null) {
+      map['voucher_mode_id'] = Variable<int>(voucherModeId);
+    }
+    if (!nullToAbsent || voucherModeName != null) {
+      map['voucher_mode_name'] = Variable<String>(voucherModeName);
+    }
+    if (!nullToAbsent || applicableFrom != null) {
+      map['applicable_from'] = Variable<DateTime>(applicableFrom);
+    }
+    if (!nullToAbsent || hasB2B != null) {
+      map['has_b2_b'] = Variable<int>(hasB2B);
+    }
+    if (!nullToAbsent || b2BPrefix != null) {
+      map['b2_b_prefix'] = Variable<String>(b2BPrefix);
+    }
+    if (!nullToAbsent || b2BSuffix != null) {
+      map['b2_b_suffix'] = Variable<String>(b2BSuffix);
+    }
+    if (!nullToAbsent || b2BWidth != null) {
+      map['b2_b_width'] = Variable<int>(b2BWidth);
+    }
+    if (!nullToAbsent || b2BStartFrom != null) {
+      map['b2_b_start_from'] = Variable<int>(b2BStartFrom);
+    }
+    if (!nullToAbsent || b2CPrefix != null) {
+      map['b2_c_prefix'] = Variable<String>(b2CPrefix);
+    }
+    if (!nullToAbsent || b2CSuffix != null) {
+      map['b2_c_suffix'] = Variable<String>(b2CSuffix);
+    }
+    if (!nullToAbsent || b2CWidth != null) {
+      map['b2_c_width'] = Variable<int>(b2CWidth);
+    }
+    if (!nullToAbsent || b2CStartFrom != null) {
+      map['b2_c_start_from'] = Variable<int>(b2CStartFrom);
+    }
+    if (!nullToAbsent || b2BDeclaration != null) {
+      map['b2_b_declaration'] = Variable<String>(b2BDeclaration);
+    }
+    if (!nullToAbsent || b2CDeclaration != null) {
+      map['b2_c_declaration'] = Variable<String>(b2CDeclaration);
+    }
+    return map;
+  }
+
+  RouteVoucherTypesCompanion toCompanion(bool nullToAbsent) {
+    return RouteVoucherTypesCompanion(
+      id: Value(id),
+      companyId: companyId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(companyId),
+      voucherTypeId: voucherTypeId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(voucherTypeId),
+      voucherMenuName: voucherMenuName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(voucherMenuName),
+      voucherMode: voucherMode == null && nullToAbsent
+          ? const Value.absent()
+          : Value(voucherMode),
+      voucherModeId: voucherModeId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(voucherModeId),
+      voucherModeName: voucherModeName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(voucherModeName),
+      applicableFrom: applicableFrom == null && nullToAbsent
+          ? const Value.absent()
+          : Value(applicableFrom),
+      hasB2B: hasB2B == null && nullToAbsent
+          ? const Value.absent()
+          : Value(hasB2B),
+      b2BPrefix: b2BPrefix == null && nullToAbsent
+          ? const Value.absent()
+          : Value(b2BPrefix),
+      b2BSuffix: b2BSuffix == null && nullToAbsent
+          ? const Value.absent()
+          : Value(b2BSuffix),
+      b2BWidth: b2BWidth == null && nullToAbsent
+          ? const Value.absent()
+          : Value(b2BWidth),
+      b2BStartFrom: b2BStartFrom == null && nullToAbsent
+          ? const Value.absent()
+          : Value(b2BStartFrom),
+      b2CPrefix: b2CPrefix == null && nullToAbsent
+          ? const Value.absent()
+          : Value(b2CPrefix),
+      b2CSuffix: b2CSuffix == null && nullToAbsent
+          ? const Value.absent()
+          : Value(b2CSuffix),
+      b2CWidth: b2CWidth == null && nullToAbsent
+          ? const Value.absent()
+          : Value(b2CWidth),
+      b2CStartFrom: b2CStartFrom == null && nullToAbsent
+          ? const Value.absent()
+          : Value(b2CStartFrom),
+      b2BDeclaration: b2BDeclaration == null && nullToAbsent
+          ? const Value.absent()
+          : Value(b2BDeclaration),
+      b2CDeclaration: b2CDeclaration == null && nullToAbsent
+          ? const Value.absent()
+          : Value(b2CDeclaration),
+    );
+  }
+
+  factory RouteVoucherType.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return RouteVoucherType(
+      id: serializer.fromJson<int>(json['id']),
+      companyId: serializer.fromJson<int?>(json['companyId']),
+      voucherTypeId: serializer.fromJson<int?>(json['voucherTypeId']),
+      voucherMenuName: serializer.fromJson<String?>(json['voucherMenuName']),
+      voucherMode: serializer.fromJson<String?>(json['voucherMode']),
+      voucherModeId: serializer.fromJson<int?>(json['voucherModeId']),
+      voucherModeName: serializer.fromJson<String?>(json['voucherModeName']),
+      applicableFrom: serializer.fromJson<DateTime?>(json['applicableFrom']),
+      hasB2B: serializer.fromJson<int?>(json['hasB2B']),
+      b2BPrefix: serializer.fromJson<String?>(json['b2BPrefix']),
+      b2BSuffix: serializer.fromJson<String?>(json['b2BSuffix']),
+      b2BWidth: serializer.fromJson<int?>(json['b2BWidth']),
+      b2BStartFrom: serializer.fromJson<int?>(json['b2BStartFrom']),
+      b2CPrefix: serializer.fromJson<String?>(json['b2CPrefix']),
+      b2CSuffix: serializer.fromJson<String?>(json['b2CSuffix']),
+      b2CWidth: serializer.fromJson<int?>(json['b2CWidth']),
+      b2CStartFrom: serializer.fromJson<int?>(json['b2CStartFrom']),
+      b2BDeclaration: serializer.fromJson<String?>(json['b2BDeclaration']),
+      b2CDeclaration: serializer.fromJson<String?>(json['b2CDeclaration']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'companyId': serializer.toJson<int?>(companyId),
+      'voucherTypeId': serializer.toJson<int?>(voucherTypeId),
+      'voucherMenuName': serializer.toJson<String?>(voucherMenuName),
+      'voucherMode': serializer.toJson<String?>(voucherMode),
+      'voucherModeId': serializer.toJson<int?>(voucherModeId),
+      'voucherModeName': serializer.toJson<String?>(voucherModeName),
+      'applicableFrom': serializer.toJson<DateTime?>(applicableFrom),
+      'hasB2B': serializer.toJson<int?>(hasB2B),
+      'b2BPrefix': serializer.toJson<String?>(b2BPrefix),
+      'b2BSuffix': serializer.toJson<String?>(b2BSuffix),
+      'b2BWidth': serializer.toJson<int?>(b2BWidth),
+      'b2BStartFrom': serializer.toJson<int?>(b2BStartFrom),
+      'b2CPrefix': serializer.toJson<String?>(b2CPrefix),
+      'b2CSuffix': serializer.toJson<String?>(b2CSuffix),
+      'b2CWidth': serializer.toJson<int?>(b2CWidth),
+      'b2CStartFrom': serializer.toJson<int?>(b2CStartFrom),
+      'b2BDeclaration': serializer.toJson<String?>(b2BDeclaration),
+      'b2CDeclaration': serializer.toJson<String?>(b2CDeclaration),
+    };
+  }
+
+  RouteVoucherType copyWith({
+    int? id,
+    Value<int?> companyId = const Value.absent(),
+    Value<int?> voucherTypeId = const Value.absent(),
+    Value<String?> voucherMenuName = const Value.absent(),
+    Value<String?> voucherMode = const Value.absent(),
+    Value<int?> voucherModeId = const Value.absent(),
+    Value<String?> voucherModeName = const Value.absent(),
+    Value<DateTime?> applicableFrom = const Value.absent(),
+    Value<int?> hasB2B = const Value.absent(),
+    Value<String?> b2BPrefix = const Value.absent(),
+    Value<String?> b2BSuffix = const Value.absent(),
+    Value<int?> b2BWidth = const Value.absent(),
+    Value<int?> b2BStartFrom = const Value.absent(),
+    Value<String?> b2CPrefix = const Value.absent(),
+    Value<String?> b2CSuffix = const Value.absent(),
+    Value<int?> b2CWidth = const Value.absent(),
+    Value<int?> b2CStartFrom = const Value.absent(),
+    Value<String?> b2BDeclaration = const Value.absent(),
+    Value<String?> b2CDeclaration = const Value.absent(),
+  }) => RouteVoucherType(
+    id: id ?? this.id,
+    companyId: companyId.present ? companyId.value : this.companyId,
+    voucherTypeId: voucherTypeId.present
+        ? voucherTypeId.value
+        : this.voucherTypeId,
+    voucherMenuName: voucherMenuName.present
+        ? voucherMenuName.value
+        : this.voucherMenuName,
+    voucherMode: voucherMode.present ? voucherMode.value : this.voucherMode,
+    voucherModeId: voucherModeId.present
+        ? voucherModeId.value
+        : this.voucherModeId,
+    voucherModeName: voucherModeName.present
+        ? voucherModeName.value
+        : this.voucherModeName,
+    applicableFrom: applicableFrom.present
+        ? applicableFrom.value
+        : this.applicableFrom,
+    hasB2B: hasB2B.present ? hasB2B.value : this.hasB2B,
+    b2BPrefix: b2BPrefix.present ? b2BPrefix.value : this.b2BPrefix,
+    b2BSuffix: b2BSuffix.present ? b2BSuffix.value : this.b2BSuffix,
+    b2BWidth: b2BWidth.present ? b2BWidth.value : this.b2BWidth,
+    b2BStartFrom: b2BStartFrom.present ? b2BStartFrom.value : this.b2BStartFrom,
+    b2CPrefix: b2CPrefix.present ? b2CPrefix.value : this.b2CPrefix,
+    b2CSuffix: b2CSuffix.present ? b2CSuffix.value : this.b2CSuffix,
+    b2CWidth: b2CWidth.present ? b2CWidth.value : this.b2CWidth,
+    b2CStartFrom: b2CStartFrom.present ? b2CStartFrom.value : this.b2CStartFrom,
+    b2BDeclaration: b2BDeclaration.present
+        ? b2BDeclaration.value
+        : this.b2BDeclaration,
+    b2CDeclaration: b2CDeclaration.present
+        ? b2CDeclaration.value
+        : this.b2CDeclaration,
+  );
+  RouteVoucherType copyWithCompanion(RouteVoucherTypesCompanion data) {
+    return RouteVoucherType(
+      id: data.id.present ? data.id.value : this.id,
+      companyId: data.companyId.present ? data.companyId.value : this.companyId,
+      voucherTypeId: data.voucherTypeId.present
+          ? data.voucherTypeId.value
+          : this.voucherTypeId,
+      voucherMenuName: data.voucherMenuName.present
+          ? data.voucherMenuName.value
+          : this.voucherMenuName,
+      voucherMode: data.voucherMode.present
+          ? data.voucherMode.value
+          : this.voucherMode,
+      voucherModeId: data.voucherModeId.present
+          ? data.voucherModeId.value
+          : this.voucherModeId,
+      voucherModeName: data.voucherModeName.present
+          ? data.voucherModeName.value
+          : this.voucherModeName,
+      applicableFrom: data.applicableFrom.present
+          ? data.applicableFrom.value
+          : this.applicableFrom,
+      hasB2B: data.hasB2B.present ? data.hasB2B.value : this.hasB2B,
+      b2BPrefix: data.b2BPrefix.present ? data.b2BPrefix.value : this.b2BPrefix,
+      b2BSuffix: data.b2BSuffix.present ? data.b2BSuffix.value : this.b2BSuffix,
+      b2BWidth: data.b2BWidth.present ? data.b2BWidth.value : this.b2BWidth,
+      b2BStartFrom: data.b2BStartFrom.present
+          ? data.b2BStartFrom.value
+          : this.b2BStartFrom,
+      b2CPrefix: data.b2CPrefix.present ? data.b2CPrefix.value : this.b2CPrefix,
+      b2CSuffix: data.b2CSuffix.present ? data.b2CSuffix.value : this.b2CSuffix,
+      b2CWidth: data.b2CWidth.present ? data.b2CWidth.value : this.b2CWidth,
+      b2CStartFrom: data.b2CStartFrom.present
+          ? data.b2CStartFrom.value
+          : this.b2CStartFrom,
+      b2BDeclaration: data.b2BDeclaration.present
+          ? data.b2BDeclaration.value
+          : this.b2BDeclaration,
+      b2CDeclaration: data.b2CDeclaration.present
+          ? data.b2CDeclaration.value
+          : this.b2CDeclaration,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RouteVoucherType(')
+          ..write('id: $id, ')
+          ..write('companyId: $companyId, ')
+          ..write('voucherTypeId: $voucherTypeId, ')
+          ..write('voucherMenuName: $voucherMenuName, ')
+          ..write('voucherMode: $voucherMode, ')
+          ..write('voucherModeId: $voucherModeId, ')
+          ..write('voucherModeName: $voucherModeName, ')
+          ..write('applicableFrom: $applicableFrom, ')
+          ..write('hasB2B: $hasB2B, ')
+          ..write('b2BPrefix: $b2BPrefix, ')
+          ..write('b2BSuffix: $b2BSuffix, ')
+          ..write('b2BWidth: $b2BWidth, ')
+          ..write('b2BStartFrom: $b2BStartFrom, ')
+          ..write('b2CPrefix: $b2CPrefix, ')
+          ..write('b2CSuffix: $b2CSuffix, ')
+          ..write('b2CWidth: $b2CWidth, ')
+          ..write('b2CStartFrom: $b2CStartFrom, ')
+          ..write('b2BDeclaration: $b2BDeclaration, ')
+          ..write('b2CDeclaration: $b2CDeclaration')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    companyId,
+    voucherTypeId,
+    voucherMenuName,
+    voucherMode,
+    voucherModeId,
+    voucherModeName,
+    applicableFrom,
+    hasB2B,
+    b2BPrefix,
+    b2BSuffix,
+    b2BWidth,
+    b2BStartFrom,
+    b2CPrefix,
+    b2CSuffix,
+    b2CWidth,
+    b2CStartFrom,
+    b2BDeclaration,
+    b2CDeclaration,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is RouteVoucherType &&
+          other.id == this.id &&
+          other.companyId == this.companyId &&
+          other.voucherTypeId == this.voucherTypeId &&
+          other.voucherMenuName == this.voucherMenuName &&
+          other.voucherMode == this.voucherMode &&
+          other.voucherModeId == this.voucherModeId &&
+          other.voucherModeName == this.voucherModeName &&
+          other.applicableFrom == this.applicableFrom &&
+          other.hasB2B == this.hasB2B &&
+          other.b2BPrefix == this.b2BPrefix &&
+          other.b2BSuffix == this.b2BSuffix &&
+          other.b2BWidth == this.b2BWidth &&
+          other.b2BStartFrom == this.b2BStartFrom &&
+          other.b2CPrefix == this.b2CPrefix &&
+          other.b2CSuffix == this.b2CSuffix &&
+          other.b2CWidth == this.b2CWidth &&
+          other.b2CStartFrom == this.b2CStartFrom &&
+          other.b2BDeclaration == this.b2BDeclaration &&
+          other.b2CDeclaration == this.b2CDeclaration);
+}
+
+class RouteVoucherTypesCompanion extends UpdateCompanion<RouteVoucherType> {
+  final Value<int> id;
+  final Value<int?> companyId;
+  final Value<int?> voucherTypeId;
+  final Value<String?> voucherMenuName;
+  final Value<String?> voucherMode;
+  final Value<int?> voucherModeId;
+  final Value<String?> voucherModeName;
+  final Value<DateTime?> applicableFrom;
+  final Value<int?> hasB2B;
+  final Value<String?> b2BPrefix;
+  final Value<String?> b2BSuffix;
+  final Value<int?> b2BWidth;
+  final Value<int?> b2BStartFrom;
+  final Value<String?> b2CPrefix;
+  final Value<String?> b2CSuffix;
+  final Value<int?> b2CWidth;
+  final Value<int?> b2CStartFrom;
+  final Value<String?> b2BDeclaration;
+  final Value<String?> b2CDeclaration;
+  const RouteVoucherTypesCompanion({
+    this.id = const Value.absent(),
+    this.companyId = const Value.absent(),
+    this.voucherTypeId = const Value.absent(),
+    this.voucherMenuName = const Value.absent(),
+    this.voucherMode = const Value.absent(),
+    this.voucherModeId = const Value.absent(),
+    this.voucherModeName = const Value.absent(),
+    this.applicableFrom = const Value.absent(),
+    this.hasB2B = const Value.absent(),
+    this.b2BPrefix = const Value.absent(),
+    this.b2BSuffix = const Value.absent(),
+    this.b2BWidth = const Value.absent(),
+    this.b2BStartFrom = const Value.absent(),
+    this.b2CPrefix = const Value.absent(),
+    this.b2CSuffix = const Value.absent(),
+    this.b2CWidth = const Value.absent(),
+    this.b2CStartFrom = const Value.absent(),
+    this.b2BDeclaration = const Value.absent(),
+    this.b2CDeclaration = const Value.absent(),
+  });
+  RouteVoucherTypesCompanion.insert({
+    this.id = const Value.absent(),
+    this.companyId = const Value.absent(),
+    this.voucherTypeId = const Value.absent(),
+    this.voucherMenuName = const Value.absent(),
+    this.voucherMode = const Value.absent(),
+    this.voucherModeId = const Value.absent(),
+    this.voucherModeName = const Value.absent(),
+    this.applicableFrom = const Value.absent(),
+    this.hasB2B = const Value.absent(),
+    this.b2BPrefix = const Value.absent(),
+    this.b2BSuffix = const Value.absent(),
+    this.b2BWidth = const Value.absent(),
+    this.b2BStartFrom = const Value.absent(),
+    this.b2CPrefix = const Value.absent(),
+    this.b2CSuffix = const Value.absent(),
+    this.b2CWidth = const Value.absent(),
+    this.b2CStartFrom = const Value.absent(),
+    this.b2BDeclaration = const Value.absent(),
+    this.b2CDeclaration = const Value.absent(),
+  });
+  static Insertable<RouteVoucherType> custom({
+    Expression<int>? id,
+    Expression<int>? companyId,
+    Expression<int>? voucherTypeId,
+    Expression<String>? voucherMenuName,
+    Expression<String>? voucherMode,
+    Expression<int>? voucherModeId,
+    Expression<String>? voucherModeName,
+    Expression<DateTime>? applicableFrom,
+    Expression<int>? hasB2B,
+    Expression<String>? b2BPrefix,
+    Expression<String>? b2BSuffix,
+    Expression<int>? b2BWidth,
+    Expression<int>? b2BStartFrom,
+    Expression<String>? b2CPrefix,
+    Expression<String>? b2CSuffix,
+    Expression<int>? b2CWidth,
+    Expression<int>? b2CStartFrom,
+    Expression<String>? b2BDeclaration,
+    Expression<String>? b2CDeclaration,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (companyId != null) 'company_id': companyId,
+      if (voucherTypeId != null) 'voucher_type_id': voucherTypeId,
+      if (voucherMenuName != null) 'voucher_menu_name': voucherMenuName,
+      if (voucherMode != null) 'voucher_mode': voucherMode,
+      if (voucherModeId != null) 'voucher_mode_id': voucherModeId,
+      if (voucherModeName != null) 'voucher_mode_name': voucherModeName,
+      if (applicableFrom != null) 'applicable_from': applicableFrom,
+      if (hasB2B != null) 'has_b2_b': hasB2B,
+      if (b2BPrefix != null) 'b2_b_prefix': b2BPrefix,
+      if (b2BSuffix != null) 'b2_b_suffix': b2BSuffix,
+      if (b2BWidth != null) 'b2_b_width': b2BWidth,
+      if (b2BStartFrom != null) 'b2_b_start_from': b2BStartFrom,
+      if (b2CPrefix != null) 'b2_c_prefix': b2CPrefix,
+      if (b2CSuffix != null) 'b2_c_suffix': b2CSuffix,
+      if (b2CWidth != null) 'b2_c_width': b2CWidth,
+      if (b2CStartFrom != null) 'b2_c_start_from': b2CStartFrom,
+      if (b2BDeclaration != null) 'b2_b_declaration': b2BDeclaration,
+      if (b2CDeclaration != null) 'b2_c_declaration': b2CDeclaration,
+    });
+  }
+
+  RouteVoucherTypesCompanion copyWith({
+    Value<int>? id,
+    Value<int?>? companyId,
+    Value<int?>? voucherTypeId,
+    Value<String?>? voucherMenuName,
+    Value<String?>? voucherMode,
+    Value<int?>? voucherModeId,
+    Value<String?>? voucherModeName,
+    Value<DateTime?>? applicableFrom,
+    Value<int?>? hasB2B,
+    Value<String?>? b2BPrefix,
+    Value<String?>? b2BSuffix,
+    Value<int?>? b2BWidth,
+    Value<int?>? b2BStartFrom,
+    Value<String?>? b2CPrefix,
+    Value<String?>? b2CSuffix,
+    Value<int?>? b2CWidth,
+    Value<int?>? b2CStartFrom,
+    Value<String?>? b2BDeclaration,
+    Value<String?>? b2CDeclaration,
+  }) {
+    return RouteVoucherTypesCompanion(
+      id: id ?? this.id,
+      companyId: companyId ?? this.companyId,
+      voucherTypeId: voucherTypeId ?? this.voucherTypeId,
+      voucherMenuName: voucherMenuName ?? this.voucherMenuName,
+      voucherMode: voucherMode ?? this.voucherMode,
+      voucherModeId: voucherModeId ?? this.voucherModeId,
+      voucherModeName: voucherModeName ?? this.voucherModeName,
+      applicableFrom: applicableFrom ?? this.applicableFrom,
+      hasB2B: hasB2B ?? this.hasB2B,
+      b2BPrefix: b2BPrefix ?? this.b2BPrefix,
+      b2BSuffix: b2BSuffix ?? this.b2BSuffix,
+      b2BWidth: b2BWidth ?? this.b2BWidth,
+      b2BStartFrom: b2BStartFrom ?? this.b2BStartFrom,
+      b2CPrefix: b2CPrefix ?? this.b2CPrefix,
+      b2CSuffix: b2CSuffix ?? this.b2CSuffix,
+      b2CWidth: b2CWidth ?? this.b2CWidth,
+      b2CStartFrom: b2CStartFrom ?? this.b2CStartFrom,
+      b2BDeclaration: b2BDeclaration ?? this.b2BDeclaration,
+      b2CDeclaration: b2CDeclaration ?? this.b2CDeclaration,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (companyId.present) {
+      map['company_id'] = Variable<int>(companyId.value);
+    }
+    if (voucherTypeId.present) {
+      map['voucher_type_id'] = Variable<int>(voucherTypeId.value);
+    }
+    if (voucherMenuName.present) {
+      map['voucher_menu_name'] = Variable<String>(voucherMenuName.value);
+    }
+    if (voucherMode.present) {
+      map['voucher_mode'] = Variable<String>(voucherMode.value);
+    }
+    if (voucherModeId.present) {
+      map['voucher_mode_id'] = Variable<int>(voucherModeId.value);
+    }
+    if (voucherModeName.present) {
+      map['voucher_mode_name'] = Variable<String>(voucherModeName.value);
+    }
+    if (applicableFrom.present) {
+      map['applicable_from'] = Variable<DateTime>(applicableFrom.value);
+    }
+    if (hasB2B.present) {
+      map['has_b2_b'] = Variable<int>(hasB2B.value);
+    }
+    if (b2BPrefix.present) {
+      map['b2_b_prefix'] = Variable<String>(b2BPrefix.value);
+    }
+    if (b2BSuffix.present) {
+      map['b2_b_suffix'] = Variable<String>(b2BSuffix.value);
+    }
+    if (b2BWidth.present) {
+      map['b2_b_width'] = Variable<int>(b2BWidth.value);
+    }
+    if (b2BStartFrom.present) {
+      map['b2_b_start_from'] = Variable<int>(b2BStartFrom.value);
+    }
+    if (b2CPrefix.present) {
+      map['b2_c_prefix'] = Variable<String>(b2CPrefix.value);
+    }
+    if (b2CSuffix.present) {
+      map['b2_c_suffix'] = Variable<String>(b2CSuffix.value);
+    }
+    if (b2CWidth.present) {
+      map['b2_c_width'] = Variable<int>(b2CWidth.value);
+    }
+    if (b2CStartFrom.present) {
+      map['b2_c_start_from'] = Variable<int>(b2CStartFrom.value);
+    }
+    if (b2BDeclaration.present) {
+      map['b2_b_declaration'] = Variable<String>(b2BDeclaration.value);
+    }
+    if (b2CDeclaration.present) {
+      map['b2_c_declaration'] = Variable<String>(b2CDeclaration.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RouteVoucherTypesCompanion(')
+          ..write('id: $id, ')
+          ..write('companyId: $companyId, ')
+          ..write('voucherTypeId: $voucherTypeId, ')
+          ..write('voucherMenuName: $voucherMenuName, ')
+          ..write('voucherMode: $voucherMode, ')
+          ..write('voucherModeId: $voucherModeId, ')
+          ..write('voucherModeName: $voucherModeName, ')
+          ..write('applicableFrom: $applicableFrom, ')
+          ..write('hasB2B: $hasB2B, ')
+          ..write('b2BPrefix: $b2BPrefix, ')
+          ..write('b2BSuffix: $b2BSuffix, ')
+          ..write('b2BWidth: $b2BWidth, ')
+          ..write('b2BStartFrom: $b2BStartFrom, ')
+          ..write('b2CPrefix: $b2CPrefix, ')
+          ..write('b2CSuffix: $b2CSuffix, ')
+          ..write('b2CWidth: $b2CWidth, ')
+          ..write('b2CStartFrom: $b2CStartFrom, ')
+          ..write('b2BDeclaration: $b2BDeclaration, ')
+          ..write('b2CDeclaration: $b2CDeclaration')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CompanySettingsTableTable extends CompanySettingsTable
+    with TableInfo<$CompanySettingsTableTable, CompanySettingsTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CompanySettingsTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _companyIdMeta = const VerificationMeta(
+    'companyId',
+  );
+  @override
+  late final GeneratedColumn<int> companyId = GeneratedColumn<int>(
+    'company_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _settingsMenuNameMeta = const VerificationMeta(
+    'settingsMenuName',
+  );
+  @override
+  late final GeneratedColumn<String> settingsMenuName = GeneratedColumn<String>(
+    'settings_menu_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _buttonTypeMeta = const VerificationMeta(
+    'buttonType',
+  );
+  @override
+  late final GeneratedColumn<String> buttonType = GeneratedColumn<String>(
+    'button_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'description',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _parentIdMeta = const VerificationMeta(
+    'parentId',
+  );
+  @override
+  late final GeneratedColumn<int> parentId = GeneratedColumn<int>(
+    'parent_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _orderNoMeta = const VerificationMeta(
+    'orderNo',
+  );
+  @override
+  late final GeneratedColumn<int> orderNo = GeneratedColumn<int>(
+    'order_no',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _menuTypeMeta = const VerificationMeta(
+    'menuType',
+  );
+  @override
+  late final GeneratedColumn<String> menuType = GeneratedColumn<String>(
+    'menu_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _settingsValueMeta = const VerificationMeta(
+    'settingsValue',
+  );
+  @override
+  late final GeneratedColumn<String> settingsValue = GeneratedColumn<String>(
+    'settings_value',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    companyId,
+    settingsMenuName,
+    buttonType,
+    description,
+    parentId,
+    orderNo,
+    menuType,
+    settingsValue,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'company_settings_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CompanySettingsTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('company_id')) {
+      context.handle(
+        _companyIdMeta,
+        companyId.isAcceptableOrUnknown(data['company_id']!, _companyIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_companyIdMeta);
+    }
+    if (data.containsKey('settings_menu_name')) {
+      context.handle(
+        _settingsMenuNameMeta,
+        settingsMenuName.isAcceptableOrUnknown(
+          data['settings_menu_name']!,
+          _settingsMenuNameMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_settingsMenuNameMeta);
+    }
+    if (data.containsKey('button_type')) {
+      context.handle(
+        _buttonTypeMeta,
+        buttonType.isAcceptableOrUnknown(data['button_type']!, _buttonTypeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_buttonTypeMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
+          _descriptionMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_descriptionMeta);
+    }
+    if (data.containsKey('parent_id')) {
+      context.handle(
+        _parentIdMeta,
+        parentId.isAcceptableOrUnknown(data['parent_id']!, _parentIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_parentIdMeta);
+    }
+    if (data.containsKey('order_no')) {
+      context.handle(
+        _orderNoMeta,
+        orderNo.isAcceptableOrUnknown(data['order_no']!, _orderNoMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_orderNoMeta);
+    }
+    if (data.containsKey('menu_type')) {
+      context.handle(
+        _menuTypeMeta,
+        menuType.isAcceptableOrUnknown(data['menu_type']!, _menuTypeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_menuTypeMeta);
+    }
+    if (data.containsKey('settings_value')) {
+      context.handle(
+        _settingsValueMeta,
+        settingsValue.isAcceptableOrUnknown(
+          data['settings_value']!,
+          _settingsValueMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_settingsValueMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id, companyId};
+  @override
+  CompanySettingsTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CompanySettingsTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      companyId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}company_id'],
+      )!,
+      settingsMenuName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}settings_menu_name'],
+      )!,
+      buttonType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}button_type'],
+      )!,
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      )!,
+      parentId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}parent_id'],
+      )!,
+      orderNo: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}order_no'],
+      )!,
+      menuType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}menu_type'],
+      )!,
+      settingsValue: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}settings_value'],
+      )!,
+    );
+  }
+
+  @override
+  $CompanySettingsTableTable createAlias(String alias) {
+    return $CompanySettingsTableTable(attachedDatabase, alias);
+  }
+}
+
+class CompanySettingsTableData extends DataClass
+    implements Insertable<CompanySettingsTableData> {
+  final int id;
+  final int companyId;
+  final String settingsMenuName;
+
+  /// Stored as TEXT → "Toggle"
+  final String buttonType;
+  final String description;
+  final int parentId;
+  final int orderNo;
+
+  /// Stored as TEXT → "Free"
+  final String menuType;
+
+  /// Stored as TEXT → "", "Yes"
+  final String settingsValue;
+  const CompanySettingsTableData({
+    required this.id,
+    required this.companyId,
+    required this.settingsMenuName,
+    required this.buttonType,
+    required this.description,
+    required this.parentId,
+    required this.orderNo,
+    required this.menuType,
+    required this.settingsValue,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['company_id'] = Variable<int>(companyId);
+    map['settings_menu_name'] = Variable<String>(settingsMenuName);
+    map['button_type'] = Variable<String>(buttonType);
+    map['description'] = Variable<String>(description);
+    map['parent_id'] = Variable<int>(parentId);
+    map['order_no'] = Variable<int>(orderNo);
+    map['menu_type'] = Variable<String>(menuType);
+    map['settings_value'] = Variable<String>(settingsValue);
+    return map;
+  }
+
+  CompanySettingsTableCompanion toCompanion(bool nullToAbsent) {
+    return CompanySettingsTableCompanion(
+      id: Value(id),
+      companyId: Value(companyId),
+      settingsMenuName: Value(settingsMenuName),
+      buttonType: Value(buttonType),
+      description: Value(description),
+      parentId: Value(parentId),
+      orderNo: Value(orderNo),
+      menuType: Value(menuType),
+      settingsValue: Value(settingsValue),
+    );
+  }
+
+  factory CompanySettingsTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CompanySettingsTableData(
+      id: serializer.fromJson<int>(json['id']),
+      companyId: serializer.fromJson<int>(json['companyId']),
+      settingsMenuName: serializer.fromJson<String>(json['settingsMenuName']),
+      buttonType: serializer.fromJson<String>(json['buttonType']),
+      description: serializer.fromJson<String>(json['description']),
+      parentId: serializer.fromJson<int>(json['parentId']),
+      orderNo: serializer.fromJson<int>(json['orderNo']),
+      menuType: serializer.fromJson<String>(json['menuType']),
+      settingsValue: serializer.fromJson<String>(json['settingsValue']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'companyId': serializer.toJson<int>(companyId),
+      'settingsMenuName': serializer.toJson<String>(settingsMenuName),
+      'buttonType': serializer.toJson<String>(buttonType),
+      'description': serializer.toJson<String>(description),
+      'parentId': serializer.toJson<int>(parentId),
+      'orderNo': serializer.toJson<int>(orderNo),
+      'menuType': serializer.toJson<String>(menuType),
+      'settingsValue': serializer.toJson<String>(settingsValue),
+    };
+  }
+
+  CompanySettingsTableData copyWith({
+    int? id,
+    int? companyId,
+    String? settingsMenuName,
+    String? buttonType,
+    String? description,
+    int? parentId,
+    int? orderNo,
+    String? menuType,
+    String? settingsValue,
+  }) => CompanySettingsTableData(
+    id: id ?? this.id,
+    companyId: companyId ?? this.companyId,
+    settingsMenuName: settingsMenuName ?? this.settingsMenuName,
+    buttonType: buttonType ?? this.buttonType,
+    description: description ?? this.description,
+    parentId: parentId ?? this.parentId,
+    orderNo: orderNo ?? this.orderNo,
+    menuType: menuType ?? this.menuType,
+    settingsValue: settingsValue ?? this.settingsValue,
+  );
+  CompanySettingsTableData copyWithCompanion(
+    CompanySettingsTableCompanion data,
+  ) {
+    return CompanySettingsTableData(
+      id: data.id.present ? data.id.value : this.id,
+      companyId: data.companyId.present ? data.companyId.value : this.companyId,
+      settingsMenuName: data.settingsMenuName.present
+          ? data.settingsMenuName.value
+          : this.settingsMenuName,
+      buttonType: data.buttonType.present
+          ? data.buttonType.value
+          : this.buttonType,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
+      parentId: data.parentId.present ? data.parentId.value : this.parentId,
+      orderNo: data.orderNo.present ? data.orderNo.value : this.orderNo,
+      menuType: data.menuType.present ? data.menuType.value : this.menuType,
+      settingsValue: data.settingsValue.present
+          ? data.settingsValue.value
+          : this.settingsValue,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CompanySettingsTableData(')
+          ..write('id: $id, ')
+          ..write('companyId: $companyId, ')
+          ..write('settingsMenuName: $settingsMenuName, ')
+          ..write('buttonType: $buttonType, ')
+          ..write('description: $description, ')
+          ..write('parentId: $parentId, ')
+          ..write('orderNo: $orderNo, ')
+          ..write('menuType: $menuType, ')
+          ..write('settingsValue: $settingsValue')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    companyId,
+    settingsMenuName,
+    buttonType,
+    description,
+    parentId,
+    orderNo,
+    menuType,
+    settingsValue,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CompanySettingsTableData &&
+          other.id == this.id &&
+          other.companyId == this.companyId &&
+          other.settingsMenuName == this.settingsMenuName &&
+          other.buttonType == this.buttonType &&
+          other.description == this.description &&
+          other.parentId == this.parentId &&
+          other.orderNo == this.orderNo &&
+          other.menuType == this.menuType &&
+          other.settingsValue == this.settingsValue);
+}
+
+class CompanySettingsTableCompanion
+    extends UpdateCompanion<CompanySettingsTableData> {
+  final Value<int> id;
+  final Value<int> companyId;
+  final Value<String> settingsMenuName;
+  final Value<String> buttonType;
+  final Value<String> description;
+  final Value<int> parentId;
+  final Value<int> orderNo;
+  final Value<String> menuType;
+  final Value<String> settingsValue;
+  final Value<int> rowid;
+  const CompanySettingsTableCompanion({
+    this.id = const Value.absent(),
+    this.companyId = const Value.absent(),
+    this.settingsMenuName = const Value.absent(),
+    this.buttonType = const Value.absent(),
+    this.description = const Value.absent(),
+    this.parentId = const Value.absent(),
+    this.orderNo = const Value.absent(),
+    this.menuType = const Value.absent(),
+    this.settingsValue = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CompanySettingsTableCompanion.insert({
+    required int id,
+    required int companyId,
+    required String settingsMenuName,
+    required String buttonType,
+    required String description,
+    required int parentId,
+    required int orderNo,
+    required String menuType,
+    required String settingsValue,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       companyId = Value(companyId),
+       settingsMenuName = Value(settingsMenuName),
+       buttonType = Value(buttonType),
+       description = Value(description),
+       parentId = Value(parentId),
+       orderNo = Value(orderNo),
+       menuType = Value(menuType),
+       settingsValue = Value(settingsValue);
+  static Insertable<CompanySettingsTableData> custom({
+    Expression<int>? id,
+    Expression<int>? companyId,
+    Expression<String>? settingsMenuName,
+    Expression<String>? buttonType,
+    Expression<String>? description,
+    Expression<int>? parentId,
+    Expression<int>? orderNo,
+    Expression<String>? menuType,
+    Expression<String>? settingsValue,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (companyId != null) 'company_id': companyId,
+      if (settingsMenuName != null) 'settings_menu_name': settingsMenuName,
+      if (buttonType != null) 'button_type': buttonType,
+      if (description != null) 'description': description,
+      if (parentId != null) 'parent_id': parentId,
+      if (orderNo != null) 'order_no': orderNo,
+      if (menuType != null) 'menu_type': menuType,
+      if (settingsValue != null) 'settings_value': settingsValue,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CompanySettingsTableCompanion copyWith({
+    Value<int>? id,
+    Value<int>? companyId,
+    Value<String>? settingsMenuName,
+    Value<String>? buttonType,
+    Value<String>? description,
+    Value<int>? parentId,
+    Value<int>? orderNo,
+    Value<String>? menuType,
+    Value<String>? settingsValue,
+    Value<int>? rowid,
+  }) {
+    return CompanySettingsTableCompanion(
+      id: id ?? this.id,
+      companyId: companyId ?? this.companyId,
+      settingsMenuName: settingsMenuName ?? this.settingsMenuName,
+      buttonType: buttonType ?? this.buttonType,
+      description: description ?? this.description,
+      parentId: parentId ?? this.parentId,
+      orderNo: orderNo ?? this.orderNo,
+      menuType: menuType ?? this.menuType,
+      settingsValue: settingsValue ?? this.settingsValue,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (companyId.present) {
+      map['company_id'] = Variable<int>(companyId.value);
+    }
+    if (settingsMenuName.present) {
+      map['settings_menu_name'] = Variable<String>(settingsMenuName.value);
+    }
+    if (buttonType.present) {
+      map['button_type'] = Variable<String>(buttonType.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (parentId.present) {
+      map['parent_id'] = Variable<int>(parentId.value);
+    }
+    if (orderNo.present) {
+      map['order_no'] = Variable<int>(orderNo.value);
+    }
+    if (menuType.present) {
+      map['menu_type'] = Variable<String>(menuType.value);
+    }
+    if (settingsValue.present) {
+      map['settings_value'] = Variable<String>(settingsValue.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CompanySettingsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('companyId: $companyId, ')
+          ..write('settingsMenuName: $settingsMenuName, ')
+          ..write('buttonType: $buttonType, ')
+          ..write('description: $description, ')
+          ..write('parentId: $parentId, ')
+          ..write('orderNo: $orderNo, ')
+          ..write('menuType: $menuType, ')
+          ..write('settingsValue: $settingsValue, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDb extends GeneratedDatabase {
   _$AppDb(QueryExecutor e) : super(e);
   $AppDbManager get managers => $AppDbManager(this);
-  late final $UsersTable users = $UsersTable(this);
   late final $RegistrationDetailsTable registrationDetails =
       $RegistrationDetailsTable(this);
   late final $CompaniesTable companies = $CompaniesTable(this);
+  late final $UserSettingsTableTable userSettingsTable =
+      $UserSettingsTableTable(this);
+  late final $VoucherTypesTable voucherTypes = $VoucherTypesTable(this);
+  late final $GodownVoucherTypesTable godownVoucherTypes =
+      $GodownVoucherTypesTable(this);
+  late final $RouteVoucherTypesTable routeVoucherTypes =
+      $RouteVoucherTypesTable(this);
+  late final $CompanySettingsTableTable companySettingsTable =
+      $CompanySettingsTableTable(this);
   late final CompanyDao companyDao = CompanyDao(this as AppDb);
-  late final UserDao userDao = UserDao(this as AppDb);
+  late final RegistrationDetailDao registrationDetailDao =
+      RegistrationDetailDao(this as AppDb);
+  late final UserSettingsDao userSettingsDao = UserSettingsDao(this as AppDb);
+  late final VoucherTypesDao voucherTypesDao = VoucherTypesDao(this as AppDb);
+  late final GodownVoucherTypesDao godownVoucherTypesDao =
+      GodownVoucherTypesDao(this as AppDb);
+  late final RouteVoucherTypesDao routeVoucherTypesDao = RouteVoucherTypesDao(
+    this as AppDb,
+  );
+  late final CompanySettingsDao companySettingsDao = CompanySettingsDao(
+    this as AppDb,
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [
-    users,
     registrationDetails,
     companies,
+    userSettingsTable,
+    voucherTypes,
+    godownVoucherTypes,
+    routeVoucherTypes,
+    companySettingsTable,
   ];
 }
 
-typedef $$UsersTableCreateCompanionBuilder =
-    UsersCompanion Function({
+typedef $$RegistrationDetailsTableCreateCompanionBuilder =
+    RegistrationDetailsCompanion Function({
       Value<int> userId,
       Value<int?> customerId,
       Value<String?> fullName,
@@ -3668,8 +7601,8 @@ typedef $$UsersTableCreateCompanionBuilder =
       Value<String?> token,
       Value<String?> dbName,
     });
-typedef $$UsersTableUpdateCompanionBuilder =
-    UsersCompanion Function({
+typedef $$RegistrationDetailsTableUpdateCompanionBuilder =
+    RegistrationDetailsCompanion Function({
       Value<int> userId,
       Value<int?> customerId,
       Value<String?> fullName,
@@ -3690,8 +7623,9 @@ typedef $$UsersTableUpdateCompanionBuilder =
       Value<String?> dbName,
     });
 
-class $$UsersTableFilterComposer extends Composer<_$AppDb, $UsersTable> {
-  $$UsersTableFilterComposer({
+class $$RegistrationDetailsTableFilterComposer
+    extends Composer<_$AppDb, $RegistrationDetailsTable> {
+  $$RegistrationDetailsTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -3789,8 +7723,9 @@ class $$UsersTableFilterComposer extends Composer<_$AppDb, $UsersTable> {
   );
 }
 
-class $$UsersTableOrderingComposer extends Composer<_$AppDb, $UsersTable> {
-  $$UsersTableOrderingComposer({
+class $$RegistrationDetailsTableOrderingComposer
+    extends Composer<_$AppDb, $RegistrationDetailsTable> {
+  $$RegistrationDetailsTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -3888,8 +7823,9 @@ class $$UsersTableOrderingComposer extends Composer<_$AppDb, $UsersTable> {
   );
 }
 
-class $$UsersTableAnnotationComposer extends Composer<_$AppDb, $UsersTable> {
-  $$UsersTableAnnotationComposer({
+class $$RegistrationDetailsTableAnnotationComposer
+    extends Composer<_$AppDb, $RegistrationDetailsTable> {
+  $$RegistrationDetailsTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -3967,284 +7903,6 @@ class $$UsersTableAnnotationComposer extends Composer<_$AppDb, $UsersTable> {
       $composableBuilder(column: $table.dbName, builder: (column) => column);
 }
 
-class $$UsersTableTableManager
-    extends
-        RootTableManager<
-          _$AppDb,
-          $UsersTable,
-          User,
-          $$UsersTableFilterComposer,
-          $$UsersTableOrderingComposer,
-          $$UsersTableAnnotationComposer,
-          $$UsersTableCreateCompanionBuilder,
-          $$UsersTableUpdateCompanionBuilder,
-          (User, BaseReferences<_$AppDb, $UsersTable, User>),
-          User,
-          PrefetchHooks Function()
-        > {
-  $$UsersTableTableManager(_$AppDb db, $UsersTable table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$UsersTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$UsersTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$UsersTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<int> userId = const Value.absent(),
-                Value<int?> customerId = const Value.absent(),
-                Value<String?> fullName = const Value.absent(),
-                Value<String?> mobile = const Value.absent(),
-                Value<String?> whatsappNo = const Value.absent(),
-                Value<String?> email = const Value.absent(),
-                Value<String?> designation = const Value.absent(),
-                Value<String?> username = const Value.absent(),
-                Value<int?> userActive = const Value.absent(),
-                Value<String?> companyName = const Value.absent(),
-                Value<String?> address = const Value.absent(),
-                Value<int?> countryId = const Value.absent(),
-                Value<int?> stateId = const Value.absent(),
-                Value<String?> activationType = const Value.absent(),
-                Value<DateTime?> expiryDate = const Value.absent(),
-                Value<int?> custActive = const Value.absent(),
-                Value<String?> token = const Value.absent(),
-                Value<String?> dbName = const Value.absent(),
-              }) => UsersCompanion(
-                userId: userId,
-                customerId: customerId,
-                fullName: fullName,
-                mobile: mobile,
-                whatsappNo: whatsappNo,
-                email: email,
-                designation: designation,
-                username: username,
-                userActive: userActive,
-                companyName: companyName,
-                address: address,
-                countryId: countryId,
-                stateId: stateId,
-                activationType: activationType,
-                expiryDate: expiryDate,
-                custActive: custActive,
-                token: token,
-                dbName: dbName,
-              ),
-          createCompanionCallback:
-              ({
-                Value<int> userId = const Value.absent(),
-                Value<int?> customerId = const Value.absent(),
-                Value<String?> fullName = const Value.absent(),
-                Value<String?> mobile = const Value.absent(),
-                Value<String?> whatsappNo = const Value.absent(),
-                Value<String?> email = const Value.absent(),
-                Value<String?> designation = const Value.absent(),
-                Value<String?> username = const Value.absent(),
-                Value<int?> userActive = const Value.absent(),
-                Value<String?> companyName = const Value.absent(),
-                Value<String?> address = const Value.absent(),
-                Value<int?> countryId = const Value.absent(),
-                Value<int?> stateId = const Value.absent(),
-                Value<String?> activationType = const Value.absent(),
-                Value<DateTime?> expiryDate = const Value.absent(),
-                Value<int?> custActive = const Value.absent(),
-                Value<String?> token = const Value.absent(),
-                Value<String?> dbName = const Value.absent(),
-              }) => UsersCompanion.insert(
-                userId: userId,
-                customerId: customerId,
-                fullName: fullName,
-                mobile: mobile,
-                whatsappNo: whatsappNo,
-                email: email,
-                designation: designation,
-                username: username,
-                userActive: userActive,
-                companyName: companyName,
-                address: address,
-                countryId: countryId,
-                stateId: stateId,
-                activationType: activationType,
-                expiryDate: expiryDate,
-                custActive: custActive,
-                token: token,
-                dbName: dbName,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ),
-      );
-}
-
-typedef $$UsersTableProcessedTableManager =
-    ProcessedTableManager<
-      _$AppDb,
-      $UsersTable,
-      User,
-      $$UsersTableFilterComposer,
-      $$UsersTableOrderingComposer,
-      $$UsersTableAnnotationComposer,
-      $$UsersTableCreateCompanionBuilder,
-      $$UsersTableUpdateCompanionBuilder,
-      (User, BaseReferences<_$AppDb, $UsersTable, User>),
-      User,
-      PrefetchHooks Function()
-    >;
-typedef $$RegistrationDetailsTableCreateCompanionBuilder =
-    RegistrationDetailsCompanion Function({
-      Value<int> id,
-      Value<String> productName,
-      Value<String?> companyName,
-      Value<String?> mobile,
-      Value<String?> email,
-      Value<String?> adminUsername,
-      Value<String?> password,
-      Value<int> rowid,
-    });
-typedef $$RegistrationDetailsTableUpdateCompanionBuilder =
-    RegistrationDetailsCompanion Function({
-      Value<int> id,
-      Value<String> productName,
-      Value<String?> companyName,
-      Value<String?> mobile,
-      Value<String?> email,
-      Value<String?> adminUsername,
-      Value<String?> password,
-      Value<int> rowid,
-    });
-
-class $$RegistrationDetailsTableFilterComposer
-    extends Composer<_$AppDb, $RegistrationDetailsTable> {
-  $$RegistrationDetailsTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get productName => $composableBuilder(
-    column: $table.productName,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get companyName => $composableBuilder(
-    column: $table.companyName,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get mobile => $composableBuilder(
-    column: $table.mobile,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get email => $composableBuilder(
-    column: $table.email,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get adminUsername => $composableBuilder(
-    column: $table.adminUsername,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get password => $composableBuilder(
-    column: $table.password,
-    builder: (column) => ColumnFilters(column),
-  );
-}
-
-class $$RegistrationDetailsTableOrderingComposer
-    extends Composer<_$AppDb, $RegistrationDetailsTable> {
-  $$RegistrationDetailsTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get productName => $composableBuilder(
-    column: $table.productName,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get companyName => $composableBuilder(
-    column: $table.companyName,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get mobile => $composableBuilder(
-    column: $table.mobile,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get email => $composableBuilder(
-    column: $table.email,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get adminUsername => $composableBuilder(
-    column: $table.adminUsername,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get password => $composableBuilder(
-    column: $table.password,
-    builder: (column) => ColumnOrderings(column),
-  );
-}
-
-class $$RegistrationDetailsTableAnnotationComposer
-    extends Composer<_$AppDb, $RegistrationDetailsTable> {
-  $$RegistrationDetailsTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get productName => $composableBuilder(
-    column: $table.productName,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get companyName => $composableBuilder(
-    column: $table.companyName,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get mobile =>
-      $composableBuilder(column: $table.mobile, builder: (column) => column);
-
-  GeneratedColumn<String> get email =>
-      $composableBuilder(column: $table.email, builder: (column) => column);
-
-  GeneratedColumn<String> get adminUsername => $composableBuilder(
-    column: $table.adminUsername,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get password =>
-      $composableBuilder(column: $table.password, builder: (column) => column);
-}
-
 class $$RegistrationDetailsTableTableManager
     extends
         RootTableManager<
@@ -4288,43 +7946,83 @@ class $$RegistrationDetailsTableTableManager
               ),
           updateCompanionCallback:
               ({
-                Value<int> id = const Value.absent(),
-                Value<String> productName = const Value.absent(),
-                Value<String?> companyName = const Value.absent(),
+                Value<int> userId = const Value.absent(),
+                Value<int?> customerId = const Value.absent(),
+                Value<String?> fullName = const Value.absent(),
                 Value<String?> mobile = const Value.absent(),
+                Value<String?> whatsappNo = const Value.absent(),
                 Value<String?> email = const Value.absent(),
-                Value<String?> adminUsername = const Value.absent(),
-                Value<String?> password = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
+                Value<String?> designation = const Value.absent(),
+                Value<String?> username = const Value.absent(),
+                Value<int?> userActive = const Value.absent(),
+                Value<String?> companyName = const Value.absent(),
+                Value<String?> address = const Value.absent(),
+                Value<int?> countryId = const Value.absent(),
+                Value<int?> stateId = const Value.absent(),
+                Value<String?> activationType = const Value.absent(),
+                Value<DateTime?> expiryDate = const Value.absent(),
+                Value<int?> custActive = const Value.absent(),
+                Value<String?> token = const Value.absent(),
+                Value<String?> dbName = const Value.absent(),
               }) => RegistrationDetailsCompanion(
-                id: id,
-                productName: productName,
-                companyName: companyName,
+                userId: userId,
+                customerId: customerId,
+                fullName: fullName,
                 mobile: mobile,
+                whatsappNo: whatsappNo,
                 email: email,
-                adminUsername: adminUsername,
-                password: password,
-                rowid: rowid,
+                designation: designation,
+                username: username,
+                userActive: userActive,
+                companyName: companyName,
+                address: address,
+                countryId: countryId,
+                stateId: stateId,
+                activationType: activationType,
+                expiryDate: expiryDate,
+                custActive: custActive,
+                token: token,
+                dbName: dbName,
               ),
           createCompanionCallback:
               ({
-                Value<int> id = const Value.absent(),
-                Value<String> productName = const Value.absent(),
-                Value<String?> companyName = const Value.absent(),
+                Value<int> userId = const Value.absent(),
+                Value<int?> customerId = const Value.absent(),
+                Value<String?> fullName = const Value.absent(),
                 Value<String?> mobile = const Value.absent(),
+                Value<String?> whatsappNo = const Value.absent(),
                 Value<String?> email = const Value.absent(),
-                Value<String?> adminUsername = const Value.absent(),
-                Value<String?> password = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
+                Value<String?> designation = const Value.absent(),
+                Value<String?> username = const Value.absent(),
+                Value<int?> userActive = const Value.absent(),
+                Value<String?> companyName = const Value.absent(),
+                Value<String?> address = const Value.absent(),
+                Value<int?> countryId = const Value.absent(),
+                Value<int?> stateId = const Value.absent(),
+                Value<String?> activationType = const Value.absent(),
+                Value<DateTime?> expiryDate = const Value.absent(),
+                Value<int?> custActive = const Value.absent(),
+                Value<String?> token = const Value.absent(),
+                Value<String?> dbName = const Value.absent(),
               }) => RegistrationDetailsCompanion.insert(
-                id: id,
-                productName: productName,
-                companyName: companyName,
+                userId: userId,
+                customerId: customerId,
+                fullName: fullName,
                 mobile: mobile,
+                whatsappNo: whatsappNo,
                 email: email,
-                adminUsername: adminUsername,
-                password: password,
-                rowid: rowid,
+                designation: designation,
+                username: username,
+                userActive: userActive,
+                companyName: companyName,
+                address: address,
+                countryId: countryId,
+                stateId: stateId,
+                activationType: activationType,
+                expiryDate: expiryDate,
+                custActive: custActive,
+                token: token,
+                dbName: dbName,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
@@ -5221,14 +8919,2031 @@ typedef $$CompaniesTableProcessedTableManager =
       Company,
       PrefetchHooks Function()
     >;
+typedef $$UserSettingsTableTableCreateCompanionBuilder =
+    UserSettingsTableCompanion Function({
+      Value<int?> id,
+      Value<int?> userId,
+      Value<String?> menuName,
+      Value<String?> buttonType,
+      Value<String?> description,
+      Value<int?> orderNo,
+      Value<int?> active,
+      Value<String?> value,
+    });
+typedef $$UserSettingsTableTableUpdateCompanionBuilder =
+    UserSettingsTableCompanion Function({
+      Value<int?> id,
+      Value<int?> userId,
+      Value<String?> menuName,
+      Value<String?> buttonType,
+      Value<String?> description,
+      Value<int?> orderNo,
+      Value<int?> active,
+      Value<String?> value,
+    });
+
+class $$UserSettingsTableTableFilterComposer
+    extends Composer<_$AppDb, $UserSettingsTableTable> {
+  $$UserSettingsTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get userId => $composableBuilder(
+    column: $table.userId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get menuName => $composableBuilder(
+    column: $table.menuName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get buttonType => $composableBuilder(
+    column: $table.buttonType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get orderNo => $composableBuilder(
+    column: $table.orderNo,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get active => $composableBuilder(
+    column: $table.active,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get value => $composableBuilder(
+    column: $table.value,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$UserSettingsTableTableOrderingComposer
+    extends Composer<_$AppDb, $UserSettingsTableTable> {
+  $$UserSettingsTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get userId => $composableBuilder(
+    column: $table.userId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get menuName => $composableBuilder(
+    column: $table.menuName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get buttonType => $composableBuilder(
+    column: $table.buttonType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get orderNo => $composableBuilder(
+    column: $table.orderNo,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get active => $composableBuilder(
+    column: $table.active,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get value => $composableBuilder(
+    column: $table.value,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$UserSettingsTableTableAnnotationComposer
+    extends Composer<_$AppDb, $UserSettingsTableTable> {
+  $$UserSettingsTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get userId =>
+      $composableBuilder(column: $table.userId, builder: (column) => column);
+
+  GeneratedColumn<String> get menuName =>
+      $composableBuilder(column: $table.menuName, builder: (column) => column);
+
+  GeneratedColumn<String> get buttonType => $composableBuilder(
+    column: $table.buttonType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get orderNo =>
+      $composableBuilder(column: $table.orderNo, builder: (column) => column);
+
+  GeneratedColumn<int> get active =>
+      $composableBuilder(column: $table.active, builder: (column) => column);
+
+  GeneratedColumn<String> get value =>
+      $composableBuilder(column: $table.value, builder: (column) => column);
+}
+
+class $$UserSettingsTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDb,
+          $UserSettingsTableTable,
+          UserSettingsTableData,
+          $$UserSettingsTableTableFilterComposer,
+          $$UserSettingsTableTableOrderingComposer,
+          $$UserSettingsTableTableAnnotationComposer,
+          $$UserSettingsTableTableCreateCompanionBuilder,
+          $$UserSettingsTableTableUpdateCompanionBuilder,
+          (
+            UserSettingsTableData,
+            BaseReferences<
+              _$AppDb,
+              $UserSettingsTableTable,
+              UserSettingsTableData
+            >,
+          ),
+          UserSettingsTableData,
+          PrefetchHooks Function()
+        > {
+  $$UserSettingsTableTableTableManager(
+    _$AppDb db,
+    $UserSettingsTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$UserSettingsTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$UserSettingsTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$UserSettingsTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int?> id = const Value.absent(),
+                Value<int?> userId = const Value.absent(),
+                Value<String?> menuName = const Value.absent(),
+                Value<String?> buttonType = const Value.absent(),
+                Value<String?> description = const Value.absent(),
+                Value<int?> orderNo = const Value.absent(),
+                Value<int?> active = const Value.absent(),
+                Value<String?> value = const Value.absent(),
+              }) => UserSettingsTableCompanion(
+                id: id,
+                userId: userId,
+                menuName: menuName,
+                buttonType: buttonType,
+                description: description,
+                orderNo: orderNo,
+                active: active,
+                value: value,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int?> id = const Value.absent(),
+                Value<int?> userId = const Value.absent(),
+                Value<String?> menuName = const Value.absent(),
+                Value<String?> buttonType = const Value.absent(),
+                Value<String?> description = const Value.absent(),
+                Value<int?> orderNo = const Value.absent(),
+                Value<int?> active = const Value.absent(),
+                Value<String?> value = const Value.absent(),
+              }) => UserSettingsTableCompanion.insert(
+                id: id,
+                userId: userId,
+                menuName: menuName,
+                buttonType: buttonType,
+                description: description,
+                orderNo: orderNo,
+                active: active,
+                value: value,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$UserSettingsTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDb,
+      $UserSettingsTableTable,
+      UserSettingsTableData,
+      $$UserSettingsTableTableFilterComposer,
+      $$UserSettingsTableTableOrderingComposer,
+      $$UserSettingsTableTableAnnotationComposer,
+      $$UserSettingsTableTableCreateCompanionBuilder,
+      $$UserSettingsTableTableUpdateCompanionBuilder,
+      (
+        UserSettingsTableData,
+        BaseReferences<_$AppDb, $UserSettingsTableTable, UserSettingsTableData>,
+      ),
+      UserSettingsTableData,
+      PrefetchHooks Function()
+    >;
+typedef $$VoucherTypesTableCreateCompanionBuilder =
+    VoucherTypesCompanion Function({
+      Value<int> id,
+      required int companyId,
+      required String voucherMenuName,
+      required String description,
+      required String hasB2BB2C,
+      required String requireDeclaration,
+      required int orderNo,
+      required int hasB2B,
+      required String b2BPrefix,
+      required String b2BSuffix,
+      required int b2BWidth,
+      required int b2BStartFrom,
+      required String b2CPrefix,
+      required String b2CSuffix,
+      required int b2CWidth,
+      required int b2CStartFrom,
+      required String b2BDeclaration,
+      required String b2CDeclaration,
+      required int isEnabled,
+    });
+typedef $$VoucherTypesTableUpdateCompanionBuilder =
+    VoucherTypesCompanion Function({
+      Value<int> id,
+      Value<int> companyId,
+      Value<String> voucherMenuName,
+      Value<String> description,
+      Value<String> hasB2BB2C,
+      Value<String> requireDeclaration,
+      Value<int> orderNo,
+      Value<int> hasB2B,
+      Value<String> b2BPrefix,
+      Value<String> b2BSuffix,
+      Value<int> b2BWidth,
+      Value<int> b2BStartFrom,
+      Value<String> b2CPrefix,
+      Value<String> b2CSuffix,
+      Value<int> b2CWidth,
+      Value<int> b2CStartFrom,
+      Value<String> b2BDeclaration,
+      Value<String> b2CDeclaration,
+      Value<int> isEnabled,
+    });
+
+class $$VoucherTypesTableFilterComposer
+    extends Composer<_$AppDb, $VoucherTypesTable> {
+  $$VoucherTypesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get companyId => $composableBuilder(
+    column: $table.companyId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get voucherMenuName => $composableBuilder(
+    column: $table.voucherMenuName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get hasB2BB2C => $composableBuilder(
+    column: $table.hasB2BB2C,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get requireDeclaration => $composableBuilder(
+    column: $table.requireDeclaration,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get orderNo => $composableBuilder(
+    column: $table.orderNo,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get hasB2B => $composableBuilder(
+    column: $table.hasB2B,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get b2BPrefix => $composableBuilder(
+    column: $table.b2BPrefix,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get b2BSuffix => $composableBuilder(
+    column: $table.b2BSuffix,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get b2BWidth => $composableBuilder(
+    column: $table.b2BWidth,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get b2BStartFrom => $composableBuilder(
+    column: $table.b2BStartFrom,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get b2CPrefix => $composableBuilder(
+    column: $table.b2CPrefix,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get b2CSuffix => $composableBuilder(
+    column: $table.b2CSuffix,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get b2CWidth => $composableBuilder(
+    column: $table.b2CWidth,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get b2CStartFrom => $composableBuilder(
+    column: $table.b2CStartFrom,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get b2BDeclaration => $composableBuilder(
+    column: $table.b2BDeclaration,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get b2CDeclaration => $composableBuilder(
+    column: $table.b2CDeclaration,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get isEnabled => $composableBuilder(
+    column: $table.isEnabled,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$VoucherTypesTableOrderingComposer
+    extends Composer<_$AppDb, $VoucherTypesTable> {
+  $$VoucherTypesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get companyId => $composableBuilder(
+    column: $table.companyId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get voucherMenuName => $composableBuilder(
+    column: $table.voucherMenuName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get hasB2BB2C => $composableBuilder(
+    column: $table.hasB2BB2C,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get requireDeclaration => $composableBuilder(
+    column: $table.requireDeclaration,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get orderNo => $composableBuilder(
+    column: $table.orderNo,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get hasB2B => $composableBuilder(
+    column: $table.hasB2B,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get b2BPrefix => $composableBuilder(
+    column: $table.b2BPrefix,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get b2BSuffix => $composableBuilder(
+    column: $table.b2BSuffix,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get b2BWidth => $composableBuilder(
+    column: $table.b2BWidth,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get b2BStartFrom => $composableBuilder(
+    column: $table.b2BStartFrom,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get b2CPrefix => $composableBuilder(
+    column: $table.b2CPrefix,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get b2CSuffix => $composableBuilder(
+    column: $table.b2CSuffix,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get b2CWidth => $composableBuilder(
+    column: $table.b2CWidth,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get b2CStartFrom => $composableBuilder(
+    column: $table.b2CStartFrom,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get b2BDeclaration => $composableBuilder(
+    column: $table.b2BDeclaration,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get b2CDeclaration => $composableBuilder(
+    column: $table.b2CDeclaration,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get isEnabled => $composableBuilder(
+    column: $table.isEnabled,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$VoucherTypesTableAnnotationComposer
+    extends Composer<_$AppDb, $VoucherTypesTable> {
+  $$VoucherTypesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get companyId =>
+      $composableBuilder(column: $table.companyId, builder: (column) => column);
+
+  GeneratedColumn<String> get voucherMenuName => $composableBuilder(
+    column: $table.voucherMenuName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get hasB2BB2C =>
+      $composableBuilder(column: $table.hasB2BB2C, builder: (column) => column);
+
+  GeneratedColumn<String> get requireDeclaration => $composableBuilder(
+    column: $table.requireDeclaration,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get orderNo =>
+      $composableBuilder(column: $table.orderNo, builder: (column) => column);
+
+  GeneratedColumn<int> get hasB2B =>
+      $composableBuilder(column: $table.hasB2B, builder: (column) => column);
+
+  GeneratedColumn<String> get b2BPrefix =>
+      $composableBuilder(column: $table.b2BPrefix, builder: (column) => column);
+
+  GeneratedColumn<String> get b2BSuffix =>
+      $composableBuilder(column: $table.b2BSuffix, builder: (column) => column);
+
+  GeneratedColumn<int> get b2BWidth =>
+      $composableBuilder(column: $table.b2BWidth, builder: (column) => column);
+
+  GeneratedColumn<int> get b2BStartFrom => $composableBuilder(
+    column: $table.b2BStartFrom,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get b2CPrefix =>
+      $composableBuilder(column: $table.b2CPrefix, builder: (column) => column);
+
+  GeneratedColumn<String> get b2CSuffix =>
+      $composableBuilder(column: $table.b2CSuffix, builder: (column) => column);
+
+  GeneratedColumn<int> get b2CWidth =>
+      $composableBuilder(column: $table.b2CWidth, builder: (column) => column);
+
+  GeneratedColumn<int> get b2CStartFrom => $composableBuilder(
+    column: $table.b2CStartFrom,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get b2BDeclaration => $composableBuilder(
+    column: $table.b2BDeclaration,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get b2CDeclaration => $composableBuilder(
+    column: $table.b2CDeclaration,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get isEnabled =>
+      $composableBuilder(column: $table.isEnabled, builder: (column) => column);
+}
+
+class $$VoucherTypesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDb,
+          $VoucherTypesTable,
+          VoucherType,
+          $$VoucherTypesTableFilterComposer,
+          $$VoucherTypesTableOrderingComposer,
+          $$VoucherTypesTableAnnotationComposer,
+          $$VoucherTypesTableCreateCompanionBuilder,
+          $$VoucherTypesTableUpdateCompanionBuilder,
+          (
+            VoucherType,
+            BaseReferences<_$AppDb, $VoucherTypesTable, VoucherType>,
+          ),
+          VoucherType,
+          PrefetchHooks Function()
+        > {
+  $$VoucherTypesTableTableManager(_$AppDb db, $VoucherTypesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$VoucherTypesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$VoucherTypesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$VoucherTypesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> companyId = const Value.absent(),
+                Value<String> voucherMenuName = const Value.absent(),
+                Value<String> description = const Value.absent(),
+                Value<String> hasB2BB2C = const Value.absent(),
+                Value<String> requireDeclaration = const Value.absent(),
+                Value<int> orderNo = const Value.absent(),
+                Value<int> hasB2B = const Value.absent(),
+                Value<String> b2BPrefix = const Value.absent(),
+                Value<String> b2BSuffix = const Value.absent(),
+                Value<int> b2BWidth = const Value.absent(),
+                Value<int> b2BStartFrom = const Value.absent(),
+                Value<String> b2CPrefix = const Value.absent(),
+                Value<String> b2CSuffix = const Value.absent(),
+                Value<int> b2CWidth = const Value.absent(),
+                Value<int> b2CStartFrom = const Value.absent(),
+                Value<String> b2BDeclaration = const Value.absent(),
+                Value<String> b2CDeclaration = const Value.absent(),
+                Value<int> isEnabled = const Value.absent(),
+              }) => VoucherTypesCompanion(
+                id: id,
+                companyId: companyId,
+                voucherMenuName: voucherMenuName,
+                description: description,
+                hasB2BB2C: hasB2BB2C,
+                requireDeclaration: requireDeclaration,
+                orderNo: orderNo,
+                hasB2B: hasB2B,
+                b2BPrefix: b2BPrefix,
+                b2BSuffix: b2BSuffix,
+                b2BWidth: b2BWidth,
+                b2BStartFrom: b2BStartFrom,
+                b2CPrefix: b2CPrefix,
+                b2CSuffix: b2CSuffix,
+                b2CWidth: b2CWidth,
+                b2CStartFrom: b2CStartFrom,
+                b2BDeclaration: b2BDeclaration,
+                b2CDeclaration: b2CDeclaration,
+                isEnabled: isEnabled,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int companyId,
+                required String voucherMenuName,
+                required String description,
+                required String hasB2BB2C,
+                required String requireDeclaration,
+                required int orderNo,
+                required int hasB2B,
+                required String b2BPrefix,
+                required String b2BSuffix,
+                required int b2BWidth,
+                required int b2BStartFrom,
+                required String b2CPrefix,
+                required String b2CSuffix,
+                required int b2CWidth,
+                required int b2CStartFrom,
+                required String b2BDeclaration,
+                required String b2CDeclaration,
+                required int isEnabled,
+              }) => VoucherTypesCompanion.insert(
+                id: id,
+                companyId: companyId,
+                voucherMenuName: voucherMenuName,
+                description: description,
+                hasB2BB2C: hasB2BB2C,
+                requireDeclaration: requireDeclaration,
+                orderNo: orderNo,
+                hasB2B: hasB2B,
+                b2BPrefix: b2BPrefix,
+                b2BSuffix: b2BSuffix,
+                b2BWidth: b2BWidth,
+                b2BStartFrom: b2BStartFrom,
+                b2CPrefix: b2CPrefix,
+                b2CSuffix: b2CSuffix,
+                b2CWidth: b2CWidth,
+                b2CStartFrom: b2CStartFrom,
+                b2BDeclaration: b2BDeclaration,
+                b2CDeclaration: b2CDeclaration,
+                isEnabled: isEnabled,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$VoucherTypesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDb,
+      $VoucherTypesTable,
+      VoucherType,
+      $$VoucherTypesTableFilterComposer,
+      $$VoucherTypesTableOrderingComposer,
+      $$VoucherTypesTableAnnotationComposer,
+      $$VoucherTypesTableCreateCompanionBuilder,
+      $$VoucherTypesTableUpdateCompanionBuilder,
+      (VoucherType, BaseReferences<_$AppDb, $VoucherTypesTable, VoucherType>),
+      VoucherType,
+      PrefetchHooks Function()
+    >;
+typedef $$GodownVoucherTypesTableCreateCompanionBuilder =
+    GodownVoucherTypesCompanion Function({
+      Value<int> id,
+      Value<int?> companyId,
+      Value<int?> voucherTypeId,
+      Value<String?> voucherMenuName,
+      Value<String?> voucherMode,
+      Value<int?> voucherModeId,
+      Value<String?> voucherModeName,
+      Value<DateTime?> applicableFrom,
+      Value<int?> hasB2B,
+      Value<String?> b2BPrefix,
+      Value<String?> b2BSuffix,
+      Value<int?> b2BWidth,
+      Value<int?> b2BStartFrom,
+      Value<String?> b2CPrefix,
+      Value<String?> b2CSuffix,
+      Value<int?> b2CWidth,
+      Value<int?> b2CStartFrom,
+      Value<String?> b2BDeclaration,
+      Value<String?> b2CDeclaration,
+    });
+typedef $$GodownVoucherTypesTableUpdateCompanionBuilder =
+    GodownVoucherTypesCompanion Function({
+      Value<int> id,
+      Value<int?> companyId,
+      Value<int?> voucherTypeId,
+      Value<String?> voucherMenuName,
+      Value<String?> voucherMode,
+      Value<int?> voucherModeId,
+      Value<String?> voucherModeName,
+      Value<DateTime?> applicableFrom,
+      Value<int?> hasB2B,
+      Value<String?> b2BPrefix,
+      Value<String?> b2BSuffix,
+      Value<int?> b2BWidth,
+      Value<int?> b2BStartFrom,
+      Value<String?> b2CPrefix,
+      Value<String?> b2CSuffix,
+      Value<int?> b2CWidth,
+      Value<int?> b2CStartFrom,
+      Value<String?> b2BDeclaration,
+      Value<String?> b2CDeclaration,
+    });
+
+class $$GodownVoucherTypesTableFilterComposer
+    extends Composer<_$AppDb, $GodownVoucherTypesTable> {
+  $$GodownVoucherTypesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get companyId => $composableBuilder(
+    column: $table.companyId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get voucherTypeId => $composableBuilder(
+    column: $table.voucherTypeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get voucherMenuName => $composableBuilder(
+    column: $table.voucherMenuName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get voucherMode => $composableBuilder(
+    column: $table.voucherMode,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get voucherModeId => $composableBuilder(
+    column: $table.voucherModeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get voucherModeName => $composableBuilder(
+    column: $table.voucherModeName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get applicableFrom => $composableBuilder(
+    column: $table.applicableFrom,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get hasB2B => $composableBuilder(
+    column: $table.hasB2B,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get b2BPrefix => $composableBuilder(
+    column: $table.b2BPrefix,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get b2BSuffix => $composableBuilder(
+    column: $table.b2BSuffix,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get b2BWidth => $composableBuilder(
+    column: $table.b2BWidth,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get b2BStartFrom => $composableBuilder(
+    column: $table.b2BStartFrom,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get b2CPrefix => $composableBuilder(
+    column: $table.b2CPrefix,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get b2CSuffix => $composableBuilder(
+    column: $table.b2CSuffix,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get b2CWidth => $composableBuilder(
+    column: $table.b2CWidth,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get b2CStartFrom => $composableBuilder(
+    column: $table.b2CStartFrom,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get b2BDeclaration => $composableBuilder(
+    column: $table.b2BDeclaration,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get b2CDeclaration => $composableBuilder(
+    column: $table.b2CDeclaration,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$GodownVoucherTypesTableOrderingComposer
+    extends Composer<_$AppDb, $GodownVoucherTypesTable> {
+  $$GodownVoucherTypesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get companyId => $composableBuilder(
+    column: $table.companyId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get voucherTypeId => $composableBuilder(
+    column: $table.voucherTypeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get voucherMenuName => $composableBuilder(
+    column: $table.voucherMenuName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get voucherMode => $composableBuilder(
+    column: $table.voucherMode,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get voucherModeId => $composableBuilder(
+    column: $table.voucherModeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get voucherModeName => $composableBuilder(
+    column: $table.voucherModeName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get applicableFrom => $composableBuilder(
+    column: $table.applicableFrom,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get hasB2B => $composableBuilder(
+    column: $table.hasB2B,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get b2BPrefix => $composableBuilder(
+    column: $table.b2BPrefix,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get b2BSuffix => $composableBuilder(
+    column: $table.b2BSuffix,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get b2BWidth => $composableBuilder(
+    column: $table.b2BWidth,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get b2BStartFrom => $composableBuilder(
+    column: $table.b2BStartFrom,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get b2CPrefix => $composableBuilder(
+    column: $table.b2CPrefix,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get b2CSuffix => $composableBuilder(
+    column: $table.b2CSuffix,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get b2CWidth => $composableBuilder(
+    column: $table.b2CWidth,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get b2CStartFrom => $composableBuilder(
+    column: $table.b2CStartFrom,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get b2BDeclaration => $composableBuilder(
+    column: $table.b2BDeclaration,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get b2CDeclaration => $composableBuilder(
+    column: $table.b2CDeclaration,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$GodownVoucherTypesTableAnnotationComposer
+    extends Composer<_$AppDb, $GodownVoucherTypesTable> {
+  $$GodownVoucherTypesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get companyId =>
+      $composableBuilder(column: $table.companyId, builder: (column) => column);
+
+  GeneratedColumn<int> get voucherTypeId => $composableBuilder(
+    column: $table.voucherTypeId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get voucherMenuName => $composableBuilder(
+    column: $table.voucherMenuName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get voucherMode => $composableBuilder(
+    column: $table.voucherMode,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get voucherModeId => $composableBuilder(
+    column: $table.voucherModeId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get voucherModeName => $composableBuilder(
+    column: $table.voucherModeName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get applicableFrom => $composableBuilder(
+    column: $table.applicableFrom,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get hasB2B =>
+      $composableBuilder(column: $table.hasB2B, builder: (column) => column);
+
+  GeneratedColumn<String> get b2BPrefix =>
+      $composableBuilder(column: $table.b2BPrefix, builder: (column) => column);
+
+  GeneratedColumn<String> get b2BSuffix =>
+      $composableBuilder(column: $table.b2BSuffix, builder: (column) => column);
+
+  GeneratedColumn<int> get b2BWidth =>
+      $composableBuilder(column: $table.b2BWidth, builder: (column) => column);
+
+  GeneratedColumn<int> get b2BStartFrom => $composableBuilder(
+    column: $table.b2BStartFrom,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get b2CPrefix =>
+      $composableBuilder(column: $table.b2CPrefix, builder: (column) => column);
+
+  GeneratedColumn<String> get b2CSuffix =>
+      $composableBuilder(column: $table.b2CSuffix, builder: (column) => column);
+
+  GeneratedColumn<int> get b2CWidth =>
+      $composableBuilder(column: $table.b2CWidth, builder: (column) => column);
+
+  GeneratedColumn<int> get b2CStartFrom => $composableBuilder(
+    column: $table.b2CStartFrom,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get b2BDeclaration => $composableBuilder(
+    column: $table.b2BDeclaration,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get b2CDeclaration => $composableBuilder(
+    column: $table.b2CDeclaration,
+    builder: (column) => column,
+  );
+}
+
+class $$GodownVoucherTypesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDb,
+          $GodownVoucherTypesTable,
+          GodownVoucherType,
+          $$GodownVoucherTypesTableFilterComposer,
+          $$GodownVoucherTypesTableOrderingComposer,
+          $$GodownVoucherTypesTableAnnotationComposer,
+          $$GodownVoucherTypesTableCreateCompanionBuilder,
+          $$GodownVoucherTypesTableUpdateCompanionBuilder,
+          (
+            GodownVoucherType,
+            BaseReferences<
+              _$AppDb,
+              $GodownVoucherTypesTable,
+              GodownVoucherType
+            >,
+          ),
+          GodownVoucherType,
+          PrefetchHooks Function()
+        > {
+  $$GodownVoucherTypesTableTableManager(
+    _$AppDb db,
+    $GodownVoucherTypesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$GodownVoucherTypesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$GodownVoucherTypesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$GodownVoucherTypesTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int?> companyId = const Value.absent(),
+                Value<int?> voucherTypeId = const Value.absent(),
+                Value<String?> voucherMenuName = const Value.absent(),
+                Value<String?> voucherMode = const Value.absent(),
+                Value<int?> voucherModeId = const Value.absent(),
+                Value<String?> voucherModeName = const Value.absent(),
+                Value<DateTime?> applicableFrom = const Value.absent(),
+                Value<int?> hasB2B = const Value.absent(),
+                Value<String?> b2BPrefix = const Value.absent(),
+                Value<String?> b2BSuffix = const Value.absent(),
+                Value<int?> b2BWidth = const Value.absent(),
+                Value<int?> b2BStartFrom = const Value.absent(),
+                Value<String?> b2CPrefix = const Value.absent(),
+                Value<String?> b2CSuffix = const Value.absent(),
+                Value<int?> b2CWidth = const Value.absent(),
+                Value<int?> b2CStartFrom = const Value.absent(),
+                Value<String?> b2BDeclaration = const Value.absent(),
+                Value<String?> b2CDeclaration = const Value.absent(),
+              }) => GodownVoucherTypesCompanion(
+                id: id,
+                companyId: companyId,
+                voucherTypeId: voucherTypeId,
+                voucherMenuName: voucherMenuName,
+                voucherMode: voucherMode,
+                voucherModeId: voucherModeId,
+                voucherModeName: voucherModeName,
+                applicableFrom: applicableFrom,
+                hasB2B: hasB2B,
+                b2BPrefix: b2BPrefix,
+                b2BSuffix: b2BSuffix,
+                b2BWidth: b2BWidth,
+                b2BStartFrom: b2BStartFrom,
+                b2CPrefix: b2CPrefix,
+                b2CSuffix: b2CSuffix,
+                b2CWidth: b2CWidth,
+                b2CStartFrom: b2CStartFrom,
+                b2BDeclaration: b2BDeclaration,
+                b2CDeclaration: b2CDeclaration,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int?> companyId = const Value.absent(),
+                Value<int?> voucherTypeId = const Value.absent(),
+                Value<String?> voucherMenuName = const Value.absent(),
+                Value<String?> voucherMode = const Value.absent(),
+                Value<int?> voucherModeId = const Value.absent(),
+                Value<String?> voucherModeName = const Value.absent(),
+                Value<DateTime?> applicableFrom = const Value.absent(),
+                Value<int?> hasB2B = const Value.absent(),
+                Value<String?> b2BPrefix = const Value.absent(),
+                Value<String?> b2BSuffix = const Value.absent(),
+                Value<int?> b2BWidth = const Value.absent(),
+                Value<int?> b2BStartFrom = const Value.absent(),
+                Value<String?> b2CPrefix = const Value.absent(),
+                Value<String?> b2CSuffix = const Value.absent(),
+                Value<int?> b2CWidth = const Value.absent(),
+                Value<int?> b2CStartFrom = const Value.absent(),
+                Value<String?> b2BDeclaration = const Value.absent(),
+                Value<String?> b2CDeclaration = const Value.absent(),
+              }) => GodownVoucherTypesCompanion.insert(
+                id: id,
+                companyId: companyId,
+                voucherTypeId: voucherTypeId,
+                voucherMenuName: voucherMenuName,
+                voucherMode: voucherMode,
+                voucherModeId: voucherModeId,
+                voucherModeName: voucherModeName,
+                applicableFrom: applicableFrom,
+                hasB2B: hasB2B,
+                b2BPrefix: b2BPrefix,
+                b2BSuffix: b2BSuffix,
+                b2BWidth: b2BWidth,
+                b2BStartFrom: b2BStartFrom,
+                b2CPrefix: b2CPrefix,
+                b2CSuffix: b2CSuffix,
+                b2CWidth: b2CWidth,
+                b2CStartFrom: b2CStartFrom,
+                b2BDeclaration: b2BDeclaration,
+                b2CDeclaration: b2CDeclaration,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$GodownVoucherTypesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDb,
+      $GodownVoucherTypesTable,
+      GodownVoucherType,
+      $$GodownVoucherTypesTableFilterComposer,
+      $$GodownVoucherTypesTableOrderingComposer,
+      $$GodownVoucherTypesTableAnnotationComposer,
+      $$GodownVoucherTypesTableCreateCompanionBuilder,
+      $$GodownVoucherTypesTableUpdateCompanionBuilder,
+      (
+        GodownVoucherType,
+        BaseReferences<_$AppDb, $GodownVoucherTypesTable, GodownVoucherType>,
+      ),
+      GodownVoucherType,
+      PrefetchHooks Function()
+    >;
+typedef $$RouteVoucherTypesTableCreateCompanionBuilder =
+    RouteVoucherTypesCompanion Function({
+      Value<int> id,
+      Value<int?> companyId,
+      Value<int?> voucherTypeId,
+      Value<String?> voucherMenuName,
+      Value<String?> voucherMode,
+      Value<int?> voucherModeId,
+      Value<String?> voucherModeName,
+      Value<DateTime?> applicableFrom,
+      Value<int?> hasB2B,
+      Value<String?> b2BPrefix,
+      Value<String?> b2BSuffix,
+      Value<int?> b2BWidth,
+      Value<int?> b2BStartFrom,
+      Value<String?> b2CPrefix,
+      Value<String?> b2CSuffix,
+      Value<int?> b2CWidth,
+      Value<int?> b2CStartFrom,
+      Value<String?> b2BDeclaration,
+      Value<String?> b2CDeclaration,
+    });
+typedef $$RouteVoucherTypesTableUpdateCompanionBuilder =
+    RouteVoucherTypesCompanion Function({
+      Value<int> id,
+      Value<int?> companyId,
+      Value<int?> voucherTypeId,
+      Value<String?> voucherMenuName,
+      Value<String?> voucherMode,
+      Value<int?> voucherModeId,
+      Value<String?> voucherModeName,
+      Value<DateTime?> applicableFrom,
+      Value<int?> hasB2B,
+      Value<String?> b2BPrefix,
+      Value<String?> b2BSuffix,
+      Value<int?> b2BWidth,
+      Value<int?> b2BStartFrom,
+      Value<String?> b2CPrefix,
+      Value<String?> b2CSuffix,
+      Value<int?> b2CWidth,
+      Value<int?> b2CStartFrom,
+      Value<String?> b2BDeclaration,
+      Value<String?> b2CDeclaration,
+    });
+
+class $$RouteVoucherTypesTableFilterComposer
+    extends Composer<_$AppDb, $RouteVoucherTypesTable> {
+  $$RouteVoucherTypesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get companyId => $composableBuilder(
+    column: $table.companyId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get voucherTypeId => $composableBuilder(
+    column: $table.voucherTypeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get voucherMenuName => $composableBuilder(
+    column: $table.voucherMenuName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get voucherMode => $composableBuilder(
+    column: $table.voucherMode,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get voucherModeId => $composableBuilder(
+    column: $table.voucherModeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get voucherModeName => $composableBuilder(
+    column: $table.voucherModeName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get applicableFrom => $composableBuilder(
+    column: $table.applicableFrom,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get hasB2B => $composableBuilder(
+    column: $table.hasB2B,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get b2BPrefix => $composableBuilder(
+    column: $table.b2BPrefix,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get b2BSuffix => $composableBuilder(
+    column: $table.b2BSuffix,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get b2BWidth => $composableBuilder(
+    column: $table.b2BWidth,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get b2BStartFrom => $composableBuilder(
+    column: $table.b2BStartFrom,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get b2CPrefix => $composableBuilder(
+    column: $table.b2CPrefix,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get b2CSuffix => $composableBuilder(
+    column: $table.b2CSuffix,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get b2CWidth => $composableBuilder(
+    column: $table.b2CWidth,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get b2CStartFrom => $composableBuilder(
+    column: $table.b2CStartFrom,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get b2BDeclaration => $composableBuilder(
+    column: $table.b2BDeclaration,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get b2CDeclaration => $composableBuilder(
+    column: $table.b2CDeclaration,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$RouteVoucherTypesTableOrderingComposer
+    extends Composer<_$AppDb, $RouteVoucherTypesTable> {
+  $$RouteVoucherTypesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get companyId => $composableBuilder(
+    column: $table.companyId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get voucherTypeId => $composableBuilder(
+    column: $table.voucherTypeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get voucherMenuName => $composableBuilder(
+    column: $table.voucherMenuName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get voucherMode => $composableBuilder(
+    column: $table.voucherMode,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get voucherModeId => $composableBuilder(
+    column: $table.voucherModeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get voucherModeName => $composableBuilder(
+    column: $table.voucherModeName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get applicableFrom => $composableBuilder(
+    column: $table.applicableFrom,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get hasB2B => $composableBuilder(
+    column: $table.hasB2B,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get b2BPrefix => $composableBuilder(
+    column: $table.b2BPrefix,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get b2BSuffix => $composableBuilder(
+    column: $table.b2BSuffix,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get b2BWidth => $composableBuilder(
+    column: $table.b2BWidth,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get b2BStartFrom => $composableBuilder(
+    column: $table.b2BStartFrom,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get b2CPrefix => $composableBuilder(
+    column: $table.b2CPrefix,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get b2CSuffix => $composableBuilder(
+    column: $table.b2CSuffix,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get b2CWidth => $composableBuilder(
+    column: $table.b2CWidth,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get b2CStartFrom => $composableBuilder(
+    column: $table.b2CStartFrom,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get b2BDeclaration => $composableBuilder(
+    column: $table.b2BDeclaration,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get b2CDeclaration => $composableBuilder(
+    column: $table.b2CDeclaration,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$RouteVoucherTypesTableAnnotationComposer
+    extends Composer<_$AppDb, $RouteVoucherTypesTable> {
+  $$RouteVoucherTypesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get companyId =>
+      $composableBuilder(column: $table.companyId, builder: (column) => column);
+
+  GeneratedColumn<int> get voucherTypeId => $composableBuilder(
+    column: $table.voucherTypeId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get voucherMenuName => $composableBuilder(
+    column: $table.voucherMenuName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get voucherMode => $composableBuilder(
+    column: $table.voucherMode,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get voucherModeId => $composableBuilder(
+    column: $table.voucherModeId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get voucherModeName => $composableBuilder(
+    column: $table.voucherModeName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get applicableFrom => $composableBuilder(
+    column: $table.applicableFrom,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get hasB2B =>
+      $composableBuilder(column: $table.hasB2B, builder: (column) => column);
+
+  GeneratedColumn<String> get b2BPrefix =>
+      $composableBuilder(column: $table.b2BPrefix, builder: (column) => column);
+
+  GeneratedColumn<String> get b2BSuffix =>
+      $composableBuilder(column: $table.b2BSuffix, builder: (column) => column);
+
+  GeneratedColumn<int> get b2BWidth =>
+      $composableBuilder(column: $table.b2BWidth, builder: (column) => column);
+
+  GeneratedColumn<int> get b2BStartFrom => $composableBuilder(
+    column: $table.b2BStartFrom,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get b2CPrefix =>
+      $composableBuilder(column: $table.b2CPrefix, builder: (column) => column);
+
+  GeneratedColumn<String> get b2CSuffix =>
+      $composableBuilder(column: $table.b2CSuffix, builder: (column) => column);
+
+  GeneratedColumn<int> get b2CWidth =>
+      $composableBuilder(column: $table.b2CWidth, builder: (column) => column);
+
+  GeneratedColumn<int> get b2CStartFrom => $composableBuilder(
+    column: $table.b2CStartFrom,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get b2BDeclaration => $composableBuilder(
+    column: $table.b2BDeclaration,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get b2CDeclaration => $composableBuilder(
+    column: $table.b2CDeclaration,
+    builder: (column) => column,
+  );
+}
+
+class $$RouteVoucherTypesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDb,
+          $RouteVoucherTypesTable,
+          RouteVoucherType,
+          $$RouteVoucherTypesTableFilterComposer,
+          $$RouteVoucherTypesTableOrderingComposer,
+          $$RouteVoucherTypesTableAnnotationComposer,
+          $$RouteVoucherTypesTableCreateCompanionBuilder,
+          $$RouteVoucherTypesTableUpdateCompanionBuilder,
+          (
+            RouteVoucherType,
+            BaseReferences<_$AppDb, $RouteVoucherTypesTable, RouteVoucherType>,
+          ),
+          RouteVoucherType,
+          PrefetchHooks Function()
+        > {
+  $$RouteVoucherTypesTableTableManager(
+    _$AppDb db,
+    $RouteVoucherTypesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$RouteVoucherTypesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$RouteVoucherTypesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$RouteVoucherTypesTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int?> companyId = const Value.absent(),
+                Value<int?> voucherTypeId = const Value.absent(),
+                Value<String?> voucherMenuName = const Value.absent(),
+                Value<String?> voucherMode = const Value.absent(),
+                Value<int?> voucherModeId = const Value.absent(),
+                Value<String?> voucherModeName = const Value.absent(),
+                Value<DateTime?> applicableFrom = const Value.absent(),
+                Value<int?> hasB2B = const Value.absent(),
+                Value<String?> b2BPrefix = const Value.absent(),
+                Value<String?> b2BSuffix = const Value.absent(),
+                Value<int?> b2BWidth = const Value.absent(),
+                Value<int?> b2BStartFrom = const Value.absent(),
+                Value<String?> b2CPrefix = const Value.absent(),
+                Value<String?> b2CSuffix = const Value.absent(),
+                Value<int?> b2CWidth = const Value.absent(),
+                Value<int?> b2CStartFrom = const Value.absent(),
+                Value<String?> b2BDeclaration = const Value.absent(),
+                Value<String?> b2CDeclaration = const Value.absent(),
+              }) => RouteVoucherTypesCompanion(
+                id: id,
+                companyId: companyId,
+                voucherTypeId: voucherTypeId,
+                voucherMenuName: voucherMenuName,
+                voucherMode: voucherMode,
+                voucherModeId: voucherModeId,
+                voucherModeName: voucherModeName,
+                applicableFrom: applicableFrom,
+                hasB2B: hasB2B,
+                b2BPrefix: b2BPrefix,
+                b2BSuffix: b2BSuffix,
+                b2BWidth: b2BWidth,
+                b2BStartFrom: b2BStartFrom,
+                b2CPrefix: b2CPrefix,
+                b2CSuffix: b2CSuffix,
+                b2CWidth: b2CWidth,
+                b2CStartFrom: b2CStartFrom,
+                b2BDeclaration: b2BDeclaration,
+                b2CDeclaration: b2CDeclaration,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int?> companyId = const Value.absent(),
+                Value<int?> voucherTypeId = const Value.absent(),
+                Value<String?> voucherMenuName = const Value.absent(),
+                Value<String?> voucherMode = const Value.absent(),
+                Value<int?> voucherModeId = const Value.absent(),
+                Value<String?> voucherModeName = const Value.absent(),
+                Value<DateTime?> applicableFrom = const Value.absent(),
+                Value<int?> hasB2B = const Value.absent(),
+                Value<String?> b2BPrefix = const Value.absent(),
+                Value<String?> b2BSuffix = const Value.absent(),
+                Value<int?> b2BWidth = const Value.absent(),
+                Value<int?> b2BStartFrom = const Value.absent(),
+                Value<String?> b2CPrefix = const Value.absent(),
+                Value<String?> b2CSuffix = const Value.absent(),
+                Value<int?> b2CWidth = const Value.absent(),
+                Value<int?> b2CStartFrom = const Value.absent(),
+                Value<String?> b2BDeclaration = const Value.absent(),
+                Value<String?> b2CDeclaration = const Value.absent(),
+              }) => RouteVoucherTypesCompanion.insert(
+                id: id,
+                companyId: companyId,
+                voucherTypeId: voucherTypeId,
+                voucherMenuName: voucherMenuName,
+                voucherMode: voucherMode,
+                voucherModeId: voucherModeId,
+                voucherModeName: voucherModeName,
+                applicableFrom: applicableFrom,
+                hasB2B: hasB2B,
+                b2BPrefix: b2BPrefix,
+                b2BSuffix: b2BSuffix,
+                b2BWidth: b2BWidth,
+                b2BStartFrom: b2BStartFrom,
+                b2CPrefix: b2CPrefix,
+                b2CSuffix: b2CSuffix,
+                b2CWidth: b2CWidth,
+                b2CStartFrom: b2CStartFrom,
+                b2BDeclaration: b2BDeclaration,
+                b2CDeclaration: b2CDeclaration,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$RouteVoucherTypesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDb,
+      $RouteVoucherTypesTable,
+      RouteVoucherType,
+      $$RouteVoucherTypesTableFilterComposer,
+      $$RouteVoucherTypesTableOrderingComposer,
+      $$RouteVoucherTypesTableAnnotationComposer,
+      $$RouteVoucherTypesTableCreateCompanionBuilder,
+      $$RouteVoucherTypesTableUpdateCompanionBuilder,
+      (
+        RouteVoucherType,
+        BaseReferences<_$AppDb, $RouteVoucherTypesTable, RouteVoucherType>,
+      ),
+      RouteVoucherType,
+      PrefetchHooks Function()
+    >;
+typedef $$CompanySettingsTableTableCreateCompanionBuilder =
+    CompanySettingsTableCompanion Function({
+      required int id,
+      required int companyId,
+      required String settingsMenuName,
+      required String buttonType,
+      required String description,
+      required int parentId,
+      required int orderNo,
+      required String menuType,
+      required String settingsValue,
+      Value<int> rowid,
+    });
+typedef $$CompanySettingsTableTableUpdateCompanionBuilder =
+    CompanySettingsTableCompanion Function({
+      Value<int> id,
+      Value<int> companyId,
+      Value<String> settingsMenuName,
+      Value<String> buttonType,
+      Value<String> description,
+      Value<int> parentId,
+      Value<int> orderNo,
+      Value<String> menuType,
+      Value<String> settingsValue,
+      Value<int> rowid,
+    });
+
+class $$CompanySettingsTableTableFilterComposer
+    extends Composer<_$AppDb, $CompanySettingsTableTable> {
+  $$CompanySettingsTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get companyId => $composableBuilder(
+    column: $table.companyId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get settingsMenuName => $composableBuilder(
+    column: $table.settingsMenuName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get buttonType => $composableBuilder(
+    column: $table.buttonType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get parentId => $composableBuilder(
+    column: $table.parentId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get orderNo => $composableBuilder(
+    column: $table.orderNo,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get menuType => $composableBuilder(
+    column: $table.menuType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get settingsValue => $composableBuilder(
+    column: $table.settingsValue,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$CompanySettingsTableTableOrderingComposer
+    extends Composer<_$AppDb, $CompanySettingsTableTable> {
+  $$CompanySettingsTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get companyId => $composableBuilder(
+    column: $table.companyId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get settingsMenuName => $composableBuilder(
+    column: $table.settingsMenuName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get buttonType => $composableBuilder(
+    column: $table.buttonType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get parentId => $composableBuilder(
+    column: $table.parentId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get orderNo => $composableBuilder(
+    column: $table.orderNo,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get menuType => $composableBuilder(
+    column: $table.menuType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get settingsValue => $composableBuilder(
+    column: $table.settingsValue,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$CompanySettingsTableTableAnnotationComposer
+    extends Composer<_$AppDb, $CompanySettingsTableTable> {
+  $$CompanySettingsTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get companyId =>
+      $composableBuilder(column: $table.companyId, builder: (column) => column);
+
+  GeneratedColumn<String> get settingsMenuName => $composableBuilder(
+    column: $table.settingsMenuName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get buttonType => $composableBuilder(
+    column: $table.buttonType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get parentId =>
+      $composableBuilder(column: $table.parentId, builder: (column) => column);
+
+  GeneratedColumn<int> get orderNo =>
+      $composableBuilder(column: $table.orderNo, builder: (column) => column);
+
+  GeneratedColumn<String> get menuType =>
+      $composableBuilder(column: $table.menuType, builder: (column) => column);
+
+  GeneratedColumn<String> get settingsValue => $composableBuilder(
+    column: $table.settingsValue,
+    builder: (column) => column,
+  );
+}
+
+class $$CompanySettingsTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDb,
+          $CompanySettingsTableTable,
+          CompanySettingsTableData,
+          $$CompanySettingsTableTableFilterComposer,
+          $$CompanySettingsTableTableOrderingComposer,
+          $$CompanySettingsTableTableAnnotationComposer,
+          $$CompanySettingsTableTableCreateCompanionBuilder,
+          $$CompanySettingsTableTableUpdateCompanionBuilder,
+          (
+            CompanySettingsTableData,
+            BaseReferences<
+              _$AppDb,
+              $CompanySettingsTableTable,
+              CompanySettingsTableData
+            >,
+          ),
+          CompanySettingsTableData,
+          PrefetchHooks Function()
+        > {
+  $$CompanySettingsTableTableTableManager(
+    _$AppDb db,
+    $CompanySettingsTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CompanySettingsTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CompanySettingsTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$CompanySettingsTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> companyId = const Value.absent(),
+                Value<String> settingsMenuName = const Value.absent(),
+                Value<String> buttonType = const Value.absent(),
+                Value<String> description = const Value.absent(),
+                Value<int> parentId = const Value.absent(),
+                Value<int> orderNo = const Value.absent(),
+                Value<String> menuType = const Value.absent(),
+                Value<String> settingsValue = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CompanySettingsTableCompanion(
+                id: id,
+                companyId: companyId,
+                settingsMenuName: settingsMenuName,
+                buttonType: buttonType,
+                description: description,
+                parentId: parentId,
+                orderNo: orderNo,
+                menuType: menuType,
+                settingsValue: settingsValue,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required int id,
+                required int companyId,
+                required String settingsMenuName,
+                required String buttonType,
+                required String description,
+                required int parentId,
+                required int orderNo,
+                required String menuType,
+                required String settingsValue,
+                Value<int> rowid = const Value.absent(),
+              }) => CompanySettingsTableCompanion.insert(
+                id: id,
+                companyId: companyId,
+                settingsMenuName: settingsMenuName,
+                buttonType: buttonType,
+                description: description,
+                parentId: parentId,
+                orderNo: orderNo,
+                menuType: menuType,
+                settingsValue: settingsValue,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$CompanySettingsTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDb,
+      $CompanySettingsTableTable,
+      CompanySettingsTableData,
+      $$CompanySettingsTableTableFilterComposer,
+      $$CompanySettingsTableTableOrderingComposer,
+      $$CompanySettingsTableTableAnnotationComposer,
+      $$CompanySettingsTableTableCreateCompanionBuilder,
+      $$CompanySettingsTableTableUpdateCompanionBuilder,
+      (
+        CompanySettingsTableData,
+        BaseReferences<
+          _$AppDb,
+          $CompanySettingsTableTable,
+          CompanySettingsTableData
+        >,
+      ),
+      CompanySettingsTableData,
+      PrefetchHooks Function()
+    >;
 
 class $AppDbManager {
   final _$AppDb _db;
   $AppDbManager(this._db);
-  $$UsersTableTableManager get users =>
-      $$UsersTableTableManager(_db, _db.users);
   $$RegistrationDetailsTableTableManager get registrationDetails =>
       $$RegistrationDetailsTableTableManager(_db, _db.registrationDetails);
   $$CompaniesTableTableManager get companies =>
       $$CompaniesTableTableManager(_db, _db.companies);
+  $$UserSettingsTableTableTableManager get userSettingsTable =>
+      $$UserSettingsTableTableTableManager(_db, _db.userSettingsTable);
+  $$VoucherTypesTableTableManager get voucherTypes =>
+      $$VoucherTypesTableTableManager(_db, _db.voucherTypes);
+  $$GodownVoucherTypesTableTableManager get godownVoucherTypes =>
+      $$GodownVoucherTypesTableTableManager(_db, _db.godownVoucherTypes);
+  $$RouteVoucherTypesTableTableManager get routeVoucherTypes =>
+      $$RouteVoucherTypesTableTableManager(_db, _db.routeVoucherTypes);
+  $$CompanySettingsTableTableTableManager get companySettingsTable =>
+      $$CompanySettingsTableTableTableManager(_db, _db.companySettingsTable);
 }

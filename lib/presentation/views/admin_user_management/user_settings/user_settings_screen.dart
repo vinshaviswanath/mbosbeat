@@ -16,11 +16,16 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
   @override
   void initState() {
     super.initState();
-    final provider = Provider.of<UserManagementProvider>(
-      context,
-      listen: false,
-    );
-    provider.getUsersSettingsList(context: context, userId: widget.userId);
+    // final provider = Provider.of<UserManagementProvider>(
+    //   context,
+    //   listen: false,
+    // );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<UserManagementProvider>().getUsersSettingsList(
+        context: context,
+        userId: widget.userId,
+      );
+    });
   }
 
   @override

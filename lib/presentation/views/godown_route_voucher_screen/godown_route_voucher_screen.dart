@@ -51,11 +51,11 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    Provider.of<CompanyCreationProvider>(context).resetSelections();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   context.read<CompanyCreationProvider>().resetSelections();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -67,11 +67,12 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
       builder: (context, provider, _) {
         return PopScope(
           canPop: true,
-          onPopInvokedWithResult: (didPop, result) async {
+          onPopInvokedWithResult: (didPop, result) {
             if (didPop) {
-              provider.resetSelections();
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                context.read<CompanyCreationProvider>().resetSelections();
+              });
             }
-            return;
           },
           child: Scaffold(
             resizeToAvoidBottomInset: false,
@@ -149,8 +150,8 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
                         GestureDetector(
                           onTap: () {
                             CustomDialog.showBottomCustomDialog(
-                             child: provider.isGodown
-                                 ? AddVehicle(
+                              child: provider.isGodown
+                                  ? AddVehicle(
                                       isEdit: true,
                                       details: provider.selectedVehicle,
                                     )
@@ -283,8 +284,8 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
                       GestureDetector(
                         onTap: () {
                           CustomDialog.showBottomCustomDialog(
-                         child: provider.isGodown
-                               ? const AddVehicle()
+                            child: provider.isGodown
+                                ? const AddVehicle()
                                 : const AddRoute(),
                           );
                         },
@@ -434,6 +435,7 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
                       //       : provider.selectedRoute?.id ?? 0,
                       //   voucherNumbers: provider.voucherNumberList ?? [],
                       // );
+                      context.read<CompanyCreationProvider>().resetSelections();
                       context.pop();
                     },
                     buttonText: "Save",

@@ -61,4 +61,5 @@ class AppRouterConst {
   static const transactionDetailpage = "/transactionDetail";
   static const orderbooking = "/orderbooking";
   static const orderbookingitems = "orderbookingitems";
+  static const userCompanySelectionScreen = "userCompanySelectionScreen";
 }
