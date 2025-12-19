@@ -148,7 +148,7 @@ class _VoucherTypeTileState extends State<VoucherTypeTile> {
                             companydata: voucher,
                             isCheckOn: isCheckOnInt,
                             isToggleOn: isToggleOnInt,
-                            regtype: "",
+                      
                           );
                         },
                       );
@@ -202,7 +202,7 @@ class _VoucherTypeTileState extends State<VoucherTypeTile> {
                                 companydata: voucher,
                                 isCheckOn: isCheckOnInt,
                                 isToggleOn: isToggleOnInt,
-                                regtype: "",
+                       
                               );
                             },
                           );
@@ -307,7 +307,7 @@ class _VoucherTypeTileState extends State<VoucherTypeTile> {
                               companydata: voucher,
                               isCheckOn: isCheckOnInt,
                               isToggleOn: isToggleOnInt,
-                              regtype: "",
+                    
                             );
                           },
                         );

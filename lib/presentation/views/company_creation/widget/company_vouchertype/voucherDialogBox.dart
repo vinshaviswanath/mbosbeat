@@ -10,7 +10,6 @@ class VoucherDialogbox extends StatefulWidget {
   final int id;
   final int isCheckOn;
   final int isToggleOn;
-  final String regtype;
   final CompanyVoucherTypesListData? companydata;
 
   const VoucherDialogbox({
@@ -19,7 +18,6 @@ class VoucherDialogbox extends StatefulWidget {
     required this.companydata,
     required this.isCheckOn,
     required this.isToggleOn,
-    required this.regtype,
   });
 
   @override

@@ -39,13 +39,6 @@ class _DefaultContainerState extends State<DefaultContainer> {
 
   @override
   void initState() {
-    print("companyid in defaultcontainer ....${widget.companyId}");
-    print("toggle in defaultcontainer ....${widget.isToggleOn}");
-    print("checkbox  in defaultcontainer....${widget.isCheckOn}");
-
-    print("B2Cprefix:${widget.companydata!.b2CPrefix}");
-    print("B2Csuffix:${widget.companydata!.b2CSuffix}");
-    print("B2Cwidth:${widget.companydata!.b2CWidth}");
     fillFields();
     super.initState();
   }
