@@ -52,10 +52,10 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
       final company = provider.selectedCompany ?? list.first;
 
-      await provider.fectchCountryList(context);
+      await provider.fetchCountryList(context);
 
       if (provider.countries.isEmpty) {
-        debugPrint("❌ No countries loaded");
+        debugPrint("❌ No countries loaded in admindashboard");
         return;
       }
 
@@ -80,7 +80,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
       );
 
       if (selectedCountry.id == 0) {
-        debugPrint("❌ Country not found for ID: ${company.country}");
+        debugPrint(
+          "❌ Country not found for ID in admindashboard: ${company.country}",
+        );
         return;
       }
 
@@ -97,11 +99,13 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
       if (selectedRegType.id != 0) {
         provider.selectRegistrationType(selectedRegType);
-        debugPrint("RegType found: ${selectedRegType.registrationType}");
+        debugPrint(
+          "RegType found in admindashboard: ${selectedRegType.registrationType}",
+        );
       }
 
       Logger.logSuccess(
-        "Initial RegType : ${provider.selectedregistrationtype?.registrationType}",
+        "Initial RegType in admindashboard : ${provider.selectedregistrationtype?.registrationType}",
       );
     });
   }
@@ -109,10 +113,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
   @override
   Widget build(BuildContext context) {
     final appLocalization = context.l10n;
-    final provider = context.read<CompanyCreationProvider>();
-    print(
-      "regtype in dialog box in dashboard: ${provider.selectedregistrationtype?.registrationType}",
-    );
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, result) async {
@@ -767,10 +767,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                                   'tabIndex': 1,
                                                                                   'companyData': selectedCompany,
                                                                                   'isPop': false,
-                                                                                  
                                                                                 },
                                                                               );
-                                                                           
                                                                             },
                                                                           ),
                                                                           const CustomDivider(),
