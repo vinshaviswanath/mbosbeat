@@ -1,6 +1,8 @@
 import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
+import 'package:mpos_beat/data/models/data/country_list_data.dart';
+import 'package:mpos_beat/data/models/data/registration_type_data.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_divider.dart';
 import 'package:mpos_beat/presentation/dialogs/auth_dialogs.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
@@ -30,7 +32,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
         context,
         listen: false,
       );
-
       // Load list
       await provider.getAllCompanies(context);
 
@@ -48,6 +49,60 @@ class _AdminDashboardState extends State<AdminDashboard> {
           provider.setSelectedCompany(company: matched);
         }
       }
+
+      final company = provider.selectedCompany ?? list.first;
+
+      await provider.fectchCountryList(context);
+
+      if (provider.countries.isEmpty) {
+        debugPrint("❌ No countries loaded");
+        return;
+      }
+
+      //Select country
+      final selectedCountry = provider.countries.firstWhere(
+        (c) => c.id.toString() == company.country.toString(),
+        orElse: () => CountryListData(
+          id: 0,
+          countryName: "Unknown",
+          stateTitle: '',
+          pinTitle: '',
+          currency: '',
+          altCurrency: 0,
+          currencyNod: 0,
+          currencySymbol: 0,
+          taxApplicable: 0,
+          taxType: 0,
+          taxRegNoTitle: '',
+          cessApplicable: 0,
+          exciseApplicable: 0,
+        ),
+      );
+
+      if (selectedCountry.id == 0) {
+        debugPrint("❌ Country not found for ID: ${company.country}");
+        return;
+      }
+
+      provider.selectCountry(context, selectedCountry);
+
+      //get regtype
+      await provider.getRegistrationType(context, selectedCountry.id);
+
+      final selectedRegType = provider.registrationlists.firstWhere(
+        (r) => r.id.toString() == company.regType.toString(),
+        orElse: () =>
+            RegistrationTypeData(id: 0, countryId: 0, registrationType: ''),
+      );
+
+      if (selectedRegType.id != 0) {
+        provider.selectRegistrationType(selectedRegType);
+        debugPrint("RegType found: ${selectedRegType.registrationType}");
+      }
+
+      Logger.logSuccess(
+        "Initial RegType : ${provider.selectedregistrationtype?.registrationType}",
+      );
     });
   }
 
@@ -204,14 +259,85 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                               companyList,
                                                           selectedCompany:
                                                               selectedCompany,
-                                                          onCompanySelected:
-                                                              (company) {
-                                                                provider
-                                                                    .setSelectedCompany(
-                                                                      company:
-                                                                          company,
-                                                                    );
-                                                              },
+                                                          onCompanySelected: (company) async {
+                                                            provider
+                                                                .setSelectedCompany(
+                                                                  company:
+                                                                      company,
+                                                                );
+
+                                                            // Update country
+                                                            final selectedCountry = provider.countries.firstWhere(
+                                                              (c) =>
+                                                                  c.id
+                                                                      .toString() ==
+                                                                  company
+                                                                      .country
+                                                                      .toString(),
+                                                              orElse: () => CountryListData(
+                                                                id: 0,
+                                                                countryName:
+                                                                    "Unknown",
+                                                                stateTitle: '',
+                                                                pinTitle: '',
+                                                                currency: '',
+                                                                altCurrency: 0,
+                                                                currencyNod: 0,
+                                                                currencySymbol:
+                                                                    0,
+                                                                taxApplicable:
+                                                                    0,
+                                                                taxType: 0,
+                                                                taxRegNoTitle:
+                                                                    '',
+                                                                cessApplicable:
+                                                                    0,
+                                                                exciseApplicable:
+                                                                    0,
+                                                              ),
+                                                            );
+                                                            provider
+                                                                .selectCountry(
+                                                                  context,
+                                                                  selectedCountry,
+                                                                );
+
+                                                            //  Update registration type
+                                                            await provider
+                                                                .getRegistrationType(
+                                                                  context,
+                                                                  selectedCountry
+                                                                      .id,
+                                                                );
+                                                            final selectedRegType = provider
+                                                                .registrationlists
+                                                                .firstWhere(
+                                                                  (r) =>
+                                                                      r.id
+                                                                          .toString() ==
+                                                                      company
+                                                                          .regType
+                                                                          .toString(),
+                                                                  orElse: () =>
+                                                                      RegistrationTypeData(
+                                                                        id: 0,
+                                                                        countryId:
+                                                                            0,
+                                                                        registrationType:
+                                                                            '',
+                                                                      ),
+                                                                );
+                                                            if (selectedRegType
+                                                                    .id !=
+                                                                0) {
+                                                              provider.selectRegistrationType(
+                                                                selectedRegType,
+                                                              );
+                                                              debugPrint(
+                                                                "RegType found: ${selectedRegType.registrationType}",
+                                                              );
+                                                            }
+                                                          },
                                                         );
                                                       },
                                                     );
@@ -571,6 +697,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                                         'tabIndex': 2,
                                                                                         'companyData': selectedCompany,
                                                                                         'isPop': false,
+                                                                                        // "regtype":
+                                                                                        //     provider.selectedregistrationtype?.registrationType ??
+                                                                                        //     "",
                                                                                       },
                                                                                     )
                                                                                   : null;
@@ -687,6 +816,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                                   "companyId": selectedCompany!.id,
                                                                                   "name": selectedCompany.companyName,
                                                                                   "companyName": "${selectedCompany.state},${selectedCompany.country}",
+                                                                                  "companyData": selectedCompany,
                                                                                 },
                                                                               );
                                                                             },

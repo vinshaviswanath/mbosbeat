@@ -1,6 +1,7 @@
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/data/company_voucher_data.dart';
 import 'package:mpos_beat/l10n/app_localizations.dart';
+import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/presentation/views/company_creation/widget/company_vouchertype/b2b_container.dart';
 import 'package:mpos_beat/presentation/views/company_creation/widget/company_vouchertype/b2c_container.dart';
 import 'package:mpos_beat/presentation/views/company_creation/widget/company_vouchertype/defualt_container.dart';
@@ -40,6 +41,13 @@ class _VoucherDialogboxState extends State<VoucherDialogbox> {
   @override
   Widget build(BuildContext context) {
     final local = AppLocalizations.of(context);
+    final provider = Provider.of<CompanyCreationProvider>(
+      context,
+      listen: false,
+    );
+    print(
+      'registrationtype......${provider.selectedregistrationtype?.registrationType}',
+    );
     return AlertDialog(
       backgroundColor: Color(0xFFF1F3F7),
       contentPadding: EdgeInsets.zero,
@@ -72,16 +80,15 @@ class _VoucherDialogboxState extends State<VoucherDialogbox> {
                               context.pop();
                             },
                             child: CircleAvatar(
-                                                                                        backgroundColor: ColorResources.bluishGray.withValues(
-                                                                                          alpha: 0.15,
-                                                                                        ),
-                                                                                        radius: 12,
-                                                                                        child: const Icon(
-                                                                                          Icons.close,
-                                                                                          size: 12,
-                                                                                          color: ColorResources.bluishGray,
-                                                                                        ),
-                                                                                      ),
+                              backgroundColor: ColorResources.bluishGray
+                                  .withValues(alpha: 0.15),
+                              radius: 12,
+                              child: const Icon(
+                                Icons.close,
+                                size: 12,
+                                color: ColorResources.bluishGray,
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -89,68 +96,71 @@ class _VoucherDialogboxState extends State<VoucherDialogbox> {
                   ),
                 ),
                 //user b2b or b2c
-                // if (widget.companydata!.hasB2BB2C == "Yes" &&
-                //         widget.regtype == "Regular" ||
-                //     widget.regtype == "Registered")
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: Text(
-                        'Use B2B / B2C',
-                        style: context.textStyle.s12.w400.dustyBlue.roboto,
+                if (widget.companydata!.hasB2BB2C == "Yes" &&
+                        provider.selectedregistrationtype?.registrationType ==
+                            "Regular" ||
+                    provider.selectedregistrationtype?.registrationType ==
+                        "Registered") ...[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15),
+                        child: Text(
+                          'Use B2B / B2C',
+                          style: context.textStyle.s12.w400.dustyBlue.roboto,
+                        ),
                       ),
-                    ),
-                    //toggle button
-                    Transform.scale(
-                      scale: 0.7,
-                      child: Switch(
-                        inactiveThumbColor: Theme.of(
-                          context,
-                        ).colorScheme.secondary,
-                        activeColor: Theme.of(context).colorScheme.onPrimary,
-                        inactiveTrackColor: Theme.of(
-                          context,
-                        ).colorScheme.onPrimary,
-                        activeTrackColor: Color(0xFF36489B),
-                        value: isToggleOn,
-                        onChanged: (value) async {
-                          if (!value) {
-                            final result = await showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return ToggleDialogBox(
-                                  companyId: widget.companydata!.companyId,
-                                  isCheckOn: widget.isCheckOn,
-                                  isToggleOn: widget.isToggleOn,
-                                  id: widget.companydata!.id,
-                                );
-                              },
-                            );
+                      //toggle button
+                      Transform.scale(
+                        scale: 0.7,
+                        child: Switch(
+                          inactiveThumbColor: Theme.of(
+                            context,
+                          ).colorScheme.secondary,
+                          activeColor: Theme.of(context).colorScheme.onPrimary,
+                          inactiveTrackColor: Theme.of(
+                            context,
+                          ).colorScheme.onPrimary,
+                          activeTrackColor: Color(0xFF36489B),
+                          value: isToggleOn,
+                          onChanged: (value) async {
+                            if (!value) {
+                              final result = await showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return ToggleDialogBox(
+                                    companyId: widget.companydata!.companyId,
+                                    isCheckOn: widget.isCheckOn,
+                                    isToggleOn: widget.isToggleOn,
+                                    id: widget.companydata!.id,
+                                  );
+                                },
+                              );
 
-                            if (result == true) {
-                              // User clicked "Yes" in the dialog
+                              if (result == true) {
+                                // User clicked "Yes" in the dialog
+                                setState(() {
+                                  isToggleOn = false;
+                                  widget.companydata!.hasB2B = 0;
+
+                                  // Correctly update the toggle state
+                                });
+                              }
+                            } else {
+                              // If the toggle is being switched on, update the state directly
                               setState(() {
-                                isToggleOn = false;
-                                widget.companydata!.hasB2B = 0;
-
-                                // Correctly update the toggle state
+                                isToggleOn =
+                                    true; // Correctly update the toggle state
+                                widget.companydata!.hasB2B = 1;
                               });
                             }
-                          } else {
-                            // If the toggle is being switched on, update the state directly
-                            setState(() {
-                              isToggleOn =
-                                  true; // Correctly update the toggle state
-                              widget.companydata!.hasB2B = 1;
-                            });
-                          }
-                        },
+                          },
+                        ),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
+                ],
 
                 //default voucher fields container
                 if (!isToggleOn)
@@ -207,7 +217,7 @@ class _VoucherDialogboxState extends State<VoucherDialogbox> {
                                     MediaQuery.of(context).size.width * 0.099,
                                 color: Theme.of(
                                   context,
-                                ).colorScheme.onPrimary  .withValues(alpha: 0.2),
+                                ).colorScheme.onPrimary.withValues(alpha: 0.2),
                               ),
                             ),
 

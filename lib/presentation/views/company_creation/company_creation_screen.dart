@@ -96,10 +96,9 @@ class _CompanyCreationScreenState extends State<CompanyCreationScreen>
       onPopInvoked: (didPop) async {
         if (didPop) return;
 
- provider.resetCompanyInfo();
-provider.getAllCompanies(context);
-
-        // final companyData = widget.companyData;
+//provider.resetCompanyInfo();
+        //provider.getAllCompanies(context);
+// final companyData = widget.companyData;
 
         // final hasIntegration =
         //     companyData?.hasIntegrationSettings != null &&

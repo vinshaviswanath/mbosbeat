@@ -1,23 +1,25 @@
-import 'package:mpos_beat/core/di/injection.dart';
+//import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
+import 'package:mpos_beat/data/models/users_list_model.dart';
 import 'package:mpos_beat/domain/request/create_user_company_mapping_params.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/presentation/logic/user_management_provider.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/add_company/widgets/add_company_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 
 class AddCompanyScreen extends StatefulWidget {
+  final String name;
+  final String companyName;
+  final int userId;
+  final UserMasterList? userlist;
   const AddCompanyScreen({
     super.key,
     required this.name,
     required this.companyName,
     required this.userId,
+    required this.userlist,
   });
-
-  final String name;
-  final String companyName;
-  final int userId;
 
   @override
   State<AddCompanyScreen> createState() => _AddCompanyScreenState();
@@ -29,23 +31,52 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
   final Set<int> selectedCompanyIds = {};
   final List<CompanyList> selectedCompanyList = [];
   @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance.addPostFrameCallback((_) async {
+  //     final provider = context.read<UserManagementProvider>();
+  //     await provider.getAllCompanies(context: context);
+  //     final pref = sl<SharedPreferences>();
+  //     final storedList = pref.getStringList('companies');
+  //     if (storedList != null && storedList.isNotEmpty) {
+  //       final loadedCompanies = storedList.map(int.parse).toList();
+  //       setState(() {
+  //         selectedCompanyIds.addAll(loadedCompanies);
+  //         selectedCompanyList.addAll(
+  //           loadedCompanies.map((id) => CompanyList(companyId: id)),
+  //         );
+  //       });
+  //     }
+  //   });
+  // }
+  @override
   void initState() {
     super.initState();
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final provider = context.read<UserManagementProvider>();
       await provider.getAllCompanies(context: context);
 
-      final pref = sl<SharedPreferences>();
-      final storedList = pref.getStringList('companies');
-      if (storedList != null && storedList.isNotEmpty) {
-        final loadedCompanies = storedList.map(int.parse).toList();
+      /// ✅ PRESELECT BASED ON USER MAPPING
+      final companyListString = widget.userlist?.companyList;
+
+      if (companyListString != null && companyListString.trim().isNotEmpty) {
+        final ids = companyListString
+            .split(',')
+            .map((e) => int.tryParse(e.trim()))
+            .whereType<int>()
+            .toSet();
+
         setState(() {
-          selectedCompanyIds.addAll(loadedCompanies);
+          selectedCompanyIds.addAll(ids);
+
           selectedCompanyList.addAll(
-            loadedCompanies.map((id) => CompanyList(companyId: id)),
+            ids.map((id) => CompanyList(companyId: id)),
           );
         });
       }
+
+      Logger.logSuccess("Preselected company IDs: $selectedCompanyIds");
     });
   }
 
@@ -59,7 +90,6 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
       selectedCompany?.address1,
       selectedCompany?.address2,
       selectedCompany?.address3,
-    
     ];
     final filteredAddress = addressParts
         .where((e) => e != null && e!.trim().isNotEmpty)
@@ -76,7 +106,6 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
         [];
 
     return Scaffold(
-     
       body: StreamBuilder<CompaniesListResponse?>(
         stream: provider.companyListStream,
         builder: (context, snapshot) {
@@ -105,7 +134,6 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
                 ),
                 centerTitle: true,
 
-              
                 bottom: PreferredSize(
                   preferredSize: const Size.fromHeight(30),
                   child: Column(
@@ -215,11 +243,11 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
         child: CustomButton(
           borderRadius: BorderRadius.circular(16),
           onTap: () async {
-            final pref = sl<SharedPreferences>();
-            await pref.setStringList(
-              'companies',
-              selectedCompanyList.map((e) => e.companyId.toString()).toList(),
-            );
+            // final pref = sl<SharedPreferences>();
+            // await pref.setStringList(
+            //   'companies',
+            //   selectedCompanyList.map((e) => e.companyId.toString()).toList(),
+            // );
             provider
                 .createUserCompanyMapping(
                   context: context,
@@ -227,9 +255,10 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
                   companyList: selectedCompanyList,
                 )
                 .then((_) {
-                  WidgetsBinding.instance.addPostFrameCallback(
-                    (_) => context.pop(),
-                  );
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    context.pop();
+                    companyprovider.getAllCompanies(context);
+                  });
                 });
           },
           buttonText: appLocalization.save,

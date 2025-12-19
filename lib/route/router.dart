@@ -210,11 +210,12 @@ class AppRouter {
           final name = extra["name"] as String;
           final companyName = extra["companyName"] as String;
           final userId = extra["userId"] as int;
-          // final company = extra["company"] as CompaniesListResponse;
+          final userlist = extra["userlist"] as UserMasterList?;
           return AddCompanyScreen(
             name: name,
             companyName: companyName,
             userId: userId,
+            userlist: userlist,
           );
         },
       ),
@@ -389,13 +390,14 @@ class AppRouter {
           );
         },
       ),
-      GoRoute(name: AppRouterConst.companyscreationsuccess,
-        
+      GoRoute(
+        name: AppRouterConst.companyscreationsuccess,
+
         path: '/CompanyCreationSuccessScreen',
         builder: (context, state) {
           return CompanyCreationSuccessScreen();
         },
-        ),
+      ),
       GoRoute(
         path: "/adminDashboard",
         name: AppRouterConst.adminDashboard,
@@ -441,10 +443,12 @@ class AppRouter {
           final name = extra["name"] as String;
           final companyName = extra["companyName"] as String;
           final companyId = extra["companyId"] as int;
+          final companyData = extra['companyData'] as CompanyViewList?;
           return CompanyUserMappingScreen(
             name: name,
             companyName: companyName,
             companyId: companyId,
+            companyData: companyData,
           );
         },
       ),
@@ -570,7 +574,7 @@ class AppRouter {
           return const AddItemCategory();
         },
       ),
-       GoRoute(
+      GoRoute(
         path: "/otherLedgerScreen",
         name: AppRouterConst.otherLedgerScreen,
         builder: (context, state) {
@@ -584,14 +588,14 @@ class AppRouter {
           return const AddOtherLedger();
         },
       ),
-       GoRoute(
+      GoRoute(
         path: "/priceListScreen",
         name: AppRouterConst.priceListScreen,
         builder: (context, state) {
           return const PriceListScreen();
         },
       ),
-       GoRoute(
+      GoRoute(
         path: "/itemNameScreen",
         name: AppRouterConst.itemNameScreen,
         builder: (context, state) {

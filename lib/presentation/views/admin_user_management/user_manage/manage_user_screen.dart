@@ -410,7 +410,7 @@ class _ManageUserScreenState extends State<ManageUserScreen> {
                         "companyName": companiesList.isNotEmpty
                             ? "${companiesList.first.mailingName ?? ""}, ${companiesList.first.country ?? ""}"
                             : "",
-                        "company": provider.companiesList,
+                        "userlist": item,
                         "userId": item.id ?? 0,
                       },
                     );
