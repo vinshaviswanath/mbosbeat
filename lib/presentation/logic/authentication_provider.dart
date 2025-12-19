@@ -6,7 +6,9 @@ import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/data/models/company_registration_response.dart';
+import 'package:mpos_beat/data/models/data/country_list_data.dart';
 import 'package:mpos_beat/data/models/data/otp_response_data.dart';
+import 'package:mpos_beat/data/models/data/registration_type_data.dart';
 import 'package:mpos_beat/data/models/login_response.dart';
 import 'package:mpos_beat/data/models/otp_response.dart';
 import 'package:mpos_beat/data/models/response_data.dart';
@@ -533,6 +535,66 @@ class AuthFormProvider with ChangeNotifier {
           companyList = companyProvider.companiesList?.companyViewList ?? [];
           hasCompany = companyList.isNotEmpty;
           companyData = hasCompany ? companyList.first : null;
+
+          // regtype for vouchertype tab
+          await companyProvider.fetchCountryList(context);
+
+          if (companyProvider.countries.isEmpty) {
+            debugPrint("❌ No countries loaded in login");
+            return;
+          }
+
+          //Select country
+          final selectedCountry = companyProvider.countries.firstWhere(
+            (c) => c.id.toString() == companyData!.country.toString(),
+            orElse: () => CountryListData(
+              id: 0,
+              countryName: "Unknown",
+              stateTitle: '',
+              pinTitle: '',
+              currency: '',
+              altCurrency: 0,
+              currencyNod: 0,
+              currencySymbol: 0,
+              taxApplicable: 0,
+              taxType: 0,
+              taxRegNoTitle: '',
+              cessApplicable: 0,
+              exciseApplicable: 0,
+            ),
+          );
+
+          if (selectedCountry.id == 0) {
+            debugPrint(
+              "❌ Country not found for ID in login: ${companyData!.country}",
+            );
+            return;
+          }
+
+          companyProvider.selectCountry(context, selectedCountry);
+
+          //get regtype
+          await companyProvider.getRegistrationType(
+            context,
+            selectedCountry.id,
+          );
+
+          final selectedRegType = companyProvider.registrationlists.firstWhere(
+            (r) => r.id.toString() == companyData!.regType.toString(),
+            orElse: () =>
+                RegistrationTypeData(id: 0, countryId: 0, registrationType: ''),
+          );
+
+          if (selectedRegType.id != 0) {
+            companyProvider.selectRegistrationType(selectedRegType);
+            debugPrint(
+              "RegType found in login: ${selectedRegType.registrationType}",
+            );
+          }
+
+          Logger.logSuccess(
+            "Initial RegType in login: ${companyProvider.selectedregistrationtype?.registrationType}",
+          );
         } catch (e) {
           Logger.logError("Error fetching companies after login: $e");
         }

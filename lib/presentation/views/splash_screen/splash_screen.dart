@@ -2,6 +2,8 @@ import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
+import 'package:mpos_beat/data/models/data/country_list_data.dart';
+import 'package:mpos_beat/data/models/data/registration_type_data.dart';
 import 'package:mpos_beat/data/models/godown_list_model.dart';
 import 'package:mpos_beat/data/models/route_list_model.dart';
 import 'package:mpos_beat/domain/request/login_by_token_param.dart';
@@ -26,164 +28,6 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     _initialize();
   }
-
-  // Future<void> _initialize() async {
-  //   final prefs = sl<SharedPreferences>();
-  //   final token = prefs.getString("token") ?? '';
-  //   final isOnboardingCompleted =
-  //       prefs.getBool("isOnboardingCompleted") ?? false;
-
-  //   await Future.delayed(const Duration(seconds: 2));
-
-  //   if (!mounted) return;
-
-  //   if (!isOnboardingCompleted) {
-  //     context.pushNamed(AppRouterConst.onboardScreen);
-  //     return;
-  //   }
-
-  //   if (token.isEmpty) {
-  //     context.pushNamed(AppRouterConst.login);
-  //     return;
-  //   }
-
-  //   final userProvider = context.read<UserManagementProvider>();
-  //   userProvider.loadDesignations();
-  //   userProvider.loadUsers();
-
-  //   final authProvider = context.read<AuthFormProvider>();
-  //   final response = await authProvider.loginByToken(
-  //     params: LoginByTokenParam(token: token),
-  //   );
-
-  //   if (!mounted) return;
-
-  //   if (response == null) {
-  //     context.pushNamed(AppRouterConst.login);
-  //     return;
-  //   }
-
-  //   switch (response.status) {
-  //     case 1:
-  //       userProvider.getDesignationList(context);
-  //       context.pushNamed(AppRouterConst.adminDashboard);
-  //       break;
-
-  //     case 10:
-  //     case 20:
-  //     case 30:
-  //     case 40:
-  //       context.pushNamed(AppRouterConst.login);
-
-  //       WidgetsBinding.instance.addPostFrameCallback((_) async {
-  //         if (!mounted) return;
-
-  //         // Fetch companies directly from API
-  //         final companyProvider = context.read<CompanyCreationProvider>();
-  //         await companyProvider.getAllCompanies(context);
-  //         final companyList =
-  //             companyProvider.companiesList?.companyViewList ?? [];
-
-  //         if (companyList.isEmpty) {
-  //           Logger.logError("No companies found!");
-  //           return;
-  //         }
-
-  //         // Pass first company
-  //         final companyData = companyList.first;
-
-  //         switch (response.status) {
-  //           case 10:
-  //             RegistrationDialogs.pendingRegisteredDialog(
-  //               context,
-  //               response.loginData?.companyName ?? '',
-  //               id: response.loginData?.customerId,
-  //             );
-  //             break;
-  //           case 20:
-  //             RegistrationDialogs.customDialog(
-  //               margin: EdgeInsets.symmetric(horizontal: 70),
-  //               context: context,
-  //               heading: "Registration Completed!",
-  //               subTitle:
-  //                   "You have successfully completed the\nregistration on last login. Kindly go to company\ncreation page to continue.",
-  //               onTap: () {
-  //                 if (!mounted) return;
-  //                 Logger.logSuccess(
-  //                   "COMPANY ID from dialog: ${companyData.id}",
-  //                 );
-  //                 context.goNamed(
-  //                   AppRouterConst.companyCreationScreen,
-  //                   extra: {
-  //                     'tabIndex': 0,
-  //                     'companyData': companyData,
-  //                     'isPop': true,
-  //                   },
-  //                 );
-  //               },
-  //               buttonText: "Go to Company Creation",
-  //             );
-  //             break;
-  //           case 40:
-  //             RegistrationDialogs.customDialog(
-  //               margin: EdgeInsets.symmetric(horizontal: 103),
-  //               context: context,
-  //               heading: "Company Creation Completed!",
-  //               subTitle:
-  //                   "You have successfully completed voucher type configuration on last login. Kindly start the integration settings to continue.",
-
-  //               onTap: () {
-  //                 if (!mounted) return;
-  //                 Logger.logSuccess(
-  //                   "COMPANY ID from dialog: ${companyData.id}",
-  //                 );
-
-  //                 context.goNamed(
-  //                   AppRouterConst.companyCreationScreen,
-  //                   extra: {
-  //                     'tabIndex': 2,
-  //                     'companyData': companyData,
-  //                     'isPop': true,
-  //                   },
-  //                 );
-  //               },
-  //               buttonText: "Continue",
-  //             );
-  //             break;
-  //           case 30:
-  //             RegistrationDialogs.customDialog(
-  //               margin: EdgeInsets.symmetric(horizontal: 103),
-  //               context: context,
-  //               heading: "Company Creation Completed!",
-  //               subTitle:
-  //                   "You have successfully created company details on last login. Kindly start the voucher type configuration to continue.",
-  //               onTap: () {
-  //                 if (!mounted) return;
-  //                 Logger.logSuccess(
-  //                   "COMPANY ID from dialog: ${companyData.id}",
-  //                 );
-
-  //                 context.goNamed(
-  //                   AppRouterConst.companyCreationScreen,
-  //                   extra: {
-  //                     'tabIndex': 1,
-  //                     'companyData': companyData,
-  //                     'isPop': true,
-  //                   },
-  //                 );
-  //               },
-  //               buttonText: "Continue",
-  //             );
-  //             break;
-  //         }
-  //       });
-  //       break;
-
-  //     default:
-  //       context.pushNamed(AppRouterConst.login);
-  //       break;
-  //   }
-  // }
 
   Future<void> _initialize() async {
     final prefs = sl<SharedPreferences>();
@@ -257,6 +101,65 @@ class _SplashScreenState extends State<SplashScreen> {
               ? companyList.first
               : null;
 
+          // regtype for vouchertype tab
+          await companyProvider.fetchCountryList(context);
+
+          if (companyProvider.countries.isEmpty) {
+            debugPrint("❌ No countries loaded in Splashscreen");
+            return;
+          }
+
+          //Select country
+          final selectedCountry = companyProvider.countries.firstWhere(
+            (c) => c.id.toString() == companyData!.country.toString(),
+            orElse: () => CountryListData(
+              id: 0,
+              countryName: "Unknown",
+              stateTitle: '',
+              pinTitle: '',
+              currency: '',
+              altCurrency: 0,
+              currencyNod: 0,
+              currencySymbol: 0,
+              taxApplicable: 0,
+              taxType: 0,
+              taxRegNoTitle: '',
+              cessApplicable: 0,
+              exciseApplicable: 0,
+            ),
+          );
+
+          if (selectedCountry.id == 0) {
+            debugPrint(
+              "❌ Country not found for ID in Splashscreen: ${companyData!.country}",
+            );
+            return;
+          }
+
+          companyProvider.selectCountry(context, selectedCountry);
+
+          //get regtype
+          await companyProvider.getRegistrationType(
+            context,
+            selectedCountry.id,
+          );
+
+          final selectedRegType = companyProvider.registrationlists.firstWhere(
+            (r) => r.id.toString() == companyData!.regType.toString(),
+            orElse: () =>
+                RegistrationTypeData(id: 0, countryId: 0, registrationType: ''),
+          );
+
+          if (selectedRegType.id != 0) {
+            companyProvider.selectRegistrationType(selectedRegType);
+            debugPrint(
+              "RegType found in Splashscreen: ${selectedRegType.registrationType}",
+            );
+          }
+
+          Logger.logSuccess(
+            "Initial RegType in Splashscreen : ${companyProvider.selectedregistrationtype?.registrationType}",
+          );
           // SHOW CORRESPONDING DIALOG
           switch (response.status) {
             case 10:
