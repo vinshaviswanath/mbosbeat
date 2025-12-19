@@ -97,8 +97,6 @@ class _VoucherDialogboxState extends State<VoucherDialogbox> {
                 ),
                 //user b2b or b2c
                 if (widget.companydata!.hasB2BB2C == "Yes" &&
-                        provider.selectedregistrationtype?.registrationType ==
-                            "Regular" ||
                     provider.selectedregistrationtype?.registrationType ==
                         "Registered") ...[
                   Row(
