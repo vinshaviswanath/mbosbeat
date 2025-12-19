@@ -133,11 +133,8 @@ class _CompanySettingsScreenState extends State<CompanySettingsScreen> {
                       },
                     ),
                   ),
-
-                SliverToBoxAdapter(child: SizedBox(height: 50)),
                 ),
                 SliverToBoxAdapter(child: SizedBox(height: 50)),
-
               ],
             );
           },

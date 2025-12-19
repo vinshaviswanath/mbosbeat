@@ -44,10 +44,10 @@ class LoginByToken {
           await sharedPreferences.setInt("customerId", customerId ?? 0);
 
           // await appDb.into(appDb.users).insert(User.fromJson(response.data));
-          await appDb.userDao.clearAll();
-          await appDb.userDao.insertUser(data.loginData!);
-          await appDb.userDao.printUsers();
-          appDb.select(appDb.users).watch();
+          await appDb.registrationDetailDao.clearAll();
+          await appDb.registrationDetailDao.insertUser(data.loginData!);
+          await appDb.registrationDetailDao.printUsers();
+          appDb.select(appDb.registrationDetails).watch();
           return data;
         }
 

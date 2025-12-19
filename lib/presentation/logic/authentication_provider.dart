@@ -389,7 +389,7 @@ class AuthFormProvider with ChangeNotifier {
   //   _otp = Otp("");
   //   _otpError = null;
   //   _otpResponse = null;
-  //   _showOtpValidation = false; 
+  //   _showOtpValidation = false;
   //   otpAutovalidateMode = AutovalidateMode.disabled;
   //   notifyListeners();
   // }
@@ -545,7 +545,12 @@ class AuthFormProvider with ChangeNotifier {
         switch (response.status) {
           case 1: //Login successful → Go to Admin Home
             _cusomerId = response.loginData?.customerId;
-            context.pushNamed(AppRouterConst.adminDashboard);
+
+            context.pushNamed(
+              response.loginData?.designation?.toLowerCase() == "admin"
+                  ? AppRouterConst.adminDashboard
+                  : AppRouterConst.userCompanySelectionScreen,
+            );
             break;
 
           case 10: //Pending registration approval

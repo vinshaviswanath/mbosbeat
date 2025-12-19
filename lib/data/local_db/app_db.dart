@@ -42,50 +42,95 @@
 //   });
 // }
 
-
 import 'dart:io';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+import 'package:mpos_beat/data/local_db/daos/company_settings_dao/company_settings_dao.dart';
+import 'package:mpos_beat/data/local_db/daos/godown_voucher_type_dao/godown_voucher_type_dao.dart';
+import 'package:mpos_beat/data/local_db/daos/route_voucher_type_dao/route_voucher_type_dao.dart';
+import 'package:mpos_beat/data/local_db/daos/user_setting_dao/user_setting_dao.dart';
+import 'package:mpos_beat/data/local_db/daos/voucher_type_dao/voucher_type_dao.dart';
+import 'package:mpos_beat/data/local_db/tables/company_settings_tables.dart';
+import 'package:mpos_beat/data/local_db/tables/godown_voucher_types_tables.dart';
+import 'package:mpos_beat/data/local_db/tables/route_voucher_types_tables.dart';
+import 'package:mpos_beat/data/local_db/tables/user_settings_tables.dart';
+import 'package:mpos_beat/data/local_db/tables/voucher_types_tables.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
 
-import 'tables/user_tables.dart';
-import 'tables/company_tables.dart';
 import 'tables/registration_details_tables.dart';
+import 'tables/company_tables.dart';
 
 import 'daos/company_dao/company_dao.dart';
-import 'daos/user_dao/user_dao.dart';
+import 'daos/registration_detail_dao/registration_detail_dao.dart';
 
 part 'app_db.g.dart';
 
 @DriftDatabase(
   tables: [
-    Users,
+    // Users,
     RegistrationDetails,
     Companies,
+    UserSettingsTable,
+    VoucherTypes,
+    GodownVoucherTypes,
+    RouteVoucherTypes,
+    CompanySettingsTable,
+
   ],
   daos: [
     CompanyDao,
-    UserDao,
+    // UserDao,
+    RegistrationDetailDao,
+    UserSettingsDao,
+    VoucherTypesDao,
+    GodownVoucherTypesDao,
+    RouteVoucherTypesDao,
+    CompanySettingsDao,
+
   ],
 )
 class AppDb extends _$AppDb {
   AppDb() : super(_openConnection());
 
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 8;
 
-  @override
-  MigrationStrategy get migration => MigrationStrategy(
-        onUpgrade: (m, from, to) async {
-          if (from < 4) {
-            await m.createTable(companies);
-            await m.alterTable(TableMigration(users));
-          }
-        },
-      );
+@override
+MigrationStrategy get migration => MigrationStrategy(
+  onCreate: (m) async {
+    await m.createAll();
+  },
+  onUpgrade: (m, from, to) async {
+
+    if (from < 4) {
+      await m.createTable(companies);
+      await m.alterTable(TableMigration(registrationDetails));
+    }
+
+    if (from < 5) {
+      await m.createTable(userSettingsTable);
+    }
+
+    if (from < 6) {
+      await m.createTable(voucherTypes);
+    }
+
+    // ✅ ADD THIS
+    if (from < 7) {
+      await m.createTable(godownVoucherTypes);
+      await m.createTable(routeVoucherTypes);
+    }
+
+     if (from < 8) {
+      await m.createTable(companySettingsTable);
+    }
+  },
+);
+
+
 }
 
 LazyDatabase _openConnection() {

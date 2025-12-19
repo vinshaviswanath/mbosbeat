@@ -10,7 +10,6 @@ import 'package:mpos_beat/data/models/data/get_all_company_settings_data.dart';
 import 'package:mpos_beat/data/models/data/registration_type_data.dart';
 import 'package:mpos_beat/data/models/get_all_company_settings_model.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
-import 'package:mpos_beat/data/models/create_company_voucher_model.dart';
 import 'package:mpos_beat/data/models/create_godown_response.dart';
 import 'package:mpos_beat/data/models/create_route_response.dart';
 import 'package:mpos_beat/data/models/create_voucher_numbering_response.dart';
@@ -30,7 +29,6 @@ import 'package:mpos_beat/data/models/voucher_numbering_response.dart';
 import 'package:mpos_beat/domain/repositories/i_company_creation_facad.dart';
 import 'package:mpos_beat/domain/request/company_creation_params.dart';
 import 'package:mpos_beat/domain/request/create_company_settings_request.dart';
-import 'package:mpos_beat/domain/request/create_comany_user_mapping_params.dart';
 import 'package:mpos_beat/domain/request/create_company_voucher_request.dart';
 import 'package:mpos_beat/domain/request/create_godown_params.dart';
 import 'package:mpos_beat/domain/request/create_route_params.dart';
@@ -38,7 +36,6 @@ import 'package:mpos_beat/domain/request/create_voucher_numbering_params.dart';
 import 'package:mpos_beat/domain/request/integration_request.dart';
 import 'package:mpos_beat/presentation/views/godown_wise_screen/godown_wise_screen.dart';
 import 'package:mpos_beat/presentation/views/route_wise_screen/route_wise_screen.dart';
-import 'package:mpos_beat/presentation/views/route_wise_screen/widgets/add_route.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -224,31 +221,35 @@ class CompanyCreationProvider extends ChangeNotifier {
       voucherMode: _isGodown ? "Godown" : "Route",
     );
     getAllRoutess(context: context, companyId: companyId.toString());
-    if (isGodown) {
-      if (_isGodown) {
-        getAllGodowns(context: context, companyId: companyId.toString());
-        if (selectedVehicle != null) {
-          getVoucherNumberingGodown(
-            context: context,
-            companyId: companyId.toString(),
-            voucherModeId: selectedVehicle?.id ?? 0,
-          );
-        }
-      } else {
-        getAllRoutess(context: context, companyId: companyId.toString());
-        if (selectedRoute != null) {
-          getVoucherNumberingRoute(
-            context: context,
-            companyId: companyId.toString(),
-            voucherModeId: selectedVehicle?.id ?? 0,
-          );
-        }
-      }
+    getAllGodowns(context: context, companyId: companyId.toString());
+    _selectedVehicle = null;
+    _selectedRoute = null;
 
-      Logger.logSuccess("Switched to ${_isGodown ? 'Godown' : 'Route'} wise");
+    // if (isGodown) {
+    //   if (_isGodown) {
+    //     getAllGodowns(context: context, companyId: companyId.toString());
+    //     // if (selectedVehicle != null) {
+    //     //   getVoucherNumberingGodown(
+    //     //     context: context,
+    //     //     companyId: companyId.toString(),
+    //     //     voucherModeId: selectedVehicle?.id ?? 0,
+    //     //   );
+    //     // }
+    //   } else {
+    //     getAllRoutess(context: context, companyId: companyId.toString());
+    //     // if (selectedRoute != null) {
+    //     //   getVoucherNumberingRoute(
+    //     //     context: context,
+    //     //     companyId: companyId.toString(),
+    //     //     voucherModeId: selectedVehicle?.id ?? 0,
+    //     //   );
+    //     // }
+    //   }
 
-      notifyListeners();
-    }
+    //   Logger.logSuccess("Switched to ${_isGodown ? 'Godown' : 'Route'} wise");
+
+    //   notifyListeners();
+    // }
   }
 
   final formKey = GlobalKey<FormState>();
@@ -772,8 +773,6 @@ class CompanyCreationProvider extends ChangeNotifier {
               ),
             );
           }
-
-      
         },
       );
     } catch (e) {
@@ -819,7 +818,6 @@ class CompanyCreationProvider extends ChangeNotifier {
           markStageCompleted(1);
 
           onSuccess?.call();
-
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(response.message, textAlign: TextAlign.center),
@@ -850,13 +848,13 @@ class CompanyCreationProvider extends ChangeNotifier {
   }
 
   //GetAllCompanySettings
-final _settingsController =
+  final _settingsController =
       StreamController<List<CompanySettingsListData>>.broadcast();
 
   Stream<List<CompanySettingsListData>> get settingsStream =>
       _settingsController.stream;
 
-        List<CompanySettingsListData> _comapanySettingsListData = [];
+  List<CompanySettingsListData> _comapanySettingsListData = [];
   List<CompanySettingsListData> get comapanySettingsListData =>
       _comapanySettingsListData;
 
@@ -1170,7 +1168,7 @@ final _settingsController =
   CreateCompanySettingsDtos? get createCompanySettingsDtos =>
       _createCompanySettingsDtos;
   //create company settings
-    Future<CreateCompanySettingsDtos?> createCompanySettings(
+  Future<CreateCompanySettingsDtos?> createCompanySettings(
     BuildContext context, {
     required CreateCompanysettingsParams param,
   }) async {
@@ -1181,8 +1179,9 @@ final _settingsController =
     result.fold(
       (failure) {
         _errorMessage = failure.errorMsg.toString();
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(_errorMessage!)));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
         Logger.logError("Create Setting failed: $_errorMessage");
       },
       (response) {
@@ -1192,7 +1191,6 @@ final _settingsController =
 
     return _createCompanySettingsDtos;
   }
-
 
   Future<void> updateParentAndChildren(
     BuildContext context,
@@ -1334,7 +1332,16 @@ final _settingsController =
           getAllGodowns(
             context: context,
             companyId: selectedCompany?.id.toString() ?? '',
-          );
+          ).then((value) {
+            if (response.status != 0) {
+              setSelectedVehicle(godownListResponse!.vehicleList.last);
+            }
+            getVoucherNumberingGodown(
+              context: context,
+              companyId: selectedCompany?.id.toString() ?? '',
+              voucherModeId: godownListResponse?.vehicleList.last.id ?? 0,
+            );
+          });
         });
         notifyListeners();
       },
@@ -1579,8 +1586,18 @@ final _settingsController =
           getAllRoutess(
             context: context,
             companyId: selectedCompany?.id.toString() ?? '',
-          );
+          ).then((_) {
+            if (response.status != 0) {
+              setSelectedRoute(routeListResponse!.routeList.last);
+            }
+            getVoucherNumberingRoute(
+              context: context,
+              companyId: selectedCompany?.id.toString() ?? '',
+              voucherModeId: routeListResponse?.routeList.last.id ?? 0,
+            );
+          });
         });
+
         notifyListeners();
       },
     );
@@ -1975,7 +1992,7 @@ final _settingsController =
     notifyListeners();
   }
 
-    @override
+  @override
   void dispose() {
     _settingsController.close();
     super.dispose();

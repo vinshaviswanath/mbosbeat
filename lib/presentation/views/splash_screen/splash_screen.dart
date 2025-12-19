@@ -228,7 +228,12 @@ class _SplashScreenState extends State<SplashScreen> {
       case 1:
         // Normal login → Dashboard
         userProvider.getDesignationList(context);
-        context.pushNamed(AppRouterConst.adminDashboard);
+        context.pushNamed(
+          authProvider.loginResponse?.loginData?.designation?.toLowerCase() ==
+                  "admin"
+              ? AppRouterConst.adminDashboard
+              : AppRouterConst.userCompanySelectionScreen,
+        );
         break;
 
       case 10:

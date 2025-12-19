@@ -1,6 +1,5 @@
-import 'package:go_router/go_router.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
-import 'package:mpos_beat/l10n/app_localizations.dart';
+// import 'package:mpos_beat/l10n/app_localizations.dart';
 
 class OtherTransOptionsScreen extends StatefulWidget {
   const OtherTransOptionsScreen({super.key});
@@ -13,7 +12,7 @@ class OtherTransOptionsScreen extends StatefulWidget {
 class _OtherTransOptionsScreenState extends State<OtherTransOptionsScreen> {
   @override
   Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context);
+    // final local = AppLocalizations.of(context);
     final List<Color> containerColors = [
       ColorResources.pastelPurple,
       ColorResources.lavenderBlue,
@@ -49,7 +48,7 @@ class _OtherTransOptionsScreenState extends State<OtherTransOptionsScreen> {
       "Expense\nEntry",
     ];
 
-    final color = Theme.of(context).colorScheme;
+    // final color = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -80,7 +79,8 @@ class _OtherTransOptionsScreenState extends State<OtherTransOptionsScreen> {
                 child: GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    mainAxisExtent: 140,
+                    mainAxisSpacing: 10,
+                    mainAxisExtent: 150,
                     crossAxisSpacing: 12,
                   ),
                   itemCount: 6,
@@ -102,7 +102,7 @@ class _OtherTransOptionsScreenState extends State<OtherTransOptionsScreen> {
                             height: MediaQuery.of(context).size.height * 0.150,
                             width: MediaQuery.of(context).size.width * 0.450,
                             decoration: BoxDecoration(
-                              color: color  .withValues(alpha: 0.2),
+                              color: color.withValues(alpha: 0.2),
                               borderRadius: BorderRadius.circular(15),
                             ),
                             child: Padding(
@@ -138,7 +138,9 @@ class _OtherTransOptionsScreenState extends State<OtherTransOptionsScreen> {
                                         ),
                                         child: CircleAvatar(
                                           radius: 14,
-                                          backgroundColor: color  .withValues(alpha: 0.2),
+                                          backgroundColor: color.withValues(
+                                            alpha: 0.2,
+                                          ),
                                           child: Icon(
                                             size: 15,
                                             Icons.arrow_forward_ios_rounded,

@@ -16,6 +16,7 @@ import 'package:mpos_beat/presentation/views/company_settings/company_settings.d
 import 'package:mpos_beat/presentation/views/company_user_mapping/company_user_mapping_screen.dart';
 import 'package:mpos_beat/presentation/views/godown_route_voucher_screen/godown_route_voucher_screen.dart';
 import 'package:mpos_beat/presentation/views/godown_wise_screen/godown_wise_screen.dart';
+import 'package:mpos_beat/presentation/views/home_screen/user_company_selection_screen.dart';
 import 'package:mpos_beat/presentation/views/master_management/godown/add_godown.dart';
 import 'package:mpos_beat/presentation/views/master_management/godown/godown_screen.dart';
 import 'package:mpos_beat/presentation/views/master_management/item_category/add_item_category.dart';
@@ -301,7 +302,8 @@ class AppRouter {
         path: "/homescreen",
         name: AppRouterConst.homeScreen,
         builder: (context, state) {
-          return const HomeScreen();
+          final company = state.extra as Company;
+          return  HomeScreen(company: company,);
         },
       ),
       GoRoute(
@@ -343,7 +345,19 @@ class AppRouter {
         path: "/customerTransactions",
         name: AppRouterConst.customerTransactions,
         builder: (context, state) {
-          return const CustomerTransactions();
+          // final userDetails = state.extra as RegistrationDetail;
+
+          return CustomerTransactions(
+            // userDetails: userDetails
+          );
+        },
+      ),
+
+      GoRoute(
+        path: "/userCompanySelectionScreen",
+        name: AppRouterConst.userCompanySelectionScreen,
+        builder: (context, state) {
+          return UserCompanySelectionScreen();
         },
       ),
 
@@ -386,13 +400,14 @@ class AppRouter {
           );
         },
       ),
-      GoRoute(name: AppRouterConst.companyscreationsuccess,
-        
+      GoRoute(
+        name: AppRouterConst.companyscreationsuccess,
+
         path: '/CompanyCreationSuccessScreen',
         builder: (context, state) {
           return CompanyCreationSuccessScreen();
         },
-        ),
+      ),
       GoRoute(
         path: "/adminDashboard",
         name: AppRouterConst.adminDashboard,
@@ -567,7 +582,7 @@ class AppRouter {
           return const AddItemCategory();
         },
       ),
-       GoRoute(
+      GoRoute(
         path: "/otherLedgerScreen",
         name: AppRouterConst.otherLedgerScreen,
         builder: (context, state) {
@@ -581,14 +596,14 @@ class AppRouter {
           return const AddOtherLedger();
         },
       ),
-       GoRoute(
+      GoRoute(
         path: "/priceListScreen",
         name: AppRouterConst.priceListScreen,
         builder: (context, state) {
           return const PriceListScreen();
         },
       ),
-       GoRoute(
+      GoRoute(
         path: "/itemNameScreen",
         name: AppRouterConst.itemNameScreen,
         builder: (context, state) {

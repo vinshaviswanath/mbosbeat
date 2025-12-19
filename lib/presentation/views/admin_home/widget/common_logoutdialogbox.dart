@@ -1,4 +1,6 @@
+import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void CommonLogoutDialog(context) {
   showDialog(
@@ -28,7 +30,16 @@ void CommonLogoutDialog(context) {
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () async {},
+                      onPressed: () async {
+                        final prefs = sl<SharedPreferences>();
+                        await prefs.remove("token");
+
+                        /// Close dialog first
+                        Navigator.of(context).pop(true);
+
+                        /// Navigate after closing dialog
+                        context.pushNamed(AppRouterConst.login);
+                      },
                       child: Text(
                         'Logout',
                         style: context.textStyle.s14.roboto.white,

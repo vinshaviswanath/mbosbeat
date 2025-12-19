@@ -71,33 +71,49 @@ class CompanyDao extends DatabaseAccessor<AppDb> with _$CompanyDaoMixin {
     });
   }
 
-  /// 🔹 Get All Companies (one time)
   Future<List<Company>> getAllCompanies() async {
     return select(companies).get();
   }
 
-  /// 🔥 STREAM OF COMPANIES (LIVE UPDATES)
   Stream<List<Company>> watchAllCompanies() {
     return select(companies).watch();
   }
 
-  /// SAFE JSON PRINTING
+  Stream<List<Company>> watchCompaniesByUserId(int userId) {
+    return select(companies).watch().map((list) {
+      return list.where((company) {
+        final raw = company.userList;
+        if (raw == null || raw.trim().isEmpty) return false;
+
+        // normalize → remove [] and spaces
+        final cleaned = raw
+            .replaceAll('[', '')
+            .replaceAll(']', '')
+            .replaceAll(' ', '');
+
+        final ids = cleaned.split(',');
+
+        return ids.contains(userId.toString());
+      }).toList();
+    });
+  }
+
   Future<void> printCompaniesAsJson() async {
     final list = await select(companies).get();
 
     Logger.logInfo("COMPANY List Length :: ${list.length}");
-    print("===== COMPANY TABLE JSON =====");
+    debugPrint("===== COMPANY TABLE JSON =====");
 
     for (var c in list) {
       try {
         final jsonMap = companyToJson(c);
-        print(const JsonEncoder.withIndent("  ").convert(jsonMap));
+        debugPrint(const JsonEncoder.withIndent("  ").convert(jsonMap));
       } catch (e) {
-        print("Error printing row with ID ${c.id}: $e");
+        debugPrint("Error printing row with ID ${c.id}: $e");
       }
     }
 
-    print("================================");
+    debugPrint("================================");
   }
 
   Map<String, dynamic> companyToJson(Company c) {
@@ -150,4 +166,3 @@ class CompanyDao extends DatabaseAccessor<AppDb> with _$CompanyDaoMixin {
     await delete(companies).go();
   }
 }
-

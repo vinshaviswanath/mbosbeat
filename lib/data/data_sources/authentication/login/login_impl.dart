@@ -45,9 +45,9 @@ class LoginImpl {
           // await appDb.into(appDb.users).insert(User.fromJson(response.data));
           // appDb.select(appDb.users).watch();
           if (data.loginData != null) {
-            await appDb.userDao.clearAll();
-            await appDb.userDao.insertUser(data.loginData!);
-            await appDb.userDao.printUsers();
+            await appDb.registrationDetailDao.clearAll();
+            await appDb.registrationDetailDao.insertUser(data.loginData!);
+            await appDb.registrationDetailDao.printUsers();
           } else {
             debugPrint("loginData is null — skipping DB insert");
           }

@@ -153,17 +153,18 @@ class _B2bAndB2cPrefixSuffixState extends State<B2bAndB2cPrefixSuffix> {
                                               onTap: () {
                                                 Navigator.pop(context);
                                               },
-                                              child:  CircleAvatar(
-                                                                                        backgroundColor: ColorResources.bluishGray.withValues(
-                                                                                          alpha: 0.15,
-                                                                                        ),
-                                                                                        radius: 12,
-                                                                                        child: const Icon(
-                                                                                          Icons.close,
-                                                                                          size: 12,
-                                                                                          color: ColorResources.bluishGray,
-                                                                                        ),
-                                                                                      ),
+                                              child: CircleAvatar(
+                                                backgroundColor: ColorResources
+                                                    .bluishGray
+                                                    .withValues(alpha: 0.15),
+                                                radius: 12,
+                                                child: const Icon(
+                                                  Icons.close,
+                                                  size: 12,
+                                                  color:
+                                                      ColorResources.bluishGray,
+                                                ),
+                                              ),
                                             ),
                                           ],
                                         ),

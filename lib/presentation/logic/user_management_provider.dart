@@ -101,7 +101,7 @@ class UserManagementProvider with ChangeNotifier {
     notifyListeners();
   }
 
-   void resetVisibilityPassword() {
+  void resetVisibilityPassword() {
     _isVisiblePassword = false;
     notifyListeners();
   }
@@ -111,7 +111,7 @@ class UserManagementProvider with ChangeNotifier {
     notifyListeners();
   }
 
-     void resetVisibilityConfirmPassword() {
+  void resetVisibilityConfirmPassword() {
     _isVisibleConfirmPassword = false;
     notifyListeners();
   }
@@ -190,7 +190,7 @@ class UserManagementProvider with ChangeNotifier {
     notifyListeners();
   }
 
-UserDesignationList? selectedDesignation;
+  UserDesignationList? selectedDesignation;
   UserMasterList? selectedReportingTo;
 
   void updateSelectedDesignation(UserDesignationList? value) {
@@ -204,13 +204,11 @@ UserDesignationList? selectedDesignation;
   }
 
   void selectLastAddedDesignation() {
-  if (_designationList?.userDesignationList.isNotEmpty ?? false) {
-    selectedDesignation =
-        _designationList!.userDesignationList.last;
-    notifyListeners();
+    if (_designationList?.userDesignationList.isNotEmpty ?? false) {
+      selectedDesignation = _designationList!.userDesignationList.last;
+      notifyListeners();
+    }
   }
-}
-
 
   void resetUserCreateForm() {
     selectedDesignation = null;
@@ -415,8 +413,8 @@ UserDesignationList? selectedDesignation;
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           ),
         );
-       await getDesignationList(context);
-       selectLastAddedDesignation();
+        await getDesignationList(context);
+        selectLastAddedDesignation();
         notifyListeners();
       },
     );
@@ -624,9 +622,9 @@ UserDesignationList? selectedDesignation;
 
     result.fold(
       (failure) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(failure.errorMsg)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(failure.errorMsg)));
       },
       (response) async {
         if (response.status == 0) {
@@ -634,9 +632,9 @@ UserDesignationList? selectedDesignation;
           resetUserCreateForm();
         }
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(response.message ?? '')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(response.message ?? '')));
 
         if (response.status != 0) {
           context.pop();
@@ -650,7 +648,6 @@ UserDesignationList? selectedDesignation;
     setLoading(false);
     return null;
   }
-
 
   //========================= Users List =========================
 
@@ -907,6 +904,7 @@ UserDesignationList? selectedDesignation;
     required String userId,
   }) async {
     setLoading(true);
+
     final result = await iUserManagementFacad.getUserSettingsList(
       userId: userId,
     );
@@ -925,23 +923,32 @@ UserDesignationList? selectedDesignation;
         );
       },
       (response) async {
+        /// Assign API result
         _userSettingsList = response;
 
-        _userSettingsList?.copyWith(
+        /// Filter only active settings
+        _userSettingsList = _userSettingsList?.copyWith(
           userSettingsList: _userSettingsList?.userSettingsList
               .where((item) => item.active == 1)
               .toList(),
         );
+
+        /// Sort by orderNo
         _userSettingsList?.userSettingsList.sort(
           (a, b) => (a.orderNo ?? 0).compareTo(b.orderNo ?? 0),
         );
+
+        /// Push to stream
         _userSettingsController.add(_userSettingsList);
+
         Logger.logSuccess(
-          "Users Settings List fetch successfull : ${response.toJson()}",
+          "Users Settings List fetch successful : ${response.toJson()}",
         );
+
         notifyListeners();
       },
     );
+
     setLoading(false);
     return _userSettingsList;
   }

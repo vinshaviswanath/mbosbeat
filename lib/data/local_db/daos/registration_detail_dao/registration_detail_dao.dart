@@ -2,14 +2,16 @@ import 'dart:convert';
 import 'package:drift/drift.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
-import 'package:mpos_beat/data/local_db/tables/user_tables.dart';
+import 'package:mpos_beat/data/local_db/tables/registration_details_tables.dart';
 import 'package:mpos_beat/data/models/data/login_data.dart';
 
-part 'user_dao.g.dart';
+part 'registration_detail_dao.g.dart';
 
-@DriftAccessor(tables: [Users])
-class UserDao extends DatabaseAccessor<AppDb> with _$UserDaoMixin {
-  UserDao(super.db);
+@DriftAccessor(tables: [
+  RegistrationDetails
+])
+class RegistrationDetailDao extends DatabaseAccessor<AppDb> with _$RegistrationDetailDaoMixin {
+  RegistrationDetailDao(super.db);
 
   DateTime? _safeDate(dynamic v) {
     if (v == null || v.toString().trim().isEmpty) return null;
@@ -18,11 +20,11 @@ class UserDao extends DatabaseAccessor<AppDb> with _$UserDaoMixin {
   }
 
   Future<void> printUsers() async {
-    final list = await select(users).get();
-    print("USER List Length :: ${list.length}");
-    print("===== USER TABLE JSON =====");
+    final list = await select(registrationDetails).get();
+    debugPrint("Registration details List Length :: ${list.length}");
+    debugPrint("===== USER TABLE JSON =====");
     for (var u in list) {
-      print(
+      debugPrint(
         const JsonEncoder.withIndent("  ").convert({
           "userId": u.userId,
           "customerId": u.customerId,
@@ -34,11 +36,11 @@ class UserDao extends DatabaseAccessor<AppDb> with _$UserDaoMixin {
         }),
       );
     }
-    print("================================");
+    debugPrint("================================");
   }
 
   Future<void> insertUser(LoginData data) async {
-    final comp = UsersCompanion(
+    final comp = RegistrationDetailsCompanion(
       userId: Value(data.userId ?? 0),
       customerId: Value(data.customerId),
       fullName: Value(data.fullName),
@@ -59,14 +61,17 @@ class UserDao extends DatabaseAccessor<AppDb> with _$UserDaoMixin {
       dbName: Value(data.dbName),
     );
 
-    await into(users).insertOnConflictUpdate(comp);
+    await into(registrationDetails).insertOnConflictUpdate(comp);
   }
 
-  Future<List<User>> getAllUsers() => select(users).get();
+  Future<List<RegistrationDetail>> getAllUsers() => select(registrationDetails).get();
 
-  Future<void> clearAll() => delete(users).go();
+  Stream<List<RegistrationDetail>> watchAllUsers() => select(registrationDetails).watch();
 
-  Stream<User?> watchLoggedInUser() {
-    return (select(users)..limit(1)).watchSingleOrNull();
+
+  Future<void> clearAll() => delete(registrationDetails).go();
+
+  Stream<RegistrationDetail?> watchLoggedInUser() {
+    return (select(registrationDetails)..limit(1)).watchSingleOrNull();
   }
 }
