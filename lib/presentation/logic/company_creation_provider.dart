@@ -415,6 +415,8 @@ class CompanyCreationProvider extends ChangeNotifier {
     _companyName = CompanyName('');
     _displayName = DisplayName('');
     _address1 = Address1('');
+    _address2 = Address2('');
+    _address3 = Address3('');
     _pincode = Pincode('');
     _country = Country('');
     _countryState = CountryState('');
@@ -520,8 +522,8 @@ class CompanyCreationProvider extends ChangeNotifier {
 
   //fetchCountryList........
 
-Future<CountryListDtos?> fetchCountryList(BuildContext context) async {
-setLoading(true);
+  Future<CountryListDtos?> fetchCountryList(BuildContext context) async {
+    setLoading(true);
 
     final result = await iCompanyCreationFacad.countryList();
 
@@ -682,6 +684,7 @@ setLoading(true);
     _registrationType = RegistrationType(reg?.registrationType ?? "");
     notifyListeners();
   }
+
 
   void clearSelections() {
     _selectedCountry = null;
@@ -913,14 +916,14 @@ setLoading(true);
     return _createdVouchers;
   }
 
- //GetAllCompanySettings
+  //GetAllCompanySettings
   final _settingsController =
       StreamController<List<CompanySettingsListData>>.broadcast();
 
   Stream<List<CompanySettingsListData>> get settingsStream =>
       _settingsController.stream;
 
-List<CompanySettingsListData> _comapanySettingsListData = [];
+  List<CompanySettingsListData> _comapanySettingsListData = [];
   List<CompanySettingsListData> get comapanySettingsListData =>
       _comapanySettingsListData;
 
@@ -2076,7 +2079,8 @@ List<CompanySettingsListData> _comapanySettingsListData = [];
     b2cDeclaration.clear();
     notifyListeners();
   }
- @override
+
+  @override
   void dispose() {
     _settingsController.close();
     super.dispose();

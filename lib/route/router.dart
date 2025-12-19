@@ -379,6 +379,9 @@ class AppRouter {
           final tabIndex = extra?['tabIndex'] as int? ?? 0;
           final companyData = extra?['companyData'] as CompanyViewList?;
           final isPop = extra?['isPop'] as bool? ?? false;
+
+
+          
           return CompanyCreationScreen(
             initialTabIndex: tabIndex,
             companyData: companyData,

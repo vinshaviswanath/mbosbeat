@@ -44,19 +44,18 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget>
     super.initState();
     final provider = context.read<CompanyCreationProvider>();
 
-
     ///print("country statet regtype..................${countrytController.text} ${stateController.text} ${regTypeController.text}");
-compnyNameController = TextEditingController();
+    compnyNameController = TextEditingController();
     displayNameController = TextEditingController();
     address1Controller = TextEditingController();
     address2Controller = TextEditingController();
     address3Controller = TextEditingController();
     pincodeController = TextEditingController();
 
-WidgetsBinding.instance.addPostFrameCallback((_) async {
-       if (widget.companyData == null) {
-         provider.clearSelections();
-       }
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (widget.companyData == null) {
+        provider.clearSelections();
+      }
 
       await provider.fetchCountryList(context);
 
@@ -84,16 +83,15 @@ WidgetsBinding.instance.addPostFrameCallback((_) async {
       );
 
       pincodeController.text = provider.pincode.value.fold((l) => "", (r) => r);
-stateController.text = provider.selectedState?.stateName ?? "";
-      countrytController.text = provider.selectedCountry?.countryName ?? "";
-      regTypeController.text =
-          provider.selectedregistrationtype?.registrationType ?? "";
+      // stateController.text = provider.selectedState?.stateName ?? "";
+      // countrytController.text = provider.selectedCountry?.countryName ?? "";
+      // regTypeController.text =
+      //     provider.selectedregistrationtype?.registrationType ?? "";
 
-// if (widget.companyData != null) {
-fillfeilds();
+      // if (widget.companyData != null) {
+      fillfeilds();
       //  }
-}
-    );
+    });
   }
 
   void fillfeilds() async {
@@ -236,8 +234,7 @@ fillfeilds();
       "${provider.selectedregistrationtype?.registrationType}",
     );
 
-
- debugPrint("📋 ----------------------------------");
+    debugPrint("📋 ----------------------------------");
   }
 
   void _debugPrintValidationErrors(CompanyCreationProvider provider) {
@@ -260,7 +257,7 @@ fillfeilds();
     check("Registration Type", provider.registrationType.getFailure);
 
     debugPrint("❌ ----------------------------------");
-}
+  }
 
   @override
   Widget build(BuildContext context) {

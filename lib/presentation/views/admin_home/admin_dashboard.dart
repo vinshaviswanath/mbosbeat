@@ -21,36 +21,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
   int? selectedIndex;
   int? optionIndex;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-
-  //   WidgetsBinding.instance.addPostFrameCallback((_) async {
-  //     final provider = Provider.of<CompanyCreationProvider>(
-  //       context,
-  //       listen: false,
-  //     );
-
-  //     // Load list
-  //     await provider.getAllCompanies(context);
-  //     // final db = sl<AppDb>();
-  //     // final list = await db.companyDao.getAllCompanies();
-
-  //     // Set selected company if not set
-  //     if (list.isNotEmpty) {
-  //       if (provider.selectedCompany == null) {
-  //         provider.setSelectedCompany(company: list.first);
-  //       } else {
-  //         final matched = list.firstWhere(
-  //           (c) => c.id == provider.selectedCompany!.id,
-  //           orElse: () => list.first,
-  //         );
-  //         provider.setSelectedCompany(company: matched);
-  //       }
-  //     }
-  //   });
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -84,7 +54,10 @@ class _AdminDashboardState extends State<AdminDashboard> {
   @override
   Widget build(BuildContext context) {
     final appLocalization = context.l10n;
-
+    final provider = context.read<CompanyCreationProvider>();
+    print(
+      "regtype in dialog box in dashboard: ${provider.selectedregistrationtype?.registrationType}",
+    );
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, result) async {
@@ -665,8 +638,10 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                                   'tabIndex': 1,
                                                                                   'companyData': selectedCompany,
                                                                                   'isPop': false,
+                                                                                  
                                                                                 },
                                                                               );
+                                                                           
                                                                             },
                                                                           ),
                                                                           const CustomDivider(),
