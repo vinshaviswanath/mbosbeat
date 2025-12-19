@@ -52,6 +52,10 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget>
     pincodeController = TextEditingController();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      // Prevent glitch validation error
+      provider.disableValidation();
+      provider.companyinfoAutovalidateMode = AutovalidateMode.disabled;
+
       if (widget.companyData == null) {
         provider.clearSelections();
       }
@@ -93,8 +97,10 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget>
     if (widget.companyData == null) return;
 
     final provider = context.read<CompanyCreationProvider>();
+    // Prevent glitch validation error
+    provider.disableValidation();
 
-    // 🔥 UPDATE PROVIDER FIRST (this fixes validation)
+    // UPDATE PROVIDER FIRST (this fixes validation)
     provider.updateCompanyName(widget.companyData!.companyName ?? "");
     provider.updateDisplayName(widget.companyData!.mailingName ?? "");
     provider.updateAddress1(widget.companyData!.address1 ?? "");
@@ -122,7 +128,6 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget>
     }
 
     // Select Country
-
     final selectedCountry = provider.countries.firstWhere(
       (c) => c.id.toString() == widget.companyData!.country.toString(),
       orElse: () => CountryListData(
@@ -167,7 +172,7 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget>
       debugPrint(" No state found for ID: ${widget.companyData!.state}");
     }
 
-    //  Fetch and Select RegType
+    //Fetch and Select RegType
     await provider.getRegistrationType(context, selectedCountry.id);
     await Future.delayed(const Duration(milliseconds: 200));
 

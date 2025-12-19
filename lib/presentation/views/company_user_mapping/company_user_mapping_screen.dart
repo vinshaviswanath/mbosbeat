@@ -1,11 +1,12 @@
-import 'package:mpos_beat/core/di/injection.dart';
+//import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/data/models/users_list_model.dart';
 import 'package:mpos_beat/domain/request/create_comany_user_mapping_params.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/presentation/logic/user_management_provider.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/add_company/widgets/add_company_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 
 class CompanyUserMappingScreen extends StatefulWidget {
   const CompanyUserMappingScreen({
@@ -13,12 +14,13 @@ class CompanyUserMappingScreen extends StatefulWidget {
     required this.name,
     required this.companyName,
     required this.companyId,
+    required this.companyData,
   });
 
   final String name;
   final String companyName;
   final int companyId;
-
+  final CompanyViewList? companyData;
   @override
   State<CompanyUserMappingScreen> createState() =>
       _CompanyUserMappingScreenState();
@@ -30,26 +32,55 @@ class _CompanyUserMappingScreenState extends State<CompanyUserMappingScreen> {
   final Set<int> selectedUserIds = {};
   final List<UserList> selectedUserList = [];
 
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance.addPostFrameCallback((_) async {
+  //     final provider = context.read<UserManagementProvider>();
+  //     await provider.getAllUsersList(context);
+
+  //     final pref = sl<SharedPreferences>();
+  //     final storedList = pref.getStringList(
+  //       'company_users_${widget.companyId}',
+  //     );
+  //     if (storedList != null && storedList.isNotEmpty) {
+  //       final loadedUsers = storedList.map(int.parse).toList();
+  //       setState(() {
+  //         selectedUserIds.addAll(loadedUsers);
+  //         selectedUserList.addAll(
+  //           loadedUsers.map((id) => UserList(userId: id)),
+  //         );
+  //       });
+  //     }
+  //   });
+  // }
+
   @override
   void initState() {
     super.initState();
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final provider = context.read<UserManagementProvider>();
       await provider.getAllUsersList(context);
 
-      final pref = sl<SharedPreferences>();
-      final storedList = pref.getStringList(
-        'company_users_${widget.companyId}',
-      );
-      if (storedList != null && storedList.isNotEmpty) {
-        final loadedUsers = storedList.map(int.parse).toList();
+      /// ✅ PRESELECT BASED ON USER MAPPING
+      final userListString = widget.companyData?.userList;
+
+      if (userListString != null && userListString.trim().isNotEmpty) {
+        final ids = userListString
+            .split(',')
+            .map((e) => int.tryParse(e.trim()))
+            .whereType<int>()
+            .toSet();
+
         setState(() {
-          selectedUserIds.addAll(loadedUsers);
-          selectedUserList.addAll(
-            loadedUsers.map((id) => UserList(userId: id)),
-          );
+          selectedUserIds.addAll(ids);
+
+          selectedUserList.addAll(ids.map((id) => UserList(userId: id)));
         });
       }
+
+      Logger.logSuccess("Preselected User IDs: $selectedUserIds");
     });
   }
 
@@ -226,11 +257,11 @@ class _CompanyUserMappingScreenState extends State<CompanyUserMappingScreen> {
         child: CustomButton(
           borderRadius: BorderRadius.circular(16),
           onTap: () async {
-            final pref = sl<SharedPreferences>();
-            await pref.setStringList(
-              'company_users_${widget.companyId}',
-              selectedUserList.map((e) => e.userId.toString()).toList(),
-            );
+            // final pref = sl<SharedPreferences>();
+            // await pref.setStringList(
+            //   'company_users_${widget.companyId}',
+            //   selectedUserList.map((e) => e.userId.toString()).toList(),
+            // );
 
             provider
                 .createCompanyMapping(
@@ -239,10 +270,13 @@ class _CompanyUserMappingScreenState extends State<CompanyUserMappingScreen> {
                   userList: selectedUserList,
                 )
                 .then(
-                  (_) => WidgetsBinding.instance.addPostFrameCallback(
-                    (_) => context.pop(),
-                  ),
+                  (_) => WidgetsBinding.instance.addPostFrameCallback((_) {
+                    context.pop();
+                    companyprovider.getAllCompanies(context);
+                  }),
                 );
+
+            print('selected userlist ${selectedUserList}');
           },
           buttonText: appLocalization.save,
           isborderEnable: false,

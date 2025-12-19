@@ -466,6 +466,8 @@ class CompanyCreationProvider extends ChangeNotifier {
       BaseParams(data: params),
     );
 
+    CompanyInfoDtos? successResponse;
+
     result.fold(
       (failure) {
         _errorMessage = failure.errorMsg.toString();
@@ -485,16 +487,10 @@ class CompanyCreationProvider extends ChangeNotifier {
         if (response.status == 1) {
           _companyCreationDtos = response;
           _companyid = _companyCreationDtos!.id;
-          // resetCompanyInfo();
-          WidgetsBinding.instance.addPostFrameCallback((_) async {
-            // final prefs = sl<SharedPreferences>();
-            // await prefs.setInt('selected_company_id', _companyCreationDtos!.id);
-            // final companyId = prefs.getInt('selected_company_id');
-            Logger.logSuccess(
-              "Company info tab SELECTED COMPANY ID: $_companyid",
-            );
-          });
-          // getCompanyId();
+          successResponse = response;
+          Logger.logSuccess(
+            "Company info tab SELECTED COMPANY ID: $_companyid",
+          );
           //getAllCompanies(context);
           markStageCompleted(0);
           onSuccess?.call();
@@ -513,6 +509,24 @@ class CompanyCreationProvider extends ChangeNotifier {
         }
       },
     );
+
+    //for update dropdown in admindashboard with the newcompany
+    if (successResponse != null) {
+      await getAllCompanies(context);
+      final list = _companiesList?.companyViewList ?? [];
+
+      if (list.isNotEmpty) {
+        final newlyCreatedCompany = list.firstWhere(
+          (c) => c.id == _companyid,
+          orElse: () => list.first,
+        );
+
+        setSelectedCompany(company: newlyCreatedCompany);
+      }
+
+      onSuccess?.call();
+    }
+
     setLoading(false);
     notifyListeners();
     return _companyCreationDtos;
