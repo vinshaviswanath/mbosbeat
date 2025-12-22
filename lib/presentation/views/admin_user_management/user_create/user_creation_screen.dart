@@ -461,6 +461,8 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   DropdownButtonFormField<UserDesignationList>(
+                                    dropdownColor: ColorResources.white,
+                                    borderRadius: BorderRadius.circular(10),
                                     decoration: InputDecoration(
                                       filled: true,
                                       fillColor: ColorResources.lightGray,
@@ -545,7 +547,7 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                                 InkWell(
                                   onTap: () {
                                     CustomDialog.showBottomCustomDialog(
-                                   child: AddDesignationWidget(
+                                      child: AddDesignationWidget(
                                         designationController:
                                             designationController,
                                       ),
@@ -595,6 +597,8 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                         ),
                         h4,
                         DropdownButtonFormField<UserMasterList>(
+                          dropdownColor: ColorResources.white,
+                          borderRadius: BorderRadius.circular(10),
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: ColorResources.lightGray,
