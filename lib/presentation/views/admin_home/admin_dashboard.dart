@@ -52,7 +52,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
       final company = provider.selectedCompany ?? list.first;
 
-      await provider.fectchCountryList(context);
+      await provider.fetchCountryList(context);
 
       if (provider.countries.isEmpty) {
         debugPrint("❌ No countries loaded");

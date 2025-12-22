@@ -74,4 +74,11 @@ class RegistrationDetailDao extends DatabaseAccessor<AppDb> with _$RegistrationD
   Stream<RegistrationDetail?> watchLoggedInUser() {
     return (select(registrationDetails)..limit(1)).watchSingleOrNull();
   }
+
+  Future<String?> getDesignation() async {
+  final user = await (select(registrationDetails)..limit(1))
+      .getSingleOrNull();
+  return user?.designation;
+}
+
 }
