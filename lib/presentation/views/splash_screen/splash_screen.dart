@@ -51,8 +51,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
     // USER PRELOAD DATA
     final userProvider = context.read<UserManagementProvider>();
-    userProvider.loadDesignations();
-    userProvider.loadUsers();
+    await userProvider.loadDesignations();
+    await userProvider.loadUsers();
+
+    final comProvider = context.read<CompanyCreationProvider>();
 
     // TOKEN LOGIN
     final authProvider = context.read<AuthFormProvider>();
@@ -74,13 +76,15 @@ class _SplashScreenState extends State<SplashScreen> {
     switch (response.status) {
       case 1:
         // Normal login → Dashboard
-        userProvider.getDesignationList(context);
+      await  userProvider.getDesignationList(context);
+      await  comProvider.getAllCompanies(context);
+
         context.pushNamed(
-authProvider.loginResponse?.loginData?.designation?.toLowerCase() ==
+          authProvider.loginResponse?.loginData?.designation?.toLowerCase() ==
                       "admin" ||
                   designation?.toLowerCase() == "admin" ||
-response.loginData?.designation?.toLowerCase() == "admin"
-? AppRouterConst.adminDashboard
+                  response.loginData?.designation?.toLowerCase() == "admin"
+              ? AppRouterConst.adminDashboard
               : AppRouterConst.userCompanySelectionScreen,
         );
         break;
