@@ -5,7 +5,6 @@ import 'package:mpos_beat/presentation/common/widgets/sliverSpace.dart';
 import 'package:mpos_beat/presentation/logic/authentication_provider.dart';
 import 'package:mpos_beat/presentation/views/otp/widgets/otp_field.dart';
 
-
 class OtpAuthentication extends StatefulWidget {
   static const routeName = 'otp-auth';
   const OtpAuthentication({super.key});
@@ -64,7 +63,7 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
                       children: [
                         Container(
                           width: context.getSize.width - 32,
-                          height: context.getSize.height * 0.38,
+                          // height: context.getSize.height * 0.38,
                           padding: const EdgeInsets.all(36),
                           decoration: BoxDecoration(
                             color: ColorResources.white,

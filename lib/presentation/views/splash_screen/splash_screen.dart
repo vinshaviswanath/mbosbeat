@@ -59,6 +59,9 @@ class _SplashScreenState extends State<SplashScreen> {
     final response = await authProvider.loginByToken(
       params: LoginByTokenParam(token: token),
     );
+    final appDb = sl<AppDb>();
+
+    final designation = await appDb.registrationDetailDao.getDesignation();
 
     if (!mounted) return;
 
@@ -74,7 +77,8 @@ class _SplashScreenState extends State<SplashScreen> {
         userProvider.getDesignationList(context);
         context.pushNamed(
           authProvider.loginResponse?.loginData?.designation?.toLowerCase() ==
-                  "admin"
+                      "admin" ||
+                  designation?.toLowerCase() == "admin"
               ? AppRouterConst.adminDashboard
               : AppRouterConst.userCompanySelectionScreen,
         );

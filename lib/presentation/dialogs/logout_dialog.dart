@@ -4,6 +4,7 @@ import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/theme/colors.dart';
 import 'package:mpos_beat/core/utils/extentions.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LogOutDialogs {
@@ -54,6 +55,8 @@ class LogOutDialogs {
                           onTap: () async {
                             final prefs = sl<SharedPreferences>();
                             await prefs.remove("token");
+                            final appDb = sl<AppDb>();
+                            await appDb.registrationDetailDao.clearAll();
 
                             /// Close dialog first
                             Navigator.of(ctx).pop(true);
