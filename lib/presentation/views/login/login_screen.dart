@@ -22,6 +22,16 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final provider = Provider.of<AuthFormProvider>(context, listen: false);
+      provider.resetLoginForm();
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final pref = sl<SharedPreferences>();
@@ -289,7 +299,6 @@ class _LoginScreenState extends State<LoginScreen> {
     FocusScope.of(context).requestFocus(FocusNode());
     passwordController.clear();
     emailController.clear();
-
     context.read<AuthFormProvider>().resetLoginForm();
   }
 }
