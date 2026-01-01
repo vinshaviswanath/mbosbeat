@@ -3,13 +3,16 @@ import 'package:go_router/go_router.dart';
 import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/extentions.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/tabs/tab1_transactions.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/tabs/tab2_outstanding.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/tabs/tab3_visit_history.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/transaction_detail_page/skip_dialog.dart';
+import 'package:mpos_beat/presentation/views/home_screen/transactions_container.dart';
 
 class TransactionDetailpage extends StatefulWidget {
-  const TransactionDetailpage({super.key});
+  final TransactionArgs data;
+  const TransactionDetailpage({super.key, required this.data});
 
   @override
   State<TransactionDetailpage> createState() => _TransactionDetailpageState();
@@ -361,7 +364,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
               child: TabBarView(
                 controller: _tabController,
                 children: [
-                  Tab1Transactions(),
+                  Tab1Transactions(data: widget.data),
                   Tab2Outstanding(),
                   Tab3VisitHistory(),
                 ],

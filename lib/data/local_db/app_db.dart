@@ -46,13 +46,17 @@ import 'dart:io';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:mpos_beat/data/local_db/daos/company_settings_dao/company_settings_dao.dart';
+import 'package:mpos_beat/data/local_db/daos/godown_vehicles_dao/godown_vehicle_dao.dart';
 import 'package:mpos_beat/data/local_db/daos/godown_voucher_type_dao/godown_voucher_type_dao.dart';
+import 'package:mpos_beat/data/local_db/daos/route_dao/route_dao.dart';
 import 'package:mpos_beat/data/local_db/daos/route_voucher_type_dao/route_voucher_type_dao.dart';
 import 'package:mpos_beat/data/local_db/daos/user_setting_dao/user_setting_dao.dart';
 import 'package:mpos_beat/data/local_db/daos/voucher_type_dao/voucher_type_dao.dart';
 import 'package:mpos_beat/data/local_db/tables/company_settings_tables.dart';
+import 'package:mpos_beat/data/local_db/tables/godown_vehicles_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/godown_voucher_types_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/route_voucher_types_tables.dart';
+import 'package:mpos_beat/data/local_db/tables/routes_table.dart';
 import 'package:mpos_beat/data/local_db/tables/user_settings_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/voucher_types_tables.dart';
 import 'package:path/path.dart' as p;
@@ -78,7 +82,8 @@ part 'app_db.g.dart';
     GodownVoucherTypes,
     RouteVoucherTypes,
     CompanySettingsTable,
-
+    GodownVehicles,
+    GodownRoutes,
   ],
   daos: [
     CompanyDao,
@@ -89,48 +94,61 @@ part 'app_db.g.dart';
     GodownVoucherTypesDao,
     RouteVoucherTypesDao,
     CompanySettingsDao,
-
+    GodownVehicleDao,
+    RouteDao,
   ],
 )
 class AppDb extends _$AppDb {
   AppDb() : super(_openConnection());
 
   @override
-  int get schemaVersion => 8;
+  int get schemaVersion => 11;
 
-@override
-MigrationStrategy get migration => MigrationStrategy(
-  onCreate: (m) async {
-    await m.createAll();
-  },
-  onUpgrade: (m, from, to) async {
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+    onCreate: (m) async {
+      await m.createAll();
+    },
+    onUpgrade: (m, from, to) async {
+      if (from < 4) {
+        await m.createTable(companies);
+        await m.alterTable(TableMigration(registrationDetails));
+      }
 
-    if (from < 4) {
-      await m.createTable(companies);
-      await m.alterTable(TableMigration(registrationDetails));
-    }
+      if (from < 5) {
+        await m.createTable(userSettingsTable);
+      }
 
-    if (from < 5) {
-      await m.createTable(userSettingsTable);
-    }
+      if (from < 6) {
+        await m.createTable(voucherTypes);
+      }
 
-    if (from < 6) {
-      await m.createTable(voucherTypes);
-    }
+      // ✅ ADD THIS
+      if (from < 7) {
+        await m.createTable(godownVoucherTypes);
+        await m.createTable(routeVoucherTypes);
+      }
 
-    // ✅ ADD THIS
-    if (from < 7) {
-      await m.createTable(godownVoucherTypes);
-      await m.createTable(routeVoucherTypes);
-    }
+      if (from < 8) {
+        await m.createTable(companySettingsTable);
+      }
 
-     if (from < 8) {
-      await m.createTable(companySettingsTable);
-    }
-  },
-);
+      if (from < 9) {
+        await m.createTable(godownVehicles);
+      }
 
+      if (from < 10) {
+        await m.createTable(godownRoutes);
+      }
 
+      if (from < 11) {
+        await m.createTable(godownRoutes);
+
+        // OPTIONAL but recommended
+        await m.database.customStatement('DROP TABLE IF EXISTS routes');
+      }
+    },
+  );
 }
 
 LazyDatabase _openConnection() {

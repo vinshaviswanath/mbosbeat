@@ -52,6 +52,15 @@ class CompanySettingsDao extends DatabaseAccessor<AppDb>
         .watch();
   }
 
+  Stream<CompanySettingsTableData?> watchRouteSetting(int companyId) {
+  return (select(companySettingsTable)
+        ..where((tbl) =>
+            tbl.companyId.equals(companyId) &
+            tbl.id.equals(5)))
+      .watchSingleOrNull();
+}
+
+
   /// Get child settings (for nested menus)
   Future<List<CompanySettingsTableData>> getByParent(
     int companyId,

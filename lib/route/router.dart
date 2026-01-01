@@ -16,6 +16,7 @@ import 'package:mpos_beat/presentation/views/company_settings/company_settings.d
 import 'package:mpos_beat/presentation/views/company_user_mapping/company_user_mapping_screen.dart';
 import 'package:mpos_beat/presentation/views/godown_route_voucher_screen/godown_route_voucher_screen.dart';
 import 'package:mpos_beat/presentation/views/godown_wise_screen/godown_wise_screen.dart';
+import 'package:mpos_beat/presentation/views/home_screen/transactions_container.dart';
 import 'package:mpos_beat/presentation/views/home_screen/user_company_selection_screen.dart';
 import 'package:mpos_beat/presentation/views/master_management/godown/add_godown.dart';
 import 'package:mpos_beat/presentation/views/master_management/godown/godown_screen.dart';
@@ -304,7 +305,7 @@ class AppRouter {
         name: AppRouterConst.homeScreen,
         builder: (context, state) {
           final company = state.extra as Company;
-          return  HomeScreen(company: company,);
+          return HomeScreen(company: company);
         },
       ),
       GoRoute(
@@ -346,11 +347,9 @@ class AppRouter {
         path: "/customerTransactions",
         name: AppRouterConst.customerTransactions,
         builder: (context, state) {
-          // final userDetails = state.extra as RegistrationDetail;
+          final data = state.extra as TransactionArgs;
 
-          return CustomerTransactions(
-            // userDetails: userDetails
-          );
+          return CustomerTransactions(data: data);
         },
       ),
 
@@ -366,7 +365,8 @@ class AppRouter {
         path: "/transactionDetailpage",
         name: AppRouterConst.transactionDetailpage,
         builder: (context, state) {
-          return const TransactionDetailpage();
+          final data = state.extra as TransactionArgs;
+          return TransactionDetailpage(data: data,);
         },
       ),
 
@@ -395,8 +395,6 @@ class AppRouter {
           final companyData = extra?['companyData'] as CompanyViewList?;
           final isPop = extra?['isPop'] as bool? ?? false;
 
-
-          
           return CompanyCreationScreen(
             initialTabIndex: tabIndex,
             companyData: companyData,

@@ -7537,6 +7537,712 @@ class CompanySettingsTableCompanion
   }
 }
 
+class $GodownVehiclesTable extends GodownVehicles
+    with TableInfo<$GodownVehiclesTable, GodownVehicle> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $GodownVehiclesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _companyIdMeta = const VerificationMeta(
+    'companyId',
+  );
+  @override
+  late final GeneratedColumn<int> companyId = GeneratedColumn<int>(
+    'company_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _codeMeta = const VerificationMeta('code');
+  @override
+  late final GeneratedColumn<String> code = GeneratedColumn<String>(
+    'code',
+    aliasedName,
+    true,
+    additionalChecks: GeneratedColumn.checkTextLength(
+      minTextLength: 0,
+      maxTextLength: 50,
+    ),
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    true,
+    additionalChecks: GeneratedColumn.checkTextLength(
+      minTextLength: 0,
+      maxTextLength: 100,
+    ),
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _activeMeta = const VerificationMeta('active');
+  @override
+  late final GeneratedColumn<int> active = GeneratedColumn<int>(
+    'active',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, companyId, code, name, active];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'godown_vehicles';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<GodownVehicle> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('company_id')) {
+      context.handle(
+        _companyIdMeta,
+        companyId.isAcceptableOrUnknown(data['company_id']!, _companyIdMeta),
+      );
+    }
+    if (data.containsKey('code')) {
+      context.handle(
+        _codeMeta,
+        code.isAcceptableOrUnknown(data['code']!, _codeMeta),
+      );
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    }
+    if (data.containsKey('active')) {
+      context.handle(
+        _activeMeta,
+        active.isAcceptableOrUnknown(data['active']!, _activeMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  GodownVehicle map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return GodownVehicle(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      companyId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}company_id'],
+      ),
+      code: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}code'],
+      ),
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      ),
+      active: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}active'],
+      ),
+    );
+  }
+
+  @override
+  $GodownVehiclesTable createAlias(String alias) {
+    return $GodownVehiclesTable(attachedDatabase, alias);
+  }
+}
+
+class GodownVehicle extends DataClass implements Insertable<GodownVehicle> {
+  final int id;
+  final int? companyId;
+  final String? code;
+  final String? name;
+  final int? active;
+  const GodownVehicle({
+    required this.id,
+    this.companyId,
+    this.code,
+    this.name,
+    this.active,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    if (!nullToAbsent || companyId != null) {
+      map['company_id'] = Variable<int>(companyId);
+    }
+    if (!nullToAbsent || code != null) {
+      map['code'] = Variable<String>(code);
+    }
+    if (!nullToAbsent || name != null) {
+      map['name'] = Variable<String>(name);
+    }
+    if (!nullToAbsent || active != null) {
+      map['active'] = Variable<int>(active);
+    }
+    return map;
+  }
+
+  GodownVehiclesCompanion toCompanion(bool nullToAbsent) {
+    return GodownVehiclesCompanion(
+      id: Value(id),
+      companyId: companyId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(companyId),
+      code: code == null && nullToAbsent ? const Value.absent() : Value(code),
+      name: name == null && nullToAbsent ? const Value.absent() : Value(name),
+      active: active == null && nullToAbsent
+          ? const Value.absent()
+          : Value(active),
+    );
+  }
+
+  factory GodownVehicle.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return GodownVehicle(
+      id: serializer.fromJson<int>(json['id']),
+      companyId: serializer.fromJson<int?>(json['companyId']),
+      code: serializer.fromJson<String?>(json['code']),
+      name: serializer.fromJson<String?>(json['name']),
+      active: serializer.fromJson<int?>(json['active']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'companyId': serializer.toJson<int?>(companyId),
+      'code': serializer.toJson<String?>(code),
+      'name': serializer.toJson<String?>(name),
+      'active': serializer.toJson<int?>(active),
+    };
+  }
+
+  GodownVehicle copyWith({
+    int? id,
+    Value<int?> companyId = const Value.absent(),
+    Value<String?> code = const Value.absent(),
+    Value<String?> name = const Value.absent(),
+    Value<int?> active = const Value.absent(),
+  }) => GodownVehicle(
+    id: id ?? this.id,
+    companyId: companyId.present ? companyId.value : this.companyId,
+    code: code.present ? code.value : this.code,
+    name: name.present ? name.value : this.name,
+    active: active.present ? active.value : this.active,
+  );
+  GodownVehicle copyWithCompanion(GodownVehiclesCompanion data) {
+    return GodownVehicle(
+      id: data.id.present ? data.id.value : this.id,
+      companyId: data.companyId.present ? data.companyId.value : this.companyId,
+      code: data.code.present ? data.code.value : this.code,
+      name: data.name.present ? data.name.value : this.name,
+      active: data.active.present ? data.active.value : this.active,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GodownVehicle(')
+          ..write('id: $id, ')
+          ..write('companyId: $companyId, ')
+          ..write('code: $code, ')
+          ..write('name: $name, ')
+          ..write('active: $active')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, companyId, code, name, active);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is GodownVehicle &&
+          other.id == this.id &&
+          other.companyId == this.companyId &&
+          other.code == this.code &&
+          other.name == this.name &&
+          other.active == this.active);
+}
+
+class GodownVehiclesCompanion extends UpdateCompanion<GodownVehicle> {
+  final Value<int> id;
+  final Value<int?> companyId;
+  final Value<String?> code;
+  final Value<String?> name;
+  final Value<int?> active;
+  const GodownVehiclesCompanion({
+    this.id = const Value.absent(),
+    this.companyId = const Value.absent(),
+    this.code = const Value.absent(),
+    this.name = const Value.absent(),
+    this.active = const Value.absent(),
+  });
+  GodownVehiclesCompanion.insert({
+    this.id = const Value.absent(),
+    this.companyId = const Value.absent(),
+    this.code = const Value.absent(),
+    this.name = const Value.absent(),
+    this.active = const Value.absent(),
+  });
+  static Insertable<GodownVehicle> custom({
+    Expression<int>? id,
+    Expression<int>? companyId,
+    Expression<String>? code,
+    Expression<String>? name,
+    Expression<int>? active,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (companyId != null) 'company_id': companyId,
+      if (code != null) 'code': code,
+      if (name != null) 'name': name,
+      if (active != null) 'active': active,
+    });
+  }
+
+  GodownVehiclesCompanion copyWith({
+    Value<int>? id,
+    Value<int?>? companyId,
+    Value<String?>? code,
+    Value<String?>? name,
+    Value<int?>? active,
+  }) {
+    return GodownVehiclesCompanion(
+      id: id ?? this.id,
+      companyId: companyId ?? this.companyId,
+      code: code ?? this.code,
+      name: name ?? this.name,
+      active: active ?? this.active,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (companyId.present) {
+      map['company_id'] = Variable<int>(companyId.value);
+    }
+    if (code.present) {
+      map['code'] = Variable<String>(code.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (active.present) {
+      map['active'] = Variable<int>(active.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GodownVehiclesCompanion(')
+          ..write('id: $id, ')
+          ..write('companyId: $companyId, ')
+          ..write('code: $code, ')
+          ..write('name: $name, ')
+          ..write('active: $active')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $GodownRoutesTable extends GodownRoutes
+    with TableInfo<$GodownRoutesTable, GodownRoute> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $GodownRoutesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _companyIdMeta = const VerificationMeta(
+    'companyId',
+  );
+  @override
+  late final GeneratedColumn<int> companyId = GeneratedColumn<int>(
+    'company_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _routeCodeMeta = const VerificationMeta(
+    'routeCode',
+  );
+  @override
+  late final GeneratedColumn<String> routeCode = GeneratedColumn<String>(
+    'route_code',
+    aliasedName,
+    true,
+    additionalChecks: GeneratedColumn.checkTextLength(
+      minTextLength: 0,
+      maxTextLength: 50,
+    ),
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _routeNameMeta = const VerificationMeta(
+    'routeName',
+  );
+  @override
+  late final GeneratedColumn<String> routeName = GeneratedColumn<String>(
+    'route_name',
+    aliasedName,
+    true,
+    additionalChecks: GeneratedColumn.checkTextLength(
+      minTextLength: 0,
+      maxTextLength: 100,
+    ),
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _activeMeta = const VerificationMeta('active');
+  @override
+  late final GeneratedColumn<int> active = GeneratedColumn<int>(
+    'active',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    companyId,
+    routeCode,
+    routeName,
+    active,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'godown_routes';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<GodownRoute> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('company_id')) {
+      context.handle(
+        _companyIdMeta,
+        companyId.isAcceptableOrUnknown(data['company_id']!, _companyIdMeta),
+      );
+    }
+    if (data.containsKey('route_code')) {
+      context.handle(
+        _routeCodeMeta,
+        routeCode.isAcceptableOrUnknown(data['route_code']!, _routeCodeMeta),
+      );
+    }
+    if (data.containsKey('route_name')) {
+      context.handle(
+        _routeNameMeta,
+        routeName.isAcceptableOrUnknown(data['route_name']!, _routeNameMeta),
+      );
+    }
+    if (data.containsKey('active')) {
+      context.handle(
+        _activeMeta,
+        active.isAcceptableOrUnknown(data['active']!, _activeMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  GodownRoute map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return GodownRoute(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      ),
+      companyId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}company_id'],
+      ),
+      routeCode: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}route_code'],
+      ),
+      routeName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}route_name'],
+      ),
+      active: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}active'],
+      ),
+    );
+  }
+
+  @override
+  $GodownRoutesTable createAlias(String alias) {
+    return $GodownRoutesTable(attachedDatabase, alias);
+  }
+}
+
+class GodownRoute extends DataClass implements Insertable<GodownRoute> {
+  final int? id;
+  final int? companyId;
+  final String? routeCode;
+  final String? routeName;
+  final int? active;
+  const GodownRoute({
+    this.id,
+    this.companyId,
+    this.routeCode,
+    this.routeName,
+    this.active,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || id != null) {
+      map['id'] = Variable<int>(id);
+    }
+    if (!nullToAbsent || companyId != null) {
+      map['company_id'] = Variable<int>(companyId);
+    }
+    if (!nullToAbsent || routeCode != null) {
+      map['route_code'] = Variable<String>(routeCode);
+    }
+    if (!nullToAbsent || routeName != null) {
+      map['route_name'] = Variable<String>(routeName);
+    }
+    if (!nullToAbsent || active != null) {
+      map['active'] = Variable<int>(active);
+    }
+    return map;
+  }
+
+  GodownRoutesCompanion toCompanion(bool nullToAbsent) {
+    return GodownRoutesCompanion(
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      companyId: companyId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(companyId),
+      routeCode: routeCode == null && nullToAbsent
+          ? const Value.absent()
+          : Value(routeCode),
+      routeName: routeName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(routeName),
+      active: active == null && nullToAbsent
+          ? const Value.absent()
+          : Value(active),
+    );
+  }
+
+  factory GodownRoute.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return GodownRoute(
+      id: serializer.fromJson<int?>(json['id']),
+      companyId: serializer.fromJson<int?>(json['companyId']),
+      routeCode: serializer.fromJson<String?>(json['routeCode']),
+      routeName: serializer.fromJson<String?>(json['routeName']),
+      active: serializer.fromJson<int?>(json['active']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int?>(id),
+      'companyId': serializer.toJson<int?>(companyId),
+      'routeCode': serializer.toJson<String?>(routeCode),
+      'routeName': serializer.toJson<String?>(routeName),
+      'active': serializer.toJson<int?>(active),
+    };
+  }
+
+  GodownRoute copyWith({
+    Value<int?> id = const Value.absent(),
+    Value<int?> companyId = const Value.absent(),
+    Value<String?> routeCode = const Value.absent(),
+    Value<String?> routeName = const Value.absent(),
+    Value<int?> active = const Value.absent(),
+  }) => GodownRoute(
+    id: id.present ? id.value : this.id,
+    companyId: companyId.present ? companyId.value : this.companyId,
+    routeCode: routeCode.present ? routeCode.value : this.routeCode,
+    routeName: routeName.present ? routeName.value : this.routeName,
+    active: active.present ? active.value : this.active,
+  );
+  GodownRoute copyWithCompanion(GodownRoutesCompanion data) {
+    return GodownRoute(
+      id: data.id.present ? data.id.value : this.id,
+      companyId: data.companyId.present ? data.companyId.value : this.companyId,
+      routeCode: data.routeCode.present ? data.routeCode.value : this.routeCode,
+      routeName: data.routeName.present ? data.routeName.value : this.routeName,
+      active: data.active.present ? data.active.value : this.active,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GodownRoute(')
+          ..write('id: $id, ')
+          ..write('companyId: $companyId, ')
+          ..write('routeCode: $routeCode, ')
+          ..write('routeName: $routeName, ')
+          ..write('active: $active')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, companyId, routeCode, routeName, active);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is GodownRoute &&
+          other.id == this.id &&
+          other.companyId == this.companyId &&
+          other.routeCode == this.routeCode &&
+          other.routeName == this.routeName &&
+          other.active == this.active);
+}
+
+class GodownRoutesCompanion extends UpdateCompanion<GodownRoute> {
+  final Value<int?> id;
+  final Value<int?> companyId;
+  final Value<String?> routeCode;
+  final Value<String?> routeName;
+  final Value<int?> active;
+  const GodownRoutesCompanion({
+    this.id = const Value.absent(),
+    this.companyId = const Value.absent(),
+    this.routeCode = const Value.absent(),
+    this.routeName = const Value.absent(),
+    this.active = const Value.absent(),
+  });
+  GodownRoutesCompanion.insert({
+    this.id = const Value.absent(),
+    this.companyId = const Value.absent(),
+    this.routeCode = const Value.absent(),
+    this.routeName = const Value.absent(),
+    this.active = const Value.absent(),
+  });
+  static Insertable<GodownRoute> custom({
+    Expression<int>? id,
+    Expression<int>? companyId,
+    Expression<String>? routeCode,
+    Expression<String>? routeName,
+    Expression<int>? active,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (companyId != null) 'company_id': companyId,
+      if (routeCode != null) 'route_code': routeCode,
+      if (routeName != null) 'route_name': routeName,
+      if (active != null) 'active': active,
+    });
+  }
+
+  GodownRoutesCompanion copyWith({
+    Value<int?>? id,
+    Value<int?>? companyId,
+    Value<String?>? routeCode,
+    Value<String?>? routeName,
+    Value<int?>? active,
+  }) {
+    return GodownRoutesCompanion(
+      id: id ?? this.id,
+      companyId: companyId ?? this.companyId,
+      routeCode: routeCode ?? this.routeCode,
+      routeName: routeName ?? this.routeName,
+      active: active ?? this.active,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (companyId.present) {
+      map['company_id'] = Variable<int>(companyId.value);
+    }
+    if (routeCode.present) {
+      map['route_code'] = Variable<String>(routeCode.value);
+    }
+    if (routeName.present) {
+      map['route_name'] = Variable<String>(routeName.value);
+    }
+    if (active.present) {
+      map['active'] = Variable<int>(active.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GodownRoutesCompanion(')
+          ..write('id: $id, ')
+          ..write('companyId: $companyId, ')
+          ..write('routeCode: $routeCode, ')
+          ..write('routeName: $routeName, ')
+          ..write('active: $active')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDb extends GeneratedDatabase {
   _$AppDb(QueryExecutor e) : super(e);
   $AppDbManager get managers => $AppDbManager(this);
@@ -7552,6 +8258,8 @@ abstract class _$AppDb extends GeneratedDatabase {
       $RouteVoucherTypesTable(this);
   late final $CompanySettingsTableTable companySettingsTable =
       $CompanySettingsTableTable(this);
+  late final $GodownVehiclesTable godownVehicles = $GodownVehiclesTable(this);
+  late final $GodownRoutesTable godownRoutes = $GodownRoutesTable(this);
   late final CompanyDao companyDao = CompanyDao(this as AppDb);
   late final RegistrationDetailDao registrationDetailDao =
       RegistrationDetailDao(this as AppDb);
@@ -7565,6 +8273,10 @@ abstract class _$AppDb extends GeneratedDatabase {
   late final CompanySettingsDao companySettingsDao = CompanySettingsDao(
     this as AppDb,
   );
+  late final GodownVehicleDao godownVehicleDao = GodownVehicleDao(
+    this as AppDb,
+  );
+  late final RouteDao routeDao = RouteDao(this as AppDb);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -7577,6 +8289,8 @@ abstract class _$AppDb extends GeneratedDatabase {
     godownVoucherTypes,
     routeVoucherTypes,
     companySettingsTable,
+    godownVehicles,
+    godownRoutes,
   ];
 }
 
@@ -10928,6 +11642,391 @@ typedef $$CompanySettingsTableTableProcessedTableManager =
       CompanySettingsTableData,
       PrefetchHooks Function()
     >;
+typedef $$GodownVehiclesTableCreateCompanionBuilder =
+    GodownVehiclesCompanion Function({
+      Value<int> id,
+      Value<int?> companyId,
+      Value<String?> code,
+      Value<String?> name,
+      Value<int?> active,
+    });
+typedef $$GodownVehiclesTableUpdateCompanionBuilder =
+    GodownVehiclesCompanion Function({
+      Value<int> id,
+      Value<int?> companyId,
+      Value<String?> code,
+      Value<String?> name,
+      Value<int?> active,
+    });
+
+class $$GodownVehiclesTableFilterComposer
+    extends Composer<_$AppDb, $GodownVehiclesTable> {
+  $$GodownVehiclesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get companyId => $composableBuilder(
+    column: $table.companyId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get active => $composableBuilder(
+    column: $table.active,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$GodownVehiclesTableOrderingComposer
+    extends Composer<_$AppDb, $GodownVehiclesTable> {
+  $$GodownVehiclesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get companyId => $composableBuilder(
+    column: $table.companyId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get code => $composableBuilder(
+    column: $table.code,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get active => $composableBuilder(
+    column: $table.active,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$GodownVehiclesTableAnnotationComposer
+    extends Composer<_$AppDb, $GodownVehiclesTable> {
+  $$GodownVehiclesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get companyId =>
+      $composableBuilder(column: $table.companyId, builder: (column) => column);
+
+  GeneratedColumn<String> get code =>
+      $composableBuilder(column: $table.code, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<int> get active =>
+      $composableBuilder(column: $table.active, builder: (column) => column);
+}
+
+class $$GodownVehiclesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDb,
+          $GodownVehiclesTable,
+          GodownVehicle,
+          $$GodownVehiclesTableFilterComposer,
+          $$GodownVehiclesTableOrderingComposer,
+          $$GodownVehiclesTableAnnotationComposer,
+          $$GodownVehiclesTableCreateCompanionBuilder,
+          $$GodownVehiclesTableUpdateCompanionBuilder,
+          (
+            GodownVehicle,
+            BaseReferences<_$AppDb, $GodownVehiclesTable, GodownVehicle>,
+          ),
+          GodownVehicle,
+          PrefetchHooks Function()
+        > {
+  $$GodownVehiclesTableTableManager(_$AppDb db, $GodownVehiclesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$GodownVehiclesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$GodownVehiclesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$GodownVehiclesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int?> companyId = const Value.absent(),
+                Value<String?> code = const Value.absent(),
+                Value<String?> name = const Value.absent(),
+                Value<int?> active = const Value.absent(),
+              }) => GodownVehiclesCompanion(
+                id: id,
+                companyId: companyId,
+                code: code,
+                name: name,
+                active: active,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int?> companyId = const Value.absent(),
+                Value<String?> code = const Value.absent(),
+                Value<String?> name = const Value.absent(),
+                Value<int?> active = const Value.absent(),
+              }) => GodownVehiclesCompanion.insert(
+                id: id,
+                companyId: companyId,
+                code: code,
+                name: name,
+                active: active,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$GodownVehiclesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDb,
+      $GodownVehiclesTable,
+      GodownVehicle,
+      $$GodownVehiclesTableFilterComposer,
+      $$GodownVehiclesTableOrderingComposer,
+      $$GodownVehiclesTableAnnotationComposer,
+      $$GodownVehiclesTableCreateCompanionBuilder,
+      $$GodownVehiclesTableUpdateCompanionBuilder,
+      (
+        GodownVehicle,
+        BaseReferences<_$AppDb, $GodownVehiclesTable, GodownVehicle>,
+      ),
+      GodownVehicle,
+      PrefetchHooks Function()
+    >;
+typedef $$GodownRoutesTableCreateCompanionBuilder =
+    GodownRoutesCompanion Function({
+      Value<int?> id,
+      Value<int?> companyId,
+      Value<String?> routeCode,
+      Value<String?> routeName,
+      Value<int?> active,
+    });
+typedef $$GodownRoutesTableUpdateCompanionBuilder =
+    GodownRoutesCompanion Function({
+      Value<int?> id,
+      Value<int?> companyId,
+      Value<String?> routeCode,
+      Value<String?> routeName,
+      Value<int?> active,
+    });
+
+class $$GodownRoutesTableFilterComposer
+    extends Composer<_$AppDb, $GodownRoutesTable> {
+  $$GodownRoutesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get companyId => $composableBuilder(
+    column: $table.companyId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get routeCode => $composableBuilder(
+    column: $table.routeCode,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get routeName => $composableBuilder(
+    column: $table.routeName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get active => $composableBuilder(
+    column: $table.active,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$GodownRoutesTableOrderingComposer
+    extends Composer<_$AppDb, $GodownRoutesTable> {
+  $$GodownRoutesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get companyId => $composableBuilder(
+    column: $table.companyId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get routeCode => $composableBuilder(
+    column: $table.routeCode,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get routeName => $composableBuilder(
+    column: $table.routeName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get active => $composableBuilder(
+    column: $table.active,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$GodownRoutesTableAnnotationComposer
+    extends Composer<_$AppDb, $GodownRoutesTable> {
+  $$GodownRoutesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get companyId =>
+      $composableBuilder(column: $table.companyId, builder: (column) => column);
+
+  GeneratedColumn<String> get routeCode =>
+      $composableBuilder(column: $table.routeCode, builder: (column) => column);
+
+  GeneratedColumn<String> get routeName =>
+      $composableBuilder(column: $table.routeName, builder: (column) => column);
+
+  GeneratedColumn<int> get active =>
+      $composableBuilder(column: $table.active, builder: (column) => column);
+}
+
+class $$GodownRoutesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDb,
+          $GodownRoutesTable,
+          GodownRoute,
+          $$GodownRoutesTableFilterComposer,
+          $$GodownRoutesTableOrderingComposer,
+          $$GodownRoutesTableAnnotationComposer,
+          $$GodownRoutesTableCreateCompanionBuilder,
+          $$GodownRoutesTableUpdateCompanionBuilder,
+          (
+            GodownRoute,
+            BaseReferences<_$AppDb, $GodownRoutesTable, GodownRoute>,
+          ),
+          GodownRoute,
+          PrefetchHooks Function()
+        > {
+  $$GodownRoutesTableTableManager(_$AppDb db, $GodownRoutesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$GodownRoutesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$GodownRoutesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$GodownRoutesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int?> id = const Value.absent(),
+                Value<int?> companyId = const Value.absent(),
+                Value<String?> routeCode = const Value.absent(),
+                Value<String?> routeName = const Value.absent(),
+                Value<int?> active = const Value.absent(),
+              }) => GodownRoutesCompanion(
+                id: id,
+                companyId: companyId,
+                routeCode: routeCode,
+                routeName: routeName,
+                active: active,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int?> id = const Value.absent(),
+                Value<int?> companyId = const Value.absent(),
+                Value<String?> routeCode = const Value.absent(),
+                Value<String?> routeName = const Value.absent(),
+                Value<int?> active = const Value.absent(),
+              }) => GodownRoutesCompanion.insert(
+                id: id,
+                companyId: companyId,
+                routeCode: routeCode,
+                routeName: routeName,
+                active: active,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$GodownRoutesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDb,
+      $GodownRoutesTable,
+      GodownRoute,
+      $$GodownRoutesTableFilterComposer,
+      $$GodownRoutesTableOrderingComposer,
+      $$GodownRoutesTableAnnotationComposer,
+      $$GodownRoutesTableCreateCompanionBuilder,
+      $$GodownRoutesTableUpdateCompanionBuilder,
+      (GodownRoute, BaseReferences<_$AppDb, $GodownRoutesTable, GodownRoute>),
+      GodownRoute,
+      PrefetchHooks Function()
+    >;
 
 class $AppDbManager {
   final _$AppDb _db;
@@ -10946,4 +12045,8 @@ class $AppDbManager {
       $$RouteVoucherTypesTableTableManager(_db, _db.routeVoucherTypes);
   $$CompanySettingsTableTableTableManager get companySettingsTable =>
       $$CompanySettingsTableTableTableManager(_db, _db.companySettingsTable);
+  $$GodownVehiclesTableTableManager get godownVehicles =>
+      $$GodownVehiclesTableTableManager(_db, _db.godownVehicles);
+  $$GodownRoutesTableTableManager get godownRoutes =>
+      $$GodownRoutesTableTableManager(_db, _db.godownRoutes);
 }
