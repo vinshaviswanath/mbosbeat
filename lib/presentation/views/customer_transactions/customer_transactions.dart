@@ -1,8 +1,11 @@
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
+import 'package:mpos_beat/presentation/views/home_screen/transactions_container.dart';
 
 class CustomerTransactions extends StatefulWidget {
-  const CustomerTransactions({super.key});
+  final TransactionArgs data;
+  const CustomerTransactions({super.key, required this.data});
 
   @override
   State<CustomerTransactions> createState() => _CustomerTransactionsState();
@@ -16,7 +19,7 @@ class _CustomerTransactionsState extends State<CustomerTransactions> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     final color = Theme.of(context).colorScheme;
-
+    Logger.logSuccess("Company ID :: ${widget.data.company.id}");
     return Scaffold(
       backgroundColor: ColorResources.white,
       appBar: AppBar(
@@ -33,8 +36,8 @@ class _CustomerTransactionsState extends State<CustomerTransactions> {
         actions: [
           CircleAvatar(
             backgroundColor: ColorResources.indigoBlue,
-            child: Icon(Icons.add, size: 18, color:ColorResources.white),
             radius: 11,
+            child: Icon(Icons.add, size: 18, color: ColorResources.white),
           ),
           w18,
         ],
@@ -66,144 +69,146 @@ class _CustomerTransactionsState extends State<CustomerTransactions> {
           ),
           SizedBox(height: MediaQuery.of(context).size.height * 0.005),
           Expanded(
-            child: Container(
-              // width: width * 0.920,
-              child: ListView.builder(
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      context.pushNamed(AppRouterConst.transactionDetailpage);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: Column(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: ColorResources.indigoBlue  .withValues(alpha: 0.1),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "Alackal Stores, Kuruppamthara",
-                                        style: context
-                                            .textStyle
-                                            .s12
-                                            .w600
-                                            .indigoBlue
-                                            .roboto,
-                                      ),
-                                      Spacer(),
-                                      Text(
-                                        "Balance",
-                                        style: context
-                                            .textStyle
-                                            .s09
-                                            .dustyBlue
-                                            .roboto,
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: height * 0.002),
-
-                                  //contact person
-                                  Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.person,
-                                        color: ColorResources.bluishGray,
-                                        size: 13,
-                                      ),
-                                      Text(
-                                        "Contact Person : Gopakumar",
-                                        style: context
-                                            .textStyle
-                                            .s08
-                                            .dustyBlue
-                                            .roboto,
-                                      ),
-                                      Spacer(),
-                                      Text(
-                                        "26,500.00 Cr",
-                                        style: context
-                                            .textStyle
-                                            .s12
-                                            .rosePink
-                                            .roboto
-                                            .w600,
-                                      ),
-                                    ],
-                                  ),
-
-                                  //mobile number
-                                  Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.phone_android,
-                                        color: ColorResources.bluishGray,
-                                        size: 13,
-                                      ),
-                                      Text(
-                                        "Mobile : 9876543215",
-                                        style: context
-                                            .textStyle
-                                            .s08
-                                            .dustyBlue
-                                            .roboto,
-                                      ),
-                                      Spacer(),
-                                      const CircleAvatar(
-                                        backgroundColor:
-                                            ColorResources.freshgreen,
-
-                                        radius: 10,
-                                        child: Icon(
-                                          Icons.call_rounded,
-                                          size: 12,
-                                          color: ColorResources.white,
-                                        ),
-                                      ),
-                                      SizedBox(width: width * 0.01),
-                                      const CircleAvatar(
-                                        backgroundColor:
-                                            ColorResources.dustyBlue,
-                                        radius: 10,
-                                        child: Icon(
-                                          Icons.location_on_sharp,
-                                          size: 12,
-                                          color: ColorResources.white,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+            child: ListView.builder(
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    context.pushNamed(
+                      AppRouterConst.transactionDetailpage,
+                      extra: widget.data,
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: ColorResources.indigoBlue.withValues(
+                              alpha: 0.1,
                             ),
                           ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.005,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Alackal Stores, Kuruppamthara",
+                                      style: context
+                                          .textStyle
+                                          .s12
+                                          .w600
+                                          .indigoBlue
+                                          .roboto,
+                                    ),
+                                    Spacer(),
+                                    Text(
+                                      "Balance",
+                                      style: context
+                                          .textStyle
+                                          .s09
+                                          .dustyBlue
+                                          .roboto,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: height * 0.002),
+            
+                                //contact person
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.person,
+                                      color: ColorResources.bluishGray,
+                                      size: 13,
+                                    ),
+                                    Text(
+                                      "Contact Person : Gopakumar",
+                                      style: context
+                                          .textStyle
+                                          .s08
+                                          .dustyBlue
+                                          .roboto,
+                                    ),
+                                    Spacer(),
+                                    Text(
+                                      "26,500.00 Cr",
+                                      style: context
+                                          .textStyle
+                                          .s12
+                                          .rosePink
+                                          .roboto
+                                          .w600,
+                                    ),
+                                  ],
+                                ),
+            
+                                //mobile number
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.phone_android,
+                                      color: ColorResources.bluishGray,
+                                      size: 13,
+                                    ),
+                                    Text(
+                                      "Mobile : 9876543215",
+                                      style: context
+                                          .textStyle
+                                          .s08
+                                          .dustyBlue
+                                          .roboto,
+                                    ),
+                                    Spacer(),
+                                    const CircleAvatar(
+                                      backgroundColor:
+                                          ColorResources.freshgreen,
+            
+                                      radius: 10,
+                                      child: Icon(
+                                        Icons.call_rounded,
+                                        size: 12,
+                                        color: ColorResources.white,
+                                      ),
+                                    ),
+                                    SizedBox(width: width * 0.01),
+                                    const CircleAvatar(
+                                      backgroundColor:
+                                          ColorResources.dustyBlue,
+                                      radius: 10,
+                                      child: Icon(
+                                        Icons.location_on_sharp,
+                                        size: 12,
+                                        color: ColorResources.white,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                          const Divider(
-                            color: ColorResources.lightGray,
-                            height: 3,
-                            thickness: 1.4,
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.005,
-                          ),
-                        ],
-                      ),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.005,
+                        ),
+                        const Divider(
+                          color: ColorResources.lightGray,
+                          height: 3,
+                          thickness: 1.4,
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.005,
+                        ),
+                      ],
                     ),
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             ),
           ),
         ],

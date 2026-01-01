@@ -7,6 +7,7 @@ import 'package:mpos_beat/core/utils/extentions.dart';
 import 'package:mpos_beat/core/utils/logger.dart';
 import 'package:mpos_beat/core/utils/typedefs.dart';
 import 'package:mpos_beat/core/utils/urls.dart';
+import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/models/route_list_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,20 +16,27 @@ class GetAllRoutes {
   final HttpClient httpClient;
   final RunSafely runSafely;
   final SharedPreferences sharedPreferences;
-  GetAllRoutes(this.httpClient, this.runSafely, this.sharedPreferences);
+  final AppDb appDb;
+  GetAllRoutes(
+    this.httpClient,
+    this.runSafely,
+    this.sharedPreferences,
+    this.appDb,
+  );
 
-  ResultFuture<RouteListModel> call(
-    {required String companyId}
-  ) {
+  ResultFuture<RouteListModel> call({required String companyId}) {
     return runSafely(
       () async {
-        final response = await httpClient.get(
-          "${Urls.getAllroutes}$companyId",
-        );
+        final response = await httpClient.get("${Urls.getAllroutes}$companyId");
 
         if (response.isOk) {
           final data = RouteListModel.fromJson(response.data);
           Logger.logInfo("Route List : ${data.toJson()}");
+          await appDb.routeDao.clearAll();
+          await appDb.routeDao.insertRoutes(data.routeList);
+
+          // 🔍 Review DB
+          await appDb.routeDao.printRoutes();
           return data;
         }
 

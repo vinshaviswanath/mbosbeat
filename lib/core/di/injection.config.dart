@@ -166,6 +166,22 @@ Future<_i174.GetIt> init(
       gh<_i264.AppDb>(),
     ),
   );
+  gh.lazySingleton<_i1064.GetAllGodowns>(
+    () => _i1064.GetAllGodowns(
+      gh<_i976.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+      gh<_i264.AppDb>(),
+    ),
+  );
+  gh.lazySingleton<_i504.GetAllRoutes>(
+    () => _i504.GetAllRoutes(
+      gh<_i976.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+      gh<_i264.AppDb>(),
+    ),
+  );
   gh.lazySingleton<_i853.GetVoucherNumbering>(
     () => _i853.GetVoucherNumbering(
       gh<_i976.HttpClient>(),
@@ -312,20 +328,6 @@ Future<_i174.GetIt> init(
   );
   gh.lazySingleton<_i112.DeleteRoute>(
     () => _i112.DeleteRoute(
-      gh<_i976.HttpClient>(),
-      gh<_i530.RunSafely>(),
-      gh<_i460.SharedPreferences>(),
-    ),
-  );
-  gh.lazySingleton<_i1064.GetAllGodowns>(
-    () => _i1064.GetAllGodowns(
-      gh<_i976.HttpClient>(),
-      gh<_i530.RunSafely>(),
-      gh<_i460.SharedPreferences>(),
-    ),
-  );
-  gh.lazySingleton<_i504.GetAllRoutes>(
-    () => _i504.GetAllRoutes(
       gh<_i976.HttpClient>(),
       gh<_i530.RunSafely>(),
       gh<_i460.SharedPreferences>(),

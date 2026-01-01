@@ -3,10 +3,10 @@ import 'package:mpos_beat/core/theme/colors.dart';
 import 'package:mpos_beat/core/theme/text_styles.dart';
 import 'package:mpos_beat/core/utils/extentions.dart';
 
-void showEndTripDialog(BuildContext context) {
+void showEndTripDialog(BuildContext context, {required void Function()? onTap}) {
   showDialog(
     context: context,
-    builder: (BuildContext context) {
+    builder: (BuildContext context, ) {
       return AlertDialog(
         backgroundColor: Theme.of(context).colorScheme.onPrimary,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
@@ -17,7 +17,7 @@ void showEndTripDialog(BuildContext context) {
             style: context.textStyle.s16.roboto.bold.indigoBlue,
           ),
         ),
-        content: Container(
+        content: SizedBox(
           width: MediaQuery.of(context).size.width * 0.9,
           height: MediaQuery.of(context).size.height * 0.13,
           child: Column(
@@ -31,9 +31,7 @@ void showEndTripDialog(BuildContext context) {
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
+                      onPressed: onTap,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: ColorResources.indigoBlue,
                         minimumSize: const Size(150, 50),

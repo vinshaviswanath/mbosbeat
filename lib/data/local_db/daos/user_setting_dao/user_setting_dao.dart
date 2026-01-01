@@ -55,4 +55,6 @@ class UserSettingsDao extends DatabaseAccessor<AppDb>
   }
 
   Future<void> clearAll() => delete(userSettingsTable).go();
+
+  
 }

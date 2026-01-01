@@ -9,7 +9,12 @@ import 'package:mpos_beat/route/app_router_const.dart';
 
 class TransactionsContainers extends StatelessWidget {
   final RegistrationDetail userDetails;
-  const TransactionsContainers({super.key, required this.userDetails});
+  final Company company;
+  const TransactionsContainers({
+    super.key,
+    required this.userDetails,
+    required this.company,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +30,7 @@ class TransactionsContainers extends StatelessWidget {
         icon: Icons.person_pin_outlined,
         routeName: AppRouterConst.customerTransactions,
         userDetails: userDetails,
+        company: company,
       ),
       TransactionItem(
         title: "Other",
@@ -37,7 +43,7 @@ class TransactionsContainers extends StatelessWidget {
         icon: Icons.event_note_outlined,
         routeName: AppRouterConst.otherTransaction,
         userDetails: userDetails,
-
+        company: company,
       ),
       TransactionItem(
         title: "Dashboard",
@@ -49,7 +55,7 @@ class TransactionsContainers extends StatelessWidget {
         avatarColor: const Color.fromARGB(255, 245, 216, 160),
         icon: Icons.now_widgets_outlined,
         userDetails: userDetails,
-
+        company: company,
       ),
       TransactionItem(
         title: "Other",
@@ -61,6 +67,7 @@ class TransactionsContainers extends StatelessWidget {
         avatarColor: const Color.fromARGB(255, 201, 155, 245),
         icon: Icons.receipt_outlined,
         userDetails: userDetails,
+        company: company,
       ),
     ];
 
@@ -92,7 +99,7 @@ class TransactionItem {
   final IconData icon;
   final String? routeName;
   final RegistrationDetail userDetails;
-
+  final Company company;
 
   TransactionItem({
     required this.title,
@@ -102,7 +109,15 @@ class TransactionItem {
     required this.icon,
     this.routeName,
     required this.userDetails,
+    required this.company,
   });
+}
+
+class TransactionArgs {
+  final RegistrationDetail userDetails;
+  final Company company;
+
+  TransactionArgs({required this.userDetails, required this.company});
 }
 
 /// ✅ Reusable Card widget
@@ -118,7 +133,7 @@ class TransactionCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (item.routeName != null) {
-          context.pushNamed(item.routeName!,extra: item.userDetails);
+          context.pushNamed(item.routeName!, extra: TransactionArgs(company: item.company,userDetails: item.userDetails));
         }
       },
       child: Stack(
