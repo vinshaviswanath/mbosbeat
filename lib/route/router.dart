@@ -407,7 +407,11 @@ class AppRouter {
 
         path: '/CompanyCreationSuccessScreen',
         builder: (context, state) {
-          return CompanyCreationSuccessScreen();
+           final CompanyViewList? companyData =
+        state.extra as CompanyViewList?;
+          return CompanyCreationSuccessScreen( 
+            companyData: companyData,
+          );
         },
       ),
       GoRoute(

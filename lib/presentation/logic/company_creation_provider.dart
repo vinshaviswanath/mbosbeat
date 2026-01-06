@@ -773,8 +773,10 @@ class CompanyCreationProvider extends ChangeNotifier {
   Future<IntegrationDtos?> integration(
     BuildContext context, {
     required IntegrationParams params,
+      CompanyViewList? companyData,
     VoidCallback? onSuccess,
   }) async {
+    print("companydata in provider ..............................${companyData}`");
     setLoading(true);
 
     final integrationType = _selectedIntegrationType;
@@ -839,7 +841,8 @@ class CompanyCreationProvider extends ChangeNotifier {
             _integrationDtos = response;
             markStageCompleted(2);
 
-            context.go(AppRouterConst.companyscreationsuccess);
+            context.go(AppRouterConst.companyscreationsuccess,
+              extra: companyData);
             onSuccess?.call();
           } else {
             ScaffoldMessenger.of(context).showSnackBar(

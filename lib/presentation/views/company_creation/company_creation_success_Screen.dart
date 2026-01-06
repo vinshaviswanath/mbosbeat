@@ -1,8 +1,10 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/models/company_list_model.dart';
 
 class CompanyCreationSuccessScreen extends StatefulWidget {
-  const CompanyCreationSuccessScreen({super.key});
+  final CompanyViewList? companyData;
+  const CompanyCreationSuccessScreen({super.key, this.companyData});
 
   @override
   State<CompanyCreationSuccessScreen> createState() =>
@@ -13,6 +15,9 @@ class _CompanyCreationSuccessScreenState
     extends State<CompanyCreationSuccessScreen> {
   @override
   Widget build(BuildContext context) {
+    print(
+      'companyDATA in success screen ...........................///////////////////////////////////: ${widget.companyData}',
+    );
     return Scaffold(
       body: Column(
         children: [
@@ -36,15 +41,20 @@ class _CompanyCreationSuccessScreenState
                   Column(
                     children: [
                       Text(
-                        "Company Created\n    Successfully!",
+                        widget.companyData == null
+                            ? "Company Created\n    Successfully!"
+                            : "Company Updated\n    Successfully!",
                         textAlign: TextAlign.center,
                         style: context.textStyle.s22.indigoBlue.bold,
                       ),
+
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.01,
                       ),
                       Text(
-                        "You are successfully created Company",
+                        widget.companyData == null
+                            ? "You are successfully created Company"
+                            : "You are successfully updated Company",
                         textAlign: TextAlign.center,
                         style: context.textStyle.s12.silverGray,
                       ),
