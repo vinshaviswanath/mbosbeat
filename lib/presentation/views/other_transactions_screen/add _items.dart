@@ -1,6 +1,5 @@
 
 import 'package:mpos_beat/core/utils/imports.dart';
-import 'package:mpos_beat/l10n/app_localizations.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 
 class AddItems extends StatefulWidget {
@@ -16,9 +15,9 @@ class _AddItemsState extends State<AddItems> {
   bool items = false;
   @override
   Widget build(BuildContext context) {
-    final args = GoRouterState.of(context).extra as Map<String, dynamic>?;
+    // final args = GoRouterState.of(context).extra as Map<String, dynamic>?;
     final color = Theme.of(context).colorScheme;
-    final local = AppLocalizations.of(context);
+    // final local = AppLocalizations.of(context);
     final texttheme = Theme.of(context).textTheme;
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
@@ -71,16 +70,16 @@ class _AddItemsState extends State<AddItems> {
                               onChanged: (value) {
                                 setState(() => items = value);
                               },
-                              activeColor: ColorResources.indigoBlue,
+                              activeThumbColor : ColorResources.indigoBlue,
                               inactiveThumbColor: ColorResources.bluishGray,
                               inactiveTrackColor: ColorResources.white,
                               activeTrackColor:ColorResources.white,
                               trackOutlineColor:
-                                  MaterialStateProperty.resolveWith<Color?>((
+                                  WidgetStateProperty .resolveWith<Color?>((
                                     states,
                                   ) {
                                     if (states.contains(
-                                      MaterialState.selected,
+                                      WidgetState .selected,
                                     )) {
                                       return ColorResources.indigoBlue;
                                     }
@@ -155,7 +154,7 @@ class _AddItemsState extends State<AddItems> {
               indent: 20,
               endIndent: 18,
             ),
-            Container(
+            SizedBox(
               height: height * 0.550,
               width: width * 0.920,
               child: ListView.builder(
@@ -195,6 +194,16 @@ class _AddItemsState extends State<AddItems> {
 
                                       //Quantity select
                                       Container(
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: ColorResources.dustyBlue,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                            15,
+                                          ),
+                                        ),
+                                        height: height * 0.0250,
+                                        width: width * 0.150,
                                         child: TextField(
                                           cursorHeight: 11,
                                           style: texttheme.labelSmall!.copyWith(
@@ -207,6 +216,11 @@ class _AddItemsState extends State<AddItems> {
                                             contentPadding: EdgeInsets.all(10),
                                           ),
                                         ),
+                                      ),
+                                      SizedBox(width: width * 0.0230),
+
+                                      //Unit select button
+                                      Container(
                                         decoration: BoxDecoration(
                                           border: Border.all(
                                             color: ColorResources.dustyBlue,
@@ -217,11 +231,6 @@ class _AddItemsState extends State<AddItems> {
                                         ),
                                         height: height * 0.0250,
                                         width: width * 0.150,
-                                      ),
-                                      SizedBox(width: width * 0.0230),
-
-                                      //Unit select button
-                                      Container(
                                         child: Row(
                                           children: [
                                             Padding(
@@ -270,16 +279,6 @@ class _AddItemsState extends State<AddItems> {
                                             ),
                                           ],
                                         ),
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: ColorResources.dustyBlue,
-                                          ),
-                                          borderRadius: BorderRadius.circular(
-                                            15,
-                                          ),
-                                        ),
-                                        height: height * 0.0250,
-                                        width: width * 0.150,
                                       ),
                                       SizedBox(width: width * 0.01),
                                       Icon(

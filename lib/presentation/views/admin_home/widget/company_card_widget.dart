@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:mpos_beat/core/theme/colors.dart';
 import 'package:mpos_beat/core/theme/text_styles.dart';
@@ -15,11 +13,11 @@ class CompanyCard extends StatelessWidget {
   final VoidCallback? onTap;
 
   const CompanyCard({
-    Key? key,
+    super.key,
     required this.company,
     this.isSelected = false,
     this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

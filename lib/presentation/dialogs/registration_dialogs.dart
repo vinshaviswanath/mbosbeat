@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mpos_beat/core/theme/colors.dart';
 import 'package:mpos_beat/core/theme/diamentions.dart';
 import 'package:mpos_beat/core/theme/text_styles.dart';
 import 'package:mpos_beat/core/utils/app_assets.dart';
@@ -159,7 +158,7 @@ class RegistrationDialogs {
     required String buttonText,
     EdgeInsetsGeometry? margin,
   }) {
-    final appLocalization = context.l10n;
+    // final appLocalization = context.l10n;
 
     return CustomDialog.showBottomCustomDialog(
       child: Column(

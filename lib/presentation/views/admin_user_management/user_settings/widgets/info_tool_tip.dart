@@ -1,7 +1,6 @@
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_switch.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_settings/tooltip_overlay_manager.dart';
-import 'package:popover/popover.dart';
 
 class InfoTooltip extends StatefulWidget {
   final String title;

@@ -27,7 +27,7 @@ class CreateVoucherNumberingParams extends ToMap{
         "companyID": companyId,
         "voucherMode": voucherMode,
         "voucherModeID": voucherModeId,
-        "VoucherNumbers": voucherNumbers.map((x) => x?.toJson()).toList(),
+        "VoucherNumbers": voucherNumbers.map((x) => x.toJson()).toList(),
     };
 
 }

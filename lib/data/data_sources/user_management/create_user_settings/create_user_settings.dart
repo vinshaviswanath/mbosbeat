@@ -8,9 +8,7 @@ import 'package:mpos_beat/core/utils/extentions.dart';
 import 'package:mpos_beat/core/utils/logger.dart';
 import 'package:mpos_beat/core/utils/typedefs.dart';
 import 'package:mpos_beat/core/utils/urls.dart';
-import 'package:mpos_beat/data/models/designation_response.dart';
 import 'package:mpos_beat/data/models/user_master_response.dart';
-import 'package:mpos_beat/domain/request/user_creation_params.dart';
 import 'package:mpos_beat/domain/request/user_settings_params.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

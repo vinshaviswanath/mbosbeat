@@ -1,6 +1,5 @@
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/user_settings_list_model.dart';
-import 'package:mpos_beat/presentation/common/widgets/sliverSpace.dart';
 import 'package:mpos_beat/presentation/logic/user_management_provider.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_settings/widgets/info_tool_tip.dart';
 

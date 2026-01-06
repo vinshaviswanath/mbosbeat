@@ -1,9 +1,7 @@
-import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/route_list_model.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AddRoute extends StatefulWidget {
   const AddRoute({super.key, this.isEdit = false, this.index, this.details});
@@ -55,7 +53,7 @@ class _AddRouteState extends State<AddRoute> {
     // final pref = sl<SharedPreferences>();
     return Consumer<CompanyCreationProvider>(
       builder: (context, provider, _) {
-        final companyId = provider.selectedCompany?.id;
+        // final companyId = provider.selectedCompany?.id;
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

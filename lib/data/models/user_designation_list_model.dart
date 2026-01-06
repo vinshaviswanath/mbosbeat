@@ -29,7 +29,7 @@ class UserDesignationListModel {
   }
 
   Map<String, dynamic> toJson() => {
-    "userDesignationList": userDesignationList.map((x) => x?.toJson()).toList(),
+    "userDesignationList": userDesignationList.map((x) => x.toJson()).toList(),
     "id": id,
     "status": status,
     "message": message,

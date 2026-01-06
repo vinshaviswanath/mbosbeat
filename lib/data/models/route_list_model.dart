@@ -21,7 +21,7 @@ class RouteListModel {
     }
 
     Map<String, dynamic> toJson() => {
-        "routeList": routeList.map((x) => x?.toJson()).toList(),
+        "routeList": routeList.map((x) => x.toJson()).toList(),
         "id": id,
         "status": status,
         "message": message,

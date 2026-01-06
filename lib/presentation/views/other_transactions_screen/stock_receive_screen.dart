@@ -169,7 +169,7 @@ class _StockReceiveScreenState extends State<StockReceiveScreen> {
               ],
             ),
           ),
-          Container(
+          SizedBox(
             height: height * 0.550,
             width: width * 0.920,
             child: ListView.builder(
@@ -213,9 +213,15 @@ class _StockReceiveScreenState extends State<StockReceiveScreen> {
                                   const Spacer(),
                                   GestureDetector(
                                     onTap: () {
-                                      _showDialog();
+                                      showDialogBox();
                                     },
                                     child: Container(
+                                      decoration: BoxDecoration(
+                                        color: ColorResources.bluishGray,
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      height: height * 0.0280,
+                                      width: width * 0.120,
                                       child: Center(
                                         child: Text(
                                           local
@@ -227,12 +233,6 @@ class _StockReceiveScreenState extends State<StockReceiveScreen> {
                                               .white,
                                         ),
                                       ),
-                                      decoration: BoxDecoration(
-                                        color: ColorResources.bluishGray,
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                      height: height * 0.0280,
-                                      width: width * 0.120,
                                     ),
                                   ),
                                 ],
@@ -262,17 +262,17 @@ class _StockReceiveScreenState extends State<StockReceiveScreen> {
               GestureDetector(
                 onTap: () {},
                 child: Container(
-                  child: Center(
-                    child: Text(
-                      local.other_transactions_stockReceive_update_button,
-                      style: context.textStyle.roboto.s10.white,
-                    ),
-                  ),
                   height: height * 0.0620,
                   width: width * 0.430,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                     color: ColorResources.indigoBlue,
+                  ),
+                  child: Center(
+                    child: Text(
+                      local.other_transactions_stockReceive_update_button,
+                      style: context.textStyle.roboto.s10.white,
+                    ),
                   ),
                 ),
               ),
@@ -280,17 +280,17 @@ class _StockReceiveScreenState extends State<StockReceiveScreen> {
               GestureDetector(
                 onTap: () {},
                 child: Container(
-                  child: Center(
-                    child: Text(
-                      local.other_transactions_stockReceive_reject_button,
-                      style: context.textStyle.roboto.s10.white,
-                    ),
-                  ),
                   height: height * 0.0620,
                   width: width * 0.430,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                     color: ColorResources.indigoBlue,
+                  ),
+                  child: Center(
+                    child: Text(
+                      local.other_transactions_stockReceive_reject_button,
+                      style: context.textStyle.roboto.s10.white,
+                    ),
                   ),
                 ),
               ),
@@ -301,8 +301,8 @@ class _StockReceiveScreenState extends State<StockReceiveScreen> {
     );
   }
 
-  void _showDialog() {
-    final color = Theme.of(context).colorScheme;
+  void showDialogBox() {
+    // final color = Theme.of(context).colorScheme;
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     showDialog(
@@ -310,7 +310,7 @@ class _StockReceiveScreenState extends State<StockReceiveScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Theme.of(context).colorScheme.onPrimary,
-          content: Container(
+          content: SizedBox(
             width: width * 0.9,
             child: SingleChildScrollView(
               child: Column(

@@ -16,7 +16,7 @@ class _OrderBookingState extends State<OrderBooking> {
   @override
   Widget build(BuildContext context) {
     final local = context.l10n;
-    final color = Theme.of(context).colorScheme;
+    // final color = Theme.of(context).colorScheme;
     final texttheme = Theme.of(context).textTheme;
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;

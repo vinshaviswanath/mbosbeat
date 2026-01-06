@@ -61,6 +61,8 @@ class AppAssets {
   static const godown = "$baseDir/godown.svg";
   static const itemCategory = "$baseDir/itemCategory.svg";
   static const otherLedgers = "$baseDir/otherLedgers.svg";
+  static const coupon = "$baseDir/coupon.svg";
+
 
 
   //Animations

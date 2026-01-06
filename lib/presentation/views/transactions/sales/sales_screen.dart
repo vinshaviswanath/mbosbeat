@@ -2,6 +2,8 @@ import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_switch.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
+import 'package:mpos_beat/presentation/views/transactions/purchase/widgets/discount_alert_widget.dart';
+import 'package:mpos_beat/presentation/views/transactions/sales/widgets/apply_coupon_widget.dart';
 import 'package:mpos_beat/presentation/views/transactions/sales/widgets/payment_mode_alert_widget.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/widgets/end_to_end_text_widget.dart';
 
@@ -388,7 +390,13 @@ class _SalesScreenState extends State<SalesScreen> {
                         borderColor: ColorResources.bluishGray,
                         thumbColor: ColorResources.bluishGray,
                         value: false,
-                        onChanged: (value) {},
+                        onChanged: (value) {
+                          if (value == true) {
+                            CustomDialog.showBottomCustomDialog(
+                              child: const DiscountAlertWidget(),
+                            );
+                          }
+                        },
                       ),
                     ],
                   ),
@@ -404,7 +412,13 @@ class _SalesScreenState extends State<SalesScreen> {
                         borderColor: ColorResources.bluishGray,
                         thumbColor: ColorResources.bluishGray,
                         value: false,
-                        onChanged: (value) {},
+                        onChanged: (value) {
+                          if (value == true) {
+                            CustomDialog.showBottomCustomDialog(
+                              child: const ApplyCouponWidget(),
+                            );
+                          }
+                        },
                       ),
                     ],
                   ),

@@ -1,4 +1,3 @@
-import 'package:mpos_beat/presentation/common/widgets/custom_dropdown.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_dropdown_type_generic.dart';
 
 class UsersListModel {
@@ -28,7 +27,7 @@ class UsersListModel {
   }
 
   Map<String, dynamic> toJson() => {
-    "userMasterList": userMasterList.map((x) => x?.toJson()).toList(),
+    "userMasterList": userMasterList.map((x) => x.toJson()).toList(),
     "id": id,
     "status": status,
     "message": message,

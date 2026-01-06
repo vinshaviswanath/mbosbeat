@@ -4,8 +4,6 @@ import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/data/models/data/country_list_data.dart';
 import 'package:mpos_beat/data/models/data/registration_type_data.dart';
-import 'package:mpos_beat/data/models/godown_list_model.dart';
-import 'package:mpos_beat/data/models/route_list_model.dart';
 import 'package:mpos_beat/domain/request/login_by_token_param.dart';
 import 'package:mpos_beat/presentation/dialogs/registration_dialogs.dart';
 import 'package:mpos_beat/presentation/logic/authentication_provider.dart';

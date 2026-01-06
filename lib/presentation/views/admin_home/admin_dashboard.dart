@@ -413,7 +413,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                               .where(
                                                 (e) =>
                                                     e != null &&
-                                                    e!.trim().isNotEmpty,
+                                                    e.trim().isNotEmpty,
                                               )
                                               .toList();
 

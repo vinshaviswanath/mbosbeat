@@ -14,44 +14,44 @@ class _TransactionOrderBookingScreenState
     extends State<TransactionOrderBookingScreen> {
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> data = [
-      {
-        "product": "ASD 16 Rice 10Kg",
-        "qty": "5.0 Qls",
-        "rate": "3900.00 Qls",
-        "amount": "27300.00",
-        "damaged": "2.0 Qls",
-        "free": "1.0 Qls",
-        "saleable": "5.0 Qls",
-      },
-      {
-        "product": "ASD 16 Rice 10Kg",
-        "qty": "5.0 Qls",
-        "rate": "3900.00 Qls",
-        "amount": "5300.00",
-        "damaged": "2.0 Qls",
-        "free": "1.0 Qls",
-        "saleable": "5.0 Qls",
-      },
-      {
-        "product": "ASD 16 Rice 10Kg",
-        "qty": "5.0 Qls",
-        "rate": "3900.00 Qls",
-        "amount": "10300.00",
-        "damaged": "2.0 Qls",
-        "free": "1.0 Qls",
-        "saleable": "5.0 Qls",
-      },
-      {
-        "product": "ASD 16 Rice 10Kg",
-        "qty": "5.0 Qls",
-        "rate": "3900.00 Qls",
-        "amount": "6700.00",
-        "damaged": "2.0 Qls",
-        "free": "1.0 Qls",
-        "saleable": "5.0 Qls",
-      },
-    ];
+    // final List<Map<String, dynamic>> data = [
+    //   {
+    //     "product": "ASD 16 Rice 10Kg",
+    //     "qty": "5.0 Qls",
+    //     "rate": "3900.00 Qls",
+    //     "amount": "27300.00",
+    //     "damaged": "2.0 Qls",
+    //     "free": "1.0 Qls",
+    //     "saleable": "5.0 Qls",
+    //   },
+    //   {
+    //     "product": "ASD 16 Rice 10Kg",
+    //     "qty": "5.0 Qls",
+    //     "rate": "3900.00 Qls",
+    //     "amount": "5300.00",
+    //     "damaged": "2.0 Qls",
+    //     "free": "1.0 Qls",
+    //     "saleable": "5.0 Qls",
+    //   },
+    //   {
+    //     "product": "ASD 16 Rice 10Kg",
+    //     "qty": "5.0 Qls",
+    //     "rate": "3900.00 Qls",
+    //     "amount": "10300.00",
+    //     "damaged": "2.0 Qls",
+    //     "free": "1.0 Qls",
+    //     "saleable": "5.0 Qls",
+    //   },
+    //   {
+    //     "product": "ASD 16 Rice 10Kg",
+    //     "qty": "5.0 Qls",
+    //     "rate": "3900.00 Qls",
+    //     "amount": "6700.00",
+    //     "damaged": "2.0 Qls",
+    //     "free": "1.0 Qls",
+    //     "saleable": "5.0 Qls",
+    //   },
+    // ];
     final List<String> priceOptions = ["Select Price"];
     String selectedValue = priceOptions[0];
     final appLocalizations = context.l10n;

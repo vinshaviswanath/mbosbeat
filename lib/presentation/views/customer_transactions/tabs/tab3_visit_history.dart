@@ -1,5 +1,4 @@
 import 'dart:math' as math;
-import 'package:flutter/material.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/transaction_detail_page/filter_dialog.dart';
 
@@ -11,13 +10,13 @@ class Tab3VisitHistory extends StatefulWidget {
 }
 
 class _Tab3VisitHistoryState extends State<Tab3VisitHistory> {
-  final GlobalKey _filterKey = GlobalKey(); // key for IconButton
+  // final GlobalKey _filterKey = GlobalKey(); // key for IconButton
 
   @override
   Widget build(BuildContext context) {
     final applocalization = context.l10n;
-    final color = Theme.of(context).colorScheme;
-    final texttheme = Theme.of(context).textTheme;
+    // final color = Theme.of(context).colorScheme;
+    // final texttheme = Theme.of(context).textTheme;
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return SingleChildScrollView(

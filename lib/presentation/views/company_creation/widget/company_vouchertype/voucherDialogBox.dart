@@ -40,7 +40,7 @@ class _VoucherDialogboxState extends State<VoucherDialogbox> {
 
   @override
   Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context);
+    // final local = AppLocalizations.of(context);
     final provider = Provider.of<CompanyCreationProvider>(
       context,
       listen: false,
@@ -116,7 +116,7 @@ class _VoucherDialogboxState extends State<VoucherDialogbox> {
                           inactiveThumbColor: Theme.of(
                             context,
                           ).colorScheme.secondary,
-                          activeColor: Theme.of(context).colorScheme.onPrimary,
+                          activeThumbColor : Theme.of(context).colorScheme.onPrimary,
                           inactiveTrackColor: Theme.of(
                             context,
                           ).colorScheme.onPrimary,
@@ -177,7 +177,7 @@ class _VoucherDialogboxState extends State<VoucherDialogbox> {
                   //it shows instead of sales container
                   Container(
                     decoration: BoxDecoration(
-                      color: Color(0xfff98A6BE),
+                      color: Color(0xFF98A6BE),
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Column(

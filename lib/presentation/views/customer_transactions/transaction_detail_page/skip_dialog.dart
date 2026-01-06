@@ -1,3 +1,4 @@
+import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 
 void skipDialog(BuildContext context) {
@@ -8,109 +9,160 @@ void skipDialog(BuildContext context) {
     "Price",
     "Other",
   ];
-  int? _selectedValue;
+
+  int _selectedValue = 0;
+  final TextEditingController otherReasonController = TextEditingController();
+
   final applocalization = context.l10n;
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        backgroundColor: ColorResources.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-        contentPadding: const EdgeInsets.all(16.0),
-        title: Center(
-          child: Text(
-            'Reason for Skip',
-            style: context.textStyle.s14.roboto.indigoBlue.bold,
-          ),
-        ),
-        content: StatefulBuilder(
-          builder: (context, setState) {
-            return Column(
-              mainAxisSize:
-                  MainAxisSize.min, // Dialog height adjusts automatically
-              children: [
-                // Map each option to a Row with Radio
-                ...options.asMap().entries.map((entry) {
-                  int index = entry.key;
-                  String option = entry.value;
-                  return Row(
+
+  CustomDialog.showBottomCustomDialog(
+    child: StatefulBuilder(
+      builder: (context, setState) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Reason for Skip",
+              style: context.textStyle.s12.w500.indigoBlue.roboto,
+            ),
+
+            const SizedBox(height: 10),
+
+            RadioGroup<int>(
+              groupValue: _selectedValue,
+              onChanged: (value) {
+                setState(() {
+                  _selectedValue = value!;
+                });
+              },
+              child: Column(
+                children: options.asMap().entries.map((entry) {
+                  final index = entry.key;
+                  final option = entry.value;
+
+                  final bool isOtherSelected =
+                      option == "Other" && _selectedValue == index;
+
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Radio<int>(
-                        fillColor: WidgetStatePropertyAll(
-                          ColorResources.indigoBlue,
+                      Row(
+                        children: [
+                          Radio<int>(
+                            value: index,
+                            fillColor: const WidgetStatePropertyAll(
+                              ColorResources.indigoBlue,
+                            ),
+                          ),
+                          Text(
+                            option,
+                            style: context.textStyle.s12.roboto.dustyBlue.w500,
+                          ),
+                        ],
+                      ),
+
+                      /// ✅ Show TextField only when "Other" is selected
+                      if (isOtherSelected)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 15, bottom: 10),
+                          child: TextField(
+                            controller: otherReasonController,
+                            minLines: 4,
+                            maxLines: 5,
+                            decoration: InputDecoration(
+                              hintText: "Enter reason",
+                              hintStyle: context.textStyle.s12.w300.bluishGray,
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                  color: ColorResources.ashGray,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                  color: Color(0xFFD6D6D6),
+                                ),
+                              ),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: ColorResources.ashGray.withValues(
+                                    alpha: 0.2,
+                                  ),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                          ),
                         ),
-                        // side: const BorderSide(
-                        //   color: ColorResources.bluishGray,
-                        //   width: 2,
-                        // ),
-                        value: index,
-                        groupValue: _selectedValue,
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedValue = value;
-                          });
-                        },
-                      ),
-                      Text(
-                        option,
-                        style: context.textStyle.s12.roboto.dustyBlue.w500,
-                      ),
                     ],
                   );
                 }).toList(),
+              ),
+            ),
 
-                const SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-                // Buttons
-                Row(
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop(_selectedValue);
-                        },
-                        child: Text(
-                          applocalization
-                              .customer_transaction_detail_skip_dilaog_confirm_skip,
-                          style: context.textStyle.s12.roboto.white.w500,
-                        ),
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      /// Optional validation
+                      if (_selectedValue == options.indexOf("Other") &&
+                          otherReasonController.text.trim().isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text("Please enter reason")),
+                        );
+                        return;
+                      }
 
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(150, 51),
-                          backgroundColor: ColorResources.bluishGray,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                        ),
+                      Navigator.of(context).pop({
+                        "reasonIndex": _selectedValue,
+                        "otherReason": otherReasonController.text,
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(150, 51),
+                      backgroundColor: ColorResources.indigoBlue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
                       ),
                     ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Text(
-                          applocalization
-                              .customer_transaction_detail_skip_dilaog_cancel,
-                          style: context.textStyle.s12.roboto.white.w500,
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(150, 51),
-                          backgroundColor: ColorResources.bluishGray,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                        ),
+                    child: Text(
+                      applocalization
+                          .customer_transaction_detail_skip_dilaog_confirm_skip,
+                      style: context.textStyle.s12.roboto.white.w500,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(150, 51),
+                      backgroundColor: ColorResources.bluishGray,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
                       ),
                     ),
-                  ],
+                    child: Text(
+                      applocalization
+                          .customer_transaction_detail_skip_dilaog_cancel,
+                      style: context.textStyle.s12.roboto.white.w500,
+                    ),
+                  ),
                 ),
               ],
-            );
-          },
-        ),
-      );
-    },
+            ),
+          ],
+        );
+      },
+    ),
   );
 }

@@ -4,7 +4,6 @@ import 'package:mpos_beat/core/theme/theme/theme_provider.dart';
 import 'package:mpos_beat/core/utils/app_details.dart';
 import 'package:mpos_beat/core/utils/isolates/init_parsers.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
-import 'package:mpos_beat/data/models/data/get_all_company_settings_data.dart';
 import 'package:mpos_beat/domain/repositories/i_authentication_facad.dart';
 import 'package:mpos_beat/domain/repositories/i_company_creation_facad.dart';
 import 'package:mpos_beat/domain/repositories/i_user_management_facad.dart';
@@ -15,6 +14,7 @@ import 'package:mpos_beat/presentation/logic/authentication_provider.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/presentation/logic/customer_transaction_provider.dart';
 import 'package:mpos_beat/presentation/logic/user_management_provider.dart';
+import 'package:mpos_beat/presentation/logic/user_provider.dart';
 import 'package:mpos_beat/route/router.dart';
 import 'package:provider/provider.dart';
 
@@ -47,6 +47,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => CompanyCreationProvider(sl<ICompanyCreationFacad>(),db: db),
         ),
+        ChangeNotifierProvider(create: (_) => UserProvider()..load()),
         //  StreamProvider<List<CompanySettingsListData>>(
         //   create: (context) =>
         //       context.read<CompanyCreationProvider>().settingsStream,

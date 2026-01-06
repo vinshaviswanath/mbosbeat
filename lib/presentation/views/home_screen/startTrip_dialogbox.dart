@@ -8,35 +8,42 @@ import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/extentions.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_button.dart';
-import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void showStartTripDialog(
   BuildContext context, {
   required int companyId,
-  required VoidCallback onTap,
+ required Function(String routeName) onTap,
+// required VoidCallback onTap,
+
+
 }) async {
   final appDb = sl<AppDb>();
   final _formKey = GlobalKey<FormState>();
-  const _kLastRouteId = 'last_route_id';
-  const _kLastVehicleId = 'last_vehicle_id';
+  const kLastRouteId = 'last_route_id';
+  const kLastVehicleId = 'last_vehicle_id';
+  const kLastRouteName = 'last_route_name';
+  
 
-  Future<void> _saveLastSelection(int routeId, int vehicleId) async {
+
+  Future<void> saveLastSelection(int routeId, int vehicleId,String routeName,) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt(_kLastRouteId, routeId);
-    await prefs.setInt(_kLastVehicleId, vehicleId);
+    await prefs.setInt(kLastRouteId, routeId);
+    await prefs.setInt(kLastVehicleId, vehicleId);
+    await prefs.setString(kLastRouteName, routeName);
+
   }
 
-  Future<(int?, int?)> _loadLastSelection() async {
+  Future<(int?, int?)> loadLastSelection() async {
     final prefs = await SharedPreferences.getInstance();
-    return (prefs.getInt(_kLastRouteId), prefs.getInt(_kLastVehicleId));
+    return (prefs.getInt(kLastRouteId), prefs.getInt(kLastVehicleId));
   }
 
   GodownRoute? selectedRoute;
   GodownVehicle? selectedVehicle;
-  bool submitted = false;
+  // bool submitted = false;
 
-  final (lastRouteId, lastVehicleId) = await _loadLastSelection();
+  final (lastRouteId, lastVehicleId) = await loadLastSelection();
 
   CustomDialog.showBottomCustomDialog(
     child: StatefulBuilder(
@@ -169,16 +176,18 @@ void showStartTripDialog(
 
                           if (!isValid) return;
 
-                          await _saveLastSelection(
+                          await saveLastSelection(
                             selectedRoute!.id!,
-                            selectedVehicle!.id!,
+                            selectedVehicle!.id,
+                            selectedRoute!.routeName ?? '',
                           );
 
                           debugPrint(
                             "Trip Started → ${selectedRoute!.routeName} / ${selectedVehicle!.name}",
                           );
 
-                          onTap();
+                          onTap(selectedRoute!.routeName ?? '');
+                          // onTap();
                           WidgetsBinding.instance.addPostFrameCallback((
                             timeStamp,
                           ) {
