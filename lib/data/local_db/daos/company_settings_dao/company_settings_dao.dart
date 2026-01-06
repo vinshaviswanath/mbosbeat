@@ -1,6 +1,5 @@
 import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
-import 'package:mpos_beat/core/utils/logger.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/local_db/tables/company_settings_tables.dart';
 
@@ -10,8 +9,6 @@ part 'company_settings_dao.g.dart';
 class CompanySettingsDao extends DatabaseAccessor<AppDb>
     with _$CompanySettingsDaoMixin {
   CompanySettingsDao(super.db);
-
-  /* ───────────────────────── INSERT ───────────────────────── */
 
   /// Insert or update single row
   Future<void> insertOne(CompanySettingsTableCompanion data) async {

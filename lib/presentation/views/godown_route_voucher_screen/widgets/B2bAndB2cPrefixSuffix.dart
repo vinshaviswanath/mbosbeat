@@ -3,7 +3,6 @@ import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/voucher_numbering_response.dart';
 import 'package:mpos_beat/domain/request/create_voucher_numbering_params.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
-import 'package:mpos_beat/presentation/views/transactions/sales_return/sales_return.dart';
 
 class B2bAndB2cPrefixSuffix extends StatefulWidget {
   final VoucherNumberingModel data;

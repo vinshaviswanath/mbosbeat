@@ -11,7 +11,6 @@ part 'route_dao.g.dart';
 class RouteDao extends DatabaseAccessor<AppDb> with _$RouteDaoMixin {
   RouteDao(super.db);
 
-  /// Insert or update routes
   Future<void> insertRoutes(List<RouteList> list) async {
     await batch((batch) {
       batch.insertAllOnConflictUpdate(
@@ -29,31 +28,24 @@ class RouteDao extends DatabaseAccessor<AppDb> with _$RouteDaoMixin {
     });
   }
 
-  /// Get all routes
   Future<List<GodownRoute>> getAllRoutes() {
     return select(godownRoutes).get();
   }
 
-  /// Watch routes
   Stream<List<GodownRoute>> watchRoutes() {
     return select(godownRoutes).watch();
   }
 
-  /// Clear all
   Future<void> clearAll() async {
     await delete(godownRoutes).go();
   }
 
-  /// Clear by company
   Future<void> clearByCompany(int companyId) async {
     await (delete(
       godownRoutes,
     )..where((tbl) => tbl.companyId.equals(companyId))).go();
   }
 
-  // =====================================================
-  // 🔍 DEBUG PRINT (Same style as your example)
-  // =====================================================
 
   Future<void> printRoutes() async {
     final list = await select(godownRoutes).get();

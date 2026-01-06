@@ -2,7 +2,6 @@ import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/create_company_voucher_model.dart';
 import 'package:mpos_beat/domain/request/create_company_voucher_request.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
-import 'package:mpos_beat/presentation/views/admin_home/widget/common_snackbar.dart';
 
 class ToggleDialogBox extends StatefulWidget {
   final int companyId;
@@ -10,7 +9,7 @@ class ToggleDialogBox extends StatefulWidget {
   final int isToggleOn;
   final void Function()? onTap;
   final int id;
-  ToggleDialogBox({
+  const ToggleDialogBox({super.key, 
     required this.companyId,
     required this.isCheckOn,
     required this.isToggleOn,

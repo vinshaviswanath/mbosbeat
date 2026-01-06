@@ -1,6 +1,5 @@
 import 'package:flutter/services.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
-import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 import 'package:mpos_beat/presentation/common/widgets/sliverSpace.dart';
 import 'package:mpos_beat/presentation/logic/authentication_provider.dart';

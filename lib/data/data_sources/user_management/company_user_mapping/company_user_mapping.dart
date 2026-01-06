@@ -9,7 +9,6 @@ import 'package:mpos_beat/core/utils/logger.dart';
 import 'package:mpos_beat/core/utils/typedefs.dart';
 import 'package:mpos_beat/core/utils/urls.dart';
 import 'package:mpos_beat/data/models/company_creation_response.dart';
-import 'package:mpos_beat/data/models/create_godown_response.dart';
 import 'package:mpos_beat/domain/request/create_comany_user_mapping_params.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

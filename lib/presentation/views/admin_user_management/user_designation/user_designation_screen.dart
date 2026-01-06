@@ -392,7 +392,7 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
                             index: index,
                           ),
                         );
-                      }, childCount: items?.length),
+                      }, childCount: items.length),
                     ),
                   ],
                 ),

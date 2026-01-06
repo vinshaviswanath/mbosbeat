@@ -267,6 +267,7 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     //String? selectedReportingTo;
     final appLocalizations = context.l10n;
     return Consumer<CompanyCreationProvider>(

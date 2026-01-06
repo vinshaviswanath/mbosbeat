@@ -97,7 +97,7 @@ class _CompanyUserMappingScreenState extends State<CompanyUserMappingScreen> {
       selectedCompany?.address3,
     ];
     final filteredAddress = addressParts
-        .where((e) => e != null && e!.trim().isNotEmpty)
+        .where((e) => e != null && e.trim().isNotEmpty)
         .toList();
 
     // Join with commas

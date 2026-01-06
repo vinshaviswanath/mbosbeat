@@ -9,7 +9,6 @@ import 'package:mpos_beat/core/utils/logger.dart';
 import 'package:mpos_beat/core/utils/typedefs.dart';
 import 'package:mpos_beat/core/utils/urls.dart';
 import 'package:mpos_beat/data/models/login_response.dart';
-import 'package:mpos_beat/data/models/otp_response.dart';
 import 'package:mpos_beat/domain/request/resend_otp_params.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

@@ -8,7 +8,6 @@ import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/presentation/views/godown_route_voucher_screen/widgets/B2bAndB2cPrefixSuffix.dart';
 import 'package:mpos_beat/presentation/views/godown_route_voucher_screen/widgets/SingleCompanyPrefixSuffix.dart';
 import 'package:mpos_beat/presentation/views/godown_route_voucher_screen/widgets/custom_dropdown_widget.dart';
-import 'package:mpos_beat/presentation/views/transactions/sales_return/sales_return.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class VoucherSettingsScreen<T> extends StatefulWidget {
@@ -60,7 +59,7 @@ class _VoucherSettingsScreenState<T> extends State<VoucherSettingsScreen<T>> {
 
   @override
   Widget build(BuildContext context) {
-    int selectedIndex = -1;
+    // int selectedIndex = -1;
 
     String nameText = '';
     if (isVehicle && widget.data is VehicleList) {

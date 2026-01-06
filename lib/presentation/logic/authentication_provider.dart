@@ -478,7 +478,7 @@ class AuthFormProvider with ChangeNotifier {
 
     await result.fold(
       (failure) async {
-        _errorMessage = failure.errorMsg?.toString();
+        _errorMessage = failure.errorMsg.toString();
         final safeMsg = _errorMessage?.isNotEmpty == true
             ? _errorMessage!
             : "Login failed. Please try again.";

@@ -21,7 +21,7 @@ class VoucherNumberingResponse {
     }
 
     Map<String, dynamic> toJson() => {
-        "voucherNumberingModels": voucherNumberingModels.map((x) => x?.toJson()).toList(),
+        "voucherNumberingModels": voucherNumberingModels.map((x) => x.toJson()).toList(),
         "id": id,
         "status": status,
         "message": message,

@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:mpos_beat/core/utils/custom_dialogs.dart';
-import 'package:mpos_beat/core/utils/extentions.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
-import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/tabs/tab1_transactions.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/tabs/tab2_outstanding.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/tabs/tab3_visit_history.dart';
@@ -47,9 +42,9 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
   @override
   Widget build(BuildContext context) {
     final applocalization = context.l10n;
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
-    final color = Theme.of(context).colorScheme;
+    // final height = MediaQuery.of(context).size.height;
+    // final width = MediaQuery.of(context).size.width;
+    // final color = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

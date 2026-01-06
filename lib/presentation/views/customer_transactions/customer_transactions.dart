@@ -1,5 +1,4 @@
 import 'package:mpos_beat/core/utils/imports.dart';
-import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 import 'package:mpos_beat/presentation/views/home_screen/transactions_container.dart';
 
@@ -18,7 +17,7 @@ class _CustomerTransactionsState extends State<CustomerTransactions> {
     final appLocalization = context.l10n;
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    final color = Theme.of(context).colorScheme;
+    // final color = Theme.of(context).colorScheme;
     Logger.logSuccess("Company ID :: ${widget.data.company.id}");
     return Scaffold(
       backgroundColor: ColorResources.white,

@@ -1,4 +1,3 @@
-import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/route_list_model.dart';
@@ -11,7 +10,6 @@ import 'package:mpos_beat/presentation/views/admin_user_management/user_manage/w
 import 'package:mpos_beat/presentation/views/route_wise_screen/widgets/add_route.dart';
 import 'package:mpos_beat/presentation/views/route_wise_screen/widgets/route_widget.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_manage/widgets/option_item.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class RouteWiseScreen extends StatefulWidget {
   const RouteWiseScreen({super.key});

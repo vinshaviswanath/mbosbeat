@@ -186,9 +186,7 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
       builder: (context, provider, _) {
         final designationList =
             provider.designationList?.userDesignationList
-                ?.where(
-                  (e) => e.active == 1 && e.name!.toLowerCase() != "admin",
-                )
+                .where((e) => e.active == 1 && e.name!.toLowerCase() != "admin")
                 .toList() ??
             [];
 
@@ -199,7 +197,7 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
 
         final usersList =
             provider.usersList?.userMasterList
-                ?.where((e) => e.active == 1 && e.id != widget.user?.id)
+                .where((e) => e.active == 1 && e.id != widget.user?.id)
                 .toList() ??
             [];
 

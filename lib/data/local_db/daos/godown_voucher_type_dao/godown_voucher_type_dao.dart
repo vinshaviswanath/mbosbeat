@@ -1,6 +1,5 @@
 import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
-import 'package:mpos_beat/core/utils/logger.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/local_db/tables/godown_voucher_types_tables.dart';
 
@@ -11,12 +10,11 @@ class GodownVoucherTypesDao extends DatabaseAccessor<AppDb>
     with _$GodownVoucherTypesDaoMixin {
   GodownVoucherTypesDao(super.db);
 
-  // Insert or update single row
+
   Future<void> insertOne(GodownVoucherTypesCompanion voucher) async {
     await into(godownVoucherTypes).insertOnConflictUpdate(voucher);
   }
 
-  // ✅ Correct bulk insert
   Future<void> insertAll(List<GodownVoucherTypesCompanion> list) async {
     await batch((batch) {
       batch.insertAllOnConflictUpdate(godownVoucherTypes, list);

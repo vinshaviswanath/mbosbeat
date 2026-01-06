@@ -68,7 +68,7 @@ class _GodownScreenState extends State<GodownScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final appLocalizations = context.l10n;
+    // final appLocalizations = context.l10n;
 
     return PopScope(
       canPop: false,
@@ -85,7 +85,7 @@ class _GodownScreenState extends State<GodownScreen> {
           return StreamBuilder<List<UserMasterList>>(
             stream: provider.usersStream,
             builder: (context, snapshot) {
-              final users = snapshot.data ?? [];
+              // final users = snapshot.data ?? [];
               final query = searchController.text.toLowerCase();
 
               final filteredItems = groupList.where((item) {

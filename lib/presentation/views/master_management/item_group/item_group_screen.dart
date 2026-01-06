@@ -82,7 +82,7 @@ class _ItemGroupScreenState extends State<ItemGroupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final appLocalizations = context.l10n;
+    // final appLocalizations = context.l10n;
 
     return PopScope(
       canPop: false,
@@ -99,7 +99,7 @@ class _ItemGroupScreenState extends State<ItemGroupScreen> {
           return StreamBuilder<List<UserMasterList>>(
             stream: provider.usersStream,
             builder: (context, snapshot) {
-              final users = snapshot.data ?? [];
+              // final users = snapshot.data ?? [];
               final query = searchController.text.toLowerCase();
 
               final filteredItems = groupList.where((item) {
@@ -205,7 +205,7 @@ class _ItemGroupScreenState extends State<ItemGroupScreen> {
 
                               return GestureDetector(
                                 onTap: () async {
-                                  // await _handleUserTap(item, index, provider);
+                                  // await handleUserTap(item, index, provider);
                                   setState(() => selectedIndex = index);
                                 },
                                 child: ListCard(
@@ -214,7 +214,7 @@ class _ItemGroupScreenState extends State<ItemGroupScreen> {
                                     // item.isBlocked
                                     //     ? null
                                     //     : () async {
-                                    //         await _showUserOptionsDialog(
+                                    //         await showUserOptionsDialog(
                                     //           context,
                                     //           index,
                                     //           item,
@@ -253,7 +253,7 @@ class _ItemGroupScreenState extends State<ItemGroupScreen> {
     );
   }
 
-  Future<void> _handleUserTap(
+  Future<void> handleUserTap(
     UserMasterList item,
     int index,
     UserManagementProvider provider,
@@ -293,7 +293,7 @@ class _ItemGroupScreenState extends State<ItemGroupScreen> {
     }
   }
 
-  Future<void> _showUserOptionsDialog(
+  Future<void> showUserOptionsDialog(
     BuildContext context,
     int index,
     UserMasterList item,

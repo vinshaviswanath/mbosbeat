@@ -21,7 +21,7 @@ class GodownListModel {
     }
 
     Map<String, dynamic> toJson() => {
-        "vehicleList": vehicleList.map((x) => x?.toJson()).toList(),
+        "vehicleList": vehicleList.map((x) => x.toJson()).toList(),
         "id": id,
         "status": status,
         "message": message,

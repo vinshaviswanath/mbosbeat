@@ -1,5 +1,4 @@
 import 'package:mpos_beat/core/utils/imports.dart';
-import 'package:mpos_beat/data/models/users_list_model.dart';
 
 class ListCard extends StatelessWidget {
   const ListCard({

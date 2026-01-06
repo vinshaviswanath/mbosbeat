@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:mpos_beat/core/utils/imports.dart';
-import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
 
 class StatusView extends StatelessWidget {

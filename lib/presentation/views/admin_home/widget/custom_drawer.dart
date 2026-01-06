@@ -1,14 +1,9 @@
-import 'dart:convert';
-
-import 'package:flutter/services.dart';
 import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/presentation/dialogs/logout_dialog.dart';
 import 'package:mpos_beat/presentation/views/admin_home/admin_dashboard.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:yaml/yaml.dart';
 
 class CustomDrawer extends StatefulWidget {
   final Widget child;

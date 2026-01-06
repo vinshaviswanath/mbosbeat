@@ -1,6 +1,5 @@
 import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
-import 'package:mpos_beat/core/utils/logger.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/local_db/tables/route_voucher_types_tables.dart';
 
@@ -11,12 +10,10 @@ class RouteVoucherTypesDao extends DatabaseAccessor<AppDb>
     with _$RouteVoucherTypesDaoMixin {
   RouteVoucherTypesDao(super.db);
 
-  // Insert or update single row
   Future<void> insertOne(RouteVoucherTypesCompanion voucher) async {
     await into(routeVoucherTypes).insertOnConflictUpdate(voucher);
   }
 
-  // ✅ Correct bulk insert
   Future<void> insertAll(List<RouteVoucherTypesCompanion> list) async {
     await batch((batch) {
       batch.insertAllOnConflictUpdate(routeVoucherTypes, list);

@@ -1,4 +1,3 @@
-import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/godown_list_model.dart';
@@ -11,7 +10,6 @@ import 'package:mpos_beat/presentation/common/widgets/deactivate_widget.dart';
 import 'package:mpos_beat/presentation/common/widgets/delete_widget.dart';
 import 'package:mpos_beat/presentation/views/godown_wise_screen/widgets/vehicle_widget.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_manage/widgets/option_item.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class GodownWiseScreen extends StatefulWidget {
   const GodownWiseScreen({super.key});
@@ -63,7 +61,9 @@ class _GodownWiseScreenState extends State<GodownWiseScreen> {
             actions: [
               InkWell(
                 onTap: () {
-                  CustomDialog.showBottomCustomDialog(child: const AddVehicle());
+                  CustomDialog.showBottomCustomDialog(
+                    child: const AddVehicle(),
+                  );
                 },
                 child: const Padding(
                   padding: EdgeInsets.only(right: 20),
@@ -190,20 +190,23 @@ class _GodownWiseScreenState extends State<GodownWiseScreen> {
                                                   InkWell(
                                                     onTap: () =>
                                                         Navigator.pop(context),
-                                                      child: CircleAvatar(
-                                                                                        backgroundColor: ColorResources.bluishGray.withValues(
-                                                                                          alpha: 0.15,
-                                                                                        ),
-                                                                     radius: 12,
-                                              
-                                                                                      child: const Icon(
-                                                                                         Icons.close,
-                                                     
-                                                     
-                                                                                         size: 12,
-                                                                                          color: ColorResources.bluishGray,
-                                                                                        ),
-                                                                                      ),
+                                                    child: CircleAvatar(
+                                                      backgroundColor:
+                                                          ColorResources
+                                                              .bluishGray
+                                                              .withValues(
+                                                                alpha: 0.15,
+                                                              ),
+                                                      radius: 12,
+
+                                                      child: const Icon(
+                                                        Icons.close,
+
+                                                        size: 12,
+                                                        color: ColorResources
+                                                            .bluishGray,
+                                                      ),
+                                                    ),
                                                   ),
                                                 ],
                                               ),

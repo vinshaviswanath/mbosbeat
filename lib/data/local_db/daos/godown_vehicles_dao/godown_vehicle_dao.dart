@@ -13,7 +13,6 @@ class GodownVehicleDao extends DatabaseAccessor<AppDb>
     with _$GodownVehicleDaoMixin {
   GodownVehicleDao(super.db);
 
-  /// Insert or update list from API
   Future<void> insertVehicles(List<VehicleList> list) async {
     await batch((batch) {
       batch.insertAllOnConflictUpdate(
@@ -31,24 +30,24 @@ class GodownVehicleDao extends DatabaseAccessor<AppDb>
     });
   }
 
-  /// Get all vehicles
+
   Future<List<GodownVehicle>> getAllVehicles() {
     return select(godownVehicles).get();
   }
 
-  /// Watch vehicles (reactive)
+
   Stream<List<GodownVehicle>> watchVehicles() {
     return select(godownVehicles).watch();
   }
 
-  /// Filter by companyId
+
   Stream<List<GodownVehicle>> watchByCompany(int companyId) {
     return (select(
       godownVehicles,
     )..where((tbl) => tbl.companyId.equals(companyId))).watch();
   }
 
-  /// Delete all (useful on logout / refresh)
+
   Future<void> clearAll() async {
     await delete(godownVehicles).go();
   }

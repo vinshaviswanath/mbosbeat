@@ -6,24 +6,21 @@ import 'package:mpos_beat/data/local_db/tables/voucher_types_tables.dart';
 
 part 'voucher_type_dao.g.dart';
 
-@DriftAccessor(tables: [VoucherTypes,UserSettingsTable])
+@DriftAccessor(tables: [VoucherTypes, UserSettingsTable])
 class VoucherTypesDao extends DatabaseAccessor<AppDb>
     with _$VoucherTypesDaoMixin {
   VoucherTypesDao(super.db);
 
-  // Insert or replace
   Future<void> insertVoucherType(VoucherType voucher) async {
     await into(voucherTypes).insertOnConflictUpdate(voucher);
   }
 
-  // Bulk insert
   Future<void> insertVoucherTypes(List<VoucherType> list) async {
     await batch((batch) {
       batch.insertAllOnConflictUpdate(voucherTypes, list);
     });
   }
 
-  // Get all
   Future<List<VoucherType>> getAllVoucherTypes() {
     return select(voucherTypes).get();
   }
@@ -32,7 +29,6 @@ class VoucherTypesDao extends DatabaseAccessor<AppDb>
     return select(voucherTypes).watch();
   }
 
-  // Get by companyId
   Future<List<VoucherType>> getVoucherTypesByCompany(int companyId) {
     return (select(voucherTypes)
           ..where((tbl) => tbl.companyId.equals(companyId))
@@ -48,15 +44,14 @@ class VoucherTypesDao extends DatabaseAccessor<AppDb>
   }
 
   Stream<List<VoucherType>> watchEnabledVoucherTypesByCompany(int companyId) {
-  return (select(voucherTypes)
-        ..where((tbl) =>
-            tbl.companyId.equals(companyId) & tbl.isEnabled.equals(1))
-        ..orderBy([(tbl) => OrderingTerm.asc(tbl.orderNo)]))
-      .watch();
-}
+    return (select(voucherTypes)
+          ..where(
+            (tbl) => tbl.companyId.equals(companyId) & tbl.isEnabled.equals(1),
+          )
+          ..orderBy([(tbl) => OrderingTerm.asc(tbl.orderNo)]))
+        .watch();
+  }
 
-
-  // Delete all
   Future<int> deleteAll() {
     return delete(voucherTypes).go();
   }
@@ -98,35 +93,33 @@ class VoucherTypesDao extends DatabaseAccessor<AppDb>
   }
 
   Future<void> deleteByCompany(int companyId) {
-  return (delete(voucherTypes)
-        ..where((tbl) => tbl.companyId.equals(companyId)))
-      .go();
-}
+    return (delete(
+      voucherTypes,
+    )..where((tbl) => tbl.companyId.equals(companyId))).go();
+  }
 
-Stream<List<VoucherType>> watchPermittedVoucherTypes({
-  required int companyId,
-  required int userId,
-}) {
-  final query = select(voucherTypes).join([
-    innerJoin(
-      userSettingsTable,
-      userSettingsTable.menuName.equalsExp(voucherTypes.voucherMenuName) &
-          userSettingsTable.userId.equals(userId) &
-          userSettingsTable.active.equals(1) &
-          userSettingsTable.value.equals('Yes'),
-    ),
-  ])
-    ..where(voucherTypes.companyId.equals(companyId))
-    ..where(voucherTypes.isEnabled.equals(1))
-    ..orderBy([
-      OrderingTerm.asc(voucherTypes.orderNo),
-    ]);
+  Stream<List<VoucherType>> watchPermittedVoucherTypes({
+    required int companyId,
+    required int userId,
+  }) {
+    final query =
+        select(voucherTypes).join([
+            innerJoin(
+              userSettingsTable,
+              userSettingsTable.menuName.equalsExp(
+                    voucherTypes.voucherMenuName,
+                  ) &
+                  userSettingsTable.userId.equals(userId) &
+                  userSettingsTable.active.equals(1) &
+                  userSettingsTable.value.equals('Yes'),
+            ),
+          ])
+          ..where(voucherTypes.companyId.equals(companyId))
+          ..where(voucherTypes.isEnabled.equals(1))
+          ..orderBy([OrderingTerm.asc(voucherTypes.orderNo)]);
 
-  return query.watch().map(
-        (rows) => rows.map((row) => row.readTable(voucherTypes)).toList(),
-      );
-}
-
-
-
+    return query.watch().map(
+      (rows) => rows.map((row) => row.readTable(voucherTypes)).toList(),
+    );
+  }
 }

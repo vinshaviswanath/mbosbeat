@@ -11,7 +11,6 @@ import 'package:mpos_beat/data/data_sources/authentication/resend_otp/resend_otp
 import 'package:mpos_beat/data/data_sources/authentication/reset_password/reset_password.dart';
 import 'package:mpos_beat/data/models/company_registration_response.dart';
 import 'package:mpos_beat/data/models/login_response.dart';
-import 'package:mpos_beat/data/models/otp_response.dart';
 import 'package:mpos_beat/data/models/response_data.dart';
 import 'package:mpos_beat/domain/repositories/i_authentication_facad.dart';
 import 'package:mpos_beat/domain/request/company_registration_params.dart';

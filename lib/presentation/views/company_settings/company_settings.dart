@@ -1,6 +1,5 @@
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/data/get_all_company_settings_data.dart';
-import 'package:mpos_beat/domain/request/create_company_settings_request.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_settings/tooltip_overlay_manager.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/user_settings/widgets/info_tool_tip.dart';
