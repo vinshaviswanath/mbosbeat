@@ -372,56 +372,56 @@ class _B2bContainerState extends State<B2bContainer> {
             SizedBox(height: MediaQuery.of(context).size.height * 0.006),
 
             //B2B elevated button
-            Center(
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorResources.indigoBlue,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  minimumSize: Size(
-                    MediaQuery.of(context).size.width * 0.400,
-                    MediaQuery.of(context).size.height * 0.060,
-                  ),
-                ),
-                onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    _validateInput();
-                    if (_isInputValid && _isPrefixValid && _isSuffixValid) {
-                      await provider.createCompanyVoucherTypes(
-                        onSuccess: widget.onTap,
-                        context,
-                        request: CreateCompanyVocherParams(
-                          id: widget.companydata!.id,
-                          companyid: widget.companyId,
-                          hasB2B: widget.isToggleOn,
-                          b2Bprefix: b2bprefixcontroller.text,
-                          b2Bsuffix: b2bsuffixcontroller.text,
-                          b2Bwidth: int.tryParse(b2bwidthcontroller.text) ?? 0,
-                          b2Bdeclaration: b2bdeclarationcontroller.text,
-                          b2Cprefix: widget.companydata!.b2CPrefix,
-                          b2Csuffix: widget.companydata!.b2CSuffix,
-                          b2Cwidth: widget.companydata!.b2CWidth,
-                          b2Cdeclaration: widget.companydata!.b2CDeclaration,
-                          isenabled: widget.isCheckOn == 1 ? 1 : 0,
-                        ),
-                      );
+            // Center(
+            //   child: ElevatedButton(
+            //     style: ElevatedButton.styleFrom(
+            //       backgroundColor: ColorResources.indigoBlue,
+            //       shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.circular(12),
+            //       ),
+            //       minimumSize: Size(
+            //         MediaQuery.of(context).size.width * 0.400,
+            //         MediaQuery.of(context).size.height * 0.060,
+            //       ),
+            //     ),
+              //   onPressed: () async {
+              //     if (_formKey.currentState!.validate()) {
+              //       _validateInput();
+              //       if (_isInputValid && _isPrefixValid && _isSuffixValid) {
+              //         await provider.createCompanyVoucherTypes(
+              //           onSuccess: widget.onTap,
+              //           context,
+              //           request: CreateCompanyVocherParams(
+              //             id: widget.companydata!.id,
+              //             companyid: widget.companyId,
+              //             hasB2B: widget.isToggleOn,
+              //             b2Bprefix: b2bprefixcontroller.text,
+              //             b2Bsuffix: b2bsuffixcontroller.text,
+              //             b2Bwidth: int.tryParse(b2bwidthcontroller.text) ?? 0,
+              //             b2Bdeclaration: b2bdeclarationcontroller.text,
+              //             b2Cprefix: widget.companydata!.b2CPrefix,
+              //             b2Csuffix: widget.companydata!.b2CSuffix,
+              //             b2Cwidth: widget.companydata!.b2CWidth,
+              //             b2Cdeclaration: widget.companydata!.b2CDeclaration,
+              //             isenabled: widget.isCheckOn == 1 ? 1 : 0,
+              //           ),
+              //         );
 
-                      await provider.fetchVoucherTypes(
-                        context,
-                        widget.companyId,
-                      );
-                      context.pop();
-                    }
-                    dataCollecting();
-                  }
-                },
-                child: Text(
-                  "Save",
-                  style: TextStyle(fontSize: 14, color: ColorResources.white),
-                ),
-              ),
-            ),
+              //         await provider.fetchVoucherTypes(
+              //           context,
+              //           widget.companyId,
+              //         );
+              //         context.pop();
+              //       }
+              //       dataCollecting();
+              //     }
+              //   },
+              //   child: Text(
+              //     "Save",
+              //     style: TextStyle(fontSize: 14, color: ColorResources.white),
+              //   ),
+              // ),
+            // ),
           ],
         ),
       ),

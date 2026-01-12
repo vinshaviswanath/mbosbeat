@@ -75,6 +75,7 @@ class _SingleCompanyPrefixSuffixState extends State<SingleCompanyPrefixSuffix> {
     super.dispose();
   }
 
+  String _b2berrorText = "";
   @override
   Widget build(BuildContext context) {
     final appLocalizations = context.l10n;
@@ -205,7 +206,13 @@ class _SingleCompanyPrefixSuffixState extends State<SingleCompanyPrefixSuffix> {
                                                 .s14
                                                 .w500
                                                 .dustyBlue
-                                                .roboto,
+                                                .roboto
+                                                .copyWith(
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                  decorationColor:
+                                                      ColorResources.indigoBlue,
+                                                ),
                                           ),
                                         ],
                                       ),
@@ -225,8 +232,8 @@ class _SingleCompanyPrefixSuffixState extends State<SingleCompanyPrefixSuffix> {
                                         "Applicable From",
                                         style: context
                                             .textStyle
-                                            .s09
-                                            .w300
+                                            .s12
+                                            .w400
                                             .bluishGray
                                             .roboto,
                                       ),
@@ -591,6 +598,22 @@ class _SingleCompanyPrefixSuffixState extends State<SingleCompanyPrefixSuffix> {
                                               ),
                                         ),
                                       ),
+                                      h2,
+                                      if (_b2berrorText.isNotEmpty)
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                            left: 12,
+                                            top: 4,
+                                          ),
+                                          child: Text(
+                                            _b2berrorText,
+                                            style: const TextStyle(
+                                              color: Colors.red,
+                                              fontSize: 11,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
                                       h24,
                                       Center(
                                         child: Padding(
@@ -610,84 +633,105 @@ class _SingleCompanyPrefixSuffixState extends State<SingleCompanyPrefixSuffix> {
                                                 .white,
                                             isborderEnable: false,
                                             onTap: () {
-                                              if (_formKey.currentState
-                                                      ?.validate() ??
-                                                  false) {
-                                                final updatedVoucher =
-                                                    VoucherNumber(
-                                                      voucherTypeId:
-                                                          data.voucherTypeId,
-                                                      applicableFrom:
-                                                          selectedDate ??
-                                                          data.applicableFrom,
-                                                      hasB2B: data.hasB2B,
-                                                      b2BPrefix:
-                                                          prefixController.text,
-                                                      b2BSuffix:
-                                                          suffixController.text,
-                                                      b2BWidth:
-                                                          int.tryParse(
-                                                            widthController
-                                                                .text,
-                                                          ) ??
-                                                          data.b2BWidth,
-                                                      b2BStartFrom:
-                                                          int.tryParse(
-                                                            startFromController
-                                                                .text,
-                                                          ) ??
-                                                          data.b2BStartFrom,
-                                                      b2CPrefix: "",
-                                                      b2CSuffix: "",
-                                                      b2CWidth: 0,
-                                                      b2CStartFrom: 0,
-                                                      b2BDeclaration:
-                                                          data.b2BDeclaration,
-                                                      b2CDeclaration: "",
-                                                    );
-                                                Logger.logSuccess(
-                                                  "Voucher Mode ::: ${provider.isGodown}",
-                                                );
-                                                provider
-                                                    .addOrUpdateVoucherNumber(
-                                                      updatedVoucher,
-                                                    );
-                                                if (!mounted) return;
-                                                //New
-                                                provider
-                                                    .createVoucherNumbering(
-                                                      context: context,
-                                                      companyId:
-                                                          provider
-                                                              .selectedCompany
-                                                              ?.id ??
-                                                          0,
-                                                      voucherModeId:
-                                                          provider.isGodown
-                                                          ? provider
-                                                                    .selectedVehicle
-                                                                    ?.id ??
-                                                                0
-                                                          : provider
-                                                                    .selectedRoute
-                                                                    ?.id ??
-                                                                0,
-                                                      voucherNumbers:
-                                                          provider
-                                                              .voucherNumberList ??
-                                                          [],
-                                                    )
-                                                    .then((value) {
-                                                      WidgetsBinding.instance
-                                                          .addPostFrameCallback(
-                                                            (timeStamp) {
-                                                              Navigator.pop(
-                                                                context,
-                                                              );
-                                                            },
-                                                          );
-                                                    });
+                                              final b2bprefix = prefixController
+                                                  .text
+                                                  .trim();
+                                              final b2bsuffix = suffixController
+                                                  .text
+                                                  .trim();
+                                              final b2bwidthText =
+                                                  widthController.text.trim();
+
+                                              final b2bwidth =
+                                                  int.tryParse(b2bwidthText) ??
+                                                  0;
+                                              final b2btotalLength =
+                                                  b2bprefix.length +
+                                                  b2bwidth +
+                                                  b2bsuffix.length;
+
+                                              if (b2btotalLength > 16) {
+                                                setState(() {
+                                                  _b2berrorText =
+                                                      "Only 16 digits allowed for Voucher Number!";
+                                                });
+
+                                                return; // stop saving
                                               }
+
+                                              final updatedVoucher =
+                                                  VoucherNumber(
+                                                    voucherTypeId:
+                                                        data.voucherTypeId,
+                                                    applicableFrom:
+                                                        selectedDate ??
+                                                        data.applicableFrom,
+                                                    hasB2B: data.hasB2B,
+                                                    b2BPrefix:
+                                                        prefixController.text,
+                                                    b2BSuffix:
+                                                        suffixController.text,
+                                                    b2BWidth:
+                                                        int.tryParse(
+                                                          widthController.text,
+                                                        ) ??
+                                                        data.b2BWidth,
+                                                    b2BStartFrom:
+                                                        int.tryParse(
+                                                          startFromController
+                                                              .text,
+                                                        ) ??
+                                                        data.b2BStartFrom,
+                                                    b2CPrefix: "",
+                                                    b2CSuffix: "",
+                                                    b2CWidth: 0,
+                                                    b2CStartFrom: 0,
+                                                    b2BDeclaration:
+                                                        data.b2BDeclaration,
+                                                    b2CDeclaration: "",
+                                                  );
+                                              Logger.logSuccess(
+                                                "Voucher Mode ::: ${provider.isGodown}",
+                                              );
+                                              provider.addOrUpdateVoucherNumber(
+                                                updatedVoucher,
+                                              );
+                                              if (!mounted) return;
+                                              //New
+                                              provider
+                                                  .createVoucherNumbering(
+                                                    context: context,
+                                                    companyId:
+                                                        provider
+                                                            .selectedCompany
+                                                            ?.id ??
+                                                        0,
+                                                    voucherModeId:
+                                                        provider.isGodown
+                                                        ? provider
+                                                                  .selectedVehicle
+                                                                  ?.id ??
+                                                              0
+                                                        : provider
+                                                                  .selectedRoute
+                                                                  ?.id ??
+                                                              0,
+                                                    voucherNumbers:
+                                                        provider
+                                                            .voucherNumberList ??
+                                                        [],
+                                                  )
+                                                  
+                                                  .then((value) {
+                                                    WidgetsBinding.instance
+                                                        .addPostFrameCallback((
+                                                          timeStamp,
+                                                        ) {
+                                                          Navigator.pop(
+                                                            context,
+                                                          );
+                                                        });
+                                                  });
                                             },
                                           ),
                                         ),

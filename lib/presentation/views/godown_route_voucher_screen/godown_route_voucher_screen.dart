@@ -1,5 +1,6 @@
 import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/models/data/company_voucher_data.dart';
 import 'package:mpos_beat/data/models/godown_list_model.dart';
 import 'package:mpos_beat/data/models/route_list_model.dart';
 import 'package:mpos_beat/data/models/voucher_numbering_response.dart';
@@ -406,7 +407,10 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
                                   children: [
                                     if (data.hasB2B == 0) ...[
                                       h16,
-                                      SingleCompanyPrefixSuffix(data: data),
+                                      SingleCompanyPrefixSuffix(
+                                        data: data,
+                                     //   companydata:CompanyVoucherTypesListData,
+                                      ),
                                     ],
                                     if (data.hasB2B == 1) ...[
                                       h6,
@@ -427,14 +431,6 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
                   // 🔹 Save Button
                   CustomButton(
                     onTap: () {
-                      // provider.createVoucherNumbering(
-                      //   context: context,
-                      //   companyId: provider.selectedCompany?.id ?? 0,
-                      //   voucherModeId: provider.isGodown
-                      //       ? provider.selectedVehicle?.id ?? 0
-                      //       : provider.selectedRoute?.id ?? 0,
-                      //   voucherNumbers: provider.voucherNumberList ?? [],
-                      // );
                       context.read<CompanyCreationProvider>().resetSelections();
                       context.pop();
                     },

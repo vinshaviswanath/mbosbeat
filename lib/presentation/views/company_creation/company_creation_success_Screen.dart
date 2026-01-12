@@ -15,9 +15,9 @@ class _CompanyCreationSuccessScreenState
     extends State<CompanyCreationSuccessScreen> {
   @override
   Widget build(BuildContext context) {
-    print(
-      'companyDATA in success screen ...........................///////////////////////////////////: ${widget.companyData}',
-    );
+    // print(
+    //   'companyDATA in success screen ...........................///////////////////////////////////: ${widget.companyData}',
+    // );
     return Scaffold(
       body: Column(
         children: [
