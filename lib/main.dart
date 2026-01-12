@@ -23,7 +23,7 @@ Future<void> main() async {
   await configureDependency(env: Environment.test);
   initParsers();
   final db = sl<AppDb>();
-  runApp( MyApp(db: db,));
+  runApp(MyApp(db: db));
 }
 
 class MyApp extends StatelessWidget {
@@ -38,14 +38,15 @@ class MyApp extends StatelessWidget {
         Provider<AppDb>.value(value: db),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(
-          create: (_) => AuthFormProvider(sl<IAuthenticationFacad>(),db: db),
+          create: (_) => AuthFormProvider(sl<IAuthenticationFacad>(), db: db),
         ),
         ChangeNotifierProvider(
           create: (_) => UserManagementProvider(sl<IUserManagementFacad>()),
         ),
         ChangeNotifierProvider(create: (_) => CustomerTransactionProvider()),
         ChangeNotifierProvider(
-          create: (_) => CompanyCreationProvider(sl<ICompanyCreationFacad>(),db: db),
+          create: (_) =>
+              CompanyCreationProvider(sl<ICompanyCreationFacad>(), db: db),
         ),
         ChangeNotifierProvider(create: (_) => UserProvider()..load()),
         //  StreamProvider<List<CompanySettingsListData>>(

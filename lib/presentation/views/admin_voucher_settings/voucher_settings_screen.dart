@@ -1,5 +1,6 @@
 import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/models/data/company_voucher_data.dart';
 import 'package:mpos_beat/data/models/godown_list_model.dart';
 import 'package:mpos_beat/data/models/route_list_model.dart';
 import 'package:mpos_beat/data/models/voucher_numbering_response.dart';
@@ -42,17 +43,23 @@ class _VoucherSettingsScreenState<T> extends State<VoucherSettingsScreen<T>> {
       provider.isGodown
           ? provider.getVoucherNumberingGodown(
               context: context,
-              companyId:  provider.selectedCompany?.id.toString() ?? '',
+              companyId: provider.selectedCompany?.id.toString() ?? '',
               voucherModeId: widget.voucherModeId,
             )
           : provider.getVoucherNumberingRoute(
               context: context,
-              companyId:  provider.selectedCompany?.id.toString() ?? '',
+              companyId: provider.selectedCompany?.id.toString() ?? '',
               voucherModeId: widget.voucherModeId,
             );
       provider
-        ..getAllRoutess(context: context, companyId:  provider.selectedCompany?.id.toString() ?? '')
-        ..getAllGodowns(context: context, companyId:  provider.selectedCompany?.id.toString() ?? '');
+        ..getAllRoutess(
+          context: context,
+          companyId: provider.selectedCompany?.id.toString() ?? '',
+        )
+        ..getAllGodowns(
+          context: context,
+          companyId: provider.selectedCompany?.id.toString() ?? '',
+        );
     });
     super.initState();
   }
@@ -248,7 +255,10 @@ class _VoucherSettingsScreenState<T> extends State<VoucherSettingsScreen<T>> {
                                     children: [
                                       if (data.hasB2B == 0) ...[
                                         h16,
-                                        SingleCompanyPrefixSuffix(data: data),
+                                        SingleCompanyPrefixSuffix(
+                                          data: data,
+                                       //   companydata: CompanyVoucherTypesListData,
+                                        ),
                                       ],
                                       if (data.hasB2B == 1) ...[
                                         h6,

@@ -86,202 +86,10 @@ class _VoucherTypeTileState extends State<VoucherTypeTile> {
             ],
           ),
         ),
-        //default voucher number....
+        //default voucheno
         if (isCheckOnInt == 1 &&
-            ((voucher.b2BPrefix.isEmpty &&
-                    voucher.b2BSuffix.isEmpty &&
-                    voucher.b2CPrefix.isEmpty &&
-                    voucher.b2CSuffix.isEmpty) ||
-                voucher.hasB2B == 0))
-          Padding(
-            padding: const EdgeInsets.only(left: 12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      "Prefix: ",
-                      style: context.textStyle.s12.w400.dustyBlue.roboto,
-                    ),
-                    Text(
-                      voucher.b2BPrefix,
-                      style: context.textStyle.s12.w400.dustyBlue.roboto,
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text(
-                      "Suffix: ",
-                      style: context.textStyle.s12.w400.dustyBlue.roboto,
-                    ),
-                    Text(
-                      voucher.b2BSuffix,
-                      style: context.textStyle.s12.w400.dustyBlue.roboto,
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text(
-                      "Width: ",
-                      style: context.textStyle.s12.w400.dustyBlue.roboto,
-                    ),
-                    Text(
-                      voucher.b2BWidth.toString(),
-                      style: context.textStyle.s12.w400.dustyBlue.roboto,
-                    ),
-                  ],
-                ),
-
-                //default voucher number add and edit icon
-                Padding(
-                  padding: const EdgeInsets.only(right: 13),
-                  child: GestureDetector(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return VoucherDialogbox(
-                            id: voucher.id,
-                            companydata: voucher,
-                            isCheckOn: isCheckOnInt,
-                            isToggleOn: isToggleOnInt,
-                      
-                          );
-                        },
-                      );
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF98A6BE)  .withValues(alpha: 0.3),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      height: MediaQuery.of(context).size.height * 0.025,
-                      width: MediaQuery.of(context).size.width * 0.05,
-                      child: Icon(
-                        Icons.drive_file_rename_outline_sharp,
-                        size: 15,
-                        color: const Color(0xFF36489B),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-        //b2b heading
-        if (isCheckOnInt == 1 &&
-            (voucher.b2BPrefix.isNotEmpty || voucher.b2BSuffix.isNotEmpty) &&
-            voucher.hasB2B == 1)
-          Align(
-            // alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 12),
-              child: Row(
-                children: [
-                  Text(
-                    "B2B",
-                    style: context.textStyle.s12.w400.dustyBlue.roboto,
-                  ),
-                  Spacer(),
-
-                  //b2b voucher number add and edit icon....
-                  if (isCheckOnInt == 1 && (voucher.b2CPrefix.isEmpty))
-                    Padding(
-                      padding: const EdgeInsets.only(right: 13),
-                      child: GestureDetector(
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return VoucherDialogbox(
-                                id: voucher.id,
-                                companydata: voucher,
-                                isCheckOn: isCheckOnInt,
-                                isToggleOn: isToggleOnInt,
-                       
-                              );
-                            },
-                          );
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF98A6BE)  .withValues(alpha: 0.3),
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          height: MediaQuery.of(context).size.height * 0.025,
-                          width: MediaQuery.of(context).size.width * 0.05,
-                          child: Icon(
-                            Icons.drive_file_rename_outline_sharp,
-                            size: 15,
-                            color: const Color(0xFF36489B),
-                          ),
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-            ),
-          ),
-        SizedBox(height: MediaQuery.of(context).size.height * 0.006),
-
-        //b2b voucher number
-        if (isCheckOnInt == 1 &&
-            (voucher.b2BPrefix.isNotEmpty || voucher.b2BSuffix.isNotEmpty) &&
-            voucher.hasB2B == 1)
-          Padding(
-            padding: const EdgeInsets.only(left: 12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      "Prefix: ",
-                      style: context.textStyle.s12.w400.dustyBlue.roboto,
-                    ),
-                    Text(
-                      voucher.b2BPrefix,
-                      style: context.textStyle.s12.w400.dustyBlue.roboto,
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text(
-                      "Suffix: ",
-                      style: context.textStyle.s12.w400.dustyBlue.roboto,
-                    ),
-                    Text(
-                      voucher.b2BSuffix,
-                      style: context.textStyle.s12.w400.dustyBlue.roboto,
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text(
-                      "Width: ",
-                      style: context.textStyle.s12.w400.dustyBlue.roboto,
-                    ),
-                    Text(
-                      voucher.b2BWidth.toString(),
-                      style: context.textStyle.s12.w400.dustyBlue.roboto,
-                    ),
-                  ],
-                ),
-                SizedBox(),
-              ],
-            ),
-          ),
-        SizedBox(height: MediaQuery.of(context).size.height * 0.006),
-
-        //b2c heading
-        if (isCheckOnInt == 1 &&
-            (voucher.b2CPrefix.isNotEmpty || voucher.b2CSuffix.isNotEmpty))
+            (voucher.b2BPrefix.isEmpty || voucher.b2BSuffix.isEmpty) &&
+            (widget.isToggleOnInt == 0))
           Align(
             alignment: Alignment.centerLeft,
             child: Padding(
@@ -289,7 +97,7 @@ class _VoucherTypeTileState extends State<VoucherTypeTile> {
               child: Row(
                 children: [
                   Text(
-                    "B2C",
+                    "B2B",
                     style: context.textStyle.s12.w400.dustyBlue.roboto,
                   ),
                   Spacer(),
@@ -307,14 +115,13 @@ class _VoucherTypeTileState extends State<VoucherTypeTile> {
                               companydata: voucher,
                               isCheckOn: isCheckOnInt,
                               isToggleOn: isToggleOnInt,
-                    
                             );
                           },
                         );
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          color: const Color(0xFF98A6BE)  .withValues(alpha: 0.3),
+                          color: const Color(0xFF98A6BE).withValues(alpha: 0.3),
                           borderRadius: BorderRadius.circular(4),
                         ),
                         height: MediaQuery.of(context).size.height * 0.025,
@@ -327,6 +134,212 @@ class _VoucherTypeTileState extends State<VoucherTypeTile> {
                       ),
                     ),
                   ),
+                ],
+              ),
+            ),
+          ),
+        if (isCheckOnInt == 1 &&
+            (voucher.b2BPrefix.isEmpty || voucher.b2BSuffix.isEmpty) &&
+            (widget.isToggleOnInt == 0))
+          Padding(
+            padding: const EdgeInsets.only(left: 12),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      "Prefix: ",
+                      style: context.textStyle.s12.w400.dustyBlue.roboto,
+                    ),
+                    Text(
+                      voucher.b2BPrefix,
+                      style: context.textStyle.s12.w400.dustyBlue.roboto,
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text(
+                      "Suffix: ",
+                      style: context.textStyle.s12.w400.dustyBlue.roboto,
+                    ),
+                    Text(
+                      voucher.b2BSuffix,
+                      style: context.textStyle.s12.w400.dustyBlue.roboto,
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text(
+                      "Width: ",
+                      style: context.textStyle.s12.w400.dustyBlue.roboto,
+                    ),
+                    Text(
+                      voucher.b2BWidth.toString(),
+                      style: context.textStyle.s12.w400.dustyBlue.roboto,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+
+        //B2B voucher number....
+        if (isCheckOnInt == 1 &&
+            (voucher.b2BPrefix.isNotEmpty || voucher.b2BSuffix.isNotEmpty))
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 12),
+              child: Row(
+                children: [
+                  Text(
+                    "B2B",
+                    style: context.textStyle.s12.w400.dustyBlue.roboto,
+                  ),
+                  Spacer(),
+
+                  //b2c voucher number add and edit icon....
+                  if ((voucher.b2BPrefix.isNotEmpty ||
+                      voucher.b2BSuffix.isNotEmpty))
+                    Padding(
+                      padding: const EdgeInsets.only(right: 13),
+                      child: GestureDetector(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return VoucherDialogbox(
+                                id: voucher.id,
+                                companydata: voucher,
+                                isCheckOn: isCheckOnInt,
+                                isToggleOn: isToggleOnInt,
+                              );
+                            },
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: const Color(
+                              0xFF98A6BE,
+                            ).withValues(alpha: 0.3),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          height: MediaQuery.of(context).size.height * 0.025,
+                          width: MediaQuery.of(context).size.width * 0.05,
+                          child: Icon(
+                            Icons.drive_file_rename_outline_sharp,
+                            size: 15,
+                            color: const Color(0xFF36489B),
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
+        if (isCheckOnInt == 1 &&
+            (voucher.b2BPrefix.isNotEmpty || voucher.b2BSuffix.isNotEmpty))
+          Padding(
+            padding: const EdgeInsets.only(left: 12),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      "Prefix: ",
+                      style: context.textStyle.s12.w400.dustyBlue.roboto,
+                    ),
+                    Text(
+                      voucher.b2BPrefix,
+                      style: context.textStyle.s12.w400.dustyBlue.roboto,
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text(
+                      "Suffix: ",
+                      style: context.textStyle.s12.w400.dustyBlue.roboto,
+                    ),
+                    Text(
+                      voucher.b2BSuffix,
+                      style: context.textStyle.s12.w400.dustyBlue.roboto,
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text(
+                      "Width: ",
+                      style: context.textStyle.s12.w400.dustyBlue.roboto,
+                    ),
+                    Text(
+                      voucher.b2BWidth.toString(),
+                      style: context.textStyle.s12.w400.dustyBlue.roboto,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+
+        //b2c heading
+        if (isCheckOnInt == 1 &&
+            (voucher.b2CPrefix.isNotEmpty || voucher.b2CSuffix.isNotEmpty))
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 12),
+              child: Row(
+                children: [
+                  Text(
+                    "B2C",
+                    style: context.textStyle.s12.w400.dustyBlue.roboto,
+                  ),
+                  Spacer(),
+                  if (isCheckOnInt == 1 &&
+                      (voucher.b2CPrefix.isNotEmpty ||
+                          voucher.b2CSuffix.isNotEmpty) &&
+                      (voucher.b2BPrefix.isEmpty || voucher.b2BSuffix.isEmpty))
+                    //b2c voucher number add and edit icon....
+                    Padding(
+                      padding: const EdgeInsets.only(right: 13),
+                      child: GestureDetector(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return VoucherDialogbox(
+                                id: voucher.id,
+                                companydata: voucher,
+                                isCheckOn: isCheckOnInt,
+                                isToggleOn: isToggleOnInt,
+                              );
+                            },
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: const Color(
+                              0xFF98A6BE,
+                            ).withValues(alpha: 0.3),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          height: MediaQuery.of(context).size.height * 0.025,
+                          width: MediaQuery.of(context).size.width * 0.05,
+                          child: Icon(
+                            Icons.drive_file_rename_outline_sharp,
+                            size: 15,
+                            color: const Color(0xFF36489B),
+                          ),
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),

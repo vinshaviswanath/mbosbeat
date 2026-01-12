@@ -29,7 +29,7 @@ class _VoucherB2BSettingsDialogState extends State<VoucherB2BSettingsDialog> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
         decoration: BoxDecoration(
-          color:ColorResources.white,
+          color: ColorResources.white,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
@@ -200,7 +200,7 @@ class _VoucherB2BSettingsDialogState extends State<VoucherB2BSettingsDialog> {
                 child: const Text(
                   "Save",
                   style: TextStyle(
-                    color:ColorResources.white,
+                    color: ColorResources.white,
                     fontWeight: FontWeight.w600,
                     fontSize: 15,
                   ),

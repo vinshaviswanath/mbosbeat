@@ -11,9 +11,43 @@ import 'package:mpos_beat/presentation/views/home_screen/transactions_container.
 import 'package:mpos_beat/presentation/views/home_screen/trip_summary.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   final Company company;
   const HomeScreen({super.key, required this.company});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  String? selectedRouteName;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await loadData();
+      await loadSavedRoute();
+    });
+  }
+
+  Future<void> loadSavedRoute() async {
+    final prefs = sl<SharedPreferences>();
+    setState(() {
+      selectedRouteName = prefs.getString('last_route_name');
+    });
+  }
+
+  Future<void> loadData() async {
+    final provider = context.read<CompanyCreationProvider>();
+    final companyId = widget.company.id ?? 0;
+    await Future.wait([
+      provider.fetchVoucherTypes(context, companyId),
+      provider.getCompanySettings(context, companyId),
+      provider.getAllGodowns(context: context, companyId: companyId.toString()),
+      provider.getAllRoutess(context: context, companyId: companyId.toString()),
+    ]);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,11 +95,11 @@ class HomeScreen extends StatelessWidget {
               builder: (_, userSnap) {
                 return StreamBuilder<CompanySettingsTableData?>(
                   stream: appDb.companySettingsDao.watchRouteSetting(
-                    company.id ?? 0,
+                    widget.company.id ?? 0,
                   ),
                   builder: (_, routeSnap) {
                     return HomeHeader(
-                      company: company,
+                      company: widget.company,
                       user: userSnap.data,
                       routeSettings: routeSnap.data,
                     );
@@ -84,7 +118,7 @@ class HomeScreen extends StatelessWidget {
                 if (snap.data == null) return const SizedBox();
                 return TransactionsContainers(
                   userDetails: snap.data!,
-                  company: company,
+                  company: widget.company,
                 );
               },
             ),
@@ -109,9 +143,9 @@ class HomeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Logger.logSuccess("valuew................${routeSettings?.settingsValue}");
     final today =
         "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}";
-
     return Selector<UserProvider, _HeaderState>(
       selector: (_, p) => _HeaderState(
         dayStarted: p.dayStarted,

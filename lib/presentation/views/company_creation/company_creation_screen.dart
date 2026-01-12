@@ -281,30 +281,4 @@ class _CompanyCreationScreenState extends State<CompanyCreationScreen>
     );
   }
 
-  //   Widget _buildTabPage(
-  //     BuildContext context,
-  //     CompanyCreationProvider provider,
-  //     int index,
-  //     Widget child,
-  //   ) {
-  //     return Column(
-  //       children: [
-  //         Expanded(child: child),
-  //         Padding(
-  //           padding: const EdgeInsets.all(16.0),
-  //           child: CustomButton(
-  //             buttonText: index == 2 ? "Finish" : "Next",
-  //             isborderEnable: false,
-  //             onTap: () {
-  //               provider.markStageCompleted(index);
-  //               if (index < 2) {
-  //                 _tabController.animateTo(index + 1);
-  //               }
-  //             },
-  //           ),
-  //         ),
-  //       ],
-  //     );
-  //   }
-  // }
 }

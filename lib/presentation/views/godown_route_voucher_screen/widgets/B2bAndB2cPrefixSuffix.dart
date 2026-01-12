@@ -89,6 +89,7 @@ class _B2bAndB2cPrefixSuffixState extends State<B2bAndB2cPrefixSuffix> {
 
   @override
   Widget build(BuildContext context) {
+    print("value b2b.............${widget.data.b2BPrefix}");
     final provider = context.watch<CompanyCreationProvider>();
     final VoucherNumber fallback = VoucherNumber(
       voucherTypeId: widget.data.voucherTypeId,
@@ -120,7 +121,8 @@ class _B2bAndB2cPrefixSuffixState extends State<B2bAndB2cPrefixSuffix> {
                   ? .end
                   : MainAxisAlignment.spaceBetween,
               children: [
-                if (widget.data.b2BPrefix == null) ...[
+                if (widget.data.b2BPrefix == null ||
+                    widget.data.b2BPrefix!.isNotEmpty) ...[
                   Text(
                     "B2B",
                     style: context.textStyle.s10.w400.indigoBlue.roboto,
@@ -179,7 +181,14 @@ class _B2bAndB2cPrefixSuffixState extends State<B2bAndB2cPrefixSuffix> {
                                                   .s14
                                                   .w500
                                                   .dustyBlue
-                                                  .roboto,
+                                                  .roboto
+                                                  .copyWith(
+                                                    decoration: TextDecoration
+                                                        .underline,
+                                                    decorationColor:
+                                                        ColorResources
+                                                            .indigoBlue,
+                                                  ),
                                             ),
                                           ],
                                         ),
@@ -200,8 +209,8 @@ class _B2bAndB2cPrefixSuffixState extends State<B2bAndB2cPrefixSuffix> {
                                           "Applicable From",
                                           style: context
                                               .textStyle
-                                              .s09
-                                              .w300
+                                              .s12
+                                              .w400
                                               .bluishGray
                                               .roboto,
                                         ),
@@ -772,7 +781,8 @@ class _B2bAndB2cPrefixSuffixState extends State<B2bAndB2cPrefixSuffix> {
                 ),
               ],
             ),
-            if (widget.data.b2BPrefix == null) ...[
+            if (widget.data.b2BPrefix == null ||
+                widget.data.b2BPrefix!.isNotEmpty) ...[
               Padding(
                 padding: const EdgeInsets.only(right: 32),
                 child: Row(
