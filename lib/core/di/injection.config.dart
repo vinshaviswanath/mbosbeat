@@ -109,6 +109,7 @@ import '../../domain/repositories/i_company_creation_facad.dart' as _i483;
 import '../../domain/repositories/i_user_management_facad.dart' as _i172;
 import '../base/run_safely.dart' as _i530;
 import '../event/event_manager.dart' as _i275;
+import '../network/network_provider.dart' as _i335;
 import '../service/http_client.dart' as _i976;
 import 'app_injection_module.dart' as _i975;
 
@@ -131,6 +132,9 @@ Future<_i174.GetIt> init(
   gh.lazySingleton<_i530.RunSafely>(() => _i530.RunSafely());
   gh.lazySingleton<_i519.Client>(() => appInjectionModule.clent);
   gh.lazySingleton<_i264.AppDb>(() => appInjectionModule.appDb);
+  gh.lazySingleton<_i335.NetworkProvider>(
+    () => appInjectionModule.networkProvider,
+  );
   gh.lazySingleton<_i976.HttpClient>(
     () => _i976.HttpClient(gh<_i519.Client>()),
   );

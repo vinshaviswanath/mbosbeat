@@ -43,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
     }
 
     if (token.isEmpty) {
-      context.pushNamed(AppRouterConst.login);
+      context.pushNamed(AppRouterConst.userLogin);
       return;
     }
 
@@ -66,7 +66,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if (!mounted) return;
 
     if (response == null) {
-      context.pushNamed(AppRouterConst.login);
+      context.pushNamed(AppRouterConst.userLogin);
       return;
     }
 
@@ -91,7 +91,7 @@ class _SplashScreenState extends State<SplashScreen> {
       case 20:
       case 30:
       case 40:
-        context.pushNamed(AppRouterConst.login);
+        context.pushNamed(AppRouterConst.userLogin);
 
         WidgetsBinding.instance.addPostFrameCallback((_) async {
           if (!mounted) return;
@@ -266,7 +266,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
       // DEFAULT
       default:
-        context.pushNamed(AppRouterConst.login);
+        context.pushNamed(AppRouterConst.userLogin);
         break;
     }
   }

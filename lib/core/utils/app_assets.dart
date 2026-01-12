@@ -23,6 +23,7 @@ class AppAssets {
   static const alreadyRegistered = "$basePngDir/already_registered.png";
   static const companyImage = "$basePngDir/companyImage.png";
   static const noData = "$basePngDir/noData.png";
+  static const adminLogin = "$basePngDir/adminLogin.png";
 
   //SVG
   static const refresh = "$baseDir/refresh.svg";
@@ -62,7 +63,11 @@ class AppAssets {
   static const itemCategory = "$baseDir/itemCategory.svg";
   static const otherLedgers = "$baseDir/otherLedgers.svg";
   static const coupon = "$baseDir/coupon.svg";
-
+  static const godownWise = "$baseDir/godownWise.svg";
+  static const adminSettings = "$baseDir/adminSettings.svg";
+  static const arrowDown = "$baseDir/arrow_down.svg";
+  static const cam = "$baseDir/cam.svg";
+  static const company2 = "$baseDir/company.svg";
 
 
   //Animations

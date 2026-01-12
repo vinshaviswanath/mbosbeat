@@ -92,6 +92,17 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Row(
+                    mainAxisAlignment: .center,
+                    children: [
+                      Text(
+                        "How are you going to manage Voucher Type?\n(Godown / Routewise)",
+                        style: context.textStyle.s12.w400.dustyBlue,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                  h12,
                   // 🔹 Switch Row
                   Container(
                     padding: const EdgeInsets.symmetric(

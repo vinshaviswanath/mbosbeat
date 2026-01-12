@@ -93,7 +93,9 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
 
     if (provider.selectedDesignation == null ||
         provider.selectedReportingTo == null ||
-        !provider.user.isValid()) {
+        !provider.user.isValid() ||
+        (!provider.password.isValid() &&
+            passwordController.text.trim().length < 3)) {
       return;
     }
 
@@ -117,6 +119,7 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
       );
 
       provider.updateUser('');
+      provider.updatePassword('');
       _clearFields();
       return;
     }
@@ -137,6 +140,7 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
     );
 
     provider.updateUser('');
+    provider.updatePassword('');
     _clearFields();
   }
 
@@ -208,6 +212,11 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
 
         final bool showNameErrorBorder =
             _submitted && userController.text.trim().isEmpty;
+
+        final bool isPasswordInvalid =
+            _submitted &&
+            (passwordController.text.trim().isEmpty ||
+                passwordController.text.trim().length < 3);
 
         return PopScope(
           canPop: true,
@@ -364,7 +373,6 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                             controller: passwordController,
                             autovalidateMode:
                                 provider.userCreateAutovalidateMode,
-                            failure: provider.password.getFailure,
                             onChange: provider.updatePassword,
                             suffixIcon: InkWell(
                               onTap: () => provider.toggleVisibilityPassword(),
@@ -383,8 +391,38 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                             inputType: TextInputType.visiblePassword,
                             borderRadius: 12,
                             hintColor: ColorResources.silverGray,
-                            borderColor: ColorResources.transparent,
+
+                            /// 🔴 border validation like Name field
+                            borderColor: isPasswordInvalid
+                                ? ColorResources.roseRed
+                                : ColorResources.transparent,
                           ),
+                          h4,
+                          if (isPasswordInvalid) ...[
+                            const SizedBox(height: 4),
+                            Row(
+                              children: [
+                                SvgPicture.asset(
+                                  AppAssets.alertError,
+                                  height: 16,
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  passwordController.text.trim().isEmpty
+                                      ? appLocalizations.enter_password
+                                      : appLocalizations
+                                            .password_must_be_at_least_3_characters,
+                                  style: context
+                                      .textStyle
+                                      .s10
+                                      .w300
+                                      .roseRed
+                                      .raleway,
+                                ),
+                              ],
+                            ),
+                          ],
+
                           h16,
                         ],
                         Text(

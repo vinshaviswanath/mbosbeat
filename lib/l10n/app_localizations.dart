@@ -124,6 +124,12 @@ abstract class AppLocalizations {
   /// **'Get Started'**
   String get onboard_get_started;
 
+  /// No description provided for @admin_login.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin Login'**
+  String get admin_login;
+
   /// No description provided for @login.
   ///
   /// In en, this message translates to:
@@ -159,6 +165,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter Password'**
   String get enter_password;
+
+  /// No description provided for @password_must_be_at_least_3_characters.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 3 characters'**
+  String get password_must_be_at_least_3_characters;
 
   /// No description provided for @login_forgot_password.
   ///
@@ -1725,6 +1737,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Home'**
   String get admin_dashboard_home;
+
+  /// No description provided for @admin_dashboard_mpos_beat.
+  ///
+  /// In en, this message translates to:
+  /// **'MPOS Beat'**
+  String get admin_dashboard_mpos_beat;
 
   /// No description provided for @admin_dashboard_address.
   ///

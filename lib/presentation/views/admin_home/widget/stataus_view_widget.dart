@@ -13,6 +13,7 @@ class StatusView extends StatelessWidget {
   final Color incompleteColor;
   final Color completeColor;
   final CompanyViewList company;
+  final Widget? innerWidget;
 
   const StatusView({
     super.key,
@@ -25,6 +26,7 @@ class StatusView extends StatelessWidget {
     this.incompleteColor = Colors.grey,
     this.completeColor = ColorResources.indigoBlue,
     required this.company,
+    this.innerWidget,
   }) : assert(centerImageUrl != null, "Please provide centerImageUrl");
   int calculateCompletedSteps(CompanyViewList c) {
     int steps = 0;
@@ -66,7 +68,7 @@ class StatusView extends StatelessWidget {
               ? NetworkImage(centerImageUrl)
               : null,
           child: centerImageUrl.isEmpty
-              ? Image.asset(
+              ? innerWidget ?? Image.asset(
                   'assets/images/pngs/mpos_logo.png',
                   fit: BoxFit.cover,
                 )

@@ -1,4 +1,5 @@
 import 'package:mpos_beat/core/di/injection.dart';
+import 'package:mpos_beat/core/network/network_provider.dart';
 import 'package:mpos_beat/core/theme/app_theme.dart';
 import 'package:mpos_beat/core/theme/theme/theme_provider.dart';
 import 'package:mpos_beat/core/utils/app_details.dart';
@@ -23,7 +24,7 @@ Future<void> main() async {
   await configureDependency(env: Environment.test);
   initParsers();
   final db = sl<AppDb>();
-  runApp( MyApp(db: db,));
+  runApp(MyApp(db: db));
 }
 
 class MyApp extends StatelessWidget {
@@ -38,16 +39,19 @@ class MyApp extends StatelessWidget {
         Provider<AppDb>.value(value: db),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(
-          create: (_) => AuthFormProvider(sl<IAuthenticationFacad>(),db: db),
+          create: (_) => AuthFormProvider(sl<IAuthenticationFacad>(), db: db),
         ),
         ChangeNotifierProvider(
           create: (_) => UserManagementProvider(sl<IUserManagementFacad>()),
         ),
         ChangeNotifierProvider(create: (_) => CustomerTransactionProvider()),
         ChangeNotifierProvider(
-          create: (_) => CompanyCreationProvider(sl<ICompanyCreationFacad>(),db: db),
+          create: (_) =>
+              CompanyCreationProvider(sl<ICompanyCreationFacad>(), db: db),
         ),
         ChangeNotifierProvider(create: (_) => UserProvider()..load()),
+        ChangeNotifierProvider.value(value: sl<NetworkProvider>()),
+
         //  StreamProvider<List<CompanySettingsListData>>(
         //   create: (context) =>
         //       context.read<CompanyCreationProvider>().settingsStream,
@@ -67,8 +71,6 @@ class MyApp extends StatelessWidget {
             locale: const Locale("en"),
             title: 'mPOS Beat',
             theme: AppTheme.getTheme(themeMode, context),
-            // builder: (context, child) =>
-            //     Stack(children: [child!, const DropdownAlert()]),
           );
         },
       ),

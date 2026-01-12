@@ -40,6 +40,7 @@ extension TextStyleX on TextStyle {
   TextStyle get roseRed => copyWith(color: ColorResources.roseRed);
   TextStyle get indigoBlue => copyWith(color: ColorResources.indigoBlue);
   TextStyle get amber => copyWith(color: ColorResources.amber);
+  TextStyle get tealBlue => copyWith(color: ColorResources.tealBlue);
   TextStyle get silverGray => copyWith(color: ColorResources.silverGray);
   TextStyle get dustyBlue => copyWith(color: ColorResources.dustyBlue);
   TextStyle get coolGray => copyWith(color: ColorResources.coolGray);
@@ -52,6 +53,10 @@ extension TextStyleX on TextStyle {
   TextStyle get neutralGray => copyWith(color: ColorResources.neutralGray);
   TextStyle get mutedBlue => copyWith(color: ColorResources.mutedBlue);
   TextStyle get lightMutedBlue => copyWith(color: ColorResources.lightMutedBlue); 
+  TextStyle get mediumGray => copyWith(color: ColorResources.mediumGray); 
+  TextStyle get mutedIndigo => copyWith(color: ColorResources.mutedIndigo); 
+
+
 
 
   TextStyle get shade100 => copyWith(color: color?.withValues(alpha: 0.1));

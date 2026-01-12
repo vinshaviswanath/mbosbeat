@@ -38,6 +38,14 @@ class ColorResources {
   static const veryLightGray = Color(0xFFFAFAFA);
   static const deepIndigo  = Color(0xFF492D8B);
   static const softLavender = Color(0xFFE9E7F5);
+  static const paleMint = Color(0xFFEDFAF0);
+  static const mediumGray = Color(0xFF808080);
+  static const mutedIndigo = Color(0xFF667EA8);
+  static const lightAccent = Color(0xFFBEC8D8);
+  static const iceBlue = Color(0xFFDBE3F8);
+
+
+
 
 
   static const lavenderMist = Color(0xFFE3D7FE);
@@ -48,6 +56,8 @@ class ColorResources {
   static const aquaMint = Color(0xFFA4E3BD);
   static const powderBlue = Color(0xFFCFD1F8);
   static const periwinkleBlue = Color(0xFFC7D1F8);
+  static const tealBlue = Color(0xFF44899C);
+
 
   //anver
   static const mintGreen = Color(0xFF69D282);

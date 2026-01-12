@@ -65,6 +65,7 @@ class AuthFormProvider with ChangeNotifier {
   // bool _alreadyNavigatedToInvalidOtp = false;
 
   bool _isVisible = false;
+  bool _isUserPasswordVisible = false;
   bool _isVisibleSignupPassword = false;
   bool _isVisibleSignupConfirmPassword = false;
 
@@ -83,6 +84,7 @@ class AuthFormProvider with ChangeNotifier {
   ConfirmPassword get confirmPassword => _confirmPassword;
 
   bool get isVisible => _isVisible;
+  bool get isUserPasswordVisible => _isUserPasswordVisible;
   bool get isVisibleSignupPassword => _isVisibleSignupPassword;
   bool get isVisibleSignupConfirmPassword => _isVisibleSignupConfirmPassword;
 
@@ -797,7 +799,7 @@ class AuthFormProvider with ChangeNotifier {
           ).then((_) {
             resetSignUpForm();
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              context.pushNamed(AppRouterConst.login);
+              context.pushNamed(AppRouterConst.userLogin);
             });
           });
         }
@@ -900,6 +902,16 @@ class AuthFormProvider with ChangeNotifier {
 
   void resetVisibility() {
     _isVisible = false;
+    notifyListeners();
+  }
+
+  void userToggleVisibility() {
+    _isUserPasswordVisible = !_isUserPasswordVisible;
+    notifyListeners();
+  }
+
+  void resetUserPasswordVisibility() {
+    _isUserPasswordVisible = false;
     notifyListeners();
   }
 
