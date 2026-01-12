@@ -41,7 +41,7 @@ void CommonLogoutDialog(context) {
                         Navigator.of(context).pop(true);
 
                         /// Navigate after closing dialog
-                        context.pushNamed(AppRouterConst.login);
+                        context.pushNamed(AppRouterConst.userLogin);
                       },
                       child: Text(
                         'Logout',

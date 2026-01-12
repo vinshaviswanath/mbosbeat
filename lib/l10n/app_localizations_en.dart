@@ -25,6 +25,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onboard_get_started => 'Get Started';
 
   @override
+  String get admin_login => 'Admin Login';
+
+  @override
   String get login => 'Login';
 
   @override
@@ -41,6 +44,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get enter_password => 'Enter Password';
+
+  @override
+  String get password_must_be_at_least_3_characters =>
+      'Password must be at least 3 characters';
 
   @override
   String get login_forgot_password => 'Forgot Password?';
@@ -864,6 +871,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get admin_dashboard_home => 'Home';
+
+  @override
+  String get admin_dashboard_mpos_beat => 'MPOS Beat';
 
   @override
   String get admin_dashboard_address => 'Address : ';

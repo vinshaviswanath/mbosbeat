@@ -117,7 +117,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             onTap: () {
               final prefs = sl<SharedPreferences>();
               prefs.setBool("isOnboardingCompleted", true);
-              context.pushNamed(AppRouterConst.login);
+              context.pushNamed(AppRouterConst.userLogin);
             },
             child: Text(
               _currentIndex == _slides.length - 1

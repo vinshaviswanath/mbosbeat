@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mpos_beat/core/di/injection.dart';
+import 'package:mpos_beat/core/network/network_provider.dart';
 import 'package:mpos_beat/core/utils/app_details.dart';
 import 'package:mpos_beat/core/utils/enums.dart';
+import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/data/models/godown_list_model.dart';
@@ -11,12 +14,14 @@ import 'package:mpos_beat/presentation/common/widgets/custom_route_screen.dart';
 import 'package:mpos_beat/presentation/views/admin_home/admin_dashboard.dart';
 import 'package:mpos_beat/presentation/views/admin_voucher_settings/voucher_settings_screen.dart';
 import 'package:mpos_beat/presentation/views/company_creation/company_creation_success_Screen.dart';
+import 'package:mpos_beat/presentation/views/company_pending_details/company_pending_details_screen.dart';
 import 'package:mpos_beat/presentation/views/company_settings/company_settings.dart';
 import 'package:mpos_beat/presentation/views/company_user_mapping/company_user_mapping_screen.dart';
 import 'package:mpos_beat/presentation/views/godown_route_voucher_screen/godown_route_voucher_screen.dart';
 import 'package:mpos_beat/presentation/views/godown_wise_screen/godown_wise_screen.dart';
 import 'package:mpos_beat/presentation/views/home_screen/transactions_container.dart';
 import 'package:mpos_beat/presentation/views/home_screen/user_company_selection_screen.dart';
+import 'package:mpos_beat/presentation/views/login/user_login_screen.dart';
 import 'package:mpos_beat/presentation/views/master_management/godown/add_godown.dart';
 import 'package:mpos_beat/presentation/views/master_management/godown/godown_screen.dart';
 import 'package:mpos_beat/presentation/views/master_management/item_category/add_item_category.dart';
@@ -35,6 +40,7 @@ import 'package:mpos_beat/presentation/views/master_management/party_name/party_
 import 'package:mpos_beat/presentation/views/master_management/price_list/price_list_screen.dart';
 import 'package:mpos_beat/presentation/views/master_management/unit/add_unit.dart';
 import 'package:mpos_beat/presentation/views/master_management/unit/unit_screen.dart';
+import 'package:mpos_beat/presentation/views/no_network.dart/no_network_screen.dart';
 import 'package:mpos_beat/presentation/views/reset_password/reset_success_screen.dart';
 import 'package:mpos_beat/presentation/views/route_wise_screen/route_wise_screen.dart';
 import 'package:mpos_beat/presentation/views/admin_user_management/add_company/add_company_screen.dart';
@@ -73,13 +79,39 @@ import 'package:mpos_beat/presentation/views/transactions/telephonic_order/telep
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/order_booking_add_item_screen.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/transaction_order_booking_screen.dart';
 import 'package:mpos_beat/route/app_navigation_observer.dart';
-import 'package:mpos_beat/route/app_router_const.dart';
 
 class AppRouter {
   static final router = GoRouter(
     observers: [AppNavigationObserver()],
     navigatorKey: AppDetails.globalNavigatorKey,
     initialLocation: "/",
+    // refreshListenable: sl<NetworkProvider>(),
+
+    // redirect: (context, state) {
+    //   final network = sl<NetworkProvider>();
+
+    //   final isOffline = !network.isConnected;
+    //   final currentRoute = state.matchedLocation;
+    //   final isNoInternet = currentRoute == '/no-internet';
+
+    //   // Save last good route
+    //   if (!isOffline && !isNoInternet) {
+    //     network.saveLastRoute(currentRoute);
+    //   }
+
+    //   // Go offline
+    //   if (isOffline && !isNoInternet) {
+    //     return '/no-internet';
+    //   }
+
+    //   // Internet restored
+    //   if (!isOffline && isNoInternet) {
+    //     return network.lastRoute ?? '/';
+    //   }
+
+    //   return null;
+    // },
+
     routes: [
       GoRoute(
         path: "/",
@@ -89,10 +121,23 @@ class AppRouter {
         },
       ),
       GoRoute(
+        path: '/no-internet',
+        name: 'noInternet',
+        builder: (context, state) => const NoNetworkScreen(),
+      ),
+
+      GoRoute(
         path: "/onboard",
         name: AppRouterConst.onboardScreen,
         builder: (context, state) {
           return const OnBoardingScreen();
+        },
+      ),
+      GoRoute(
+        path: "/userLogin",
+        name: AppRouterConst.userLogin,
+        builder: (context, state) {
+          return UserLoginScreen();
         },
       ),
       GoRoute(
@@ -363,7 +408,7 @@ class AppRouter {
         name: AppRouterConst.transactionDetailpage,
         builder: (context, state) {
           final data = state.extra as TransactionArgs;
-          return TransactionDetailpage(data: data,);
+          return TransactionDetailpage(data: data);
         },
       ),
 
@@ -404,11 +449,8 @@ class AppRouter {
 
         path: '/CompanyCreationSuccessScreen',
         builder: (context, state) {
-           final CompanyViewList? companyData =
-        state.extra as CompanyViewList?;
-          return CompanyCreationSuccessScreen( 
-            companyData: companyData,
-          );
+          final CompanyViewList? companyData = state.extra as CompanyViewList?;
+          return CompanyCreationSuccessScreen(companyData: companyData);
         },
       ),
       GoRoute(
@@ -416,6 +458,14 @@ class AppRouter {
         name: AppRouterConst.adminDashboard,
         builder: (context, state) {
           return const AdminDashboard();
+        },
+      ),
+      GoRoute(
+        path: "/companyPendingDetailsScreen",
+        name: AppRouterConst.companyPendingDetailsScreen,
+        builder: (context, state) {
+          final CompanyViewList? companyData = state.extra as CompanyViewList?;
+          return CompanyPendingDetailsScreen(company: companyData);
         },
       ),
       GoRoute(

@@ -41,11 +41,13 @@ class GetCompanyvoucherTypeListDatasource {
         if (response.isOk) {
           final data = CompanyvouchertypeslistDtos.fromJson(response.data);
           Logger.logInfo('Parsed voucher type list successfully.');
-           final voucherTypeList = data.companyVoucherTypesList
-            .map((e) => e.toDrift())
-            .toList();
+          final voucherTypeList = data.companyVoucherTypesList
+              .map((e) => e.toDrift())
+              .toList();
+          await appDb.voucherTypesDao.deleteAll();
           await appDb.voucherTypesDao.deleteByCompany(companyID);
-         await appDb.voucherTypesDao.insertVoucherTypes(voucherTypeList);
+          await appDb.voucherTypesDao.deleteAll();
+          await appDb.voucherTypesDao.insertVoucherTypes(voucherTypeList);
           return data;
         }
 

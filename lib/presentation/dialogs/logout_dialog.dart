@@ -62,7 +62,7 @@ class LogOutDialogs {
                             Navigator.of(ctx).pop(true);
 
                             /// Navigate after closing dialog
-                            context.pushNamed(AppRouterConst.login);
+                            context.pushNamed(AppRouterConst.userLogin);
                           },
                           textStyle: context.textStyle.s12.white.w500,
                         ),

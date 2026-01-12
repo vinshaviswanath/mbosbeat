@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:mpos_beat/core/base/run_safely.dart';
 import 'package:mpos_beat/core/event/event_manager.dart';
+import 'package:mpos_beat/core/network/network_provider.dart';
 import 'package:mpos_beat/core/service/http_client.dart';
 import 'package:mpos_beat/data/data_sources/authentication/company_registeration/company_registeration.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
@@ -17,6 +18,9 @@ abstract class AppInjectionModule {
 
   @lazySingleton
   AppDb get appDb => AppDb();
+
+  @lazySingleton
+  NetworkProvider get networkProvider => NetworkProvider();
 
   @lazySingleton
   CompanyRegisteration companyRegisteration(

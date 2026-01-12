@@ -1,4 +1,5 @@
 import 'package:mpos_beat/core/di/injection.dart';
+import 'package:mpos_beat/core/network/network_provider.dart';
 import 'package:mpos_beat/core/theme/app_theme.dart';
 import 'package:mpos_beat/core/theme/theme/theme_provider.dart';
 import 'package:mpos_beat/core/utils/app_details.dart';
@@ -49,6 +50,8 @@ class MyApp extends StatelessWidget {
               CompanyCreationProvider(sl<ICompanyCreationFacad>(), db: db),
         ),
         ChangeNotifierProvider(create: (_) => UserProvider()..load()),
+        ChangeNotifierProvider.value(value: sl<NetworkProvider>()),
+
         //  StreamProvider<List<CompanySettingsListData>>(
         //   create: (context) =>
         //       context.read<CompanyCreationProvider>().settingsStream,
@@ -68,8 +71,6 @@ class MyApp extends StatelessWidget {
             locale: const Locale("en"),
             title: 'mPOS Beat',
             theme: AppTheme.getTheme(themeMode, context),
-            // builder: (context, child) =>
-            //     Stack(children: [child!, const DropdownAlert()]),
           );
         },
       ),

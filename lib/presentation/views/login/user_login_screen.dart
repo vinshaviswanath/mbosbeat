@@ -2,21 +2,22 @@ import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/domain/request/login_params.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
+import 'package:mpos_beat/presentation/dialogs/auth_dialogs.dart';
 import 'package:mpos_beat/presentation/logic/authentication_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class UserLoginScreen extends StatefulWidget {
+  const UserLoginScreen({super.key});
 
   static const routeName = "login-screen";
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<UserLoginScreen> createState() => _UserLoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+class _UserLoginScreenState extends State<UserLoginScreen> {
+  final userEmailController = TextEditingController();
+  final userPasswordController = TextEditingController();
 
   @override
   void initState() {
@@ -35,13 +36,12 @@ class _LoginScreenState extends State<LoginScreen> {
     Logger.logSuccess("TOKEN : $token");
 
     final appLocalization = context.l10n;
-
     return PopScope(
-      canPop: true,
+      canPop: false,
       onPopInvokedWithResult: (didPop, result) async {
         if (didPop) return;
 
-        FocusScope.of(context).unfocus();
+        AuthDialogs.show(context);
       },
       child: Scaffold(
         resizeToAvoidBottomInset: true,
@@ -67,19 +67,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                     bottomLeft: Radius.circular(45),
                                     bottomRight: Radius.circular(45),
                                   ),
-                                  color: ColorResources.tealBlue,
+                                  color: ColorResources.indigoBlue,
                                 ),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Image.asset(
-                                      AppAssets.adminLogin,
-                                      height: context.getSize.height * 0.12,
-                                    ),
-                                    h8,
                                     Text(
-                                      context.l10n.admin_login,
+                                      context.l10n.login,
                                       style: context
                                           .textStyle
                                           .s22
@@ -87,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           .white
                                           .roboto,
                                     ),
-                                    h16,
+                                    h24,
                                     Text(
                                       context.l10n.login_welcome_back,
                                       style: context
@@ -130,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 h4,
                                 CustomTextField(
-                                  controller: emailController,
+                                  controller: userEmailController,
                                   hint: appLocalization.enter_email_or_phone,
                                   hintTextStyle: context
                                       .textStyle
@@ -167,7 +162,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 h4,
                                 CustomTextField(
-                                  controller: passwordController,
+                                  controller: userPasswordController,
                                   hint: appLocalization.enter_password,
                                   hintTextStyle: context
                                       .textStyle
@@ -176,18 +171,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                       .silverGray
                                       .roboto,
                                   suffixIcon: InkWell(
-                                    onTap: () => provider.toggleVisibility(),
+                                    onTap: () =>
+                                        provider.userToggleVisibility(),
                                     child: Padding(
                                       padding: const EdgeInsets.all(12),
                                       child: SvgPicture.asset(
-                                        provider.isVisible
+                                        provider.isUserPasswordVisible
                                             ? AppAssets.featherEyeOn
                                             : AppAssets.featherEyeOff,
                                         height: context.getSize.height * 0.02,
                                       ),
                                     ),
                                   ),
-                                  obscureText: !provider.isVisible,
+                                  obscureText: !provider.isUserPasswordVisible,
                                   backgroundColor: ColorResources.lightGray,
                                   autovalidateMode:
                                       provider.loginAutovalidateMode,
@@ -204,7 +200,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 h26,
                                 CustomButton(
                                   buttonText: appLocalization.login,
-                                  color: ColorResources.tealBlue,
                                   isborderEnable: false,
                                   textStyle:
                                       context.textStyle.s16.white.bold.roboto,
@@ -214,9 +209,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                     await provider.submitLogin(
                                       context,
                                       params: LoginParams(
-                                        username: emailController.text,
-                                        password: passwordController.text,
-                                        isAdmin: true,
+                                        username: userEmailController.text,
+                                        password: userPasswordController.text,
+                                        isAdmin: false,
                                       ),
                                     );
                                   },
@@ -228,7 +223,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     TextButton(
                                       onPressed: () async {
                                         reset();
-                                        provider.resetVisibility();
+                                        provider.resetUserPasswordVisibility();
                                         await context.pushNamed(
                                           AppRouterConst.forgotPassword,
                                         );
@@ -248,43 +243,51 @@ class _LoginScreenState extends State<LoginScreen> {
                               ],
                             ),
                           ),
+
                           const Spacer(),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: .center,
                             children: [
-                              Text(
-                                appLocalization.login_no_account,
-                                style: context
-                                    .textStyle
-                                    .s12
-                                    .bluishGray
-                                    .w400
-                                    .roboto,
-                              ),
-                              w10,
-                              InkWell(
-                                onTap: () async {
+                              GestureDetector(
+                                onTap: () {
                                   reset();
-                                  await GoRouter.of(
-                                    context,
-                                  ).push(AppRouterConst.signup);
-                                  provider.resetVisibility();
+                                  provider.resetUserPasswordVisibility();
+                                  context.pushNamed(AppRouterConst.login);
                                 },
-                                child: Text(
-                                  appLocalization.sign_up,
-                                  style: context
-                                      .textStyle
-                                      .s12
-                                      .tealBlue
-                                      .bold
-                                      .roboto
-                                      .copyWith(
-                                        height: 1.8,
-                                        decoration: TextDecoration.underline,
-                                        decorationColor:
-                                            context.textStyle.tealBlue.color,
-                                      ),
-                                  textAlign: TextAlign.center,
+                                child: Container(
+                                  padding: .symmetric(
+                                    horizontal: 16,
+                                    vertical: 8,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: ColorResources.ashGray,
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: RichText(
+                                    text: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: "Login as ",
+                                          style: context
+                                              .textStyle
+                                              .s12
+                                              .bluishGray
+                                              .w400,
+                                        ),
+                                        TextSpan(
+                                          text: "Admin",
+                                          style: context
+                                              .textStyle
+                                              .s12
+                                              .bluishGray
+                                              .bold,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
@@ -305,8 +308,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void reset() {
     FocusScope.of(context).requestFocus(FocusNode());
-    passwordController.clear();
-    emailController.clear();
+    userPasswordController.clear();
+    userEmailController.clear();
     context.read<AuthFormProvider>().resetLoginForm();
   }
 }

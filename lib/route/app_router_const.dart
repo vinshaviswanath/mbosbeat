@@ -1,6 +1,7 @@
 class AppRouterConst {
   static const splashScreen = "/";
   static const onboardScreen = "/onboard";
+  static const userLogin = "/userLogin";
   static const login = "/login";
   static const signup = "/signup";
   static const otpAuth = "/otpAuth";
@@ -62,4 +63,5 @@ class AppRouterConst {
   static const orderbooking = "/orderbooking";
   static const orderbookingitems = "orderbookingitems";
   static const userCompanySelectionScreen = "userCompanySelectionScreen";
+  static const companyPendingDetailsScreen = "companyPendingDetailsScreen";
 }
