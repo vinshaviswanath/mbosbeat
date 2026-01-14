@@ -25,7 +25,7 @@ final List<String> optionTitles = [
 
   final List<Color> colors = [
   ColorResources.lavendermist,
-  ColorResources.lavenderblue,
+  ColorResources.lavenderblueMist,
   ColorResources.mistyrose,
   ColorResources.lightgoldenrod,
   ColorResources.paleskyblue,

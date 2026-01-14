@@ -89,7 +89,7 @@ class ColorResources {
   static const palegrayblue = Color(0xFFF1F3F7);
   static const babyblue = Color(0xFFEBF3FF);
   static const lavendermist = Color(0xFFEFE8FF);
-  static const lavenderblue = Color(0xFFE9EEFF);
+  static const lavenderblueMist = Color(0xFFE9EEFF);
   static const mistyrose = Color(0xFFFFEBE9);
   static const lightgoldenrod = Color(0xFFFFF4D6);
   static const paleskyblue = Color(0xFFDCEFFF);

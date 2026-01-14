@@ -78,7 +78,7 @@ class _CompanyPendingDetailsScreenState
                   isExpanded: isExpanded,
                   bgColor: index == 1
                       ? ColorResources.mistyrose
-                      : ColorResources.lavenderBlue,
+                      : ColorResources.lavenderblueMist,
                 ),
               ),
               child: expandedIndex == 0
