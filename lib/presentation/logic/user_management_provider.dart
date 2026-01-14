@@ -4,6 +4,7 @@ import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/company_creation_response.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/data/models/designation_response.dart';
+import 'package:mpos_beat/data/models/party_MasterSync_model.dart';
 import 'package:mpos_beat/data/models/user_designation_list_model.dart';
 import 'package:mpos_beat/data/models/user_master_response.dart';
 import 'package:mpos_beat/data/models/user_settings_list_model.dart';
@@ -14,6 +15,7 @@ import 'package:mpos_beat/domain/request/block_user_params.dart';
 import 'package:mpos_beat/domain/request/create_comany_user_mapping_params.dart';
 import 'package:mpos_beat/domain/request/create_user_company_mapping_params.dart';
 import 'package:mpos_beat/domain/request/delete_user_param.dart';
+import 'package:mpos_beat/domain/request/party_MasterSync_params.dart';
 import 'package:mpos_beat/domain/request/reset_user_password_params.dart';
 import 'package:mpos_beat/domain/request/user_creation_params.dart';
 import 'package:mpos_beat/domain/request/user_settings_params.dart';
@@ -79,6 +81,8 @@ class UserManagementProvider with ChangeNotifier {
 
   CompanyInfoDtos? _companyCreationDtos;
   CompanyInfoDtos? get companyCreationDtos => _companyCreationDtos;
+  PartyMasterSyncModel? _partmastersync;
+  PartyMasterSyncModel? get partymastersync => _partmastersync;
 
   AutovalidateMode userCreateAutovalidateMode = AutovalidateMode.disabled;
   AutovalidateMode designationAutovalidateMode = AutovalidateMode.disabled;
@@ -1156,5 +1160,34 @@ class UserManagementProvider with ChangeNotifier {
     );
     setLoading(false);
     return _companyCreationDtos;
+  }
+
+  //========================== Party Master Sync====================================
+  Future<PartyMasterSyncModel?> partyMasterSync() async {
+    setLoading(true);
+    final result = await iUserManagementFacad.partyMasterSync(
+      BaseParams(
+        data: PartyMasterSyncParams(
+          companyId: 1663,
+          pageNumber: 1,
+              lastSyncDateTime: DateTime.parse("2026-01-05T10:30:00"),
+        ),
+      ),
+    );
+
+    result.fold(
+      (failure) {
+        Logger.logError("Party Master Sync failed: ${failure.errorMsg}");
+      },
+      (response) async {
+        _partmastersync = response;
+        Logger.logSuccess(
+          "Party Master Sync successful : ${response.toJson()}",
+        );
+        notifyListeners();
+      },
+    );
+    setLoading(false);
+    return _partmastersync;
   }
 }

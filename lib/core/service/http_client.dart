@@ -33,8 +33,10 @@ class HttpClient {
       return _handleResponse(response);
     } on SocketException catch (e) {
       throw CustomException(errMsg: e.toString());
-    } catch (e) {
-      throw CustomException(errMsg: "Unknown error occurred");
+    } on CustomException {
+      rethrow;
+    } catch (e, s) {
+      throw CustomException(errMsg: e.toString(), stackTrace: s);
     }
   }
 
@@ -54,7 +56,6 @@ class HttpClient {
         url,
         headers: _getHeaders(headers),
         body: jsonEncode(data),
-        
       );
 
       return _handleResponse(response);
@@ -165,7 +166,9 @@ class HttpClient {
   }
 
   http.Response _handleResponse(http.Response response) {
-    Logger.logWarning(jsonDecode(response.body));
+    Logger.logInfo("HTTP ${response.statusCode}");
+    Logger.logInfo("RAW RESPONSE: '${response.body}'");
+
     if (response.statusCode >= 200 && response.statusCode < 300) {
       return response;
     } else {
@@ -195,5 +198,31 @@ class HttpClient {
   Future<bool> isInternetAvailable() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     return connectivityResult != ConnectivityResult.none;
+  }
+
+  //get with query parameter
+  Future<http.Response> getWithBody(
+    String uri, {
+    Map<String, String>? headers,
+    required Map<String, dynamic> body,
+  }) async {
+    try {
+      final url = Uri.parse(baseUrl + uri);
+
+      final request = http.Request("GET", url);
+      request.headers.addAll(_getHeaders(headers));
+      request.body = jsonEncode(body);
+
+      Logger.logInfo("GET WITH BODY: ${request.body}");
+
+      final streamed = await client.send(request);
+      final response = await http.Response.fromStream(streamed);
+
+      return _handleResponse(response);
+    } on SocketException catch (e) {
+      throw CustomException(errMsg: e.toString());
+    } catch (e, s) {
+      throw CustomException(errMsg: e.toString(), stackTrace: s);
+    }
   }
 }
