@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:mpos_beat/core/param/param_builder.dart';
+import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/core/utils/logger.dart';
+import 'package:mpos_beat/data/models/response.dart';
+import 'package:mpos_beat/domain/repositories/i_user_facad.dart';
+import 'package:mpos_beat/domain/request/attendance_params.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProvider extends ChangeNotifier {
+  final IUserFacad iUserFacad;
+  UserProvider(this.iUserFacad);
   static const _kDayStarted = 'day_started';
   static const _kRouteStarted = 'route_started';
   static const _kLastRouteName = 'last_route_name';
@@ -13,6 +21,25 @@ class UserProvider extends ChangeNotifier {
   bool get dayStarted => _dayStarted;
   bool get routeStarted => _routeStarted;
   String? get routeName => _routeName;
+
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  bool _isMarkingAttendance = false;
+  bool _isAttendanceMarked = false;
+  bool get isAttendanceMarked => _isAttendanceMarked;
+
+  void resetAttendance() {
+    _isAttendanceMarked = !_isAttendanceMarked;
+  }
+
+  void setLoading(bool val) {
+    _isLoading = val;
+    notifyListeners();
+  }
+
+  DefaultResponse? _attendanceResponse;
+  DefaultResponse? get attendanceResponse => _attendanceResponse;
 
   /// ---------------- LOAD PERSISTED STATE ----------------
   Future<void> load() async {
@@ -58,5 +85,49 @@ class UserProvider extends ChangeNotifier {
     await prefs.setBool(_kRouteStarted, false);
     await prefs.remove(_kLastRouteName);
     notifyListeners();
+  }
+
+  Future<DefaultResponse?> markAttendance({
+    required BuildContext context,
+    required double lattitude,
+    required double longitude,
+    required double accuracy,
+    required String address,
+    required AttendanceMark attendanceType,
+  }) async {
+    if (_isMarkingAttendance) return null;
+    _isMarkingAttendance = true;
+
+    setLoading(true);
+
+    final result = await iUserFacad.markAttendance(
+      BaseParams(
+        data: AttendanceParams(
+          lattitude: lattitude,
+          longitude: longitude,
+          accuracy: accuracy,
+          address: address,
+          attendanceType: attendanceType,
+        ),
+      ),
+    );
+
+    result.fold(
+      (failure) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(failure.errorMsg)));
+      },
+      (response) {
+        _attendanceResponse = response;
+      },
+    );
+    resetAttendance();
+    print("MARKING :: $isAttendanceMarked");
+    setLoading(false);
+    _isMarkingAttendance = false;
+    notifyListeners();
+
+    return _attendanceResponse;
   }
 }

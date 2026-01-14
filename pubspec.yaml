@@ -49,6 +49,8 @@ dependencies:
   package_info_plus: ^9.0.0
   image_picker: ^1.2.1
   image_cropper: 
+  geolocator: ^14.0.2
+  geocoding: ^4.0.0
 
 dev_dependencies:
   flutter_test:

@@ -64,7 +64,7 @@ class _RegistrationDetailsFormState extends State<RegistrationDetailsForm> {
       margin: const EdgeInsets.only(top: 4, left: 16, right: 16),
       padding: const EdgeInsets.only(left: 9, right: 9, top: 12, bottom: 20),
       decoration: BoxDecoration(
-        color: ColorResources.lavenderblue,
+        color: ColorResources.lavenderblueMist,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Padding(

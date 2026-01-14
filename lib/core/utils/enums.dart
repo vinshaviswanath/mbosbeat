@@ -38,3 +38,18 @@ enum UserAction {
     }
   }
 }
+
+
+enum AttendanceMark {
+  start,
+  end;
+
+  String get value {
+    switch (this) {
+      case AttendanceMark.start:
+        return 'Start';
+      case AttendanceMark.end:
+        return 'End';
+    }
+  }
+}

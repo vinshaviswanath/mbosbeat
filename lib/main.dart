@@ -7,6 +7,7 @@ import 'package:mpos_beat/core/utils/isolates/init_parsers.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/domain/repositories/i_authentication_facad.dart';
 import 'package:mpos_beat/domain/repositories/i_company_creation_facad.dart';
+import 'package:mpos_beat/domain/repositories/i_user_facad.dart';
 import 'package:mpos_beat/domain/repositories/i_user_management_facad.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
           create: (_) =>
               CompanyCreationProvider(sl<ICompanyCreationFacad>(), db: db),
         ),
-        ChangeNotifierProvider(create: (_) => UserProvider()..load()),
+        ChangeNotifierProvider(create: (_) => UserProvider(sl<IUserFacad>())..load()),
         ChangeNotifierProvider.value(value: sl<NetworkProvider>()),
 
         //  StreamProvider<List<CompanySettingsListData>>(

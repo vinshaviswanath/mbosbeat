@@ -3,6 +3,7 @@ import 'package:mpos_beat/core/base/run_safely.dart';
 import 'package:mpos_beat/core/event/event_manager.dart';
 import 'package:mpos_beat/core/network/network_provider.dart';
 import 'package:mpos_beat/core/service/http_client.dart';
+import 'package:mpos_beat/core/service/location_services.dart';
 import 'package:mpos_beat/data/data_sources/authentication/company_registeration/company_registeration.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,6 +22,9 @@ abstract class AppInjectionModule {
 
   @lazySingleton
   NetworkProvider get networkProvider => NetworkProvider();
+
+  @lazySingleton
+  LocationService get locationService => LocationService();
 
   @lazySingleton
   CompanyRegisteration companyRegisteration(

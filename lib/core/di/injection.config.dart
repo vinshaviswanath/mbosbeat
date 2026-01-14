@@ -70,6 +70,7 @@ import '../../data/data_sources/company_creation/registration_type.dart'
 import '../../data/data_sources/company_creation/set_voucher_numbering_method/set_voucher_numbering_method.dart'
     as _i931;
 import '../../data/data_sources/company_creation/state_list.dart' as _i374;
+import '../../data/data_sources/user/attendanceMarking.dart' as _i249;
 import '../../data/data_sources/user_management/activate_designation/activate_designation.dart'
     as _i185;
 import '../../data/data_sources/user_management/add_designation/add_designation.dart'
@@ -103,14 +104,17 @@ import '../../data/data_sources/user_management/user_settings/user_settings_list
 import '../../data/local_db/app_db.dart' as _i264;
 import '../../data/repositories/i_authentication_facad_impl.dart' as _i823;
 import '../../data/repositories/i_company_creation_facad_impl.dart' as _i322;
+import '../../data/repositories/i_user_facad_impl.dart' as _i30;
 import '../../data/repositories/i_user_management_facad_impl.dart' as _i168;
 import '../../domain/repositories/i_authentication_facad.dart' as _i590;
 import '../../domain/repositories/i_company_creation_facad.dart' as _i483;
+import '../../domain/repositories/i_user_facad.dart' as _i9;
 import '../../domain/repositories/i_user_management_facad.dart' as _i172;
 import '../base/run_safely.dart' as _i530;
 import '../event/event_manager.dart' as _i275;
 import '../network/network_provider.dart' as _i335;
 import '../service/http_client.dart' as _i976;
+import '../service/location_services.dart' as _i547;
 import 'app_injection_module.dart' as _i975;
 
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -134,6 +138,9 @@ Future<_i174.GetIt> init(
   gh.lazySingleton<_i264.AppDb>(() => appInjectionModule.appDb);
   gh.lazySingleton<_i335.NetworkProvider>(
     () => appInjectionModule.networkProvider,
+  );
+  gh.lazySingleton<_i547.LocationService>(
+    () => appInjectionModule.locationService,
   );
   gh.lazySingleton<_i976.HttpClient>(
     () => _i976.HttpClient(gh<_i519.Client>()),
@@ -365,6 +372,13 @@ Future<_i174.GetIt> init(
       gh<_i460.SharedPreferences>(),
     ),
   );
+  gh.lazySingleton<_i249.AttendanceMarking>(
+    () => _i249.AttendanceMarking(
+      gh<_i976.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
   gh.lazySingleton<_i185.ActivateDesignation>(
     () => _i185.ActivateDesignation(
       gh<_i976.HttpClient>(),
@@ -493,6 +507,14 @@ Future<_i174.GetIt> init(
       gh<_i264.AppDb>(),
       gh<_i275.EventManager>(),
       gh<_i70.RegistrationEventBinder>(),
+    ),
+  );
+  gh.lazySingleton<_i9.IUserFacad>(
+    () => _i30.IUserFacadImp(
+      gh<_i976.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+      gh<_i249.AttendanceMarking>(),
     ),
   );
   gh.lazySingleton<_i483.ICompanyCreationFacad>(
