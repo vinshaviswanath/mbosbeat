@@ -94,6 +94,8 @@ import '../../data/data_sources/user_management/get_companies/get_compamies.dart
     as _i213;
 import '../../data/data_sources/user_management/get_users_list/get_users_list.dart'
     as _i165;
+import '../../data/data_sources/user_management/party_MasterSync/party_MasterSync.dart'
+    as _i860;
 import '../../data/data_sources/user_management/reset_user_password/reset_user_password.dart'
     as _i762;
 import '../../data/data_sources/user_management/user_designation_list/user_designation_list.dart'
@@ -449,6 +451,13 @@ Future<_i174.GetIt> init(
       gh<_i460.SharedPreferences>(),
     ),
   );
+  gh.lazySingleton<_i860.PartyMasterSync>(
+    () => _i860.PartyMasterSync(
+      gh<_i976.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
   gh.lazySingleton<_i762.ResetUserPassword>(
     () => _i762.ResetUserPassword(
       gh<_i976.HttpClient>(),
@@ -482,6 +491,7 @@ Future<_i174.GetIt> init(
       gh<_i466.CreateUserSettings>(),
       gh<_i213.GetCompanies>(),
       gh<_i600.CreateUserCompanyMapping>(),
+      gh<_i860.PartyMasterSync>(),
       gh<_i148.CreateCompanyUserMapping>(),
     ),
   );

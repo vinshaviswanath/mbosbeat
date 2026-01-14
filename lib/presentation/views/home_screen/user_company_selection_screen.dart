@@ -156,7 +156,10 @@ class _UserCompanySelectionScreenState
                           return InkWell(
                             borderRadius: BorderRadius.circular(12),
                             onTap: () {
-                              Logger.logInfo("Selected company: ${company.id}");
+                              Logger.logInfo(
+                                "Selected company id...................................: ${company.id}",
+                              );
+                           
                               setState(() {
                                 selectedIndex = index;
                               });

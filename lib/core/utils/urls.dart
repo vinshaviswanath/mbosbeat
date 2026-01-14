@@ -67,4 +67,5 @@ class Urls {
       "/api/Company/CompleteSettings?CompanyID=";
       static const String setVoucherNumberingMethod1 = "/api/Company/SetVoucherNumberingMethod?CompanyID=";
       static const String setVoucherNumberingMethod2 = "&VoucherMode=";
+      static const String partyMasterSync = "/API/Party/GetAll";
 }

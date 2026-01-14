@@ -3,6 +3,7 @@ import 'package:mpos_beat/core/utils/typedefs.dart';
 import 'package:mpos_beat/data/models/company_creation_response.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/data/models/designation_response.dart';
+import 'package:mpos_beat/data/models/party_MasterSync_model.dart';
 import 'package:mpos_beat/data/models/user_designation_list_model.dart';
 import 'package:mpos_beat/data/models/user_master_response.dart';
 import 'package:mpos_beat/data/models/user_settings_list_model.dart';
@@ -12,6 +13,7 @@ import 'package:mpos_beat/domain/request/block_user_params.dart';
 import 'package:mpos_beat/domain/request/create_comany_user_mapping_params.dart';
 import 'package:mpos_beat/domain/request/create_user_company_mapping_params.dart';
 import 'package:mpos_beat/domain/request/delete_user_param.dart';
+import 'package:mpos_beat/domain/request/party_MasterSync_params.dart';
 import 'package:mpos_beat/domain/request/reset_user_password_params.dart';
 import 'package:mpos_beat/domain/request/user_creation_params.dart';
 import 'package:mpos_beat/domain/request/user_settings_params.dart';
@@ -101,9 +103,15 @@ interface class IUserManagementFacad {
     throw UnimplementedError();
   }
 
-    ResultFuture<CompanyInfoDtos> createCompanyUserMapping(BaseParams<CreateComanyUserMappingParams> params) {
+  ResultFuture<CompanyInfoDtos> createCompanyUserMapping(
+    BaseParams<CreateComanyUserMappingParams> params,
+  ) {
     throw UnimplementedError();
   }
 
-
+  ResultFuture<PartyMasterSyncModel> partyMasterSync(
+    BaseParams<PartyMasterSyncParams> params,
+  ) {
+    throw UnimplementedError();
+  }
 }

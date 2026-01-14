@@ -15,12 +15,14 @@ import 'package:mpos_beat/data/data_sources/user_management/delete_designation/d
 import 'package:mpos_beat/data/data_sources/user_management/delete_user/delete_user.dart';
 import 'package:mpos_beat/data/data_sources/user_management/get_companies/get_compamies.dart';
 import 'package:mpos_beat/data/data_sources/user_management/get_users_list/get_users_list.dart';
+import 'package:mpos_beat/data/data_sources/user_management/party_MasterSync/party_MasterSync.dart';
 import 'package:mpos_beat/data/data_sources/user_management/reset_user_password/reset_user_password.dart';
 import 'package:mpos_beat/data/data_sources/user_management/user_designation_list/user_designation_list.dart';
 import 'package:mpos_beat/data/data_sources/user_management/user_settings/user_settings_list.dart';
 import 'package:mpos_beat/data/models/company_creation_response.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/data/models/designation_response.dart';
+import 'package:mpos_beat/data/models/party_MasterSync_model.dart';
 import 'package:mpos_beat/data/models/user_designation_list_model.dart';
 import 'package:mpos_beat/data/models/user_master_response.dart';
 import 'package:mpos_beat/data/models/user_settings_list_model.dart';
@@ -31,6 +33,7 @@ import 'package:mpos_beat/domain/request/block_user_params.dart';
 import 'package:mpos_beat/domain/request/create_comany_user_mapping_params.dart';
 import 'package:mpos_beat/domain/request/create_user_company_mapping_params.dart';
 import 'package:mpos_beat/domain/request/delete_user_param.dart';
+import 'package:mpos_beat/domain/request/party_MasterSync_params.dart';
 import 'package:mpos_beat/domain/request/reset_user_password_params.dart';
 import 'package:mpos_beat/domain/request/user_creation_params.dart';
 import 'package:mpos_beat/domain/request/user_settings_params.dart';
@@ -52,7 +55,8 @@ class IUserManagementFacadImpl implements IUserManagementFacad {
   final CreateUserSettings userSettings;
   final GetCompanies getAllcompanies;
   final CreateUserCompanyMapping userComapnyMapping;
-    final CreateCompanyUserMapping companyUserMapping;
+  final CreateCompanyUserMapping companyUserMapping;
+  final PartyMasterSync partyMastersync;
   final HttpClient httpClient;
   final RunSafely runSafely;
   final SharedPreferences sharedPreferences;
@@ -73,7 +77,9 @@ class IUserManagementFacadImpl implements IUserManagementFacad {
     this.userSettingsList,
     this.userSettings,
     this.getAllcompanies,
-    this.userComapnyMapping, this.companyUserMapping,
+    this.userComapnyMapping,
+    this.partyMastersync,
+    this.companyUserMapping,
   );
 
   @override
@@ -175,8 +181,17 @@ class IUserManagementFacadImpl implements IUserManagementFacad {
     return userComapnyMapping(params);
   }
 
-      @override
-  ResultFuture<CompanyInfoDtos> createCompanyUserMapping(BaseParams<CreateComanyUserMappingParams> params) {
+  @override
+  ResultFuture<CompanyInfoDtos> createCompanyUserMapping(
+    BaseParams<CreateComanyUserMappingParams> params,
+  ) {
     return companyUserMapping(params);
+  }
+
+  @override
+  ResultFuture<PartyMasterSyncModel> partyMasterSync(
+    BaseParams<PartyMasterSyncParams> params,
+  ) {
+    return partyMastersync(params);
   }
 }
