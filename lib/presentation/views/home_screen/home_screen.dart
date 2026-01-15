@@ -1,16 +1,11 @@
-import 'package:geocoding/geocoding.dart';
 import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/service/location_services.dart';
-import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
-import 'package:mpos_beat/domain/request/attendance_params.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
-import 'package:mpos_beat/presentation/logic/user_management_provider.dart';
 import 'package:mpos_beat/presentation/logic/user_provider.dart';
 import 'package:mpos_beat/presentation/views/admin_home/widget/common_logoutdialogbox.dart';
 import 'package:mpos_beat/presentation/views/home_screen/dialogs/endTrip_dialogbox.dart';
-import 'package:mpos_beat/presentation/views/home_screen/dialogs/markEndDay_dialogobox.dart';
 import 'package:mpos_beat/presentation/views/home_screen/dialogs/mark_attendance.dart';
 import 'package:mpos_beat/presentation/views/home_screen/dialogs/startTrip_dialogbox.dart';
 import 'package:mpos_beat/presentation/views/home_screen/transactions_container.dart';
@@ -31,16 +26,22 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final provider = Provider.of<UserManagementProvider>(
-        context,
-        listen: false,
-      );
+      final provider = Provider.of<UserProvider>(context, listen: false);
       await loadData();
       await loadSavedRoute();
+
+      provider.setCompanyId(widget.company.id!);
       await provider.partyMasterSync();
+
+      final appDb = sl<AppDb>();
+  await appDb.partyMasterDao.getAllParties();
+      final parties = await appDb.partyMasterDao.getAllParties();
+          Logger.logInfo("📦 PartyMaster DB count:....................................................................... ${parties.length}");
+
     });
     super.initState();
   }
+
 
   Future<void> loadSavedRoute() async {
     final prefs = sl<SharedPreferences>();
@@ -62,6 +63,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(
+      "id......................................................${widget.company.id}",
+    );
     final appDb = sl<AppDb>();
 
     return Scaffold(
@@ -154,7 +158,6 @@ class HomeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   
     final today =
         "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}";
     return Selector<UserProvider, _HeaderState>(

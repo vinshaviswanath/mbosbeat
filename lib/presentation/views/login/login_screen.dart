@@ -31,8 +31,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final pref = sl<SharedPreferences>();
     final token = pref.getString("token");
-    Logger.logInfo(context.textStyle.s22.w700.white.fontFamily);
-    Logger.logSuccess("TOKEN : $token");
+  //  Logger.logInfo(context.textStyle.s22.w700.white.fontFamily);
+    //Logger.logSuccess("TOKEN : $token");
 
     final appLocalization = context.l10n;
 

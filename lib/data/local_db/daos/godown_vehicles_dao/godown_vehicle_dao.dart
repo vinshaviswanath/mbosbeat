@@ -55,8 +55,8 @@ class GodownVehicleDao extends DatabaseAccessor<AppDb>
   Future<void> printGodownVehicles() async {
     final list = await select(godownVehicles).get();
 
-    debugPrint("Godown Vehicles List Length :: ${list.length}");
-    debugPrint("===== GODOWN VEHICLES TABLE JSON =====");
+    //debugPrint("Godown Vehicles List Length :: ${list.length}");
+    //debugPrint("===== GODOWN VEHICLES TABLE JSON =====");
 
     for (final v in list) {
       debugPrint(
@@ -70,7 +70,7 @@ class GodownVehicleDao extends DatabaseAccessor<AppDb>
       );
     }
 
-    debugPrint("=====================================");
+   // debugPrint("=====================================");
   }
 
   Stream<List<GodownVehicle>> watchActiveVehiclesByCompany(int companyId) {

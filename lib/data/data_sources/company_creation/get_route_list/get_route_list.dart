@@ -31,12 +31,12 @@ class GetAllRoutes {
 
         if (response.isOk) {
           final data = RouteListModel.fromJson(response.data);
-          Logger.logInfo("Route List : ${data.toJson()}");
+        //  Logger.logInfo("Route List : ${data.toJson()}");
           await appDb.routeDao.clearAll();
           await appDb.routeDao.insertRoutes(data.routeList);
 
           // 🔍 Review DB
-          await appDb.routeDao.printRoutes();
+          //await appDb.routeDao.printRoutes();
           return data;
         }
 

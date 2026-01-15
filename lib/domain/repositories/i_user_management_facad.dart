@@ -108,10 +108,4 @@ interface class IUserManagementFacad {
   ) {
     throw UnimplementedError();
   }
-
-  ResultFuture<PartyMasterSyncModel> partyMasterSync(
-    BaseParams<PartyMasterSyncParams> params,
-  ) {
-    throw UnimplementedError();
-  }
 }

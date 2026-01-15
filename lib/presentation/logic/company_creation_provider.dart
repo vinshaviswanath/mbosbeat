@@ -1762,9 +1762,9 @@ class CompanyCreationProvider extends ChangeNotifier {
         _routeListResponse = response;
         _routeController.add(_routeListResponse?.routeList ?? []);
         // _companyListController.add(_companiesList);
-        Logger.logSuccess(
-          "Route List fetch successfull : ${response.toJson()}",
-        );
+        // Logger.logSuccess(
+        //   "Route List fetch successfull : ${response.toJson()}",
+        // );
         notifyListeners();
       },
     );

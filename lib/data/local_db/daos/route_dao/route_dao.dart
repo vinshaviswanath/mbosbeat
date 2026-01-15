@@ -46,7 +46,6 @@ class RouteDao extends DatabaseAccessor<AppDb> with _$RouteDaoMixin {
     )..where((tbl) => tbl.companyId.equals(companyId))).go();
   }
 
-
   Future<void> printRoutes() async {
     final list = await select(godownRoutes).get();
 
@@ -92,13 +91,9 @@ class RouteDao extends DatabaseAccessor<AppDb> with _$RouteDaoMixin {
   }
 
   Stream<List<GodownRoute>> watchActiveRoutesByCompany(int companyId) {
-  return (select(godownRoutes)
-        ..where(
-          (tbl) =>
-              tbl.companyId.equals(companyId) &
-              tbl.active.equals(1),
+    return (select(godownRoutes)..where(
+          (tbl) => tbl.companyId.equals(companyId) & tbl.active.equals(1),
         ))
-      .watch();
-}
-
+        .watch();
+  }
 }
