@@ -77,12 +77,16 @@ import '../../data/data_sources/user_management/add_designation/add_designation.
     as _i749;
 import '../../data/data_sources/user_management/block_user/block_user.dart'
     as _i183;
+import '../../data/data_sources/user_management/checkin_Checkout/checkin_datasource.dart'
+    as _i1053;
+import '../../data/data_sources/user_management/checkin_Checkout/checkout_datasource.dart'
+    as _i435;
 import '../../data/data_sources/user_management/company_user_mapping/company_user_mapping.dart'
     as _i148;
 import '../../data/data_sources/user_management/create_user/create_user.dart'
     as _i420;
-import '../../data/data_sources/user_management/create_user_company_mapping%5D/create_user_company_mapping.dart'
-    as _i600;
+import '../../data/data_sources/user_management/create_user_company_mapping/create_user_company_mapping.dart'
+    as _i400;
 import '../../data/data_sources/user_management/create_user_settings/create_user_settings.dart'
     as _i466;
 import '../../data/data_sources/user_management/deactivate_designation/deactivate_designation.dart'
@@ -221,6 +225,14 @@ Future<_i174.GetIt> init(
   );
   gh.lazySingleton<_i284.GetCompanyList>(
     () => _i284.GetCompanyList(
+      gh<_i976.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+      appDb: gh<_i264.AppDb>(),
+    ),
+  );
+  gh.lazySingleton<_i860.PartyMasterSync>(
+    () => _i860.PartyMasterSync(
       gh<_i976.HttpClient>(),
       gh<_i530.RunSafely>(),
       gh<_i460.SharedPreferences>(),
@@ -402,6 +414,20 @@ Future<_i174.GetIt> init(
       gh<_i460.SharedPreferences>(),
     ),
   );
+  gh.lazySingleton<_i1053.CheckinDatasource>(
+    () => _i1053.CheckinDatasource(
+      gh<_i976.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i435.CheckoutDatasource>(
+    () => _i435.CheckoutDatasource(
+      gh<_i976.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
   gh.lazySingleton<_i148.CreateCompanyUserMapping>(
     () => _i148.CreateCompanyUserMapping(
       gh<_i976.HttpClient>(),
@@ -416,8 +442,8 @@ Future<_i174.GetIt> init(
       gh<_i460.SharedPreferences>(),
     ),
   );
-  gh.lazySingleton<_i600.CreateUserCompanyMapping>(
-    () => _i600.CreateUserCompanyMapping(
+  gh.lazySingleton<_i400.CreateUserCompanyMapping>(
+    () => _i400.CreateUserCompanyMapping(
       gh<_i976.HttpClient>(),
       gh<_i530.RunSafely>(),
       gh<_i460.SharedPreferences>(),
@@ -465,13 +491,6 @@ Future<_i174.GetIt> init(
       gh<_i460.SharedPreferences>(),
     ),
   );
-  gh.lazySingleton<_i860.PartyMasterSync>(
-    () => _i860.PartyMasterSync(
-      gh<_i976.HttpClient>(),
-      gh<_i530.RunSafely>(),
-      gh<_i460.SharedPreferences>(),
-    ),
-  );
   gh.lazySingleton<_i762.ResetUserPassword>(
     () => _i762.ResetUserPassword(
       gh<_i976.HttpClient>(),
@@ -484,6 +503,17 @@ Future<_i174.GetIt> init(
       gh<_i976.HttpClient>(),
       gh<_i530.RunSafely>(),
       gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i9.IUserFacad>(
+    () => _i30.IUserFacadImp(
+      gh<_i976.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+      gh<_i249.AttendanceMarking>(),
+      gh<_i860.PartyMasterSync>(),
+      gh<_i1053.CheckinDatasource>(),
+      gh<_i435.CheckoutDatasource>(),
     ),
   );
   gh.lazySingleton<_i172.IUserManagementFacad>(
@@ -504,8 +534,7 @@ Future<_i174.GetIt> init(
       gh<_i829.GetUserSettings>(),
       gh<_i466.CreateUserSettings>(),
       gh<_i213.GetCompanies>(),
-      gh<_i600.CreateUserCompanyMapping>(),
-      gh<_i860.PartyMasterSync>(),
+      gh<_i400.CreateUserCompanyMapping>(),
       gh<_i148.CreateCompanyUserMapping>(),
     ),
   );
@@ -517,14 +546,6 @@ Future<_i174.GetIt> init(
       gh<_i264.AppDb>(),
       gh<_i275.EventManager>(),
       gh<_i70.RegistrationEventBinder>(),
-    ),
-  );
-  gh.lazySingleton<_i9.IUserFacad>(
-    () => _i30.IUserFacadImp(
-      gh<_i976.HttpClient>(),
-      gh<_i530.RunSafely>(),
-      gh<_i460.SharedPreferences>(),
-      gh<_i249.AttendanceMarking>(),
     ),
   );
   gh.lazySingleton<_i483.ICompanyCreationFacad>(

@@ -65,8 +65,11 @@ class Urls {
       "/api/Company/CreateVoucherNumbering";
   static const String completeVoucherSettings =
       "/api/Company/CompleteSettings?CompanyID=";
-      static const String setVoucherNumberingMethod1 = "/api/Company/SetVoucherNumberingMethod?CompanyID=";
-      static const String setVoucherNumberingMethod2 = "&VoucherMode=";
-      static const String partyMasterSync = "/API/Party/GetAll";
-      static const String attendanceMarking = "/UserModule/MarkAttendance";
+  static const String setVoucherNumberingMethod1 =
+      "/api/Company/SetVoucherNumberingMethod?CompanyID=";
+  static const String setVoucherNumberingMethod2 = "&VoucherMode=";
+  static const String partyMasterSync = "/API/Party/GetAll";
+  static const String attendanceMarking = "/UserModule/MarkAttendance";
+  static const String checkin = "/UserModule/CustomerCheckIN";
+  static const String checkout = "/UserModule/CustomerCheckOut";
 }

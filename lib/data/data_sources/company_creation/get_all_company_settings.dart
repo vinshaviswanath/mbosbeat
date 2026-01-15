@@ -51,7 +51,7 @@ class GetAllCompanySettingsDatasource {
 
           await appDb.companySettingsDao.deleteAll();
           await appDb.companySettingsDao.insertAll(companions);
-          await appDb.companySettingsDao.printAll();
+         // await appDb.companySettingsDao.printAll();
           return data;
         }
         throw CustomException(errMsg: response.message);

@@ -8243,6 +8243,2001 @@ class GodownRoutesCompanion extends UpdateCompanion<GodownRoute> {
   }
 }
 
+class $PartyMasterTable extends PartyMaster
+    with TableInfo<$PartyMasterTable, PartyMasterData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PartyMasterTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _ledgerIdMeta = const VerificationMeta(
+    'ledgerId',
+  );
+  @override
+  late final GeneratedColumn<int> ledgerId = GeneratedColumn<int>(
+    'ledger_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _ledgerNameMeta = const VerificationMeta(
+    'ledgerName',
+  );
+  @override
+  late final GeneratedColumn<String> ledgerName = GeneratedColumn<String>(
+    'ledger_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _ledgerNameLocalMeta = const VerificationMeta(
+    'ledgerNameLocal',
+  );
+  @override
+  late final GeneratedColumn<String> ledgerNameLocal = GeneratedColumn<String>(
+    'ledger_name_local',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _aliasNameMeta = const VerificationMeta(
+    'aliasName',
+  );
+  @override
+  late final GeneratedColumn<String> aliasName = GeneratedColumn<String>(
+    'alias_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _ledDescMeta = const VerificationMeta(
+    'ledDesc',
+  );
+  @override
+  late final GeneratedColumn<String> ledDesc = GeneratedColumn<String>(
+    'led_desc',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _groupIdMeta = const VerificationMeta(
+    'groupId',
+  );
+  @override
+  late final GeneratedColumn<int> groupId = GeneratedColumn<int>(
+    'group_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _groupNameMeta = const VerificationMeta(
+    'groupName',
+  );
+  @override
+  late final GeneratedColumn<String> groupName = GeneratedColumn<String>(
+    'group_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _isActiveMeta = const VerificationMeta(
+    'isActive',
+  );
+  @override
+  late final GeneratedColumn<bool> isActive = GeneratedColumn<bool>(
+    'is_active',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_active" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
+    'isDeleted',
+  );
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+    'is_deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _creditLimitMeta = const VerificationMeta(
+    'creditLimit',
+  );
+  @override
+  late final GeneratedColumn<double> creditLimit = GeneratedColumn<double>(
+    'credit_limit',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _dueDaysMeta = const VerificationMeta(
+    'dueDays',
+  );
+  @override
+  late final GeneratedColumn<int> dueDays = GeneratedColumn<int>(
+    'due_days',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _address1Meta = const VerificationMeta(
+    'address1',
+  );
+  @override
+  late final GeneratedColumn<String> address1 = GeneratedColumn<String>(
+    'address1',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _address2Meta = const VerificationMeta(
+    'address2',
+  );
+  @override
+  late final GeneratedColumn<String> address2 = GeneratedColumn<String>(
+    'address2',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _address3Meta = const VerificationMeta(
+    'address3',
+  );
+  @override
+  late final GeneratedColumn<String> address3 = GeneratedColumn<String>(
+    'address3',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _cityMeta = const VerificationMeta('city');
+  @override
+  late final GeneratedColumn<String> city = GeneratedColumn<String>(
+    'city',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _stateIdMeta = const VerificationMeta(
+    'stateId',
+  );
+  @override
+  late final GeneratedColumn<int> stateId = GeneratedColumn<int>(
+    'state_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _stateNameMeta = const VerificationMeta(
+    'stateName',
+  );
+  @override
+  late final GeneratedColumn<String> stateName = GeneratedColumn<String>(
+    'state_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _countryIdMeta = const VerificationMeta(
+    'countryId',
+  );
+  @override
+  late final GeneratedColumn<int> countryId = GeneratedColumn<int>(
+    'country_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _countryNameMeta = const VerificationMeta(
+    'countryName',
+  );
+  @override
+  late final GeneratedColumn<String> countryName = GeneratedColumn<String>(
+    'country_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _pinCodeMeta = const VerificationMeta(
+    'pinCode',
+  );
+  @override
+  late final GeneratedColumn<String> pinCode = GeneratedColumn<String>(
+    'pin_code',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _latitudeMeta = const VerificationMeta(
+    'latitude',
+  );
+  @override
+  late final GeneratedColumn<double> latitude = GeneratedColumn<double>(
+    'latitude',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _longitudeMeta = const VerificationMeta(
+    'longitude',
+  );
+  @override
+  late final GeneratedColumn<double> longitude = GeneratedColumn<double>(
+    'longitude',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _distanceFromCompanyKMMeta =
+      const VerificationMeta('distanceFromCompanyKM');
+  @override
+  late final GeneratedColumn<double> distanceFromCompanyKM =
+      GeneratedColumn<double>(
+        'distance_from_company_k_m',
+        aliasedName,
+        true,
+        type: DriftSqlType.double,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _mailingNameMeta = const VerificationMeta(
+    'mailingName',
+  );
+  @override
+  late final GeneratedColumn<String> mailingName = GeneratedColumn<String>(
+    'mailing_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _contactPersonMeta = const VerificationMeta(
+    'contactPerson',
+  );
+  @override
+  late final GeneratedColumn<String> contactPerson = GeneratedColumn<String>(
+    'contact_person',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _mobileMeta = const VerificationMeta('mobile');
+  @override
+  late final GeneratedColumn<String> mobile = GeneratedColumn<String>(
+    'mobile',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _whatsappNoMeta = const VerificationMeta(
+    'whatsappNo',
+  );
+  @override
+  late final GeneratedColumn<String> whatsappNo = GeneratedColumn<String>(
+    'whatsapp_no',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _emailMeta = const VerificationMeta('email');
+  @override
+  late final GeneratedColumn<String> email = GeneratedColumn<String>(
+    'email',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _taxTypeMeta = const VerificationMeta(
+    'taxType',
+  );
+  @override
+  late final GeneratedColumn<String> taxType = GeneratedColumn<String>(
+    'tax_type',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _taxNumberMeta = const VerificationMeta(
+    'taxNumber',
+  );
+  @override
+  late final GeneratedColumn<String> taxNumber = GeneratedColumn<String>(
+    'tax_number',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _stateCodeMeta = const VerificationMeta(
+    'stateCode',
+  );
+  @override
+  late final GeneratedColumn<String> stateCode = GeneratedColumn<String>(
+    'state_code',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _closingBalanceMeta = const VerificationMeta(
+    'closingBalance',
+  );
+  @override
+  late final GeneratedColumn<double> closingBalance = GeneratedColumn<double>(
+    'closing_balance',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _onAccountValueMeta = const VerificationMeta(
+    'onAccountValue',
+  );
+  @override
+  late final GeneratedColumn<double> onAccountValue = GeneratedColumn<double>(
+    'on_account_value',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _routeIdMeta = const VerificationMeta(
+    'routeId',
+  );
+  @override
+  late final GeneratedColumn<int> routeId = GeneratedColumn<int>(
+    'route_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _routeNameMeta = const VerificationMeta(
+    'routeName',
+  );
+  @override
+  late final GeneratedColumn<String> routeName = GeneratedColumn<String>(
+    'route_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _lastSyncOnMeta = const VerificationMeta(
+    'lastSyncOn',
+  );
+  @override
+  late final GeneratedColumn<DateTime> lastSyncOn = GeneratedColumn<DateTime>(
+    'last_sync_on',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _syncActionMeta = const VerificationMeta(
+    'syncAction',
+  );
+  @override
+  late final GeneratedColumn<String> syncAction = GeneratedColumn<String>(
+    'sync_action',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    ledgerId,
+    ledgerName,
+    ledgerNameLocal,
+    aliasName,
+    ledDesc,
+    groupId,
+    groupName,
+    isActive,
+    isDeleted,
+    creditLimit,
+    dueDays,
+    address1,
+    address2,
+    address3,
+    city,
+    stateId,
+    stateName,
+    countryId,
+    countryName,
+    pinCode,
+    latitude,
+    longitude,
+    distanceFromCompanyKM,
+    mailingName,
+    contactPerson,
+    mobile,
+    whatsappNo,
+    email,
+    taxType,
+    taxNumber,
+    stateCode,
+    closingBalance,
+    onAccountValue,
+    routeId,
+    routeName,
+    lastSyncOn,
+    syncAction,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'party_master';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<PartyMasterData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('ledger_id')) {
+      context.handle(
+        _ledgerIdMeta,
+        ledgerId.isAcceptableOrUnknown(data['ledger_id']!, _ledgerIdMeta),
+      );
+    }
+    if (data.containsKey('ledger_name')) {
+      context.handle(
+        _ledgerNameMeta,
+        ledgerName.isAcceptableOrUnknown(data['ledger_name']!, _ledgerNameMeta),
+      );
+    }
+    if (data.containsKey('ledger_name_local')) {
+      context.handle(
+        _ledgerNameLocalMeta,
+        ledgerNameLocal.isAcceptableOrUnknown(
+          data['ledger_name_local']!,
+          _ledgerNameLocalMeta,
+        ),
+      );
+    }
+    if (data.containsKey('alias_name')) {
+      context.handle(
+        _aliasNameMeta,
+        aliasName.isAcceptableOrUnknown(data['alias_name']!, _aliasNameMeta),
+      );
+    }
+    if (data.containsKey('led_desc')) {
+      context.handle(
+        _ledDescMeta,
+        ledDesc.isAcceptableOrUnknown(data['led_desc']!, _ledDescMeta),
+      );
+    }
+    if (data.containsKey('group_id')) {
+      context.handle(
+        _groupIdMeta,
+        groupId.isAcceptableOrUnknown(data['group_id']!, _groupIdMeta),
+      );
+    }
+    if (data.containsKey('group_name')) {
+      context.handle(
+        _groupNameMeta,
+        groupName.isAcceptableOrUnknown(data['group_name']!, _groupNameMeta),
+      );
+    }
+    if (data.containsKey('is_active')) {
+      context.handle(
+        _isActiveMeta,
+        isActive.isAcceptableOrUnknown(data['is_active']!, _isActiveMeta),
+      );
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
+    if (data.containsKey('credit_limit')) {
+      context.handle(
+        _creditLimitMeta,
+        creditLimit.isAcceptableOrUnknown(
+          data['credit_limit']!,
+          _creditLimitMeta,
+        ),
+      );
+    }
+    if (data.containsKey('due_days')) {
+      context.handle(
+        _dueDaysMeta,
+        dueDays.isAcceptableOrUnknown(data['due_days']!, _dueDaysMeta),
+      );
+    }
+    if (data.containsKey('address1')) {
+      context.handle(
+        _address1Meta,
+        address1.isAcceptableOrUnknown(data['address1']!, _address1Meta),
+      );
+    }
+    if (data.containsKey('address2')) {
+      context.handle(
+        _address2Meta,
+        address2.isAcceptableOrUnknown(data['address2']!, _address2Meta),
+      );
+    }
+    if (data.containsKey('address3')) {
+      context.handle(
+        _address3Meta,
+        address3.isAcceptableOrUnknown(data['address3']!, _address3Meta),
+      );
+    }
+    if (data.containsKey('city')) {
+      context.handle(
+        _cityMeta,
+        city.isAcceptableOrUnknown(data['city']!, _cityMeta),
+      );
+    }
+    if (data.containsKey('state_id')) {
+      context.handle(
+        _stateIdMeta,
+        stateId.isAcceptableOrUnknown(data['state_id']!, _stateIdMeta),
+      );
+    }
+    if (data.containsKey('state_name')) {
+      context.handle(
+        _stateNameMeta,
+        stateName.isAcceptableOrUnknown(data['state_name']!, _stateNameMeta),
+      );
+    }
+    if (data.containsKey('country_id')) {
+      context.handle(
+        _countryIdMeta,
+        countryId.isAcceptableOrUnknown(data['country_id']!, _countryIdMeta),
+      );
+    }
+    if (data.containsKey('country_name')) {
+      context.handle(
+        _countryNameMeta,
+        countryName.isAcceptableOrUnknown(
+          data['country_name']!,
+          _countryNameMeta,
+        ),
+      );
+    }
+    if (data.containsKey('pin_code')) {
+      context.handle(
+        _pinCodeMeta,
+        pinCode.isAcceptableOrUnknown(data['pin_code']!, _pinCodeMeta),
+      );
+    }
+    if (data.containsKey('latitude')) {
+      context.handle(
+        _latitudeMeta,
+        latitude.isAcceptableOrUnknown(data['latitude']!, _latitudeMeta),
+      );
+    }
+    if (data.containsKey('longitude')) {
+      context.handle(
+        _longitudeMeta,
+        longitude.isAcceptableOrUnknown(data['longitude']!, _longitudeMeta),
+      );
+    }
+    if (data.containsKey('distance_from_company_k_m')) {
+      context.handle(
+        _distanceFromCompanyKMMeta,
+        distanceFromCompanyKM.isAcceptableOrUnknown(
+          data['distance_from_company_k_m']!,
+          _distanceFromCompanyKMMeta,
+        ),
+      );
+    }
+    if (data.containsKey('mailing_name')) {
+      context.handle(
+        _mailingNameMeta,
+        mailingName.isAcceptableOrUnknown(
+          data['mailing_name']!,
+          _mailingNameMeta,
+        ),
+      );
+    }
+    if (data.containsKey('contact_person')) {
+      context.handle(
+        _contactPersonMeta,
+        contactPerson.isAcceptableOrUnknown(
+          data['contact_person']!,
+          _contactPersonMeta,
+        ),
+      );
+    }
+    if (data.containsKey('mobile')) {
+      context.handle(
+        _mobileMeta,
+        mobile.isAcceptableOrUnknown(data['mobile']!, _mobileMeta),
+      );
+    }
+    if (data.containsKey('whatsapp_no')) {
+      context.handle(
+        _whatsappNoMeta,
+        whatsappNo.isAcceptableOrUnknown(data['whatsapp_no']!, _whatsappNoMeta),
+      );
+    }
+    if (data.containsKey('email')) {
+      context.handle(
+        _emailMeta,
+        email.isAcceptableOrUnknown(data['email']!, _emailMeta),
+      );
+    }
+    if (data.containsKey('tax_type')) {
+      context.handle(
+        _taxTypeMeta,
+        taxType.isAcceptableOrUnknown(data['tax_type']!, _taxTypeMeta),
+      );
+    }
+    if (data.containsKey('tax_number')) {
+      context.handle(
+        _taxNumberMeta,
+        taxNumber.isAcceptableOrUnknown(data['tax_number']!, _taxNumberMeta),
+      );
+    }
+    if (data.containsKey('state_code')) {
+      context.handle(
+        _stateCodeMeta,
+        stateCode.isAcceptableOrUnknown(data['state_code']!, _stateCodeMeta),
+      );
+    }
+    if (data.containsKey('closing_balance')) {
+      context.handle(
+        _closingBalanceMeta,
+        closingBalance.isAcceptableOrUnknown(
+          data['closing_balance']!,
+          _closingBalanceMeta,
+        ),
+      );
+    }
+    if (data.containsKey('on_account_value')) {
+      context.handle(
+        _onAccountValueMeta,
+        onAccountValue.isAcceptableOrUnknown(
+          data['on_account_value']!,
+          _onAccountValueMeta,
+        ),
+      );
+    }
+    if (data.containsKey('route_id')) {
+      context.handle(
+        _routeIdMeta,
+        routeId.isAcceptableOrUnknown(data['route_id']!, _routeIdMeta),
+      );
+    }
+    if (data.containsKey('route_name')) {
+      context.handle(
+        _routeNameMeta,
+        routeName.isAcceptableOrUnknown(data['route_name']!, _routeNameMeta),
+      );
+    }
+    if (data.containsKey('last_sync_on')) {
+      context.handle(
+        _lastSyncOnMeta,
+        lastSyncOn.isAcceptableOrUnknown(
+          data['last_sync_on']!,
+          _lastSyncOnMeta,
+        ),
+      );
+    }
+    if (data.containsKey('sync_action')) {
+      context.handle(
+        _syncActionMeta,
+        syncAction.isAcceptableOrUnknown(data['sync_action']!, _syncActionMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {ledgerId};
+  @override
+  PartyMasterData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PartyMasterData(
+      ledgerId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}ledger_id'],
+      )!,
+      ledgerName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}ledger_name'],
+      ),
+      ledgerNameLocal: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}ledger_name_local'],
+      ),
+      aliasName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}alias_name'],
+      ),
+      ledDesc: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}led_desc'],
+      ),
+      groupId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}group_id'],
+      ),
+      groupName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}group_name'],
+      ),
+      isActive: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_active'],
+      )!,
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
+      creditLimit: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}credit_limit'],
+      ),
+      dueDays: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}due_days'],
+      ),
+      address1: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}address1'],
+      ),
+      address2: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}address2'],
+      ),
+      address3: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}address3'],
+      ),
+      city: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}city'],
+      ),
+      stateId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}state_id'],
+      ),
+      stateName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}state_name'],
+      ),
+      countryId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}country_id'],
+      ),
+      countryName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}country_name'],
+      ),
+      pinCode: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}pin_code'],
+      ),
+      latitude: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}latitude'],
+      ),
+      longitude: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}longitude'],
+      ),
+      distanceFromCompanyKM: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}distance_from_company_k_m'],
+      ),
+      mailingName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}mailing_name'],
+      ),
+      contactPerson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}contact_person'],
+      ),
+      mobile: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}mobile'],
+      ),
+      whatsappNo: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}whatsapp_no'],
+      ),
+      email: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}email'],
+      ),
+      taxType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tax_type'],
+      ),
+      taxNumber: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tax_number'],
+      ),
+      stateCode: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}state_code'],
+      ),
+      closingBalance: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}closing_balance'],
+      ),
+      onAccountValue: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}on_account_value'],
+      ),
+      routeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}route_id'],
+      ),
+      routeName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}route_name'],
+      ),
+      lastSyncOn: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}last_sync_on'],
+      ),
+      syncAction: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}sync_action'],
+      ),
+    );
+  }
+
+  @override
+  $PartyMasterTable createAlias(String alias) {
+    return $PartyMasterTable(attachedDatabase, alias);
+  }
+}
+
+class PartyMasterData extends DataClass implements Insertable<PartyMasterData> {
+  final int ledgerId;
+  final String? ledgerName;
+  final String? ledgerNameLocal;
+  final String? aliasName;
+  final String? ledDesc;
+  final int? groupId;
+  final String? groupName;
+  final bool isActive;
+  final bool isDeleted;
+  final double? creditLimit;
+  final int? dueDays;
+  final String? address1;
+  final String? address2;
+  final String? address3;
+  final String? city;
+  final int? stateId;
+  final String? stateName;
+  final int? countryId;
+  final String? countryName;
+  final String? pinCode;
+  final double? latitude;
+  final double? longitude;
+  final double? distanceFromCompanyKM;
+  final String? mailingName;
+  final String? contactPerson;
+  final String? mobile;
+  final String? whatsappNo;
+  final String? email;
+  final String? taxType;
+  final String? taxNumber;
+  final String? stateCode;
+  final double? closingBalance;
+  final double? onAccountValue;
+  final int? routeId;
+  final String? routeName;
+  final DateTime? lastSyncOn;
+  final String? syncAction;
+  const PartyMasterData({
+    required this.ledgerId,
+    this.ledgerName,
+    this.ledgerNameLocal,
+    this.aliasName,
+    this.ledDesc,
+    this.groupId,
+    this.groupName,
+    required this.isActive,
+    required this.isDeleted,
+    this.creditLimit,
+    this.dueDays,
+    this.address1,
+    this.address2,
+    this.address3,
+    this.city,
+    this.stateId,
+    this.stateName,
+    this.countryId,
+    this.countryName,
+    this.pinCode,
+    this.latitude,
+    this.longitude,
+    this.distanceFromCompanyKM,
+    this.mailingName,
+    this.contactPerson,
+    this.mobile,
+    this.whatsappNo,
+    this.email,
+    this.taxType,
+    this.taxNumber,
+    this.stateCode,
+    this.closingBalance,
+    this.onAccountValue,
+    this.routeId,
+    this.routeName,
+    this.lastSyncOn,
+    this.syncAction,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['ledger_id'] = Variable<int>(ledgerId);
+    if (!nullToAbsent || ledgerName != null) {
+      map['ledger_name'] = Variable<String>(ledgerName);
+    }
+    if (!nullToAbsent || ledgerNameLocal != null) {
+      map['ledger_name_local'] = Variable<String>(ledgerNameLocal);
+    }
+    if (!nullToAbsent || aliasName != null) {
+      map['alias_name'] = Variable<String>(aliasName);
+    }
+    if (!nullToAbsent || ledDesc != null) {
+      map['led_desc'] = Variable<String>(ledDesc);
+    }
+    if (!nullToAbsent || groupId != null) {
+      map['group_id'] = Variable<int>(groupId);
+    }
+    if (!nullToAbsent || groupName != null) {
+      map['group_name'] = Variable<String>(groupName);
+    }
+    map['is_active'] = Variable<bool>(isActive);
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    if (!nullToAbsent || creditLimit != null) {
+      map['credit_limit'] = Variable<double>(creditLimit);
+    }
+    if (!nullToAbsent || dueDays != null) {
+      map['due_days'] = Variable<int>(dueDays);
+    }
+    if (!nullToAbsent || address1 != null) {
+      map['address1'] = Variable<String>(address1);
+    }
+    if (!nullToAbsent || address2 != null) {
+      map['address2'] = Variable<String>(address2);
+    }
+    if (!nullToAbsent || address3 != null) {
+      map['address3'] = Variable<String>(address3);
+    }
+    if (!nullToAbsent || city != null) {
+      map['city'] = Variable<String>(city);
+    }
+    if (!nullToAbsent || stateId != null) {
+      map['state_id'] = Variable<int>(stateId);
+    }
+    if (!nullToAbsent || stateName != null) {
+      map['state_name'] = Variable<String>(stateName);
+    }
+    if (!nullToAbsent || countryId != null) {
+      map['country_id'] = Variable<int>(countryId);
+    }
+    if (!nullToAbsent || countryName != null) {
+      map['country_name'] = Variable<String>(countryName);
+    }
+    if (!nullToAbsent || pinCode != null) {
+      map['pin_code'] = Variable<String>(pinCode);
+    }
+    if (!nullToAbsent || latitude != null) {
+      map['latitude'] = Variable<double>(latitude);
+    }
+    if (!nullToAbsent || longitude != null) {
+      map['longitude'] = Variable<double>(longitude);
+    }
+    if (!nullToAbsent || distanceFromCompanyKM != null) {
+      map['distance_from_company_k_m'] = Variable<double>(
+        distanceFromCompanyKM,
+      );
+    }
+    if (!nullToAbsent || mailingName != null) {
+      map['mailing_name'] = Variable<String>(mailingName);
+    }
+    if (!nullToAbsent || contactPerson != null) {
+      map['contact_person'] = Variable<String>(contactPerson);
+    }
+    if (!nullToAbsent || mobile != null) {
+      map['mobile'] = Variable<String>(mobile);
+    }
+    if (!nullToAbsent || whatsappNo != null) {
+      map['whatsapp_no'] = Variable<String>(whatsappNo);
+    }
+    if (!nullToAbsent || email != null) {
+      map['email'] = Variable<String>(email);
+    }
+    if (!nullToAbsent || taxType != null) {
+      map['tax_type'] = Variable<String>(taxType);
+    }
+    if (!nullToAbsent || taxNumber != null) {
+      map['tax_number'] = Variable<String>(taxNumber);
+    }
+    if (!nullToAbsent || stateCode != null) {
+      map['state_code'] = Variable<String>(stateCode);
+    }
+    if (!nullToAbsent || closingBalance != null) {
+      map['closing_balance'] = Variable<double>(closingBalance);
+    }
+    if (!nullToAbsent || onAccountValue != null) {
+      map['on_account_value'] = Variable<double>(onAccountValue);
+    }
+    if (!nullToAbsent || routeId != null) {
+      map['route_id'] = Variable<int>(routeId);
+    }
+    if (!nullToAbsent || routeName != null) {
+      map['route_name'] = Variable<String>(routeName);
+    }
+    if (!nullToAbsent || lastSyncOn != null) {
+      map['last_sync_on'] = Variable<DateTime>(lastSyncOn);
+    }
+    if (!nullToAbsent || syncAction != null) {
+      map['sync_action'] = Variable<String>(syncAction);
+    }
+    return map;
+  }
+
+  PartyMasterCompanion toCompanion(bool nullToAbsent) {
+    return PartyMasterCompanion(
+      ledgerId: Value(ledgerId),
+      ledgerName: ledgerName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(ledgerName),
+      ledgerNameLocal: ledgerNameLocal == null && nullToAbsent
+          ? const Value.absent()
+          : Value(ledgerNameLocal),
+      aliasName: aliasName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(aliasName),
+      ledDesc: ledDesc == null && nullToAbsent
+          ? const Value.absent()
+          : Value(ledDesc),
+      groupId: groupId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(groupId),
+      groupName: groupName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(groupName),
+      isActive: Value(isActive),
+      isDeleted: Value(isDeleted),
+      creditLimit: creditLimit == null && nullToAbsent
+          ? const Value.absent()
+          : Value(creditLimit),
+      dueDays: dueDays == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dueDays),
+      address1: address1 == null && nullToAbsent
+          ? const Value.absent()
+          : Value(address1),
+      address2: address2 == null && nullToAbsent
+          ? const Value.absent()
+          : Value(address2),
+      address3: address3 == null && nullToAbsent
+          ? const Value.absent()
+          : Value(address3),
+      city: city == null && nullToAbsent ? const Value.absent() : Value(city),
+      stateId: stateId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(stateId),
+      stateName: stateName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(stateName),
+      countryId: countryId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(countryId),
+      countryName: countryName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(countryName),
+      pinCode: pinCode == null && nullToAbsent
+          ? const Value.absent()
+          : Value(pinCode),
+      latitude: latitude == null && nullToAbsent
+          ? const Value.absent()
+          : Value(latitude),
+      longitude: longitude == null && nullToAbsent
+          ? const Value.absent()
+          : Value(longitude),
+      distanceFromCompanyKM: distanceFromCompanyKM == null && nullToAbsent
+          ? const Value.absent()
+          : Value(distanceFromCompanyKM),
+      mailingName: mailingName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(mailingName),
+      contactPerson: contactPerson == null && nullToAbsent
+          ? const Value.absent()
+          : Value(contactPerson),
+      mobile: mobile == null && nullToAbsent
+          ? const Value.absent()
+          : Value(mobile),
+      whatsappNo: whatsappNo == null && nullToAbsent
+          ? const Value.absent()
+          : Value(whatsappNo),
+      email: email == null && nullToAbsent
+          ? const Value.absent()
+          : Value(email),
+      taxType: taxType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(taxType),
+      taxNumber: taxNumber == null && nullToAbsent
+          ? const Value.absent()
+          : Value(taxNumber),
+      stateCode: stateCode == null && nullToAbsent
+          ? const Value.absent()
+          : Value(stateCode),
+      closingBalance: closingBalance == null && nullToAbsent
+          ? const Value.absent()
+          : Value(closingBalance),
+      onAccountValue: onAccountValue == null && nullToAbsent
+          ? const Value.absent()
+          : Value(onAccountValue),
+      routeId: routeId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(routeId),
+      routeName: routeName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(routeName),
+      lastSyncOn: lastSyncOn == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastSyncOn),
+      syncAction: syncAction == null && nullToAbsent
+          ? const Value.absent()
+          : Value(syncAction),
+    );
+  }
+
+  factory PartyMasterData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PartyMasterData(
+      ledgerId: serializer.fromJson<int>(json['ledgerId']),
+      ledgerName: serializer.fromJson<String?>(json['ledgerName']),
+      ledgerNameLocal: serializer.fromJson<String?>(json['ledgerNameLocal']),
+      aliasName: serializer.fromJson<String?>(json['aliasName']),
+      ledDesc: serializer.fromJson<String?>(json['ledDesc']),
+      groupId: serializer.fromJson<int?>(json['groupId']),
+      groupName: serializer.fromJson<String?>(json['groupName']),
+      isActive: serializer.fromJson<bool>(json['isActive']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+      creditLimit: serializer.fromJson<double?>(json['creditLimit']),
+      dueDays: serializer.fromJson<int?>(json['dueDays']),
+      address1: serializer.fromJson<String?>(json['address1']),
+      address2: serializer.fromJson<String?>(json['address2']),
+      address3: serializer.fromJson<String?>(json['address3']),
+      city: serializer.fromJson<String?>(json['city']),
+      stateId: serializer.fromJson<int?>(json['stateId']),
+      stateName: serializer.fromJson<String?>(json['stateName']),
+      countryId: serializer.fromJson<int?>(json['countryId']),
+      countryName: serializer.fromJson<String?>(json['countryName']),
+      pinCode: serializer.fromJson<String?>(json['pinCode']),
+      latitude: serializer.fromJson<double?>(json['latitude']),
+      longitude: serializer.fromJson<double?>(json['longitude']),
+      distanceFromCompanyKM: serializer.fromJson<double?>(
+        json['distanceFromCompanyKM'],
+      ),
+      mailingName: serializer.fromJson<String?>(json['mailingName']),
+      contactPerson: serializer.fromJson<String?>(json['contactPerson']),
+      mobile: serializer.fromJson<String?>(json['mobile']),
+      whatsappNo: serializer.fromJson<String?>(json['whatsappNo']),
+      email: serializer.fromJson<String?>(json['email']),
+      taxType: serializer.fromJson<String?>(json['taxType']),
+      taxNumber: serializer.fromJson<String?>(json['taxNumber']),
+      stateCode: serializer.fromJson<String?>(json['stateCode']),
+      closingBalance: serializer.fromJson<double?>(json['closingBalance']),
+      onAccountValue: serializer.fromJson<double?>(json['onAccountValue']),
+      routeId: serializer.fromJson<int?>(json['routeId']),
+      routeName: serializer.fromJson<String?>(json['routeName']),
+      lastSyncOn: serializer.fromJson<DateTime?>(json['lastSyncOn']),
+      syncAction: serializer.fromJson<String?>(json['syncAction']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'ledgerId': serializer.toJson<int>(ledgerId),
+      'ledgerName': serializer.toJson<String?>(ledgerName),
+      'ledgerNameLocal': serializer.toJson<String?>(ledgerNameLocal),
+      'aliasName': serializer.toJson<String?>(aliasName),
+      'ledDesc': serializer.toJson<String?>(ledDesc),
+      'groupId': serializer.toJson<int?>(groupId),
+      'groupName': serializer.toJson<String?>(groupName),
+      'isActive': serializer.toJson<bool>(isActive),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+      'creditLimit': serializer.toJson<double?>(creditLimit),
+      'dueDays': serializer.toJson<int?>(dueDays),
+      'address1': serializer.toJson<String?>(address1),
+      'address2': serializer.toJson<String?>(address2),
+      'address3': serializer.toJson<String?>(address3),
+      'city': serializer.toJson<String?>(city),
+      'stateId': serializer.toJson<int?>(stateId),
+      'stateName': serializer.toJson<String?>(stateName),
+      'countryId': serializer.toJson<int?>(countryId),
+      'countryName': serializer.toJson<String?>(countryName),
+      'pinCode': serializer.toJson<String?>(pinCode),
+      'latitude': serializer.toJson<double?>(latitude),
+      'longitude': serializer.toJson<double?>(longitude),
+      'distanceFromCompanyKM': serializer.toJson<double?>(
+        distanceFromCompanyKM,
+      ),
+      'mailingName': serializer.toJson<String?>(mailingName),
+      'contactPerson': serializer.toJson<String?>(contactPerson),
+      'mobile': serializer.toJson<String?>(mobile),
+      'whatsappNo': serializer.toJson<String?>(whatsappNo),
+      'email': serializer.toJson<String?>(email),
+      'taxType': serializer.toJson<String?>(taxType),
+      'taxNumber': serializer.toJson<String?>(taxNumber),
+      'stateCode': serializer.toJson<String?>(stateCode),
+      'closingBalance': serializer.toJson<double?>(closingBalance),
+      'onAccountValue': serializer.toJson<double?>(onAccountValue),
+      'routeId': serializer.toJson<int?>(routeId),
+      'routeName': serializer.toJson<String?>(routeName),
+      'lastSyncOn': serializer.toJson<DateTime?>(lastSyncOn),
+      'syncAction': serializer.toJson<String?>(syncAction),
+    };
+  }
+
+  PartyMasterData copyWith({
+    int? ledgerId,
+    Value<String?> ledgerName = const Value.absent(),
+    Value<String?> ledgerNameLocal = const Value.absent(),
+    Value<String?> aliasName = const Value.absent(),
+    Value<String?> ledDesc = const Value.absent(),
+    Value<int?> groupId = const Value.absent(),
+    Value<String?> groupName = const Value.absent(),
+    bool? isActive,
+    bool? isDeleted,
+    Value<double?> creditLimit = const Value.absent(),
+    Value<int?> dueDays = const Value.absent(),
+    Value<String?> address1 = const Value.absent(),
+    Value<String?> address2 = const Value.absent(),
+    Value<String?> address3 = const Value.absent(),
+    Value<String?> city = const Value.absent(),
+    Value<int?> stateId = const Value.absent(),
+    Value<String?> stateName = const Value.absent(),
+    Value<int?> countryId = const Value.absent(),
+    Value<String?> countryName = const Value.absent(),
+    Value<String?> pinCode = const Value.absent(),
+    Value<double?> latitude = const Value.absent(),
+    Value<double?> longitude = const Value.absent(),
+    Value<double?> distanceFromCompanyKM = const Value.absent(),
+    Value<String?> mailingName = const Value.absent(),
+    Value<String?> contactPerson = const Value.absent(),
+    Value<String?> mobile = const Value.absent(),
+    Value<String?> whatsappNo = const Value.absent(),
+    Value<String?> email = const Value.absent(),
+    Value<String?> taxType = const Value.absent(),
+    Value<String?> taxNumber = const Value.absent(),
+    Value<String?> stateCode = const Value.absent(),
+    Value<double?> closingBalance = const Value.absent(),
+    Value<double?> onAccountValue = const Value.absent(),
+    Value<int?> routeId = const Value.absent(),
+    Value<String?> routeName = const Value.absent(),
+    Value<DateTime?> lastSyncOn = const Value.absent(),
+    Value<String?> syncAction = const Value.absent(),
+  }) => PartyMasterData(
+    ledgerId: ledgerId ?? this.ledgerId,
+    ledgerName: ledgerName.present ? ledgerName.value : this.ledgerName,
+    ledgerNameLocal: ledgerNameLocal.present
+        ? ledgerNameLocal.value
+        : this.ledgerNameLocal,
+    aliasName: aliasName.present ? aliasName.value : this.aliasName,
+    ledDesc: ledDesc.present ? ledDesc.value : this.ledDesc,
+    groupId: groupId.present ? groupId.value : this.groupId,
+    groupName: groupName.present ? groupName.value : this.groupName,
+    isActive: isActive ?? this.isActive,
+    isDeleted: isDeleted ?? this.isDeleted,
+    creditLimit: creditLimit.present ? creditLimit.value : this.creditLimit,
+    dueDays: dueDays.present ? dueDays.value : this.dueDays,
+    address1: address1.present ? address1.value : this.address1,
+    address2: address2.present ? address2.value : this.address2,
+    address3: address3.present ? address3.value : this.address3,
+    city: city.present ? city.value : this.city,
+    stateId: stateId.present ? stateId.value : this.stateId,
+    stateName: stateName.present ? stateName.value : this.stateName,
+    countryId: countryId.present ? countryId.value : this.countryId,
+    countryName: countryName.present ? countryName.value : this.countryName,
+    pinCode: pinCode.present ? pinCode.value : this.pinCode,
+    latitude: latitude.present ? latitude.value : this.latitude,
+    longitude: longitude.present ? longitude.value : this.longitude,
+    distanceFromCompanyKM: distanceFromCompanyKM.present
+        ? distanceFromCompanyKM.value
+        : this.distanceFromCompanyKM,
+    mailingName: mailingName.present ? mailingName.value : this.mailingName,
+    contactPerson: contactPerson.present
+        ? contactPerson.value
+        : this.contactPerson,
+    mobile: mobile.present ? mobile.value : this.mobile,
+    whatsappNo: whatsappNo.present ? whatsappNo.value : this.whatsappNo,
+    email: email.present ? email.value : this.email,
+    taxType: taxType.present ? taxType.value : this.taxType,
+    taxNumber: taxNumber.present ? taxNumber.value : this.taxNumber,
+    stateCode: stateCode.present ? stateCode.value : this.stateCode,
+    closingBalance: closingBalance.present
+        ? closingBalance.value
+        : this.closingBalance,
+    onAccountValue: onAccountValue.present
+        ? onAccountValue.value
+        : this.onAccountValue,
+    routeId: routeId.present ? routeId.value : this.routeId,
+    routeName: routeName.present ? routeName.value : this.routeName,
+    lastSyncOn: lastSyncOn.present ? lastSyncOn.value : this.lastSyncOn,
+    syncAction: syncAction.present ? syncAction.value : this.syncAction,
+  );
+  PartyMasterData copyWithCompanion(PartyMasterCompanion data) {
+    return PartyMasterData(
+      ledgerId: data.ledgerId.present ? data.ledgerId.value : this.ledgerId,
+      ledgerName: data.ledgerName.present
+          ? data.ledgerName.value
+          : this.ledgerName,
+      ledgerNameLocal: data.ledgerNameLocal.present
+          ? data.ledgerNameLocal.value
+          : this.ledgerNameLocal,
+      aliasName: data.aliasName.present ? data.aliasName.value : this.aliasName,
+      ledDesc: data.ledDesc.present ? data.ledDesc.value : this.ledDesc,
+      groupId: data.groupId.present ? data.groupId.value : this.groupId,
+      groupName: data.groupName.present ? data.groupName.value : this.groupName,
+      isActive: data.isActive.present ? data.isActive.value : this.isActive,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+      creditLimit: data.creditLimit.present
+          ? data.creditLimit.value
+          : this.creditLimit,
+      dueDays: data.dueDays.present ? data.dueDays.value : this.dueDays,
+      address1: data.address1.present ? data.address1.value : this.address1,
+      address2: data.address2.present ? data.address2.value : this.address2,
+      address3: data.address3.present ? data.address3.value : this.address3,
+      city: data.city.present ? data.city.value : this.city,
+      stateId: data.stateId.present ? data.stateId.value : this.stateId,
+      stateName: data.stateName.present ? data.stateName.value : this.stateName,
+      countryId: data.countryId.present ? data.countryId.value : this.countryId,
+      countryName: data.countryName.present
+          ? data.countryName.value
+          : this.countryName,
+      pinCode: data.pinCode.present ? data.pinCode.value : this.pinCode,
+      latitude: data.latitude.present ? data.latitude.value : this.latitude,
+      longitude: data.longitude.present ? data.longitude.value : this.longitude,
+      distanceFromCompanyKM: data.distanceFromCompanyKM.present
+          ? data.distanceFromCompanyKM.value
+          : this.distanceFromCompanyKM,
+      mailingName: data.mailingName.present
+          ? data.mailingName.value
+          : this.mailingName,
+      contactPerson: data.contactPerson.present
+          ? data.contactPerson.value
+          : this.contactPerson,
+      mobile: data.mobile.present ? data.mobile.value : this.mobile,
+      whatsappNo: data.whatsappNo.present
+          ? data.whatsappNo.value
+          : this.whatsappNo,
+      email: data.email.present ? data.email.value : this.email,
+      taxType: data.taxType.present ? data.taxType.value : this.taxType,
+      taxNumber: data.taxNumber.present ? data.taxNumber.value : this.taxNumber,
+      stateCode: data.stateCode.present ? data.stateCode.value : this.stateCode,
+      closingBalance: data.closingBalance.present
+          ? data.closingBalance.value
+          : this.closingBalance,
+      onAccountValue: data.onAccountValue.present
+          ? data.onAccountValue.value
+          : this.onAccountValue,
+      routeId: data.routeId.present ? data.routeId.value : this.routeId,
+      routeName: data.routeName.present ? data.routeName.value : this.routeName,
+      lastSyncOn: data.lastSyncOn.present
+          ? data.lastSyncOn.value
+          : this.lastSyncOn,
+      syncAction: data.syncAction.present
+          ? data.syncAction.value
+          : this.syncAction,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PartyMasterData(')
+          ..write('ledgerId: $ledgerId, ')
+          ..write('ledgerName: $ledgerName, ')
+          ..write('ledgerNameLocal: $ledgerNameLocal, ')
+          ..write('aliasName: $aliasName, ')
+          ..write('ledDesc: $ledDesc, ')
+          ..write('groupId: $groupId, ')
+          ..write('groupName: $groupName, ')
+          ..write('isActive: $isActive, ')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('creditLimit: $creditLimit, ')
+          ..write('dueDays: $dueDays, ')
+          ..write('address1: $address1, ')
+          ..write('address2: $address2, ')
+          ..write('address3: $address3, ')
+          ..write('city: $city, ')
+          ..write('stateId: $stateId, ')
+          ..write('stateName: $stateName, ')
+          ..write('countryId: $countryId, ')
+          ..write('countryName: $countryName, ')
+          ..write('pinCode: $pinCode, ')
+          ..write('latitude: $latitude, ')
+          ..write('longitude: $longitude, ')
+          ..write('distanceFromCompanyKM: $distanceFromCompanyKM, ')
+          ..write('mailingName: $mailingName, ')
+          ..write('contactPerson: $contactPerson, ')
+          ..write('mobile: $mobile, ')
+          ..write('whatsappNo: $whatsappNo, ')
+          ..write('email: $email, ')
+          ..write('taxType: $taxType, ')
+          ..write('taxNumber: $taxNumber, ')
+          ..write('stateCode: $stateCode, ')
+          ..write('closingBalance: $closingBalance, ')
+          ..write('onAccountValue: $onAccountValue, ')
+          ..write('routeId: $routeId, ')
+          ..write('routeName: $routeName, ')
+          ..write('lastSyncOn: $lastSyncOn, ')
+          ..write('syncAction: $syncAction')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hashAll([
+    ledgerId,
+    ledgerName,
+    ledgerNameLocal,
+    aliasName,
+    ledDesc,
+    groupId,
+    groupName,
+    isActive,
+    isDeleted,
+    creditLimit,
+    dueDays,
+    address1,
+    address2,
+    address3,
+    city,
+    stateId,
+    stateName,
+    countryId,
+    countryName,
+    pinCode,
+    latitude,
+    longitude,
+    distanceFromCompanyKM,
+    mailingName,
+    contactPerson,
+    mobile,
+    whatsappNo,
+    email,
+    taxType,
+    taxNumber,
+    stateCode,
+    closingBalance,
+    onAccountValue,
+    routeId,
+    routeName,
+    lastSyncOn,
+    syncAction,
+  ]);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PartyMasterData &&
+          other.ledgerId == this.ledgerId &&
+          other.ledgerName == this.ledgerName &&
+          other.ledgerNameLocal == this.ledgerNameLocal &&
+          other.aliasName == this.aliasName &&
+          other.ledDesc == this.ledDesc &&
+          other.groupId == this.groupId &&
+          other.groupName == this.groupName &&
+          other.isActive == this.isActive &&
+          other.isDeleted == this.isDeleted &&
+          other.creditLimit == this.creditLimit &&
+          other.dueDays == this.dueDays &&
+          other.address1 == this.address1 &&
+          other.address2 == this.address2 &&
+          other.address3 == this.address3 &&
+          other.city == this.city &&
+          other.stateId == this.stateId &&
+          other.stateName == this.stateName &&
+          other.countryId == this.countryId &&
+          other.countryName == this.countryName &&
+          other.pinCode == this.pinCode &&
+          other.latitude == this.latitude &&
+          other.longitude == this.longitude &&
+          other.distanceFromCompanyKM == this.distanceFromCompanyKM &&
+          other.mailingName == this.mailingName &&
+          other.contactPerson == this.contactPerson &&
+          other.mobile == this.mobile &&
+          other.whatsappNo == this.whatsappNo &&
+          other.email == this.email &&
+          other.taxType == this.taxType &&
+          other.taxNumber == this.taxNumber &&
+          other.stateCode == this.stateCode &&
+          other.closingBalance == this.closingBalance &&
+          other.onAccountValue == this.onAccountValue &&
+          other.routeId == this.routeId &&
+          other.routeName == this.routeName &&
+          other.lastSyncOn == this.lastSyncOn &&
+          other.syncAction == this.syncAction);
+}
+
+class PartyMasterCompanion extends UpdateCompanion<PartyMasterData> {
+  final Value<int> ledgerId;
+  final Value<String?> ledgerName;
+  final Value<String?> ledgerNameLocal;
+  final Value<String?> aliasName;
+  final Value<String?> ledDesc;
+  final Value<int?> groupId;
+  final Value<String?> groupName;
+  final Value<bool> isActive;
+  final Value<bool> isDeleted;
+  final Value<double?> creditLimit;
+  final Value<int?> dueDays;
+  final Value<String?> address1;
+  final Value<String?> address2;
+  final Value<String?> address3;
+  final Value<String?> city;
+  final Value<int?> stateId;
+  final Value<String?> stateName;
+  final Value<int?> countryId;
+  final Value<String?> countryName;
+  final Value<String?> pinCode;
+  final Value<double?> latitude;
+  final Value<double?> longitude;
+  final Value<double?> distanceFromCompanyKM;
+  final Value<String?> mailingName;
+  final Value<String?> contactPerson;
+  final Value<String?> mobile;
+  final Value<String?> whatsappNo;
+  final Value<String?> email;
+  final Value<String?> taxType;
+  final Value<String?> taxNumber;
+  final Value<String?> stateCode;
+  final Value<double?> closingBalance;
+  final Value<double?> onAccountValue;
+  final Value<int?> routeId;
+  final Value<String?> routeName;
+  final Value<DateTime?> lastSyncOn;
+  final Value<String?> syncAction;
+  const PartyMasterCompanion({
+    this.ledgerId = const Value.absent(),
+    this.ledgerName = const Value.absent(),
+    this.ledgerNameLocal = const Value.absent(),
+    this.aliasName = const Value.absent(),
+    this.ledDesc = const Value.absent(),
+    this.groupId = const Value.absent(),
+    this.groupName = const Value.absent(),
+    this.isActive = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+    this.creditLimit = const Value.absent(),
+    this.dueDays = const Value.absent(),
+    this.address1 = const Value.absent(),
+    this.address2 = const Value.absent(),
+    this.address3 = const Value.absent(),
+    this.city = const Value.absent(),
+    this.stateId = const Value.absent(),
+    this.stateName = const Value.absent(),
+    this.countryId = const Value.absent(),
+    this.countryName = const Value.absent(),
+    this.pinCode = const Value.absent(),
+    this.latitude = const Value.absent(),
+    this.longitude = const Value.absent(),
+    this.distanceFromCompanyKM = const Value.absent(),
+    this.mailingName = const Value.absent(),
+    this.contactPerson = const Value.absent(),
+    this.mobile = const Value.absent(),
+    this.whatsappNo = const Value.absent(),
+    this.email = const Value.absent(),
+    this.taxType = const Value.absent(),
+    this.taxNumber = const Value.absent(),
+    this.stateCode = const Value.absent(),
+    this.closingBalance = const Value.absent(),
+    this.onAccountValue = const Value.absent(),
+    this.routeId = const Value.absent(),
+    this.routeName = const Value.absent(),
+    this.lastSyncOn = const Value.absent(),
+    this.syncAction = const Value.absent(),
+  });
+  PartyMasterCompanion.insert({
+    this.ledgerId = const Value.absent(),
+    this.ledgerName = const Value.absent(),
+    this.ledgerNameLocal = const Value.absent(),
+    this.aliasName = const Value.absent(),
+    this.ledDesc = const Value.absent(),
+    this.groupId = const Value.absent(),
+    this.groupName = const Value.absent(),
+    this.isActive = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+    this.creditLimit = const Value.absent(),
+    this.dueDays = const Value.absent(),
+    this.address1 = const Value.absent(),
+    this.address2 = const Value.absent(),
+    this.address3 = const Value.absent(),
+    this.city = const Value.absent(),
+    this.stateId = const Value.absent(),
+    this.stateName = const Value.absent(),
+    this.countryId = const Value.absent(),
+    this.countryName = const Value.absent(),
+    this.pinCode = const Value.absent(),
+    this.latitude = const Value.absent(),
+    this.longitude = const Value.absent(),
+    this.distanceFromCompanyKM = const Value.absent(),
+    this.mailingName = const Value.absent(),
+    this.contactPerson = const Value.absent(),
+    this.mobile = const Value.absent(),
+    this.whatsappNo = const Value.absent(),
+    this.email = const Value.absent(),
+    this.taxType = const Value.absent(),
+    this.taxNumber = const Value.absent(),
+    this.stateCode = const Value.absent(),
+    this.closingBalance = const Value.absent(),
+    this.onAccountValue = const Value.absent(),
+    this.routeId = const Value.absent(),
+    this.routeName = const Value.absent(),
+    this.lastSyncOn = const Value.absent(),
+    this.syncAction = const Value.absent(),
+  });
+  static Insertable<PartyMasterData> custom({
+    Expression<int>? ledgerId,
+    Expression<String>? ledgerName,
+    Expression<String>? ledgerNameLocal,
+    Expression<String>? aliasName,
+    Expression<String>? ledDesc,
+    Expression<int>? groupId,
+    Expression<String>? groupName,
+    Expression<bool>? isActive,
+    Expression<bool>? isDeleted,
+    Expression<double>? creditLimit,
+    Expression<int>? dueDays,
+    Expression<String>? address1,
+    Expression<String>? address2,
+    Expression<String>? address3,
+    Expression<String>? city,
+    Expression<int>? stateId,
+    Expression<String>? stateName,
+    Expression<int>? countryId,
+    Expression<String>? countryName,
+    Expression<String>? pinCode,
+    Expression<double>? latitude,
+    Expression<double>? longitude,
+    Expression<double>? distanceFromCompanyKM,
+    Expression<String>? mailingName,
+    Expression<String>? contactPerson,
+    Expression<String>? mobile,
+    Expression<String>? whatsappNo,
+    Expression<String>? email,
+    Expression<String>? taxType,
+    Expression<String>? taxNumber,
+    Expression<String>? stateCode,
+    Expression<double>? closingBalance,
+    Expression<double>? onAccountValue,
+    Expression<int>? routeId,
+    Expression<String>? routeName,
+    Expression<DateTime>? lastSyncOn,
+    Expression<String>? syncAction,
+  }) {
+    return RawValuesInsertable({
+      if (ledgerId != null) 'ledger_id': ledgerId,
+      if (ledgerName != null) 'ledger_name': ledgerName,
+      if (ledgerNameLocal != null) 'ledger_name_local': ledgerNameLocal,
+      if (aliasName != null) 'alias_name': aliasName,
+      if (ledDesc != null) 'led_desc': ledDesc,
+      if (groupId != null) 'group_id': groupId,
+      if (groupName != null) 'group_name': groupName,
+      if (isActive != null) 'is_active': isActive,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+      if (creditLimit != null) 'credit_limit': creditLimit,
+      if (dueDays != null) 'due_days': dueDays,
+      if (address1 != null) 'address1': address1,
+      if (address2 != null) 'address2': address2,
+      if (address3 != null) 'address3': address3,
+      if (city != null) 'city': city,
+      if (stateId != null) 'state_id': stateId,
+      if (stateName != null) 'state_name': stateName,
+      if (countryId != null) 'country_id': countryId,
+      if (countryName != null) 'country_name': countryName,
+      if (pinCode != null) 'pin_code': pinCode,
+      if (latitude != null) 'latitude': latitude,
+      if (longitude != null) 'longitude': longitude,
+      if (distanceFromCompanyKM != null)
+        'distance_from_company_k_m': distanceFromCompanyKM,
+      if (mailingName != null) 'mailing_name': mailingName,
+      if (contactPerson != null) 'contact_person': contactPerson,
+      if (mobile != null) 'mobile': mobile,
+      if (whatsappNo != null) 'whatsapp_no': whatsappNo,
+      if (email != null) 'email': email,
+      if (taxType != null) 'tax_type': taxType,
+      if (taxNumber != null) 'tax_number': taxNumber,
+      if (stateCode != null) 'state_code': stateCode,
+      if (closingBalance != null) 'closing_balance': closingBalance,
+      if (onAccountValue != null) 'on_account_value': onAccountValue,
+      if (routeId != null) 'route_id': routeId,
+      if (routeName != null) 'route_name': routeName,
+      if (lastSyncOn != null) 'last_sync_on': lastSyncOn,
+      if (syncAction != null) 'sync_action': syncAction,
+    });
+  }
+
+  PartyMasterCompanion copyWith({
+    Value<int>? ledgerId,
+    Value<String?>? ledgerName,
+    Value<String?>? ledgerNameLocal,
+    Value<String?>? aliasName,
+    Value<String?>? ledDesc,
+    Value<int?>? groupId,
+    Value<String?>? groupName,
+    Value<bool>? isActive,
+    Value<bool>? isDeleted,
+    Value<double?>? creditLimit,
+    Value<int?>? dueDays,
+    Value<String?>? address1,
+    Value<String?>? address2,
+    Value<String?>? address3,
+    Value<String?>? city,
+    Value<int?>? stateId,
+    Value<String?>? stateName,
+    Value<int?>? countryId,
+    Value<String?>? countryName,
+    Value<String?>? pinCode,
+    Value<double?>? latitude,
+    Value<double?>? longitude,
+    Value<double?>? distanceFromCompanyKM,
+    Value<String?>? mailingName,
+    Value<String?>? contactPerson,
+    Value<String?>? mobile,
+    Value<String?>? whatsappNo,
+    Value<String?>? email,
+    Value<String?>? taxType,
+    Value<String?>? taxNumber,
+    Value<String?>? stateCode,
+    Value<double?>? closingBalance,
+    Value<double?>? onAccountValue,
+    Value<int?>? routeId,
+    Value<String?>? routeName,
+    Value<DateTime?>? lastSyncOn,
+    Value<String?>? syncAction,
+  }) {
+    return PartyMasterCompanion(
+      ledgerId: ledgerId ?? this.ledgerId,
+      ledgerName: ledgerName ?? this.ledgerName,
+      ledgerNameLocal: ledgerNameLocal ?? this.ledgerNameLocal,
+      aliasName: aliasName ?? this.aliasName,
+      ledDesc: ledDesc ?? this.ledDesc,
+      groupId: groupId ?? this.groupId,
+      groupName: groupName ?? this.groupName,
+      isActive: isActive ?? this.isActive,
+      isDeleted: isDeleted ?? this.isDeleted,
+      creditLimit: creditLimit ?? this.creditLimit,
+      dueDays: dueDays ?? this.dueDays,
+      address1: address1 ?? this.address1,
+      address2: address2 ?? this.address2,
+      address3: address3 ?? this.address3,
+      city: city ?? this.city,
+      stateId: stateId ?? this.stateId,
+      stateName: stateName ?? this.stateName,
+      countryId: countryId ?? this.countryId,
+      countryName: countryName ?? this.countryName,
+      pinCode: pinCode ?? this.pinCode,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
+      distanceFromCompanyKM:
+          distanceFromCompanyKM ?? this.distanceFromCompanyKM,
+      mailingName: mailingName ?? this.mailingName,
+      contactPerson: contactPerson ?? this.contactPerson,
+      mobile: mobile ?? this.mobile,
+      whatsappNo: whatsappNo ?? this.whatsappNo,
+      email: email ?? this.email,
+      taxType: taxType ?? this.taxType,
+      taxNumber: taxNumber ?? this.taxNumber,
+      stateCode: stateCode ?? this.stateCode,
+      closingBalance: closingBalance ?? this.closingBalance,
+      onAccountValue: onAccountValue ?? this.onAccountValue,
+      routeId: routeId ?? this.routeId,
+      routeName: routeName ?? this.routeName,
+      lastSyncOn: lastSyncOn ?? this.lastSyncOn,
+      syncAction: syncAction ?? this.syncAction,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (ledgerId.present) {
+      map['ledger_id'] = Variable<int>(ledgerId.value);
+    }
+    if (ledgerName.present) {
+      map['ledger_name'] = Variable<String>(ledgerName.value);
+    }
+    if (ledgerNameLocal.present) {
+      map['ledger_name_local'] = Variable<String>(ledgerNameLocal.value);
+    }
+    if (aliasName.present) {
+      map['alias_name'] = Variable<String>(aliasName.value);
+    }
+    if (ledDesc.present) {
+      map['led_desc'] = Variable<String>(ledDesc.value);
+    }
+    if (groupId.present) {
+      map['group_id'] = Variable<int>(groupId.value);
+    }
+    if (groupName.present) {
+      map['group_name'] = Variable<String>(groupName.value);
+    }
+    if (isActive.present) {
+      map['is_active'] = Variable<bool>(isActive.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    if (creditLimit.present) {
+      map['credit_limit'] = Variable<double>(creditLimit.value);
+    }
+    if (dueDays.present) {
+      map['due_days'] = Variable<int>(dueDays.value);
+    }
+    if (address1.present) {
+      map['address1'] = Variable<String>(address1.value);
+    }
+    if (address2.present) {
+      map['address2'] = Variable<String>(address2.value);
+    }
+    if (address3.present) {
+      map['address3'] = Variable<String>(address3.value);
+    }
+    if (city.present) {
+      map['city'] = Variable<String>(city.value);
+    }
+    if (stateId.present) {
+      map['state_id'] = Variable<int>(stateId.value);
+    }
+    if (stateName.present) {
+      map['state_name'] = Variable<String>(stateName.value);
+    }
+    if (countryId.present) {
+      map['country_id'] = Variable<int>(countryId.value);
+    }
+    if (countryName.present) {
+      map['country_name'] = Variable<String>(countryName.value);
+    }
+    if (pinCode.present) {
+      map['pin_code'] = Variable<String>(pinCode.value);
+    }
+    if (latitude.present) {
+      map['latitude'] = Variable<double>(latitude.value);
+    }
+    if (longitude.present) {
+      map['longitude'] = Variable<double>(longitude.value);
+    }
+    if (distanceFromCompanyKM.present) {
+      map['distance_from_company_k_m'] = Variable<double>(
+        distanceFromCompanyKM.value,
+      );
+    }
+    if (mailingName.present) {
+      map['mailing_name'] = Variable<String>(mailingName.value);
+    }
+    if (contactPerson.present) {
+      map['contact_person'] = Variable<String>(contactPerson.value);
+    }
+    if (mobile.present) {
+      map['mobile'] = Variable<String>(mobile.value);
+    }
+    if (whatsappNo.present) {
+      map['whatsapp_no'] = Variable<String>(whatsappNo.value);
+    }
+    if (email.present) {
+      map['email'] = Variable<String>(email.value);
+    }
+    if (taxType.present) {
+      map['tax_type'] = Variable<String>(taxType.value);
+    }
+    if (taxNumber.present) {
+      map['tax_number'] = Variable<String>(taxNumber.value);
+    }
+    if (stateCode.present) {
+      map['state_code'] = Variable<String>(stateCode.value);
+    }
+    if (closingBalance.present) {
+      map['closing_balance'] = Variable<double>(closingBalance.value);
+    }
+    if (onAccountValue.present) {
+      map['on_account_value'] = Variable<double>(onAccountValue.value);
+    }
+    if (routeId.present) {
+      map['route_id'] = Variable<int>(routeId.value);
+    }
+    if (routeName.present) {
+      map['route_name'] = Variable<String>(routeName.value);
+    }
+    if (lastSyncOn.present) {
+      map['last_sync_on'] = Variable<DateTime>(lastSyncOn.value);
+    }
+    if (syncAction.present) {
+      map['sync_action'] = Variable<String>(syncAction.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PartyMasterCompanion(')
+          ..write('ledgerId: $ledgerId, ')
+          ..write('ledgerName: $ledgerName, ')
+          ..write('ledgerNameLocal: $ledgerNameLocal, ')
+          ..write('aliasName: $aliasName, ')
+          ..write('ledDesc: $ledDesc, ')
+          ..write('groupId: $groupId, ')
+          ..write('groupName: $groupName, ')
+          ..write('isActive: $isActive, ')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('creditLimit: $creditLimit, ')
+          ..write('dueDays: $dueDays, ')
+          ..write('address1: $address1, ')
+          ..write('address2: $address2, ')
+          ..write('address3: $address3, ')
+          ..write('city: $city, ')
+          ..write('stateId: $stateId, ')
+          ..write('stateName: $stateName, ')
+          ..write('countryId: $countryId, ')
+          ..write('countryName: $countryName, ')
+          ..write('pinCode: $pinCode, ')
+          ..write('latitude: $latitude, ')
+          ..write('longitude: $longitude, ')
+          ..write('distanceFromCompanyKM: $distanceFromCompanyKM, ')
+          ..write('mailingName: $mailingName, ')
+          ..write('contactPerson: $contactPerson, ')
+          ..write('mobile: $mobile, ')
+          ..write('whatsappNo: $whatsappNo, ')
+          ..write('email: $email, ')
+          ..write('taxType: $taxType, ')
+          ..write('taxNumber: $taxNumber, ')
+          ..write('stateCode: $stateCode, ')
+          ..write('closingBalance: $closingBalance, ')
+          ..write('onAccountValue: $onAccountValue, ')
+          ..write('routeId: $routeId, ')
+          ..write('routeName: $routeName, ')
+          ..write('lastSyncOn: $lastSyncOn, ')
+          ..write('syncAction: $syncAction')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDb extends GeneratedDatabase {
   _$AppDb(QueryExecutor e) : super(e);
   $AppDbManager get managers => $AppDbManager(this);
@@ -8260,6 +10255,7 @@ abstract class _$AppDb extends GeneratedDatabase {
       $CompanySettingsTableTable(this);
   late final $GodownVehiclesTable godownVehicles = $GodownVehiclesTable(this);
   late final $GodownRoutesTable godownRoutes = $GodownRoutesTable(this);
+  late final $PartyMasterTable partyMaster = $PartyMasterTable(this);
   late final CompanyDao companyDao = CompanyDao(this as AppDb);
   late final RegistrationDetailDao registrationDetailDao =
       RegistrationDetailDao(this as AppDb);
@@ -8277,6 +10273,7 @@ abstract class _$AppDb extends GeneratedDatabase {
     this as AppDb,
   );
   late final RouteDao routeDao = RouteDao(this as AppDb);
+  late final PartyMasterDao partyMasterDao = PartyMasterDao(this as AppDb);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -8291,6 +10288,7 @@ abstract class _$AppDb extends GeneratedDatabase {
     companySettingsTable,
     godownVehicles,
     godownRoutes,
+    partyMaster,
   ];
 }
 
@@ -12027,6 +14025,832 @@ typedef $$GodownRoutesTableProcessedTableManager =
       GodownRoute,
       PrefetchHooks Function()
     >;
+typedef $$PartyMasterTableCreateCompanionBuilder =
+    PartyMasterCompanion Function({
+      Value<int> ledgerId,
+      Value<String?> ledgerName,
+      Value<String?> ledgerNameLocal,
+      Value<String?> aliasName,
+      Value<String?> ledDesc,
+      Value<int?> groupId,
+      Value<String?> groupName,
+      Value<bool> isActive,
+      Value<bool> isDeleted,
+      Value<double?> creditLimit,
+      Value<int?> dueDays,
+      Value<String?> address1,
+      Value<String?> address2,
+      Value<String?> address3,
+      Value<String?> city,
+      Value<int?> stateId,
+      Value<String?> stateName,
+      Value<int?> countryId,
+      Value<String?> countryName,
+      Value<String?> pinCode,
+      Value<double?> latitude,
+      Value<double?> longitude,
+      Value<double?> distanceFromCompanyKM,
+      Value<String?> mailingName,
+      Value<String?> contactPerson,
+      Value<String?> mobile,
+      Value<String?> whatsappNo,
+      Value<String?> email,
+      Value<String?> taxType,
+      Value<String?> taxNumber,
+      Value<String?> stateCode,
+      Value<double?> closingBalance,
+      Value<double?> onAccountValue,
+      Value<int?> routeId,
+      Value<String?> routeName,
+      Value<DateTime?> lastSyncOn,
+      Value<String?> syncAction,
+    });
+typedef $$PartyMasterTableUpdateCompanionBuilder =
+    PartyMasterCompanion Function({
+      Value<int> ledgerId,
+      Value<String?> ledgerName,
+      Value<String?> ledgerNameLocal,
+      Value<String?> aliasName,
+      Value<String?> ledDesc,
+      Value<int?> groupId,
+      Value<String?> groupName,
+      Value<bool> isActive,
+      Value<bool> isDeleted,
+      Value<double?> creditLimit,
+      Value<int?> dueDays,
+      Value<String?> address1,
+      Value<String?> address2,
+      Value<String?> address3,
+      Value<String?> city,
+      Value<int?> stateId,
+      Value<String?> stateName,
+      Value<int?> countryId,
+      Value<String?> countryName,
+      Value<String?> pinCode,
+      Value<double?> latitude,
+      Value<double?> longitude,
+      Value<double?> distanceFromCompanyKM,
+      Value<String?> mailingName,
+      Value<String?> contactPerson,
+      Value<String?> mobile,
+      Value<String?> whatsappNo,
+      Value<String?> email,
+      Value<String?> taxType,
+      Value<String?> taxNumber,
+      Value<String?> stateCode,
+      Value<double?> closingBalance,
+      Value<double?> onAccountValue,
+      Value<int?> routeId,
+      Value<String?> routeName,
+      Value<DateTime?> lastSyncOn,
+      Value<String?> syncAction,
+    });
+
+class $$PartyMasterTableFilterComposer
+    extends Composer<_$AppDb, $PartyMasterTable> {
+  $$PartyMasterTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get ledgerId => $composableBuilder(
+    column: $table.ledgerId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get ledgerName => $composableBuilder(
+    column: $table.ledgerName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get ledgerNameLocal => $composableBuilder(
+    column: $table.ledgerNameLocal,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get aliasName => $composableBuilder(
+    column: $table.aliasName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get ledDesc => $composableBuilder(
+    column: $table.ledDesc,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get groupId => $composableBuilder(
+    column: $table.groupId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get groupName => $composableBuilder(
+    column: $table.groupName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isActive => $composableBuilder(
+    column: $table.isActive,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get creditLimit => $composableBuilder(
+    column: $table.creditLimit,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get dueDays => $composableBuilder(
+    column: $table.dueDays,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get address1 => $composableBuilder(
+    column: $table.address1,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get address2 => $composableBuilder(
+    column: $table.address2,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get address3 => $composableBuilder(
+    column: $table.address3,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get city => $composableBuilder(
+    column: $table.city,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get stateId => $composableBuilder(
+    column: $table.stateId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get stateName => $composableBuilder(
+    column: $table.stateName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get countryId => $composableBuilder(
+    column: $table.countryId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get countryName => $composableBuilder(
+    column: $table.countryName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get pinCode => $composableBuilder(
+    column: $table.pinCode,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get latitude => $composableBuilder(
+    column: $table.latitude,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get longitude => $composableBuilder(
+    column: $table.longitude,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get distanceFromCompanyKM => $composableBuilder(
+    column: $table.distanceFromCompanyKM,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get mailingName => $composableBuilder(
+    column: $table.mailingName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get contactPerson => $composableBuilder(
+    column: $table.contactPerson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get mobile => $composableBuilder(
+    column: $table.mobile,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get whatsappNo => $composableBuilder(
+    column: $table.whatsappNo,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get email => $composableBuilder(
+    column: $table.email,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get taxType => $composableBuilder(
+    column: $table.taxType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get taxNumber => $composableBuilder(
+    column: $table.taxNumber,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get stateCode => $composableBuilder(
+    column: $table.stateCode,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get closingBalance => $composableBuilder(
+    column: $table.closingBalance,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get onAccountValue => $composableBuilder(
+    column: $table.onAccountValue,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get routeId => $composableBuilder(
+    column: $table.routeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get routeName => $composableBuilder(
+    column: $table.routeName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get lastSyncOn => $composableBuilder(
+    column: $table.lastSyncOn,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get syncAction => $composableBuilder(
+    column: $table.syncAction,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$PartyMasterTableOrderingComposer
+    extends Composer<_$AppDb, $PartyMasterTable> {
+  $$PartyMasterTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get ledgerId => $composableBuilder(
+    column: $table.ledgerId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get ledgerName => $composableBuilder(
+    column: $table.ledgerName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get ledgerNameLocal => $composableBuilder(
+    column: $table.ledgerNameLocal,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get aliasName => $composableBuilder(
+    column: $table.aliasName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get ledDesc => $composableBuilder(
+    column: $table.ledDesc,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get groupId => $composableBuilder(
+    column: $table.groupId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get groupName => $composableBuilder(
+    column: $table.groupName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isActive => $composableBuilder(
+    column: $table.isActive,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get creditLimit => $composableBuilder(
+    column: $table.creditLimit,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get dueDays => $composableBuilder(
+    column: $table.dueDays,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get address1 => $composableBuilder(
+    column: $table.address1,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get address2 => $composableBuilder(
+    column: $table.address2,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get address3 => $composableBuilder(
+    column: $table.address3,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get city => $composableBuilder(
+    column: $table.city,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get stateId => $composableBuilder(
+    column: $table.stateId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get stateName => $composableBuilder(
+    column: $table.stateName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get countryId => $composableBuilder(
+    column: $table.countryId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get countryName => $composableBuilder(
+    column: $table.countryName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get pinCode => $composableBuilder(
+    column: $table.pinCode,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get latitude => $composableBuilder(
+    column: $table.latitude,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get longitude => $composableBuilder(
+    column: $table.longitude,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get distanceFromCompanyKM => $composableBuilder(
+    column: $table.distanceFromCompanyKM,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get mailingName => $composableBuilder(
+    column: $table.mailingName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get contactPerson => $composableBuilder(
+    column: $table.contactPerson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get mobile => $composableBuilder(
+    column: $table.mobile,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get whatsappNo => $composableBuilder(
+    column: $table.whatsappNo,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get email => $composableBuilder(
+    column: $table.email,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get taxType => $composableBuilder(
+    column: $table.taxType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get taxNumber => $composableBuilder(
+    column: $table.taxNumber,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get stateCode => $composableBuilder(
+    column: $table.stateCode,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get closingBalance => $composableBuilder(
+    column: $table.closingBalance,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get onAccountValue => $composableBuilder(
+    column: $table.onAccountValue,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get routeId => $composableBuilder(
+    column: $table.routeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get routeName => $composableBuilder(
+    column: $table.routeName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get lastSyncOn => $composableBuilder(
+    column: $table.lastSyncOn,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get syncAction => $composableBuilder(
+    column: $table.syncAction,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$PartyMasterTableAnnotationComposer
+    extends Composer<_$AppDb, $PartyMasterTable> {
+  $$PartyMasterTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get ledgerId =>
+      $composableBuilder(column: $table.ledgerId, builder: (column) => column);
+
+  GeneratedColumn<String> get ledgerName => $composableBuilder(
+    column: $table.ledgerName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get ledgerNameLocal => $composableBuilder(
+    column: $table.ledgerNameLocal,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get aliasName =>
+      $composableBuilder(column: $table.aliasName, builder: (column) => column);
+
+  GeneratedColumn<String> get ledDesc =>
+      $composableBuilder(column: $table.ledDesc, builder: (column) => column);
+
+  GeneratedColumn<int> get groupId =>
+      $composableBuilder(column: $table.groupId, builder: (column) => column);
+
+  GeneratedColumn<String> get groupName =>
+      $composableBuilder(column: $table.groupName, builder: (column) => column);
+
+  GeneratedColumn<bool> get isActive =>
+      $composableBuilder(column: $table.isActive, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
+  GeneratedColumn<double> get creditLimit => $composableBuilder(
+    column: $table.creditLimit,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get dueDays =>
+      $composableBuilder(column: $table.dueDays, builder: (column) => column);
+
+  GeneratedColumn<String> get address1 =>
+      $composableBuilder(column: $table.address1, builder: (column) => column);
+
+  GeneratedColumn<String> get address2 =>
+      $composableBuilder(column: $table.address2, builder: (column) => column);
+
+  GeneratedColumn<String> get address3 =>
+      $composableBuilder(column: $table.address3, builder: (column) => column);
+
+  GeneratedColumn<String> get city =>
+      $composableBuilder(column: $table.city, builder: (column) => column);
+
+  GeneratedColumn<int> get stateId =>
+      $composableBuilder(column: $table.stateId, builder: (column) => column);
+
+  GeneratedColumn<String> get stateName =>
+      $composableBuilder(column: $table.stateName, builder: (column) => column);
+
+  GeneratedColumn<int> get countryId =>
+      $composableBuilder(column: $table.countryId, builder: (column) => column);
+
+  GeneratedColumn<String> get countryName => $composableBuilder(
+    column: $table.countryName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get pinCode =>
+      $composableBuilder(column: $table.pinCode, builder: (column) => column);
+
+  GeneratedColumn<double> get latitude =>
+      $composableBuilder(column: $table.latitude, builder: (column) => column);
+
+  GeneratedColumn<double> get longitude =>
+      $composableBuilder(column: $table.longitude, builder: (column) => column);
+
+  GeneratedColumn<double> get distanceFromCompanyKM => $composableBuilder(
+    column: $table.distanceFromCompanyKM,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get mailingName => $composableBuilder(
+    column: $table.mailingName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get contactPerson => $composableBuilder(
+    column: $table.contactPerson,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get mobile =>
+      $composableBuilder(column: $table.mobile, builder: (column) => column);
+
+  GeneratedColumn<String> get whatsappNo => $composableBuilder(
+    column: $table.whatsappNo,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get email =>
+      $composableBuilder(column: $table.email, builder: (column) => column);
+
+  GeneratedColumn<String> get taxType =>
+      $composableBuilder(column: $table.taxType, builder: (column) => column);
+
+  GeneratedColumn<String> get taxNumber =>
+      $composableBuilder(column: $table.taxNumber, builder: (column) => column);
+
+  GeneratedColumn<String> get stateCode =>
+      $composableBuilder(column: $table.stateCode, builder: (column) => column);
+
+  GeneratedColumn<double> get closingBalance => $composableBuilder(
+    column: $table.closingBalance,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get onAccountValue => $composableBuilder(
+    column: $table.onAccountValue,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get routeId =>
+      $composableBuilder(column: $table.routeId, builder: (column) => column);
+
+  GeneratedColumn<String> get routeName =>
+      $composableBuilder(column: $table.routeName, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get lastSyncOn => $composableBuilder(
+    column: $table.lastSyncOn,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get syncAction => $composableBuilder(
+    column: $table.syncAction,
+    builder: (column) => column,
+  );
+}
+
+class $$PartyMasterTableTableManager
+    extends
+        RootTableManager<
+          _$AppDb,
+          $PartyMasterTable,
+          PartyMasterData,
+          $$PartyMasterTableFilterComposer,
+          $$PartyMasterTableOrderingComposer,
+          $$PartyMasterTableAnnotationComposer,
+          $$PartyMasterTableCreateCompanionBuilder,
+          $$PartyMasterTableUpdateCompanionBuilder,
+          (
+            PartyMasterData,
+            BaseReferences<_$AppDb, $PartyMasterTable, PartyMasterData>,
+          ),
+          PartyMasterData,
+          PrefetchHooks Function()
+        > {
+  $$PartyMasterTableTableManager(_$AppDb db, $PartyMasterTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PartyMasterTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PartyMasterTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$PartyMasterTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> ledgerId = const Value.absent(),
+                Value<String?> ledgerName = const Value.absent(),
+                Value<String?> ledgerNameLocal = const Value.absent(),
+                Value<String?> aliasName = const Value.absent(),
+                Value<String?> ledDesc = const Value.absent(),
+                Value<int?> groupId = const Value.absent(),
+                Value<String?> groupName = const Value.absent(),
+                Value<bool> isActive = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+                Value<double?> creditLimit = const Value.absent(),
+                Value<int?> dueDays = const Value.absent(),
+                Value<String?> address1 = const Value.absent(),
+                Value<String?> address2 = const Value.absent(),
+                Value<String?> address3 = const Value.absent(),
+                Value<String?> city = const Value.absent(),
+                Value<int?> stateId = const Value.absent(),
+                Value<String?> stateName = const Value.absent(),
+                Value<int?> countryId = const Value.absent(),
+                Value<String?> countryName = const Value.absent(),
+                Value<String?> pinCode = const Value.absent(),
+                Value<double?> latitude = const Value.absent(),
+                Value<double?> longitude = const Value.absent(),
+                Value<double?> distanceFromCompanyKM = const Value.absent(),
+                Value<String?> mailingName = const Value.absent(),
+                Value<String?> contactPerson = const Value.absent(),
+                Value<String?> mobile = const Value.absent(),
+                Value<String?> whatsappNo = const Value.absent(),
+                Value<String?> email = const Value.absent(),
+                Value<String?> taxType = const Value.absent(),
+                Value<String?> taxNumber = const Value.absent(),
+                Value<String?> stateCode = const Value.absent(),
+                Value<double?> closingBalance = const Value.absent(),
+                Value<double?> onAccountValue = const Value.absent(),
+                Value<int?> routeId = const Value.absent(),
+                Value<String?> routeName = const Value.absent(),
+                Value<DateTime?> lastSyncOn = const Value.absent(),
+                Value<String?> syncAction = const Value.absent(),
+              }) => PartyMasterCompanion(
+                ledgerId: ledgerId,
+                ledgerName: ledgerName,
+                ledgerNameLocal: ledgerNameLocal,
+                aliasName: aliasName,
+                ledDesc: ledDesc,
+                groupId: groupId,
+                groupName: groupName,
+                isActive: isActive,
+                isDeleted: isDeleted,
+                creditLimit: creditLimit,
+                dueDays: dueDays,
+                address1: address1,
+                address2: address2,
+                address3: address3,
+                city: city,
+                stateId: stateId,
+                stateName: stateName,
+                countryId: countryId,
+                countryName: countryName,
+                pinCode: pinCode,
+                latitude: latitude,
+                longitude: longitude,
+                distanceFromCompanyKM: distanceFromCompanyKM,
+                mailingName: mailingName,
+                contactPerson: contactPerson,
+                mobile: mobile,
+                whatsappNo: whatsappNo,
+                email: email,
+                taxType: taxType,
+                taxNumber: taxNumber,
+                stateCode: stateCode,
+                closingBalance: closingBalance,
+                onAccountValue: onAccountValue,
+                routeId: routeId,
+                routeName: routeName,
+                lastSyncOn: lastSyncOn,
+                syncAction: syncAction,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> ledgerId = const Value.absent(),
+                Value<String?> ledgerName = const Value.absent(),
+                Value<String?> ledgerNameLocal = const Value.absent(),
+                Value<String?> aliasName = const Value.absent(),
+                Value<String?> ledDesc = const Value.absent(),
+                Value<int?> groupId = const Value.absent(),
+                Value<String?> groupName = const Value.absent(),
+                Value<bool> isActive = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+                Value<double?> creditLimit = const Value.absent(),
+                Value<int?> dueDays = const Value.absent(),
+                Value<String?> address1 = const Value.absent(),
+                Value<String?> address2 = const Value.absent(),
+                Value<String?> address3 = const Value.absent(),
+                Value<String?> city = const Value.absent(),
+                Value<int?> stateId = const Value.absent(),
+                Value<String?> stateName = const Value.absent(),
+                Value<int?> countryId = const Value.absent(),
+                Value<String?> countryName = const Value.absent(),
+                Value<String?> pinCode = const Value.absent(),
+                Value<double?> latitude = const Value.absent(),
+                Value<double?> longitude = const Value.absent(),
+                Value<double?> distanceFromCompanyKM = const Value.absent(),
+                Value<String?> mailingName = const Value.absent(),
+                Value<String?> contactPerson = const Value.absent(),
+                Value<String?> mobile = const Value.absent(),
+                Value<String?> whatsappNo = const Value.absent(),
+                Value<String?> email = const Value.absent(),
+                Value<String?> taxType = const Value.absent(),
+                Value<String?> taxNumber = const Value.absent(),
+                Value<String?> stateCode = const Value.absent(),
+                Value<double?> closingBalance = const Value.absent(),
+                Value<double?> onAccountValue = const Value.absent(),
+                Value<int?> routeId = const Value.absent(),
+                Value<String?> routeName = const Value.absent(),
+                Value<DateTime?> lastSyncOn = const Value.absent(),
+                Value<String?> syncAction = const Value.absent(),
+              }) => PartyMasterCompanion.insert(
+                ledgerId: ledgerId,
+                ledgerName: ledgerName,
+                ledgerNameLocal: ledgerNameLocal,
+                aliasName: aliasName,
+                ledDesc: ledDesc,
+                groupId: groupId,
+                groupName: groupName,
+                isActive: isActive,
+                isDeleted: isDeleted,
+                creditLimit: creditLimit,
+                dueDays: dueDays,
+                address1: address1,
+                address2: address2,
+                address3: address3,
+                city: city,
+                stateId: stateId,
+                stateName: stateName,
+                countryId: countryId,
+                countryName: countryName,
+                pinCode: pinCode,
+                latitude: latitude,
+                longitude: longitude,
+                distanceFromCompanyKM: distanceFromCompanyKM,
+                mailingName: mailingName,
+                contactPerson: contactPerson,
+                mobile: mobile,
+                whatsappNo: whatsappNo,
+                email: email,
+                taxType: taxType,
+                taxNumber: taxNumber,
+                stateCode: stateCode,
+                closingBalance: closingBalance,
+                onAccountValue: onAccountValue,
+                routeId: routeId,
+                routeName: routeName,
+                lastSyncOn: lastSyncOn,
+                syncAction: syncAction,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$PartyMasterTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDb,
+      $PartyMasterTable,
+      PartyMasterData,
+      $$PartyMasterTableFilterComposer,
+      $$PartyMasterTableOrderingComposer,
+      $$PartyMasterTableAnnotationComposer,
+      $$PartyMasterTableCreateCompanionBuilder,
+      $$PartyMasterTableUpdateCompanionBuilder,
+      (
+        PartyMasterData,
+        BaseReferences<_$AppDb, $PartyMasterTable, PartyMasterData>,
+      ),
+      PartyMasterData,
+      PrefetchHooks Function()
+    >;
 
 class $AppDbManager {
   final _$AppDb _db;
@@ -12049,4 +14873,6 @@ class $AppDbManager {
       $$GodownVehiclesTableTableManager(_db, _db.godownVehicles);
   $$GodownRoutesTableTableManager get godownRoutes =>
       $$GodownRoutesTableTableManager(_db, _db.godownRoutes);
+  $$PartyMasterTableTableManager get partyMaster =>
+      $$PartyMasterTableTableManager(_db, _db.partyMaster);
 }

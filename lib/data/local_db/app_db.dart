@@ -48,6 +48,7 @@ import 'package:drift/native.dart';
 import 'package:mpos_beat/data/local_db/daos/company_settings_dao/company_settings_dao.dart';
 import 'package:mpos_beat/data/local_db/daos/godown_vehicles_dao/godown_vehicle_dao.dart';
 import 'package:mpos_beat/data/local_db/daos/godown_voucher_type_dao/godown_voucher_type_dao.dart';
+import 'package:mpos_beat/data/local_db/daos/partymaster_sync_dao/party_master_sync_dao.dart';
 import 'package:mpos_beat/data/local_db/daos/route_dao/route_dao.dart';
 import 'package:mpos_beat/data/local_db/daos/route_voucher_type_dao/route_voucher_type_dao.dart';
 import 'package:mpos_beat/data/local_db/daos/user_setting_dao/user_setting_dao.dart';
@@ -55,6 +56,7 @@ import 'package:mpos_beat/data/local_db/daos/voucher_type_dao/voucher_type_dao.d
 import 'package:mpos_beat/data/local_db/tables/company_settings_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/godown_vehicles_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/godown_voucher_types_tables.dart';
+import 'package:mpos_beat/data/local_db/tables/partymaster_sync_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/route_voucher_types_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/routes_table.dart';
 import 'package:mpos_beat/data/local_db/tables/user_settings_tables.dart';
@@ -84,6 +86,7 @@ part 'app_db.g.dart';
     CompanySettingsTable,
     GodownVehicles,
     GodownRoutes,
+    PartyMaster,
   ],
   daos: [
     CompanyDao,
@@ -96,13 +99,14 @@ part 'app_db.g.dart';
     CompanySettingsDao,
     GodownVehicleDao,
     RouteDao,
+    PartyMasterDao,
   ],
 )
 class AppDb extends _$AppDb {
   AppDb() : super(_openConnection());
 
   @override
-  int get schemaVersion => 11;
+  int get schemaVersion => 12;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -146,6 +150,9 @@ class AppDb extends _$AppDb {
 
         // OPTIONAL but recommended
         await m.database.customStatement('DROP TABLE IF EXISTS routes');
+      }
+      if (from < 12) {
+        await m.createTable(partyMaster);
       }
     },
   );

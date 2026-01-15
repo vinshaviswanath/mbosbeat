@@ -81,8 +81,7 @@ class UserManagementProvider with ChangeNotifier {
 
   CompanyInfoDtos? _companyCreationDtos;
   CompanyInfoDtos? get companyCreationDtos => _companyCreationDtos;
-  PartyMasterSyncModel? _partmastersync;
-  PartyMasterSyncModel? get partymastersync => _partmastersync;
+
 
   AutovalidateMode userCreateAutovalidateMode = AutovalidateMode.disabled;
   AutovalidateMode designationAutovalidateMode = AutovalidateMode.disabled;
@@ -1162,32 +1161,5 @@ class UserManagementProvider with ChangeNotifier {
     return _companyCreationDtos;
   }
 
-  //========================== Party Master Sync====================================
-  Future<PartyMasterSyncModel?> partyMasterSync() async {
-    setLoading(true);
-    final result = await iUserManagementFacad.partyMasterSync(
-      BaseParams(
-        data: PartyMasterSyncParams(
-          companyId: 1663,
-          pageNumber: 1,
-              lastSyncDateTime: DateTime.parse("2026-01-05T10:30:00"),
-        ),
-      ),
-    );
-
-    result.fold(
-      (failure) {
-        Logger.logError("Party Master Sync failed: ${failure.errorMsg}");
-      },
-      (response) async {
-        _partmastersync = response;
-        Logger.logSuccess(
-          "Party Master Sync successful : ${response.toJson()}",
-        );
-        notifyListeners();
-      },
-    );
-    setLoading(false);
-    return _partmastersync;
-  }
+  
 }

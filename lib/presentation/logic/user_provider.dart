@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/core/utils/logger.dart';
+import 'package:mpos_beat/data/models/party_MasterSync_model.dart';
 import 'package:mpos_beat/data/models/response.dart';
 import 'package:mpos_beat/domain/repositories/i_user_facad.dart';
 import 'package:mpos_beat/domain/request/attendance_params.dart';
+import 'package:mpos_beat/domain/request/checkin_params.dart';
+import 'package:mpos_beat/domain/request/party_MasterSync_params.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProvider extends ChangeNotifier {
@@ -28,8 +31,9 @@ class UserProvider extends ChangeNotifier {
   bool _isMarkingAttendance = false;
   bool _isAttendanceMarked = false;
   bool get isAttendanceMarked => _isAttendanceMarked;
-
-  void resetAttendance() {
+  PartyMasterSyncModel? _partmastersync;
+  PartyMasterSyncModel? get partymastersync => _partmastersync;
+  resetAttendance() {
     _isAttendanceMarked = !_isAttendanceMarked;
   }
 
@@ -129,5 +133,96 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
 
     return _attendanceResponse;
+  }
+
+  int? _companyId;
+
+  int? get companyId => _companyId;
+
+  void setCompanyId(int id) {
+    _companyId = id;
+    notifyListeners();
+  }
+
+  //========================== Party Master Sync====================================
+  Future<PartyMasterSyncModel?> partyMasterSync() async {
+    setLoading(true);
+    final result = await iUserFacad.partyMasterSync(
+      BaseParams(
+        data: PartyMasterSyncParams(
+          companyId: _companyId!,
+          pageNumber: 1,
+          lastSyncDateTime: DateTime.parse("2026-01-05T10:30:00"),
+        ),
+      ),
+    );
+
+    result.fold(
+      (failure) {
+        Logger.logError("Party Master Sync failed: ${failure.errorMsg}");
+      },
+      (response) async {
+        _partmastersync = response;
+        Logger.logSuccess(
+          "Party Master Sync successful : ${response.toJson()}",
+        );
+        notifyListeners();
+      },
+    );
+    setLoading(false);
+    return _partmastersync;
+  }
+
+  String? _errorMessage;
+  String? get errorMessage => _errorMessage;
+  DefaultResponse? _checkinresponse;
+  DefaultResponse? get checkinResponse => _checkinresponse;
+  // ===========================check in============================
+
+  Future<DefaultResponse?> checkIn(
+    BuildContext context, {
+    required CheckinParams params,
+    VoidCallback? onSuccess,
+  }) async {
+    setLoading(true);
+    final result = await iUserFacad.checkin(BaseParams(data: params));
+    result.fold(
+      (failure) {
+        _errorMessage = failure.errorMsg.toString();
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
+        Logger.logError("Checkin failed : $_errorMessage");
+        notifyListeners();
+      },
+      (response) {
+        Logger.logSuccess("Checkin  success : ${response.toJson()}");
+        Logger.logSuccess("status :${response.status}");
+        setLoading(false);
+        notifyListeners();
+
+        if (response.status == 1) {
+          _checkinresponse = response;
+          onSuccess?.call();
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                response.message ?? "",
+                textAlign: TextAlign.center,
+              ),
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            ),
+          );
+        }
+      },
+    );
+    return _checkinresponse;
+
+    //============================check out========================================
   }
 }

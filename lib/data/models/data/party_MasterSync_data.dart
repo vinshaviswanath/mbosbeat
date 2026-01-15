@@ -8,7 +8,7 @@ class PartyMasterListData {
   Name groupName;
   bool isActive;
   bool isDeleted;
-  int creditLimit;
+  double creditLimit;
   int dueDays;
   String address1;
   String address2;
@@ -18,10 +18,10 @@ class PartyMasterListData {
   StateName stateName;
   int countryId;
   CountryName countryName;
-  String pinCode;
-  int latitude;
-  int longitude;
-  int distanceFromCompanyKm;
+  String? pinCode;
+  double latitude;
+  double longitude;
+  double distanceFromCompanyKm;
   String mailingName;
   String contactPerson;
   String mobile;
@@ -31,7 +31,7 @@ class PartyMasterListData {
   String taxNumber;
   String stateCode;
   double closingBalance;
-  int onAccountValue;
+  double onAccountValue;
   int routeId;
   Name routeName;
   dynamic priceList;
@@ -87,38 +87,40 @@ class PartyMasterListData {
         aliasName: json["aliasName"],
         ledDesc: json["ledDesc"],
         groupId: json["groupID"],
-        groupName: nameValues.map[json["groupName"]]!,
+        groupName: nameValues.map[json["groupName"]] ?? Name.UNKNOWN,
         isActive: json["isActive"],
         isDeleted: json["isDeleted"],
-        creditLimit: json["creditLimit"],
+        creditLimit: (json["creditLimit"] as num).toDouble(),
         dueDays: json["dueDays"],
         address1: json["address1"],
         address2: json["address2"],
         address3: json["address3"],
-        city: cityValues.map[json["city"]]!,
+        city: cityValues.map[json["city"]] ?? City.EMPTY,
         stateId: json["stateID"],
-        stateName: stateNameValues.map[json["stateName"]]!,
+        stateName: stateNameValues.map[json["stateName"]]??StateName.UNKNOWN,
         countryId: json["countryID"],
-        countryName: countryNameValues.map[json["countryName"]]!,
-        pinCode: json["pinCode"],
-        latitude: json["latitude"],
-        longitude: json["longitude"],
-        distanceFromCompanyKm: json["distanceFromCompanyKM"],
+        countryName: countryNameValues.map[json["countryName"]]??CountryName.UNKNOWN,
+        pinCode: json["pinCode"]?.toString(),
+
+        latitude: (json["latitude"] as num).toDouble(),
+        longitude: (json["longitude"] as num).toDouble(),
+        distanceFromCompanyKm: (json["distanceFromCompanyKM"] as num)
+            .toDouble(),
         mailingName: json["mailingName"],
         contactPerson: json["contactPerson"],
         mobile: json["mobile"],
         whatsappNo: json["whatsappNo"],
-        email: emailValues.map[json["email"]]!,
-        taxType: taxTypeValues.map[json["taxType"]]!,
+        email: emailValues.map[json["email"]] ?? Email.EMPTY,
+        taxType: taxTypeValues.map[json["taxType"]] ?? TaxType.UNKNOWN,
         taxNumber: json["taxNumber"],
         stateCode: json["stateCode"],
         closingBalance: json["closingBalance"]?.toDouble(),
-        onAccountValue: json["onAccountValue"],
+        onAccountValue: (json["onAccountValue"] as num).toDouble(),
         routeId: json["routeID"],
-        routeName: nameValues.map[json["routeName"]]!,
+        routeName: nameValues.map[json["routeName"]] ?? Name.UNKNOWN,
         priceList: json["priceList"],
         lastSyncOn: DateTime.parse(json["lastSyncOn"]),
-        syncAction: syncActionValues.map[json["syncAction"]]!,
+        syncAction: syncActionValues.map[json["syncAction"]]??SyncAction.UNKNOWN,
       );
 
   Map<String, dynamic> toJson() => {
@@ -167,7 +169,7 @@ enum City { ALUVA, EMPTY }
 
 final cityValues = EnumValues({"Aluva": City.ALUVA, "": City.EMPTY});
 
-enum CountryName { INDIA }
+enum CountryName { UNKNOWN, INDIA }
 
 final countryNameValues = EnumValues({"India": CountryName.INDIA});
 
@@ -221,6 +223,7 @@ final emailValues = EnumValues({
 });
 
 enum Name {
+  UNKNOWN,
   ALAPPUZHA,
   ALUVA_BAKERY_AND_MANUFACTURING,
   ALUVA_HORECA,
@@ -240,15 +243,15 @@ final nameValues = EnumValues({
   "BEKTASH TURKISH": Name.BEKTASH_TURKISH,
 });
 
-enum StateName { KERALA }
+enum StateName { UNKNOWN, KERALA }
 
 final stateNameValues = EnumValues({"Kerala": StateName.KERALA});
 
-enum SyncAction { U }
+enum SyncAction { UNKNOWN, U }
 
 final syncActionValues = EnumValues({"U": SyncAction.U});
 
-enum TaxType { COMPOSITION, REGULAR, UNREGISTERED_CONSUMER }
+enum TaxType { UNKNOWN, COMPOSITION, REGULAR, UNREGISTERED_CONSUMER }
 
 final taxTypeValues = EnumValues({
   "Composition": TaxType.COMPOSITION,

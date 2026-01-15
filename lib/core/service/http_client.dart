@@ -166,8 +166,8 @@ class HttpClient {
   }
 
   http.Response _handleResponse(http.Response response) {
-    Logger.logInfo("HTTP ${response.statusCode}");
-    Logger.logInfo("RAW RESPONSE: '${response.body}'");
+    //Logger.logInfo("HTTP ${response.statusCode}");
+  //  Logger.logInfo("RAW RESPONSE: '${response.body}'");
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
       return response;
