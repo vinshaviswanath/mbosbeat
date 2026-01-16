@@ -40,18 +40,16 @@ class UserProvider extends ChangeNotifier {
 
   bool _isAttendanceMarked = false;
   bool get isAttendanceMarked => _isAttendanceMarked;
-
+  DefaultResponse? _response;
+  DefaultResponse? get response => _response;
   PartyMasterSyncModel? _partmastersync;
   PartyMasterSyncModel? get partymastersync => _partmastersync;
   resetAttendance() {
     _isAttendanceMarked = !_isAttendanceMarked;
   }
 
-  void setLoading(bool val) {
-    _isLoading = val;
-  DefaultResponse? _response;
-  DefaultResponse? get response => _response;
-
+ 
+  
   void setLoading(bool value) {
     _isLoading = value;
     notifyListeners();
@@ -284,7 +282,7 @@ class UserProvider extends ChangeNotifier {
   notifyListeners();
   return success;
 }
-
+  
   int? _companyId;
 
   int? get companyId => _companyId;

@@ -3,7 +3,6 @@ import 'package:mpos_beat/core/base/run_safely.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
 import 'package:mpos_beat/core/service/http_client.dart';
 import 'package:mpos_beat/core/utils/typedefs.dart';
-import 'package:mpos_beat/data/data_sources/user/attendanceMarking.dart';
 import 'package:mpos_beat/data/data_sources/user_management/checkin_Checkout/checkin_datasource.dart';
 import 'package:mpos_beat/data/data_sources/user_management/checkin_Checkout/checkout_datasource.dart';
 import 'package:mpos_beat/data/data_sources/user_management/party_MasterSync/party_MasterSync.dart';
@@ -40,7 +39,7 @@ class IUserFacadImp implements IUserFacad {
     this.partyMastersync,
     this.checkinDatasource,
     this.checkoutDatasource,
-    this.attendanceMarking, this.startTrip, this.endTrip
+     this.startTrip, this.endTrip
   );
 
   @override

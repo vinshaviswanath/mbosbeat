@@ -40,8 +40,8 @@ class HomeInitController {
         userId: _userId.toString(),
       ),
     ]);
-
-    await userManagementProvider.partyMasterSync();
+    userProvider.setCompanyId(companyId);
+    await userProvider.partyMasterSync();
     await userProvider.loadRouteState();
     await userProvider.load();
   }
