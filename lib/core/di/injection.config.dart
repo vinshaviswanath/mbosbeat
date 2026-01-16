@@ -70,7 +70,10 @@ import '../../data/data_sources/company_creation/registration_type.dart'
 import '../../data/data_sources/company_creation/set_voucher_numbering_method/set_voucher_numbering_method.dart'
     as _i931;
 import '../../data/data_sources/company_creation/state_list.dart' as _i374;
-import '../../data/data_sources/user/attendanceMarking.dart' as _i249;
+import '../../data/data_sources/user/attendance_marking/attendanceMarking.dart'
+    as _i891;
+import '../../data/data_sources/user/trip_end/trip_end.dart' as _i271;
+import '../../data/data_sources/user/trip_start/trip_start.dart' as _i796;
 import '../../data/data_sources/user_management/activate_designation/activate_designation.dart'
     as _i185;
 import '../../data/data_sources/user_management/add_designation/add_designation.dart'
@@ -116,6 +119,8 @@ import '../../domain/repositories/i_authentication_facad.dart' as _i590;
 import '../../domain/repositories/i_company_creation_facad.dart' as _i483;
 import '../../domain/repositories/i_user_facad.dart' as _i9;
 import '../../domain/repositories/i_user_management_facad.dart' as _i172;
+import '../../presentation/views/home_screen/controller/home_init_controller.dart'
+    as _i342;
 import '../base/run_safely.dart' as _i530;
 import '../event/event_manager.dart' as _i275;
 import '../network/network_provider.dart' as _i335;
@@ -147,6 +152,9 @@ Future<_i174.GetIt> init(
   );
   gh.lazySingleton<_i547.LocationService>(
     () => appInjectionModule.locationService,
+  );
+  gh.lazySingleton<_i342.HomeInitController>(
+    () => _i342.HomeInitController(appDb: gh<_i264.AppDb>()),
   );
   gh.lazySingleton<_i976.HttpClient>(
     () => _i976.HttpClient(gh<_i519.Client>()),
@@ -386,8 +394,22 @@ Future<_i174.GetIt> init(
       gh<_i460.SharedPreferences>(),
     ),
   );
-  gh.lazySingleton<_i249.AttendanceMarking>(
-    () => _i249.AttendanceMarking(
+  gh.lazySingleton<_i891.AttendanceMarking>(
+    () => _i891.AttendanceMarking(
+      gh<_i976.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i271.TripEnd>(
+    () => _i271.TripEnd(
+      gh<_i976.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+    ),
+  );
+  gh.lazySingleton<_i796.TripStart>(
+    () => _i796.TripStart(
       gh<_i976.HttpClient>(),
       gh<_i530.RunSafely>(),
       gh<_i460.SharedPreferences>(),
@@ -536,6 +558,16 @@ Future<_i174.GetIt> init(
       gh<_i213.GetCompanies>(),
       gh<_i400.CreateUserCompanyMapping>(),
       gh<_i148.CreateCompanyUserMapping>(),
+    ),
+  );
+  gh.lazySingleton<_i9.IUserFacad>(
+    () => _i30.IUserFacadImp(
+      gh<_i976.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+      gh<_i891.AttendanceMarking>(),
+      gh<_i796.TripStart>(),
+      gh<_i271.TripEnd>(),
     ),
   );
   gh.lazySingleton<_i70.CompanyRegisteration>(

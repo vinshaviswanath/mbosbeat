@@ -9,27 +9,27 @@ import 'package:mpos_beat/core/utils/logger.dart';
 import 'package:mpos_beat/core/utils/typedefs.dart';
 import 'package:mpos_beat/core/utils/urls.dart';
 import 'package:mpos_beat/data/models/response.dart';
-import 'package:mpos_beat/domain/request/attendance_params.dart';
+import 'package:mpos_beat/domain/request/trip_start_params.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 @lazySingleton
-class AttendanceMarking {
+class TripStart {
   final HttpClient httpClient;
   final RunSafely runSafely;
   final SharedPreferences sharedPreferences;
-  AttendanceMarking(this.httpClient, this.runSafely, this.sharedPreferences);
+  TripStart(this.httpClient, this.runSafely, this.sharedPreferences);
 
-  ResultFuture<DefaultResponse> call(BaseParams<AttendanceParams> param) {
+  ResultFuture<DefaultResponse> call(BaseParams<TripStartParams> param) {
     return runSafely(
       () async {
         final response = await httpClient.post(
-        Urls.attendanceMarking,
+        Urls.startTrip,
         data: param.data.toMap()
       );
 
         if (response.isOk) {
           final data = DefaultResponse.fromJson(response.data);
-          Logger.logInfo("User Password reset response : ${data.toJson()}");
+          Logger.logInfo("User start trip marked : ${data.toJson()}");
           return data;
         }
 

@@ -6,6 +6,8 @@ import 'package:mpos_beat/domain/request/attendance_params.dart';
 import 'package:mpos_beat/domain/request/checkin_params.dart';
 import 'package:mpos_beat/domain/request/checkout_params.dart';
 import 'package:mpos_beat/domain/request/party_MasterSync_params.dart';
+import 'package:mpos_beat/domain/request/trip_end_params.dart';
+import 'package:mpos_beat/domain/request/trip_start_params.dart';
 
 interface class IUserFacad {
   ResultFuture<DefaultResponse> markAttendance(
@@ -27,4 +29,17 @@ interface class IUserFacad {
   ResultFuture<DefaultResponse> checkout(BaseParams<CheckoutParams> params) {
     throw UnimplementedError();
   }
+
+   ResultFuture<DefaultResponse> markTripStart(
+    BaseParams<TripStartParams> params,
+  ) {
+    throw UnimplementedError();
+  }
+
+     ResultFuture<DefaultResponse> markTripEnd(
+    BaseParams<TripEndParams> params,
+  ) {
+    throw UnimplementedError();
+  }
 }
+

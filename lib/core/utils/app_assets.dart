@@ -68,6 +68,9 @@ class AppAssets {
   static const arrowDown = "$baseDir/arrow_down.svg";
   static const cam = "$baseDir/cam.svg";
   static const company2 = "$baseDir/company.svg";
+  static const noCompanies = "$baseDir/noCompanies.svg";
+  static const logout2 = "$baseDir/logout2.svg";
+  static const switchIcon = "$baseDir/switch.svg";
 
 
   //Animations
