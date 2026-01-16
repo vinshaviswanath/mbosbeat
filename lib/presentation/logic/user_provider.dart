@@ -7,6 +7,7 @@ import 'package:mpos_beat/data/models/response.dart';
 import 'package:mpos_beat/domain/repositories/i_user_facad.dart';
 import 'package:mpos_beat/domain/request/attendance_params.dart';
 import 'package:mpos_beat/domain/request/checkin_params.dart';
+import 'package:mpos_beat/domain/request/checkout_params.dart';
 import 'package:mpos_beat/domain/request/party_MasterSync_params.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -177,12 +178,14 @@ class UserProvider extends ChangeNotifier {
   String? get errorMessage => _errorMessage;
   DefaultResponse? _checkinresponse;
   DefaultResponse? get checkinResponse => _checkinresponse;
+  DefaultResponse? _checkoutresponse;
+  DefaultResponse? get checkoutResponse => _checkoutresponse;
   // ===========================check in============================
 
   Future<DefaultResponse?> checkIn(
     BuildContext context, {
     required CheckinParams params,
-    VoidCallback? onSuccess,
+  //  VoidCallback? onSuccess,
   }) async {
     setLoading(true);
     final result = await iUserFacad.checkin(BaseParams(data: params));
@@ -203,7 +206,7 @@ class UserProvider extends ChangeNotifier {
 
         if (response.status == 1) {
           _checkinresponse = response;
-          onSuccess?.call();
+         // onSuccess?.call();
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -222,7 +225,51 @@ class UserProvider extends ChangeNotifier {
       },
     );
     return _checkinresponse;
+  }
 
-    //============================check out========================================
+  //============================check out========================================
+  Future<DefaultResponse?> checkOut(
+    BuildContext context, {
+    required CheckoutParams params,
+    VoidCallback? onSuccess,
+  }) async {
+    setLoading(true);
+    final result = await iUserFacad.checkout(BaseParams(data: params));
+    result.fold(
+      (failure) {
+        _errorMessage = failure.errorMsg.toString();
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
+        Logger.logError("Checkout failed : $_errorMessage");
+        notifyListeners();
+      },
+      (response) {
+        Logger.logSuccess("Checkout  success : ${response.toJson()}");
+        Logger.logSuccess("status :${response.status}");
+        setLoading(false);
+        notifyListeners();
+
+        if (response.status == 1) {
+          _checkoutresponse = response;
+          onSuccess?.call();
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                response.message ?? "",
+                textAlign: TextAlign.center,
+              ),
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            ),
+          );
+        }
+      },
+    );
+    return _checkoutresponse;
   }
 }

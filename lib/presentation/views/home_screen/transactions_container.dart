@@ -132,7 +132,13 @@ class TransactionCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (item.routeName != null) {
-          context.pushNamed(item.routeName!, extra: TransactionArgs(company: item.company,userDetails: item.userDetails));
+          context.pushNamed(
+            item.routeName!,
+            extra: TransactionArgs(
+              company: item.company,
+              userDetails: item.userDetails,
+            ),
+          );
         }
       },
       child: Stack(

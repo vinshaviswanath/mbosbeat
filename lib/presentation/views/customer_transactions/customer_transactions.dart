@@ -1,4 +1,6 @@
+import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 import 'package:mpos_beat/presentation/views/home_screen/transactions_container.dart';
 
@@ -12,13 +14,48 @@ class CustomerTransactions extends StatefulWidget {
 
 class _CustomerTransactionsState extends State<CustomerTransactions> {
   TextEditingController searchController = TextEditingController();
+  final AppDb appDb = sl<AppDb>();
+
+  List<PartyMasterData> allParties = [];
+  List<PartyMasterData> filteredParties = [];
+  bool isLoading = true;
+  Future<void> loadParties() async {
+    final list = await appDb.partyMasterDao.getAllParties();
+
+    setState(() {
+      allParties = list;
+      filteredParties = list;
+      isLoading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await loadParties();
+
+      searchController.addListener(() {
+        final keyword = searchController.text.toLowerCase();
+
+        setState(() {
+          filteredParties = allParties.where((p) {
+            final name = p.ledgerName?.toLowerCase() ?? "";
+            final mobile = p.mobile ?? "";
+            return name.contains(keyword) || mobile.contains(keyword);
+          }).toList();
+        });
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final appLocalization = context.l10n;
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    // final color = Theme.of(context).colorScheme;
-    Logger.logSuccess("Company ID :: ${widget.data.company.id}");
+
     return Scaffold(
       backgroundColor: ColorResources.white,
       appBar: AppBar(
@@ -69,13 +106,15 @@ class _CustomerTransactionsState extends State<CustomerTransactions> {
           SizedBox(height: MediaQuery.of(context).size.height * 0.005),
           Expanded(
             child: ListView.builder(
-              itemCount: 10,
+              itemCount: filteredParties.length,
+
               itemBuilder: (context, index) {
+                final party = filteredParties[index];
                 return GestureDetector(
                   onTap: () {
                     context.pushNamed(
                       AppRouterConst.transactionDetailpage,
-                      extra: widget.data,
+                      extra: {"base": widget.data, "party": party},
                     );
                   },
                   child: Padding(
@@ -97,7 +136,7 @@ class _CustomerTransactionsState extends State<CustomerTransactions> {
                                 Row(
                                   children: [
                                     Text(
-                                      "Alackal Stores, Kuruppamthara",
+                                      party.ledgerName ?? "N/A",
                                       style: context
                                           .textStyle
                                           .s12
@@ -117,7 +156,7 @@ class _CustomerTransactionsState extends State<CustomerTransactions> {
                                   ],
                                 ),
                                 SizedBox(height: height * 0.002),
-            
+
                                 //contact person
                                 Row(
                                   children: [
@@ -127,7 +166,7 @@ class _CustomerTransactionsState extends State<CustomerTransactions> {
                                       size: 13,
                                     ),
                                     Text(
-                                      "Contact Person : Gopakumar",
+                                      "Contact Person : ${party.contactPerson}",
                                       style: context
                                           .textStyle
                                           .s08
@@ -136,7 +175,7 @@ class _CustomerTransactionsState extends State<CustomerTransactions> {
                                     ),
                                     Spacer(),
                                     Text(
-                                      "26,500.00 Cr",
+                                      party.closingBalance.toString(),
                                       style: context
                                           .textStyle
                                           .s12
@@ -146,7 +185,7 @@ class _CustomerTransactionsState extends State<CustomerTransactions> {
                                     ),
                                   ],
                                 ),
-            
+
                                 //mobile number
                                 Row(
                                   children: [
@@ -156,7 +195,7 @@ class _CustomerTransactionsState extends State<CustomerTransactions> {
                                       size: 13,
                                     ),
                                     Text(
-                                      "Mobile : 9876543215",
+                                      "Mobile : ${party.mobile}",
                                       style: context
                                           .textStyle
                                           .s08
@@ -167,7 +206,7 @@ class _CustomerTransactionsState extends State<CustomerTransactions> {
                                     const CircleAvatar(
                                       backgroundColor:
                                           ColorResources.freshgreen,
-            
+
                                       radius: 10,
                                       child: Icon(
                                         Icons.call_rounded,
@@ -177,8 +216,7 @@ class _CustomerTransactionsState extends State<CustomerTransactions> {
                                     ),
                                     SizedBox(width: width * 0.01),
                                     const CircleAvatar(
-                                      backgroundColor:
-                                          ColorResources.dustyBlue,
+                                      backgroundColor: ColorResources.dustyBlue,
                                       radius: 10,
                                       child: Icon(
                                         Icons.location_on_sharp,
