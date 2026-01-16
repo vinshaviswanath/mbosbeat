@@ -532,10 +532,12 @@ Future<_i174.GetIt> init(
       gh<_i976.HttpClient>(),
       gh<_i530.RunSafely>(),
       gh<_i460.SharedPreferences>(),
-      gh<_i249.AttendanceMarking>(),
+      gh<_i891.AttendanceMarking>(),
       gh<_i860.PartyMasterSync>(),
       gh<_i1053.CheckinDatasource>(),
       gh<_i435.CheckoutDatasource>(),
+      gh<_i796.TripStart>(),
+      gh<_i271.TripEnd>(),
     ),
   );
   gh.lazySingleton<_i172.IUserManagementFacad>(
@@ -558,16 +560,6 @@ Future<_i174.GetIt> init(
       gh<_i213.GetCompanies>(),
       gh<_i400.CreateUserCompanyMapping>(),
       gh<_i148.CreateCompanyUserMapping>(),
-    ),
-  );
-  gh.lazySingleton<_i9.IUserFacad>(
-    () => _i30.IUserFacadImp(
-      gh<_i976.HttpClient>(),
-      gh<_i530.RunSafely>(),
-      gh<_i460.SharedPreferences>(),
-      gh<_i891.AttendanceMarking>(),
-      gh<_i796.TripStart>(),
-      gh<_i271.TripEnd>(),
     ),
   );
   gh.lazySingleton<_i70.CompanyRegisteration>(
