@@ -1,12 +1,14 @@
 import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
+import 'package:mpos_beat/presentation/logic/user_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void CommonLogoutDialog(context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
+      final userProvider = context.read<UserProvider>();
       return AlertDialog(
         backgroundColor: Theme.of(context).colorScheme.onPrimary,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
@@ -36,6 +38,7 @@ void CommonLogoutDialog(context) {
                         await prefs.remove("token");
                         final appDb = sl<AppDb>();
                         await appDb.registrationDetailDao.clearAll();
+                        await userProvider.clearAttendance();
 
                         /// Close dialog first
                         Navigator.of(context).pop(true);

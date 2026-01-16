@@ -55,5 +55,13 @@ class UserSettingsDao extends DatabaseAccessor<AppDb>
 
   Future<void> clearAll() => delete(userSettingsTable).go();
 
-  
+  Future<String?> getCompanySwitchingValue(int userId) async {
+  final query = select(userSettingsTable)
+    ..where((tbl) => tbl.userId.equals(userId) & tbl.id.equals(6))
+    ..limit(1);
+
+  final result = await query.getSingleOrNull();
+  return result?.value;
+}
+
 }

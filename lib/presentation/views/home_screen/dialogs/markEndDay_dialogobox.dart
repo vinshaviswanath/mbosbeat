@@ -4,12 +4,15 @@ import 'package:mpos_beat/core/theme/colors.dart';
 import 'package:mpos_beat/core/theme/text_styles.dart';
 import 'package:mpos_beat/core/utils/extentions.dart';
 
-void showMarkEndDayDialog(BuildContext context) {
+void showMarkEndDayDialog(
+  BuildContext context, {
+  required VoidCallback onConfirm,
+}) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-            backgroundColor: Theme.of(context).colorScheme.onPrimary,
+        backgroundColor: Theme.of(context).colorScheme.onPrimary,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
         contentPadding: const EdgeInsets.all(16.0),
         title: Center(
@@ -33,7 +36,8 @@ void showMarkEndDayDialog(BuildContext context) {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        context.pop();
+                        onConfirm();
+                        Navigator.pop(context);
                       },
                       child: Text(
                         'Confirm',

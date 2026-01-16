@@ -3,6 +3,7 @@ import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 import 'package:mpos_beat/presentation/dialogs/auth_dialogs.dart';
+import 'package:mpos_beat/presentation/views/admin_home/widget/common_logoutdialogbox.dart';
 
 class UserCompanySelectionScreen extends StatefulWidget {
   const UserCompanySelectionScreen({super.key});
@@ -54,13 +55,25 @@ class _UserCompanySelectionScreenState
       },
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: ColorResources.softLavender,
+          backgroundColor: ColorResources.white,
           centerTitle: true,
           automaticallyImplyLeading: false,
           title: Text(
-            "Select Company",
+            "Company Listing",
             style: context.textStyle.s20.indigoBlue.bold.roboto,
           ),
+          actions: [
+            GestureDetector(
+              onTap: () => CommonLogoutDialog(context),
+              child: Padding(
+                padding: const EdgeInsets.only(right: 16),
+                child: SvgPicture.asset(
+                  AppAssets.logout2,
+                  height: context.getSize.height * 0.025,
+                ),
+              ),
+            ),
+          ],
           bottom: PreferredSize(
             preferredSize: Size(double.infinity, 5),
             child: SizedBox.shrink(),
@@ -109,8 +122,20 @@ class _UserCompanySelectionScreenState
                       // }
 
                       if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                        return const Center(
-                          child: Text("No companies assigned"),
+                        return Column(
+                          mainAxisAlignment: .center,
+                          children: [
+                            SvgPicture.asset(
+                              AppAssets.noCompanies,
+                              height: context.getSize.height * 0.156,
+                            ),
+                            h16,
+                            Text(
+                              "No Company listing found!\nContact Administrator.",
+                              style: context.textStyle.s11.w400.dustyBlue,
+                              textAlign: .center,
+                            ),
+                          ],
                         );
                       }
 
@@ -159,7 +184,7 @@ class _UserCompanySelectionScreenState
                               Logger.logInfo(
                                 "Selected company id...................................: ${company.id}",
                               );
-                           
+
                               setState(() {
                                 selectedIndex = index;
                               });

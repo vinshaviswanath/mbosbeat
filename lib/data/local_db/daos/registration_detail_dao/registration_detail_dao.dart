@@ -81,4 +81,10 @@ class RegistrationDetailDao extends DatabaseAccessor<AppDb> with _$RegistrationD
   return user?.designation;
 }
 
+Future<int?> getLoggedInUserId() async {
+  final user = await (select(registrationDetails)..limit(1))
+      .getSingleOrNull();
+  return user?.userId;
+}
+
 }
