@@ -1,4 +1,11 @@
+import 'package:intl/intl.dart';
+import 'package:mpos_beat/core/di/injection.dart';
+import 'package:mpos_beat/core/service/location_services.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/local_db/app_db.dart';
+import 'package:mpos_beat/domain/request/checkin_params.dart';
+import 'package:mpos_beat/domain/request/checkout_params.dart';
+import 'package:mpos_beat/presentation/logic/user_provider.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/tabs/tab1_transactions.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/tabs/tab2_outstanding.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/tabs/tab3_visit_history.dart';
@@ -7,7 +14,12 @@ import 'package:mpos_beat/presentation/views/home_screen/transactions_container.
 
 class TransactionDetailpage extends StatefulWidget {
   final TransactionArgs data;
-  const TransactionDetailpage({super.key, required this.data});
+  final PartyMasterData party;
+  const TransactionDetailpage({
+    super.key,
+    required this.data,
+    required this.party,
+  });
 
   @override
   State<TransactionDetailpage> createState() => _TransactionDetailpageState();
@@ -24,7 +36,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
     _tabController.addListener(() {
-      setState(() {}); // Forces widget rebuild to update colors
+      setState(() {}); 
     });
   }
 
@@ -39,12 +51,189 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
     return "${now.hour}:${now.minute.toString().padLeft(2, '0')}";
   }
 
+  int? _checkInId;
+  void _showSnack(BuildContext context, String message) {
+    ScaffoldMessenger.of(context)
+      ..clearSnackBars()
+      ..showSnackBar(
+        SnackBar(
+          content: Text(
+            message,
+            textAlign: TextAlign.center,
+            style: context.textStyle.s12.w500.white.roboto,
+          ),
+          backgroundColor: ColorResources.black.withValues(alpha: 0.6),
+          behavior: SnackBarBehavior.floating,
+          margin: const EdgeInsets.all(16),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+      );
+  }
+
+  Future<void> _handleCheckIn(BuildContext context) async {
+    final locationService = sl<LocationService>();
+    final provider = context.read<UserProvider>();
+
+    try {
+      final position = await locationService.getCurrentLocation();
+      final address = await locationService.getNormalAddress(
+        position.latitude,
+        position.longitude,
+      );
+      final now = DateTime.now();
+      final response = await provider.checkIn(
+        context,
+        params: CheckinParams(
+          tripId: 101,
+          vistType: "Regular",
+          visitSequence: 1,
+          partyId: widget.party.ledgerId,
+          partyName: widget.party.ledgerName ?? "",
+          date: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+          time: DateFormat("yyyy-MM-dd'T'HH:mm:ss").format(now),
+          latitude: position.latitude,
+          longitude: position.longitude,
+          accuracy: position.accuracy,
+          address: address,
+        ),
+      );
+
+      if (response != null) {
+        if (response.status == 1) {
+          setState(() {
+            _checkInId = response.id;
+            checkInTime = _getCurrentTime();
+            checkOutTime = null;
+          });
+          _showSnack(context, response.message ?? "Check-in successful");
+        }
+      } else if (response!.status == 0 &&
+          response.message == "Customer Already Check In") {
+        setState(() {
+          _checkInId = response.id; 
+          checkInTime =
+              _getCurrentTime(); 
+          checkOutTime = null;
+        });
+        _showSnack(context, response.message!);
+      } else {
+        _showSnack(context, response.message ?? "Check-in failed");
+      }
+    } catch (e) {
+      debugPrint("Check-in error: $e");
+    }
+  }
+
+  Future<void> _handleCheckout(
+    BuildContext context, {
+    required String remarks,
+  }) async {
+    final locationService = sl<LocationService>();
+    final provider = context.read<UserProvider>();
+    try {
+      final position = await locationService.getCurrentLocation();
+      final address = await locationService.getNormalAddress(
+        position.latitude,
+        position.longitude,
+      );
+      final now = DateTime.now();
+      final response = await provider.checkOut(
+        context,
+        params: CheckoutParams(
+          tripId: 101,
+          time: DateFormat("yyyy-MM-dd'T'HH:mm:ss").format(now),
+          latitude: position.latitude,
+          longitude: position.longitude,
+          accuracy: position.accuracy,
+          address: address,
+          checkinId: _checkInId!,
+          remarks: remarks,
+        ),
+      );
+      if (response != null) {
+        if (response.status == 1) {
+          setState(() {
+            checkOutTime = _getCurrentTime();
+            checkInTime = null;
+            _checkInId = null; 
+          });
+          _showSnack(context, response.message ?? "Check-out successful");
+        }
+      } else if (response!.status == 0 &&
+          response.message ==
+              "Customer Already Check Out/ Invalid Check In ID") {
+  
+        setState(() {
+          checkOutTime = _getCurrentTime();
+          checkInTime = null;
+          _checkInId = null;
+        });
+        _showSnack(context, response.message!);
+      } else {
+        _showSnack(context, response.message ?? "Check-out failed");
+      }
+    } catch (e) {
+      debugPrint("Check-out error: $e");
+    }
+  }
+Future<void> _showCheckoutRemarksDialog(BuildContext context) async {
+  final TextEditingController remarksController = TextEditingController();
+
+  await showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (context) {
+      return AlertDialog(
+        title: Text(
+          "Checkout Remarks",
+          style: context.textStyle.s14.roboto.bold,
+        ),
+        content: TextField(
+          controller: remarksController,
+          maxLines: 3,
+          decoration: InputDecoration(
+            hintText: "Enter remarks",
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("Cancel"),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              final remarks = remarksController.text.trim();
+
+              if (remarks.isEmpty) {
+                _showSnack(context, "Please enter remarks");
+                return;
+              }
+
+              Navigator.pop(context);
+
+              await _handleCheckout(
+                context,
+                remarks: remarks,
+              );
+            },
+            child: const Text("Submit"),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+
+
   @override
   Widget build(BuildContext context) {
     final applocalization = context.l10n;
-    // final height = MediaQuery.of(context).size.height;
-    // final width = MediaQuery.of(context).size.width;
-    // final color = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -80,7 +269,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Alackal Stores, Kuruppamthara",
+                      widget.party.ledgerName ?? "",
                       style: context.textStyle.s12.roboto.indigoBlue.w600,
                     ),
                     SizedBox(
@@ -88,7 +277,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
                     ),
                     //gst no.....
                     Text(
-                      "${applocalization.customer_transaction_detail_GSTno}JDGSJ2468246572",
+                      "${applocalization.customer_transaction_detail_GSTno}${widget.party.taxNumber}",
                       style: context.textStyle.s08.roboto.dustyBlue,
                     ),
                     SizedBox(
@@ -103,7 +292,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
                           size: 11,
                         ),
                         Text(
-                          "${applocalization.customer_transaction_detail_ContactPerson}: Gopakumar",
+                          "${applocalization.customer_transaction_detail_ContactPerson}: G${widget.party.contactPerson}",
 
                           style: context.textStyle.s08.roboto.dustyBlue,
                         ),
@@ -121,7 +310,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
                           size: 11,
                         ),
                         Text(
-                          "${applocalization.customer_transaction_detail_Mobile} 9876543215",
+                          "${applocalization.customer_transaction_detail_Mobile} ${widget.party.mobile}",
                           style: context.textStyle.s08.roboto.dustyBlue,
                         ),
                       ],
@@ -131,7 +320,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
                     ),
                     //address....
                     Text(
-                      "${applocalization.customer_transaction_detail_Address}: Kuruppamthara, Kerala",
+                      "${applocalization.customer_transaction_detail_Address}: ${widget.party.address1}",
                       style: context.textStyle.s08.roboto.dustyBlue,
                     ),
                   ],
@@ -147,7 +336,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
 
                     //balance....
                     Text(
-                      "56,874.00 Cr",
+                      "${widget.party.closingBalance}",
                       style: context.textStyle.s14.roboto.indigoBlue.w600,
                     ),
 
@@ -173,14 +362,15 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
                     Row(
                       children: [
                         GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              if (checkInTime == null) {
-                                // First time clicking check-in
-                                checkInTime = _getCurrentTime();
-                                checkOutTime = null; // reset checkout
-                              }
-                            });
+                          onTap: () async {
+                            //  setState(() {
+                            if (checkInTime == null) {
+                              await _handleCheckIn(context);
+                              // // First time clicking check-in
+                              // checkInTime = _getCurrentTime();
+                              // checkOutTime = null; // reset checkout
+                            }
+                            // });
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -205,17 +395,13 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
                           width: MediaQuery.of(context).size.width * 0.01,
                         ),
                         GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              if (checkInTime != null && checkOutTime == null) {
-                                // If already checked in, allow checkout
-                                checkOutTime = _getCurrentTime();
-                                checkInTime = null; // reset checkin button
-                              } else if (checkInTime == null &&
-                                  checkOutTime == null) {
-                                skipDialog(context);
-                              }
-                            });
+                          onTap: () async {
+                            if (checkInTime != null && checkOutTime == null) {
+                                  await _showCheckoutRemarksDialog(context); 
+                            } else if (checkInTime == null &&
+                                checkOutTime == null) {
+                              skipDialog(context);
+                            }
                           },
                           child: Container(
                             decoration: BoxDecoration(

@@ -33,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final provider = Provider.of<UserProvider>(context, listen: false);
       await loadData();
@@ -41,16 +42,15 @@ class _HomeScreenState extends State<HomeScreen> {
       provider.setCompanyId(widget.company.id!);
       await provider.partyMasterSync();
 
-      final appDb = sl<AppDb>();
-      final appDb = sl<AppDb>();
-  await appDb.partyMasterDao.getAllParties();
-      final parties = await appDb.partyMasterDao.getAllParties();
-          Logger.logInfo("📦 PartyMaster DB count:....................................................................... ${parties.length}");
-
+   final appDb = sl<AppDb>();
+    await appDb.partyMasterDao.getAllParties();
+    final parties = await appDb.partyMasterDao.getAllParties();
+      Logger.logInfo(
+        "📦 PartyMaster DB count:....................................................................... ${parties.length}",
+      );
     });
     super.initState();
   }
-
 
   Future<void> loadSavedRoute() async {
     final prefs = sl<SharedPreferences>();

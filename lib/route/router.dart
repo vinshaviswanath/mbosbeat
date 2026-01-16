@@ -85,6 +85,7 @@ class AppRouter {
     observers: [AppNavigationObserver()],
     navigatorKey: AppDetails.globalNavigatorKey,
     initialLocation: "/",
+
     // refreshListenable: sl<NetworkProvider>(),
 
     // redirect: (context, state) {
@@ -111,7 +112,6 @@ class AppRouter {
 
     //   return null;
     // },
-
     routes: [
       GoRoute(
         path: "/",
@@ -407,8 +407,11 @@ class AppRouter {
         path: "/transactionDetailpage",
         name: AppRouterConst.transactionDetailpage,
         builder: (context, state) {
-          final data = state.extra as TransactionArgs;
-          return TransactionDetailpage(data: data);
+          final args = state.extra as Map<String, dynamic>;
+          return TransactionDetailpage(
+            data: args["base"],
+            party: args["party"],
+          );
         },
       ),
 
