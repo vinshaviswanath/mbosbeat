@@ -30,7 +30,6 @@ class DayToggleButton extends StatelessWidget {
           : AttendanceMark.start;
 
       await userProvider.markAttendance(
-        context: context,
         attendanceType: attendanceType,
         lattitude: position.latitude,
         longitude: position.longitude,
