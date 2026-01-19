@@ -1,7 +1,8 @@
-enum AppThemeMode {
-  light,
-  dark,
-}
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+
+enum AppThemeMode { light, dark }
 
 enum APIAction {
   none('mone'),
@@ -19,15 +20,15 @@ enum ActionType {
   final String name;
 }
 
-enum NavigationType { success, failed, }
+enum NavigationType { success, failed }
 
 enum TransitionDirection { leftToRight, rightToLeft, topToBottom, bottomToTop }
 
-enum ImageType {svg, png}
+enum ImageType { svg, png }
 
 enum UserAction {
-  block,   
-  unblock; 
+  block,
+  unblock;
 
   int get value {
     switch (this) {
@@ -39,7 +40,6 @@ enum UserAction {
   }
 }
 
-
 enum AttendanceMark {
   start,
   end;
@@ -50,6 +50,52 @@ enum AttendanceMark {
         return 'Start';
       case AttendanceMark.end:
         return 'End';
+    }
+  }
+}
+
+enum NetworkQuality {
+  poor,
+  fair,
+  good,
+  excellent;
+
+  String get value {
+    switch (this) {
+      case NetworkQuality.poor:
+        return 'Poor';
+      case NetworkQuality.fair:
+        return 'Fair';
+      case NetworkQuality.good:
+        return 'Good';
+      case NetworkQuality.excellent:
+        return 'Excellent';
+    }
+  }
+
+  Color get color {
+    switch (this) {
+      case NetworkQuality.poor:
+        return Colors.red;
+      case NetworkQuality.fair:
+        return Colors.orange;
+      case NetworkQuality.good:
+        return Colors.blue;
+      case NetworkQuality.excellent:
+        return Colors.green;
+    }
+  }
+
+  int get bars {
+    switch (this) {
+      case NetworkQuality.poor:
+        return 1;
+      case NetworkQuality.fair:
+        return 2;
+      case NetworkQuality.good:
+        return 3;
+      case NetworkQuality.excellent:
+        return 4;
     }
   }
 }

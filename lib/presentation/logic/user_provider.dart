@@ -1,9 +1,11 @@
+import 'package:http/http.dart';
 import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/core/utils/logger.dart';
 import 'package:mpos_beat/data/models/party_MasterSync_model.dart';
 import 'package:mpos_beat/data/models/response.dart';
+import 'package:mpos_beat/data/models/skip_reason_response.dart';
 import 'package:mpos_beat/domain/repositories/i_user_facad.dart';
 import 'package:mpos_beat/domain/request/attendance_params.dart';
 import 'package:mpos_beat/domain/request/checkin_params.dart';
@@ -35,7 +37,6 @@ class UserProvider extends ChangeNotifier {
 
   bool _isStartingTrip = false;
   bool _isEndingTrip = false;
-
   bool _isMarkingAttendance = false;
 
   bool _isAttendanceMarked = false;
@@ -48,6 +49,23 @@ class UserProvider extends ChangeNotifier {
     _isAttendanceMarked = !_isAttendanceMarked;
   }
 
+
+  DefaultResponse? _response;
+  DefaultResponse? get response => _response;
+
+  int? _companyId;
+  int? get companyId => _companyId;
+
+  String? _errorMessage;
+  String? get errorMessage => _errorMessage;
+
+  DefaultResponse? _checkinresponse;
+  DefaultResponse? get checkinResponse => _checkinresponse;
+
+  SkipReasonResponse? _skipReasonResponse;
+  SkipReasonResponse? get skipReasonResponse => _skipReasonResponse;
+
+  /// ---------------- GENERAL ----------------
  
   
   void setLoading(bool value) {
@@ -55,13 +73,29 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setCompanyId(int id) {
+    _companyId = id;
+    notifyListeners();
+  }
+
+  void resetAttendance() {
+    _isAttendanceMarked = !_isAttendanceMarked;
+    notifyListeners();
+  }
+
+  /// ---------------- LOAD ----------------
   Future<void> load() async {
     final prefs = await SharedPreferences.getInstance();
     _dayStarted = prefs.getBool(_kDayStarted) ?? false;
     _routeStarted = prefs.getBool(_kRouteStarted) ?? false;
     _routeName = prefs.getString(_kLastRouteName);
     _isAttendanceMarked = prefs.getBool(_kAttendanceStarted) ?? false;
-    debugPrint("LOADED ROUTE NAME => $_routeName");
+    notifyListeners();
+  }
+
+  Future<void> loadRouteState() async {
+    final prefs = await SharedPreferences.getInstance();
+    _routeStarted = prefs.getBool(_kRouteStarted) ?? false;
     notifyListeners();
   }
 
@@ -73,7 +107,7 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// ---------------- ROUTE START ----------------
+  /// ---------------- ROUTE START / END ----------------
   Future<void> startRoute(String routeName) async {
     final prefs = await SharedPreferences.getInstance();
     _routeStarted = true;
@@ -83,19 +117,12 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// ---------------- ROUTE END ----------------
   Future<void> endRoute() async {
     final prefs = await SharedPreferences.getInstance();
     _routeStarted = false;
     _routeName = null;
     await prefs.setBool(_kRouteStarted, false);
     await prefs.remove(_kLastRouteName);
-    notifyListeners();
-  }
-
-  Future<void> loadRouteState() async {
-    final prefs = await SharedPreferences.getInstance();
-    _routeStarted = prefs.getBool(_kRouteStarted) ?? false;
     notifyListeners();
   }
 
@@ -115,7 +142,6 @@ class UserProvider extends ChangeNotifier {
 
   /// ---------------- ATTENDANCE ----------------
   Future<bool> markAttendance({
-    required BuildContext context,
     required double lattitude,
     required double longitude,
     required double accuracy,
@@ -144,15 +170,15 @@ class UserProvider extends ChangeNotifier {
 
     result.fold(
       (failure) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(failure.errorMsg)));
+        success = false;
       },
       (response) {
         _response = response;
         _isAttendanceMarked = attendanceType == AttendanceMark.start;
-        final prefs = sl<SharedPreferences>();
-        prefs.setBool(_kAttendanceStarted, _isAttendanceMarked);
+        sl<SharedPreferences>().setBool(
+          _kAttendanceStarted,
+          _isAttendanceMarked,
+        );
         success = true;
       },
     );
@@ -170,7 +196,7 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// ---------------- Trip Start ----------------
+  /// ---------------- TRIP START ----------------
   Future<bool> markTripStart({
     required DateTime date,
     required String startTime,
@@ -204,22 +230,16 @@ class UserProvider extends ChangeNotifier {
       ),
     );
 
-    result.fold(
-      (failure) {
-    success = false;
-  },
-      (response) async {
-        await setRouteStarted();
-        _response = response;
-        success = true;
+    result.fold((_) => success = false, (response) async {
+      await setRouteStarted();
+      _response = response;
+      success = true;
 
-        final prefs = sl<SharedPreferences>();
-        _routeStarted = true;
-        await prefs.setBool(_kRouteStarted, true);
-
-        await prefs.setInt('current_trip_id', response.id ?? 0);
-      },
-    );
+      final prefs = sl<SharedPreferences>();
+      _routeStarted = true;
+      await prefs.setBool(_kRouteStarted, true);
+      await prefs.setInt('current_trip_id', response.id ?? 0);
+    });
 
     _isStartingTrip = false;
     _isLoading = false;
@@ -227,61 +247,54 @@ class UserProvider extends ChangeNotifier {
     return success;
   }
 
-  /// ---------------- Trip End ----------------
-
+  /// ---------------- TRIP END ----------------
   Future<bool> markTripEnd({
-  required int tripId,
-  required int routeID,
-  required int godownID,
-  required double latitude,
-  required double longitude,
-  required double accuracy,
-  required String address,
-}) async {
-  if (_isEndingTrip) return false;
+    required int tripId,
+    required int routeID,
+    required int godownID,
+    required double latitude,
+    required double longitude,
+    required double accuracy,
+    required String address,
+  }) async {
+    if (_isEndingTrip) return false;
 
-  _isEndingTrip = true;
-  _isLoading = true;
-  notifyListeners();
+    _isEndingTrip = true;
+    _isLoading = true;
+    notifyListeners();
 
-  bool success = false;
+    bool success = false;
 
-  final result = await iUserFacad.markTripEnd(
-    BaseParams(
-      data: TripEndParams(
-        tripId: tripId,
-        endTime: DateTime.now(),
-        routeId: routeID,
-        godownId: godownID,
-        latitude: latitude,
-        longitude: longitude,
-        accuracy: accuracy,
-        address: address,
+    final result = await iUserFacad.markTripEnd(
+      BaseParams(
+        data: TripEndParams(
+          tripId: tripId,
+          endTime: DateTime.now(),
+          routeId: routeID,
+          godownId: godownID,
+          latitude: latitude,
+          longitude: longitude,
+          accuracy: accuracy,
+          address: address,
+        ),
       ),
-    ),
-  );
+    );
 
-  result.fold(
-    (failure) {
-      success = false;
-      // ❌ NO SnackBar here
-    },
-    (response) async {
+    result.fold((_) => success = false, (response) async {
       _response = response;
       success = true;
-
       await clearRouteStarted();
 
       final prefs = await SharedPreferences.getInstance();
       await prefs.remove('current_trip_id');
-    },
-  );
+    });
 
-  _isEndingTrip = false;
-  _isLoading = false;
-  notifyListeners();
-  return success;
-}
+    _isEndingTrip = false;
+    _isLoading = false;
+    notifyListeners();
+    return success;
+  }
+
   
   int? _companyId;
 
@@ -290,15 +303,19 @@ class UserProvider extends ChangeNotifier {
   void setCompanyId(int id) {
     _companyId = id;
     notifyListeners();
-  }
+  /// ---------------- PARTY MASTER SYNC ----------------
+  Future<PartyMasterSyncModel?> partyMasterSync({int? companyId}) async {
+    final id = companyId ?? _companyId;
+    if (id == null) {
+      Logger.logError("Cannot sync party master. companyId is null");
+      return null;
+    }
 
-  //========================== Party Master Sync====================================
-  Future<PartyMasterSyncModel?> partyMasterSync() async {
     setLoading(true);
     final result = await iUserFacad.partyMasterSync(
       BaseParams(
         data: PartyMasterSyncParams(
-          companyId: _companyId!,
+          companyId: id,
           pageNumber: 1,
           lastSyncDateTime: DateTime.parse("2026-01-05T10:30:00"),
         ),
@@ -306,20 +323,18 @@ class UserProvider extends ChangeNotifier {
     );
 
     result.fold(
-      (failure) {
-        Logger.logError("Party Master Sync failed: ${failure.errorMsg}");
-      },
+      (failure) =>
+          Logger.logError("Party Master Sync failed: ${failure.errorMsg}"),
       (response) async {
         _partmastersync = response;
-        Logger.logSuccess(
-          "Party Master Sync successful : ${response.toJson()}",
-        );
+        Logger.logSuccess("Party Master Sync successful: ${response.toJson()}");
         notifyListeners();
       },
     );
     setLoading(false);
     return _partmastersync;
   }
+
 
   String? _errorMessage;
   String? get errorMessage => _errorMessage;
@@ -331,23 +346,22 @@ class UserProvider extends ChangeNotifier {
 
   Future<DefaultResponse?> checkIn(
     BuildContext context, {
+  /// ---------------- CHECK-IN ----------------
+  Future<DefaultResponse?> checkIn({
     required CheckinParams params,
   //  VoidCallback? onSuccess,
   }) async {
     setLoading(true);
     final result = await iUserFacad.checkin(BaseParams(data: params));
+
     result.fold(
       (failure) {
-        _errorMessage = failure.errorMsg.toString();
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
-        Logger.logError("Checkin failed : $_errorMessage");
+        _errorMessage = failure.errorMsg;
+        Logger.logError("Checkin failed: $_errorMessage");
         notifyListeners();
       },
       (response) {
-        Logger.logSuccess("Checkin  success : ${response.toJson()}");
-        Logger.logSuccess("status :${response.status}");
+        Logger.logSuccess("Checkin success: ${response.toJson()}");
         setLoading(false);
         notifyListeners();
 
@@ -355,26 +369,48 @@ class UserProvider extends ChangeNotifier {
           _checkinresponse = response;
          // onSuccess?.call();
         } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                response.message ?? "",
-                textAlign: TextAlign.center,
-              ),
-              behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            ),
-          );
+          _errorMessage = response.message;
         }
+      },
+    );
+
+    return _checkinresponse;
+  }
+
+  //========================= Skip Reason =========================
+
+  Future<SkipReasonResponse?> getSkipReasons(BuildContext context) async {
+    setLoading(true);
+    final result = await iUserFacad.skipReason();
+
+    result.fold(
+      (failure) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(failure.errorMsg, textAlign: TextAlign.center),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          ),
+        );
+      },
+      (response) async {
+        _skipReasonResponse = response;
+
+        Logger.logSuccess(
+          "Skip reason List fetch successfull : ${response.toJson()}",
+        );
+        notifyListeners();
       },
     );
     return _checkinresponse;
   }
 
   //============================check out========================================
+    setLoading(false);
+    return _skipReasonResponse;
   Future<DefaultResponse?> checkOut(
     BuildContext context, {
     required CheckoutParams params,
@@ -419,5 +455,4 @@ class UserProvider extends ChangeNotifier {
     );
     return _checkoutresponse;
   }
-
 }

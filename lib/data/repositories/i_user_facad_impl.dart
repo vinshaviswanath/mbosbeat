@@ -3,6 +3,7 @@ import 'package:mpos_beat/core/base/run_safely.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
 import 'package:mpos_beat/core/service/http_client.dart';
 import 'package:mpos_beat/core/utils/typedefs.dart';
+import 'package:mpos_beat/data/data_sources/user/skip_reason/skip_reason.dart';
 import 'package:mpos_beat/data/data_sources/user_management/checkin_Checkout/checkin_datasource.dart';
 import 'package:mpos_beat/data/data_sources/user_management/checkin_Checkout/checkout_datasource.dart';
 import 'package:mpos_beat/data/data_sources/user_management/party_MasterSync/party_MasterSync.dart';
@@ -11,6 +12,7 @@ import 'package:mpos_beat/data/data_sources/user/attendance_marking/attendanceMa
 import 'package:mpos_beat/data/data_sources/user/trip_end/trip_end.dart';
 import 'package:mpos_beat/data/data_sources/user/trip_start/trip_start.dart';
 import 'package:mpos_beat/data/models/response.dart';
+import 'package:mpos_beat/data/models/skip_reason_response.dart';
 import 'package:mpos_beat/domain/repositories/i_user_facad.dart';
 import 'package:mpos_beat/domain/request/attendance_params.dart';
 import 'package:mpos_beat/domain/request/checkin_params.dart';
@@ -25,6 +27,7 @@ class IUserFacadImp implements IUserFacad {
   final AttendanceMarking attendanceMarking;
   final TripStart startTrip;
   final TripEnd endTrip;
+  final SkipReason reasonToSkip;
   final HttpClient httpClient;
   final RunSafely runSafely;
   final SharedPreferences sharedPreferences;
@@ -40,6 +43,9 @@ class IUserFacadImp implements IUserFacad {
     this.checkinDatasource,
     this.checkoutDatasource,
      this.startTrip, this.endTrip
+    this.startTrip,
+    this.endTrip,
+    this.reasonToSkip
   );
 
   @override
@@ -73,10 +79,13 @@ class IUserFacadImp implements IUserFacad {
     return startTrip(params);
   }
 
-    @override
-  ResultFuture<DefaultResponse> markTripEnd(
-    BaseParams<TripEndParams> params,
-  ) {
+  @override
+  ResultFuture<DefaultResponse> markTripEnd(BaseParams<TripEndParams> params) {
     return endTrip(params);
+  }
+
+  @override
+  ResultFuture<SkipReasonResponse> skipReason() {
+    return reasonToSkip();
   }
 }

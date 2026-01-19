@@ -1,7 +1,9 @@
+import 'package:fpdart/fpdart.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
 import 'package:mpos_beat/core/utils/typedefs.dart';
 import 'package:mpos_beat/data/models/party_MasterSync_model.dart';
 import 'package:mpos_beat/data/models/response.dart';
+import 'package:mpos_beat/data/models/skip_reason_response.dart';
 import 'package:mpos_beat/domain/request/attendance_params.dart';
 import 'package:mpos_beat/domain/request/checkin_params.dart';
 import 'package:mpos_beat/domain/request/checkout_params.dart';
@@ -30,16 +32,17 @@ interface class IUserFacad {
     throw UnimplementedError();
   }
 
-   ResultFuture<DefaultResponse> markTripStart(
+  ResultFuture<DefaultResponse> markTripStart(
     BaseParams<TripStartParams> params,
   ) {
     throw UnimplementedError();
   }
 
-     ResultFuture<DefaultResponse> markTripEnd(
-    BaseParams<TripEndParams> params,
-  ) {
+  ResultFuture<DefaultResponse> markTripEnd(BaseParams<TripEndParams> params) {
+    throw UnimplementedError();
+  }
+
+  ResultFuture<SkipReasonResponse> skipReason() {
     throw UnimplementedError();
   }
 }
-

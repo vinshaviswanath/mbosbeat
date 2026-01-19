@@ -1,5 +1,6 @@
 import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/network/network_provider.dart';
+import 'package:mpos_beat/core/service/network_service.dart';
 import 'package:mpos_beat/core/theme/app_theme.dart';
 import 'package:mpos_beat/core/theme/theme/theme_provider.dart';
 import 'package:mpos_beat/core/utils/app_details.dart';

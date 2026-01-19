@@ -6,6 +6,9 @@ import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/domain/request/checkin_params.dart';
 import 'package:mpos_beat/domain/request/checkout_params.dart';
 import 'package:mpos_beat/presentation/logic/user_provider.dart';
+import 'package:mpos_beat/core/network/network_provider.dart';
+import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/presentation/logic/user_provider.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/tabs/tab1_transactions.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/tabs/tab2_outstanding.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/tabs/tab3_visit_history.dart';
@@ -31,12 +34,18 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
   String? checkOutTime;
 
   late TabController _tabController;
+
   @override
   void initState() {
     super.initState();
+
     _tabController = TabController(length: 3, vsync: this);
     _tabController.addListener(() {
       setState(() {}); 
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final provider = context.read<UserProvider>();
+      provider.getSkipReasons(context);
     });
   }
 
@@ -234,6 +243,7 @@ Future<void> _showCheckoutRemarksDialog(BuildContext context) async {
   @override
   Widget build(BuildContext context) {
     final applocalization = context.l10n;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -342,17 +352,13 @@ Future<void> _showCheckoutRemarksDialog(BuildContext context) async {
 
                     //signal strength.....
                     Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          applocalization.customer_transaction_detail_Signal,
-                          style: context.textStyle.s08.roboto.dustyBlue,
+                          'Signal Strength :',
+                          style: context.textStyle.s10.w400.dustyBlue,
                         ),
-                        const Icon(
-                          Icons.signal_cellular_alt_sharp,
-                          color: ColorResources.freshgreen,
-                          size: 20,
-                        ),
+                        const SizedBox(width: 8),
+                        const NetworkSignalBars(),
                       ],
                     ),
                     SizedBox(
@@ -554,6 +560,56 @@ Future<void> _showCheckoutRemarksDialog(BuildContext context) async {
           ],
         ),
       ),
+    );
+  }
+}
+
+class NetworkSignalBars extends StatelessWidget {
+  const NetworkSignalBars({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final provider = context.watch<NetworkProvider>();
+    final quality = provider.quality;
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        /// Signal quality text
+        AnimatedSwitcher(
+          duration: const Duration(milliseconds: 250),
+          child: Text(
+            quality.value,
+            key: ValueKey(quality),
+            style: TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.w400,
+              color: quality.color,
+            ),
+          ),
+        ),
+
+        const SizedBox(width: 8),
+
+        /// Signal bars
+        Row(
+          children: List.generate(4, (index) {
+            final isActive = index < quality.bars;
+
+            return AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeOut,
+              margin: const EdgeInsets.symmetric(horizontal: 2),
+              width: 3,
+              height: 4.0 + index * 4,
+              decoration: BoxDecoration(
+                color: isActive ? quality.color : Colors.grey.shade300,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            );
+          }),
+        ),
+      ],
     );
   }
 }

@@ -106,7 +106,10 @@ class HeaderInfo extends StatelessWidget {
                     "Route : ",
                     style: context.textStyle.s10.dustyBlue.roboto,
                   ),
-                  const SizedBox(width: 5),
+                  Text(
+                    !state.routeStarted ? "Start  " : "End ",
+                    style: context.textStyle.s10.dustyBlue.roboto,
+                  ),
                   CircleAvatar(
                     radius: 6,
                     backgroundColor: state.routeStarted

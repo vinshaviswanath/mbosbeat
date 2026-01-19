@@ -74,4 +74,5 @@ class Urls {
   static const String checkout = "/UserModule/CustomerCheckOut";
       static const String startTrip = "/UserModule/TripStart";
       static const String endTrip = "/UserModule/TripEnd";
+      static const String skipReason = "/UserModule/GetSkipReasons";
 }
