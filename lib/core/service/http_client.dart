@@ -67,59 +67,63 @@ class HttpClient {
     }
   }
 
-  Future<http.Response> postFormData(
-    String uri, {
-    required Map<String, dynamic> fields,
-    Map<String, File>? files,
-    Map<String, String>? headers,
-  }) async {
-    try {
-      final url = Uri.parse(baseUrl + uri);
-      final request = http.MultipartRequest('POST', url);
+Future<http.Response> postFormData(
+  String uri, {
+  required Map<String, dynamic> fields,
+  Map<String, File>? files,
+  Map<String, String>? headers,
+}) async {
+  try {
+    final url = Uri.parse(baseUrl + uri);
+    final request = http.MultipartRequest('POST', url);
 
-      // Remove content-type since Multipart handles it
-      final headerMap = _getHeaders(headers)..remove('Content-Type');
-      request.headers.addAll(headerMap);
+    // Remove content-type since Multipart handles it
+    final headerMap = _getHeaders(headers)..remove('Content-Type');
+    request.headers.addAll(headerMap);
 
-      // Add fields
-      fields.forEach((key, value) {
-        request.fields[key] = value.toString();
-      });
+    // Add fields
+    fields.forEach((key, value) {
+      request.fields[key] = value.toString();
+    });
 
-      // Add files
-      if (files != null && files.isNotEmpty) {
-        for (var entry in files.entries) {
-          final file = entry.value;
-          final stream = http.ByteStream(file.openRead());
-          final length = await file.length();
-          request.files.add(
-            http.MultipartFile(
-              entry.key,
-              stream,
-              length,
-              filename: file.path.split('/').last,
-            ),
-          );
-        }
+    // Add files
+    if (files != null && files.isNotEmpty) {
+      for (final entry in files.entries) {
+        final file = entry.value;
+
+        // Safety check
+        if (!file.existsSync()) continue;
+
+        request.files.add(
+          await http.MultipartFile.fromPath(
+            entry.key,
+            file.path,
+            filename: file.path.split('/').last,
+          ),
+        );
       }
-
-      Logger.logInfo("FormData fields: $fields");
-      Logger.logInfo("FormData files: ${files?.keys.toList()}");
-
-      final streamedResponse = await request.send();
-      final response = await http.Response.fromStream(streamedResponse);
-
-      return _handleResponse(response);
-    } on SocketException catch (e) {
-      throw CustomException(errMsg: e.toString());
-    } catch (e, s) {
-      Logger.logInfo("FormData error: $e");
-      throw CustomException(
-        errMsg: "Unknown error occurred during file upload",
-        stackTrace: s,
-      );
     }
+
+    Logger.logInfo("FormData fields: $fields");
+    Logger.logInfo("FormData files: ${files?.keys.toList()}");
+
+    final streamedResponse = await request.send();
+    final response = await http.Response.fromStream(streamedResponse);
+
+    return _handleResponse(response);
+  } on CustomException {
+    rethrow; // 🔥 KEEP backend error
+  } on SocketException catch (e) {
+    throw CustomException(errMsg: e.toString());
+  } catch (e, s) {
+    Logger.logInfo("FormData error: $e");
+    throw CustomException(
+      errMsg: e.toString(),
+      stackTrace: s,
+    );
   }
+}
+
 
   Future<http.Response> put(
     String uri, {
@@ -225,4 +229,28 @@ class HttpClient {
   //     throw CustomException(errMsg: e.toString(), stackTrace: s);
   //   }
   // }
+  Future<http.Response> getWithBody(
+    String uri, {
+    Map<String, String>? headers,
+    required Map<String, dynamic> body,
+  }) async {
+    try {
+      final url = Uri.parse(baseUrl + uri);
+
+      final request = http.Request("GET", url);
+      request.headers.addAll(_getHeaders(headers));
+      request.body = jsonEncode(body);
+
+      // Logger.logInfo("GET WITH BODY: ${request.body}");
+
+      final streamed = await client.send(request);
+      final response = await http.Response.fromStream(streamed);
+
+      return _handleResponse(response);
+    } on SocketException catch (e) {
+      throw CustomException(errMsg: e.toString());
+    } catch (e, s) {
+      throw CustomException(errMsg: e.toString(), stackTrace: s);
+    }
+  }
 }

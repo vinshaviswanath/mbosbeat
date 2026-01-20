@@ -51,7 +51,9 @@ class MyApp extends StatelessWidget {
           create: (_) =>
               CompanyCreationProvider(sl<ICompanyCreationFacad>(), db: db),
         ),
-        ChangeNotifierProvider(create: (_) => UserProvider(sl<IUserFacad>())..load()),
+        ChangeNotifierProvider(
+          create: (_) => UserProvider(sl<IUserFacad>())..load(),
+        ),
         ChangeNotifierProvider.value(value: sl<NetworkProvider>()),
 
         //  StreamProvider<List<CompanySettingsListData>>(

@@ -45,13 +45,6 @@ class UserProvider extends ChangeNotifier {
   DefaultResponse? get response => _response;
   PartyMasterSyncModel? _partmastersync;
   PartyMasterSyncModel? get partymastersync => _partmastersync;
-  resetAttendance() {
-    _isAttendanceMarked = !_isAttendanceMarked;
-  }
-
-
-  DefaultResponse? _response;
-  DefaultResponse? get response => _response;
 
   int? _companyId;
   int? get companyId => _companyId;
@@ -295,27 +288,14 @@ class UserProvider extends ChangeNotifier {
     return success;
   }
 
-  
-  int? _companyId;
 
-  int? get companyId => _companyId;
-
-  void setCompanyId(int id) {
-    _companyId = id;
-    notifyListeners();
   /// ---------------- PARTY MASTER SYNC ----------------
   Future<PartyMasterSyncModel?> partyMasterSync({int? companyId}) async {
-    final id = companyId ?? _companyId;
-    if (id == null) {
-      Logger.logError("Cannot sync party master. companyId is null");
-      return null;
-    }
-
     setLoading(true);
     final result = await iUserFacad.partyMasterSync(
       BaseParams(
         data: PartyMasterSyncParams(
-          companyId: id,
+          companyId: _companyId ?? 0,
           pageNumber: 1,
           lastSyncDateTime: DateTime.parse("2026-01-05T10:30:00"),
         ),
@@ -334,18 +314,10 @@ class UserProvider extends ChangeNotifier {
     setLoading(false);
     return _partmastersync;
   }
-
-
-  String? _errorMessage;
-  String? get errorMessage => _errorMessage;
-  DefaultResponse? _checkinresponse;
-  DefaultResponse? get checkinResponse => _checkinresponse;
   DefaultResponse? _checkoutresponse;
   DefaultResponse? get checkoutResponse => _checkoutresponse;
   // ===========================check in============================
 
-  Future<DefaultResponse?> checkIn(
-    BuildContext context, {
   /// ---------------- CHECK-IN ----------------
   Future<DefaultResponse?> checkIn({
     required CheckinParams params,
@@ -405,12 +377,11 @@ class UserProvider extends ChangeNotifier {
         notifyListeners();
       },
     );
-    return _checkinresponse;
+    return _skipReasonResponse;
   }
 
   //============================check out========================================
-    setLoading(false);
-    return _skipReasonResponse;
+
   Future<DefaultResponse?> checkOut(
     BuildContext context, {
     required CheckoutParams params,

@@ -1,13 +1,19 @@
 import 'dart:io';
+import 'dart:ui';
 
+import 'package:flutter_dropdown_alert/alert_controller.dart';
 import 'package:mpos_beat/core/service/file_picker_serveice.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/core/utils/urls.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
+import 'package:mpos_beat/domain/request/update_company_profile_params.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
+import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 
 class CompanyInfoForm extends StatefulWidget {
   final CompanyViewList? company;
-  const CompanyInfoForm({super.key, required this.company});
+  final VoidCallBack onUpdate;
+  const CompanyInfoForm({super.key, required this.onUpdate, this.company});
 
   @override
   State<CompanyInfoForm> createState() => _CompanyInfoFormState();
@@ -18,13 +24,18 @@ class _CompanyInfoFormState extends State<CompanyInfoForm> {
   late TextEditingController officePhoneController;
   late TextEditingController mobileNumberController;
   late TextEditingController emailController;
+  File? imgPath;
 
   @override
   void initState() {
-    compnyController = TextEditingController();
+    compnyController = TextEditingController(
+      text: widget.company?.companyName ?? "",
+    );
     officePhoneController = TextEditingController();
-    mobileNumberController = TextEditingController();
-    emailController = TextEditingController();
+    mobileNumberController = TextEditingController(
+      text: widget.company?.mobile ?? "",
+    );
+    emailController = TextEditingController(text: widget.company?.email ?? "");
     super.initState();
   }
 
@@ -37,9 +48,10 @@ class _CompanyInfoFormState extends State<CompanyInfoForm> {
     super.dispose();
   }
 
-  File? imgPath;
   @override
   Widget build(BuildContext context) {
+    print("Url :: ${Urls.baseURL}${widget.company?.companyLogoUrl}");
+    Logger.logInfo("Local :: ${imgPath?.path}");
     return Container(
       margin: EdgeInsets.only(top: 4, left: 16, right: 16),
       padding: EdgeInsets.only(left: 9, right: 9, top: 12, bottom: 20),
@@ -75,6 +87,10 @@ class _CompanyInfoFormState extends State<CompanyInfoForm> {
                             ),
                             child: imgPath != null
                                 ? Image.file(imgPath!)
+                                : widget.company?.companyLogoUrl != null
+                                ? Image.network(
+                                    "${Urls.baseURL}${widget.company?.companyLogoUrl}",
+                                  )
                                 : SizedBox.shrink(),
                           ),
                         ),
@@ -142,6 +158,8 @@ class _CompanyInfoFormState extends State<CompanyInfoForm> {
               backgroundColor: ColorResources.white,
               // inputFormatters: [noEmojiFormatter],
               onChange: (_) {},
+              inputType: TextInputType.phone,
+              maxLength: 10,
               borderRadius: 15,
               hintColor: ColorResources.silverGray,
               borderColor: ColorResources.bluishGray,
@@ -163,6 +181,7 @@ class _CompanyInfoFormState extends State<CompanyInfoForm> {
               // inputFormatters: [noEmojiFormatter],
               onChange: (_) {},
               inputType: TextInputType.phone,
+              maxLength: 10,
               borderRadius: 15,
               hintColor: ColorResources.silverGray,
               borderColor: ColorResources.bluishGray,
@@ -193,6 +212,25 @@ class _CompanyInfoFormState extends State<CompanyInfoForm> {
               mainAxisAlignment: .center,
               children: [
                 CustomButton(
+                  onTap: () {
+                    final provider = context.read<CompanyCreationProvider>();
+                    final company = widget.company;
+                    provider
+                        .updateCompanyProfile(
+                          context: context,
+                          params: CompanyProfileModel(
+                            companyId: company?.id.toString() ?? "",
+                            companyCode: company?.companyCode.toString() ?? "",
+                            officeNumber: officePhoneController.text,
+                            mobileNumber: mobileNumberController.text,
+                            emailId: emailController.text,
+                            cmpLogo: imgPath,
+                          ),
+                        )
+                        .then((value) {
+                          widget.onUpdate.call();
+                        });
+                  },
                   width: context.getSize.width * 1 / 2.2,
                   buttonText: "Save",
                   isborderEnable: false,

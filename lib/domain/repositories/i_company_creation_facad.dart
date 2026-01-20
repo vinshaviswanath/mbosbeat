@@ -1,3 +1,4 @@
+import 'package:fpdart/fpdart.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
 import 'package:mpos_beat/core/utils/typedefs.dart';
 import 'package:mpos_beat/data/models/company_creation_response.dart';
@@ -14,9 +15,11 @@ import 'package:mpos_beat/data/models/create_godown_response.dart';
 import 'package:mpos_beat/data/models/create_route_response.dart';
 import 'package:mpos_beat/data/models/create_voucher_numbering_response.dart';
 import 'package:mpos_beat/data/models/godown_list_model.dart';
+import 'package:mpos_beat/data/models/response.dart';
 import 'package:mpos_beat/data/models/route_list_model.dart';
 import 'package:mpos_beat/data/models/state_list_response.dart';
 import 'package:mpos_beat/data/models/voucher_numbering_response.dart';
+import 'package:mpos_beat/domain/request/bank_details_params.dart';
 import 'package:mpos_beat/domain/request/company_creation_params.dart';
 import 'package:mpos_beat/domain/request/create_company_settings_request.dart';
 import 'package:mpos_beat/domain/request/create_company_voucher_request.dart';
@@ -24,6 +27,8 @@ import 'package:mpos_beat/domain/request/create_godown_params.dart';
 import 'package:mpos_beat/domain/request/create_route_params.dart';
 import 'package:mpos_beat/domain/request/create_voucher_numbering_params.dart';
 import 'package:mpos_beat/domain/request/integration_request.dart';
+import 'package:mpos_beat/domain/request/update_company_profile_params.dart';
+import 'package:mpos_beat/presentation/views/company_pending_details/widgets/bank_details_form.dart';
 
 interface class ICompanyCreationFacad {
   ResultFuture<CompanyInfoDtos> companyInfo(
@@ -142,6 +147,18 @@ interface class ICompanyCreationFacad {
     required String voucherMode,
     required String companyId,
   }) {
+    throw UnimplementedError();
+  }
+
+  ResultFuture<DefaultResponse> updateCompanyProfile(
+    BaseParams<CompanyProfileModel> params,
+  ) {
+    throw UnimplementedError();
+  }
+
+    ResultFuture<DefaultResponse> updateBankDetails(
+    BaseParams<BankDetailsParams> params,
+  ) {
     throw UnimplementedError();
   }
 }

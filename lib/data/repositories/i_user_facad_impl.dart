@@ -42,9 +42,7 @@ class IUserFacadImp implements IUserFacad {
     this.partyMastersync,
     this.checkinDatasource,
     this.checkoutDatasource,
-     this.startTrip, this.endTrip
-    this.startTrip,
-    this.endTrip,
+     this.startTrip, this.endTrip,
     this.reasonToSkip
   );
 

@@ -73,6 +73,10 @@ class CompanyViewList {
     required this.stockInCloud,
     required this.registrationNo,
     required this.vchNumberingMode,
+    required this.companyLogoUrl,
+    required this.companyProfileUpdated,
+    required this.companyBankUpdated,
+    required this.companyRegUpdated,
   });
 
   final int? id;
@@ -111,9 +115,13 @@ class CompanyViewList {
   final String? userList;
   dynamic integrationType;
   dynamic serialNumber;
-  dynamic stockInCloud;
+  final String? stockInCloud;
   final String? registrationNo;
   final String? vchNumberingMode;
+  final String? companyLogoUrl;
+  final bool? companyProfileUpdated;
+  final bool? companyBankUpdated;
+  final bool? companyRegUpdated;
 
   factory CompanyViewList.fromJson(Map<String, dynamic> json) {
     return CompanyViewList(
@@ -156,6 +164,10 @@ class CompanyViewList {
       stockInCloud: json["stockInCloud"],
       registrationNo: json["registrationNo"],
       vchNumberingMode: json["vchNumberingMode"],
+      companyLogoUrl: json["companyLogoUrl"],
+      companyProfileUpdated: json["companyProfileUpdated"],
+      companyBankUpdated: json["companyBankUpdated"],
+      companyRegUpdated: json["companyRegUpdated"],
     );
   }
 
@@ -199,5 +211,9 @@ class CompanyViewList {
     "stockInCloud": stockInCloud,
     "registrationNo": registrationNo,
     "vchNumberingMode": vchNumberingMode,
+    "companyLogoUrl": companyLogoUrl,
+    "companyProfileUpdated": companyProfileUpdated,
+    "companyBankUpdated": companyBankUpdated,
+    "companyRegUpdated": companyRegUpdated,
   };
 }
