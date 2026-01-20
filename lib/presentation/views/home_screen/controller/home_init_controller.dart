@@ -27,7 +27,7 @@ class HomeInitController {
     await Future.wait([
       companyProvider.fetchVoucherTypes(context, companyId),
       companyProvider.getCompanySettings(context, companyId),
-      companyProvider.getAllGodowns(
+      companyProvider.getAllGodowns(             
         context: context,
         companyId: companyId.toString(),
       ),

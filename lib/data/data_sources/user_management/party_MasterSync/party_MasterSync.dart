@@ -40,17 +40,17 @@ class PartyMasterSync {
 
       while (hasMore) {
         final body = {
-          "CompanyID": params.data.companyId,
-          "PageNumber": page,
+          "CompanyID": params.data.companyId.toString(),
+          "PageNumber": page.toString(),
           "LastSyncDateTime": params.data.lastSyncDateTime
               .toUtc()
               .toIso8601String(),
         };
         Logger.logInfo("📡 PartyMaster Page $page request: $body");
 
-        final response = await httpClient.getWithBody(
+        final response = await httpClient.get(
           Urls.partyMasterSync,
-          body: body,
+          queryParameters: body,
         );
 
         //  Logger.logInfo("PartyMasterSync Raw Response: ${response.body}");
