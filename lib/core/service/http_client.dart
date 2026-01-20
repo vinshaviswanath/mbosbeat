@@ -201,28 +201,28 @@ class HttpClient {
   }
 
   //get with query parameter
-  Future<http.Response> getWithBody(
-    String uri, {
-    Map<String, String>? headers,
-    required Map<String, dynamic> body,
-  }) async {
-    try {
-      final url = Uri.parse(baseUrl + uri);
+  // Future<http.Response> getWithBody(
+  //   String uri, {
+  //   Map<String, String>? headers,
+  //   required Map<String, dynamic> body,
+  // }) async {
+  //   try {
+  //     final url = Uri.parse(baseUrl + uri);
 
-      final request = http.Request("GET", url);
-      request.headers.addAll(_getHeaders(headers));
-      request.body = jsonEncode(body);
+  //     final request = http.Request("GET", url);
+  //     request.headers.addAll(_getHeaders(headers));
+  //     request.body = jsonEncode(body);
 
-      Logger.logInfo("GET WITH BODY: ${request.body}");
+  //     Logger.logInfo("GET WITH BODY: ${request.body}");
 
-      final streamed = await client.send(request);
-      final response = await http.Response.fromStream(streamed);
+  //     final streamed = await client.send(request);
+  //     final response = await http.Response.fromStream(streamed);
 
-      return _handleResponse(response);
-    } on SocketException catch (e) {
-      throw CustomException(errMsg: e.toString());
-    } catch (e, s) {
-      throw CustomException(errMsg: e.toString(), stackTrace: s);
-    }
-  }
+  //     return _handleResponse(response);
+  //   } on SocketException catch (e) {
+  //     throw CustomException(errMsg: e.toString());
+  //   } catch (e, s) {
+  //     throw CustomException(errMsg: e.toString(), stackTrace: s);
+  //   }
+  // }
 }
