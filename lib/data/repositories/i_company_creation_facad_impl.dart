@@ -1,3 +1,4 @@
+import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mpos_beat/core/base/run_safely.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
@@ -28,6 +29,8 @@ import 'package:mpos_beat/data/data_sources/company_creation/get_all_companies.d
 import 'package:mpos_beat/data/data_sources/company_creation/get_godown_list/get_godown_list.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/get_route_list/get_route_list.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/state_list.dart';
+import 'package:mpos_beat/data/data_sources/company_creation/update_bank_details/update_bank_details.dart';
+import 'package:mpos_beat/data/data_sources/company_creation/update_company_profile/update_company_profile.dart';
 import 'package:mpos_beat/data/models/company_creation_response.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/data/models/complete_voucher_settings_model.dart';
@@ -42,10 +45,12 @@ import 'package:mpos_beat/data/models/create_godown_response.dart';
 import 'package:mpos_beat/data/models/create_route_response.dart';
 import 'package:mpos_beat/data/models/create_voucher_numbering_response.dart';
 import 'package:mpos_beat/data/models/godown_list_model.dart';
+import 'package:mpos_beat/data/models/response.dart';
 import 'package:mpos_beat/data/models/route_list_model.dart';
 import 'package:mpos_beat/data/models/state_list_response.dart';
 import 'package:mpos_beat/data/models/voucher_numbering_response.dart';
 import 'package:mpos_beat/domain/repositories/i_company_creation_facad.dart';
+import 'package:mpos_beat/domain/request/bank_details_params.dart';
 import 'package:mpos_beat/domain/request/company_creation_params.dart';
 import 'package:mpos_beat/domain/request/create_company_settings_request.dart';
 import 'package:mpos_beat/domain/request/create_company_voucher_request.dart';
@@ -53,6 +58,7 @@ import 'package:mpos_beat/domain/request/create_godown_params.dart';
 import 'package:mpos_beat/domain/request/create_route_params.dart';
 import 'package:mpos_beat/domain/request/create_voucher_numbering_params.dart';
 import 'package:mpos_beat/domain/request/integration_request.dart';
+import 'package:mpos_beat/domain/request/update_company_profile_params.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 @LazySingleton(as: ICompanyCreationFacad)
@@ -82,6 +88,8 @@ class ICompanyCreationFacadImpl implements ICompanyCreationFacad {
   final CreateVoucherNumbering createVoucherNumbers;
   final CompleteVoucherSettings completeVoucherSettings;
   final SetVoucherNumberingMethod setVoucherNumberMode;
+  final UpdateCompanyProfile updateProfile;
+  final UpdateBankDetails updateBank;
   final RunSafely runSafely;
   final SharedPreferences sharedPreferences;
 
@@ -112,8 +120,9 @@ class ICompanyCreationFacadImpl implements ICompanyCreationFacad {
     this.voucherNumbering,
     this.createVoucherNumbers,
     this.completeVoucherSettings,
-
+    this.updateBank,
     this.setVoucherNumberMode,
+    this.updateProfile,
   );
 
   @override
@@ -259,5 +268,17 @@ class ICompanyCreationFacadImpl implements ICompanyCreationFacad {
     required String companyId,
   }) {
     return setVoucherNumberMode(companyId: companyId, voucherMode: voucherMode);
+  }
+
+  @override
+  ResultFuture<DefaultResponse> updateCompanyProfile(
+    BaseParams<CompanyProfileModel> params,
+  ) {
+    return updateProfile(params);
+  }
+
+  @override
+  ResultFuture<DefaultResponse> updateBankDetails(BaseParams<BankDetailsParams> params) {
+    return updateBank(params);
   }
 }

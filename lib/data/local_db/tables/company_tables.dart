@@ -40,7 +40,10 @@ class Companies extends Table {
   TextColumn get stockInCloud => text().nullable()();
   TextColumn get registrationNo => text().nullable()();
   TextColumn get vchNumberingMode => text().nullable()();
-
+  TextColumn get companyLogoUrl => text().nullable()();
+  BoolColumn get companyProfileUpdated => boolean().nullable()();
+  BoolColumn get companyBankUpdated => boolean().nullable()();
+  BoolColumn get companyRegUpdated => boolean().nullable()();
   @override
   Set<Column> get primaryKey => {id};
 }

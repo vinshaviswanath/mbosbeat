@@ -70,9 +70,12 @@ class Urls {
   static const String setVoucherNumberingMethod2 = "&VoucherMode=";
   static const String partyMasterSync = "/API/Party/GetAll";
   static const String attendanceMarking = "/UserModule/MarkAttendance";
- static const String checkin = "/UserModule/CustomerCheckIN";
+  static const String checkin = "/UserModule/CustomerCheckIN";
   static const String checkout = "/UserModule/CustomerCheckOut";
-      static const String startTrip = "/UserModule/TripStart";
-      static const String endTrip = "/UserModule/TripEnd";
-      static const String skipReason = "/UserModule/GetSkipReasons";
+  static const String startTrip = "/UserModule/TripStart";
+  static const String endTrip = "/UserModule/TripEnd";
+  static const String skipReason = "/UserModule/GetSkipReasons";
+  static const String updateCompanyProfile = "/api/Company/Profile";
+  static const String updateBankDetails = "/api/Company/UpdateBankDetails";
+  // static const String updateCompanyProfile = "/api/Company/UpdateBankDetails";
 }

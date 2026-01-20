@@ -7,8 +7,6 @@ import 'package:mpos_beat/domain/request/checkin_params.dart';
 import 'package:mpos_beat/domain/request/checkout_params.dart';
 import 'package:mpos_beat/presentation/logic/user_provider.dart';
 import 'package:mpos_beat/core/network/network_provider.dart';
-import 'package:mpos_beat/core/utils/imports.dart';
-import 'package:mpos_beat/presentation/logic/user_provider.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/tabs/tab1_transactions.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/tabs/tab2_outstanding.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/tabs/tab3_visit_history.dart';
@@ -93,7 +91,6 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
       );
       final now = DateTime.now();
       final response = await provider.checkIn(
-        context,
         params: CheckinParams(
           tripId: 101,
           vistType: "Regular",

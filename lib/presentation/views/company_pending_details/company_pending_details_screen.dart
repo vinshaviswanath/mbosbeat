@@ -1,6 +1,6 @@
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/core/utils/urls.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
-import 'package:mpos_beat/presentation/views/company_creation/widget/company_info_widget/company_info_widget.dart';
 import 'package:mpos_beat/presentation/views/company_pending_details/widgets/bank_details_form.dart';
 import 'package:mpos_beat/presentation/views/company_pending_details/widgets/company_info_form.dart';
 import 'package:mpos_beat/presentation/views/company_pending_details/widgets/registration_details_form.dart';
@@ -23,6 +23,14 @@ class _CompanyPendingDetailsScreenState
     "Registration Details",
   ];
   int expandedIndex = -1;
+
+  @override
+  void initState() {
+    Logger.logInfo(
+      "Company Logo URL = ${Urls.baseURL}${widget.company?.companyLogoUrl}",
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +90,14 @@ class _CompanyPendingDetailsScreenState
                 ),
               ),
               child: expandedIndex == 0
-                  ? CompanyInfoForm(company: widget.company)
+                  ? CompanyInfoForm(
+                      company: widget.company,
+                      onUpdate: () {
+                        setState(() {
+                          expandedIndex = -1;
+                        });
+                      },
+                    )
                   : expandedIndex == 1
                   ? BankDetailsForm(company: widget.company)
                   : RegistrationDetailsForm(company: widget.company),

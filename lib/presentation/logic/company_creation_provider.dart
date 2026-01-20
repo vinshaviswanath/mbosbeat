@@ -23,10 +23,12 @@ import 'package:mpos_beat/data/models/data/state_list_data.dart';
 import 'package:mpos_beat/data/models/godown_list_model.dart';
 import 'package:mpos_beat/data/models/integration_model.dart';
 import 'package:mpos_beat/data/models/registration_type_model.dart';
+import 'package:mpos_beat/data/models/response.dart';
 import 'package:mpos_beat/data/models/route_list_model.dart';
 import 'package:mpos_beat/data/models/state_list_response.dart';
 import 'package:mpos_beat/data/models/voucher_numbering_response.dart';
 import 'package:mpos_beat/domain/repositories/i_company_creation_facad.dart';
+import 'package:mpos_beat/domain/request/bank_details_params.dart';
 import 'package:mpos_beat/domain/request/company_creation_params.dart';
 import 'package:mpos_beat/domain/request/create_company_settings_request.dart';
 import 'package:mpos_beat/domain/request/create_company_voucher_request.dart';
@@ -34,6 +36,7 @@ import 'package:mpos_beat/domain/request/create_godown_params.dart';
 import 'package:mpos_beat/domain/request/create_route_params.dart';
 import 'package:mpos_beat/domain/request/create_voucher_numbering_params.dart';
 import 'package:mpos_beat/domain/request/integration_request.dart';
+import 'package:mpos_beat/domain/request/update_company_profile_params.dart';
 import 'package:mpos_beat/presentation/views/godown_wise_screen/godown_wise_screen.dart';
 import 'package:mpos_beat/presentation/views/route_wise_screen/route_wise_screen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -86,6 +89,9 @@ class CompanyCreationProvider extends ChangeNotifier {
 
   IntegrationDtos? _integrationDtos;
   IntegrationDtos? get integrationDtos => _integrationDtos;
+
+  DefaultResponse? _defaultResponse;
+  DefaultResponse? get defaultResponse => _defaultResponse;
 
   void setLoading(bool val) {
     _isLoading = val;
@@ -166,7 +172,7 @@ class CompanyCreationProvider extends ChangeNotifier {
   }
 
   void addOrUpdateVoucherNumber(VoucherNumber voucher) {
-    final index = _voucherNumberList!.indexWhere(
+    final index = _voucherNumberList.indexWhere(
       (v) => v.voucherTypeId == voucher.voucherTypeId,
     );
 
@@ -700,7 +706,6 @@ class CompanyCreationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   void clearSelections() {
     _selectedCountry = null;
     _selectedState = null;
@@ -773,10 +778,12 @@ class CompanyCreationProvider extends ChangeNotifier {
   Future<IntegrationDtos?> integration(
     BuildContext context, {
     required IntegrationParams params,
-      CompanyViewList? companyData,
+    CompanyViewList? companyData,
     VoidCallback? onSuccess,
   }) async {
-    print("companydata in provider ..............................${companyData}`");
+    print(
+      "companydata in provider ..............................${companyData}`",
+    );
     setLoading(true);
 
     final integrationType = _selectedIntegrationType;
@@ -841,8 +848,10 @@ class CompanyCreationProvider extends ChangeNotifier {
             _integrationDtos = response;
             markStageCompleted(2);
 
-            context.go(AppRouterConst.companyscreationsuccess,
-              extra: companyData);
+            context.go(
+              AppRouterConst.companyscreationsuccess,
+              extra: companyData,
+            );
             onSuccess?.call();
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -2097,6 +2106,106 @@ class CompanyCreationProvider extends ChangeNotifier {
     setLoading(false);
     notifyListeners();
     return _voucherNumberingRouteResponse;
+  }
+
+  Future<DefaultResponse?> updateCompanyProfile({
+    required BuildContext context,
+    required CompanyProfileModel params,
+  }) async {
+    setLoading(true);
+    setLoading(true);
+
+    final result = await iCompanyCreationFacad.updateCompanyProfile(
+      BaseParams(data: params),
+    );
+    result.fold(
+      (failure) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(failure.errorMsg, textAlign: TextAlign.center),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          ),
+        );
+      },
+      (response) async {
+        _defaultResponse = response;
+        // _voucherNumberingRouteController.add(
+        //   _voucherNumberingRouteResponse?.voucherNumberingModels ?? [],
+        // );
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              response.message.toString(),
+              textAlign: TextAlign.center,
+            ),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          ),
+        );
+        Logger.logSuccess("Company profile update successfull.");
+        notifyListeners();
+      },
+    );
+    setLoading(false);
+    notifyListeners();
+    return _defaultResponse;
+  }
+
+  Future<DefaultResponse?> updateBankDetails({
+    required BuildContext context,
+    required BankDetailsParams params,
+  }) async {
+    setLoading(true);
+    setLoading(true);
+
+    final result = await iCompanyCreationFacad.updateBankDetails(
+      BaseParams(data: params),
+    );
+    result.fold(
+      (failure) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(failure.errorMsg, textAlign: TextAlign.center),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          ),
+        );
+      },
+      (response) async {
+        _defaultResponse = response;
+        // _voucherNumberingRouteController.add(
+        //   _voucherNumberingRouteResponse?.voucherNumberingModels ?? [],
+        // );
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              response.message.toString(),
+              textAlign: TextAlign.center,
+            ),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          ),
+        );
+        Logger.logSuccess("Bank details update successfull ");
+        notifyListeners();
+      },
+    );
+    setLoading(false);
+    notifyListeners();
+    return _defaultResponse;
   }
 
   // B2B Controllers

@@ -31,32 +31,33 @@ class PartyMasterSync {
   ResultFuture<PartyMasterSyncModel> call(
     BaseParams<PartyMasterSyncParams> params,
   ) {
-    return runSafely(() async {
-      int page = 1;
-      bool hasMore = true;
-      PartyMasterSyncModel? lastResponse;
+    return runSafely(
+      () async {
+        int page = 1;
+        bool hasMore = true;
+        PartyMasterSyncModel? lastResponse;
 
-      await appDb.partyMasterDao.clearParties();
+        await appDb.partyMasterDao.clearParties();
 
-      while (hasMore) {
-        final body = {
-          "CompanyID": params.data.companyId,
-          "PageNumber": page,
-          "LastSyncDateTime": params.data.lastSyncDateTime
-              .toUtc()
-              .toIso8601String(),
-        };
-        Logger.logInfo("📡 PartyMaster Page $page request: $body");
+        while (hasMore) {
+          final body = {
+            "CompanyID": params.data.companyId,
+            "PageNumber": page,
+            "LastSyncDateTime": params.data.lastSyncDateTime
+                .toUtc()
+                .toIso8601String(),
+          };
+          Logger.logInfo("📡 PartyMaster Page $page request: $body");
 
-        final response = await httpClient.getWithBody(
-          Urls.partyMasterSync,
-          body: body,
-        );
+          final response = await httpClient.getWithBody(
+            Urls.partyMasterSync,
+            body: body,
+          );
 
-        //  Logger.logInfo("PartyMasterSync Raw Response: ${response.body}");
-   if (!response.isOk) {
-      throw CustomException(errMsg: response.message);
-    }
+          //  Logger.logInfo("PartyMasterSync Raw Response: ${response.body}");
+          if (!response.isOk) {
+            throw CustomException(errMsg: response.message);
+          }
 
           final data = PartyMasterSyncModel.fromJson(response.data);
           lastResponse = data;
@@ -80,7 +81,7 @@ class PartyMasterSync {
           }
           //await appDb.partyMasterDao.clearParties();
           await appDb.partyMasterDao.insertOrUpdateParties(companions);
-      //    await appDb.partyMasterDao.printAllPartyMasters();
+          //    await appDb.partyMasterDao.printAllPartyMasters();
           page++;
         }
 
@@ -90,13 +91,12 @@ class PartyMasterSync {
         return lastResponse!;
       },
 
-      failure:
-      (error) {
+      failure: (error) {
         if (error.toLowerCase() == 'invalid referrel code!') {
           return InvalidReferralCode(errorMsg: error);
         }
         return MainFailure.genericError(errorMsg: error);
-      }
+      },
     );
   }
 }

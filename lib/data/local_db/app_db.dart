@@ -106,7 +106,7 @@ class AppDb extends _$AppDb {
   AppDb() : super(_openConnection());
 
   @override
-  int get schemaVersion => 12;
+  int get schemaVersion => 13;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -154,6 +154,19 @@ class AppDb extends _$AppDb {
       if (from < 12) {
         await m.createTable(partyMaster);
       }
+      if (from < 13) {
+      await m.alterTable(
+        TableMigration(
+          companies,
+          newColumns: [
+            companies.companyLogoUrl,
+            companies.companyProfileUpdated,
+            companies.companyBankUpdated,
+            companies.companyRegUpdated,
+          ],
+        ),
+      );
+    }
     },
   );
 }

@@ -1,7 +1,9 @@
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
+import 'package:mpos_beat/domain/request/bank_details_params.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_switch.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
+import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 
 class BankDetailsForm extends StatefulWidget {
   final CompanyViewList? company;
@@ -24,13 +26,25 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
 
   @override
   void initState() {
-    bankNameController = TextEditingController();
-    branchNameController = TextEditingController();
-    accNoController = TextEditingController();
-    ifscController = TextEditingController();
-    upiPaymentAddressController = TextEditingController();
-    paymentNameController = TextEditingController();
-    currencyController = TextEditingController();
+    bankNameController = TextEditingController(
+      text: widget.company?.bankName ?? "",
+    );
+    branchNameController = TextEditingController(
+      text: widget.company?.bankBranch ?? "",
+    );
+    accNoController = TextEditingController(text: widget.company?.accNo ?? "");
+    ifscController = TextEditingController(
+      text: widget.company?.ifscCode ?? "",
+    );
+    upiPaymentAddressController = TextEditingController(
+      text: widget.company?.upiAddress ?? "",
+    );
+    paymentNameController = TextEditingController(
+      text: widget.company?.payeeName ?? "",
+    );
+    currencyController = TextEditingController(
+      text: widget.company?.currency ?? "",
+    );
 
     super.initState();
   }
@@ -113,8 +127,8 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
               // },
               backgroundColor: ColorResources.white,
               // inputFormatters: [noEmojiFormatter],
+              maxLength: 16,
               onChange: (_) {},
-              inputType: TextInputType.phone,
               borderRadius: 15,
               hintColor: ColorResources.silverGray,
               borderColor: ColorResources.bluishGray,
@@ -135,7 +149,6 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
               backgroundColor: ColorResources.white,
               // inputFormatters: [noEmojiFormatter],
               onChange: (_) {},
-              inputType: TextInputType.emailAddress,
               borderRadius: 15,
               hintColor: ColorResources.silverGray,
               borderColor: ColorResources.bluishGray,
@@ -182,7 +195,6 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
                 backgroundColor: ColorResources.white,
                 // inputFormatters: [noEmojiFormatter],
                 onChange: (_) {},
-                inputType: TextInputType.emailAddress,
                 borderRadius: 15,
                 hintColor: ColorResources.silverGray,
                 borderColor: ColorResources.bluishGray,
@@ -203,7 +215,6 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
                 backgroundColor: ColorResources.white,
                 // inputFormatters: [noEmojiFormatter],
                 onChange: (_) {},
-                inputType: TextInputType.emailAddress,
                 borderRadius: 15,
                 hintColor: ColorResources.silverGray,
                 borderColor: ColorResources.bluishGray,
@@ -224,7 +235,6 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
                 backgroundColor: ColorResources.white,
                 // inputFormatters: [noEmojiFormatter],
                 onChange: (_) {},
-                inputType: TextInputType.emailAddress,
                 borderRadius: 15,
                 hintColor: ColorResources.silverGray,
                 borderColor: ColorResources.bluishGray,
@@ -235,6 +245,24 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
               mainAxisAlignment: .center,
               children: [
                 CustomButton(
+                  onTap: () {
+                    final provider = context.read<CompanyCreationProvider>();
+                    final company = widget.company;
+                    provider.updateBankDetails(
+                      context: context,
+                      params: BankDetailsParams(
+                        companyId: company?.id,
+                        bankName: bankNameController.text,
+                        branch: branchNameController.text,
+                        accountNumber: accNoController.text,
+                        ifscCode: ifscController.text,
+                        hasUpi: isUpiEnabled,
+                        upiAddress: upiPaymentAddressController.text,
+                        upiName: "",
+                        currency: currencyController.text,
+                      ),
+                    );
+                  },
                   width: context.getSize.width * 1 / 2.2,
                   buttonText: "Save",
                   isborderEnable: false,

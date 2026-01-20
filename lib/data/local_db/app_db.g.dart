@@ -1444,6 +1444,58 @@ class $CompaniesTable extends Companies
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _companyLogoUrlMeta = const VerificationMeta(
+    'companyLogoUrl',
+  );
+  @override
+  late final GeneratedColumn<String> companyLogoUrl = GeneratedColumn<String>(
+    'company_logo_url',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _companyProfileUpdatedMeta =
+      const VerificationMeta('companyProfileUpdated');
+  @override
+  late final GeneratedColumn<bool> companyProfileUpdated =
+      GeneratedColumn<bool>(
+        'company_profile_updated',
+        aliasedName,
+        true,
+        type: DriftSqlType.bool,
+        requiredDuringInsert: false,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("company_profile_updated" IN (0, 1))',
+        ),
+      );
+  static const VerificationMeta _companyBankUpdatedMeta =
+      const VerificationMeta('companyBankUpdated');
+  @override
+  late final GeneratedColumn<bool> companyBankUpdated = GeneratedColumn<bool>(
+    'company_bank_updated',
+    aliasedName,
+    true,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("company_bank_updated" IN (0, 1))',
+    ),
+  );
+  static const VerificationMeta _companyRegUpdatedMeta = const VerificationMeta(
+    'companyRegUpdated',
+  );
+  @override
+  late final GeneratedColumn<bool> companyRegUpdated = GeneratedColumn<bool>(
+    'company_reg_updated',
+    aliasedName,
+    true,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("company_reg_updated" IN (0, 1))',
+    ),
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -1485,6 +1537,10 @@ class $CompaniesTable extends Companies
     stockInCloud,
     registrationNo,
     vchNumberingMode,
+    companyLogoUrl,
+    companyProfileUpdated,
+    companyBankUpdated,
+    companyRegUpdated,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -1777,6 +1833,42 @@ class $CompaniesTable extends Companies
         ),
       );
     }
+    if (data.containsKey('company_logo_url')) {
+      context.handle(
+        _companyLogoUrlMeta,
+        companyLogoUrl.isAcceptableOrUnknown(
+          data['company_logo_url']!,
+          _companyLogoUrlMeta,
+        ),
+      );
+    }
+    if (data.containsKey('company_profile_updated')) {
+      context.handle(
+        _companyProfileUpdatedMeta,
+        companyProfileUpdated.isAcceptableOrUnknown(
+          data['company_profile_updated']!,
+          _companyProfileUpdatedMeta,
+        ),
+      );
+    }
+    if (data.containsKey('company_bank_updated')) {
+      context.handle(
+        _companyBankUpdatedMeta,
+        companyBankUpdated.isAcceptableOrUnknown(
+          data['company_bank_updated']!,
+          _companyBankUpdatedMeta,
+        ),
+      );
+    }
+    if (data.containsKey('company_reg_updated')) {
+      context.handle(
+        _companyRegUpdatedMeta,
+        companyRegUpdated.isAcceptableOrUnknown(
+          data['company_reg_updated']!,
+          _companyRegUpdatedMeta,
+        ),
+      );
+    }
     return context;
   }
 
@@ -1942,6 +2034,22 @@ class $CompaniesTable extends Companies
         DriftSqlType.string,
         data['${effectivePrefix}vch_numbering_mode'],
       ),
+      companyLogoUrl: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}company_logo_url'],
+      ),
+      companyProfileUpdated: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}company_profile_updated'],
+      ),
+      companyBankUpdated: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}company_bank_updated'],
+      ),
+      companyRegUpdated: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}company_reg_updated'],
+      ),
     );
   }
 
@@ -1991,6 +2099,10 @@ class Company extends DataClass implements Insertable<Company> {
   final String? stockInCloud;
   final String? registrationNo;
   final String? vchNumberingMode;
+  final String? companyLogoUrl;
+  final bool? companyProfileUpdated;
+  final bool? companyBankUpdated;
+  final bool? companyRegUpdated;
   const Company({
     this.id,
     this.companyName,
@@ -2031,6 +2143,10 @@ class Company extends DataClass implements Insertable<Company> {
     this.stockInCloud,
     this.registrationNo,
     this.vchNumberingMode,
+    this.companyLogoUrl,
+    this.companyProfileUpdated,
+    this.companyBankUpdated,
+    this.companyRegUpdated,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -2152,6 +2268,18 @@ class Company extends DataClass implements Insertable<Company> {
     if (!nullToAbsent || vchNumberingMode != null) {
       map['vch_numbering_mode'] = Variable<String>(vchNumberingMode);
     }
+    if (!nullToAbsent || companyLogoUrl != null) {
+      map['company_logo_url'] = Variable<String>(companyLogoUrl);
+    }
+    if (!nullToAbsent || companyProfileUpdated != null) {
+      map['company_profile_updated'] = Variable<bool>(companyProfileUpdated);
+    }
+    if (!nullToAbsent || companyBankUpdated != null) {
+      map['company_bank_updated'] = Variable<bool>(companyBankUpdated);
+    }
+    if (!nullToAbsent || companyRegUpdated != null) {
+      map['company_reg_updated'] = Variable<bool>(companyRegUpdated);
+    }
     return map;
   }
 
@@ -2272,6 +2400,18 @@ class Company extends DataClass implements Insertable<Company> {
       vchNumberingMode: vchNumberingMode == null && nullToAbsent
           ? const Value.absent()
           : Value(vchNumberingMode),
+      companyLogoUrl: companyLogoUrl == null && nullToAbsent
+          ? const Value.absent()
+          : Value(companyLogoUrl),
+      companyProfileUpdated: companyProfileUpdated == null && nullToAbsent
+          ? const Value.absent()
+          : Value(companyProfileUpdated),
+      companyBankUpdated: companyBankUpdated == null && nullToAbsent
+          ? const Value.absent()
+          : Value(companyBankUpdated),
+      companyRegUpdated: companyRegUpdated == null && nullToAbsent
+          ? const Value.absent()
+          : Value(companyRegUpdated),
     );
   }
 
@@ -2324,6 +2464,14 @@ class Company extends DataClass implements Insertable<Company> {
       stockInCloud: serializer.fromJson<String?>(json['stockInCloud']),
       registrationNo: serializer.fromJson<String?>(json['registrationNo']),
       vchNumberingMode: serializer.fromJson<String?>(json['vchNumberingMode']),
+      companyLogoUrl: serializer.fromJson<String?>(json['companyLogoUrl']),
+      companyProfileUpdated: serializer.fromJson<bool?>(
+        json['companyProfileUpdated'],
+      ),
+      companyBankUpdated: serializer.fromJson<bool?>(
+        json['companyBankUpdated'],
+      ),
+      companyRegUpdated: serializer.fromJson<bool?>(json['companyRegUpdated']),
     );
   }
   @override
@@ -2369,6 +2517,10 @@ class Company extends DataClass implements Insertable<Company> {
       'stockInCloud': serializer.toJson<String?>(stockInCloud),
       'registrationNo': serializer.toJson<String?>(registrationNo),
       'vchNumberingMode': serializer.toJson<String?>(vchNumberingMode),
+      'companyLogoUrl': serializer.toJson<String?>(companyLogoUrl),
+      'companyProfileUpdated': serializer.toJson<bool?>(companyProfileUpdated),
+      'companyBankUpdated': serializer.toJson<bool?>(companyBankUpdated),
+      'companyRegUpdated': serializer.toJson<bool?>(companyRegUpdated),
     };
   }
 
@@ -2412,6 +2564,10 @@ class Company extends DataClass implements Insertable<Company> {
     Value<String?> stockInCloud = const Value.absent(),
     Value<String?> registrationNo = const Value.absent(),
     Value<String?> vchNumberingMode = const Value.absent(),
+    Value<String?> companyLogoUrl = const Value.absent(),
+    Value<bool?> companyProfileUpdated = const Value.absent(),
+    Value<bool?> companyBankUpdated = const Value.absent(),
+    Value<bool?> companyRegUpdated = const Value.absent(),
   }) => Company(
     id: id.present ? id.value : this.id,
     companyName: companyName.present ? companyName.value : this.companyName,
@@ -2466,6 +2622,18 @@ class Company extends DataClass implements Insertable<Company> {
     vchNumberingMode: vchNumberingMode.present
         ? vchNumberingMode.value
         : this.vchNumberingMode,
+    companyLogoUrl: companyLogoUrl.present
+        ? companyLogoUrl.value
+        : this.companyLogoUrl,
+    companyProfileUpdated: companyProfileUpdated.present
+        ? companyProfileUpdated.value
+        : this.companyProfileUpdated,
+    companyBankUpdated: companyBankUpdated.present
+        ? companyBankUpdated.value
+        : this.companyBankUpdated,
+    companyRegUpdated: companyRegUpdated.present
+        ? companyRegUpdated.value
+        : this.companyRegUpdated,
   );
   Company copyWithCompanion(CompaniesCompanion data) {
     return Company(
@@ -2544,6 +2712,18 @@ class Company extends DataClass implements Insertable<Company> {
       vchNumberingMode: data.vchNumberingMode.present
           ? data.vchNumberingMode.value
           : this.vchNumberingMode,
+      companyLogoUrl: data.companyLogoUrl.present
+          ? data.companyLogoUrl.value
+          : this.companyLogoUrl,
+      companyProfileUpdated: data.companyProfileUpdated.present
+          ? data.companyProfileUpdated.value
+          : this.companyProfileUpdated,
+      companyBankUpdated: data.companyBankUpdated.present
+          ? data.companyBankUpdated.value
+          : this.companyBankUpdated,
+      companyRegUpdated: data.companyRegUpdated.present
+          ? data.companyRegUpdated.value
+          : this.companyRegUpdated,
     );
   }
 
@@ -2588,7 +2768,11 @@ class Company extends DataClass implements Insertable<Company> {
           ..write('serialNumber: $serialNumber, ')
           ..write('stockInCloud: $stockInCloud, ')
           ..write('registrationNo: $registrationNo, ')
-          ..write('vchNumberingMode: $vchNumberingMode')
+          ..write('vchNumberingMode: $vchNumberingMode, ')
+          ..write('companyLogoUrl: $companyLogoUrl, ')
+          ..write('companyProfileUpdated: $companyProfileUpdated, ')
+          ..write('companyBankUpdated: $companyBankUpdated, ')
+          ..write('companyRegUpdated: $companyRegUpdated')
           ..write(')'))
         .toString();
   }
@@ -2634,6 +2818,10 @@ class Company extends DataClass implements Insertable<Company> {
     stockInCloud,
     registrationNo,
     vchNumberingMode,
+    companyLogoUrl,
+    companyProfileUpdated,
+    companyBankUpdated,
+    companyRegUpdated,
   ]);
   @override
   bool operator ==(Object other) =>
@@ -2677,7 +2865,11 @@ class Company extends DataClass implements Insertable<Company> {
           other.serialNumber == this.serialNumber &&
           other.stockInCloud == this.stockInCloud &&
           other.registrationNo == this.registrationNo &&
-          other.vchNumberingMode == this.vchNumberingMode);
+          other.vchNumberingMode == this.vchNumberingMode &&
+          other.companyLogoUrl == this.companyLogoUrl &&
+          other.companyProfileUpdated == this.companyProfileUpdated &&
+          other.companyBankUpdated == this.companyBankUpdated &&
+          other.companyRegUpdated == this.companyRegUpdated);
 }
 
 class CompaniesCompanion extends UpdateCompanion<Company> {
@@ -2720,6 +2912,10 @@ class CompaniesCompanion extends UpdateCompanion<Company> {
   final Value<String?> stockInCloud;
   final Value<String?> registrationNo;
   final Value<String?> vchNumberingMode;
+  final Value<String?> companyLogoUrl;
+  final Value<bool?> companyProfileUpdated;
+  final Value<bool?> companyBankUpdated;
+  final Value<bool?> companyRegUpdated;
   const CompaniesCompanion({
     this.id = const Value.absent(),
     this.companyName = const Value.absent(),
@@ -2760,6 +2956,10 @@ class CompaniesCompanion extends UpdateCompanion<Company> {
     this.stockInCloud = const Value.absent(),
     this.registrationNo = const Value.absent(),
     this.vchNumberingMode = const Value.absent(),
+    this.companyLogoUrl = const Value.absent(),
+    this.companyProfileUpdated = const Value.absent(),
+    this.companyBankUpdated = const Value.absent(),
+    this.companyRegUpdated = const Value.absent(),
   });
   CompaniesCompanion.insert({
     this.id = const Value.absent(),
@@ -2801,6 +3001,10 @@ class CompaniesCompanion extends UpdateCompanion<Company> {
     this.stockInCloud = const Value.absent(),
     this.registrationNo = const Value.absent(),
     this.vchNumberingMode = const Value.absent(),
+    this.companyLogoUrl = const Value.absent(),
+    this.companyProfileUpdated = const Value.absent(),
+    this.companyBankUpdated = const Value.absent(),
+    this.companyRegUpdated = const Value.absent(),
   });
   static Insertable<Company> custom({
     Expression<int>? id,
@@ -2842,6 +3046,10 @@ class CompaniesCompanion extends UpdateCompanion<Company> {
     Expression<String>? stockInCloud,
     Expression<String>? registrationNo,
     Expression<String>? vchNumberingMode,
+    Expression<String>? companyLogoUrl,
+    Expression<bool>? companyProfileUpdated,
+    Expression<bool>? companyBankUpdated,
+    Expression<bool>? companyRegUpdated,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -2886,6 +3094,12 @@ class CompaniesCompanion extends UpdateCompanion<Company> {
       if (stockInCloud != null) 'stock_in_cloud': stockInCloud,
       if (registrationNo != null) 'registration_no': registrationNo,
       if (vchNumberingMode != null) 'vch_numbering_mode': vchNumberingMode,
+      if (companyLogoUrl != null) 'company_logo_url': companyLogoUrl,
+      if (companyProfileUpdated != null)
+        'company_profile_updated': companyProfileUpdated,
+      if (companyBankUpdated != null)
+        'company_bank_updated': companyBankUpdated,
+      if (companyRegUpdated != null) 'company_reg_updated': companyRegUpdated,
     });
   }
 
@@ -2929,6 +3143,10 @@ class CompaniesCompanion extends UpdateCompanion<Company> {
     Value<String?>? stockInCloud,
     Value<String?>? registrationNo,
     Value<String?>? vchNumberingMode,
+    Value<String?>? companyLogoUrl,
+    Value<bool?>? companyProfileUpdated,
+    Value<bool?>? companyBankUpdated,
+    Value<bool?>? companyRegUpdated,
   }) {
     return CompaniesCompanion(
       id: id ?? this.id,
@@ -2972,6 +3190,11 @@ class CompaniesCompanion extends UpdateCompanion<Company> {
       stockInCloud: stockInCloud ?? this.stockInCloud,
       registrationNo: registrationNo ?? this.registrationNo,
       vchNumberingMode: vchNumberingMode ?? this.vchNumberingMode,
+      companyLogoUrl: companyLogoUrl ?? this.companyLogoUrl,
+      companyProfileUpdated:
+          companyProfileUpdated ?? this.companyProfileUpdated,
+      companyBankUpdated: companyBankUpdated ?? this.companyBankUpdated,
+      companyRegUpdated: companyRegUpdated ?? this.companyRegUpdated,
     );
   }
 
@@ -3099,6 +3322,20 @@ class CompaniesCompanion extends UpdateCompanion<Company> {
     if (vchNumberingMode.present) {
       map['vch_numbering_mode'] = Variable<String>(vchNumberingMode.value);
     }
+    if (companyLogoUrl.present) {
+      map['company_logo_url'] = Variable<String>(companyLogoUrl.value);
+    }
+    if (companyProfileUpdated.present) {
+      map['company_profile_updated'] = Variable<bool>(
+        companyProfileUpdated.value,
+      );
+    }
+    if (companyBankUpdated.present) {
+      map['company_bank_updated'] = Variable<bool>(companyBankUpdated.value);
+    }
+    if (companyRegUpdated.present) {
+      map['company_reg_updated'] = Variable<bool>(companyRegUpdated.value);
+    }
     return map;
   }
 
@@ -3143,7 +3380,11 @@ class CompaniesCompanion extends UpdateCompanion<Company> {
           ..write('serialNumber: $serialNumber, ')
           ..write('stockInCloud: $stockInCloud, ')
           ..write('registrationNo: $registrationNo, ')
-          ..write('vchNumberingMode: $vchNumberingMode')
+          ..write('vchNumberingMode: $vchNumberingMode, ')
+          ..write('companyLogoUrl: $companyLogoUrl, ')
+          ..write('companyProfileUpdated: $companyProfileUpdated, ')
+          ..write('companyBankUpdated: $companyBankUpdated, ')
+          ..write('companyRegUpdated: $companyRegUpdated')
           ..write(')'))
         .toString();
   }
@@ -10802,6 +11043,10 @@ typedef $$CompaniesTableCreateCompanionBuilder =
       Value<String?> stockInCloud,
       Value<String?> registrationNo,
       Value<String?> vchNumberingMode,
+      Value<String?> companyLogoUrl,
+      Value<bool?> companyProfileUpdated,
+      Value<bool?> companyBankUpdated,
+      Value<bool?> companyRegUpdated,
     });
 typedef $$CompaniesTableUpdateCompanionBuilder =
     CompaniesCompanion Function({
@@ -10844,6 +11089,10 @@ typedef $$CompaniesTableUpdateCompanionBuilder =
       Value<String?> stockInCloud,
       Value<String?> registrationNo,
       Value<String?> vchNumberingMode,
+      Value<String?> companyLogoUrl,
+      Value<bool?> companyProfileUpdated,
+      Value<bool?> companyBankUpdated,
+      Value<bool?> companyRegUpdated,
     });
 
 class $$CompaniesTableFilterComposer
@@ -11047,6 +11296,26 @@ class $$CompaniesTableFilterComposer
 
   ColumnFilters<String> get vchNumberingMode => $composableBuilder(
     column: $table.vchNumberingMode,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get companyLogoUrl => $composableBuilder(
+    column: $table.companyLogoUrl,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get companyProfileUpdated => $composableBuilder(
+    column: $table.companyProfileUpdated,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get companyBankUpdated => $composableBuilder(
+    column: $table.companyBankUpdated,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get companyRegUpdated => $composableBuilder(
+    column: $table.companyRegUpdated,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -11254,6 +11523,26 @@ class $$CompaniesTableOrderingComposer
     column: $table.vchNumberingMode,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get companyLogoUrl => $composableBuilder(
+    column: $table.companyLogoUrl,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get companyProfileUpdated => $composableBuilder(
+    column: $table.companyProfileUpdated,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get companyBankUpdated => $composableBuilder(
+    column: $table.companyBankUpdated,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get companyRegUpdated => $composableBuilder(
+    column: $table.companyRegUpdated,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$CompaniesTableAnnotationComposer
@@ -11417,6 +11706,26 @@ class $$CompaniesTableAnnotationComposer
     column: $table.vchNumberingMode,
     builder: (column) => column,
   );
+
+  GeneratedColumn<String> get companyLogoUrl => $composableBuilder(
+    column: $table.companyLogoUrl,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get companyProfileUpdated => $composableBuilder(
+    column: $table.companyProfileUpdated,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get companyBankUpdated => $composableBuilder(
+    column: $table.companyBankUpdated,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get companyRegUpdated => $composableBuilder(
+    column: $table.companyRegUpdated,
+    builder: (column) => column,
+  );
 }
 
 class $$CompaniesTableTableManager
@@ -11486,6 +11795,10 @@ class $$CompaniesTableTableManager
                 Value<String?> stockInCloud = const Value.absent(),
                 Value<String?> registrationNo = const Value.absent(),
                 Value<String?> vchNumberingMode = const Value.absent(),
+                Value<String?> companyLogoUrl = const Value.absent(),
+                Value<bool?> companyProfileUpdated = const Value.absent(),
+                Value<bool?> companyBankUpdated = const Value.absent(),
+                Value<bool?> companyRegUpdated = const Value.absent(),
               }) => CompaniesCompanion(
                 id: id,
                 companyName: companyName,
@@ -11526,6 +11839,10 @@ class $$CompaniesTableTableManager
                 stockInCloud: stockInCloud,
                 registrationNo: registrationNo,
                 vchNumberingMode: vchNumberingMode,
+                companyLogoUrl: companyLogoUrl,
+                companyProfileUpdated: companyProfileUpdated,
+                companyBankUpdated: companyBankUpdated,
+                companyRegUpdated: companyRegUpdated,
               ),
           createCompanionCallback:
               ({
@@ -11568,6 +11885,10 @@ class $$CompaniesTableTableManager
                 Value<String?> stockInCloud = const Value.absent(),
                 Value<String?> registrationNo = const Value.absent(),
                 Value<String?> vchNumberingMode = const Value.absent(),
+                Value<String?> companyLogoUrl = const Value.absent(),
+                Value<bool?> companyProfileUpdated = const Value.absent(),
+                Value<bool?> companyBankUpdated = const Value.absent(),
+                Value<bool?> companyRegUpdated = const Value.absent(),
               }) => CompaniesCompanion.insert(
                 id: id,
                 companyName: companyName,
@@ -11608,6 +11929,10 @@ class $$CompaniesTableTableManager
                 stockInCloud: stockInCloud,
                 registrationNo: registrationNo,
                 vchNumberingMode: vchNumberingMode,
+                companyLogoUrl: companyLogoUrl,
+                companyProfileUpdated: companyProfileUpdated,
+                companyBankUpdated: companyBankUpdated,
+                companyRegUpdated: companyRegUpdated,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))

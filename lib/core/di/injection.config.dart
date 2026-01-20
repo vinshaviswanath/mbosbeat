@@ -70,6 +70,10 @@ import '../../data/data_sources/company_creation/registration_type.dart'
 import '../../data/data_sources/company_creation/set_voucher_numbering_method/set_voucher_numbering_method.dart'
     as _i931;
 import '../../data/data_sources/company_creation/state_list.dart' as _i374;
+import '../../data/data_sources/company_creation/update_bank_details/update_bank_details.dart'
+    as _i158;
+import '../../data/data_sources/company_creation/update_company_profile/update_company_profile.dart'
+    as _i522;
 import '../../data/data_sources/user/attendance_marking/attendanceMarking.dart'
     as _i891;
 import '../../data/data_sources/user/skip_reason/skip_reason.dart' as _i152;
@@ -163,6 +167,16 @@ Future<_i174.GetIt> init(
   );
   gh.lazySingleton<_i976.HttpClient>(
     () => _i976.HttpClient(gh<_i519.Client>()),
+  );
+  gh.lazySingleton<_i158.UpdateBankDetails>(
+    () =>
+        _i158.UpdateBankDetails(gh<_i976.HttpClient>(), gh<_i530.RunSafely>()),
+  );
+  gh.lazySingleton<_i522.UpdateCompanyProfile>(
+    () => _i522.UpdateCompanyProfile(
+      gh<_i976.HttpClient>(),
+      gh<_i530.RunSafely>(),
+    ),
   );
   gh.lazySingleton<_i526.LoginImpl>(
     () => _i526.LoginImpl(
@@ -539,20 +553,40 @@ Future<_i174.GetIt> init(
       gh<_i460.SharedPreferences>(),
     ),
   );
-  gh.lazySingleton<_i9.IUserFacad>(
-    () => _i30.IUserFacadImp(
-      gh<_i976.HttpClient>(),
+  gh.lazySingleton<_i483.ICompanyCreationFacad>(
+    () => _i322.ICompanyCreationFacadImpl(
+      gh<_i665.CompanyInfo>(),
+      gh<_i79.CountryList>(),
+      gh<_i374.StateList>(),
+      gh<_i34.RegistrationTypeDatasource>(),
       gh<_i530.RunSafely>(),
+      gh<_i976.HttpClient>(),
       gh<_i460.SharedPreferences>(),
-      gh<_i891.AttendanceMarking>(),
-      gh<_i860.PartyMasterSync>(),
-      gh<_i1053.CheckinDatasource>(),
-      gh<_i435.CheckoutDatasource>(),
-      gh<_i796.TripStart>(),
-      gh<_i271.TripEnd>(),
+      gh<_i1001.GetCompanyvoucherTypeListDatasource>(),
+      gh<_i1051.CreateCompanyVouchertypeDatasource>(),
+      gh<_i189.IntegrationDatasource>(),
+      gh<_i252.GetAllCompanySettingsDatasource>(),
+      gh<_i640.CreateCompanySettingsDatasource>(),
+      gh<_i284.GetCompanyList>(),
+      gh<_i719.CreateGodownOrVehicle>(),
+      gh<_i891.CreateRoute>(),
+      gh<_i1064.GetAllGodowns>(),
+      gh<_i504.GetAllRoutes>(),
+      gh<_i123.ActivateGodown>(),
+      gh<_i260.ActivateRoute>(),
+      gh<_i6.DeactivateRoute>(),
+      gh<_i440.DeactivateGodown>(),
+      gh<_i323.DeleteGodown>(),
+      gh<_i112.DeleteRoute>(),
+      gh<_i853.GetVoucherNumbering>(),
+      gh<_i220.CreateVoucherNumbering>(),
+      gh<_i915.CompleteVoucherSettings>(),
+      gh<_i158.UpdateBankDetails>(),
+      gh<_i931.SetVoucherNumberingMethod>(),
+      gh<_i522.UpdateCompanyProfile>(),
     ),
   );
- gh.lazySingleton<_i172.IUserManagementFacad>(
+  gh.lazySingleton<_i172.IUserManagementFacad>(
     () => _i168.IUserManagementFacadImpl(
       gh<_i797.DeactivateDesignation>(),
       gh<_i749.AddDesignation>(),
@@ -582,14 +616,6 @@ Future<_i174.GetIt> init(
       gh<_i264.AppDb>(),
       gh<_i275.EventManager>(),
       gh<_i70.RegistrationEventBinder>(),
-  gh.lazySingleton<_i70.CompanyRegisteration>(
-    () => appInjectionModule.companyRegisteration(
-      gh<_i976.HttpClient>(),
-      gh<_i530.RunSafely>(),
-      gh<_i460.SharedPreferences>(),
-      gh<_i264.AppDb>(),
-      gh<_i275.EventManager>(),
-      gh<_i70.RegistrationEventBinder>(),
     ),
   );
   gh.lazySingleton<_i9.IUserFacad>(
@@ -604,37 +630,6 @@ Future<_i174.GetIt> init(
       gh<_i796.TripStart>(),
       gh<_i271.TripEnd>(),
       gh<_i152.SkipReason>(),
-    ),
-  );
-  gh.lazySingleton<_i483.ICompanyCreationFacad>(
-    () => _i322.ICompanyCreationFacadImpl(
-      gh<_i665.CompanyInfo>(),
-      gh<_i79.CountryList>(),
-      gh<_i374.StateList>(),
-      gh<_i34.RegistrationTypeDatasource>(),
-      gh<_i530.RunSafely>(),
-      gh<_i976.HttpClient>(),
-      gh<_i460.SharedPreferences>(),
-      gh<_i1001.GetCompanyvoucherTypeListDatasource>(),
-      gh<_i1051.CreateCompanyVouchertypeDatasource>(),
-      gh<_i189.IntegrationDatasource>(),
-      gh<_i252.GetAllCompanySettingsDatasource>(),
-      gh<_i640.CreateCompanySettingsDatasource>(),
-      gh<_i284.GetCompanyList>(),
-      gh<_i719.CreateGodownOrVehicle>(),
-      gh<_i891.CreateRoute>(),
-      gh<_i1064.GetAllGodowns>(),
-      gh<_i504.GetAllRoutes>(),
-      gh<_i123.ActivateGodown>(),
-      gh<_i260.ActivateRoute>(),
-      gh<_i6.DeactivateRoute>(),
-      gh<_i440.DeactivateGodown>(),
-      gh<_i323.DeleteGodown>(),
-      gh<_i112.DeleteRoute>(),
-      gh<_i853.GetVoucherNumbering>(),
-      gh<_i220.CreateVoucherNumbering>(),
-      gh<_i915.CompleteVoucherSettings>(),
-      gh<_i931.SetVoucherNumberingMethod>(),
     ),
   );
   gh.lazySingleton<_i590.IAuthenticationFacad>(
