@@ -39,7 +39,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
 
     _tabController = TabController(length: 3, vsync: this);
     _tabController.addListener(() {
-      setState(() {}); 
+      setState(() {});
     });
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final provider = context.read<UserProvider>();
@@ -118,9 +118,8 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
       } else if (response!.status == 0 &&
           response.message == "Customer Already Check In") {
         setState(() {
-          _checkInId = response.id; 
-          checkInTime =
-              _getCurrentTime(); 
+          _checkInId = response.id;
+          checkInTime = _getCurrentTime();
           checkOutTime = null;
         });
         _showSnack(context, response.message!);
@@ -163,14 +162,13 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
           setState(() {
             checkOutTime = _getCurrentTime();
             checkInTime = null;
-            _checkInId = null; 
+            _checkInId = null;
           });
           _showSnack(context, response.message ?? "Check-out successful");
         }
       } else if (response!.status == 0 &&
           response.message ==
               "Customer Already Check Out/ Invalid Check In ID") {
-  
         setState(() {
           checkOutTime = _getCurrentTime();
           checkInTime = null;
@@ -184,63 +182,59 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
       debugPrint("Check-out error: $e");
     }
   }
-Future<void> _showCheckoutRemarksDialog(BuildContext context) async {
-  final TextEditingController remarksController = TextEditingController();
 
-  await showDialog(
-    context: context,
-    barrierDismissible: false,
-    builder: (context) {
-      return AlertDialog(
-        title: Text(
-          "Checkout Remarks",
-          style: context.textStyle.s14.roboto.bold,
-        ),
-        content: TextField(
-          controller: remarksController,
-          maxLines: 3,
-          decoration: InputDecoration(
-            hintText: "Enter remarks",
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
+  Future<void> _showCheckoutRemarksDialog(BuildContext context) async {
+    final TextEditingController remarksController = TextEditingController();
+
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            "Checkout Remarks",
+            style: context.textStyle.s14.roboto.bold,
+          ),
+          content: TextField(
+            controller: remarksController,
+            maxLines: 3,
+            decoration: InputDecoration(
+              hintText: "Enter remarks",
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
             ),
           ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text("Cancel"),
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              final remarks = remarksController.text.trim();
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("Cancel"),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final remarks = remarksController.text.trim();
 
-              if (remarks.isEmpty) {
-                _showSnack(context, "Please enter remarks");
-                return;
-              }
+                if (remarks.isEmpty) {
+                  _showSnack(context, "Please enter remarks");
+                  return;
+                }
 
-              Navigator.pop(context);
+                Navigator.pop(context);
 
-              await _handleCheckout(
-                context,
-                remarks: remarks,
-              );
-            },
-            child: const Text("Submit"),
-          ),
-        ],
-      );
-    },
-  );
-}
-
-
+                await _handleCheckout(context, remarks: remarks);
+              },
+              child: const Text("Submit"),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final applocalization = context.l10n;
-
+    final appDb = sl<AppDb>();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -256,11 +250,7 @@ Future<void> _showCheckoutRemarksDialog(BuildContext context) async {
         ),
         actions: [
           IconButton(
-            icon: Icon(
-              Icons.edit_note_outlined,
-              //color: Appcolor.primary,
-              size: 22,
-            ),
+            icon: Icon(Icons.edit_note_outlined, size: 22),
             onPressed: () {},
           ),
         ],
@@ -362,80 +352,89 @@ Future<void> _showCheckoutRemarksDialog(BuildContext context) async {
                       height: MediaQuery.of(context).size.height * 0.004,
                     ),
                     //checkin and skip button.....
-                    Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () async {
-                            //  setState(() {
-                            if (checkInTime == null) {
-                              await _handleCheckIn(context);
-                              // // First time clicking check-in
-                              // checkInTime = _getCurrentTime();
-                              // checkOutTime = null; // reset checkout
-                            }
-                            // });
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(11),
-                              color: ColorResources.rosePink,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 2,
-                              ),
-                              child: Text(
-                                checkInTime ??
-                                    applocalization
-                                        .customer_transaction_detail_CheckIn,
-                                style: context.textStyle.s09.roboto.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.01,
-                        ),
-                        GestureDetector(
-                          onTap: () async {
-                            if (checkInTime != null && checkOutTime == null) {
-                                  await _showCheckoutRemarksDialog(context); 
-                            } else if (checkInTime == null &&
-                                checkOutTime == null) {
-                              skipDialog(context);
-                            }
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(11),
-                              color:
-                                  (checkInTime != null && checkOutTime == null)
-                                  ? ColorResources.errorRed
-                                  : checkOutTime != null
-                                  ? ColorResources.rosePink
-                                  : ColorResources.bluishGray,
-                            ),
-                            child: Center(
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 8,
-                                  vertical: 2,
+                    StreamBuilder<CompanySettingsTableData?>(
+                      stream: appDb.companySettingsDao.watchcheckInOutSetting(
+                        widget.data.company.id ?? 0,
+                      ),
+                      builder: (_, snap) {
+                        final setting = snap.data;
+                        if (setting == null || setting.settingsValue != "Yes") {
+                          return const SizedBox.shrink();
+                        }
+                        return Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () async {
+                                if (checkInTime == null) {
+                                  await _handleCheckIn(context);
+                                }
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(11),
+                                  color: ColorResources.rosePink,
                                 ),
-                                child: Text(
-                                  checkInTime != null && checkOutTime == null
-                                      ? applocalization
-                                            .customer_transaction_detail_CheckOut
-                                      : checkOutTime ??
-                                            applocalization
-                                                .customer_transaction_detail_Skip,
-                                  style: context.textStyle.s11.roboto.white,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                    vertical: 2,
+                                  ),
+                                  child: Text(
+                                    checkInTime ??
+                                        applocalization
+                                            .customer_transaction_detail_CheckIn,
+                                    style: context.textStyle.s09.roboto.white,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ),
-                      ],
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.01,
+                            ),
+                            GestureDetector(
+                              onTap: () async {
+                                if (checkInTime != null &&
+                                    checkOutTime == null) {
+                                  await _showCheckoutRemarksDialog(context);
+                                } else if (checkInTime == null &&
+                                    checkOutTime == null) {
+                                  skipDialog(context);
+                                }
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(11),
+                                  color:
+                                      (checkInTime != null &&
+                                          checkOutTime == null)
+                                      ? ColorResources.errorRed
+                                      : checkOutTime != null
+                                      ? ColorResources.rosePink
+                                      : ColorResources.bluishGray,
+                                ),
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 8,
+                                      vertical: 2,
+                                    ),
+                                    child: Text(
+                                      checkInTime != null &&
+                                              checkOutTime == null
+                                          ? applocalization
+                                                .customer_transaction_detail_CheckOut
+                                          : checkOutTime ??
+                                                applocalization
+                                                    .customer_transaction_detail_Skip,
+                                      style: context.textStyle.s11.roboto.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
                     ),
                   ],
                 ),
