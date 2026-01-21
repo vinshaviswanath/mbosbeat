@@ -232,11 +232,7 @@ class _StartTripFormState extends State<StartTripForm> {
 
     userProvider.setLoading(false);
 
-    // if (!success) {
-    //   messenger.showSnackBar(
-    //     const SnackBar(content: Text("Something went wrong")),
-    //   );
-    // }
+
   }
 }
 

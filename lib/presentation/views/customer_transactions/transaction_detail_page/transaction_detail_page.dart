@@ -82,6 +82,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
   Future<void> _handleCheckIn(BuildContext context) async {
     final locationService = sl<LocationService>();
     final provider = context.read<UserProvider>();
+final tripId = provider.currentTripId;
 
     try {
       final position = await locationService.getCurrentLocation();
@@ -92,7 +93,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
       final now = DateTime.now();
       final response = await provider.checkIn(
         params: CheckinParams(
-          tripId: 101,
+          tripId: tripId??0,
           vistType: "Regular",
           visitSequence: 1,
           partyId: widget.party.ledgerId,
@@ -137,6 +138,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
   }) async {
     final locationService = sl<LocationService>();
     final provider = context.read<UserProvider>();
+final tripId = provider.currentTripId;
     try {
       final position = await locationService.getCurrentLocation();
       final address = await locationService.getNormalAddress(
@@ -147,7 +149,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
       final response = await provider.checkOut(
         context,
         params: CheckoutParams(
-          tripId: 101,
+          tripId: tripId??0,
           time: DateFormat("yyyy-MM-dd'T'HH:mm:ss").format(now),
           latitude: position.latitude,
           longitude: position.longitude,

@@ -188,6 +188,8 @@ class UserProvider extends ChangeNotifier {
     await prefs.remove(_kAttendanceStarted);
     notifyListeners();
   }
+int? _currentTripId;
+int? get currentTripId => _currentTripId;
 
   /// ---------------- TRIP START ----------------
   Future<bool> markTripStart({
@@ -227,7 +229,7 @@ class UserProvider extends ChangeNotifier {
       await setRouteStarted();
       _response = response;
       success = true;
-
+      _currentTripId = response.id;
       final prefs = sl<SharedPreferences>();
       _routeStarted = true;
       await prefs.setBool(_kRouteStarted, true);
@@ -239,6 +241,11 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
     return success;
   }
+Future<void> loadCurrentTrip() async {
+  final prefs = sl<SharedPreferences>();
+  _currentTripId = prefs.getInt('current_trip_id');
+  notifyListeners();
+}
 
   /// ---------------- TRIP END ----------------
   Future<bool> markTripEnd({
