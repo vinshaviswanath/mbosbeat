@@ -24,7 +24,6 @@ class CompanySettingsDao extends DatabaseAccessor<AppDb>
     });
   }
 
-
   Future<List<CompanySettingsTableData>> getAll() {
     return select(companySettingsTable).get();
   }
@@ -32,7 +31,6 @@ class CompanySettingsDao extends DatabaseAccessor<AppDb>
   Stream<List<CompanySettingsTableData>> watchAll() {
     return select(companySettingsTable).watch();
   }
-
 
   Future<List<CompanySettingsTableData>> getByCompany(int companyId) {
     return (select(companySettingsTable)
@@ -50,13 +48,16 @@ class CompanySettingsDao extends DatabaseAccessor<AppDb>
   }
 
   Stream<CompanySettingsTableData?> watchRouteSetting(int companyId) {
-  return (select(companySettingsTable)
-        ..where((tbl) =>
-            tbl.companyId.equals(companyId) &
-            tbl.id.equals(5)))
-      .watchSingleOrNull();
-}
+    return (select(companySettingsTable)
+          ..where((tbl) => tbl.companyId.equals(companyId) & tbl.id.equals(5)))
+        .watchSingleOrNull();
+  }
 
+  Stream<CompanySettingsTableData?> watchcheckInOutSetting(int companyId) {
+    return (select(companySettingsTable)
+          ..where((tbl) => tbl.companyId.equals(companyId) & tbl.id.equals(15)))
+        .watchSingleOrNull();
+  }
 
   /// Get child settings (for nested menus)
   Future<List<CompanySettingsTableData>> getByParent(

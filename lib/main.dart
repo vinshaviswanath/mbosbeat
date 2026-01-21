@@ -56,11 +56,7 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider.value(value: sl<NetworkProvider>()),
 
-        //  StreamProvider<List<CompanySettingsListData>>(
-        //   create: (context) =>
-        //       context.read<CompanyCreationProvider>().settingsStream,
-        //   initialData: const [],
-        // ),
+       
       ],
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, _) {

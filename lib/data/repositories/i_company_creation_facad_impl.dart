@@ -31,6 +31,7 @@ import 'package:mpos_beat/data/data_sources/company_creation/get_route_list/get_
 import 'package:mpos_beat/data/data_sources/company_creation/state_list.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/update_bank_details/update_bank_details.dart';
 import 'package:mpos_beat/data/data_sources/company_creation/update_company_profile/update_company_profile.dart';
+import 'package:mpos_beat/data/data_sources/company_creation/update_registraion_details/update_registration%20details.dart';
 import 'package:mpos_beat/data/models/company_creation_response.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/data/models/complete_voucher_settings_model.dart';
@@ -59,6 +60,7 @@ import 'package:mpos_beat/domain/request/create_route_params.dart';
 import 'package:mpos_beat/domain/request/create_voucher_numbering_params.dart';
 import 'package:mpos_beat/domain/request/integration_request.dart';
 import 'package:mpos_beat/domain/request/update_company_profile_params.dart';
+import 'package:mpos_beat/domain/request/update_registraion_params.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 @LazySingleton(as: ICompanyCreationFacad)
@@ -89,6 +91,7 @@ class ICompanyCreationFacadImpl implements ICompanyCreationFacad {
   final CompleteVoucherSettings completeVoucherSettings;
   final SetVoucherNumberingMethod setVoucherNumberMode;
   final UpdateCompanyProfile updateProfile;
+  final UpdateRegistrationDetails updateRegistrationDetails;
   final UpdateBankDetails updateBank;
   final RunSafely runSafely;
   final SharedPreferences sharedPreferences;
@@ -123,6 +126,7 @@ class ICompanyCreationFacadImpl implements ICompanyCreationFacad {
     this.updateBank,
     this.setVoucherNumberMode,
     this.updateProfile,
+    this.updateRegistrationDetails,
   );
 
   @override
@@ -278,7 +282,16 @@ class ICompanyCreationFacadImpl implements ICompanyCreationFacad {
   }
 
   @override
-  ResultFuture<DefaultResponse> updateBankDetails(BaseParams<BankDetailsParams> params) {
+  ResultFuture<DefaultResponse> updateBankDetails(
+    BaseParams<BankDetailsParams> params,
+  ) {
     return updateBank(params);
+  }
+
+  @override
+  ResultFuture<DefaultResponse> UpdateRegistrationDetail(
+    BaseParams<UpdateRegistrationParams> params,
+  ) {
+    return updateRegistrationDetails(params);
   }
 }

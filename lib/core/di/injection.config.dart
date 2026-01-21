@@ -74,6 +74,8 @@ import '../../data/data_sources/company_creation/update_bank_details/update_bank
     as _i158;
 import '../../data/data_sources/company_creation/update_company_profile/update_company_profile.dart'
     as _i522;
+import '../../data/data_sources/company_creation/update_registraion_details/update_registration%20details.dart'
+    as _i69;
 import '../../data/data_sources/user/attendance_marking/attendanceMarking.dart'
     as _i891;
 import '../../data/data_sources/user/skip_reason/skip_reason.dart' as _i152;
@@ -174,6 +176,12 @@ Future<_i174.GetIt> init(
   );
   gh.lazySingleton<_i522.UpdateCompanyProfile>(
     () => _i522.UpdateCompanyProfile(
+      gh<_i976.HttpClient>(),
+      gh<_i530.RunSafely>(),
+    ),
+  );
+  gh.lazySingleton<_i69.UpdateRegistrationDetails>(
+    () => _i69.UpdateRegistrationDetails(
       gh<_i976.HttpClient>(),
       gh<_i530.RunSafely>(),
     ),
@@ -584,6 +592,7 @@ Future<_i174.GetIt> init(
       gh<_i158.UpdateBankDetails>(),
       gh<_i931.SetVoucherNumberingMethod>(),
       gh<_i522.UpdateCompanyProfile>(),
+      gh<_i69.UpdateRegistrationDetails>(),
     ),
   );
   gh.lazySingleton<_i172.IUserManagementFacad>(
