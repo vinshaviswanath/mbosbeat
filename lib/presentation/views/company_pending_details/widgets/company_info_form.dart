@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_dropdown_alert/alert_controller.dart';
 import 'package:mpos_beat/core/service/file_picker_serveice.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
@@ -88,8 +89,14 @@ class _CompanyInfoFormState extends State<CompanyInfoForm> {
                             child: imgPath != null
                                 ? Image.file(imgPath!)
                                 : widget.company?.companyLogoUrl != null
-                                ? Image.network(
-                                    "${Urls.baseURL}${widget.company?.companyLogoUrl}",
+                                ? CachedNetworkImage(
+                                    imageUrl:
+                                        "${Urls.baseURL}${widget.company?.companyLogoUrl}",
+                                    fit: BoxFit.cover,
+                                    placeholder: (context, url) =>
+                                        const CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.broken_image),
                                   )
                                 : SizedBox.shrink(),
                           ),

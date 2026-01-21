@@ -81,49 +81,46 @@ class HeaderInfo extends StatelessWidget {
             h8,
 
             /// DAY
-            Row(
-              children: [
-                Text("Day : ", style: context.textStyle.s10.dustyBlue.roboto),
-                Text(today, style: context.textStyle.s10.dustyBlue.roboto),
-                const SizedBox(width: 5),
-                CircleAvatar(
-                  radius: 6,
-                  backgroundColor: state.dayStarted
-                      ? ColorResources.mintGreen
-                      : ColorResources.bluishGray,
-                ),
-                const SizedBox(width: 5),
-                DayToggleButton(started: state.dayStarted),
-              ],
-            ),
-
-            /// ROUTE
             if (companySettings?.settingsValue == "Yes") ...[
-              const SizedBox(height: 10),
               Row(
                 children: [
-                  Text(
-                    "Route : ",
-                    style: context.textStyle.s10.dustyBlue.roboto,
-                  ),
-                  Text(
-                    !state.routeStarted ? "Start  " : "End ",
-                    style: context.textStyle.s10.dustyBlue.roboto,
-                  ),
+                  Text("Day : ", style: context.textStyle.s10.dustyBlue.roboto),
+                  Text(today, style: context.textStyle.s10.dustyBlue.roboto),
+                  const SizedBox(width: 5),
                   CircleAvatar(
                     radius: 6,
-                    backgroundColor: state.routeStarted
+                    backgroundColor: state.dayStarted
                         ? ColorResources.mintGreen
                         : ColorResources.bluishGray,
                   ),
                   const SizedBox(width: 5),
-                  RouteToggleButton(
-                    started: state.routeStarted,
-                    companyId: company.id ?? 0,
-                  ),
+                  DayToggleButton(started: state.dayStarted),
                 ],
               ),
             ],
+
+            /// ROUTE
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                Text("Route : ", style: context.textStyle.s10.dustyBlue.roboto),
+                Text(
+                  !state.routeStarted ? "Start  " : "End ",
+                  style: context.textStyle.s10.dustyBlue.roboto,
+                ),
+                CircleAvatar(
+                  radius: 6,
+                  backgroundColor: state.routeStarted
+                      ? ColorResources.mintGreen
+                      : ColorResources.bluishGray,
+                ),
+                const SizedBox(width: 5),
+                RouteToggleButton(
+                  started: state.routeStarted,
+                  companyId: company.id ?? 0,
+                ),
+              ],
+            ),
           ],
         ),
       ],

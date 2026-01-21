@@ -77,5 +77,7 @@ class Urls {
   static const String skipReason = "/UserModule/GetSkipReasons";
   static const String updateCompanyProfile = "/api/Company/Profile";
   static const String updateBankDetails = "/api/Company/UpdateBankDetails";
+  static const String updateRegistrationDetails =
+      "/api/Company/UpdateRegDetails";
   // static const String updateCompanyProfile = "/api/Company/UpdateBankDetails";
 }

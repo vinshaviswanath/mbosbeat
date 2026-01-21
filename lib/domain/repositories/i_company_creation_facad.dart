@@ -28,6 +28,7 @@ import 'package:mpos_beat/domain/request/create_route_params.dart';
 import 'package:mpos_beat/domain/request/create_voucher_numbering_params.dart';
 import 'package:mpos_beat/domain/request/integration_request.dart';
 import 'package:mpos_beat/domain/request/update_company_profile_params.dart';
+import 'package:mpos_beat/domain/request/update_registraion_params.dart';
 import 'package:mpos_beat/presentation/views/company_pending_details/widgets/bank_details_form.dart';
 
 interface class ICompanyCreationFacad {
@@ -156,8 +157,14 @@ interface class ICompanyCreationFacad {
     throw UnimplementedError();
   }
 
-    ResultFuture<DefaultResponse> updateBankDetails(
+  ResultFuture<DefaultResponse> updateBankDetails(
     BaseParams<BankDetailsParams> params,
+  ) {
+    throw UnimplementedError();
+  }
+
+  ResultFuture<DefaultResponse> UpdateRegistrationDetail(
+    BaseParams<UpdateRegistrationParams> params,
   ) {
     throw UnimplementedError();
   }

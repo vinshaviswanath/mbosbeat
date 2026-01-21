@@ -37,6 +37,7 @@ import 'package:mpos_beat/domain/request/create_route_params.dart';
 import 'package:mpos_beat/domain/request/create_voucher_numbering_params.dart';
 import 'package:mpos_beat/domain/request/integration_request.dart';
 import 'package:mpos_beat/domain/request/update_company_profile_params.dart';
+import 'package:mpos_beat/domain/request/update_registraion_params.dart';
 import 'package:mpos_beat/presentation/views/godown_wise_screen/godown_wise_screen.dart';
 import 'package:mpos_beat/presentation/views/route_wise_screen/route_wise_screen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -2200,6 +2201,56 @@ class CompanyCreationProvider extends ChangeNotifier {
           ),
         );
         Logger.logSuccess("Bank details update successfull ");
+        notifyListeners();
+      },
+    );
+    setLoading(false);
+    notifyListeners();
+    return _defaultResponse;
+  }
+
+  Future<DefaultResponse?> UpdateRegistrationDetail({
+    required BuildContext context,
+    required UpdateRegistrationParams params,
+  }) async {
+    setLoading(true);
+    setLoading(true);
+
+    final result = await iCompanyCreationFacad.UpdateRegistrationDetail(
+      BaseParams(data: params),
+    );
+    result.fold(
+      (failure) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(failure.errorMsg, textAlign: TextAlign.center),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          ),
+        );
+      },
+      (response) async {
+        _defaultResponse = response;
+        // _voucherNumberingRouteController.add(
+        //   _voucherNumberingRouteResponse?.voucherNumberingModels ?? [],
+        // );
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              response.message.toString(),
+              textAlign: TextAlign.center,
+            ),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          ),
+        );
+        Logger.logSuccess("Registration details update successfull ");
         notifyListeners();
       },
     );

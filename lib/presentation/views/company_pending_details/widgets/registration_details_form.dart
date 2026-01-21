@@ -1,7 +1,9 @@
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
+import 'package:mpos_beat/domain/request/update_registraion_params.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 import 'package:intl/intl.dart';
+import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 
 class RegistrationDetailsForm extends StatefulWidget {
   final CompanyViewList? company;
@@ -17,14 +19,16 @@ class _RegistrationDetailsFormState extends State<RegistrationDetailsForm> {
   late TextEditingController gstnController;
   late TextEditingController fssaiController;
 
-  String? selectedRegistrationType;
+ int? selectedRegistrationType;
 
-  final List<String> registrationTypes = [
-    'Proprietorship',
-    'Partnership',
-    'Private Limited',
-    'Public Limited',
-  ];
+
+ final Map<String, int> registrationTypeMap = {
+  'Proprietorship': 0,
+  'Partnership': 1,
+  'Private Limited': 2,
+  'Public Limited': 3,
+};
+
 
   @override
   void initState() {
@@ -53,7 +57,7 @@ class _RegistrationDetailsFormState extends State<RegistrationDetailsForm> {
 
     if (pickedDate != null) {
       applicationFromController.text = DateFormat(
-        'dd-MM-yyyy',
+        'yyyy-MM-dd',
       ).format(pickedDate);
     }
   }
@@ -108,7 +112,7 @@ class _RegistrationDetailsFormState extends State<RegistrationDetailsForm> {
                 border: Border.all(color: ColorResources.bluishGray),
               ),
               child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
+                child: DropdownButton<int>(
                   value: selectedRegistrationType,
                   hint: Text(
                     "Select Type",
@@ -119,12 +123,12 @@ class _RegistrationDetailsFormState extends State<RegistrationDetailsForm> {
                     Icons.keyboard_arrow_down,
                     color: ColorResources.indigoBlue,
                   ),
-                  items: registrationTypes
+                  items: registrationTypeMap.entries
                       .map(
-                        (type) => DropdownMenuItem<String>(
-                          value: type,
+                        (entry) => DropdownMenuItem<int>(
+                          value: entry.value,
                           child: Text(
-                            type,
+                            entry.key,
                             style: context.textStyle.s12.bluishGray,
                           ),
                         ),
@@ -181,6 +185,20 @@ class _RegistrationDetailsFormState extends State<RegistrationDetailsForm> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CustomButton(
+                  onTap: () {
+                    final provider = context.read<CompanyCreationProvider>();
+                    final company = widget.company;
+                    provider.UpdateRegistrationDetail(
+                      context: context,
+                      params: UpdateRegistrationParams(
+                        companyId: company?.id,
+                        date: applicationFromController.text,
+                        registrationType: selectedRegistrationType ?? 0,
+                        taxNumber: gstnController.text,
+                        fassaiNo: fssaiController.text,
+                      ),
+                    );
+                  },
                   width: context.getSize.width * 1 / 2.2,
                   buttonText: "Save",
                   isborderEnable: false,
