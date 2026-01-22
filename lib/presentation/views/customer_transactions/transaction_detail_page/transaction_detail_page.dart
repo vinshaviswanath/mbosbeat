@@ -37,7 +37,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
   @override
   void initState() {
     super.initState();
-
+    print("checkintime............................$checkInTime");
     _tabController = TabController(length: 3, vsync: this);
     _tabController.addListener(() {
       setState(() {});
@@ -54,10 +54,10 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
     super.dispose();
   }
 
-  String _getCurrentTime() {
-    final now = DateTime.now();
-    return "${now.hour}:${now.minute.toString().padLeft(2, '0')}";
-  }
+  // String _getCurrentTime() {
+  //   final now = DateTime.now();
+  //   return "${now.hour}:${now.minute.toString().padLeft(2, '0')}";
+  // }
 
   void _showSnack(BuildContext context, String message) {
     ScaffoldMessenger.of(context)
@@ -111,25 +111,26 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
         ),
       );
 
-      if (response != null) {
-        if (response.status == 1) {
-          setState(() {
-            _checkInId = response.id;
-            checkInTime = _getCurrentTime();
-            checkOutTime = null;
-          });
-          _showSnack(context, response.message ?? "Check-in successful");
-        }
-      } else if (response!.status == 0) {
-        setState(() {
-          _checkInId = response.id;
-          checkInTime = _getCurrentTime();
-          checkOutTime = null;
-        });
-        _showSnack(context, response.message!);
+      //    if (response != null) {
+      if (response!.status == 1) {
+        // setState(() {
+        //   _checkInId = response.id;
+        //   checkInTime = _getCurrentTime();
+        //   checkOutTime = null;
+        // });
+        _showSnack(context, response.message ?? "Check-in successful");
+        //  }
       } else {
-        _showSnack(context, response.message ?? "Check-in failed");
+        // setState(() {
+        //   _checkInId = response.id;
+        //   checkInTime = _getCurrentTime();
+        //   checkOutTime = null;
+        // });
+        _showSnack(context, response.message ?? "");
       }
+      //  else {
+      //  _showSnack(context, response.message ?? "Check-in failed");
+      //   }
     } catch (e) {
       debugPrint("Check-in error: $e");
     }
@@ -162,25 +163,26 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
           remarks: remarks,
         ),
       );
-      if (response != null) {
-        if (response.status == 1) {
-          setState(() {
-            checkOutTime = _getCurrentTime();
-            checkInTime = null;
-            _checkInId = null;
-          });
-          _showSnack(context, response.message ?? "Check-out successful");
-        }
-      } else if (response!.status == 0) {
-        setState(() {
-          checkOutTime = _getCurrentTime();
-          checkInTime = null;
-          _checkInId = null;
-        });
-        _showSnack(context, response.message!);
+      //  if (response != null) {
+      if (response!.status == 1) {
+        // setState(() {
+        //   checkOutTime = _getCurrentTime();
+        //   checkInTime = null;
+        //   _checkInId = null;
+        // });
+        _showSnack(context, response.message ?? "Check-out successful");
+        // }
       } else {
-        _showSnack(context, response.message ?? "Check-out failed");
+        // setState(() {
+        //   checkOutTime = _getCurrentTime();
+        //   checkInTime = null;
+        //   _checkInId = null;
+        // });
+        _showSnack(context, response.message!);
       }
+      // else {
+      //    _showSnack(context, response.message ?? "Check-out failed");
+      //  }
     } catch (e) {
       debugPrint("Check-out error: $e");
     }
@@ -224,10 +226,12 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
 
                 Navigator.pop(context);
 
-                await _handleCheckout(context, remarks: remarks).then((_) async{
+                await _handleCheckout(context, remarks: remarks).then((
+                  _,
+                ) async {
                   final prefs = sl<SharedPreferences>();
                   await prefs.remove('current_trip_id');
-                },);
+                });
               },
               child: const Text("Submit"),
             ),
@@ -268,184 +272,197 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
           children: [
             Row(
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.party.ledgerName ?? "",
-                      style: context.textStyle.s12.roboto.indigoBlue.w600,
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.002,
-                    ),
-                    //gst no.....
-                    Text(
-                      "${applocalization.customer_transaction_detail_GSTno}${widget.party.taxNumber}",
-                      style: context.textStyle.s08.roboto.dustyBlue,
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.002,
-                    ),
-                    //contact person.....
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.person,
-                          color: ColorResources.dustyBlue,
-                          size: 11,
-                        ),
-                        Text(
-                          "${applocalization.customer_transaction_detail_ContactPerson}: G${widget.party.contactPerson}",
-
-                          style: context.textStyle.s08.roboto.dustyBlue,
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.002,
-                    ),
-                    //mobile......
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.phone_android,
-                          color: ColorResources.dustyBlue,
-                          size: 11,
-                        ),
-                        Text(
-                          "${applocalization.customer_transaction_detail_Mobile} ${widget.party.mobile}",
-                          style: context.textStyle.s08.roboto.dustyBlue,
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.002,
-                    ),
-                    //address....
-                    Text(
-                      "${applocalization.customer_transaction_detail_Address}: ${widget.party.address1}",
-                      style: context.textStyle.s08.roboto.dustyBlue,
-                    ),
-                  ],
-                ),
-                Spacer(),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      applocalization.customer_transaction_detail_Balance,
-                      style: context.textStyle.s09.roboto.dustyBlue,
-                    ),
-
-                    //balance....
-                    Text(
-                      "${widget.party.closingBalance}",
-                      style: context.textStyle.s14.roboto.indigoBlue.w600,
-                    ),
-
-                    //signal strength.....
-                    Row(
-                      children: [
-                        Text(
-                          'Signal Strength :',
-                          style: context.textStyle.s10.w400.dustyBlue,
-                        ),
-                        const SizedBox(width: 8),
-                        const NetworkSignalBars(),
-                      ],
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.004,
-                    ),
-                    //checkin and skip button.....
-                    StreamBuilder<CompanySettingsTableData?>(
-                      stream: appDb.companySettingsDao.watchcheckInOutSetting(
-                        widget.data.company.id ?? 0,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.party.ledgerName ?? "",
+                        maxLines: 2,
+                        style: context.textStyle.s12.roboto.indigoBlue.w600,
                       ),
-                      builder: (_, snap) {
-                        final setting = snap.data;
-                        if (setting == null || setting.settingsValue != "Yes") {
-                          return const SizedBox.shrink();
-                        }
-                        return Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () async {
-                                if (checkInTime == null) {
-                                  await _handleCheckIn(context);
-                                }
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(11),
-                                  color: ColorResources.rosePink,
+
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.002,
+                      ),
+                      //gst no.....
+                      Text(
+                        "${applocalization.customer_transaction_detail_GSTno}${widget.party.taxNumber}",
+                        style: context.textStyle.s08.roboto.dustyBlue,
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.002,
+                      ),
+                      //contact person.....
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.person,
+                            color: ColorResources.dustyBlue,
+                            size: 11,
+                          ),
+                          Expanded(
+                            child: Text(
+                              maxLines: 2,
+                              "${applocalization.customer_transaction_detail_ContactPerson}: G${widget.party.contactPerson}",
+
+                              style: context.textStyle.s08.roboto.dustyBlue,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.002,
+                      ),
+                      //mobile......
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.phone_android,
+                            color: ColorResources.dustyBlue,
+                            size: 11,
+                          ),
+                          Text(
+                            "${applocalization.customer_transaction_detail_Mobile} ${widget.party.mobile}",
+                            style: context.textStyle.s08.roboto.dustyBlue,
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.002,
+                      ),
+                      //address....
+                      Text(
+                        "${applocalization.customer_transaction_detail_Address}: ${widget.party.address1}",
+                        style: context.textStyle.s08.roboto.dustyBlue,
+                      ),
+
+                      //  Spacer(),
+                    ],
+                  ),
+                ),
+                // Spacer(),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        applocalization.customer_transaction_detail_Balance,
+                        style: context.textStyle.s09.roboto.dustyBlue,
+                      ),
+
+                      //balance....
+                      Text(
+                        "${widget.party.closingBalance}",
+                        style: context.textStyle.s14.roboto.indigoBlue.w600,
+                      ),
+
+                      //signal strength.....
+                      // Row(
+                      //   children: [
+                      //     Text(
+                      //       'Signal Strength :',
+                      //       style: context.textStyle.s10.w400.dustyBlue,
+                      //     ),
+                      //     const SizedBox(width: 8),
+                      //     const NetworkSignalBars(),
+                      //   ],
+                      // ),
+                      // SizedBox(
+                      //   height: MediaQuery.of(context).size.height * 0.004,
+                      // ),
+
+                      //checkin and skip button.....
+                      // StreamBuilder<CompanySettingsTableData?>(
+                      //   stream: appDb.companySettingsDao.watchcheckInOutSetting(
+                      //     widget.data.company.id ?? 0,
+                      //   ),
+                      //   builder: (_, snap) {
+                      //     final setting = snap.data;
+                      //     if (setting == null || setting.settingsValue != "Yes") {
+                      //       return const SizedBox.shrink();
+                      //     }
+                      //     return
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () async {
+                              //  if (checkInTime == null) {
+                              await _handleCheckIn(context);
+                              //  }
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(11),
+                                color: ColorResources.rosePink,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 2,
                                 ),
+                                child: Text(
+                                  checkInTime ??
+                                      applocalization
+                                          .customer_transaction_detail_CheckIn,
+                                  style: context.textStyle.s09.roboto.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.01,
+                          ),
+                          GestureDetector(
+                            onTap: () async {
+                              if (checkInTime != null && checkOutTime == null) {
+                                await _showCheckoutRemarksDialog(context);
+                              } else if (checkInTime == null &&
+                                  checkOutTime == null) {
+                                skipDialog(context);
+                              }
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(11),
+                                color:
+                                    (checkInTime != null &&
+                                        checkOutTime == null)
+                                    ? ColorResources.errorRed
+                                    : checkOutTime != null
+                                    ? ColorResources.rosePink
+                                    : ColorResources.bluishGray,
+                              ),
+                              child: Center(
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 8,
                                     vertical: 2,
                                   ),
                                   child: Text(
-                                    checkInTime ??
-                                        applocalization
-                                            .customer_transaction_detail_CheckIn,
-                                    style: context.textStyle.s09.roboto.white,
+                                    checkInTime != null && checkOutTime == null
+                                        ? applocalization
+                                              .customer_transaction_detail_CheckOut
+                                        : checkOutTime ??
+                                              applocalization
+                                                  .customer_transaction_detail_Skip,
+                                    style: context.textStyle.s11.roboto.white,
                                   ),
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.01,
-                            ),
-                            GestureDetector(
-                              onTap: () async {
-                                if (checkInTime != null &&
-                                    checkOutTime == null) {
-                                  await _showCheckoutRemarksDialog(context);
-                                } else if (checkInTime == null &&
-                                    checkOutTime == null) {
-                                  skipDialog(context);
-                                }
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(11),
-                                  color:
-                                      (checkInTime != null &&
-                                          checkOutTime == null)
-                                      ? ColorResources.errorRed
-                                      : checkOutTime != null
-                                      ? ColorResources.rosePink
-                                      : ColorResources.bluishGray,
-                                ),
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 8,
-                                      vertical: 2,
-                                    ),
-                                    child: Text(
-                                      checkInTime != null &&
-                                              checkOutTime == null
-                                          ? applocalization
-                                                .customer_transaction_detail_CheckOut
-                                          : checkOutTime ??
-                                                applocalization
-                                                    .customer_transaction_detail_Skip,
-                                      style: context.textStyle.s11.roboto.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                  ],
+                          ),
+                        ],
+                        //  );
+                        // },
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
+
             SizedBox(height: MediaQuery.of(context).size.height * 0.01),
             Divider(
               height: 2,
