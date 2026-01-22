@@ -1,4 +1,5 @@
 import 'package:http/http.dart';
+import 'package:intl/intl.dart';
 import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
@@ -59,8 +60,7 @@ class UserProvider extends ChangeNotifier {
   SkipReasonResponse? get skipReasonResponse => _skipReasonResponse;
 
   /// ---------------- GENERAL ----------------
- 
-  
+
   void setLoading(bool value) {
     _isLoading = value;
     notifyListeners();
@@ -189,6 +189,9 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  int? _currentTripId;
+  int? get currentTripId => _currentTripId;
+
   /// ---------------- TRIP START ----------------
   Future<bool> markTripStart({
     required DateTime date,
@@ -227,7 +230,7 @@ class UserProvider extends ChangeNotifier {
       await setRouteStarted();
       _response = response;
       success = true;
-
+      _currentTripId = response.id;
       final prefs = sl<SharedPreferences>();
       _routeStarted = true;
       await prefs.setBool(_kRouteStarted, true);
@@ -238,6 +241,12 @@ class UserProvider extends ChangeNotifier {
     _isLoading = false;
     notifyListeners();
     return success;
+  }
+
+  Future<void> loadCurrentTrip() async {
+    final prefs = sl<SharedPreferences>();
+    _currentTripId = prefs.getInt('current_trip_id');
+    notifyListeners();
   }
 
   /// ---------------- TRIP END ----------------
@@ -279,7 +288,7 @@ class UserProvider extends ChangeNotifier {
       await clearRouteStarted();
 
       final prefs = await SharedPreferences.getInstance();
-      await prefs.remove('current_trip_id');
+      
     });
 
     _isEndingTrip = false;
@@ -287,7 +296,6 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
     return success;
   }
-
 
   /// ---------------- PARTY MASTER SYNC ----------------
   Future<PartyMasterSyncModel?> partyMasterSync({int? companyId}) async {
@@ -314,15 +322,16 @@ class UserProvider extends ChangeNotifier {
     setLoading(false);
     return _partmastersync;
   }
+
   DefaultResponse? _checkoutresponse;
   DefaultResponse? get checkoutResponse => _checkoutresponse;
   // ===========================check in============================
+  int? activeCheckinId;
+  String? activeCheckinTime;
+  int visitSequence = 0;
 
   /// ---------------- CHECK-IN ----------------
-  Future<DefaultResponse?> checkIn({
-    required CheckinParams params,
-  //  VoidCallback? onSuccess,
-  }) async {
+  Future<DefaultResponse?> checkIn({required CheckinParams params}) async {
     setLoading(true);
     final result = await iUserFacad.checkin(BaseParams(data: params));
 
@@ -339,7 +348,10 @@ class UserProvider extends ChangeNotifier {
 
         if (response.status == 1) {
           _checkinresponse = response;
-         // onSuccess?.call();
+          activeCheckinId = response.id;
+          activeCheckinTime = DateFormat('HH:mm').format(DateTime.now());
+          visitSequence++;
+          // onSuccess?.call();
         } else {
           _errorMessage = response.message;
         }
@@ -347,6 +359,57 @@ class UserProvider extends ChangeNotifier {
     );
 
     return _checkinresponse;
+  }
+
+  //============================check out========================================
+
+  Future<DefaultResponse?> checkOut(
+    BuildContext context, {
+    required CheckoutParams params,
+    VoidCallback? onSuccess,
+  }) async {
+    setLoading(true);
+    final result = await iUserFacad.checkout(BaseParams(data: params));
+    result.fold(
+      (failure) {
+        _errorMessage = failure.errorMsg.toString();
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
+        Logger.logError("Checkout failed : $_errorMessage");
+        notifyListeners();
+      },
+      (response) {
+        Logger.logSuccess("Checkout  success : ${response.toJson()}");
+        Logger.logSuccess("status :${response.status}");
+        setLoading(false);
+        notifyListeners();
+
+        if (response.status == 1) {
+          _checkoutresponse = response;
+          activeCheckinId = null;
+          activeCheckinTime = null;
+
+          notifyListeners();
+          onSuccess?.call();
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                response.message ?? "",
+                textAlign: TextAlign.center,
+              ),
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            ),
+          );
+        }
+      },
+    );
+    return _checkoutresponse;
   }
 
   //========================= Skip Reason =========================
@@ -378,52 +441,5 @@ class UserProvider extends ChangeNotifier {
       },
     );
     return _skipReasonResponse;
-  }
-
-  //============================check out========================================
-
-  Future<DefaultResponse?> checkOut(
-    BuildContext context, {
-    required CheckoutParams params,
-    VoidCallback? onSuccess,
-  }) async {
-    setLoading(true);
-    final result = await iUserFacad.checkout(BaseParams(data: params));
-    result.fold(
-      (failure) {
-        _errorMessage = failure.errorMsg.toString();
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
-        Logger.logError("Checkout failed : $_errorMessage");
-        notifyListeners();
-      },
-      (response) {
-        Logger.logSuccess("Checkout  success : ${response.toJson()}");
-        Logger.logSuccess("status :${response.status}");
-        setLoading(false);
-        notifyListeners();
-
-        if (response.status == 1) {
-          _checkoutresponse = response;
-          onSuccess?.call();
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                response.message ?? "",
-                textAlign: TextAlign.center,
-              ),
-              behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            ),
-          );
-        }
-      },
-    );
-    return _checkoutresponse;
   }
 }
