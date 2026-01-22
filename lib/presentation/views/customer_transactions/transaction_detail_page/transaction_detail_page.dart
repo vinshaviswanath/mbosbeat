@@ -12,6 +12,7 @@ import 'package:mpos_beat/presentation/views/customer_transactions/tabs/tab2_out
 import 'package:mpos_beat/presentation/views/customer_transactions/tabs/tab3_visit_history.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/transaction_detail_page/skip_dialog.dart';
 import 'package:mpos_beat/presentation/views/home_screen/transactions_container.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TransactionDetailpage extends StatefulWidget {
   final TransactionArgs data;
@@ -30,7 +31,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
     with SingleTickerProviderStateMixin {
   String? checkInTime;
   String? checkOutTime;
-
+  int? _checkInId;
   late TabController _tabController;
 
   @override
@@ -58,7 +59,6 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
     return "${now.hour}:${now.minute.toString().padLeft(2, '0')}";
   }
 
-  int? _checkInId;
   void _showSnack(BuildContext context, String message) {
     ScaffoldMessenger.of(context)
       ..clearSnackBars()
@@ -82,7 +82,10 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
   Future<void> _handleCheckIn(BuildContext context) async {
     final locationService = sl<LocationService>();
     final provider = context.read<UserProvider>();
-final tripId = provider.currentTripId;
+    final tripId = provider.currentTripId;
+    final prefs = sl<SharedPreferences>();
+    final tripID = prefs.getInt('current_trip_id');
+    print("tripID....$tripID");
 
     try {
       final position = await locationService.getCurrentLocation();
@@ -93,7 +96,8 @@ final tripId = provider.currentTripId;
       final now = DateTime.now();
       final response = await provider.checkIn(
         params: CheckinParams(
-          tripId: tripId??0,
+          tripId: (tripID != null && tripID != 0) ? tripID : tripId ?? 0,
+
           vistType: "Regular",
           visitSequence: 1,
           partyId: widget.party.ledgerId,
@@ -116,8 +120,7 @@ final tripId = provider.currentTripId;
           });
           _showSnack(context, response.message ?? "Check-in successful");
         }
-      } else if (response!.status == 0 &&
-          response.message == "Customer Already Check In") {
+      } else if (response!.status == 0) {
         setState(() {
           _checkInId = response.id;
           checkInTime = _getCurrentTime();
@@ -138,7 +141,7 @@ final tripId = provider.currentTripId;
   }) async {
     final locationService = sl<LocationService>();
     final provider = context.read<UserProvider>();
-final tripId = provider.currentTripId;
+    final tripId = provider.currentTripId;
     try {
       final position = await locationService.getCurrentLocation();
       final address = await locationService.getNormalAddress(
@@ -149,7 +152,7 @@ final tripId = provider.currentTripId;
       final response = await provider.checkOut(
         context,
         params: CheckoutParams(
-          tripId: tripId??0,
+          tripId: tripId ?? 0,
           time: DateFormat("yyyy-MM-dd'T'HH:mm:ss").format(now),
           latitude: position.latitude,
           longitude: position.longitude,
@@ -168,9 +171,7 @@ final tripId = provider.currentTripId;
           });
           _showSnack(context, response.message ?? "Check-out successful");
         }
-      } else if (response!.status == 0 &&
-          response.message ==
-              "Customer Already Check Out/ Invalid Check In ID") {
+      } else if (response!.status == 0) {
         setState(() {
           checkOutTime = _getCurrentTime();
           checkInTime = null;
@@ -223,7 +224,10 @@ final tripId = provider.currentTripId;
 
                 Navigator.pop(context);
 
-                await _handleCheckout(context, remarks: remarks);
+                await _handleCheckout(context, remarks: remarks).then((_) async{
+                  final prefs = sl<SharedPreferences>();
+                  await prefs.remove('current_trip_id');
+                },);
               },
               child: const Text("Submit"),
             ),
