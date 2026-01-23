@@ -37,12 +37,13 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
   @override
   void initState() {
     super.initState();
-    print("checkintime............................$checkInTime");
+
     _tabController = TabController(length: 3, vsync: this);
     _tabController.addListener(() {
       setState(() {});
     });
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      _restoreCheckInState();
       final provider = context.read<UserProvider>();
       provider.getSkipReasons(context);
     });
@@ -54,10 +55,10 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
     super.dispose();
   }
 
-  // String _getCurrentTime() {
-  //   final now = DateTime.now();
-  //   return "${now.hour}:${now.minute.toString().padLeft(2, '0')}";
-  // }
+  String _getCurrentTime() {
+    final now = DateTime.now();
+    return "${now.hour}:${now.minute.toString().padLeft(2, '0')}";
+  }
 
   void _showSnack(BuildContext context, String message) {
     ScaffoldMessenger.of(context)
@@ -78,15 +79,27 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
         ),
       );
   }
+ Future<int> _getNextVisitSequence(int ledgerId) async {
+  final prefs = sl<SharedPreferences>();
+  final key = 'visit_sequence_$ledgerId';
+  final lastSeq = prefs.getInt(key) ?? 0;
+  return lastSeq + 1;
+}
 
   Future<void> _handleCheckIn(BuildContext context) async {
+    final prefs = sl<SharedPreferences>();
+    final activePartyId = prefs.getInt('checkin_party_id');
+    if (activePartyId != null && activePartyId != widget.party.ledgerId) {
+      _showSnack(context, "You are currently checked in with another party");
+      return;
+    }
+final visitSequence = await _getNextVisitSequence(widget.party.ledgerId);
+
     final locationService = sl<LocationService>();
     final provider = context.read<UserProvider>();
     final tripId = provider.currentTripId;
-    final prefs = sl<SharedPreferences>();
     final tripID = prefs.getInt('current_trip_id');
     print("tripID....$tripID");
-
     try {
       final position = await locationService.getCurrentLocation();
       final address = await locationService.getNormalAddress(
@@ -99,7 +112,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
           tripId: (tripID != null && tripID != 0) ? tripID : tripId ?? 0,
 
           vistType: "Regular",
-          visitSequence: 1,
+          visitSequence: visitSequence,
           partyId: widget.party.ledgerId,
           partyName: widget.party.ledgerName ?? "",
           date: DateFormat('yyyy-MM-dd').format(DateTime.now()),
@@ -110,29 +123,47 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
           address: address,
         ),
       );
-
+      if (response == null) return;
       //    if (response != null) {
-      if (response!.status == 1) {
-        // setState(() {
-        //   _checkInId = response.id;
-        //   checkInTime = _getCurrentTime();
-        //   checkOutTime = null;
-        // });
-        _showSnack(context, response.message ?? "Check-in successful");
-        //  }
-      } else {
-        // setState(() {
-        //   _checkInId = response.id;
-        //   checkInTime = _getCurrentTime();
-        //   checkOutTime = null;
-        // });
+      if (response.status == 1 && response.id != null) {
+        setState(() {
+          _checkInId = response.id;
+          checkInTime = _getCurrentTime();
+          checkOutTime = null;
+        });
+        final prefs = sl<SharedPreferences>();
+        await prefs.setInt('checkin_party_id', widget.party.ledgerId);
+        await prefs.setInt('checkin_id', response.id!);
+        await prefs.setString('checkin_time', checkInTime!);
         _showSnack(context, response.message ?? "");
+        return;
       }
-      //  else {
-      //  _showSnack(context, response.message ?? "Check-in failed");
-      //   }
+
+      _showSnack(context, response.message ?? "");
+      return;
     } catch (e) {
       debugPrint("Check-in error: $e");
+      _showSnack(context, "Unable to check in. Please try again.");
+    }
+  }
+
+  Future<void> _restoreCheckInState() async {
+    final prefs = sl<SharedPreferences>();
+
+    final savedPartyId = prefs.getInt('checkin_party_id');
+    final savedCheckInId = prefs.getInt('checkin_id');
+    final savedCheckInTime = prefs.getString('checkin_time');
+
+    if (savedPartyId == widget.party.ledgerId &&
+        savedCheckInId != null &&
+        savedCheckInTime != null) {
+      setState(() {
+        _checkInId = savedCheckInId;
+        checkInTime = savedCheckInTime;
+        checkOutTime = null;
+      });
+    } else {
+      debugPrint("No active check-in to restore");
     }
   }
 
@@ -165,24 +196,23 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
       );
       //  if (response != null) {
       if (response!.status == 1) {
-        // setState(() {
-        //   checkOutTime = _getCurrentTime();
-        //   checkInTime = null;
-        //   _checkInId = null;
-        // });
-        _showSnack(context, response.message ?? "Check-out successful");
+        final prefs = sl<SharedPreferences>();
+  final key = 'visit_sequence_${widget.party.ledgerId}';
+
+  final lastSeq = prefs.getInt(key) ?? 0;
+  await prefs.setInt(key, lastSeq + 1);
+        setState(() {
+          checkOutTime = _getCurrentTime();
+          checkInTime = null;
+          _checkInId = null;
+        });
+        await prefs.remove('checkin_party_id');
+        await prefs.remove('checkin_id');
+        await prefs.remove('checkin_time');
+
+        _showSnack(context, response.message ?? "");
         // }
-      } else {
-        // setState(() {
-        //   checkOutTime = _getCurrentTime();
-        //   checkInTime = null;
-        //   _checkInId = null;
-        // });
-        _showSnack(context, response.message!);
       }
-      // else {
-      //    _showSnack(context, response.message ?? "Check-out failed");
-      //  }
     } catch (e) {
       debugPrint("Check-out error: $e");
     }
@@ -229,8 +259,8 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
                 await _handleCheckout(context, remarks: remarks).then((
                   _,
                 ) async {
-                  final prefs = sl<SharedPreferences>();
-                  await prefs.remove('current_trip_id');
+                  // final prefs = sl<SharedPreferences>();
+                  // await prefs.remove('current_trip_id');
                 });
               },
               child: const Text("Submit"),
