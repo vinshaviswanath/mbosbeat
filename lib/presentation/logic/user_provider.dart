@@ -288,7 +288,7 @@ class UserProvider extends ChangeNotifier {
       await clearRouteStarted();
 
       final prefs = await SharedPreferences.getInstance();
-      
+      await prefs.remove('current_trip_id');
     });
 
     _isEndingTrip = false;
@@ -434,9 +434,9 @@ class UserProvider extends ChangeNotifier {
       (response) async {
         _skipReasonResponse = response;
 
-        Logger.logSuccess(
-          "Skip reason List fetch successfull : ${response.toJson()}",
-        );
+        // Logger.logSuccess(
+        //   "Skip reason List fetch successfull : ${response.toJson()}",
+        // );
         notifyListeners();
       },
     );

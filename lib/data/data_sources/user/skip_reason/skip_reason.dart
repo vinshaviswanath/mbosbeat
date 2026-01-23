@@ -27,7 +27,7 @@ class SkipReason {
 
         if (response.isOk) {
           final data = SkipReasonResponse.fromJson(response.data);
-          Logger.logInfo("Skip Reason List : ${data.toJson()}");
+        //  Logger.logInfo("Skip Reason List : ${data.toJson()}");
           return data;
 
         }

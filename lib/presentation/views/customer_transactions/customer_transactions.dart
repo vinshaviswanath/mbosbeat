@@ -135,16 +135,20 @@ class _CustomerTransactionsState extends State<CustomerTransactions> {
                               children: [
                                 Row(
                                   children: [
-                                    Text(
-                                      party.ledgerName ?? "N/A",
-                                      style: context
-                                          .textStyle
-                                          .s12
-                                          .w600
-                                          .indigoBlue
-                                          .roboto,
+                                    Expanded(
+                                      child: Text(
+                                        party.ledgerName ?? "N/A",
+                                        maxLines: 2,
+                                        softWrap: true,
+                                        style: context
+                                            .textStyle
+                                            .s12
+                                            .w600
+                                            .indigoBlue
+                                            .roboto,
+                                      ),
                                     ),
-                                    Spacer(),
+                                    // Spacer(),
                                     Text(
                                       "Balance",
                                       style: context
@@ -165,15 +169,18 @@ class _CustomerTransactionsState extends State<CustomerTransactions> {
                                       color: ColorResources.bluishGray,
                                       size: 13,
                                     ),
-                                    Text(
-                                      "Contact Person : ${party.contactPerson}",
-                                      style: context
-                                          .textStyle
-                                          .s08
-                                          .dustyBlue
-                                          .roboto,
+                                    Expanded(
+                                      child: Text(
+                                        "Contact Person : ${party.contactPerson}",
+                                        style: context
+                                            .textStyle
+                                            .s08
+                                            .dustyBlue
+                                            .roboto,
+                                        softWrap: true,
+                                      ),
                                     ),
-                                    Spacer(),
+                                    //  Spacer(),
                                     Text(
                                       party.closingBalance.toString(),
                                       style: context
