@@ -1,8 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
-import 'package:mpos_beat/data/local_db/tables/partymaster_sync_tables.dart';
 import 'package:mpos_beat/data/models/data/party_MasterSync_data.dart';
-import 'package:mpos_beat/data/models/party_MasterSync_model.dart';
 extension PartyMasterMapper on PartyMasterListData {
   PartyMasterCompanion toCompanion() {
     return PartyMasterCompanion(
@@ -41,6 +39,7 @@ extension PartyMasterMapper on PartyMasterListData {
       onAccountValue: Value(onAccountValue.toDouble()),
       routeId: Value(routeId),
       routeName: Value(nameValues.reverse[routeName]),
+      priceList: Value(priceList),
       lastSyncOn: Value(lastSyncOn),
       syncAction: Value(syncActionValues.reverse[syncAction]),
     );

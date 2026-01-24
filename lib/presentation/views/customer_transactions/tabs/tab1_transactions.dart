@@ -3,10 +3,13 @@ import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/core/utils/constants.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/presentation/views/home_screen/transactions_container.dart';
+import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/transaction_order_booking_screen.dart';
 
 class Tab1Transactions extends StatefulWidget {
   final TransactionArgs data;
-  const Tab1Transactions({super.key, required this.data});
+  final PartyMasterData party;
+
+  const Tab1Transactions({super.key, required this.data, required this.party});
 
   @override
   State<Tab1Transactions> createState() => _Tab1TransactionsState();
@@ -102,7 +105,13 @@ class _Tab1TransactionsState extends State<Tab1Transactions> {
                   // NEXT STEP:
                   // route = voucher.routeName OR voucher.voucherType
                   if (voucher.voucherMenuName == "Sales Order") {
-                    context.pushNamed(AppRouterConst.transactionOrderBooking);
+                    context.pushNamed(
+                      AppRouterConst.transactionOrderBooking,
+                      extra: TransactionOrderBookingRouteArgs(
+                        data: widget.data,
+                        party: widget.party,
+                      ),
+                    );
                   } else if (voucher.voucherMenuName == "Sales") {
                     context.pushNamed(AppRouterConst.salesScreen);
                   } else if (voucher.voucherMenuName == "Sales Return") {

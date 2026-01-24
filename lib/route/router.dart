@@ -274,14 +274,20 @@ class AppRouter {
         path: "/transactionOrderBooking",
         name: AppRouterConst.transactionOrderBooking,
         builder: (context, state) {
-          return const TransactionOrderBookingScreen();
+          final args = state.extra as TransactionOrderBookingRouteArgs;
+          return TransactionOrderBookingScreen(
+            
+            data: args,
+          );
         },
       ),
+
       GoRoute(
         path: "/orderBookingAddItemScreen",
         name: AppRouterConst.orderBookingAddItemScreen,
         builder: (context, state) {
-          return const OrderBookingAddItemScreen();
+           final data = state.extra as TransactionOrderBookingRouteArgs;
+          return  OrderBookingAddItemScreen(data: data,);
         },
       ),
       GoRoute(

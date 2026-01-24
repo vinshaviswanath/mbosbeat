@@ -76,6 +76,8 @@ class Urls {
   static const String endTrip = "/UserModule/TripEnd";
   static const String skipReason = "/UserModule/GetSkipReasons";
   static const String updateCompanyProfile = "/api/Company/Profile";
-  static const String updateBankDetails = "/api/Company/UpdateBankDetails";
-  // static const String updateCompanyProfile = "/api/Company/UpdateBankDetails";
+  static const String updateBankDetails = "/api/Company/UpdateBankDetails"; 
+  static const String itemMasterSync = "/API/StockItem/GetAll";
+  static const String priceLevel = "/API/StockItem/PriceLevel";
+  static const String itemPriceDetails = "/API/StockItem/GetAllItemPrice";
 }

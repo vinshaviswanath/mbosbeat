@@ -48,7 +48,10 @@ import 'package:drift/native.dart';
 import 'package:mpos_beat/data/local_db/daos/company_settings_dao/company_settings_dao.dart';
 import 'package:mpos_beat/data/local_db/daos/godown_vehicles_dao/godown_vehicle_dao.dart';
 import 'package:mpos_beat/data/local_db/daos/godown_voucher_type_dao/godown_voucher_type_dao.dart';
+import 'package:mpos_beat/data/local_db/daos/item_master_dao/item_master_dao.dart';
+import 'package:mpos_beat/data/local_db/daos/item_price_details_dao/item_price_details_dao.dart';
 import 'package:mpos_beat/data/local_db/daos/partymaster_sync_dao/party_master_sync_dao.dart';
+import 'package:mpos_beat/data/local_db/daos/price_lavel_dao/price_level_sync_dao.dart';
 import 'package:mpos_beat/data/local_db/daos/route_dao/route_dao.dart';
 import 'package:mpos_beat/data/local_db/daos/route_voucher_type_dao/route_voucher_type_dao.dart';
 import 'package:mpos_beat/data/local_db/daos/user_setting_dao/user_setting_dao.dart';
@@ -56,7 +59,10 @@ import 'package:mpos_beat/data/local_db/daos/voucher_type_dao/voucher_type_dao.d
 import 'package:mpos_beat/data/local_db/tables/company_settings_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/godown_vehicles_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/godown_voucher_types_tables.dart';
+import 'package:mpos_beat/data/local_db/tables/item_master_sync_tables.dart';
+import 'package:mpos_beat/data/local_db/tables/item_price_details_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/partymaster_sync_tables.dart';
+import 'package:mpos_beat/data/local_db/tables/price_level_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/route_voucher_types_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/routes_table.dart';
 import 'package:mpos_beat/data/local_db/tables/user_settings_tables.dart';
@@ -87,6 +93,9 @@ part 'app_db.g.dart';
     GodownVehicles,
     GodownRoutes,
     PartyMaster,
+    ItemMaster,
+    PriceLevelsTable,
+    ItemPriceDetailsTables,
   ],
   daos: [
     CompanyDao,
@@ -100,13 +109,16 @@ part 'app_db.g.dart';
     GodownVehicleDao,
     RouteDao,
     PartyMasterDao,
+    ItemMasterDao,
+    PriceLevelDao,
+    PriceListDetailsDao,
   ],
 )
 class AppDb extends _$AppDb {
   AppDb() : super(_openConnection());
 
   @override
-  int get schemaVersion => 13;
+  int get schemaVersion => 18;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -155,18 +167,42 @@ class AppDb extends _$AppDb {
         await m.createTable(partyMaster);
       }
       if (from < 13) {
-      await m.alterTable(
-        TableMigration(
-          companies,
-          newColumns: [
-            companies.companyLogoUrl,
-            companies.companyProfileUpdated,
-            companies.companyBankUpdated,
-            companies.companyRegUpdated,
-          ],
-        ),
-      );
-    }
+        await m.alterTable(
+          TableMigration(
+            companies,
+            newColumns: [
+              companies.companyLogoUrl,
+              companies.companyProfileUpdated,
+              companies.companyBankUpdated,
+              companies.companyRegUpdated,
+            ],
+          ),
+        );
+      }
+      if (from < 14) {
+        await m.createTable(itemMaster);
+      }
+      if (from < 15) {
+        await m.createTable(priceLevelsTable);
+      }
+      if (from < 16) {
+        await m.createTable(itemPriceDetailsTables);
+      }
+      if (from < 17) {
+        await m.deleteTable(itemPriceDetailsTables.actualTableName);
+        await m.createTable(itemPriceDetailsTables);
+      }
+      if (from < 18) {
+  await m.alterTable(
+    TableMigration(
+      partyMaster,
+      newColumns: [
+        partyMaster.priceList,
+      ],
+    ),
+  );
+}
+
     },
   );
 }

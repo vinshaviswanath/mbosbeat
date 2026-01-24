@@ -16,6 +16,7 @@ import 'package:mpos_beat/l10n/app_localizations.dart';
 import 'package:mpos_beat/presentation/logic/authentication_provider.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/presentation/logic/customer_transaction_provider.dart';
+import 'package:mpos_beat/presentation/logic/item_filter_provider.dart';
 import 'package:mpos_beat/presentation/logic/user_management_provider.dart';
 import 'package:mpos_beat/presentation/logic/user_provider.dart';
 import 'package:mpos_beat/route/router.dart';
@@ -55,6 +56,10 @@ class MyApp extends StatelessWidget {
           create: (_) => UserProvider(sl<IUserFacad>())..load(),
         ),
         ChangeNotifierProvider.value(value: sl<NetworkProvider>()),
+ChangeNotifierProvider(
+  create: (_) => ItemFilterProvider(db.itemMasterDao),
+),
+
 
         //  StreamProvider<List<CompanySettingsListData>>(
         //   create: (context) =>

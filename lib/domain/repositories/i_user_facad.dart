@@ -1,12 +1,15 @@
-import 'package:fpdart/fpdart.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
 import 'package:mpos_beat/core/utils/typedefs.dart';
+import 'package:mpos_beat/data/models/item_master_sync_model.dart';
+import 'package:mpos_beat/data/models/item_price_details_model.dart';
 import 'package:mpos_beat/data/models/party_MasterSync_model.dart';
+import 'package:mpos_beat/data/models/price_level_model.dart';
 import 'package:mpos_beat/data/models/response.dart';
 import 'package:mpos_beat/data/models/skip_reason_response.dart';
 import 'package:mpos_beat/domain/request/attendance_params.dart';
 import 'package:mpos_beat/domain/request/checkin_params.dart';
 import 'package:mpos_beat/domain/request/checkout_params.dart';
+import 'package:mpos_beat/domain/request/item_master_quary_params.dart';
 import 'package:mpos_beat/domain/request/party_MasterSync_params.dart';
 import 'package:mpos_beat/domain/request/trip_end_params.dart';
 import 'package:mpos_beat/domain/request/trip_start_params.dart';
@@ -43,6 +46,20 @@ interface class IUserFacad {
   }
 
   ResultFuture<SkipReasonResponse> skipReason() {
+    throw UnimplementedError();
+  }
+
+  ResultFuture<ItemMasterSyncModel> getItemMaster(
+    BaseParams<ItemMasterQueryParams> params,
+  ) {
+    throw UnimplementedError();
+  }
+
+  ResultFuture<PriceLevelModel> getPriceLevels(int companyId) {
+    throw UnimplementedError();
+  }
+
+  ResultFuture<ItemPriceDetailsModel> getItempriceDetails(int companyId) {
     throw UnimplementedError();
   }
 }

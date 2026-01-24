@@ -3,6 +3,7 @@ import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/service/location_services.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
+import 'package:mpos_beat/data/models/party_MasterSync_model.dart';
 import 'package:mpos_beat/domain/request/checkin_params.dart';
 import 'package:mpos_beat/domain/request/checkout_params.dart';
 import 'package:mpos_beat/presentation/logic/user_provider.dart';
@@ -39,7 +40,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
 
     _tabController = TabController(length: 3, vsync: this);
     _tabController.addListener(() {
-      setState(() {}); 
+      setState(() {});
     });
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final provider = context.read<UserProvider>();
@@ -118,9 +119,8 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
       } else if (response!.status == 0 &&
           response.message == "Customer Already Check In") {
         setState(() {
-          _checkInId = response.id; 
-          checkInTime =
-              _getCurrentTime(); 
+          _checkInId = response.id;
+          checkInTime = _getCurrentTime();
           checkOutTime = null;
         });
         _showSnack(context, response.message!);
@@ -163,14 +163,13 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
           setState(() {
             checkOutTime = _getCurrentTime();
             checkInTime = null;
-            _checkInId = null; 
+            _checkInId = null;
           });
           _showSnack(context, response.message ?? "Check-out successful");
         }
       } else if (response!.status == 0 &&
           response.message ==
               "Customer Already Check Out/ Invalid Check In ID") {
-  
         setState(() {
           checkOutTime = _getCurrentTime();
           checkInTime = null;
@@ -184,63 +183,59 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
       debugPrint("Check-out error: $e");
     }
   }
-Future<void> _showCheckoutRemarksDialog(BuildContext context) async {
-  final TextEditingController remarksController = TextEditingController();
 
-  await showDialog(
-    context: context,
-    barrierDismissible: false,
-    builder: (context) {
-      return AlertDialog(
-        title: Text(
-          "Checkout Remarks",
-          style: context.textStyle.s14.roboto.bold,
-        ),
-        content: TextField(
-          controller: remarksController,
-          maxLines: 3,
-          decoration: InputDecoration(
-            hintText: "Enter remarks",
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
+  Future<void> _showCheckoutRemarksDialog(BuildContext context) async {
+    final TextEditingController remarksController = TextEditingController();
+
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            "Checkout Remarks",
+            style: context.textStyle.s14.roboto.bold,
+          ),
+          content: TextField(
+            controller: remarksController,
+            maxLines: 3,
+            decoration: InputDecoration(
+              hintText: "Enter remarks",
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
             ),
           ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text("Cancel"),
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              final remarks = remarksController.text.trim();
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("Cancel"),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final remarks = remarksController.text.trim();
 
-              if (remarks.isEmpty) {
-                _showSnack(context, "Please enter remarks");
-                return;
-              }
+                if (remarks.isEmpty) {
+                  _showSnack(context, "Please enter remarks");
+                  return;
+                }
 
-              Navigator.pop(context);
+                Navigator.pop(context);
 
-              await _handleCheckout(
-                context,
-                remarks: remarks,
-              );
-            },
-            child: const Text("Submit"),
-          ),
-        ],
-      );
-    },
-  );
-}
-
-
+                await _handleCheckout(context, remarks: remarks);
+              },
+              child: const Text("Submit"),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final applocalization = context.l10n;
-
+    Logger.logInfo("Party List :: ${widget.party.priceList}");
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -400,7 +395,7 @@ Future<void> _showCheckoutRemarksDialog(BuildContext context) async {
                         GestureDetector(
                           onTap: () async {
                             if (checkInTime != null && checkOutTime == null) {
-                                  await _showCheckoutRemarksDialog(context); 
+                              await _showCheckoutRemarksDialog(context);
                             } else if (checkInTime == null &&
                                 checkOutTime == null) {
                               skipDialog(context);
@@ -548,7 +543,7 @@ Future<void> _showCheckoutRemarksDialog(BuildContext context) async {
               child: TabBarView(
                 controller: _tabController,
                 children: [
-                  Tab1Transactions(data: widget.data),
+                  Tab1Transactions(data: widget.data,party: widget.party,),
                   Tab2Outstanding(),
                   Tab3VisitHistory(),
                 ],

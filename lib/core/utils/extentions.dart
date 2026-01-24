@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:mpos_beat/core/param/param_builder.dart';
 import 'package:mpos_beat/core/theme/theme/theme_provider.dart';
 import 'package:mpos_beat/core/utils/enums.dart';
 import 'package:flutter/material.dart';
@@ -111,6 +112,14 @@ extension StreamedResponseX on http.StreamedResponse {
     return 'Unknown error';
   }
 }
+
+extension QueryMapX on Map<String, dynamic> {
+  Map<String, String> toQueryMap() {
+    return map((k, v) => MapEntry(k, v.toString()));
+  }
+}
+
+
 
 // extension StreamedResponseX on http.StreamedResponse {
 //   Future<http.Response> toResponse() async {
