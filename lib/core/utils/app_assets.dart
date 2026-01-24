@@ -71,6 +71,8 @@ class AppAssets {
   static const noCompanies = "$baseDir/noCompanies.svg";
   static const logout2 = "$baseDir/logout2.svg";
   static const switchIcon = "$baseDir/switch.svg";
+  static const qr = "$baseDir/qr.svg";
+
 
 
   //Animations

@@ -1,9 +1,27 @@
+import 'package:intl/intl.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
+import 'package:mpos_beat/presentation/logic/user_provider.dart';
+import 'package:mpos_beat/presentation/views/home_screen/transactions_container.dart';
+import 'package:mpos_beat/presentation/views/transactions/sales_return/sales_return.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/widgets/end_to_end_text_widget.dart';
 
+
+class TransactionOrderBookingRouteArgs {
+  final PartyMasterData party;
+  final TransactionArgs data;
+
+  TransactionOrderBookingRouteArgs({
+    required this.party,
+    required this.data,
+  });
+}
+
 class TransactionOrderBookingScreen extends StatefulWidget {
-  const TransactionOrderBookingScreen({super.key});
+  final TransactionOrderBookingRouteArgs data;
+
+  const TransactionOrderBookingScreen({super.key,  required this.data});
 
   @override
   State<TransactionOrderBookingScreen> createState() =>
@@ -13,47 +31,26 @@ class TransactionOrderBookingScreen extends StatefulWidget {
 class _TransactionOrderBookingScreenState
     extends State<TransactionOrderBookingScreen> {
   @override
+  void initState() {
+    super.initState();
+    context.read<UserProvider>().attachDb(context.read<AppDb>());
+  }
+
+  @override
+  void didUpdateWidget(covariant TransactionOrderBookingScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.data.party.ledgerId != widget.data.party.ledgerId) {
+      context.read<UserProvider>().clearSelectedPriceLevel();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // final List<Map<String, dynamic>> data = [
-    //   {
-    //     "product": "ASD 16 Rice 10Kg",
-    //     "qty": "5.0 Qls",
-    //     "rate": "3900.00 Qls",
-    //     "amount": "27300.00",
-    //     "damaged": "2.0 Qls",
-    //     "free": "1.0 Qls",
-    //     "saleable": "5.0 Qls",
-    //   },
-    //   {
-    //     "product": "ASD 16 Rice 10Kg",
-    //     "qty": "5.0 Qls",
-    //     "rate": "3900.00 Qls",
-    //     "amount": "5300.00",
-    //     "damaged": "2.0 Qls",
-    //     "free": "1.0 Qls",
-    //     "saleable": "5.0 Qls",
-    //   },
-    //   {
-    //     "product": "ASD 16 Rice 10Kg",
-    //     "qty": "5.0 Qls",
-    //     "rate": "3900.00 Qls",
-    //     "amount": "10300.00",
-    //     "damaged": "2.0 Qls",
-    //     "free": "1.0 Qls",
-    //     "saleable": "5.0 Qls",
-    //   },
-    //   {
-    //     "product": "ASD 16 Rice 10Kg",
-    //     "qty": "5.0 Qls",
-    //     "rate": "3900.00 Qls",
-    //     "amount": "6700.00",
-    //     "damaged": "2.0 Qls",
-    //     "free": "1.0 Qls",
-    //     "saleable": "5.0 Qls",
-    //   },
-    // ];
-    final List<String> priceOptions = ["Select Price"];
-    String selectedValue = priceOptions[0];
+    // final List<String> priceOptions = ["Select Price"];
+    // String selectedValue = priceOptions[0];
+
+    final party = widget.data.party;
     final appLocalizations = context.l10n;
     return Scaffold(
       appBar: AppBar(
@@ -81,10 +78,17 @@ class _TransactionOrderBookingScreenState
               BlendMode.srcIn,
             ),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.qr_code, size: context.getSize.height * 0.022),
+          w10,
+          SvgPicture.asset(
+            AppAssets.qr,
+            height: context.getSize.height * 0.022,
+            colorFilter: const ColorFilter.mode(
+              ColorResources.indigoBlue,
+              BlendMode.srcIn,
+            ),
           ),
+
+          w10,
         ],
       ),
       body: CustomScrollView(
@@ -100,13 +104,14 @@ class _TransactionOrderBookingScreenState
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Alackal Stores, Kuruppamthara",
+                        "${party.ledgerName}",
                         style: context.textStyle.s12.w500.indigoBlue.roboto,
                       ),
                       GestureDetector(
                         onTap: () {
                           context.pushNamed(
                             AppRouterConst.orderBookingAddItemScreen,
+                            extra: TransactionOrderBookingRouteArgs(data: widget.data.data,party: widget.data.party)
                           );
                         },
                         child: Container(
@@ -129,9 +134,11 @@ class _TransactionOrderBookingScreenState
                     ],
                   ),
                   h4,
-                  const EndToEndTextWidget(
-                    text1: "GST No. JDGSJ2468246572",
-                    text2: "29-07-2024",
+                  EndToEndTextWidget(
+                    text1: party.countryId == 1
+                        ? "GST No. ${party.taxNumber}"
+                        : "VAT No. ${party.taxNumber}",
+                    text2: DateFormat('dd-MM-yyyy').format(DateTime.now()),
                   ),
                   h4,
                   EndToEndTextWidget(
@@ -149,49 +156,101 @@ class _TransactionOrderBookingScreenState
                             style: context.textStyle.s09.w400.dustyBlue.roboto,
                           ),
                           w8,
-                          Container(
-                            height: context.getSize.height * 0.022,
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            decoration: BoxDecoration(
-                              color: ColorResources.lightGray,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: DropdownButtonHideUnderline(
-                              child: DropdownButton<String>(
-                                value: selectedValue,
-                                icon: Padding(
-                                  padding: const EdgeInsets.only(left: 80),
-                                  child: Icon(
-                                    Icons.keyboard_arrow_down,
-                                    size: context.getSize.height * 0.016,
-                                    color: ColorResources.indigoBlue,
-                                  ),
+                          Consumer<UserProvider>(
+                            builder: (context, userProvider, _) {
+                              return StreamBuilder<List<PriceLevelsTableData>>(
+                                stream: userProvider.priceLevelsStream(
+                                  partyPriceListId: widget.data.party.priceList,
                                 ),
-                                style:
-                                    context.textStyle.s09.w300.dustyBlue.roboto,
-                                items: priceOptions
-                                    .map(
-                                      (e) => DropdownMenuItem(
-                                        value: e,
-                                        child: Text(
-                                          e,
-                                          style: const TextStyle(fontSize: 10),
-                                        ),
+                                builder: (context, snapshot) {
+                                  if (!snapshot.hasData) {
+                                    return const SizedBox(
+                                      height: 20,
+                                      width: 20,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
                                       ),
-                                    )
-                                    .toList(),
-                                onChanged: (val) {
-                                  setState(() {
-                                    selectedValue = val!;
-                                  });
+                                    );
+                                  }
+
+                                  final priceLevels = snapshot.data!;
+
+                                  /// ✅ Selected value must EXIST in the list
+                                  final selectedValue =
+                                      priceLevels.any(
+                                        (e) =>
+                                            e.id ==
+                                            userProvider.selectedPriceLevelId,
+                                      )
+                                      ? priceLevels.firstWhere(
+                                          (e) =>
+                                              e.id ==
+                                              userProvider.selectedPriceLevelId,
+                                        )
+                                      : null;
+
+                                  return Container(
+                                    height: context.getSize.height * 0.022,
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 8,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: ColorResources.lightGray,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButton<PriceLevelsTableData?>(
+                                        value: selectedValue,
+                                        hint: Text(
+                                          "Select Price",
+                                          style: context
+                                              .textStyle
+                                              .s09
+                                              .w300
+                                              .dustyBlue
+                                              .roboto,
+                                        ),
+                                        icon: Icon(
+                                          Icons.keyboard_arrow_down,
+                                          size: context.getSize.height * 0.016,
+                                          color: ColorResources.indigoBlue,
+                                        ),
+                                        items: priceLevels.map((e) {
+                                          return DropdownMenuItem<
+                                            PriceLevelsTableData
+                                          >(
+                                            value: e,
+                                            child: Text(
+                                              e.priceLevel ?? '',
+                                              style: const TextStyle(
+                                                fontSize: 10,
+                                              ),
+                                            ),
+                                          );
+                                        }).toList(),
+
+                                        /// 🔒 Disable dropdown if only one price level
+                                        onChanged: priceLevels.length == 1
+                                            ? null
+                                            : (value) {
+                                                if (value != null) {
+                                                  userProvider
+                                                      .setSelectedPriceLevel(
+                                                        value,
+                                                      );
+                                                }
+                                              },
+                                      ),
+                                    ),
+                                  );
                                 },
-                              ),
-                            ),
+                              );
+                            },
                           ),
                         ],
                       ),
                       Text(
-                        "56,874.00 Cr",
+                        "${party.closingBalance}",
                         style: context.textStyle.s12.bold.indigoBlue.roboto,
                       ),
                     ],

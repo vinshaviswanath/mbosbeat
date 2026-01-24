@@ -78,6 +78,13 @@ import '../../data/data_sources/company_creation/update_registraion_details/upda
     as _i69;
 import '../../data/data_sources/user/attendance_marking/attendanceMarking.dart'
     as _i891;
+import '../../data/data_sources/user/item_master_sync/item_master_sync.dart'
+    as _i393;
+import '../../data/data_sources/user/item_price_details/get_item_price_details.dart'
+    as _i141;
+import '../../data/data_sources/user/party_MasterSync/party_MasterSync.dart'
+    as _i204;
+import '../../data/data_sources/user/price_level/get_price_level.dart' as _i168;
 import '../../data/data_sources/user/skip_reason/skip_reason.dart' as _i152;
 import '../../data/data_sources/user/trip_end/trip_end.dart' as _i271;
 import '../../data/data_sources/user/trip_start/trip_start.dart' as _i796;
@@ -109,8 +116,6 @@ import '../../data/data_sources/user_management/get_companies/get_compamies.dart
     as _i213;
 import '../../data/data_sources/user_management/get_users_list/get_users_list.dart'
     as _i165;
-import '../../data/data_sources/user_management/party_MasterSync/party_MasterSync.dart'
-    as _i860;
 import '../../data/data_sources/user_management/reset_user_password/reset_user_password.dart'
     as _i762;
 import '../../data/data_sources/user_management/user_designation_list/user_designation_list.dart'
@@ -266,8 +271,16 @@ Future<_i174.GetIt> init(
       appDb: gh<_i264.AppDb>(),
     ),
   );
-  gh.lazySingleton<_i860.PartyMasterSync>(
-    () => _i860.PartyMasterSync(
+  gh.lazySingleton<_i393.ItemMasterSync>(
+    () => _i393.ItemMasterSync(
+      gh<_i976.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i460.SharedPreferences>(),
+      appDb: gh<_i264.AppDb>(),
+    ),
+  );
+  gh.lazySingleton<_i204.PartyMasterSync>(
+    () => _i204.PartyMasterSync(
       gh<_i976.HttpClient>(),
       gh<_i530.RunSafely>(),
       gh<_i460.SharedPreferences>(),
@@ -561,6 +574,20 @@ Future<_i174.GetIt> init(
       gh<_i460.SharedPreferences>(),
     ),
   );
+  gh.lazySingleton<_i141.GetItemPriceDetails>(
+    () => _i141.GetItemPriceDetails(
+      gh<_i976.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i264.AppDb>(),
+    ),
+  );
+  gh.lazySingleton<_i168.GetPriceLevel>(
+    () => _i168.GetPriceLevel(
+      gh<_i976.HttpClient>(),
+      gh<_i530.RunSafely>(),
+      gh<_i264.AppDb>(),
+    ),
+  );
   gh.lazySingleton<_i483.ICompanyCreationFacad>(
     () => _i322.ICompanyCreationFacadImpl(
       gh<_i665.CompanyInfo>(),
@@ -633,12 +660,15 @@ Future<_i174.GetIt> init(
       gh<_i530.RunSafely>(),
       gh<_i460.SharedPreferences>(),
       gh<_i891.AttendanceMarking>(),
-      gh<_i860.PartyMasterSync>(),
+      gh<_i204.PartyMasterSync>(),
       gh<_i1053.CheckinDatasource>(),
       gh<_i435.CheckoutDatasource>(),
       gh<_i796.TripStart>(),
       gh<_i271.TripEnd>(),
       gh<_i152.SkipReason>(),
+      gh<_i393.ItemMasterSync>(),
+      gh<_i168.GetPriceLevel>(),
+      gh<_i141.GetItemPriceDetails>(),
     ),
   );
   gh.lazySingleton<_i590.IAuthenticationFacad>(

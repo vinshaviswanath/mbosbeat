@@ -2,11 +2,14 @@ import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/widgets/order_details_widget.dart';
 
 class StockCard extends StatefulWidget {
+  final int itemId; // ✅ ADD
+  final int priceListId; // ✅ ADD
   final String name;
   final int stock;
   final double mrp;
   final double tax;
   final double inclRate;
+  final int companyId;
 
   const StockCard({
     super.key,
@@ -15,6 +18,9 @@ class StockCard extends StatefulWidget {
     required this.mrp,
     required this.tax,
     required this.inclRate,
+    required this.companyId,
+    required this.itemId,
+    required this.priceListId,
   });
 
   @override
@@ -69,21 +75,20 @@ class _StockCardState extends State<StockCard> {
                   ),
                   Row(
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            appLocalizations.stock_card_mrp,
-                            style: context.textStyle.rosePink.s09.w400.roboto,
-                          ),
-                          Text(
-                            widget.mrp.toStringAsFixed(0),
-                            style: context.textStyle.rosePink.s09.w400.roboto,
-                          ),
-                        ],
-                      ),
+                      // Column(
+                      //   crossAxisAlignment: CrossAxisAlignment.start,
+                      //   children: [
+                      //     Text(
+                      //       appLocalizations.stock_card_mrp,
+                      //       style: context.textStyle.rosePink.s09.w400.roboto,
+                      //     ),
+                      //     Text(
+                      //       widget.mrp.toStringAsFixed(0),
+                      //       style: context.textStyle.rosePink.s09.w400.roboto,
+                      //     ),
+                      //   ],
+                      // ),
                       w18,
-
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -136,7 +141,18 @@ class _StockCardState extends State<StockCard> {
               ),
             ],
           ),
-          if (_showDetails) const OrderDetailsWidget(),
+          if (_showDetails)
+            OrderDetailsWidget(
+              companyId: widget.companyId,
+              itemId: widget.itemId,
+              priceListId: widget.priceListId,
+              inclRate: widget.inclRate,
+              onDelete: () {
+                setState(() {
+                  _showDetails = false;
+                });
+              },
+            ),
         ],
       ),
     );

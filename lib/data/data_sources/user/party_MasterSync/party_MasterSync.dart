@@ -1,4 +1,3 @@
-import 'package:drift/drift.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mpos_beat/core/base/run_safely.dart';
 import 'package:mpos_beat/core/exception/custom_exception.dart';

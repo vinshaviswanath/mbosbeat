@@ -3,6 +3,7 @@ import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/service/location_services.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
+import 'package:mpos_beat/data/models/party_MasterSync_model.dart';
 import 'package:mpos_beat/domain/request/checkin_params.dart';
 import 'package:mpos_beat/domain/request/checkout_params.dart';
 import 'package:mpos_beat/presentation/logic/user_provider.dart';
@@ -160,6 +161,8 @@ final visitSequence = await _getNextVisitSequence(widget.party.ledgerId);
       setState(() {
         _checkInId = savedCheckInId;
         checkInTime = savedCheckInTime;
+          _checkInId = response.id;
+          checkInTime = _getCurrentTime();
         checkOutTime = null;
       });
     } else {
@@ -204,7 +207,7 @@ final visitSequence = await _getNextVisitSequence(widget.party.ledgerId);
         setState(() {
           checkOutTime = _getCurrentTime();
           checkInTime = null;
-          _checkInId = null;
+             _checkInId = null;
         });
         await prefs.remove('checkin_party_id');
         await prefs.remove('checkin_id');
@@ -212,6 +215,19 @@ final visitSequence = await _getNextVisitSequence(widget.party.ledgerId);
 
         _showSnack(context, response.message ?? "");
         // }
+          _showSnack(context, response.message ?? "Check-out successful");
+        }
+      } else if (response!.status == 0 &&
+          response.message ==
+              "Customer Already Check Out/ Invalid Check In ID") {
+        setState(() {
+          checkOutTime = _getCurrentTime();
+          checkInTime = null;
+          _checkInId = null;
+        });
+        _showSnack(context, response.message!);
+      } else {
+        _showSnack(context, response.message ?? "Check-out failed");
       }
     } catch (e) {
       debugPrint("Check-out error: $e");
@@ -262,6 +278,7 @@ final visitSequence = await _getNextVisitSequence(widget.party.ledgerId);
                   // final prefs = sl<SharedPreferences>();
                   // await prefs.remove('current_trip_id');
                 });
+                await _handleCheckout(context, remarks: remarks);
               },
               child: const Text("Submit"),
             ),
@@ -275,6 +292,8 @@ final visitSequence = await _getNextVisitSequence(widget.party.ledgerId);
   Widget build(BuildContext context) {
     final applocalization = context.l10n;
     final appDb = sl<AppDb>();
+    return Scaffold(
+    Logger.logInfo("Party List :: ${widget.party.priceList}");
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -600,7 +619,7 @@ final visitSequence = await _getNextVisitSequence(widget.party.ledgerId);
               child: TabBarView(
                 controller: _tabController,
                 children: [
-                  Tab1Transactions(data: widget.data),
+                  Tab1Transactions(data: widget.data,party: widget.party,),
                   Tab2Outstanding(),
                   Tab3VisitHistory(),
                 ],

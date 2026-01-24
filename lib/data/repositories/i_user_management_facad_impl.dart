@@ -15,7 +15,7 @@ import 'package:mpos_beat/data/data_sources/user_management/delete_designation/d
 import 'package:mpos_beat/data/data_sources/user_management/delete_user/delete_user.dart';
 import 'package:mpos_beat/data/data_sources/user_management/get_companies/get_compamies.dart';
 import 'package:mpos_beat/data/data_sources/user_management/get_users_list/get_users_list.dart';
-import 'package:mpos_beat/data/data_sources/user_management/party_MasterSync/party_MasterSync.dart';
+import 'package:mpos_beat/data/data_sources/user/party_MasterSync/party_MasterSync.dart';
 import 'package:mpos_beat/data/data_sources/user_management/reset_user_password/reset_user_password.dart';
 import 'package:mpos_beat/data/data_sources/user_management/user_designation_list/user_designation_list.dart';
 import 'package:mpos_beat/data/data_sources/user_management/user_settings/user_settings_list.dart';

@@ -34,7 +34,7 @@ class PartyMasterListData {
   double onAccountValue;
   int routeId;
   Name routeName;
-  dynamic priceList;
+  int priceList;
   DateTime lastSyncOn;
   SyncAction syncAction;
 

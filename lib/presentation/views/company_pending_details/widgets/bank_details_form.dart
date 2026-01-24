@@ -1,3 +1,4 @@
+import 'package:flutter_dropdown_alert/alert_controller.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/domain/request/bank_details_params.dart';
@@ -7,7 +8,12 @@ import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 
 class BankDetailsForm extends StatefulWidget {
   final CompanyViewList? company;
-  const BankDetailsForm({super.key, required this.company});
+  final VoidCallBack onUpdate;
+  const BankDetailsForm({
+    super.key,
+    required this.company,
+    required this.onUpdate,
+  });
 
   @override
   State<BankDetailsForm> createState() => _BankDetailsFormState();
@@ -248,20 +254,24 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
                   onTap: () {
                     final provider = context.read<CompanyCreationProvider>();
                     final company = widget.company;
-                    provider.updateBankDetails(
-                      context: context,
-                      params: BankDetailsParams(
-                        companyId: company?.id,
-                        bankName: bankNameController.text,
-                        branch: branchNameController.text,
-                        accountNumber: accNoController.text,
-                        ifscCode: ifscController.text,
-                        hasUpi: isUpiEnabled,
-                        upiAddress: upiPaymentAddressController.text,
-                        upiName: "",
-                        currency: currencyController.text,
-                      ),
-                    );
+                    provider
+                        .updateBankDetails(
+                          context: context,
+                          params: BankDetailsParams(
+                            companyId: company?.id,
+                            bankName: bankNameController.text,
+                            branch: branchNameController.text,
+                            accountNumber: accNoController.text,
+                            ifscCode: ifscController.text,
+                            hasUpi: isUpiEnabled,
+                            upiAddress: upiPaymentAddressController.text,
+                            upiName: "",
+                            currency: currencyController.text,
+                          ),
+                        )
+                        .then((value) {
+                          widget.onUpdate.call();
+                        });
                   },
                   width: context.getSize.width * 1 / 2.2,
                   buttonText: "Save",

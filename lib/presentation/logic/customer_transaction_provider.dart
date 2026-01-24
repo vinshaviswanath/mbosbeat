@@ -1,19 +1,30 @@
 import 'package:mpos_beat/core/utils/imports.dart';
 
 class CustomerTransactionProvider extends ChangeNotifier {
-  int _orderQty = 0;
-  int get orderQty => _orderQty;
+  final Map<int, int> _itemQty = {}; // stockItemId → qty
 
-  void incrementQty() {
-    _orderQty++;
+  int getQty(int itemId) => _itemQty[itemId] ?? 1;
+
+  void incrementQty(int itemId) {
+    _itemQty[itemId] = getQty(itemId) + 1;
     notifyListeners();
   }
 
-  void decrementQty() {
-    if (_orderQty > 0) {
-      _orderQty--;
+  void decrementQty(int itemId) {
+    final current = getQty(itemId);
+    if (current > 1) {
+      _itemQty[itemId] = current - 1;
       notifyListeners();
     }
   }
- 
+
+  void resetQty(int itemId) {
+    _itemQty[itemId] = 1;
+    notifyListeners();
+  }
+
+  void clear() {
+    _itemQty.clear();
+    notifyListeners();
+  }
 }

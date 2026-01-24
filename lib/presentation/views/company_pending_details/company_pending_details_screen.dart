@@ -94,12 +94,19 @@ class _CompanyPendingDetailsScreenState
                       company: widget.company,
                       onUpdate: () {
                         setState(() {
-                          expandedIndex = -1;
+                          expandedIndex = 1;
                         });
                       },
                     )
                   : expandedIndex == 1
-                  ? BankDetailsForm(company: widget.company)
+                  ? BankDetailsForm(
+                      company: widget.company,
+                      onUpdate: () {
+                        setState(() {
+                          expandedIndex = 2;
+                        });
+                      },
+                    )
                   : RegistrationDetailsForm(company: widget.company),
             ),
           );

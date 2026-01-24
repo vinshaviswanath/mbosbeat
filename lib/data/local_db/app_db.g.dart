@@ -8877,6 +8877,17 @@ class $PartyMasterTable extends PartyMaster
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _priceListMeta = const VerificationMeta(
+    'priceList',
+  );
+  @override
+  late final GeneratedColumn<int> priceList = GeneratedColumn<int>(
+    'price_list',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _lastSyncOnMeta = const VerificationMeta(
     'lastSyncOn',
   );
@@ -8936,6 +8947,7 @@ class $PartyMasterTable extends PartyMaster
     onAccountValue,
     routeId,
     routeName,
+    priceList,
     lastSyncOn,
     syncAction,
   ];
@@ -9185,6 +9197,12 @@ class $PartyMasterTable extends PartyMaster
         routeName.isAcceptableOrUnknown(data['route_name']!, _routeNameMeta),
       );
     }
+    if (data.containsKey('price_list')) {
+      context.handle(
+        _priceListMeta,
+        priceList.isAcceptableOrUnknown(data['price_list']!, _priceListMeta),
+      );
+    }
     if (data.containsKey('last_sync_on')) {
       context.handle(
         _lastSyncOnMeta,
@@ -9349,6 +9367,10 @@ class $PartyMasterTable extends PartyMaster
         DriftSqlType.string,
         data['${effectivePrefix}route_name'],
       ),
+      priceList: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}price_list'],
+      ),
       lastSyncOn: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}last_sync_on'],
@@ -9402,6 +9424,7 @@ class PartyMasterData extends DataClass implements Insertable<PartyMasterData> {
   final double? onAccountValue;
   final int? routeId;
   final String? routeName;
+  final int? priceList;
   final DateTime? lastSyncOn;
   final String? syncAction;
   const PartyMasterData({
@@ -9440,6 +9463,7 @@ class PartyMasterData extends DataClass implements Insertable<PartyMasterData> {
     this.onAccountValue,
     this.routeId,
     this.routeName,
+    this.priceList,
     this.lastSyncOn,
     this.syncAction,
   });
@@ -9546,6 +9570,9 @@ class PartyMasterData extends DataClass implements Insertable<PartyMasterData> {
     }
     if (!nullToAbsent || routeName != null) {
       map['route_name'] = Variable<String>(routeName);
+    }
+    if (!nullToAbsent || priceList != null) {
+      map['price_list'] = Variable<int>(priceList);
     }
     if (!nullToAbsent || lastSyncOn != null) {
       map['last_sync_on'] = Variable<DateTime>(lastSyncOn);
@@ -9655,6 +9682,9 @@ class PartyMasterData extends DataClass implements Insertable<PartyMasterData> {
       routeName: routeName == null && nullToAbsent
           ? const Value.absent()
           : Value(routeName),
+      priceList: priceList == null && nullToAbsent
+          ? const Value.absent()
+          : Value(priceList),
       lastSyncOn: lastSyncOn == null && nullToAbsent
           ? const Value.absent()
           : Value(lastSyncOn),
@@ -9707,6 +9737,7 @@ class PartyMasterData extends DataClass implements Insertable<PartyMasterData> {
       onAccountValue: serializer.fromJson<double?>(json['onAccountValue']),
       routeId: serializer.fromJson<int?>(json['routeId']),
       routeName: serializer.fromJson<String?>(json['routeName']),
+      priceList: serializer.fromJson<int?>(json['priceList']),
       lastSyncOn: serializer.fromJson<DateTime?>(json['lastSyncOn']),
       syncAction: serializer.fromJson<String?>(json['syncAction']),
     );
@@ -9752,6 +9783,7 @@ class PartyMasterData extends DataClass implements Insertable<PartyMasterData> {
       'onAccountValue': serializer.toJson<double?>(onAccountValue),
       'routeId': serializer.toJson<int?>(routeId),
       'routeName': serializer.toJson<String?>(routeName),
+      'priceList': serializer.toJson<int?>(priceList),
       'lastSyncOn': serializer.toJson<DateTime?>(lastSyncOn),
       'syncAction': serializer.toJson<String?>(syncAction),
     };
@@ -9793,6 +9825,7 @@ class PartyMasterData extends DataClass implements Insertable<PartyMasterData> {
     Value<double?> onAccountValue = const Value.absent(),
     Value<int?> routeId = const Value.absent(),
     Value<String?> routeName = const Value.absent(),
+    Value<int?> priceList = const Value.absent(),
     Value<DateTime?> lastSyncOn = const Value.absent(),
     Value<String?> syncAction = const Value.absent(),
   }) => PartyMasterData(
@@ -9841,6 +9874,7 @@ class PartyMasterData extends DataClass implements Insertable<PartyMasterData> {
         : this.onAccountValue,
     routeId: routeId.present ? routeId.value : this.routeId,
     routeName: routeName.present ? routeName.value : this.routeName,
+    priceList: priceList.present ? priceList.value : this.priceList,
     lastSyncOn: lastSyncOn.present ? lastSyncOn.value : this.lastSyncOn,
     syncAction: syncAction.present ? syncAction.value : this.syncAction,
   );
@@ -9901,6 +9935,7 @@ class PartyMasterData extends DataClass implements Insertable<PartyMasterData> {
           : this.onAccountValue,
       routeId: data.routeId.present ? data.routeId.value : this.routeId,
       routeName: data.routeName.present ? data.routeName.value : this.routeName,
+      priceList: data.priceList.present ? data.priceList.value : this.priceList,
       lastSyncOn: data.lastSyncOn.present
           ? data.lastSyncOn.value
           : this.lastSyncOn,
@@ -9948,6 +9983,7 @@ class PartyMasterData extends DataClass implements Insertable<PartyMasterData> {
           ..write('onAccountValue: $onAccountValue, ')
           ..write('routeId: $routeId, ')
           ..write('routeName: $routeName, ')
+          ..write('priceList: $priceList, ')
           ..write('lastSyncOn: $lastSyncOn, ')
           ..write('syncAction: $syncAction')
           ..write(')'))
@@ -9991,6 +10027,7 @@ class PartyMasterData extends DataClass implements Insertable<PartyMasterData> {
     onAccountValue,
     routeId,
     routeName,
+    priceList,
     lastSyncOn,
     syncAction,
   ]);
@@ -10033,6 +10070,7 @@ class PartyMasterData extends DataClass implements Insertable<PartyMasterData> {
           other.onAccountValue == this.onAccountValue &&
           other.routeId == this.routeId &&
           other.routeName == this.routeName &&
+          other.priceList == this.priceList &&
           other.lastSyncOn == this.lastSyncOn &&
           other.syncAction == this.syncAction);
 }
@@ -10073,6 +10111,7 @@ class PartyMasterCompanion extends UpdateCompanion<PartyMasterData> {
   final Value<double?> onAccountValue;
   final Value<int?> routeId;
   final Value<String?> routeName;
+  final Value<int?> priceList;
   final Value<DateTime?> lastSyncOn;
   final Value<String?> syncAction;
   const PartyMasterCompanion({
@@ -10111,6 +10150,7 @@ class PartyMasterCompanion extends UpdateCompanion<PartyMasterData> {
     this.onAccountValue = const Value.absent(),
     this.routeId = const Value.absent(),
     this.routeName = const Value.absent(),
+    this.priceList = const Value.absent(),
     this.lastSyncOn = const Value.absent(),
     this.syncAction = const Value.absent(),
   });
@@ -10150,6 +10190,7 @@ class PartyMasterCompanion extends UpdateCompanion<PartyMasterData> {
     this.onAccountValue = const Value.absent(),
     this.routeId = const Value.absent(),
     this.routeName = const Value.absent(),
+    this.priceList = const Value.absent(),
     this.lastSyncOn = const Value.absent(),
     this.syncAction = const Value.absent(),
   });
@@ -10189,6 +10230,7 @@ class PartyMasterCompanion extends UpdateCompanion<PartyMasterData> {
     Expression<double>? onAccountValue,
     Expression<int>? routeId,
     Expression<String>? routeName,
+    Expression<int>? priceList,
     Expression<DateTime>? lastSyncOn,
     Expression<String>? syncAction,
   }) {
@@ -10229,6 +10271,7 @@ class PartyMasterCompanion extends UpdateCompanion<PartyMasterData> {
       if (onAccountValue != null) 'on_account_value': onAccountValue,
       if (routeId != null) 'route_id': routeId,
       if (routeName != null) 'route_name': routeName,
+      if (priceList != null) 'price_list': priceList,
       if (lastSyncOn != null) 'last_sync_on': lastSyncOn,
       if (syncAction != null) 'sync_action': syncAction,
     });
@@ -10270,6 +10313,7 @@ class PartyMasterCompanion extends UpdateCompanion<PartyMasterData> {
     Value<double?>? onAccountValue,
     Value<int?>? routeId,
     Value<String?>? routeName,
+    Value<int?>? priceList,
     Value<DateTime?>? lastSyncOn,
     Value<String?>? syncAction,
   }) {
@@ -10310,6 +10354,7 @@ class PartyMasterCompanion extends UpdateCompanion<PartyMasterData> {
       onAccountValue: onAccountValue ?? this.onAccountValue,
       routeId: routeId ?? this.routeId,
       routeName: routeName ?? this.routeName,
+      priceList: priceList ?? this.priceList,
       lastSyncOn: lastSyncOn ?? this.lastSyncOn,
       syncAction: syncAction ?? this.syncAction,
     );
@@ -10425,6 +10470,9 @@ class PartyMasterCompanion extends UpdateCompanion<PartyMasterData> {
     if (routeName.present) {
       map['route_name'] = Variable<String>(routeName.value);
     }
+    if (priceList.present) {
+      map['price_list'] = Variable<int>(priceList.value);
+    }
     if (lastSyncOn.present) {
       map['last_sync_on'] = Variable<DateTime>(lastSyncOn.value);
     }
@@ -10472,8 +10520,2013 @@ class PartyMasterCompanion extends UpdateCompanion<PartyMasterData> {
           ..write('onAccountValue: $onAccountValue, ')
           ..write('routeId: $routeId, ')
           ..write('routeName: $routeName, ')
+          ..write('priceList: $priceList, ')
           ..write('lastSyncOn: $lastSyncOn, ')
           ..write('syncAction: $syncAction')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ItemMasterTable extends ItemMaster
+    with TableInfo<$ItemMasterTable, ItemMasterData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ItemMasterTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _stockItemIdMeta = const VerificationMeta(
+    'stockItemId',
+  );
+  @override
+  late final GeneratedColumn<int> stockItemId = GeneratedColumn<int>(
+    'stock_item_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _itemNameMeta = const VerificationMeta(
+    'itemName',
+  );
+  @override
+  late final GeneratedColumn<String> itemName = GeneratedColumn<String>(
+    'item_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _aliasNameMeta = const VerificationMeta(
+    'aliasName',
+  );
+  @override
+  late final GeneratedColumn<String> aliasName = GeneratedColumn<String>(
+    'alias_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _partNumberMeta = const VerificationMeta(
+    'partNumber',
+  );
+  @override
+  late final GeneratedColumn<String> partNumber = GeneratedColumn<String>(
+    'part_number',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _itemNameLclMeta = const VerificationMeta(
+    'itemNameLcl',
+  );
+  @override
+  late final GeneratedColumn<String> itemNameLcl = GeneratedColumn<String>(
+    'item_name_lcl',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _groupNameMeta = const VerificationMeta(
+    'groupName',
+  );
+  @override
+  late final GeneratedColumn<String> groupName = GeneratedColumn<String>(
+    'group_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _categoryNameMeta = const VerificationMeta(
+    'categoryName',
+  );
+  @override
+  late final GeneratedColumn<String> categoryName = GeneratedColumn<String>(
+    'category_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _unitNameMeta = const VerificationMeta(
+    'unitName',
+  );
+  @override
+  late final GeneratedColumn<String> unitName = GeneratedColumn<String>(
+    'unit_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _decimalPlacesMeta = const VerificationMeta(
+    'decimalPlaces',
+  );
+  @override
+  late final GeneratedColumn<int> decimalPlaces = GeneratedColumn<int>(
+    'decimal_places',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _altUnitMeta = const VerificationMeta(
+    'altUnit',
+  );
+  @override
+  late final GeneratedColumn<String> altUnit = GeneratedColumn<String>(
+    'alt_unit',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _altDecimalPlacesMeta = const VerificationMeta(
+    'altDecimalPlaces',
+  );
+  @override
+  late final GeneratedColumn<int> altDecimalPlaces = GeneratedColumn<int>(
+    'alt_decimal_places',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _unitConversionMeta = const VerificationMeta(
+    'unitConversion',
+  );
+  @override
+  late final GeneratedColumn<double> unitConversion = GeneratedColumn<double>(
+    'unit_conversion',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(1),
+  );
+  static const VerificationMeta _unitDenominatorMeta = const VerificationMeta(
+    'unitDenominator',
+  );
+  @override
+  late final GeneratedColumn<double> unitDenominator = GeneratedColumn<double>(
+    'unit_denominator',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(1),
+  );
+  static const VerificationMeta _isActiveMeta = const VerificationMeta(
+    'isActive',
+  );
+  @override
+  late final GeneratedColumn<bool> isActive = GeneratedColumn<bool>(
+    'is_active',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_active" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
+    'isDeleted',
+  );
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+    'is_deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _hsnCodeMeta = const VerificationMeta(
+    'hsnCode',
+  );
+  @override
+  late final GeneratedColumn<String> hsnCode = GeneratedColumn<String>(
+    'hsn_code',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _taxPercentMeta = const VerificationMeta(
+    'taxPercent',
+  );
+  @override
+  late final GeneratedColumn<double> taxPercent = GeneratedColumn<double>(
+    'tax_percent',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    stockItemId,
+    itemName,
+    aliasName,
+    partNumber,
+    itemNameLcl,
+    groupName,
+    categoryName,
+    unitName,
+    decimalPlaces,
+    altUnit,
+    altDecimalPlaces,
+    unitConversion,
+    unitDenominator,
+    isActive,
+    isDeleted,
+    hsnCode,
+    taxPercent,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'item_master';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ItemMasterData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('stock_item_id')) {
+      context.handle(
+        _stockItemIdMeta,
+        stockItemId.isAcceptableOrUnknown(
+          data['stock_item_id']!,
+          _stockItemIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_stockItemIdMeta);
+    }
+    if (data.containsKey('item_name')) {
+      context.handle(
+        _itemNameMeta,
+        itemName.isAcceptableOrUnknown(data['item_name']!, _itemNameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_itemNameMeta);
+    }
+    if (data.containsKey('alias_name')) {
+      context.handle(
+        _aliasNameMeta,
+        aliasName.isAcceptableOrUnknown(data['alias_name']!, _aliasNameMeta),
+      );
+    }
+    if (data.containsKey('part_number')) {
+      context.handle(
+        _partNumberMeta,
+        partNumber.isAcceptableOrUnknown(data['part_number']!, _partNumberMeta),
+      );
+    }
+    if (data.containsKey('item_name_lcl')) {
+      context.handle(
+        _itemNameLclMeta,
+        itemNameLcl.isAcceptableOrUnknown(
+          data['item_name_lcl']!,
+          _itemNameLclMeta,
+        ),
+      );
+    }
+    if (data.containsKey('group_name')) {
+      context.handle(
+        _groupNameMeta,
+        groupName.isAcceptableOrUnknown(data['group_name']!, _groupNameMeta),
+      );
+    }
+    if (data.containsKey('category_name')) {
+      context.handle(
+        _categoryNameMeta,
+        categoryName.isAcceptableOrUnknown(
+          data['category_name']!,
+          _categoryNameMeta,
+        ),
+      );
+    }
+    if (data.containsKey('unit_name')) {
+      context.handle(
+        _unitNameMeta,
+        unitName.isAcceptableOrUnknown(data['unit_name']!, _unitNameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_unitNameMeta);
+    }
+    if (data.containsKey('decimal_places')) {
+      context.handle(
+        _decimalPlacesMeta,
+        decimalPlaces.isAcceptableOrUnknown(
+          data['decimal_places']!,
+          _decimalPlacesMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_decimalPlacesMeta);
+    }
+    if (data.containsKey('alt_unit')) {
+      context.handle(
+        _altUnitMeta,
+        altUnit.isAcceptableOrUnknown(data['alt_unit']!, _altUnitMeta),
+      );
+    }
+    if (data.containsKey('alt_decimal_places')) {
+      context.handle(
+        _altDecimalPlacesMeta,
+        altDecimalPlaces.isAcceptableOrUnknown(
+          data['alt_decimal_places']!,
+          _altDecimalPlacesMeta,
+        ),
+      );
+    }
+    if (data.containsKey('unit_conversion')) {
+      context.handle(
+        _unitConversionMeta,
+        unitConversion.isAcceptableOrUnknown(
+          data['unit_conversion']!,
+          _unitConversionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('unit_denominator')) {
+      context.handle(
+        _unitDenominatorMeta,
+        unitDenominator.isAcceptableOrUnknown(
+          data['unit_denominator']!,
+          _unitDenominatorMeta,
+        ),
+      );
+    }
+    if (data.containsKey('is_active')) {
+      context.handle(
+        _isActiveMeta,
+        isActive.isAcceptableOrUnknown(data['is_active']!, _isActiveMeta),
+      );
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
+    if (data.containsKey('hsn_code')) {
+      context.handle(
+        _hsnCodeMeta,
+        hsnCode.isAcceptableOrUnknown(data['hsn_code']!, _hsnCodeMeta),
+      );
+    }
+    if (data.containsKey('tax_percent')) {
+      context.handle(
+        _taxPercentMeta,
+        taxPercent.isAcceptableOrUnknown(data['tax_percent']!, _taxPercentMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  List<Set<GeneratedColumn>> get uniqueKeys => [
+    {stockItemId},
+  ];
+  @override
+  ItemMasterData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ItemMasterData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      stockItemId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}stock_item_id'],
+      )!,
+      itemName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}item_name'],
+      )!,
+      aliasName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}alias_name'],
+      )!,
+      partNumber: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}part_number'],
+      )!,
+      itemNameLcl: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}item_name_lcl'],
+      ),
+      groupName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}group_name'],
+      ),
+      categoryName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}category_name'],
+      ),
+      unitName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}unit_name'],
+      )!,
+      decimalPlaces: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}decimal_places'],
+      )!,
+      altUnit: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}alt_unit'],
+      ),
+      altDecimalPlaces: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}alt_decimal_places'],
+      ),
+      unitConversion: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}unit_conversion'],
+      )!,
+      unitDenominator: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}unit_denominator'],
+      )!,
+      isActive: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_active'],
+      )!,
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
+      hsnCode: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}hsn_code'],
+      ),
+      taxPercent: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}tax_percent'],
+      ),
+    );
+  }
+
+  @override
+  $ItemMasterTable createAlias(String alias) {
+    return $ItemMasterTable(attachedDatabase, alias);
+  }
+}
+
+class ItemMasterData extends DataClass implements Insertable<ItemMasterData> {
+  /// Local auto-increment primary key
+  final int id;
+
+  /// Server ID
+  final int stockItemId;
+  final String itemName;
+  final String aliasName;
+  final String partNumber;
+  final String? itemNameLcl;
+  final String? groupName;
+  final String? categoryName;
+  final String unitName;
+  final int decimalPlaces;
+  final String? altUnit;
+  final int? altDecimalPlaces;
+  final double unitConversion;
+  final double unitDenominator;
+  final bool isActive;
+  final bool isDeleted;
+  final String? hsnCode;
+  final double? taxPercent;
+  const ItemMasterData({
+    required this.id,
+    required this.stockItemId,
+    required this.itemName,
+    required this.aliasName,
+    required this.partNumber,
+    this.itemNameLcl,
+    this.groupName,
+    this.categoryName,
+    required this.unitName,
+    required this.decimalPlaces,
+    this.altUnit,
+    this.altDecimalPlaces,
+    required this.unitConversion,
+    required this.unitDenominator,
+    required this.isActive,
+    required this.isDeleted,
+    this.hsnCode,
+    this.taxPercent,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['stock_item_id'] = Variable<int>(stockItemId);
+    map['item_name'] = Variable<String>(itemName);
+    map['alias_name'] = Variable<String>(aliasName);
+    map['part_number'] = Variable<String>(partNumber);
+    if (!nullToAbsent || itemNameLcl != null) {
+      map['item_name_lcl'] = Variable<String>(itemNameLcl);
+    }
+    if (!nullToAbsent || groupName != null) {
+      map['group_name'] = Variable<String>(groupName);
+    }
+    if (!nullToAbsent || categoryName != null) {
+      map['category_name'] = Variable<String>(categoryName);
+    }
+    map['unit_name'] = Variable<String>(unitName);
+    map['decimal_places'] = Variable<int>(decimalPlaces);
+    if (!nullToAbsent || altUnit != null) {
+      map['alt_unit'] = Variable<String>(altUnit);
+    }
+    if (!nullToAbsent || altDecimalPlaces != null) {
+      map['alt_decimal_places'] = Variable<int>(altDecimalPlaces);
+    }
+    map['unit_conversion'] = Variable<double>(unitConversion);
+    map['unit_denominator'] = Variable<double>(unitDenominator);
+    map['is_active'] = Variable<bool>(isActive);
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    if (!nullToAbsent || hsnCode != null) {
+      map['hsn_code'] = Variable<String>(hsnCode);
+    }
+    if (!nullToAbsent || taxPercent != null) {
+      map['tax_percent'] = Variable<double>(taxPercent);
+    }
+    return map;
+  }
+
+  ItemMasterCompanion toCompanion(bool nullToAbsent) {
+    return ItemMasterCompanion(
+      id: Value(id),
+      stockItemId: Value(stockItemId),
+      itemName: Value(itemName),
+      aliasName: Value(aliasName),
+      partNumber: Value(partNumber),
+      itemNameLcl: itemNameLcl == null && nullToAbsent
+          ? const Value.absent()
+          : Value(itemNameLcl),
+      groupName: groupName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(groupName),
+      categoryName: categoryName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(categoryName),
+      unitName: Value(unitName),
+      decimalPlaces: Value(decimalPlaces),
+      altUnit: altUnit == null && nullToAbsent
+          ? const Value.absent()
+          : Value(altUnit),
+      altDecimalPlaces: altDecimalPlaces == null && nullToAbsent
+          ? const Value.absent()
+          : Value(altDecimalPlaces),
+      unitConversion: Value(unitConversion),
+      unitDenominator: Value(unitDenominator),
+      isActive: Value(isActive),
+      isDeleted: Value(isDeleted),
+      hsnCode: hsnCode == null && nullToAbsent
+          ? const Value.absent()
+          : Value(hsnCode),
+      taxPercent: taxPercent == null && nullToAbsent
+          ? const Value.absent()
+          : Value(taxPercent),
+    );
+  }
+
+  factory ItemMasterData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ItemMasterData(
+      id: serializer.fromJson<int>(json['id']),
+      stockItemId: serializer.fromJson<int>(json['stockItemId']),
+      itemName: serializer.fromJson<String>(json['itemName']),
+      aliasName: serializer.fromJson<String>(json['aliasName']),
+      partNumber: serializer.fromJson<String>(json['partNumber']),
+      itemNameLcl: serializer.fromJson<String?>(json['itemNameLcl']),
+      groupName: serializer.fromJson<String?>(json['groupName']),
+      categoryName: serializer.fromJson<String?>(json['categoryName']),
+      unitName: serializer.fromJson<String>(json['unitName']),
+      decimalPlaces: serializer.fromJson<int>(json['decimalPlaces']),
+      altUnit: serializer.fromJson<String?>(json['altUnit']),
+      altDecimalPlaces: serializer.fromJson<int?>(json['altDecimalPlaces']),
+      unitConversion: serializer.fromJson<double>(json['unitConversion']),
+      unitDenominator: serializer.fromJson<double>(json['unitDenominator']),
+      isActive: serializer.fromJson<bool>(json['isActive']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+      hsnCode: serializer.fromJson<String?>(json['hsnCode']),
+      taxPercent: serializer.fromJson<double?>(json['taxPercent']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'stockItemId': serializer.toJson<int>(stockItemId),
+      'itemName': serializer.toJson<String>(itemName),
+      'aliasName': serializer.toJson<String>(aliasName),
+      'partNumber': serializer.toJson<String>(partNumber),
+      'itemNameLcl': serializer.toJson<String?>(itemNameLcl),
+      'groupName': serializer.toJson<String?>(groupName),
+      'categoryName': serializer.toJson<String?>(categoryName),
+      'unitName': serializer.toJson<String>(unitName),
+      'decimalPlaces': serializer.toJson<int>(decimalPlaces),
+      'altUnit': serializer.toJson<String?>(altUnit),
+      'altDecimalPlaces': serializer.toJson<int?>(altDecimalPlaces),
+      'unitConversion': serializer.toJson<double>(unitConversion),
+      'unitDenominator': serializer.toJson<double>(unitDenominator),
+      'isActive': serializer.toJson<bool>(isActive),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+      'hsnCode': serializer.toJson<String?>(hsnCode),
+      'taxPercent': serializer.toJson<double?>(taxPercent),
+    };
+  }
+
+  ItemMasterData copyWith({
+    int? id,
+    int? stockItemId,
+    String? itemName,
+    String? aliasName,
+    String? partNumber,
+    Value<String?> itemNameLcl = const Value.absent(),
+    Value<String?> groupName = const Value.absent(),
+    Value<String?> categoryName = const Value.absent(),
+    String? unitName,
+    int? decimalPlaces,
+    Value<String?> altUnit = const Value.absent(),
+    Value<int?> altDecimalPlaces = const Value.absent(),
+    double? unitConversion,
+    double? unitDenominator,
+    bool? isActive,
+    bool? isDeleted,
+    Value<String?> hsnCode = const Value.absent(),
+    Value<double?> taxPercent = const Value.absent(),
+  }) => ItemMasterData(
+    id: id ?? this.id,
+    stockItemId: stockItemId ?? this.stockItemId,
+    itemName: itemName ?? this.itemName,
+    aliasName: aliasName ?? this.aliasName,
+    partNumber: partNumber ?? this.partNumber,
+    itemNameLcl: itemNameLcl.present ? itemNameLcl.value : this.itemNameLcl,
+    groupName: groupName.present ? groupName.value : this.groupName,
+    categoryName: categoryName.present ? categoryName.value : this.categoryName,
+    unitName: unitName ?? this.unitName,
+    decimalPlaces: decimalPlaces ?? this.decimalPlaces,
+    altUnit: altUnit.present ? altUnit.value : this.altUnit,
+    altDecimalPlaces: altDecimalPlaces.present
+        ? altDecimalPlaces.value
+        : this.altDecimalPlaces,
+    unitConversion: unitConversion ?? this.unitConversion,
+    unitDenominator: unitDenominator ?? this.unitDenominator,
+    isActive: isActive ?? this.isActive,
+    isDeleted: isDeleted ?? this.isDeleted,
+    hsnCode: hsnCode.present ? hsnCode.value : this.hsnCode,
+    taxPercent: taxPercent.present ? taxPercent.value : this.taxPercent,
+  );
+  ItemMasterData copyWithCompanion(ItemMasterCompanion data) {
+    return ItemMasterData(
+      id: data.id.present ? data.id.value : this.id,
+      stockItemId: data.stockItemId.present
+          ? data.stockItemId.value
+          : this.stockItemId,
+      itemName: data.itemName.present ? data.itemName.value : this.itemName,
+      aliasName: data.aliasName.present ? data.aliasName.value : this.aliasName,
+      partNumber: data.partNumber.present
+          ? data.partNumber.value
+          : this.partNumber,
+      itemNameLcl: data.itemNameLcl.present
+          ? data.itemNameLcl.value
+          : this.itemNameLcl,
+      groupName: data.groupName.present ? data.groupName.value : this.groupName,
+      categoryName: data.categoryName.present
+          ? data.categoryName.value
+          : this.categoryName,
+      unitName: data.unitName.present ? data.unitName.value : this.unitName,
+      decimalPlaces: data.decimalPlaces.present
+          ? data.decimalPlaces.value
+          : this.decimalPlaces,
+      altUnit: data.altUnit.present ? data.altUnit.value : this.altUnit,
+      altDecimalPlaces: data.altDecimalPlaces.present
+          ? data.altDecimalPlaces.value
+          : this.altDecimalPlaces,
+      unitConversion: data.unitConversion.present
+          ? data.unitConversion.value
+          : this.unitConversion,
+      unitDenominator: data.unitDenominator.present
+          ? data.unitDenominator.value
+          : this.unitDenominator,
+      isActive: data.isActive.present ? data.isActive.value : this.isActive,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+      hsnCode: data.hsnCode.present ? data.hsnCode.value : this.hsnCode,
+      taxPercent: data.taxPercent.present
+          ? data.taxPercent.value
+          : this.taxPercent,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ItemMasterData(')
+          ..write('id: $id, ')
+          ..write('stockItemId: $stockItemId, ')
+          ..write('itemName: $itemName, ')
+          ..write('aliasName: $aliasName, ')
+          ..write('partNumber: $partNumber, ')
+          ..write('itemNameLcl: $itemNameLcl, ')
+          ..write('groupName: $groupName, ')
+          ..write('categoryName: $categoryName, ')
+          ..write('unitName: $unitName, ')
+          ..write('decimalPlaces: $decimalPlaces, ')
+          ..write('altUnit: $altUnit, ')
+          ..write('altDecimalPlaces: $altDecimalPlaces, ')
+          ..write('unitConversion: $unitConversion, ')
+          ..write('unitDenominator: $unitDenominator, ')
+          ..write('isActive: $isActive, ')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('hsnCode: $hsnCode, ')
+          ..write('taxPercent: $taxPercent')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    stockItemId,
+    itemName,
+    aliasName,
+    partNumber,
+    itemNameLcl,
+    groupName,
+    categoryName,
+    unitName,
+    decimalPlaces,
+    altUnit,
+    altDecimalPlaces,
+    unitConversion,
+    unitDenominator,
+    isActive,
+    isDeleted,
+    hsnCode,
+    taxPercent,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ItemMasterData &&
+          other.id == this.id &&
+          other.stockItemId == this.stockItemId &&
+          other.itemName == this.itemName &&
+          other.aliasName == this.aliasName &&
+          other.partNumber == this.partNumber &&
+          other.itemNameLcl == this.itemNameLcl &&
+          other.groupName == this.groupName &&
+          other.categoryName == this.categoryName &&
+          other.unitName == this.unitName &&
+          other.decimalPlaces == this.decimalPlaces &&
+          other.altUnit == this.altUnit &&
+          other.altDecimalPlaces == this.altDecimalPlaces &&
+          other.unitConversion == this.unitConversion &&
+          other.unitDenominator == this.unitDenominator &&
+          other.isActive == this.isActive &&
+          other.isDeleted == this.isDeleted &&
+          other.hsnCode == this.hsnCode &&
+          other.taxPercent == this.taxPercent);
+}
+
+class ItemMasterCompanion extends UpdateCompanion<ItemMasterData> {
+  final Value<int> id;
+  final Value<int> stockItemId;
+  final Value<String> itemName;
+  final Value<String> aliasName;
+  final Value<String> partNumber;
+  final Value<String?> itemNameLcl;
+  final Value<String?> groupName;
+  final Value<String?> categoryName;
+  final Value<String> unitName;
+  final Value<int> decimalPlaces;
+  final Value<String?> altUnit;
+  final Value<int?> altDecimalPlaces;
+  final Value<double> unitConversion;
+  final Value<double> unitDenominator;
+  final Value<bool> isActive;
+  final Value<bool> isDeleted;
+  final Value<String?> hsnCode;
+  final Value<double?> taxPercent;
+  const ItemMasterCompanion({
+    this.id = const Value.absent(),
+    this.stockItemId = const Value.absent(),
+    this.itemName = const Value.absent(),
+    this.aliasName = const Value.absent(),
+    this.partNumber = const Value.absent(),
+    this.itemNameLcl = const Value.absent(),
+    this.groupName = const Value.absent(),
+    this.categoryName = const Value.absent(),
+    this.unitName = const Value.absent(),
+    this.decimalPlaces = const Value.absent(),
+    this.altUnit = const Value.absent(),
+    this.altDecimalPlaces = const Value.absent(),
+    this.unitConversion = const Value.absent(),
+    this.unitDenominator = const Value.absent(),
+    this.isActive = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+    this.hsnCode = const Value.absent(),
+    this.taxPercent = const Value.absent(),
+  });
+  ItemMasterCompanion.insert({
+    this.id = const Value.absent(),
+    required int stockItemId,
+    required String itemName,
+    this.aliasName = const Value.absent(),
+    this.partNumber = const Value.absent(),
+    this.itemNameLcl = const Value.absent(),
+    this.groupName = const Value.absent(),
+    this.categoryName = const Value.absent(),
+    required String unitName,
+    required int decimalPlaces,
+    this.altUnit = const Value.absent(),
+    this.altDecimalPlaces = const Value.absent(),
+    this.unitConversion = const Value.absent(),
+    this.unitDenominator = const Value.absent(),
+    this.isActive = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+    this.hsnCode = const Value.absent(),
+    this.taxPercent = const Value.absent(),
+  }) : stockItemId = Value(stockItemId),
+       itemName = Value(itemName),
+       unitName = Value(unitName),
+       decimalPlaces = Value(decimalPlaces);
+  static Insertable<ItemMasterData> custom({
+    Expression<int>? id,
+    Expression<int>? stockItemId,
+    Expression<String>? itemName,
+    Expression<String>? aliasName,
+    Expression<String>? partNumber,
+    Expression<String>? itemNameLcl,
+    Expression<String>? groupName,
+    Expression<String>? categoryName,
+    Expression<String>? unitName,
+    Expression<int>? decimalPlaces,
+    Expression<String>? altUnit,
+    Expression<int>? altDecimalPlaces,
+    Expression<double>? unitConversion,
+    Expression<double>? unitDenominator,
+    Expression<bool>? isActive,
+    Expression<bool>? isDeleted,
+    Expression<String>? hsnCode,
+    Expression<double>? taxPercent,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (stockItemId != null) 'stock_item_id': stockItemId,
+      if (itemName != null) 'item_name': itemName,
+      if (aliasName != null) 'alias_name': aliasName,
+      if (partNumber != null) 'part_number': partNumber,
+      if (itemNameLcl != null) 'item_name_lcl': itemNameLcl,
+      if (groupName != null) 'group_name': groupName,
+      if (categoryName != null) 'category_name': categoryName,
+      if (unitName != null) 'unit_name': unitName,
+      if (decimalPlaces != null) 'decimal_places': decimalPlaces,
+      if (altUnit != null) 'alt_unit': altUnit,
+      if (altDecimalPlaces != null) 'alt_decimal_places': altDecimalPlaces,
+      if (unitConversion != null) 'unit_conversion': unitConversion,
+      if (unitDenominator != null) 'unit_denominator': unitDenominator,
+      if (isActive != null) 'is_active': isActive,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+      if (hsnCode != null) 'hsn_code': hsnCode,
+      if (taxPercent != null) 'tax_percent': taxPercent,
+    });
+  }
+
+  ItemMasterCompanion copyWith({
+    Value<int>? id,
+    Value<int>? stockItemId,
+    Value<String>? itemName,
+    Value<String>? aliasName,
+    Value<String>? partNumber,
+    Value<String?>? itemNameLcl,
+    Value<String?>? groupName,
+    Value<String?>? categoryName,
+    Value<String>? unitName,
+    Value<int>? decimalPlaces,
+    Value<String?>? altUnit,
+    Value<int?>? altDecimalPlaces,
+    Value<double>? unitConversion,
+    Value<double>? unitDenominator,
+    Value<bool>? isActive,
+    Value<bool>? isDeleted,
+    Value<String?>? hsnCode,
+    Value<double?>? taxPercent,
+  }) {
+    return ItemMasterCompanion(
+      id: id ?? this.id,
+      stockItemId: stockItemId ?? this.stockItemId,
+      itemName: itemName ?? this.itemName,
+      aliasName: aliasName ?? this.aliasName,
+      partNumber: partNumber ?? this.partNumber,
+      itemNameLcl: itemNameLcl ?? this.itemNameLcl,
+      groupName: groupName ?? this.groupName,
+      categoryName: categoryName ?? this.categoryName,
+      unitName: unitName ?? this.unitName,
+      decimalPlaces: decimalPlaces ?? this.decimalPlaces,
+      altUnit: altUnit ?? this.altUnit,
+      altDecimalPlaces: altDecimalPlaces ?? this.altDecimalPlaces,
+      unitConversion: unitConversion ?? this.unitConversion,
+      unitDenominator: unitDenominator ?? this.unitDenominator,
+      isActive: isActive ?? this.isActive,
+      isDeleted: isDeleted ?? this.isDeleted,
+      hsnCode: hsnCode ?? this.hsnCode,
+      taxPercent: taxPercent ?? this.taxPercent,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (stockItemId.present) {
+      map['stock_item_id'] = Variable<int>(stockItemId.value);
+    }
+    if (itemName.present) {
+      map['item_name'] = Variable<String>(itemName.value);
+    }
+    if (aliasName.present) {
+      map['alias_name'] = Variable<String>(aliasName.value);
+    }
+    if (partNumber.present) {
+      map['part_number'] = Variable<String>(partNumber.value);
+    }
+    if (itemNameLcl.present) {
+      map['item_name_lcl'] = Variable<String>(itemNameLcl.value);
+    }
+    if (groupName.present) {
+      map['group_name'] = Variable<String>(groupName.value);
+    }
+    if (categoryName.present) {
+      map['category_name'] = Variable<String>(categoryName.value);
+    }
+    if (unitName.present) {
+      map['unit_name'] = Variable<String>(unitName.value);
+    }
+    if (decimalPlaces.present) {
+      map['decimal_places'] = Variable<int>(decimalPlaces.value);
+    }
+    if (altUnit.present) {
+      map['alt_unit'] = Variable<String>(altUnit.value);
+    }
+    if (altDecimalPlaces.present) {
+      map['alt_decimal_places'] = Variable<int>(altDecimalPlaces.value);
+    }
+    if (unitConversion.present) {
+      map['unit_conversion'] = Variable<double>(unitConversion.value);
+    }
+    if (unitDenominator.present) {
+      map['unit_denominator'] = Variable<double>(unitDenominator.value);
+    }
+    if (isActive.present) {
+      map['is_active'] = Variable<bool>(isActive.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    if (hsnCode.present) {
+      map['hsn_code'] = Variable<String>(hsnCode.value);
+    }
+    if (taxPercent.present) {
+      map['tax_percent'] = Variable<double>(taxPercent.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ItemMasterCompanion(')
+          ..write('id: $id, ')
+          ..write('stockItemId: $stockItemId, ')
+          ..write('itemName: $itemName, ')
+          ..write('aliasName: $aliasName, ')
+          ..write('partNumber: $partNumber, ')
+          ..write('itemNameLcl: $itemNameLcl, ')
+          ..write('groupName: $groupName, ')
+          ..write('categoryName: $categoryName, ')
+          ..write('unitName: $unitName, ')
+          ..write('decimalPlaces: $decimalPlaces, ')
+          ..write('altUnit: $altUnit, ')
+          ..write('altDecimalPlaces: $altDecimalPlaces, ')
+          ..write('unitConversion: $unitConversion, ')
+          ..write('unitDenominator: $unitDenominator, ')
+          ..write('isActive: $isActive, ')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('hsnCode: $hsnCode, ')
+          ..write('taxPercent: $taxPercent')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PriceLevelsTableTable extends PriceLevelsTable
+    with TableInfo<$PriceLevelsTableTable, PriceLevelsTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PriceLevelsTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _priceLevelMeta = const VerificationMeta(
+    'priceLevel',
+  );
+  @override
+  late final GeneratedColumn<String> priceLevel = GeneratedColumn<String>(
+    'price_level',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _rateInclusiveMeta = const VerificationMeta(
+    'rateInclusive',
+  );
+  @override
+  late final GeneratedColumn<bool> rateInclusive = GeneratedColumn<bool>(
+    'rate_inclusive',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("rate_inclusive" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _isDefaultMeta = const VerificationMeta(
+    'isDefault',
+  );
+  @override
+  late final GeneratedColumn<bool> isDefault = GeneratedColumn<bool>(
+    'is_default',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_default" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _activeMeta = const VerificationMeta('active');
+  @override
+  late final GeneratedColumn<bool> active = GeneratedColumn<bool>(
+    'active',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("active" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    priceLevel,
+    rateInclusive,
+    isDefault,
+    active,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'price_levels_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<PriceLevelsTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('price_level')) {
+      context.handle(
+        _priceLevelMeta,
+        priceLevel.isAcceptableOrUnknown(data['price_level']!, _priceLevelMeta),
+      );
+    }
+    if (data.containsKey('rate_inclusive')) {
+      context.handle(
+        _rateInclusiveMeta,
+        rateInclusive.isAcceptableOrUnknown(
+          data['rate_inclusive']!,
+          _rateInclusiveMeta,
+        ),
+      );
+    }
+    if (data.containsKey('is_default')) {
+      context.handle(
+        _isDefaultMeta,
+        isDefault.isAcceptableOrUnknown(data['is_default']!, _isDefaultMeta),
+      );
+    }
+    if (data.containsKey('active')) {
+      context.handle(
+        _activeMeta,
+        active.isAcceptableOrUnknown(data['active']!, _activeMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PriceLevelsTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PriceLevelsTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      priceLevel: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}price_level'],
+      ),
+      rateInclusive: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}rate_inclusive'],
+      )!,
+      isDefault: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_default'],
+      )!,
+      active: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}active'],
+      )!,
+    );
+  }
+
+  @override
+  $PriceLevelsTableTable createAlias(String alias) {
+    return $PriceLevelsTableTable(attachedDatabase, alias);
+  }
+}
+
+class PriceLevelsTableData extends DataClass
+    implements Insertable<PriceLevelsTableData> {
+  final int id;
+  final String? priceLevel;
+  final bool rateInclusive;
+  final bool isDefault;
+  final bool active;
+  const PriceLevelsTableData({
+    required this.id,
+    this.priceLevel,
+    required this.rateInclusive,
+    required this.isDefault,
+    required this.active,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    if (!nullToAbsent || priceLevel != null) {
+      map['price_level'] = Variable<String>(priceLevel);
+    }
+    map['rate_inclusive'] = Variable<bool>(rateInclusive);
+    map['is_default'] = Variable<bool>(isDefault);
+    map['active'] = Variable<bool>(active);
+    return map;
+  }
+
+  PriceLevelsTableCompanion toCompanion(bool nullToAbsent) {
+    return PriceLevelsTableCompanion(
+      id: Value(id),
+      priceLevel: priceLevel == null && nullToAbsent
+          ? const Value.absent()
+          : Value(priceLevel),
+      rateInclusive: Value(rateInclusive),
+      isDefault: Value(isDefault),
+      active: Value(active),
+    );
+  }
+
+  factory PriceLevelsTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PriceLevelsTableData(
+      id: serializer.fromJson<int>(json['id']),
+      priceLevel: serializer.fromJson<String?>(json['priceLevel']),
+      rateInclusive: serializer.fromJson<bool>(json['rateInclusive']),
+      isDefault: serializer.fromJson<bool>(json['isDefault']),
+      active: serializer.fromJson<bool>(json['active']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'priceLevel': serializer.toJson<String?>(priceLevel),
+      'rateInclusive': serializer.toJson<bool>(rateInclusive),
+      'isDefault': serializer.toJson<bool>(isDefault),
+      'active': serializer.toJson<bool>(active),
+    };
+  }
+
+  PriceLevelsTableData copyWith({
+    int? id,
+    Value<String?> priceLevel = const Value.absent(),
+    bool? rateInclusive,
+    bool? isDefault,
+    bool? active,
+  }) => PriceLevelsTableData(
+    id: id ?? this.id,
+    priceLevel: priceLevel.present ? priceLevel.value : this.priceLevel,
+    rateInclusive: rateInclusive ?? this.rateInclusive,
+    isDefault: isDefault ?? this.isDefault,
+    active: active ?? this.active,
+  );
+  PriceLevelsTableData copyWithCompanion(PriceLevelsTableCompanion data) {
+    return PriceLevelsTableData(
+      id: data.id.present ? data.id.value : this.id,
+      priceLevel: data.priceLevel.present
+          ? data.priceLevel.value
+          : this.priceLevel,
+      rateInclusive: data.rateInclusive.present
+          ? data.rateInclusive.value
+          : this.rateInclusive,
+      isDefault: data.isDefault.present ? data.isDefault.value : this.isDefault,
+      active: data.active.present ? data.active.value : this.active,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PriceLevelsTableData(')
+          ..write('id: $id, ')
+          ..write('priceLevel: $priceLevel, ')
+          ..write('rateInclusive: $rateInclusive, ')
+          ..write('isDefault: $isDefault, ')
+          ..write('active: $active')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, priceLevel, rateInclusive, isDefault, active);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PriceLevelsTableData &&
+          other.id == this.id &&
+          other.priceLevel == this.priceLevel &&
+          other.rateInclusive == this.rateInclusive &&
+          other.isDefault == this.isDefault &&
+          other.active == this.active);
+}
+
+class PriceLevelsTableCompanion extends UpdateCompanion<PriceLevelsTableData> {
+  final Value<int> id;
+  final Value<String?> priceLevel;
+  final Value<bool> rateInclusive;
+  final Value<bool> isDefault;
+  final Value<bool> active;
+  const PriceLevelsTableCompanion({
+    this.id = const Value.absent(),
+    this.priceLevel = const Value.absent(),
+    this.rateInclusive = const Value.absent(),
+    this.isDefault = const Value.absent(),
+    this.active = const Value.absent(),
+  });
+  PriceLevelsTableCompanion.insert({
+    this.id = const Value.absent(),
+    this.priceLevel = const Value.absent(),
+    this.rateInclusive = const Value.absent(),
+    this.isDefault = const Value.absent(),
+    this.active = const Value.absent(),
+  });
+  static Insertable<PriceLevelsTableData> custom({
+    Expression<int>? id,
+    Expression<String>? priceLevel,
+    Expression<bool>? rateInclusive,
+    Expression<bool>? isDefault,
+    Expression<bool>? active,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (priceLevel != null) 'price_level': priceLevel,
+      if (rateInclusive != null) 'rate_inclusive': rateInclusive,
+      if (isDefault != null) 'is_default': isDefault,
+      if (active != null) 'active': active,
+    });
+  }
+
+  PriceLevelsTableCompanion copyWith({
+    Value<int>? id,
+    Value<String?>? priceLevel,
+    Value<bool>? rateInclusive,
+    Value<bool>? isDefault,
+    Value<bool>? active,
+  }) {
+    return PriceLevelsTableCompanion(
+      id: id ?? this.id,
+      priceLevel: priceLevel ?? this.priceLevel,
+      rateInclusive: rateInclusive ?? this.rateInclusive,
+      isDefault: isDefault ?? this.isDefault,
+      active: active ?? this.active,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (priceLevel.present) {
+      map['price_level'] = Variable<String>(priceLevel.value);
+    }
+    if (rateInclusive.present) {
+      map['rate_inclusive'] = Variable<bool>(rateInclusive.value);
+    }
+    if (isDefault.present) {
+      map['is_default'] = Variable<bool>(isDefault.value);
+    }
+    if (active.present) {
+      map['active'] = Variable<bool>(active.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PriceLevelsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('priceLevel: $priceLevel, ')
+          ..write('rateInclusive: $rateInclusive, ')
+          ..write('isDefault: $isDefault, ')
+          ..write('active: $active')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ItemPriceDetailsTablesTable extends ItemPriceDetailsTables
+    with TableInfo<$ItemPriceDetailsTablesTable, ItemPriceDetailsTable> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ItemPriceDetailsTablesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _applicableDateMeta = const VerificationMeta(
+    'applicableDate',
+  );
+  @override
+  late final GeneratedColumn<DateTime> applicableDate =
+      GeneratedColumn<DateTime>(
+        'applicable_date',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _itemIdMeta = const VerificationMeta('itemId');
+  @override
+  late final GeneratedColumn<int> itemId = GeneratedColumn<int>(
+    'item_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _companyIdMeta = const VerificationMeta(
+    'companyId',
+  );
+  @override
+  late final GeneratedColumn<int> companyId = GeneratedColumn<int>(
+    'company_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _priceListMeta = const VerificationMeta(
+    'priceList',
+  );
+  @override
+  late final GeneratedColumn<int> priceList = GeneratedColumn<int>(
+    'price_list',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _rateMeta = const VerificationMeta('rate');
+  @override
+  late final GeneratedColumn<double> rate = GeneratedColumn<double>(
+    'rate',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _discountMeta = const VerificationMeta(
+    'discount',
+  );
+  @override
+  late final GeneratedColumn<double> discount = GeneratedColumn<double>(
+    'discount',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _discountTypeMeta = const VerificationMeta(
+    'discountType',
+  );
+  @override
+  late final GeneratedColumn<String> discountType = GeneratedColumn<String>(
+    'discount_type',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _fromQtyMeta = const VerificationMeta(
+    'fromQty',
+  );
+  @override
+  late final GeneratedColumn<double> fromQty = GeneratedColumn<double>(
+    'from_qty',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _toQtyMeta = const VerificationMeta('toQty');
+  @override
+  late final GeneratedColumn<double> toQty = GeneratedColumn<double>(
+    'to_qty',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    applicableDate,
+    itemId,
+    companyId,
+    priceList,
+    rate,
+    discount,
+    discountType,
+    fromQty,
+    toQty,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'item_price_details_tables';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ItemPriceDetailsTable> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('applicable_date')) {
+      context.handle(
+        _applicableDateMeta,
+        applicableDate.isAcceptableOrUnknown(
+          data['applicable_date']!,
+          _applicableDateMeta,
+        ),
+      );
+    }
+    if (data.containsKey('item_id')) {
+      context.handle(
+        _itemIdMeta,
+        itemId.isAcceptableOrUnknown(data['item_id']!, _itemIdMeta),
+      );
+    }
+    if (data.containsKey('company_id')) {
+      context.handle(
+        _companyIdMeta,
+        companyId.isAcceptableOrUnknown(data['company_id']!, _companyIdMeta),
+      );
+    }
+    if (data.containsKey('price_list')) {
+      context.handle(
+        _priceListMeta,
+        priceList.isAcceptableOrUnknown(data['price_list']!, _priceListMeta),
+      );
+    }
+    if (data.containsKey('rate')) {
+      context.handle(
+        _rateMeta,
+        rate.isAcceptableOrUnknown(data['rate']!, _rateMeta),
+      );
+    }
+    if (data.containsKey('discount')) {
+      context.handle(
+        _discountMeta,
+        discount.isAcceptableOrUnknown(data['discount']!, _discountMeta),
+      );
+    }
+    if (data.containsKey('discount_type')) {
+      context.handle(
+        _discountTypeMeta,
+        discountType.isAcceptableOrUnknown(
+          data['discount_type']!,
+          _discountTypeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('from_qty')) {
+      context.handle(
+        _fromQtyMeta,
+        fromQty.isAcceptableOrUnknown(data['from_qty']!, _fromQtyMeta),
+      );
+    }
+    if (data.containsKey('to_qty')) {
+      context.handle(
+        _toQtyMeta,
+        toQty.isAcceptableOrUnknown(data['to_qty']!, _toQtyMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ItemPriceDetailsTable map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ItemPriceDetailsTable(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      applicableDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}applicable_date'],
+      ),
+      itemId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}item_id'],
+      ),
+      companyId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}company_id'],
+      ),
+      priceList: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}price_list'],
+      ),
+      rate: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}rate'],
+      ),
+      discount: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}discount'],
+      ),
+      discountType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}discount_type'],
+      ),
+      fromQty: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}from_qty'],
+      ),
+      toQty: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}to_qty'],
+      ),
+    );
+  }
+
+  @override
+  $ItemPriceDetailsTablesTable createAlias(String alias) {
+    return $ItemPriceDetailsTablesTable(attachedDatabase, alias);
+  }
+}
+
+class ItemPriceDetailsTable extends DataClass
+    implements Insertable<ItemPriceDetailsTable> {
+  final int id;
+  final DateTime? applicableDate;
+  final int? itemId;
+  final int? companyId;
+  final int? priceList;
+  final double? rate;
+  final double? discount;
+  final String? discountType;
+  final double? fromQty;
+  final double? toQty;
+  const ItemPriceDetailsTable({
+    required this.id,
+    this.applicableDate,
+    this.itemId,
+    this.companyId,
+    this.priceList,
+    this.rate,
+    this.discount,
+    this.discountType,
+    this.fromQty,
+    this.toQty,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    if (!nullToAbsent || applicableDate != null) {
+      map['applicable_date'] = Variable<DateTime>(applicableDate);
+    }
+    if (!nullToAbsent || itemId != null) {
+      map['item_id'] = Variable<int>(itemId);
+    }
+    if (!nullToAbsent || companyId != null) {
+      map['company_id'] = Variable<int>(companyId);
+    }
+    if (!nullToAbsent || priceList != null) {
+      map['price_list'] = Variable<int>(priceList);
+    }
+    if (!nullToAbsent || rate != null) {
+      map['rate'] = Variable<double>(rate);
+    }
+    if (!nullToAbsent || discount != null) {
+      map['discount'] = Variable<double>(discount);
+    }
+    if (!nullToAbsent || discountType != null) {
+      map['discount_type'] = Variable<String>(discountType);
+    }
+    if (!nullToAbsent || fromQty != null) {
+      map['from_qty'] = Variable<double>(fromQty);
+    }
+    if (!nullToAbsent || toQty != null) {
+      map['to_qty'] = Variable<double>(toQty);
+    }
+    return map;
+  }
+
+  ItemPriceDetailsTablesCompanion toCompanion(bool nullToAbsent) {
+    return ItemPriceDetailsTablesCompanion(
+      id: Value(id),
+      applicableDate: applicableDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(applicableDate),
+      itemId: itemId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(itemId),
+      companyId: companyId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(companyId),
+      priceList: priceList == null && nullToAbsent
+          ? const Value.absent()
+          : Value(priceList),
+      rate: rate == null && nullToAbsent ? const Value.absent() : Value(rate),
+      discount: discount == null && nullToAbsent
+          ? const Value.absent()
+          : Value(discount),
+      discountType: discountType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(discountType),
+      fromQty: fromQty == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fromQty),
+      toQty: toQty == null && nullToAbsent
+          ? const Value.absent()
+          : Value(toQty),
+    );
+  }
+
+  factory ItemPriceDetailsTable.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ItemPriceDetailsTable(
+      id: serializer.fromJson<int>(json['id']),
+      applicableDate: serializer.fromJson<DateTime?>(json['applicableDate']),
+      itemId: serializer.fromJson<int?>(json['itemId']),
+      companyId: serializer.fromJson<int?>(json['companyId']),
+      priceList: serializer.fromJson<int?>(json['priceList']),
+      rate: serializer.fromJson<double?>(json['rate']),
+      discount: serializer.fromJson<double?>(json['discount']),
+      discountType: serializer.fromJson<String?>(json['discountType']),
+      fromQty: serializer.fromJson<double?>(json['fromQty']),
+      toQty: serializer.fromJson<double?>(json['toQty']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'applicableDate': serializer.toJson<DateTime?>(applicableDate),
+      'itemId': serializer.toJson<int?>(itemId),
+      'companyId': serializer.toJson<int?>(companyId),
+      'priceList': serializer.toJson<int?>(priceList),
+      'rate': serializer.toJson<double?>(rate),
+      'discount': serializer.toJson<double?>(discount),
+      'discountType': serializer.toJson<String?>(discountType),
+      'fromQty': serializer.toJson<double?>(fromQty),
+      'toQty': serializer.toJson<double?>(toQty),
+    };
+  }
+
+  ItemPriceDetailsTable copyWith({
+    int? id,
+    Value<DateTime?> applicableDate = const Value.absent(),
+    Value<int?> itemId = const Value.absent(),
+    Value<int?> companyId = const Value.absent(),
+    Value<int?> priceList = const Value.absent(),
+    Value<double?> rate = const Value.absent(),
+    Value<double?> discount = const Value.absent(),
+    Value<String?> discountType = const Value.absent(),
+    Value<double?> fromQty = const Value.absent(),
+    Value<double?> toQty = const Value.absent(),
+  }) => ItemPriceDetailsTable(
+    id: id ?? this.id,
+    applicableDate: applicableDate.present
+        ? applicableDate.value
+        : this.applicableDate,
+    itemId: itemId.present ? itemId.value : this.itemId,
+    companyId: companyId.present ? companyId.value : this.companyId,
+    priceList: priceList.present ? priceList.value : this.priceList,
+    rate: rate.present ? rate.value : this.rate,
+    discount: discount.present ? discount.value : this.discount,
+    discountType: discountType.present ? discountType.value : this.discountType,
+    fromQty: fromQty.present ? fromQty.value : this.fromQty,
+    toQty: toQty.present ? toQty.value : this.toQty,
+  );
+  ItemPriceDetailsTable copyWithCompanion(
+    ItemPriceDetailsTablesCompanion data,
+  ) {
+    return ItemPriceDetailsTable(
+      id: data.id.present ? data.id.value : this.id,
+      applicableDate: data.applicableDate.present
+          ? data.applicableDate.value
+          : this.applicableDate,
+      itemId: data.itemId.present ? data.itemId.value : this.itemId,
+      companyId: data.companyId.present ? data.companyId.value : this.companyId,
+      priceList: data.priceList.present ? data.priceList.value : this.priceList,
+      rate: data.rate.present ? data.rate.value : this.rate,
+      discount: data.discount.present ? data.discount.value : this.discount,
+      discountType: data.discountType.present
+          ? data.discountType.value
+          : this.discountType,
+      fromQty: data.fromQty.present ? data.fromQty.value : this.fromQty,
+      toQty: data.toQty.present ? data.toQty.value : this.toQty,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ItemPriceDetailsTable(')
+          ..write('id: $id, ')
+          ..write('applicableDate: $applicableDate, ')
+          ..write('itemId: $itemId, ')
+          ..write('companyId: $companyId, ')
+          ..write('priceList: $priceList, ')
+          ..write('rate: $rate, ')
+          ..write('discount: $discount, ')
+          ..write('discountType: $discountType, ')
+          ..write('fromQty: $fromQty, ')
+          ..write('toQty: $toQty')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    applicableDate,
+    itemId,
+    companyId,
+    priceList,
+    rate,
+    discount,
+    discountType,
+    fromQty,
+    toQty,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ItemPriceDetailsTable &&
+          other.id == this.id &&
+          other.applicableDate == this.applicableDate &&
+          other.itemId == this.itemId &&
+          other.companyId == this.companyId &&
+          other.priceList == this.priceList &&
+          other.rate == this.rate &&
+          other.discount == this.discount &&
+          other.discountType == this.discountType &&
+          other.fromQty == this.fromQty &&
+          other.toQty == this.toQty);
+}
+
+class ItemPriceDetailsTablesCompanion
+    extends UpdateCompanion<ItemPriceDetailsTable> {
+  final Value<int> id;
+  final Value<DateTime?> applicableDate;
+  final Value<int?> itemId;
+  final Value<int?> companyId;
+  final Value<int?> priceList;
+  final Value<double?> rate;
+  final Value<double?> discount;
+  final Value<String?> discountType;
+  final Value<double?> fromQty;
+  final Value<double?> toQty;
+  const ItemPriceDetailsTablesCompanion({
+    this.id = const Value.absent(),
+    this.applicableDate = const Value.absent(),
+    this.itemId = const Value.absent(),
+    this.companyId = const Value.absent(),
+    this.priceList = const Value.absent(),
+    this.rate = const Value.absent(),
+    this.discount = const Value.absent(),
+    this.discountType = const Value.absent(),
+    this.fromQty = const Value.absent(),
+    this.toQty = const Value.absent(),
+  });
+  ItemPriceDetailsTablesCompanion.insert({
+    this.id = const Value.absent(),
+    this.applicableDate = const Value.absent(),
+    this.itemId = const Value.absent(),
+    this.companyId = const Value.absent(),
+    this.priceList = const Value.absent(),
+    this.rate = const Value.absent(),
+    this.discount = const Value.absent(),
+    this.discountType = const Value.absent(),
+    this.fromQty = const Value.absent(),
+    this.toQty = const Value.absent(),
+  });
+  static Insertable<ItemPriceDetailsTable> custom({
+    Expression<int>? id,
+    Expression<DateTime>? applicableDate,
+    Expression<int>? itemId,
+    Expression<int>? companyId,
+    Expression<int>? priceList,
+    Expression<double>? rate,
+    Expression<double>? discount,
+    Expression<String>? discountType,
+    Expression<double>? fromQty,
+    Expression<double>? toQty,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (applicableDate != null) 'applicable_date': applicableDate,
+      if (itemId != null) 'item_id': itemId,
+      if (companyId != null) 'company_id': companyId,
+      if (priceList != null) 'price_list': priceList,
+      if (rate != null) 'rate': rate,
+      if (discount != null) 'discount': discount,
+      if (discountType != null) 'discount_type': discountType,
+      if (fromQty != null) 'from_qty': fromQty,
+      if (toQty != null) 'to_qty': toQty,
+    });
+  }
+
+  ItemPriceDetailsTablesCompanion copyWith({
+    Value<int>? id,
+    Value<DateTime?>? applicableDate,
+    Value<int?>? itemId,
+    Value<int?>? companyId,
+    Value<int?>? priceList,
+    Value<double?>? rate,
+    Value<double?>? discount,
+    Value<String?>? discountType,
+    Value<double?>? fromQty,
+    Value<double?>? toQty,
+  }) {
+    return ItemPriceDetailsTablesCompanion(
+      id: id ?? this.id,
+      applicableDate: applicableDate ?? this.applicableDate,
+      itemId: itemId ?? this.itemId,
+      companyId: companyId ?? this.companyId,
+      priceList: priceList ?? this.priceList,
+      rate: rate ?? this.rate,
+      discount: discount ?? this.discount,
+      discountType: discountType ?? this.discountType,
+      fromQty: fromQty ?? this.fromQty,
+      toQty: toQty ?? this.toQty,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (applicableDate.present) {
+      map['applicable_date'] = Variable<DateTime>(applicableDate.value);
+    }
+    if (itemId.present) {
+      map['item_id'] = Variable<int>(itemId.value);
+    }
+    if (companyId.present) {
+      map['company_id'] = Variable<int>(companyId.value);
+    }
+    if (priceList.present) {
+      map['price_list'] = Variable<int>(priceList.value);
+    }
+    if (rate.present) {
+      map['rate'] = Variable<double>(rate.value);
+    }
+    if (discount.present) {
+      map['discount'] = Variable<double>(discount.value);
+    }
+    if (discountType.present) {
+      map['discount_type'] = Variable<String>(discountType.value);
+    }
+    if (fromQty.present) {
+      map['from_qty'] = Variable<double>(fromQty.value);
+    }
+    if (toQty.present) {
+      map['to_qty'] = Variable<double>(toQty.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ItemPriceDetailsTablesCompanion(')
+          ..write('id: $id, ')
+          ..write('applicableDate: $applicableDate, ')
+          ..write('itemId: $itemId, ')
+          ..write('companyId: $companyId, ')
+          ..write('priceList: $priceList, ')
+          ..write('rate: $rate, ')
+          ..write('discount: $discount, ')
+          ..write('discountType: $discountType, ')
+          ..write('fromQty: $fromQty, ')
+          ..write('toQty: $toQty')
           ..write(')'))
         .toString();
   }
@@ -10497,6 +12550,12 @@ abstract class _$AppDb extends GeneratedDatabase {
   late final $GodownVehiclesTable godownVehicles = $GodownVehiclesTable(this);
   late final $GodownRoutesTable godownRoutes = $GodownRoutesTable(this);
   late final $PartyMasterTable partyMaster = $PartyMasterTable(this);
+  late final $ItemMasterTable itemMaster = $ItemMasterTable(this);
+  late final $PriceLevelsTableTable priceLevelsTable = $PriceLevelsTableTable(
+    this,
+  );
+  late final $ItemPriceDetailsTablesTable itemPriceDetailsTables =
+      $ItemPriceDetailsTablesTable(this);
   late final CompanyDao companyDao = CompanyDao(this as AppDb);
   late final RegistrationDetailDao registrationDetailDao =
       RegistrationDetailDao(this as AppDb);
@@ -10515,6 +12574,11 @@ abstract class _$AppDb extends GeneratedDatabase {
   );
   late final RouteDao routeDao = RouteDao(this as AppDb);
   late final PartyMasterDao partyMasterDao = PartyMasterDao(this as AppDb);
+  late final ItemMasterDao itemMasterDao = ItemMasterDao(this as AppDb);
+  late final PriceLevelDao priceLevelDao = PriceLevelDao(this as AppDb);
+  late final PriceListDetailsDao priceListDetailsDao = PriceListDetailsDao(
+    this as AppDb,
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -10530,6 +12594,9 @@ abstract class _$AppDb extends GeneratedDatabase {
     godownVehicles,
     godownRoutes,
     partyMaster,
+    itemMaster,
+    priceLevelsTable,
+    itemPriceDetailsTables,
   ];
 }
 
@@ -14387,6 +16454,7 @@ typedef $$PartyMasterTableCreateCompanionBuilder =
       Value<double?> onAccountValue,
       Value<int?> routeId,
       Value<String?> routeName,
+      Value<int?> priceList,
       Value<DateTime?> lastSyncOn,
       Value<String?> syncAction,
     });
@@ -14427,6 +16495,7 @@ typedef $$PartyMasterTableUpdateCompanionBuilder =
       Value<double?> onAccountValue,
       Value<int?> routeId,
       Value<String?> routeName,
+      Value<int?> priceList,
       Value<DateTime?> lastSyncOn,
       Value<String?> syncAction,
     });
@@ -14612,6 +16681,11 @@ class $$PartyMasterTableFilterComposer
 
   ColumnFilters<String> get routeName => $composableBuilder(
     column: $table.routeName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get priceList => $composableBuilder(
+    column: $table.priceList,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -14810,6 +16884,11 @@ class $$PartyMasterTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<int> get priceList => $composableBuilder(
+    column: $table.priceList,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<DateTime> get lastSyncOn => $composableBuilder(
     column: $table.lastSyncOn,
     builder: (column) => ColumnOrderings(column),
@@ -14955,6 +17034,9 @@ class $$PartyMasterTableAnnotationComposer
   GeneratedColumn<String> get routeName =>
       $composableBuilder(column: $table.routeName, builder: (column) => column);
 
+  GeneratedColumn<int> get priceList =>
+      $composableBuilder(column: $table.priceList, builder: (column) => column);
+
   GeneratedColumn<DateTime> get lastSyncOn => $composableBuilder(
     column: $table.lastSyncOn,
     builder: (column) => column,
@@ -15032,6 +17114,7 @@ class $$PartyMasterTableTableManager
                 Value<double?> onAccountValue = const Value.absent(),
                 Value<int?> routeId = const Value.absent(),
                 Value<String?> routeName = const Value.absent(),
+                Value<int?> priceList = const Value.absent(),
                 Value<DateTime?> lastSyncOn = const Value.absent(),
                 Value<String?> syncAction = const Value.absent(),
               }) => PartyMasterCompanion(
@@ -15070,6 +17153,7 @@ class $$PartyMasterTableTableManager
                 onAccountValue: onAccountValue,
                 routeId: routeId,
                 routeName: routeName,
+                priceList: priceList,
                 lastSyncOn: lastSyncOn,
                 syncAction: syncAction,
               ),
@@ -15110,6 +17194,7 @@ class $$PartyMasterTableTableManager
                 Value<double?> onAccountValue = const Value.absent(),
                 Value<int?> routeId = const Value.absent(),
                 Value<String?> routeName = const Value.absent(),
+                Value<int?> priceList = const Value.absent(),
                 Value<DateTime?> lastSyncOn = const Value.absent(),
                 Value<String?> syncAction = const Value.absent(),
               }) => PartyMasterCompanion.insert(
@@ -15148,6 +17233,7 @@ class $$PartyMasterTableTableManager
                 onAccountValue: onAccountValue,
                 routeId: routeId,
                 routeName: routeName,
+                priceList: priceList,
                 lastSyncOn: lastSyncOn,
                 syncAction: syncAction,
               ),
@@ -15176,6 +17262,979 @@ typedef $$PartyMasterTableProcessedTableManager =
       PartyMasterData,
       PrefetchHooks Function()
     >;
+typedef $$ItemMasterTableCreateCompanionBuilder =
+    ItemMasterCompanion Function({
+      Value<int> id,
+      required int stockItemId,
+      required String itemName,
+      Value<String> aliasName,
+      Value<String> partNumber,
+      Value<String?> itemNameLcl,
+      Value<String?> groupName,
+      Value<String?> categoryName,
+      required String unitName,
+      required int decimalPlaces,
+      Value<String?> altUnit,
+      Value<int?> altDecimalPlaces,
+      Value<double> unitConversion,
+      Value<double> unitDenominator,
+      Value<bool> isActive,
+      Value<bool> isDeleted,
+      Value<String?> hsnCode,
+      Value<double?> taxPercent,
+    });
+typedef $$ItemMasterTableUpdateCompanionBuilder =
+    ItemMasterCompanion Function({
+      Value<int> id,
+      Value<int> stockItemId,
+      Value<String> itemName,
+      Value<String> aliasName,
+      Value<String> partNumber,
+      Value<String?> itemNameLcl,
+      Value<String?> groupName,
+      Value<String?> categoryName,
+      Value<String> unitName,
+      Value<int> decimalPlaces,
+      Value<String?> altUnit,
+      Value<int?> altDecimalPlaces,
+      Value<double> unitConversion,
+      Value<double> unitDenominator,
+      Value<bool> isActive,
+      Value<bool> isDeleted,
+      Value<String?> hsnCode,
+      Value<double?> taxPercent,
+    });
+
+class $$ItemMasterTableFilterComposer
+    extends Composer<_$AppDb, $ItemMasterTable> {
+  $$ItemMasterTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get stockItemId => $composableBuilder(
+    column: $table.stockItemId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get itemName => $composableBuilder(
+    column: $table.itemName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get aliasName => $composableBuilder(
+    column: $table.aliasName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get partNumber => $composableBuilder(
+    column: $table.partNumber,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get itemNameLcl => $composableBuilder(
+    column: $table.itemNameLcl,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get groupName => $composableBuilder(
+    column: $table.groupName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get categoryName => $composableBuilder(
+    column: $table.categoryName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get unitName => $composableBuilder(
+    column: $table.unitName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get decimalPlaces => $composableBuilder(
+    column: $table.decimalPlaces,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get altUnit => $composableBuilder(
+    column: $table.altUnit,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get altDecimalPlaces => $composableBuilder(
+    column: $table.altDecimalPlaces,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get unitConversion => $composableBuilder(
+    column: $table.unitConversion,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get unitDenominator => $composableBuilder(
+    column: $table.unitDenominator,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isActive => $composableBuilder(
+    column: $table.isActive,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get hsnCode => $composableBuilder(
+    column: $table.hsnCode,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get taxPercent => $composableBuilder(
+    column: $table.taxPercent,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ItemMasterTableOrderingComposer
+    extends Composer<_$AppDb, $ItemMasterTable> {
+  $$ItemMasterTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get stockItemId => $composableBuilder(
+    column: $table.stockItemId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get itemName => $composableBuilder(
+    column: $table.itemName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get aliasName => $composableBuilder(
+    column: $table.aliasName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get partNumber => $composableBuilder(
+    column: $table.partNumber,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get itemNameLcl => $composableBuilder(
+    column: $table.itemNameLcl,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get groupName => $composableBuilder(
+    column: $table.groupName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get categoryName => $composableBuilder(
+    column: $table.categoryName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get unitName => $composableBuilder(
+    column: $table.unitName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get decimalPlaces => $composableBuilder(
+    column: $table.decimalPlaces,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get altUnit => $composableBuilder(
+    column: $table.altUnit,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get altDecimalPlaces => $composableBuilder(
+    column: $table.altDecimalPlaces,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get unitConversion => $composableBuilder(
+    column: $table.unitConversion,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get unitDenominator => $composableBuilder(
+    column: $table.unitDenominator,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isActive => $composableBuilder(
+    column: $table.isActive,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get hsnCode => $composableBuilder(
+    column: $table.hsnCode,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get taxPercent => $composableBuilder(
+    column: $table.taxPercent,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ItemMasterTableAnnotationComposer
+    extends Composer<_$AppDb, $ItemMasterTable> {
+  $$ItemMasterTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get stockItemId => $composableBuilder(
+    column: $table.stockItemId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get itemName =>
+      $composableBuilder(column: $table.itemName, builder: (column) => column);
+
+  GeneratedColumn<String> get aliasName =>
+      $composableBuilder(column: $table.aliasName, builder: (column) => column);
+
+  GeneratedColumn<String> get partNumber => $composableBuilder(
+    column: $table.partNumber,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get itemNameLcl => $composableBuilder(
+    column: $table.itemNameLcl,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get groupName =>
+      $composableBuilder(column: $table.groupName, builder: (column) => column);
+
+  GeneratedColumn<String> get categoryName => $composableBuilder(
+    column: $table.categoryName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get unitName =>
+      $composableBuilder(column: $table.unitName, builder: (column) => column);
+
+  GeneratedColumn<int> get decimalPlaces => $composableBuilder(
+    column: $table.decimalPlaces,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get altUnit =>
+      $composableBuilder(column: $table.altUnit, builder: (column) => column);
+
+  GeneratedColumn<int> get altDecimalPlaces => $composableBuilder(
+    column: $table.altDecimalPlaces,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get unitConversion => $composableBuilder(
+    column: $table.unitConversion,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get unitDenominator => $composableBuilder(
+    column: $table.unitDenominator,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get isActive =>
+      $composableBuilder(column: $table.isActive, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
+  GeneratedColumn<String> get hsnCode =>
+      $composableBuilder(column: $table.hsnCode, builder: (column) => column);
+
+  GeneratedColumn<double> get taxPercent => $composableBuilder(
+    column: $table.taxPercent,
+    builder: (column) => column,
+  );
+}
+
+class $$ItemMasterTableTableManager
+    extends
+        RootTableManager<
+          _$AppDb,
+          $ItemMasterTable,
+          ItemMasterData,
+          $$ItemMasterTableFilterComposer,
+          $$ItemMasterTableOrderingComposer,
+          $$ItemMasterTableAnnotationComposer,
+          $$ItemMasterTableCreateCompanionBuilder,
+          $$ItemMasterTableUpdateCompanionBuilder,
+          (
+            ItemMasterData,
+            BaseReferences<_$AppDb, $ItemMasterTable, ItemMasterData>,
+          ),
+          ItemMasterData,
+          PrefetchHooks Function()
+        > {
+  $$ItemMasterTableTableManager(_$AppDb db, $ItemMasterTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ItemMasterTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ItemMasterTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ItemMasterTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> stockItemId = const Value.absent(),
+                Value<String> itemName = const Value.absent(),
+                Value<String> aliasName = const Value.absent(),
+                Value<String> partNumber = const Value.absent(),
+                Value<String?> itemNameLcl = const Value.absent(),
+                Value<String?> groupName = const Value.absent(),
+                Value<String?> categoryName = const Value.absent(),
+                Value<String> unitName = const Value.absent(),
+                Value<int> decimalPlaces = const Value.absent(),
+                Value<String?> altUnit = const Value.absent(),
+                Value<int?> altDecimalPlaces = const Value.absent(),
+                Value<double> unitConversion = const Value.absent(),
+                Value<double> unitDenominator = const Value.absent(),
+                Value<bool> isActive = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+                Value<String?> hsnCode = const Value.absent(),
+                Value<double?> taxPercent = const Value.absent(),
+              }) => ItemMasterCompanion(
+                id: id,
+                stockItemId: stockItemId,
+                itemName: itemName,
+                aliasName: aliasName,
+                partNumber: partNumber,
+                itemNameLcl: itemNameLcl,
+                groupName: groupName,
+                categoryName: categoryName,
+                unitName: unitName,
+                decimalPlaces: decimalPlaces,
+                altUnit: altUnit,
+                altDecimalPlaces: altDecimalPlaces,
+                unitConversion: unitConversion,
+                unitDenominator: unitDenominator,
+                isActive: isActive,
+                isDeleted: isDeleted,
+                hsnCode: hsnCode,
+                taxPercent: taxPercent,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int stockItemId,
+                required String itemName,
+                Value<String> aliasName = const Value.absent(),
+                Value<String> partNumber = const Value.absent(),
+                Value<String?> itemNameLcl = const Value.absent(),
+                Value<String?> groupName = const Value.absent(),
+                Value<String?> categoryName = const Value.absent(),
+                required String unitName,
+                required int decimalPlaces,
+                Value<String?> altUnit = const Value.absent(),
+                Value<int?> altDecimalPlaces = const Value.absent(),
+                Value<double> unitConversion = const Value.absent(),
+                Value<double> unitDenominator = const Value.absent(),
+                Value<bool> isActive = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+                Value<String?> hsnCode = const Value.absent(),
+                Value<double?> taxPercent = const Value.absent(),
+              }) => ItemMasterCompanion.insert(
+                id: id,
+                stockItemId: stockItemId,
+                itemName: itemName,
+                aliasName: aliasName,
+                partNumber: partNumber,
+                itemNameLcl: itemNameLcl,
+                groupName: groupName,
+                categoryName: categoryName,
+                unitName: unitName,
+                decimalPlaces: decimalPlaces,
+                altUnit: altUnit,
+                altDecimalPlaces: altDecimalPlaces,
+                unitConversion: unitConversion,
+                unitDenominator: unitDenominator,
+                isActive: isActive,
+                isDeleted: isDeleted,
+                hsnCode: hsnCode,
+                taxPercent: taxPercent,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ItemMasterTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDb,
+      $ItemMasterTable,
+      ItemMasterData,
+      $$ItemMasterTableFilterComposer,
+      $$ItemMasterTableOrderingComposer,
+      $$ItemMasterTableAnnotationComposer,
+      $$ItemMasterTableCreateCompanionBuilder,
+      $$ItemMasterTableUpdateCompanionBuilder,
+      (
+        ItemMasterData,
+        BaseReferences<_$AppDb, $ItemMasterTable, ItemMasterData>,
+      ),
+      ItemMasterData,
+      PrefetchHooks Function()
+    >;
+typedef $$PriceLevelsTableTableCreateCompanionBuilder =
+    PriceLevelsTableCompanion Function({
+      Value<int> id,
+      Value<String?> priceLevel,
+      Value<bool> rateInclusive,
+      Value<bool> isDefault,
+      Value<bool> active,
+    });
+typedef $$PriceLevelsTableTableUpdateCompanionBuilder =
+    PriceLevelsTableCompanion Function({
+      Value<int> id,
+      Value<String?> priceLevel,
+      Value<bool> rateInclusive,
+      Value<bool> isDefault,
+      Value<bool> active,
+    });
+
+class $$PriceLevelsTableTableFilterComposer
+    extends Composer<_$AppDb, $PriceLevelsTableTable> {
+  $$PriceLevelsTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get priceLevel => $composableBuilder(
+    column: $table.priceLevel,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get rateInclusive => $composableBuilder(
+    column: $table.rateInclusive,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDefault => $composableBuilder(
+    column: $table.isDefault,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get active => $composableBuilder(
+    column: $table.active,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$PriceLevelsTableTableOrderingComposer
+    extends Composer<_$AppDb, $PriceLevelsTableTable> {
+  $$PriceLevelsTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get priceLevel => $composableBuilder(
+    column: $table.priceLevel,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get rateInclusive => $composableBuilder(
+    column: $table.rateInclusive,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDefault => $composableBuilder(
+    column: $table.isDefault,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get active => $composableBuilder(
+    column: $table.active,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$PriceLevelsTableTableAnnotationComposer
+    extends Composer<_$AppDb, $PriceLevelsTableTable> {
+  $$PriceLevelsTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get priceLevel => $composableBuilder(
+    column: $table.priceLevel,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get rateInclusive => $composableBuilder(
+    column: $table.rateInclusive,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get isDefault =>
+      $composableBuilder(column: $table.isDefault, builder: (column) => column);
+
+  GeneratedColumn<bool> get active =>
+      $composableBuilder(column: $table.active, builder: (column) => column);
+}
+
+class $$PriceLevelsTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDb,
+          $PriceLevelsTableTable,
+          PriceLevelsTableData,
+          $$PriceLevelsTableTableFilterComposer,
+          $$PriceLevelsTableTableOrderingComposer,
+          $$PriceLevelsTableTableAnnotationComposer,
+          $$PriceLevelsTableTableCreateCompanionBuilder,
+          $$PriceLevelsTableTableUpdateCompanionBuilder,
+          (
+            PriceLevelsTableData,
+            BaseReferences<
+              _$AppDb,
+              $PriceLevelsTableTable,
+              PriceLevelsTableData
+            >,
+          ),
+          PriceLevelsTableData,
+          PrefetchHooks Function()
+        > {
+  $$PriceLevelsTableTableTableManager(_$AppDb db, $PriceLevelsTableTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PriceLevelsTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PriceLevelsTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$PriceLevelsTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String?> priceLevel = const Value.absent(),
+                Value<bool> rateInclusive = const Value.absent(),
+                Value<bool> isDefault = const Value.absent(),
+                Value<bool> active = const Value.absent(),
+              }) => PriceLevelsTableCompanion(
+                id: id,
+                priceLevel: priceLevel,
+                rateInclusive: rateInclusive,
+                isDefault: isDefault,
+                active: active,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String?> priceLevel = const Value.absent(),
+                Value<bool> rateInclusive = const Value.absent(),
+                Value<bool> isDefault = const Value.absent(),
+                Value<bool> active = const Value.absent(),
+              }) => PriceLevelsTableCompanion.insert(
+                id: id,
+                priceLevel: priceLevel,
+                rateInclusive: rateInclusive,
+                isDefault: isDefault,
+                active: active,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$PriceLevelsTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDb,
+      $PriceLevelsTableTable,
+      PriceLevelsTableData,
+      $$PriceLevelsTableTableFilterComposer,
+      $$PriceLevelsTableTableOrderingComposer,
+      $$PriceLevelsTableTableAnnotationComposer,
+      $$PriceLevelsTableTableCreateCompanionBuilder,
+      $$PriceLevelsTableTableUpdateCompanionBuilder,
+      (
+        PriceLevelsTableData,
+        BaseReferences<_$AppDb, $PriceLevelsTableTable, PriceLevelsTableData>,
+      ),
+      PriceLevelsTableData,
+      PrefetchHooks Function()
+    >;
+typedef $$ItemPriceDetailsTablesTableCreateCompanionBuilder =
+    ItemPriceDetailsTablesCompanion Function({
+      Value<int> id,
+      Value<DateTime?> applicableDate,
+      Value<int?> itemId,
+      Value<int?> companyId,
+      Value<int?> priceList,
+      Value<double?> rate,
+      Value<double?> discount,
+      Value<String?> discountType,
+      Value<double?> fromQty,
+      Value<double?> toQty,
+    });
+typedef $$ItemPriceDetailsTablesTableUpdateCompanionBuilder =
+    ItemPriceDetailsTablesCompanion Function({
+      Value<int> id,
+      Value<DateTime?> applicableDate,
+      Value<int?> itemId,
+      Value<int?> companyId,
+      Value<int?> priceList,
+      Value<double?> rate,
+      Value<double?> discount,
+      Value<String?> discountType,
+      Value<double?> fromQty,
+      Value<double?> toQty,
+    });
+
+class $$ItemPriceDetailsTablesTableFilterComposer
+    extends Composer<_$AppDb, $ItemPriceDetailsTablesTable> {
+  $$ItemPriceDetailsTablesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get applicableDate => $composableBuilder(
+    column: $table.applicableDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get itemId => $composableBuilder(
+    column: $table.itemId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get companyId => $composableBuilder(
+    column: $table.companyId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get priceList => $composableBuilder(
+    column: $table.priceList,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get rate => $composableBuilder(
+    column: $table.rate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get discount => $composableBuilder(
+    column: $table.discount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get discountType => $composableBuilder(
+    column: $table.discountType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get fromQty => $composableBuilder(
+    column: $table.fromQty,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get toQty => $composableBuilder(
+    column: $table.toQty,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ItemPriceDetailsTablesTableOrderingComposer
+    extends Composer<_$AppDb, $ItemPriceDetailsTablesTable> {
+  $$ItemPriceDetailsTablesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get applicableDate => $composableBuilder(
+    column: $table.applicableDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get itemId => $composableBuilder(
+    column: $table.itemId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get companyId => $composableBuilder(
+    column: $table.companyId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get priceList => $composableBuilder(
+    column: $table.priceList,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get rate => $composableBuilder(
+    column: $table.rate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get discount => $composableBuilder(
+    column: $table.discount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get discountType => $composableBuilder(
+    column: $table.discountType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get fromQty => $composableBuilder(
+    column: $table.fromQty,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get toQty => $composableBuilder(
+    column: $table.toQty,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ItemPriceDetailsTablesTableAnnotationComposer
+    extends Composer<_$AppDb, $ItemPriceDetailsTablesTable> {
+  $$ItemPriceDetailsTablesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get applicableDate => $composableBuilder(
+    column: $table.applicableDate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get itemId =>
+      $composableBuilder(column: $table.itemId, builder: (column) => column);
+
+  GeneratedColumn<int> get companyId =>
+      $composableBuilder(column: $table.companyId, builder: (column) => column);
+
+  GeneratedColumn<int> get priceList =>
+      $composableBuilder(column: $table.priceList, builder: (column) => column);
+
+  GeneratedColumn<double> get rate =>
+      $composableBuilder(column: $table.rate, builder: (column) => column);
+
+  GeneratedColumn<double> get discount =>
+      $composableBuilder(column: $table.discount, builder: (column) => column);
+
+  GeneratedColumn<String> get discountType => $composableBuilder(
+    column: $table.discountType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get fromQty =>
+      $composableBuilder(column: $table.fromQty, builder: (column) => column);
+
+  GeneratedColumn<double> get toQty =>
+      $composableBuilder(column: $table.toQty, builder: (column) => column);
+}
+
+class $$ItemPriceDetailsTablesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDb,
+          $ItemPriceDetailsTablesTable,
+          ItemPriceDetailsTable,
+          $$ItemPriceDetailsTablesTableFilterComposer,
+          $$ItemPriceDetailsTablesTableOrderingComposer,
+          $$ItemPriceDetailsTablesTableAnnotationComposer,
+          $$ItemPriceDetailsTablesTableCreateCompanionBuilder,
+          $$ItemPriceDetailsTablesTableUpdateCompanionBuilder,
+          (
+            ItemPriceDetailsTable,
+            BaseReferences<
+              _$AppDb,
+              $ItemPriceDetailsTablesTable,
+              ItemPriceDetailsTable
+            >,
+          ),
+          ItemPriceDetailsTable,
+          PrefetchHooks Function()
+        > {
+  $$ItemPriceDetailsTablesTableTableManager(
+    _$AppDb db,
+    $ItemPriceDetailsTablesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ItemPriceDetailsTablesTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$ItemPriceDetailsTablesTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$ItemPriceDetailsTablesTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<DateTime?> applicableDate = const Value.absent(),
+                Value<int?> itemId = const Value.absent(),
+                Value<int?> companyId = const Value.absent(),
+                Value<int?> priceList = const Value.absent(),
+                Value<double?> rate = const Value.absent(),
+                Value<double?> discount = const Value.absent(),
+                Value<String?> discountType = const Value.absent(),
+                Value<double?> fromQty = const Value.absent(),
+                Value<double?> toQty = const Value.absent(),
+              }) => ItemPriceDetailsTablesCompanion(
+                id: id,
+                applicableDate: applicableDate,
+                itemId: itemId,
+                companyId: companyId,
+                priceList: priceList,
+                rate: rate,
+                discount: discount,
+                discountType: discountType,
+                fromQty: fromQty,
+                toQty: toQty,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<DateTime?> applicableDate = const Value.absent(),
+                Value<int?> itemId = const Value.absent(),
+                Value<int?> companyId = const Value.absent(),
+                Value<int?> priceList = const Value.absent(),
+                Value<double?> rate = const Value.absent(),
+                Value<double?> discount = const Value.absent(),
+                Value<String?> discountType = const Value.absent(),
+                Value<double?> fromQty = const Value.absent(),
+                Value<double?> toQty = const Value.absent(),
+              }) => ItemPriceDetailsTablesCompanion.insert(
+                id: id,
+                applicableDate: applicableDate,
+                itemId: itemId,
+                companyId: companyId,
+                priceList: priceList,
+                rate: rate,
+                discount: discount,
+                discountType: discountType,
+                fromQty: fromQty,
+                toQty: toQty,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ItemPriceDetailsTablesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDb,
+      $ItemPriceDetailsTablesTable,
+      ItemPriceDetailsTable,
+      $$ItemPriceDetailsTablesTableFilterComposer,
+      $$ItemPriceDetailsTablesTableOrderingComposer,
+      $$ItemPriceDetailsTablesTableAnnotationComposer,
+      $$ItemPriceDetailsTablesTableCreateCompanionBuilder,
+      $$ItemPriceDetailsTablesTableUpdateCompanionBuilder,
+      (
+        ItemPriceDetailsTable,
+        BaseReferences<
+          _$AppDb,
+          $ItemPriceDetailsTablesTable,
+          ItemPriceDetailsTable
+        >,
+      ),
+      ItemPriceDetailsTable,
+      PrefetchHooks Function()
+    >;
 
 class $AppDbManager {
   final _$AppDb _db;
@@ -15200,4 +18259,13 @@ class $AppDbManager {
       $$GodownRoutesTableTableManager(_db, _db.godownRoutes);
   $$PartyMasterTableTableManager get partyMaster =>
       $$PartyMasterTableTableManager(_db, _db.partyMaster);
+  $$ItemMasterTableTableManager get itemMaster =>
+      $$ItemMasterTableTableManager(_db, _db.itemMaster);
+  $$PriceLevelsTableTableTableManager get priceLevelsTable =>
+      $$PriceLevelsTableTableTableManager(_db, _db.priceLevelsTable);
+  $$ItemPriceDetailsTablesTableTableManager get itemPriceDetailsTables =>
+      $$ItemPriceDetailsTablesTableTableManager(
+        _db,
+        _db.itemPriceDetailsTables,
+      );
 }

@@ -1,10 +1,16 @@
+import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_dropdown.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
+import 'package:mpos_beat/presentation/logic/item_filter_provider.dart';
+import 'package:mpos_beat/presentation/logic/user_provider.dart';
+import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/transaction_order_booking_screen.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/widgets/stock_card.dart';
 
 class OrderBookingAddItemScreen extends StatefulWidget {
-  const OrderBookingAddItemScreen({super.key});
+  final TransactionOrderBookingRouteArgs data;
+  const OrderBookingAddItemScreen({super.key, required this.data});
 
   @override
   State<OrderBookingAddItemScreen> createState() =>
@@ -12,216 +18,236 @@ class OrderBookingAddItemScreen extends StatefulWidget {
 }
 
 class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
-  final List<Map<String, dynamic>> items = [
-    {
-      "name": "Black & Broken Rice",
-      "category": "Category Name",
-      "stock": 0,
-      "mrp": 2000.0,
-      "tax": 18.0,
-      "inclRate": 1800.0,
-    },
-    {
-      "name": "Premium Rice",
-      "category": "Category A",
-      "stock": 12,
-      "mrp": 2500.0,
-      "tax": 12.0,
-      "inclRate": 2300.0,
-    },
-  ];
+  Timer? _debounce;
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = context.watch<UserProvider>();
+    final itemFilterProvider = context.watch<ItemFilterProvider>();
+
+    final selectedPriceListId = userProvider.selectedPriceLevelId;
+    final rateInclusive = userProvider.rateInclusive;
+
+    final appDb = sl<AppDb>();
     final appLocalizations = context.l10n;
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Icons.keyboard_arrow_left,
-            color: ColorResources.indigoBlue,
-            size: context.getSize.height * 0.024,
-          ),
-        ),
-        title: Column(
-          children: [
-            Text(
-              "Alackal Stores",
-              style: context.textStyle.s20.indigoBlue.bold.roboto,
+
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              icon: const Icon(Icons.keyboard_arrow_left),
+              onPressed: () => Navigator.pop(context),
             ),
-            Text(
-              "Order Value : 18000.00",
-              style: context.textStyle.s12.dustyBlue.w500.roboto,
+            title: Column(
+              children: [
+                Text(
+                  "${widget.data.party.ledgerName}",
+                  style: context.textStyle.s20.indigoBlue.bold.roboto,
+                ),
+                Text(
+                  "Order Value : 0.00",
+                  style: context.textStyle.s12.dustyBlue.w500.roboto,
+                ),
+              ],
             ),
-            h4,
-          ],
-        ),
-        centerTitle: true,
-        actions: [
-          SvgPicture.asset(
-            AppAssets.refresh,
-            height: context.getSize.height * 0.022,
-            colorFilter: const ColorFilter.mode(
-              ColorResources.indigoBlue,
-              BlendMode.srcIn,
-            ),
+            centerTitle: true,
+            toolbarHeight: 65,
           ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.qr_code, size: context.getSize.height * 0.022),
-          ),
-        ],
-        toolbarHeight: 65,
-      ),
-      body: CustomScrollView(
-        physics: const NeverScrollableScrollPhysics(),
-        slivers: [
-          
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                children: [
-                  h10,
-                  CustomTextField(
-                    // controller: searchController,
-                    hint: appLocalizations.manage_user_screen_search_user,
-                    suffixIcon: Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: Icon(
-                        Icons.search,
-                        color: ColorResources.bluishGray,
-                        size: context.getSize.height * 0.024,
+          body: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    /// 🔍 Search
+                    CustomTextField(
+                      onChange: (value) {
+                        _debounce?.cancel();
+                        _debounce = Timer(
+                          const Duration(milliseconds: 300),
+                          () => itemFilterProvider.updateSearch(value),
+                        );
+                      },
+                      hint: appLocalizations.manage_user_screen_search_user,
+                      suffixIcon: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Icon(
+                          Icons.search,
+                          color: ColorResources.bluishGray,
+                          size: context.getSize.height * 0.024,
+                        ),
                       ),
+                      backgroundColor: ColorResources.lightGray,
+                      borderRadius: 12,
+                      hintColor: ColorResources.silverGray,
+                      borderColor: ColorResources.transparent,
                     ),
-                    backgroundColor: ColorResources.lightGray,
-                    borderRadius: 12,
-                    hintColor: ColorResources.silverGray,
-                    borderColor: ColorResources.transparent,
-                  ),
-                  h6,
-                  Divider(
-                    thickness: 1,
-                    color: ColorResources.bluishGray.withValues(alpha: 0.2),
-                  ),
-                  h6,
-                  Row(
-                    children: [
-                      Expanded(
-                        child: CustomDropdown(
-                          height: context.getSize.height * 0.032,
-                          arrowSize: context.getSize.height * 0.016,
-                          label: appLocalizations
-                              .order_booking_add_item_select_by_group,
-                          labelTextStyle:
-                              context.textStyle.dustyBlue.s10.w400.roboto,
-                          hintText: appLocalizations
-                              .order_booking_add_item_select_group,
-                          hintTextStyle:
-                              context.textStyle.bluishGray.s09.w300.roboto,
-                          items: [],
-                          onChanged: (value) {},
+                    h10,
+
+                    /// 🔹 Filters
+                    Row(
+                      children: [
+                        Expanded(
+                          child: StreamBuilder<List<String>>(
+                            stream: itemFilterProvider.groupStream,
+                            builder: (_, snapshot) {
+                              return CustomDropdown(
+                                items: snapshot.data ?? ['All'],
+                                hintText: appLocalizations
+                                    .order_booking_add_item_select_group,
+                                onChanged: (v) =>
+                                    itemFilterProvider.selectGroup(v ?? 'All'),
+                              );
+                            },
+                          ),
                         ),
-                      ),
-                      w5,
-                      Expanded(
-                        child: CustomDropdown(
-                          height: context.getSize.height * 0.032,
-                          arrowSize: context.getSize.height * 0.016,
-                          label: appLocalizations
-                              .order_booking_add_item_select_by_category,
-                          labelTextStyle:
-                              context.textStyle.dustyBlue.s10.w400.roboto,
-                          hintText: appLocalizations
-                              .order_booking_add_item_select_category,
-                          hintTextStyle:
-                              context.textStyle.bluishGray.s09.w300.roboto,
-                          items: [],
-                          onChanged: (value) {},
+                        w8,
+                        Expanded(
+                          child: StreamBuilder<List<String>>(
+                            stream: itemFilterProvider.categoryStream,
+                            builder: (_, snapshot) {
+                              return CustomDropdown(
+                                items: snapshot.data ?? ['All'],
+                                hintText: appLocalizations
+                                    .order_booking_add_item_select_category,
+                                onChanged: (v) => itemFilterProvider
+                                    .selectCategory(v ?? 'All'),
+                              );
+                            },
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  h6,
-                  Divider(
-                    thickness: 1,
-                    color: ColorResources.bluishGray.withValues(alpha: 0.2),
-                  ),
-                  h6,
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
+
+              /// 🔹 ITEM LIST
+              Expanded(
+                child: selectedPriceListId == null
+                    ? const Center(child: Text("Please select a Price Level"))
+                    : StreamBuilder<List<ItemPriceDetailsTable>>(
+                        stream: appDb.priceListDetailsDao.watchAll(),
+                        builder: (context, priceSnap) {
+                          final priceDetails = priceSnap.data ?? [];
+
+                          return StreamBuilder<List<ItemMasterData>>(
+                            stream: itemFilterProvider.filteredItems,
+                            builder: (context, itemSnap) {
+                              if (!itemSnap.hasData) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+
+                              final items = itemSnap.data!;
+                              if (items.isEmpty) {
+                                return const Center(
+                                  child: Text("No items found"),
+                                );
+                              }
+
+                              return ListView.separated(
+                                itemCount: items.length,
+                                separatorBuilder: (_, __) => Divider(
+                                  thickness: 1,
+                                  color: ColorResources.bluishGray.withValues(
+                                    alpha: 0.2,
+                                  ),
+                                ),
+                                itemBuilder: (context, index) {
+                                  final item = items[index];
+
+                                  /// 🔹 Match price by itemId + priceList
+                                  ItemPriceDetailsTable? price;
+
+                                  for (final p in priceDetails) {
+                                    if (p.itemId == item.stockItemId &&
+                                        p.priceList == selectedPriceListId) {
+                                      price = p;
+                                      break;
+                                    }
+                                  }
+
+                                  double inclRate = 0;
+
+                                  if (price != null && price.rate != null) {
+                                    final double rate = price.rate!;
+                                    final double tax = item.taxPercent ?? 0;
+
+                                    inclRate = rateInclusive
+                                        ? rate
+                                        : rate + (rate * tax / 100);
+                                  }
+
+                                  return StockCard(
+                                    name: item.itemName,
+                                    stock: 0,
+                                    mrp: price?.rate ?? 0.00,
+                                    tax: item.taxPercent ?? 0,
+                                    inclRate: inclRate,
+                                    companyId: widget.data.data.company.id ?? 0,
+                                    itemId: item.stockItemId,
+                                    priceListId: selectedPriceListId,
+                                  );
+                                },
+                              );
+                            },
+                          );
+                        },
+                      ),
+              ),
+            ],
+          ),
+        ),
+        Positioned(
+          bottom: 0,
+          child: Container(
+            color: ColorResources.white,
+            padding: .all(16),
+            width: context.getSize.width,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          appLocalizations.grand_total,
+                          style: context.textStyle.indigoBlue.s12.w500.roboto,
+                        ),
+                        Text(
+                          "72000.00",
+                          style: context.textStyle.indigoBlue.s20.bold.roboto,
+                        ),
+                      ],
+                    ),
+                    CustomButton(
+                      buttonText: "",
+                      isborderEnable: false,
+                      width: context.getSize.width / 2.5,
+                      borderRadius: BorderRadius.circular(16),
+                      icon: Icons.shopping_cart,
+                      iconSize: 30,
+                      iconColor: ColorResources.white,
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate((context, index) {
-              final item = items[index];
-              return Column(
-                children: [
-                  StockCard(
-                    name: item["name"],
-                    stock: item["stock"],
-                    mrp: item["mrp"],
-                    tax: item["tax"],
-                    inclRate: item["inclRate"],
-                  ),
-                  h3,
-                  Divider(
-                    thickness: 1,
-                    color: ColorResources.bluishGray.withValues(alpha: 0.2),
-                  ),
-                  h3,
-                ],
-              );
-            }, childCount: items.length),
-          ),
-          SliverFillRemaining(
-            hasScrollBody: false,
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Divider(
-                    thickness: 1,
-                    color: ColorResources.bluishGray.withValues(alpha: 0.2),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            appLocalizations.grand_total,
-                            style: context.textStyle.indigoBlue.s12.w500.roboto,
-                          ),
-                          Text(
-                            "72000.00",
-                            style: context.textStyle.indigoBlue.s20.bold.roboto,
-                          ),
-                        ],
-                      ),
-                      CustomButton(
-                        buttonText: "",
-                        isborderEnable: false,
-                        width: context.getSize.width / 2.5,
-                        borderRadius: BorderRadius.circular(16),
-                        icon: Icons.shopping_cart,
-                        iconSize: 30,
-                        iconColor: ColorResources.white,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

@@ -3,20 +3,27 @@ import 'package:mpos_beat/core/base/run_safely.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
 import 'package:mpos_beat/core/service/http_client.dart';
 import 'package:mpos_beat/core/utils/typedefs.dart';
+import 'package:mpos_beat/data/data_sources/user/item_master_sync/item_master_sync.dart';
+import 'package:mpos_beat/data/data_sources/user/item_price_details/get_item_price_details.dart';
+import 'package:mpos_beat/data/data_sources/user/price_level/get_price_level.dart';
 import 'package:mpos_beat/data/data_sources/user/skip_reason/skip_reason.dart';
 import 'package:mpos_beat/data/data_sources/user_management/checkin_Checkout/checkin_datasource.dart';
 import 'package:mpos_beat/data/data_sources/user_management/checkin_Checkout/checkout_datasource.dart';
-import 'package:mpos_beat/data/data_sources/user_management/party_MasterSync/party_MasterSync.dart';
+import 'package:mpos_beat/data/data_sources/user/party_MasterSync/party_MasterSync.dart';
+import 'package:mpos_beat/data/models/item_master_sync_model.dart';
+import 'package:mpos_beat/data/models/item_price_details_model.dart';
 import 'package:mpos_beat/data/models/party_MasterSync_model.dart';
 import 'package:mpos_beat/data/data_sources/user/attendance_marking/attendanceMarking.dart';
 import 'package:mpos_beat/data/data_sources/user/trip_end/trip_end.dart';
 import 'package:mpos_beat/data/data_sources/user/trip_start/trip_start.dart';
+import 'package:mpos_beat/data/models/price_level_model.dart';
 import 'package:mpos_beat/data/models/response.dart';
 import 'package:mpos_beat/data/models/skip_reason_response.dart';
 import 'package:mpos_beat/domain/repositories/i_user_facad.dart';
 import 'package:mpos_beat/domain/request/attendance_params.dart';
 import 'package:mpos_beat/domain/request/checkin_params.dart';
 import 'package:mpos_beat/domain/request/checkout_params.dart';
+import 'package:mpos_beat/domain/request/item_master_quary_params.dart';
 import 'package:mpos_beat/domain/request/party_MasterSync_params.dart';
 import 'package:mpos_beat/domain/request/trip_end_params.dart';
 import 'package:mpos_beat/domain/request/trip_start_params.dart';
@@ -34,6 +41,9 @@ class IUserFacadImp implements IUserFacad {
   final PartyMasterSync partyMastersync;
   final CheckinDatasource checkinDatasource;
   final CheckoutDatasource checkoutDatasource;
+  final ItemMasterSync itemMaster;
+  final GetPriceLevel priceLevel;
+  final GetItemPriceDetails itemPriceDetails;
   IUserFacadImp(
     this.httpClient,
     this.runSafely,
@@ -42,8 +52,12 @@ class IUserFacadImp implements IUserFacad {
     this.partyMastersync,
     this.checkinDatasource,
     this.checkoutDatasource,
-     this.startTrip, this.endTrip,
-    this.reasonToSkip
+    this.startTrip,
+    this.endTrip,
+    this.reasonToSkip,
+    this.itemMaster,
+    this.priceLevel,
+    this.itemPriceDetails,
   );
 
   @override
@@ -85,5 +99,22 @@ class IUserFacadImp implements IUserFacad {
   @override
   ResultFuture<SkipReasonResponse> skipReason() {
     return reasonToSkip();
+  }
+
+  @override
+  ResultFuture<ItemMasterSyncModel> getItemMaster(
+    BaseParams<ItemMasterQueryParams> params,
+  ) {
+    return itemMaster(params);
+  }
+
+  @override
+  ResultFuture<PriceLevelModel> getPriceLevels(int companyId) {
+    return priceLevel(companyId: companyId);
+  }
+
+  @override
+  ResultFuture<ItemPriceDetailsModel> getItempriceDetails(int companyId) {
+    return itemPriceDetails(companyId: companyId);
   }
 }

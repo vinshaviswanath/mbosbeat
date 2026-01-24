@@ -4,13 +4,19 @@ import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/core/utils/logger.dart';
+import 'package:mpos_beat/data/local_db/app_db.dart';
+import 'package:mpos_beat/data/local_db/daos/price_lavel_dao/price_level_sync_dao.dart';
+import 'package:mpos_beat/data/models/item_master_sync_model.dart';
+import 'package:mpos_beat/data/models/item_price_details_model.dart';
 import 'package:mpos_beat/data/models/party_MasterSync_model.dart';
+import 'package:mpos_beat/data/models/price_level_model.dart';
 import 'package:mpos_beat/data/models/response.dart';
 import 'package:mpos_beat/data/models/skip_reason_response.dart';
 import 'package:mpos_beat/domain/repositories/i_user_facad.dart';
 import 'package:mpos_beat/domain/request/attendance_params.dart';
 import 'package:mpos_beat/domain/request/checkin_params.dart';
 import 'package:mpos_beat/domain/request/checkout_params.dart';
+import 'package:mpos_beat/domain/request/item_master_quary_params.dart';
 import 'package:mpos_beat/domain/request/party_MasterSync_params.dart';
 import 'package:mpos_beat/domain/request/trip_end_params.dart';
 import 'package:mpos_beat/domain/request/trip_start_params.dart';
@@ -58,6 +64,28 @@ class UserProvider extends ChangeNotifier {
 
   SkipReasonResponse? _skipReasonResponse;
   SkipReasonResponse? get skipReasonResponse => _skipReasonResponse;
+
+  ItemMasterSyncModel? _itemMasterList;
+  ItemMasterSyncModel? get itemMasterList => _itemMasterList;
+
+  PriceLevelModel? _priceLevelList;
+  PriceLevelModel? get priceLevelList => _priceLevelList;
+
+  ItemPriceDetailsModel? _itemPriceDetailsList;
+  ItemPriceDetailsModel? get itemPriceDetailsList => _itemPriceDetailsList;
+
+  AppDb? _appDb;
+
+  void attachDb(AppDb db) {
+    _appDb = db;
+  }
+
+int? _selectedPriceLevelId;
+int? get selectedPriceLevelId => _selectedPriceLevelId;
+
+  bool _rateInclusive = false;
+    bool get rateInclusive => _rateInclusive;
+
 
   /// ---------------- GENERAL ----------------
 
@@ -331,7 +359,10 @@ class UserProvider extends ChangeNotifier {
   int visitSequence = 0;
 
   /// ---------------- CHECK-IN ----------------
-  Future<DefaultResponse?> checkIn({required CheckinParams params}) async {
+  Future<DefaultResponse?> checkIn({
+    required CheckinParams params,
+    //  VoidCallback? onSuccess,
+  }) async {
     setLoading(true);
     final result = await iUserFacad.checkin(BaseParams(data: params));
 
@@ -348,17 +379,49 @@ class UserProvider extends ChangeNotifier {
 
         if (response.status == 1) {
           _checkinresponse = response;
-          activeCheckinId = response.id;
+         activeCheckinId = response.id;
           activeCheckinTime = DateFormat('HH:mm').format(DateTime.now());
-          visitSequence++;
-          // onSuccess?.call();
+          visitSequence++;          // onSuccess?.call();
         } else {
           _errorMessage = response.message;
         }
       },
     );
+    setLoading(false);
 
     return _checkinresponse;
+  }
+  //========================= Skip Reason =========================
+
+  Future<SkipReasonResponse?> getSkipReasons(BuildContext context) async {
+    setLoading(true);
+    final result = await iUserFacad.skipReason();
+
+    result.fold(
+      (failure) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(failure.errorMsg, textAlign: TextAlign.center),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          ),
+        );
+      },
+      (response) async {
+        _skipReasonResponse = response;
+
+        Logger.logSuccess(
+          "Skip reason List fetch successfull : ${response.toJson()}",
+        );
+        notifyListeners();
+      },
+    );
+    setLoading(false);
+
+    return _skipReasonResponse;
   }
 
   //============================check out========================================
@@ -382,7 +445,6 @@ class UserProvider extends ChangeNotifier {
       (response) {
         Logger.logSuccess("Checkout  success : ${response.toJson()}");
         Logger.logSuccess("status :${response.status}");
-        setLoading(false);
         notifyListeners();
 
         if (response.status == 1) {
@@ -409,6 +471,8 @@ class UserProvider extends ChangeNotifier {
         }
       },
     );
+    setLoading(false);
+
     return _checkoutresponse;
   }
 
@@ -441,5 +505,164 @@ class UserProvider extends ChangeNotifier {
       },
     );
     return _skipReasonResponse;
+  }
+
+  Future<ItemMasterSyncModel?> getItemMaster(
+    BuildContext context, {
+    required ItemMasterQueryParams params,
+  }) async {
+    setLoading(true);
+    final result = await iUserFacad.getItemMaster(BaseParams(data: params));
+
+    result.fold(
+      (failure) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(failure.errorMsg, textAlign: TextAlign.center),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          ),
+        );
+      },
+      (response) async {
+        _itemMasterList = response;
+
+        Logger.logSuccess(
+          "Item Master List fetch successfull : ${response.toJson()}",
+        );
+        notifyListeners();
+      },
+    );
+    setLoading(false);
+    return _itemMasterList;
+  }
+
+  ///======================= Price Level ==========================
+
+  Future<PriceLevelModel?> getPriceLevel(
+    BuildContext context, {
+    required int companyId,
+  }) async {
+    setLoading(true);
+    final result = await iUserFacad.getPriceLevels(companyId);
+
+    result.fold(
+      (failure) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(failure.errorMsg, textAlign: TextAlign.center),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          ),
+        );
+      },
+      (response) async {
+        _priceLevelList = response;
+
+        Logger.logSuccess(
+          "Item Master List fetch successfull : ${response.toJson()}",
+        );
+        notifyListeners();
+      },
+    );
+    setLoading(false);
+    return _priceLevelList;
+  }
+
+  /// Price Level Stram
+  Stream<List<PriceLevelsTableData>> priceLevelsStream({
+    required int? partyPriceListId,
+  }) {
+    if (_appDb == null) return const Stream.empty();
+
+    return _appDb!
+        .watchPriceLevelsForParty(partyPriceListId)
+        .map((list) {
+      _autoSelectIfSingle(list);
+      return list;
+    });
+  }
+
+
+  /* ───────────────── AUTO SELECT LOGIC ───────────────── */
+
+  void _autoSelectIfSingle(List<PriceLevelsTableData> list) {
+    if (list.length == 1) {
+      final level = list.first;
+
+      if (_selectedPriceLevelId != level.id) {
+        _selectedPriceLevelId = level.id;
+        _rateInclusive = level.rateInclusive;
+        notifyListeners();
+      }
+    }
+  }
+
+  /* ───────────────── MANUAL SELECTION ───────────────── */
+
+  void setSelectedPriceLevel(PriceLevelsTableData level) {
+    _selectedPriceLevelId = level.id;
+    _rateInclusive = level.rateInclusive;
+    notifyListeners();
+  }
+
+  void selectPriceLevelById(int? id) {
+    _selectedPriceLevelId = id;
+    notifyListeners();
+  }
+
+  /* ───────────────── PARTY CHANGE HANDLING ───────────────── */
+
+  void onPartyChanged() {
+    _selectedPriceLevelId = null;
+    _rateInclusive = false;
+    notifyListeners();
+  }
+
+  /* ───────────────── CLEAR ───────────────── */
+
+  void clearSelectedPriceLevel() {
+    _selectedPriceLevelId = null;
+    _rateInclusive = false;
+    notifyListeners();
+  }
+
+  ///======================= Item Price Details ==========================
+
+  Future<ItemPriceDetailsModel?> getItemPriceDetails(
+    BuildContext context, {
+    required int companyId,
+  }) async {
+    setLoading(true);
+    final result = await iUserFacad.getItempriceDetails(companyId);
+
+    result.fold(
+      (failure) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(failure.errorMsg, textAlign: TextAlign.center),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          ),
+        );
+      },
+      (response) async {
+        _itemPriceDetailsList = response;
+
+        Logger.logSuccess("Item Price Details List fetch successfull : ");
+        notifyListeners();
+      },
+    );
+    setLoading(false);
+    return _itemPriceDetailsList;
   }
 }

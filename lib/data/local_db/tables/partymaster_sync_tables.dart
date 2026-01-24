@@ -57,6 +57,9 @@ class PartyMaster extends Table {
   // Route
   IntColumn get routeId => integer().nullable()();
   TextColumn get routeName => text().nullable()();
+  
+  //Price list
+  IntColumn get priceList => integer().nullable()();
 
   // Sync
   DateTimeColumn get lastSyncOn => dateTime().nullable()();
