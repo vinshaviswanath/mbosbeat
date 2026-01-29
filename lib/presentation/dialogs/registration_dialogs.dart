@@ -127,15 +127,11 @@ class RegistrationDialogs {
             builder: (context, provider, _) {
               return CustomButton(
                 onTap: () {
-                  Navigator.pop(context);
                   provider.resetSignUpForm();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const LoginScreen(),
-                    ),
-                  );
+                  context.pop();
+                  // context.go(AppRouterConst.login);
                 },
+
                 buttonText: appLocalization.login,
                 textStyle: context.textStyle.s12.white.bold,
                 isborderEnable: false,

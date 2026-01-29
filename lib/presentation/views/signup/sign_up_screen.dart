@@ -41,12 +41,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.dispose();
   }
 
+  final noSpaceFormatter = FilteringTextInputFormatter.deny(RegExp(r'\s'));
+
   @override
   Widget build(BuildContext context) {
     final appLocalization = context.l10n;
-    final noEmojiFormatter = FilteringTextInputFormatter.allow(
-      RegExp(r'[a-zA-Z0-9\s!@#\$%^&*(),?":{}|<>_\-+=~`\[\]\\;\/]*'),
-    );
+
     return Consumer<AuthFormProvider>(
       builder: (context, provider, _) {
         return PopScope(
@@ -94,7 +94,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           backgroundColor: ColorResources.lightGray,
                           autovalidateMode: provider.registerAutovalidateMode,
                           failure: provider.companyName.getFailure,
-                          inputFormatters: [noEmojiFormatter],
+                          inputFormatters: [noSpaceFormatter],
                           onChange: provider.updateCompanyName,
                           inputType: TextInputType.emailAddress,
                           borderRadius: 12,
@@ -120,10 +120,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           failure: provider.phone.getFailure,
                           onChange: provider.updatePhone,
                           inputType: TextInputType.phone,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                            noEmojiFormatter,
-                          ],
+                          inputFormatters: [noSpaceFormatter],
                           borderRadius: 12,
                           hintColor: ColorResources.silverGray,
                           borderColor: ColorResources.transparent,
@@ -148,12 +145,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           failure: provider.email.getFailure,
                           onChange: provider.updateEmail,
                           inputType: TextInputType.emailAddress,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                              RegExp(r"[a-zA-Z0-9@._-]"),
-                            ),
-                            // noEmojiFormatter,
-                          ],
+                          inputFormatters: [noSpaceFormatter],
+
                           borderRadius: 12,
                           hintColor: ColorResources.silverGray,
                           borderColor: ColorResources.transparent,
@@ -190,7 +183,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           backgroundColor: ColorResources.lightGray,
                           autovalidateMode: provider.registerAutovalidateMode,
                           failure: provider.password.getFailure,
-                          inputFormatters: [noEmojiFormatter],
+                          inputFormatters: [noSpaceFormatter],
                           onChange: (value) {
                             provider.updatePassword(
                               value,
@@ -233,7 +226,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           backgroundColor: ColorResources.lightGray,
                           autovalidateMode: provider.registerAutovalidateMode,
                           failure: provider.confirmPassword.getFailure,
-                          inputFormatters: [noEmojiFormatter],
+                          inputFormatters: [noSpaceFormatter],
                           onChange: provider.updateConfirmPassword,
                           inputType: TextInputType.emailAddress,
                           borderRadius: 12,

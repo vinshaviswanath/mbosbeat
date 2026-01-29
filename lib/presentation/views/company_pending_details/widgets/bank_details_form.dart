@@ -258,7 +258,7 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
                         ifscCode: ifscController.text,
                         hasUpi: isUpiEnabled,
                         upiAddress: upiPaymentAddressController.text,
-                        upiName: "",
+                        upiName: paymentNameController.text,
                         currency: currencyController.text,
                       ),
                     );

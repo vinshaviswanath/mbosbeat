@@ -1,6 +1,7 @@
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/company_list_model.dart';
 import 'package:mpos_beat/domain/request/update_registraion_params.dart';
+import 'package:mpos_beat/presentation/common/widgets/custom_dropdown.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 import 'package:intl/intl.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
@@ -19,22 +20,13 @@ class _RegistrationDetailsFormState extends State<RegistrationDetailsForm> {
   late TextEditingController gstnController;
   late TextEditingController fssaiController;
 
- int? selectedRegistrationType;
-
-
- final Map<String, int> registrationTypeMap = {
-  'Proprietorship': 0,
-  'Partnership': 1,
-  'Private Limited': 2,
-  'Public Limited': 3,
-};
-
-
   @override
   void initState() {
     applicationFromController = TextEditingController();
     gstnController = TextEditingController();
-    fssaiController = TextEditingController();
+    fssaiController = TextEditingController(
+      text: widget.company?.fssaiNo ?? "",
+    );
     super.initState();
   }
 
@@ -64,6 +56,16 @@ class _RegistrationDetailsFormState extends State<RegistrationDetailsForm> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.read<CompanyCreationProvider>();
+    final regtypelist = provider.registrationlists;
+    final regItems = regtypelist
+        .map((e) => e.registrationType.trim())
+        .where((regType) => regType.isNotEmpty)
+        .toSet()
+        .toList();
+
+    final selectedRegType = provider.selectedregistrationtype;
+
     return Container(
       margin: const EdgeInsets.only(top: 4, left: 16, right: 16),
       padding: const EdgeInsets.only(left: 9, right: 9, top: 12, bottom: 20),
@@ -111,35 +113,25 @@ class _RegistrationDetailsFormState extends State<RegistrationDetailsForm> {
                 borderRadius: BorderRadius.circular(15),
                 border: Border.all(color: ColorResources.bluishGray),
               ),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<int>(
-                  value: selectedRegistrationType,
-                  hint: Text(
-                    "Select Type",
-                    style: context.textStyle.s12.silverGray,
-                  ),
-                  isExpanded: true,
-                  icon: Icon(
-                    Icons.keyboard_arrow_down,
-                    color: ColorResources.indigoBlue,
-                  ),
-                  items: registrationTypeMap.entries
-                      .map(
-                        (entry) => DropdownMenuItem<int>(
-                          value: entry.value,
-                          child: Text(
-                            entry.key,
-                            style: context.textStyle.s12.bluishGray,
-                          ),
-                        ),
-                      )
-                      .toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      selectedRegistrationType = value;
-                    });
-                  },
-                ),
+              child: CustomDropdown(
+                // label: "Registration Type",
+                hintText: "Select Type",
+                items: regItems,
+                value: selectedRegType?.registrationType,
+
+                onChanged: (value) {
+                  if (value != null) {
+                    final selected = regtypelist.firstWhere(
+                      (element) =>
+                          element.registrationType.trim() == value.trim(),
+                    );
+                    provider.selectRegistrationType(selected);
+                    provider.updateRegType(value);
+                  }
+                },
+
+                autovalidateMode: provider.effectiveMode,
+                failure: provider.registrationType.getFailure,
               ),
             ),
             h20,
@@ -193,7 +185,7 @@ class _RegistrationDetailsFormState extends State<RegistrationDetailsForm> {
                       params: UpdateRegistrationParams(
                         companyId: company?.id,
                         date: applicationFromController.text,
-                        registrationType: selectedRegistrationType ?? 0,
+                        registrationType: selectedRegType?.id,
                         taxNumber: gstnController.text,
                         fassaiNo: fssaiController.text,
                       ),

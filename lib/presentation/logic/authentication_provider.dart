@@ -799,7 +799,7 @@ class AuthFormProvider with ChangeNotifier {
           ).then((_) {
             resetSignUpForm();
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              context.pushNamed(AppRouterConst.userLogin);
+              context.pushNamed(AppRouterConst.login);
             });
           });
         }

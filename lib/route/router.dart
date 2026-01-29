@@ -144,7 +144,7 @@ class AppRouter {
         path: "/login",
         name: AppRouterConst.login,
         builder: (context, state) {
-          return const LoginScreen();
+          return  LoginScreen();
         },
       ),
       GoRoute(
