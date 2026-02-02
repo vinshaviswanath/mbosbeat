@@ -99,7 +99,7 @@ class _CompanyPendingDetailsScreenState
                       },
                     )
                   : expandedIndex == 1
-                  ? BankDetailsForm(company: widget.company)
+                  ? BankDetailsForm(company: widget.company, )
                   : RegistrationDetailsForm(company: widget.company),
             ),
           );

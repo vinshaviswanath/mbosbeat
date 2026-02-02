@@ -5,14 +5,14 @@ class UpdateRegistrationParams extends ToMap {
   final String date;
   final int? registrationType;
   final String taxNumber;
-  final String fassaiNo;
+  final String fssaiNo;
 
   UpdateRegistrationParams({
     required this.companyId,
     required this.date,
     required this.registrationType,
     required this.taxNumber,
-    required this.fassaiNo,
+    required this.fssaiNo,
   });
 
   factory UpdateRegistrationParams.fromJson(Map<String, dynamic> json) {
@@ -21,7 +21,7 @@ class UpdateRegistrationParams extends ToMap {
       date: json["appFrom"],
       registrationType: json["registrationType"],
       taxNumber: json["taxNumber"],
-      fassaiNo: json["fssaiNo"],
+      fssaiNo: json["fssaiNo"],
     );
   }
   @override
@@ -30,6 +30,6 @@ class UpdateRegistrationParams extends ToMap {
     "appFrom": date,
     "registrationType": registrationType,
     "taxNumber": taxNumber,
-    "fssaiNo": fassaiNo,
+    "fssaiNo": fssaiNo,
   };
 }

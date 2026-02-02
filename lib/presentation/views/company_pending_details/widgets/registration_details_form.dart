@@ -22,14 +22,22 @@ class _RegistrationDetailsFormState extends State<RegistrationDetailsForm> {
 
   @override
   void initState() {
-    applicationFromController = TextEditingController();
-    gstnController = TextEditingController();
+    super.initState();
+
+    applicationFromController = TextEditingController(
+      text: widget.company?.applicableFrom ?? "",
+    );
+    gstnController = TextEditingController(
+      text: widget.company?.registrationNo ?? "",
+    );
     fssaiController = TextEditingController(
       text: widget.company?.fssaiNo ?? "",
     );
-    super.initState();
+    final provider = context.read<CompanyCreationProvider>();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await provider.getAllCompanies(context);
+    });
   }
-
   @override
   void dispose() {
     applicationFromController.dispose();
@@ -56,7 +64,7 @@ class _RegistrationDetailsFormState extends State<RegistrationDetailsForm> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = context.read<CompanyCreationProvider>();
+    final provider = context.watch<CompanyCreationProvider>();
     final regtypelist = provider.registrationlists;
     final regItems = regtypelist
         .map((e) => e.registrationType.trim())
@@ -64,8 +72,16 @@ class _RegistrationDetailsFormState extends State<RegistrationDetailsForm> {
         .toSet()
         .toList();
 
-    final selectedRegType = provider.selectedregistrationtype;
-
+    final selectregType =
+        regItems.contains(provider.selectedregistrationtype?.registrationType)
+        ? provider.selectedregistrationtype?.registrationType
+        : null;
+    if (provider.updateRegistartion != null) {
+      final updated = provider.updateRegistartion!;
+      applicationFromController.text = updated.date;
+      fssaiController.text = updated.fssaiNo;
+      gstnController.text = updated.taxNumber;
+    }
     return Container(
       margin: const EdgeInsets.only(top: 4, left: 16, right: 16),
       padding: const EdgeInsets.only(left: 9, right: 9, top: 12, bottom: 20),
@@ -114,11 +130,10 @@ class _RegistrationDetailsFormState extends State<RegistrationDetailsForm> {
                 border: Border.all(color: ColorResources.bluishGray),
               ),
               child: CustomDropdown(
-                // label: "Registration Type",
                 hintText: "Select Type",
                 items: regItems,
-                value: selectedRegType?.registrationType,
-
+                value: selectregType,
+                backgroundColor: ColorResources.white,
                 onChanged: (value) {
                   if (value != null) {
                     final selected = regtypelist.firstWhere(
@@ -126,7 +141,7 @@ class _RegistrationDetailsFormState extends State<RegistrationDetailsForm> {
                           element.registrationType.trim() == value.trim(),
                     );
                     provider.selectRegistrationType(selected);
-                    provider.updateRegType(value);
+
                   }
                 },
 
@@ -185,9 +200,9 @@ class _RegistrationDetailsFormState extends State<RegistrationDetailsForm> {
                       params: UpdateRegistrationParams(
                         companyId: company?.id,
                         date: applicationFromController.text,
-                        registrationType: selectedRegType?.id,
+                        registrationType: provider.selectedregistrationtype?.id,
                         taxNumber: gstnController.text,
-                        fassaiNo: fssaiController.text,
+                        fssaiNo: fssaiController.text,
                       ),
                     );
                   },

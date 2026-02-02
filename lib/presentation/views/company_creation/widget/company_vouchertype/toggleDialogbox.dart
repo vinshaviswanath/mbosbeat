@@ -9,7 +9,8 @@ class ToggleDialogBox extends StatefulWidget {
   final int isToggleOn;
   final void Function()? onTap;
   final int id;
-  const ToggleDialogBox({super.key, 
+  const ToggleDialogBox({
+    super.key,
     required this.companyId,
     required this.isCheckOn,
     required this.isToggleOn,
@@ -24,13 +25,14 @@ class ToggleDialogBox extends StatefulWidget {
 class _ToggleDialogBoxState extends State<ToggleDialogBox> {
   @override
   void initState() {
-    print("company companyId togglebox....${widget.companyId}");
-    print("company checkOn togglebox....${widget.isCheckOn}");
-    print("company toggleOn togglebox....${widget.isToggleOn}");
-    print("company id togglebox....${widget.id}");
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   fetchCompanyVoucherList();
-    // });
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final provider = Provider.of<CompanyCreationProvider>(
+        context,
+        listen: false,
+      );
+      await provider.fetchVoucherTypes(context, widget.companyId);
+      print("b2bprefix value.. ${provider.b2bPrefix.text}");
+    });
     super.initState();
   }
 
@@ -63,9 +65,9 @@ class _ToggleDialogBoxState extends State<ToggleDialogBox> {
                 ElevatedButton(
                   onPressed: () async {
                     provider.clearB2C();
-                    
+
                     context.pop(true);
-                    
+
                     CreateCompanyvochertypeDtos? response = await provider
                         .createCompanyVoucherTypes(
                           onSuccess: widget.onTap,

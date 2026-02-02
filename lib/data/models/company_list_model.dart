@@ -77,6 +77,7 @@ class CompanyViewList {
     required this.companyProfileUpdated,
     required this.companyBankUpdated,
     required this.companyRegUpdated,
+    required this.applicableFrom,
   });
 
   final int? id;
@@ -117,6 +118,7 @@ class CompanyViewList {
   dynamic serialNumber;
   final String? stockInCloud;
   final String? registrationNo;
+  final String? applicableFrom;
   final String? vchNumberingMode;
   final String? companyLogoUrl;
   final bool? companyProfileUpdated;
@@ -168,6 +170,7 @@ class CompanyViewList {
       companyProfileUpdated: json["companyProfileUpdated"],
       companyBankUpdated: json["companyBankUpdated"],
       companyRegUpdated: json["companyRegUpdated"],
+      applicableFrom: json['applicableFrom'],
     );
   }
 
@@ -215,5 +218,6 @@ class CompanyViewList {
     "companyProfileUpdated": companyProfileUpdated,
     "companyBankUpdated": companyBankUpdated,
     "companyRegUpdated": companyRegUpdated,
+    "applicableFrom": applicableFrom,
   };
 }
