@@ -275,10 +275,7 @@ class AppRouter {
         name: AppRouterConst.transactionOrderBooking,
         builder: (context, state) {
           final args = state.extra as TransactionOrderBookingRouteArgs;
-          return TransactionOrderBookingScreen(
-            
-            data: args,
-          );
+          return TransactionOrderBookingScreen(data: args);
         },
       ),
 
@@ -286,8 +283,8 @@ class AppRouter {
         path: "/orderBookingAddItemScreen",
         name: AppRouterConst.orderBookingAddItemScreen,
         builder: (context, state) {
-           final data = state.extra as TransactionOrderBookingRouteArgs;
-          return  OrderBookingAddItemScreen(data: data,);
+          final data = state.extra as TransactionOrderBookingRouteArgs;
+          return OrderBookingAddItemScreen(data: data);
         },
       ),
       GoRoute(

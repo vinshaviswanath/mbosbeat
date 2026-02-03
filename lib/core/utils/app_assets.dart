@@ -80,4 +80,6 @@ class AppAssets {
   static const mail_send = "$baseAnimDir/mail_send.json";
   static const loading_anim = "$baseAnimDir/loading_anim.json";
   static const registred = "$baseAnimDir/registred.json";
+  static const syncAnim = "$baseAnimDir/sync.json";
+
 }

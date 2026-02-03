@@ -80,7 +80,7 @@ class StockItemList {
             unitName: json["unitName"],
             decimalPlaces: json["decimalPlaces"],
             altUnit: json["altUnit"],
-            altDecimalPlaces: json["altDecimalPlaces"],
+            altDecimalPlaces: (json["altDecimalPlaces"] as num?)?.toDouble(),
             unitConversion: json["unitConversion"],
             unitDenominator: json["unitDenominator"],
             isActive: json["isActive"],

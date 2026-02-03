@@ -41,7 +41,7 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
       onPopInvokedWithResult: (didPop, result) async {
         if (didPop) return;
 
-        AuthDialogs.show(context);
+        AuthDialogs.exitApp();
       },
       child: Scaffold(
         resizeToAvoidBottomInset: true,

@@ -1,14 +1,14 @@
-import 'package:http/http.dart';
+import 'package:drift/drift.dart';
 import 'package:intl/intl.dart';
 import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/param/param_builder.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
-import 'package:mpos_beat/core/utils/logger.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/local_db/daos/price_lavel_dao/price_level_sync_dao.dart';
 import 'package:mpos_beat/data/models/item_master_sync_model.dart';
 import 'package:mpos_beat/data/models/item_price_details_model.dart';
 import 'package:mpos_beat/data/models/party_MasterSync_model.dart';
+import 'package:mpos_beat/data/models/party_details.dart';
 import 'package:mpos_beat/data/models/price_level_model.dart';
 import 'package:mpos_beat/data/models/response.dart';
 import 'package:mpos_beat/data/models/skip_reason_response.dart';
@@ -74,17 +74,25 @@ class UserProvider extends ChangeNotifier {
   ItemPriceDetailsModel? _itemPriceDetailsList;
   ItemPriceDetailsModel? get itemPriceDetailsList => _itemPriceDetailsList;
 
+  PriceLevelDetails? _selectedPriceLevel;
+  PriceLevelDetails? get selectedPriceLevel => _selectedPriceLevel;
+
+  int? get selectedPriceLevelId => _selectedPriceLevel?.id;
+  bool get rateInclusive => _selectedPriceLevel?.rateInclusive ?? false;
+
   AppDb? _appDb;
 
   void attachDb(AppDb db) {
     _appDb = db;
   }
 
-int? _selectedPriceLevelId;
-int? get selectedPriceLevelId => _selectedPriceLevelId;
+  PartyMasterDetails? _selectedParty;
+  PartyMasterDetails? get selectedParty => _selectedParty;
 
-  bool _rateInclusive = false;
-    bool get rateInclusive => _rateInclusive;
+  void setParty(PartyMasterDetails party) {
+    _selectedParty = party;
+    notifyListeners();
+  }
 
 
   /// ---------------- GENERAL ----------------
@@ -389,9 +397,9 @@ void setHomeLoading(bool value) {
 
         if (response.status == 1) {
           _checkinresponse = response;
-         activeCheckinId = response.id;
+          activeCheckinId = response.id;
           activeCheckinTime = DateFormat('HH:mm').format(DateTime.now());
-          visitSequence++;          // onSuccess?.call();
+          visitSequence++; // onSuccess?.call();
         } else {
           _errorMessage = response.message;
         }
@@ -400,38 +408,6 @@ void setHomeLoading(bool value) {
     setLoading(false);
 
     return _checkinresponse;
-  }
-  //========================= Skip Reason =========================
-
-  Future<SkipReasonResponse?> getSkipReasons(BuildContext context) async {
-    setLoading(true);
-    final result = await iUserFacad.skipReason();
-
-    result.fold(
-      (failure) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(failure.errorMsg, textAlign: TextAlign.center),
-            behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          ),
-        );
-      },
-      (response) async {
-        _skipReasonResponse = response;
-
-        Logger.logSuccess(
-          "Skip reason List fetch successfull : ${response.toJson()}",
-        );
-        notifyListeners();
-      },
-    );
-    setLoading(false);
-
-    return _skipReasonResponse;
   }
 
   //============================check out========================================
@@ -586,60 +562,60 @@ void setHomeLoading(bool value) {
   }
 
   /// Price Level Stram
-  Stream<List<PriceLevelsTableData>> priceLevelsStream({
+  Stream<List<PriceLevelDetails>> priceLevelsStream({
     required int? partyPriceListId,
   }) {
     if (_appDb == null) return const Stream.empty();
 
     return _appDb!
         .watchPriceLevelsForParty(partyPriceListId)
-        .map((list) {
-      _autoSelectIfSingle(list);
-      return list;
+        .map((dbList) {
+      final apiList = dbList.map((db) => PriceLevelDetails(
+            id: db.id,
+            companyId: db.companyId ?? 0,
+            priceLevel: db.priceLevel ?? "",
+            rateInclusive: db.rateInclusive,
+            isDefault: db.isDefault,
+            active: db.active,
+          )).toList();
+
+      _autoSelectIfSingle(apiList);
+      return apiList;
     });
   }
 
-
-  /* ───────────────── AUTO SELECT LOGIC ───────────────── */
-
-  void _autoSelectIfSingle(List<PriceLevelsTableData> list) {
-    if (list.length == 1) {
-      final level = list.first;
-
-      if (_selectedPriceLevelId != level.id) {
-        _selectedPriceLevelId = level.id;
-        _rateInclusive = level.rateInclusive;
-        notifyListeners();
-      }
+  /// ---------------- AUTO SELECT ----------------
+  void _autoSelectIfSingle(List<PriceLevelDetails> list) {
+    if (list.length == 1 && _selectedPriceLevel == null) {
+      _selectedPriceLevel = list.first;
+      notifyListeners();
     }
   }
 
-  /* ───────────────── MANUAL SELECTION ───────────────── */
-
-  void setSelectedPriceLevel(PriceLevelsTableData level) {
-    _selectedPriceLevelId = level.id;
-    _rateInclusive = level.rateInclusive;
+  /// ---------------- MANUAL SELECTION ----------------
+  void setSelectedPriceLevel(PriceLevelDetails level) {
+    _selectedPriceLevel = level;
     notifyListeners();
   }
 
-  void selectPriceLevelById(int? id) {
-    _selectedPriceLevelId = id;
-    notifyListeners();
+void selectPriceLevelById(int? id, List<PriceLevelDetails> list) {
+  final level = list.where((e) => e.id == id).cast<PriceLevelDetails?>().firstOrNull;
+  if (level != null) {
+    setSelectedPriceLevel(level);
+  } else {
+    clearSelectedPriceLevel();
   }
+}
 
-  /* ───────────────── PARTY CHANGE HANDLING ───────────────── */
 
+  /// ---------------- PARTY CHANGE HANDLING ----------------
   void onPartyChanged() {
-    _selectedPriceLevelId = null;
-    _rateInclusive = false;
-    notifyListeners();
+    clearSelectedPriceLevel();
   }
 
-  /* ───────────────── CLEAR ───────────────── */
-
+  /// ---------------- CLEAR ----------------
   void clearSelectedPriceLevel() {
-    _selectedPriceLevelId = null;
-    _rateInclusive = false;
+    _selectedPriceLevel = null;
     notifyListeners();
   }
 
@@ -674,5 +650,25 @@ void setHomeLoading(bool value) {
     );
     setLoading(false);
     return _itemPriceDetailsList;
+  }
+
+  Stream<PartyMasterDetails?> partyDetailsStream(int companyId, int ledgerId) {
+    final query = '''
+      SELECT *
+      FROM party_master
+      WHERE company_id = ? AND ledger_id = ?
+      LIMIT 1
+    ''';
+
+    return _appDb!
+        .customSelect(
+          query,
+          variables: [Variable(companyId), Variable(ledgerId)],
+        )
+        .watchSingleOrNull()
+        .map((row) {
+          if (row == null) return null;
+          return PartyMasterDetails.fromJson(row.data);
+        });
   }
 }

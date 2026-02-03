@@ -1,15 +1,20 @@
 import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
-import 'package:mpos_beat/data/local_db/app_db.dart';
+import 'package:mpos_beat/data/data_sources/user/item_master_sync/item_master_sync.dart';
+import 'package:mpos_beat/data/data_sources/user/party_MasterSync/party_MasterSync.dart';
+import 'package:mpos_beat/data/models/category_model.dart';
+import 'package:mpos_beat/data/models/group_model.dart';
+import 'package:mpos_beat/data/models/product.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_dropdown.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
-import 'package:mpos_beat/presentation/logic/item_filter_provider.dart';
+import 'package:mpos_beat/presentation/logic/customer_transaction_provider.dart';
 import 'package:mpos_beat/presentation/logic/user_provider.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/transaction_order_booking_screen.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/widgets/stock_card.dart';
 
 class OrderBookingAddItemScreen extends StatefulWidget {
   final TransactionOrderBookingRouteArgs data;
+
   const OrderBookingAddItemScreen({super.key, required this.data});
 
   @override
@@ -19,222 +24,290 @@ class OrderBookingAddItemScreen extends StatefulWidget {
 
 class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
   Timer? _debounce;
+  late TextEditingController _searchController;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController = TextEditingController();
+  }
 
   @override
   void dispose() {
     _debounce?.cancel();
+    _searchController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final transactionProvider = context.watch<CustomerTransactionProvider>();
     final userProvider = context.watch<UserProvider>();
-    final itemFilterProvider = context.watch<ItemFilterProvider>();
 
     final selectedPriceListId = userProvider.selectedPriceLevelId;
     final rateInclusive = userProvider.rateInclusive;
 
-    final appDb = sl<AppDb>();
-    final appLocalizations = context.l10n;
+    final appLocalization = context.l10n;
 
-    return Stack(
-      children: [
-        Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-              icon: const Icon(Icons.keyboard_arrow_left),
-              onPressed: () => Navigator.pop(context),
-            ),
-            title: Column(
-              children: [
-                Text(
-                  "${widget.data.party.ledgerName}",
-                  style: context.textStyle.s20.indigoBlue.bold.roboto,
-                ),
-                Text(
-                  "Order Value : 0.00",
-                  style: context.textStyle.s12.dustyBlue.w500.roboto,
-                ),
-              ],
-            ),
-            centerTitle: true,
-            toolbarHeight: 65,
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
+        if (didPop) return;
+        Navigator.pop(context);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.keyboard_arrow_left),
+            onPressed: () => Navigator.pop(context),
           ),
-          body: Column(
+          title: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  children: [
-                    /// 🔍 Search
-                    CustomTextField(
-                      onChange: (value) {
-                        _debounce?.cancel();
-                        _debounce = Timer(
-                          const Duration(milliseconds: 300),
-                          () => itemFilterProvider.updateSearch(value),
-                        );
-                      },
-                      hint: appLocalizations.manage_user_screen_search_user,
-                      suffixIcon: Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: Icon(
-                          Icons.search,
-                          color: ColorResources.bluishGray,
-                          size: context.getSize.height * 0.024,
-                        ),
-                      ),
-                      backgroundColor: ColorResources.lightGray,
-                      borderRadius: 12,
-                      hintColor: ColorResources.silverGray,
-                      borderColor: ColorResources.transparent,
-                    ),
-                    h10,
-
-                    /// 🔹 Filters
-                    Row(
-                      children: [
-                        Expanded(
-                          child: StreamBuilder<List<String>>(
-                            stream: itemFilterProvider.groupStream,
-                            builder: (_, snapshot) {
-                              return CustomDropdown(
-                                items: snapshot.data ?? ['All'],
-                                hintText: appLocalizations
-                                    .order_booking_add_item_select_group,
-                                onChanged: (v) =>
-                                    itemFilterProvider.selectGroup(v ?? 'All'),
-                              );
-                            },
-                          ),
-                        ),
-                        w8,
-                        Expanded(
-                          child: StreamBuilder<List<String>>(
-                            stream: itemFilterProvider.categoryStream,
-                            builder: (_, snapshot) {
-                              return CustomDropdown(
-                                items: snapshot.data ?? ['All'],
-                                hintText: appLocalizations
-                                    .order_booking_add_item_select_category,
-                                onChanged: (v) => itemFilterProvider
-                                    .selectCategory(v ?? 'All'),
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+              Text(
+                widget.data.party.ledgerName ?? "",
+                style: context.textStyle.s18.bold.indigoBlue.roboto,
               ),
-
-              /// 🔹 ITEM LIST
-              Expanded(
-                child: selectedPriceListId == null
-                    ? const Center(child: Text("Please select a Price Level"))
-                    : StreamBuilder<List<ItemPriceDetailsTable>>(
-                        stream: appDb.priceListDetailsDao.watchAll(),
-                        builder: (context, priceSnap) {
-                          final priceDetails = priceSnap.data ?? [];
-
-                          return StreamBuilder<List<ItemMasterData>>(
-                            stream: itemFilterProvider.filteredItems,
-                            builder: (context, itemSnap) {
-                              if (!itemSnap.hasData) {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              }
-
-                              final items = itemSnap.data!;
-                              if (items.isEmpty) {
-                                return const Center(
-                                  child: Text("No items found"),
-                                );
-                              }
-
-                              return ListView.separated(
-                                itemCount: items.length,
-                                separatorBuilder: (_, __) => Divider(
-                                  thickness: 1,
-                                  color: ColorResources.bluishGray.withValues(
-                                    alpha: 0.2,
-                                  ),
-                                ),
-                                itemBuilder: (context, index) {
-                                  final item = items[index];
-
-                                  /// 🔹 Match price by itemId + priceList
-                                  ItemPriceDetailsTable? price;
-
-                                  for (final p in priceDetails) {
-                                    if (p.itemId == item.stockItemId &&
-                                        p.priceList == selectedPriceListId) {
-                                      price = p;
-                                      break;
-                                    }
-                                  }
-
-                                  double inclRate = 0;
-
-                                  if (price != null && price.rate != null) {
-                                    final double rate = price.rate!;
-                                    final double tax = item.taxPercent ?? 0;
-
-                                    inclRate = rateInclusive
-                                        ? rate
-                                        : rate + (rate * tax / 100);
-                                  }
-
-                                  return StockCard(
-                                    name: item.itemName,
-                                    stock: 0,
-                                    mrp: price?.rate ?? 0.00,
-                                    tax: item.taxPercent ?? 0,
-                                    inclRate: inclRate,
-                                    companyId: widget.data.data.company.id ?? 0,
-                                    itemId: item.stockItemId,
-                                    priceListId: selectedPriceListId,
-                                  );
-                                },
-                              );
-                            },
-                          );
-                        },
-                      ),
+              Text(
+                "Order Value : ${transactionProvider.grandTotal.toStringAsFixed(2)}",
+                style: context.textStyle.s12.dustyBlue.w500.roboto,
               ),
             ],
           ),
+          centerTitle: true,
+          toolbarHeight: 65,
         ),
-        Positioned(
-          bottom: 0,
-          child: Container(
-            color: ColorResources.white,
-            padding: .all(16),
-            width: context.getSize.width,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Row(
+        body: Stack(
+          children: [
+            selectedPriceListId == null
+                ? const Center(child: Text("Please select a Price Level"))
+                : Column(
+                    children: [
+                      /// ===================== SEARCH FIELD (OUTSIDE STREAM) =====================
+                      Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: CustomTextField(
+                          controller: _searchController,
+                          onChange: (value) {
+                            _debounce?.cancel();
+                            _debounce = Timer(
+                              const Duration(milliseconds: 300),
+                              () => transactionProvider.updateSearch(value),
+                            );
+                          },
+                          hint: appLocalization.manage_user_screen_search_user,
+                          suffixIcon: Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: Icon(
+                              Icons.search,
+                              color: ColorResources.bluishGray,
+                              size: context.getSize.height * 0.024,
+                            ),
+                          ),
+                          backgroundColor: ColorResources.lightGray,
+                          borderRadius: 12,
+                          hintColor: ColorResources.silverGray,
+                          borderColor: ColorResources.transparent,
+                        ),
+                      ),
+
+                      /// ===================== PRODUCT LIST =====================
+                      Expanded(
+                        child: StreamBuilder<List<Product>>(
+                          stream: sl<PartyMasterSync>().fetchProduct(
+                            widget.data.data.company.id!,
+                            widget.data.party.ledgerId,
+                            widget.data.party.priceList ?? 0,
+                            transactionProvider.selectedGroup,
+                            transactionProvider.selectedCategory,
+                            transactionProvider.searchValue,
+                          ),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+
+                            final items = snapshot.data!;
+                            if (items.isEmpty) {
+                              return const Center(
+                                child: Text("No items found"),
+                              );
+                            }
+
+                            return CustomScrollView(
+                              keyboardDismissBehavior:
+                                  ScrollViewKeyboardDismissBehavior.onDrag,
+                              slivers: [
+                                /// ===================== FILTERS =====================
+                                SliverToBoxAdapter(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                      vertical: 8,
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        /// -------- GROUP DROPDOWN --------
+                                        Expanded(
+                                          child: StreamBuilder<List<GroupModel>>(
+                                            stream: sl<ItemMasterSync>()
+                                                .groupNameList(
+                                                  widget.data.data.company.id ??
+                                                      0,
+                                                ),
+                                            builder: (_, snapshot) {
+                                              final groups =
+                                                  snapshot.data
+                                                      ?.map((e) => e.groupName)
+                                                      .toList() ??
+                                                  ['All'];
+
+                                              return CustomDropdown<String>(
+                                                items: groups,
+                                                hintText: appLocalization
+                                                    .order_booking_add_item_select_group,
+                                                onChanged: (v) =>
+                                                    transactionProvider
+                                                        .selectGroup(
+                                                          v ?? 'All',
+                                                        ),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                        w8,
+
+                                        /// -------- CATEGORY DROPDOWN --------
+                                        Expanded(
+                                          child: StreamBuilder<List<CategoryModel>>(
+                                            stream: sl<ItemMasterSync>()
+                                                .categoryList(
+                                                  widget.data.data.company.id ??
+                                                      0,
+                                                ),
+                                            builder: (_, snapshot) {
+                                              final categories =
+                                                  snapshot.data
+                                                      ?.map(
+                                                        (e) => e.catgoryName,
+                                                      )
+                                                      .toList() ??
+                                                  ['All'];
+
+                                              return CustomDropdown<String>(
+                                                items: categories,
+                                                hintText: appLocalization
+                                                    .order_booking_add_item_select_category,
+                                                onChanged: (v) =>
+                                                    transactionProvider
+                                                        .selectCategory(
+                                                          v ?? 'All',
+                                                        ),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+
+                                /// ===================== ITEM LIST =====================
+                                SliverList(
+                                  delegate: SliverChildBuilderDelegate((
+                                    context,
+                                    index,
+                                  ) {
+                                    final item = items[index];
+
+                                    final selectedUnit = transactionProvider
+                                        .getSelectedUnit(
+                                          item.stockItemId,
+                                          item,
+                                        );
+
+                                    final baseRate = item.rate;
+
+                                    final rate = selectedUnit == item.unitName
+                                        ? baseRate
+                                        : baseRate *
+                                              ((item.unitConversion) /
+                                                  (item.unitDenominator));
+
+                                    final tax = item.taxPercent;
+
+                                    final inclRate = rateInclusive
+                                        ? rate
+                                        : rate + (rate * tax / 100);
+
+                                    return Padding(
+                                      padding: const EdgeInsets.only(bottom: 8),
+                                      child: StockCard(
+                                        item: item,
+                                        data: widget.data,
+                                        name: item.itemName,
+                                        stock: 0,
+                                        mrp: rate,
+                                        tax: tax,
+                                        inclRate: inclRate,
+                                        companyId:
+                                            widget.data.data.company.id ?? 0,
+                                        itemId: item.stockItemId,
+                                        priceListId: selectedPriceListId,
+                                      ),
+                                    );
+                                  }, childCount: items.length),
+                                ),
+
+                                const SliverToBoxAdapter(
+                                  child: SizedBox(height: 120),
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+
+            /// ===================== BOTTOM SUMMARY =====================
+            Positioned(
+              bottom: 0,
+              child: Container(
+                width: context.getSize.width,
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: ColorResources.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: ColorResources.black.withOpacity(0.1),
+                      blurRadius: 10,
+                      offset: const Offset(0, -4),
+                    ),
+                  ],
+                ),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          appLocalizations.grand_total,
+                          appLocalization.grand_total,
                           style: context.textStyle.indigoBlue.s12.w500.roboto,
                         ),
                         Text(
-                          "72000.00",
+                          transactionProvider.grandTotal.toStringAsFixed(2),
                           style: context.textStyle.indigoBlue.s20.bold.roboto,
                         ),
                       ],
                     ),
                     CustomButton(
-                      buttonText: "",
+                      buttonText: transactionProvider.selectedItemCount
+                          .toString(),
                       isborderEnable: false,
+                      onTap: () => Navigator.of(context).pop(),
                       width: context.getSize.width / 2.5,
                       borderRadius: BorderRadius.circular(16),
                       icon: Icons.shopping_cart,
@@ -243,62 +316,11 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
-
-// class SliverListExample extends StatelessWidget {
-//   const SliverListExample({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final items = [
-//       {
-//         "name": "Black & Broken Rice",
-//         "category": "Category Name",
-//         "stock": 0,
-//         "mrp": 2000.0,
-//         "tax": 18.0,
-//         "inclRate": 1800.0,
-//       },
-//       {
-//         "name": "Premium Rice",
-//         "category": "Category A",
-//         "stock": 12,
-//         "mrp": 2500.0,
-//         "tax": 12.0,
-//         "inclRate": 2300.0,
-//       },
-//     ];
-
-//     return Scaffold(
-//       body: CustomScrollView(
-//         slivers: [
-//           const SliverAppBar(
-//             floating: true,
-//             pinned: true,
-//             title: Text("Stocks"),
-//           ),
-//           SliverList(
-//             delegate: SliverChildBuilderDelegate((context, index) {
-//               final item = items[index];
-//               return StockCard(
-//                 name: item["name"] as String,
-//                 category: item["category"] as String,
-//                 stock: item["stock"] as int,
-//                 mrp: item["mrp"] as double,
-//                 tax: item["tax"] as double,
-//                 inclRate: item["inclRate"] as double,
-//               );
-//             }, childCount: items.length),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }

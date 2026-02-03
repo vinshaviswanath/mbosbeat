@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       },
       child: Scaffold(
-        appBar: const HomeAppBar(),
+        appBar:  HomeAppBar(company: widget.company,),
         body: Selector<UserProvider, bool>(
           selector: (_, p) => p.homeLoading,
           builder: (_, isLoading, __) {

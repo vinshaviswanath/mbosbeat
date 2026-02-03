@@ -2,8 +2,9 @@ import 'package:drift/drift.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/models/data/party_MasterSync_data.dart';
 extension PartyMasterMapper on PartyMasterListData {
-  PartyMasterCompanion toCompanion() {
+  PartyMasterCompanion toCompanion({required int companyId}) {
     return PartyMasterCompanion(
+      companyId: Value(companyId),
       ledgerId: Value(ledgerId),
       ledgerName: Value(ledgerName),
       ledgerNameLocal: Value(ledgerNameLocal),

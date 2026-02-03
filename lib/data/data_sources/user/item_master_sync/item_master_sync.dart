@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mpos_beat/core/base/run_safely.dart';
 import 'package:mpos_beat/core/exception/custom_exception.dart';
@@ -9,6 +10,8 @@ import 'package:mpos_beat/core/utils/typedefs.dart';
 import 'package:mpos_beat/core/utils/urls.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/mappers/item_master_sync_mapper/item_master_sync_mapper.dart';
+import 'package:mpos_beat/data/models/category_model.dart';
+import 'package:mpos_beat/data/models/group_model.dart';
 import 'package:mpos_beat/data/models/item_master_sync_model.dart';
 import 'package:mpos_beat/domain/request/item_master_quary_params.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -39,7 +42,6 @@ class ItemMasterSync {
         final allCompanions = <ItemMasterCompanion>[];
 
         while (hasMore) {
-          // ✅ Page-specific query params
           final queryParams = params.data.copyWith(pageNumber: page).toMap();
 
           Logger.logInfo("📡 ItemMaster Page $page request: $queryParams");
@@ -60,22 +62,60 @@ class ItemMasterSync {
             "🧮 Page $page API rows: ${data.stockItemList.length}",
           );
 
-          // ✅ Stop pagination when backend sends empty page
           if (data.stockItemList.isEmpty) {
             hasMore = false;
             break;
           }
 
-          // ✅ Collect companions
-          allCompanions.addAll(data.stockItemList.map((e) => e.toCompanion()));
+          final category = data.stockItemList
+              .where(
+                (e) => e.categoryName != null && e.categoryName!.isNotEmpty,
+              )
+              .map(
+                (e) => CategoryTableCompanion(
+                  categoryName: Value(e.categoryName),
+                  companyId: Value(params.data.companyId),
+                ),
+              );
+
+          final groupName = data.stockItemList
+              .where((e) => e.groupName != null && e.groupName!.isNotEmpty)
+              .map(
+                (e) => GroupNameTableCompanion(
+                  groupName: Value(e.groupName!),
+                  companyId: Value(params.data.companyId),
+                ),
+              );
+
+          await appDb.batch((batch) {
+            batch.insertAll(
+              appDb.categoryTable,
+              category,
+              mode: InsertMode.insertOrReplace,
+            );
+          });
+
+          await appDb.batch((batch) {
+            batch.insertAll(
+              appDb.groupNameTable,
+              groupName,
+              mode: InsertMode.insertOrReplace,
+            );
+          });
+
+          allCompanions.addAll(
+            data.stockItemList.map(
+              (e) => e.toCompanion(companyId: params.data.companyId),
+            ),
+          );
 
           page++;
         }
 
-        // ✅ Clear & insert ONLY after successful full sync
         if (allCompanions.isNotEmpty) {
           await appDb.itemMasterDao.clearItems();
           await appDb.itemMasterDao.upsertItems(allCompanions);
+
           await appDb.itemMasterDao.getItemCount();
         }
 
@@ -96,6 +136,33 @@ class ItemMasterSync {
         }
         return MainFailure.genericError(errorMsg: error);
       },
+    );
+  }
+
+  Stream<List<GroupModel>> groupNameList(int companyId) {
+    return (appDb.select(
+      appDb.groupNameTable,
+    )..where((t) => t.companyId.equals(companyId))).watch().map(
+      (rows) => rows
+          .map(
+            (e) => GroupModel(groupName: e.groupName, companyId: e.companyId),
+          )
+          .toList(),
+    );
+  }
+
+  Stream<List<CategoryModel>> categoryList(int companyId) {
+    return (appDb.select(
+      appDb.categoryTable,
+    )..where((t) => t.companyId.equals(companyId))).watch().map(
+      (rows) => rows
+          .map(
+            (e) => CategoryModel(
+              catgoryName: e.categoryName ?? "",
+              companyId: e.companyId ?? 0,
+            ),
+          )
+          .toList(),
     );
   }
 }

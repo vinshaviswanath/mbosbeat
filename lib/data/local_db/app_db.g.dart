@@ -8501,6 +8501,17 @@ class $PartyMasterTable extends PartyMaster
     type: DriftSqlType.int,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _companyIdMeta = const VerificationMeta(
+    'companyId',
+  );
+  @override
+  late final GeneratedColumn<int> companyId = GeneratedColumn<int>(
+    'company_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
   static const VerificationMeta _ledgerNameMeta = const VerificationMeta(
     'ledgerName',
   );
@@ -8913,6 +8924,7 @@ class $PartyMasterTable extends PartyMaster
   @override
   List<GeneratedColumn> get $columns => [
     ledgerId,
+    companyId,
     ledgerName,
     ledgerNameLocal,
     aliasName,
@@ -8968,6 +8980,14 @@ class $PartyMasterTable extends PartyMaster
         _ledgerIdMeta,
         ledgerId.isAcceptableOrUnknown(data['ledger_id']!, _ledgerIdMeta),
       );
+    }
+    if (data.containsKey('company_id')) {
+      context.handle(
+        _companyIdMeta,
+        companyId.isAcceptableOrUnknown(data['company_id']!, _companyIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_companyIdMeta);
     }
     if (data.containsKey('ledger_name')) {
       context.handle(
@@ -9231,6 +9251,10 @@ class $PartyMasterTable extends PartyMaster
         DriftSqlType.int,
         data['${effectivePrefix}ledger_id'],
       )!,
+      companyId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}company_id'],
+      )!,
       ledgerName: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}ledger_name'],
@@ -9390,6 +9414,7 @@ class $PartyMasterTable extends PartyMaster
 
 class PartyMasterData extends DataClass implements Insertable<PartyMasterData> {
   final int ledgerId;
+  final int companyId;
   final String? ledgerName;
   final String? ledgerNameLocal;
   final String? aliasName;
@@ -9429,6 +9454,7 @@ class PartyMasterData extends DataClass implements Insertable<PartyMasterData> {
   final String? syncAction;
   const PartyMasterData({
     required this.ledgerId,
+    required this.companyId,
     this.ledgerName,
     this.ledgerNameLocal,
     this.aliasName,
@@ -9471,6 +9497,7 @@ class PartyMasterData extends DataClass implements Insertable<PartyMasterData> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['ledger_id'] = Variable<int>(ledgerId);
+    map['company_id'] = Variable<int>(companyId);
     if (!nullToAbsent || ledgerName != null) {
       map['ledger_name'] = Variable<String>(ledgerName);
     }
@@ -9586,6 +9613,7 @@ class PartyMasterData extends DataClass implements Insertable<PartyMasterData> {
   PartyMasterCompanion toCompanion(bool nullToAbsent) {
     return PartyMasterCompanion(
       ledgerId: Value(ledgerId),
+      companyId: Value(companyId),
       ledgerName: ledgerName == null && nullToAbsent
           ? const Value.absent()
           : Value(ledgerName),
@@ -9701,6 +9729,7 @@ class PartyMasterData extends DataClass implements Insertable<PartyMasterData> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return PartyMasterData(
       ledgerId: serializer.fromJson<int>(json['ledgerId']),
+      companyId: serializer.fromJson<int>(json['companyId']),
       ledgerName: serializer.fromJson<String?>(json['ledgerName']),
       ledgerNameLocal: serializer.fromJson<String?>(json['ledgerNameLocal']),
       aliasName: serializer.fromJson<String?>(json['aliasName']),
@@ -9747,6 +9776,7 @@ class PartyMasterData extends DataClass implements Insertable<PartyMasterData> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'ledgerId': serializer.toJson<int>(ledgerId),
+      'companyId': serializer.toJson<int>(companyId),
       'ledgerName': serializer.toJson<String?>(ledgerName),
       'ledgerNameLocal': serializer.toJson<String?>(ledgerNameLocal),
       'aliasName': serializer.toJson<String?>(aliasName),
@@ -9791,6 +9821,7 @@ class PartyMasterData extends DataClass implements Insertable<PartyMasterData> {
 
   PartyMasterData copyWith({
     int? ledgerId,
+    int? companyId,
     Value<String?> ledgerName = const Value.absent(),
     Value<String?> ledgerNameLocal = const Value.absent(),
     Value<String?> aliasName = const Value.absent(),
@@ -9830,6 +9861,7 @@ class PartyMasterData extends DataClass implements Insertable<PartyMasterData> {
     Value<String?> syncAction = const Value.absent(),
   }) => PartyMasterData(
     ledgerId: ledgerId ?? this.ledgerId,
+    companyId: companyId ?? this.companyId,
     ledgerName: ledgerName.present ? ledgerName.value : this.ledgerName,
     ledgerNameLocal: ledgerNameLocal.present
         ? ledgerNameLocal.value
@@ -9881,6 +9913,7 @@ class PartyMasterData extends DataClass implements Insertable<PartyMasterData> {
   PartyMasterData copyWithCompanion(PartyMasterCompanion data) {
     return PartyMasterData(
       ledgerId: data.ledgerId.present ? data.ledgerId.value : this.ledgerId,
+      companyId: data.companyId.present ? data.companyId.value : this.companyId,
       ledgerName: data.ledgerName.present
           ? data.ledgerName.value
           : this.ledgerName,
@@ -9949,6 +9982,7 @@ class PartyMasterData extends DataClass implements Insertable<PartyMasterData> {
   String toString() {
     return (StringBuffer('PartyMasterData(')
           ..write('ledgerId: $ledgerId, ')
+          ..write('companyId: $companyId, ')
           ..write('ledgerName: $ledgerName, ')
           ..write('ledgerNameLocal: $ledgerNameLocal, ')
           ..write('aliasName: $aliasName, ')
@@ -9993,6 +10027,7 @@ class PartyMasterData extends DataClass implements Insertable<PartyMasterData> {
   @override
   int get hashCode => Object.hashAll([
     ledgerId,
+    companyId,
     ledgerName,
     ledgerNameLocal,
     aliasName,
@@ -10036,6 +10071,7 @@ class PartyMasterData extends DataClass implements Insertable<PartyMasterData> {
       identical(this, other) ||
       (other is PartyMasterData &&
           other.ledgerId == this.ledgerId &&
+          other.companyId == this.companyId &&
           other.ledgerName == this.ledgerName &&
           other.ledgerNameLocal == this.ledgerNameLocal &&
           other.aliasName == this.aliasName &&
@@ -10077,6 +10113,7 @@ class PartyMasterData extends DataClass implements Insertable<PartyMasterData> {
 
 class PartyMasterCompanion extends UpdateCompanion<PartyMasterData> {
   final Value<int> ledgerId;
+  final Value<int> companyId;
   final Value<String?> ledgerName;
   final Value<String?> ledgerNameLocal;
   final Value<String?> aliasName;
@@ -10116,6 +10153,7 @@ class PartyMasterCompanion extends UpdateCompanion<PartyMasterData> {
   final Value<String?> syncAction;
   const PartyMasterCompanion({
     this.ledgerId = const Value.absent(),
+    this.companyId = const Value.absent(),
     this.ledgerName = const Value.absent(),
     this.ledgerNameLocal = const Value.absent(),
     this.aliasName = const Value.absent(),
@@ -10156,6 +10194,7 @@ class PartyMasterCompanion extends UpdateCompanion<PartyMasterData> {
   });
   PartyMasterCompanion.insert({
     this.ledgerId = const Value.absent(),
+    required int companyId,
     this.ledgerName = const Value.absent(),
     this.ledgerNameLocal = const Value.absent(),
     this.aliasName = const Value.absent(),
@@ -10193,9 +10232,10 @@ class PartyMasterCompanion extends UpdateCompanion<PartyMasterData> {
     this.priceList = const Value.absent(),
     this.lastSyncOn = const Value.absent(),
     this.syncAction = const Value.absent(),
-  });
+  }) : companyId = Value(companyId);
   static Insertable<PartyMasterData> custom({
     Expression<int>? ledgerId,
+    Expression<int>? companyId,
     Expression<String>? ledgerName,
     Expression<String>? ledgerNameLocal,
     Expression<String>? aliasName,
@@ -10236,6 +10276,7 @@ class PartyMasterCompanion extends UpdateCompanion<PartyMasterData> {
   }) {
     return RawValuesInsertable({
       if (ledgerId != null) 'ledger_id': ledgerId,
+      if (companyId != null) 'company_id': companyId,
       if (ledgerName != null) 'ledger_name': ledgerName,
       if (ledgerNameLocal != null) 'ledger_name_local': ledgerNameLocal,
       if (aliasName != null) 'alias_name': aliasName,
@@ -10279,6 +10320,7 @@ class PartyMasterCompanion extends UpdateCompanion<PartyMasterData> {
 
   PartyMasterCompanion copyWith({
     Value<int>? ledgerId,
+    Value<int>? companyId,
     Value<String?>? ledgerName,
     Value<String?>? ledgerNameLocal,
     Value<String?>? aliasName,
@@ -10319,6 +10361,7 @@ class PartyMasterCompanion extends UpdateCompanion<PartyMasterData> {
   }) {
     return PartyMasterCompanion(
       ledgerId: ledgerId ?? this.ledgerId,
+      companyId: companyId ?? this.companyId,
       ledgerName: ledgerName ?? this.ledgerName,
       ledgerNameLocal: ledgerNameLocal ?? this.ledgerNameLocal,
       aliasName: aliasName ?? this.aliasName,
@@ -10365,6 +10408,9 @@ class PartyMasterCompanion extends UpdateCompanion<PartyMasterData> {
     final map = <String, Expression>{};
     if (ledgerId.present) {
       map['ledger_id'] = Variable<int>(ledgerId.value);
+    }
+    if (companyId.present) {
+      map['company_id'] = Variable<int>(companyId.value);
     }
     if (ledgerName.present) {
       map['ledger_name'] = Variable<String>(ledgerName.value);
@@ -10486,6 +10532,7 @@ class PartyMasterCompanion extends UpdateCompanion<PartyMasterData> {
   String toString() {
     return (StringBuffer('PartyMasterCompanion(')
           ..write('ledgerId: $ledgerId, ')
+          ..write('companyId: $companyId, ')
           ..write('ledgerName: $ledgerName, ')
           ..write('ledgerNameLocal: $ledgerNameLocal, ')
           ..write('aliasName: $aliasName, ')
@@ -10546,6 +10593,17 @@ class $ItemMasterTable extends ItemMaster
     defaultConstraints: GeneratedColumn.constraintIsAlways(
       'PRIMARY KEY AUTOINCREMENT',
     ),
+  );
+  static const VerificationMeta _companyIdMeta = const VerificationMeta(
+    'companyId',
+  );
+  @override
+  late final GeneratedColumn<int> companyId = GeneratedColumn<int>(
+    'company_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
   );
   static const VerificationMeta _stockItemIdMeta = const VerificationMeta(
     'stockItemId',
@@ -10663,11 +10721,11 @@ class $ItemMasterTable extends ItemMaster
     'altDecimalPlaces',
   );
   @override
-  late final GeneratedColumn<int> altDecimalPlaces = GeneratedColumn<int>(
+  late final GeneratedColumn<double> altDecimalPlaces = GeneratedColumn<double>(
     'alt_decimal_places',
     aliasedName,
     true,
-    type: DriftSqlType.int,
+    type: DriftSqlType.double,
     requiredDuringInsert: false,
   );
   static const VerificationMeta _unitConversionMeta = const VerificationMeta(
@@ -10749,6 +10807,7 @@ class $ItemMasterTable extends ItemMaster
   @override
   List<GeneratedColumn> get $columns => [
     id,
+    companyId,
     stockItemId,
     itemName,
     aliasName,
@@ -10781,6 +10840,14 @@ class $ItemMasterTable extends ItemMaster
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('company_id')) {
+      context.handle(
+        _companyIdMeta,
+        companyId.isAcceptableOrUnknown(data['company_id']!, _companyIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_companyIdMeta);
     }
     if (data.containsKey('stock_item_id')) {
       context.handle(
@@ -10920,7 +10987,7 @@ class $ItemMasterTable extends ItemMaster
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
   List<Set<GeneratedColumn>> get uniqueKeys => [
-    {stockItemId},
+    {companyId, stockItemId},
   ];
   @override
   ItemMasterData map(Map<String, dynamic> data, {String? tablePrefix}) {
@@ -10929,6 +10996,10 @@ class $ItemMasterTable extends ItemMaster
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}id'],
+      )!,
+      companyId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}company_id'],
       )!,
       stockItemId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
@@ -10971,7 +11042,7 @@ class $ItemMasterTable extends ItemMaster
         data['${effectivePrefix}alt_unit'],
       ),
       altDecimalPlaces: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
+        DriftSqlType.double,
         data['${effectivePrefix}alt_decimal_places'],
       ),
       unitConversion: attachedDatabase.typeMapping.read(
@@ -11010,6 +11081,7 @@ class $ItemMasterTable extends ItemMaster
 class ItemMasterData extends DataClass implements Insertable<ItemMasterData> {
   /// Local auto-increment primary key
   final int id;
+  final int companyId;
 
   /// Server ID
   final int stockItemId;
@@ -11022,7 +11094,7 @@ class ItemMasterData extends DataClass implements Insertable<ItemMasterData> {
   final String unitName;
   final int decimalPlaces;
   final String? altUnit;
-  final int? altDecimalPlaces;
+  final double? altDecimalPlaces;
   final double unitConversion;
   final double unitDenominator;
   final bool isActive;
@@ -11031,6 +11103,7 @@ class ItemMasterData extends DataClass implements Insertable<ItemMasterData> {
   final double? taxPercent;
   const ItemMasterData({
     required this.id,
+    required this.companyId,
     required this.stockItemId,
     required this.itemName,
     required this.aliasName,
@@ -11053,6 +11126,7 @@ class ItemMasterData extends DataClass implements Insertable<ItemMasterData> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
+    map['company_id'] = Variable<int>(companyId);
     map['stock_item_id'] = Variable<int>(stockItemId);
     map['item_name'] = Variable<String>(itemName);
     map['alias_name'] = Variable<String>(aliasName);
@@ -11072,7 +11146,7 @@ class ItemMasterData extends DataClass implements Insertable<ItemMasterData> {
       map['alt_unit'] = Variable<String>(altUnit);
     }
     if (!nullToAbsent || altDecimalPlaces != null) {
-      map['alt_decimal_places'] = Variable<int>(altDecimalPlaces);
+      map['alt_decimal_places'] = Variable<double>(altDecimalPlaces);
     }
     map['unit_conversion'] = Variable<double>(unitConversion);
     map['unit_denominator'] = Variable<double>(unitDenominator);
@@ -11090,6 +11164,7 @@ class ItemMasterData extends DataClass implements Insertable<ItemMasterData> {
   ItemMasterCompanion toCompanion(bool nullToAbsent) {
     return ItemMasterCompanion(
       id: Value(id),
+      companyId: Value(companyId),
       stockItemId: Value(stockItemId),
       itemName: Value(itemName),
       aliasName: Value(aliasName),
@@ -11131,6 +11206,7 @@ class ItemMasterData extends DataClass implements Insertable<ItemMasterData> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return ItemMasterData(
       id: serializer.fromJson<int>(json['id']),
+      companyId: serializer.fromJson<int>(json['companyId']),
       stockItemId: serializer.fromJson<int>(json['stockItemId']),
       itemName: serializer.fromJson<String>(json['itemName']),
       aliasName: serializer.fromJson<String>(json['aliasName']),
@@ -11141,7 +11217,7 @@ class ItemMasterData extends DataClass implements Insertable<ItemMasterData> {
       unitName: serializer.fromJson<String>(json['unitName']),
       decimalPlaces: serializer.fromJson<int>(json['decimalPlaces']),
       altUnit: serializer.fromJson<String?>(json['altUnit']),
-      altDecimalPlaces: serializer.fromJson<int?>(json['altDecimalPlaces']),
+      altDecimalPlaces: serializer.fromJson<double?>(json['altDecimalPlaces']),
       unitConversion: serializer.fromJson<double>(json['unitConversion']),
       unitDenominator: serializer.fromJson<double>(json['unitDenominator']),
       isActive: serializer.fromJson<bool>(json['isActive']),
@@ -11155,6 +11231,7 @@ class ItemMasterData extends DataClass implements Insertable<ItemMasterData> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
+      'companyId': serializer.toJson<int>(companyId),
       'stockItemId': serializer.toJson<int>(stockItemId),
       'itemName': serializer.toJson<String>(itemName),
       'aliasName': serializer.toJson<String>(aliasName),
@@ -11165,7 +11242,7 @@ class ItemMasterData extends DataClass implements Insertable<ItemMasterData> {
       'unitName': serializer.toJson<String>(unitName),
       'decimalPlaces': serializer.toJson<int>(decimalPlaces),
       'altUnit': serializer.toJson<String?>(altUnit),
-      'altDecimalPlaces': serializer.toJson<int?>(altDecimalPlaces),
+      'altDecimalPlaces': serializer.toJson<double?>(altDecimalPlaces),
       'unitConversion': serializer.toJson<double>(unitConversion),
       'unitDenominator': serializer.toJson<double>(unitDenominator),
       'isActive': serializer.toJson<bool>(isActive),
@@ -11177,6 +11254,7 @@ class ItemMasterData extends DataClass implements Insertable<ItemMasterData> {
 
   ItemMasterData copyWith({
     int? id,
+    int? companyId,
     int? stockItemId,
     String? itemName,
     String? aliasName,
@@ -11187,7 +11265,7 @@ class ItemMasterData extends DataClass implements Insertable<ItemMasterData> {
     String? unitName,
     int? decimalPlaces,
     Value<String?> altUnit = const Value.absent(),
-    Value<int?> altDecimalPlaces = const Value.absent(),
+    Value<double?> altDecimalPlaces = const Value.absent(),
     double? unitConversion,
     double? unitDenominator,
     bool? isActive,
@@ -11196,6 +11274,7 @@ class ItemMasterData extends DataClass implements Insertable<ItemMasterData> {
     Value<double?> taxPercent = const Value.absent(),
   }) => ItemMasterData(
     id: id ?? this.id,
+    companyId: companyId ?? this.companyId,
     stockItemId: stockItemId ?? this.stockItemId,
     itemName: itemName ?? this.itemName,
     aliasName: aliasName ?? this.aliasName,
@@ -11219,6 +11298,7 @@ class ItemMasterData extends DataClass implements Insertable<ItemMasterData> {
   ItemMasterData copyWithCompanion(ItemMasterCompanion data) {
     return ItemMasterData(
       id: data.id.present ? data.id.value : this.id,
+      companyId: data.companyId.present ? data.companyId.value : this.companyId,
       stockItemId: data.stockItemId.present
           ? data.stockItemId.value
           : this.stockItemId,
@@ -11261,6 +11341,7 @@ class ItemMasterData extends DataClass implements Insertable<ItemMasterData> {
   String toString() {
     return (StringBuffer('ItemMasterData(')
           ..write('id: $id, ')
+          ..write('companyId: $companyId, ')
           ..write('stockItemId: $stockItemId, ')
           ..write('itemName: $itemName, ')
           ..write('aliasName: $aliasName, ')
@@ -11285,6 +11366,7 @@ class ItemMasterData extends DataClass implements Insertable<ItemMasterData> {
   @override
   int get hashCode => Object.hash(
     id,
+    companyId,
     stockItemId,
     itemName,
     aliasName,
@@ -11308,6 +11390,7 @@ class ItemMasterData extends DataClass implements Insertable<ItemMasterData> {
       identical(this, other) ||
       (other is ItemMasterData &&
           other.id == this.id &&
+          other.companyId == this.companyId &&
           other.stockItemId == this.stockItemId &&
           other.itemName == this.itemName &&
           other.aliasName == this.aliasName &&
@@ -11329,6 +11412,7 @@ class ItemMasterData extends DataClass implements Insertable<ItemMasterData> {
 
 class ItemMasterCompanion extends UpdateCompanion<ItemMasterData> {
   final Value<int> id;
+  final Value<int> companyId;
   final Value<int> stockItemId;
   final Value<String> itemName;
   final Value<String> aliasName;
@@ -11339,7 +11423,7 @@ class ItemMasterCompanion extends UpdateCompanion<ItemMasterData> {
   final Value<String> unitName;
   final Value<int> decimalPlaces;
   final Value<String?> altUnit;
-  final Value<int?> altDecimalPlaces;
+  final Value<double?> altDecimalPlaces;
   final Value<double> unitConversion;
   final Value<double> unitDenominator;
   final Value<bool> isActive;
@@ -11348,6 +11432,7 @@ class ItemMasterCompanion extends UpdateCompanion<ItemMasterData> {
   final Value<double?> taxPercent;
   const ItemMasterCompanion({
     this.id = const Value.absent(),
+    this.companyId = const Value.absent(),
     this.stockItemId = const Value.absent(),
     this.itemName = const Value.absent(),
     this.aliasName = const Value.absent(),
@@ -11368,6 +11453,7 @@ class ItemMasterCompanion extends UpdateCompanion<ItemMasterData> {
   });
   ItemMasterCompanion.insert({
     this.id = const Value.absent(),
+    required int companyId,
     required int stockItemId,
     required String itemName,
     this.aliasName = const Value.absent(),
@@ -11385,12 +11471,14 @@ class ItemMasterCompanion extends UpdateCompanion<ItemMasterData> {
     this.isDeleted = const Value.absent(),
     this.hsnCode = const Value.absent(),
     this.taxPercent = const Value.absent(),
-  }) : stockItemId = Value(stockItemId),
+  }) : companyId = Value(companyId),
+       stockItemId = Value(stockItemId),
        itemName = Value(itemName),
        unitName = Value(unitName),
        decimalPlaces = Value(decimalPlaces);
   static Insertable<ItemMasterData> custom({
     Expression<int>? id,
+    Expression<int>? companyId,
     Expression<int>? stockItemId,
     Expression<String>? itemName,
     Expression<String>? aliasName,
@@ -11401,7 +11489,7 @@ class ItemMasterCompanion extends UpdateCompanion<ItemMasterData> {
     Expression<String>? unitName,
     Expression<int>? decimalPlaces,
     Expression<String>? altUnit,
-    Expression<int>? altDecimalPlaces,
+    Expression<double>? altDecimalPlaces,
     Expression<double>? unitConversion,
     Expression<double>? unitDenominator,
     Expression<bool>? isActive,
@@ -11411,6 +11499,7 @@ class ItemMasterCompanion extends UpdateCompanion<ItemMasterData> {
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
+      if (companyId != null) 'company_id': companyId,
       if (stockItemId != null) 'stock_item_id': stockItemId,
       if (itemName != null) 'item_name': itemName,
       if (aliasName != null) 'alias_name': aliasName,
@@ -11433,6 +11522,7 @@ class ItemMasterCompanion extends UpdateCompanion<ItemMasterData> {
 
   ItemMasterCompanion copyWith({
     Value<int>? id,
+    Value<int>? companyId,
     Value<int>? stockItemId,
     Value<String>? itemName,
     Value<String>? aliasName,
@@ -11443,7 +11533,7 @@ class ItemMasterCompanion extends UpdateCompanion<ItemMasterData> {
     Value<String>? unitName,
     Value<int>? decimalPlaces,
     Value<String?>? altUnit,
-    Value<int?>? altDecimalPlaces,
+    Value<double?>? altDecimalPlaces,
     Value<double>? unitConversion,
     Value<double>? unitDenominator,
     Value<bool>? isActive,
@@ -11453,6 +11543,7 @@ class ItemMasterCompanion extends UpdateCompanion<ItemMasterData> {
   }) {
     return ItemMasterCompanion(
       id: id ?? this.id,
+      companyId: companyId ?? this.companyId,
       stockItemId: stockItemId ?? this.stockItemId,
       itemName: itemName ?? this.itemName,
       aliasName: aliasName ?? this.aliasName,
@@ -11478,6 +11569,9 @@ class ItemMasterCompanion extends UpdateCompanion<ItemMasterData> {
     final map = <String, Expression>{};
     if (id.present) {
       map['id'] = Variable<int>(id.value);
+    }
+    if (companyId.present) {
+      map['company_id'] = Variable<int>(companyId.value);
     }
     if (stockItemId.present) {
       map['stock_item_id'] = Variable<int>(stockItemId.value);
@@ -11510,7 +11604,7 @@ class ItemMasterCompanion extends UpdateCompanion<ItemMasterData> {
       map['alt_unit'] = Variable<String>(altUnit.value);
     }
     if (altDecimalPlaces.present) {
-      map['alt_decimal_places'] = Variable<int>(altDecimalPlaces.value);
+      map['alt_decimal_places'] = Variable<double>(altDecimalPlaces.value);
     }
     if (unitConversion.present) {
       map['unit_conversion'] = Variable<double>(unitConversion.value);
@@ -11537,6 +11631,7 @@ class ItemMasterCompanion extends UpdateCompanion<ItemMasterData> {
   String toString() {
     return (StringBuffer('ItemMasterCompanion(')
           ..write('id: $id, ')
+          ..write('companyId: $companyId, ')
           ..write('stockItemId: $stockItemId, ')
           ..write('itemName: $itemName, ')
           ..write('aliasName: $aliasName, ')
@@ -11571,6 +11666,17 @@ class $PriceLevelsTableTable extends PriceLevelsTable
     'id',
     aliasedName,
     false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _companyIdMeta = const VerificationMeta(
+    'companyId',
+  );
+  @override
+  late final GeneratedColumn<int> companyId = GeneratedColumn<int>(
+    'company_id',
+    aliasedName,
+    true,
     type: DriftSqlType.int,
     requiredDuringInsert: false,
   );
@@ -11631,6 +11737,7 @@ class $PriceLevelsTableTable extends PriceLevelsTable
   @override
   List<GeneratedColumn> get $columns => [
     id,
+    companyId,
     priceLevel,
     rateInclusive,
     isDefault,
@@ -11650,6 +11757,12 @@ class $PriceLevelsTableTable extends PriceLevelsTable
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('company_id')) {
+      context.handle(
+        _companyIdMeta,
+        companyId.isAcceptableOrUnknown(data['company_id']!, _companyIdMeta),
+      );
     }
     if (data.containsKey('price_level')) {
       context.handle(
@@ -11691,6 +11804,10 @@ class $PriceLevelsTableTable extends PriceLevelsTable
         DriftSqlType.int,
         data['${effectivePrefix}id'],
       )!,
+      companyId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}company_id'],
+      ),
       priceLevel: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}price_level'],
@@ -11719,12 +11836,14 @@ class $PriceLevelsTableTable extends PriceLevelsTable
 class PriceLevelsTableData extends DataClass
     implements Insertable<PriceLevelsTableData> {
   final int id;
+  final int? companyId;
   final String? priceLevel;
   final bool rateInclusive;
   final bool isDefault;
   final bool active;
   const PriceLevelsTableData({
     required this.id,
+    this.companyId,
     this.priceLevel,
     required this.rateInclusive,
     required this.isDefault,
@@ -11734,6 +11853,9 @@ class PriceLevelsTableData extends DataClass
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
+    if (!nullToAbsent || companyId != null) {
+      map['company_id'] = Variable<int>(companyId);
+    }
     if (!nullToAbsent || priceLevel != null) {
       map['price_level'] = Variable<String>(priceLevel);
     }
@@ -11746,6 +11868,9 @@ class PriceLevelsTableData extends DataClass
   PriceLevelsTableCompanion toCompanion(bool nullToAbsent) {
     return PriceLevelsTableCompanion(
       id: Value(id),
+      companyId: companyId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(companyId),
       priceLevel: priceLevel == null && nullToAbsent
           ? const Value.absent()
           : Value(priceLevel),
@@ -11762,6 +11887,7 @@ class PriceLevelsTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return PriceLevelsTableData(
       id: serializer.fromJson<int>(json['id']),
+      companyId: serializer.fromJson<int?>(json['companyId']),
       priceLevel: serializer.fromJson<String?>(json['priceLevel']),
       rateInclusive: serializer.fromJson<bool>(json['rateInclusive']),
       isDefault: serializer.fromJson<bool>(json['isDefault']),
@@ -11773,6 +11899,7 @@ class PriceLevelsTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
+      'companyId': serializer.toJson<int?>(companyId),
       'priceLevel': serializer.toJson<String?>(priceLevel),
       'rateInclusive': serializer.toJson<bool>(rateInclusive),
       'isDefault': serializer.toJson<bool>(isDefault),
@@ -11782,12 +11909,14 @@ class PriceLevelsTableData extends DataClass
 
   PriceLevelsTableData copyWith({
     int? id,
+    Value<int?> companyId = const Value.absent(),
     Value<String?> priceLevel = const Value.absent(),
     bool? rateInclusive,
     bool? isDefault,
     bool? active,
   }) => PriceLevelsTableData(
     id: id ?? this.id,
+    companyId: companyId.present ? companyId.value : this.companyId,
     priceLevel: priceLevel.present ? priceLevel.value : this.priceLevel,
     rateInclusive: rateInclusive ?? this.rateInclusive,
     isDefault: isDefault ?? this.isDefault,
@@ -11796,6 +11925,7 @@ class PriceLevelsTableData extends DataClass
   PriceLevelsTableData copyWithCompanion(PriceLevelsTableCompanion data) {
     return PriceLevelsTableData(
       id: data.id.present ? data.id.value : this.id,
+      companyId: data.companyId.present ? data.companyId.value : this.companyId,
       priceLevel: data.priceLevel.present
           ? data.priceLevel.value
           : this.priceLevel,
@@ -11811,6 +11941,7 @@ class PriceLevelsTableData extends DataClass
   String toString() {
     return (StringBuffer('PriceLevelsTableData(')
           ..write('id: $id, ')
+          ..write('companyId: $companyId, ')
           ..write('priceLevel: $priceLevel, ')
           ..write('rateInclusive: $rateInclusive, ')
           ..write('isDefault: $isDefault, ')
@@ -11821,12 +11952,13 @@ class PriceLevelsTableData extends DataClass
 
   @override
   int get hashCode =>
-      Object.hash(id, priceLevel, rateInclusive, isDefault, active);
+      Object.hash(id, companyId, priceLevel, rateInclusive, isDefault, active);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is PriceLevelsTableData &&
           other.id == this.id &&
+          other.companyId == this.companyId &&
           other.priceLevel == this.priceLevel &&
           other.rateInclusive == this.rateInclusive &&
           other.isDefault == this.isDefault &&
@@ -11835,12 +11967,14 @@ class PriceLevelsTableData extends DataClass
 
 class PriceLevelsTableCompanion extends UpdateCompanion<PriceLevelsTableData> {
   final Value<int> id;
+  final Value<int?> companyId;
   final Value<String?> priceLevel;
   final Value<bool> rateInclusive;
   final Value<bool> isDefault;
   final Value<bool> active;
   const PriceLevelsTableCompanion({
     this.id = const Value.absent(),
+    this.companyId = const Value.absent(),
     this.priceLevel = const Value.absent(),
     this.rateInclusive = const Value.absent(),
     this.isDefault = const Value.absent(),
@@ -11848,6 +11982,7 @@ class PriceLevelsTableCompanion extends UpdateCompanion<PriceLevelsTableData> {
   });
   PriceLevelsTableCompanion.insert({
     this.id = const Value.absent(),
+    this.companyId = const Value.absent(),
     this.priceLevel = const Value.absent(),
     this.rateInclusive = const Value.absent(),
     this.isDefault = const Value.absent(),
@@ -11855,6 +11990,7 @@ class PriceLevelsTableCompanion extends UpdateCompanion<PriceLevelsTableData> {
   });
   static Insertable<PriceLevelsTableData> custom({
     Expression<int>? id,
+    Expression<int>? companyId,
     Expression<String>? priceLevel,
     Expression<bool>? rateInclusive,
     Expression<bool>? isDefault,
@@ -11862,6 +11998,7 @@ class PriceLevelsTableCompanion extends UpdateCompanion<PriceLevelsTableData> {
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
+      if (companyId != null) 'company_id': companyId,
       if (priceLevel != null) 'price_level': priceLevel,
       if (rateInclusive != null) 'rate_inclusive': rateInclusive,
       if (isDefault != null) 'is_default': isDefault,
@@ -11871,6 +12008,7 @@ class PriceLevelsTableCompanion extends UpdateCompanion<PriceLevelsTableData> {
 
   PriceLevelsTableCompanion copyWith({
     Value<int>? id,
+    Value<int?>? companyId,
     Value<String?>? priceLevel,
     Value<bool>? rateInclusive,
     Value<bool>? isDefault,
@@ -11878,6 +12016,7 @@ class PriceLevelsTableCompanion extends UpdateCompanion<PriceLevelsTableData> {
   }) {
     return PriceLevelsTableCompanion(
       id: id ?? this.id,
+      companyId: companyId ?? this.companyId,
       priceLevel: priceLevel ?? this.priceLevel,
       rateInclusive: rateInclusive ?? this.rateInclusive,
       isDefault: isDefault ?? this.isDefault,
@@ -11890,6 +12029,9 @@ class PriceLevelsTableCompanion extends UpdateCompanion<PriceLevelsTableData> {
     final map = <String, Expression>{};
     if (id.present) {
       map['id'] = Variable<int>(id.value);
+    }
+    if (companyId.present) {
+      map['company_id'] = Variable<int>(companyId.value);
     }
     if (priceLevel.present) {
       map['price_level'] = Variable<String>(priceLevel.value);
@@ -11910,6 +12052,7 @@ class PriceLevelsTableCompanion extends UpdateCompanion<PriceLevelsTableData> {
   String toString() {
     return (StringBuffer('PriceLevelsTableCompanion(')
           ..write('id: $id, ')
+          ..write('companyId: $companyId, ')
           ..write('priceLevel: $priceLevel, ')
           ..write('rateInclusive: $rateInclusive, ')
           ..write('isDefault: $isDefault, ')
@@ -12532,6 +12675,454 @@ class ItemPriceDetailsTablesCompanion
   }
 }
 
+class $GroupNameTableTable extends GroupNameTable
+    with TableInfo<$GroupNameTableTable, GroupNameTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $GroupNameTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _groupNameMeta = const VerificationMeta(
+    'groupName',
+  );
+  @override
+  late final GeneratedColumn<String> groupName = GeneratedColumn<String>(
+    'group_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _companyIdMeta = const VerificationMeta(
+    'companyId',
+  );
+  @override
+  late final GeneratedColumn<int> companyId = GeneratedColumn<int>(
+    'company_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [groupName, companyId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'group_name_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<GroupNameTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('group_name')) {
+      context.handle(
+        _groupNameMeta,
+        groupName.isAcceptableOrUnknown(data['group_name']!, _groupNameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_groupNameMeta);
+    }
+    if (data.containsKey('company_id')) {
+      context.handle(
+        _companyIdMeta,
+        companyId.isAcceptableOrUnknown(data['company_id']!, _companyIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_companyIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {groupName, companyId};
+  @override
+  GroupNameTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return GroupNameTableData(
+      groupName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}group_name'],
+      )!,
+      companyId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}company_id'],
+      )!,
+    );
+  }
+
+  @override
+  $GroupNameTableTable createAlias(String alias) {
+    return $GroupNameTableTable(attachedDatabase, alias);
+  }
+}
+
+class GroupNameTableData extends DataClass
+    implements Insertable<GroupNameTableData> {
+  final String groupName;
+  final int companyId;
+  const GroupNameTableData({required this.groupName, required this.companyId});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['group_name'] = Variable<String>(groupName);
+    map['company_id'] = Variable<int>(companyId);
+    return map;
+  }
+
+  GroupNameTableCompanion toCompanion(bool nullToAbsent) {
+    return GroupNameTableCompanion(
+      groupName: Value(groupName),
+      companyId: Value(companyId),
+    );
+  }
+
+  factory GroupNameTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return GroupNameTableData(
+      groupName: serializer.fromJson<String>(json['groupName']),
+      companyId: serializer.fromJson<int>(json['companyId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'groupName': serializer.toJson<String>(groupName),
+      'companyId': serializer.toJson<int>(companyId),
+    };
+  }
+
+  GroupNameTableData copyWith({String? groupName, int? companyId}) =>
+      GroupNameTableData(
+        groupName: groupName ?? this.groupName,
+        companyId: companyId ?? this.companyId,
+      );
+  GroupNameTableData copyWithCompanion(GroupNameTableCompanion data) {
+    return GroupNameTableData(
+      groupName: data.groupName.present ? data.groupName.value : this.groupName,
+      companyId: data.companyId.present ? data.companyId.value : this.companyId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GroupNameTableData(')
+          ..write('groupName: $groupName, ')
+          ..write('companyId: $companyId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(groupName, companyId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is GroupNameTableData &&
+          other.groupName == this.groupName &&
+          other.companyId == this.companyId);
+}
+
+class GroupNameTableCompanion extends UpdateCompanion<GroupNameTableData> {
+  final Value<String> groupName;
+  final Value<int> companyId;
+  final Value<int> rowid;
+  const GroupNameTableCompanion({
+    this.groupName = const Value.absent(),
+    this.companyId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  GroupNameTableCompanion.insert({
+    required String groupName,
+    required int companyId,
+    this.rowid = const Value.absent(),
+  }) : groupName = Value(groupName),
+       companyId = Value(companyId);
+  static Insertable<GroupNameTableData> custom({
+    Expression<String>? groupName,
+    Expression<int>? companyId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (groupName != null) 'group_name': groupName,
+      if (companyId != null) 'company_id': companyId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  GroupNameTableCompanion copyWith({
+    Value<String>? groupName,
+    Value<int>? companyId,
+    Value<int>? rowid,
+  }) {
+    return GroupNameTableCompanion(
+      groupName: groupName ?? this.groupName,
+      companyId: companyId ?? this.companyId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (groupName.present) {
+      map['group_name'] = Variable<String>(groupName.value);
+    }
+    if (companyId.present) {
+      map['company_id'] = Variable<int>(companyId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GroupNameTableCompanion(')
+          ..write('groupName: $groupName, ')
+          ..write('companyId: $companyId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CategoryTableTable extends CategoryTable
+    with TableInfo<$CategoryTableTable, CategoryTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CategoryTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _categoryNameMeta = const VerificationMeta(
+    'categoryName',
+  );
+  @override
+  late final GeneratedColumn<String> categoryName = GeneratedColumn<String>(
+    'category_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _companyIdMeta = const VerificationMeta(
+    'companyId',
+  );
+  @override
+  late final GeneratedColumn<int> companyId = GeneratedColumn<int>(
+    'company_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [categoryName, companyId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'category_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CategoryTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('category_name')) {
+      context.handle(
+        _categoryNameMeta,
+        categoryName.isAcceptableOrUnknown(
+          data['category_name']!,
+          _categoryNameMeta,
+        ),
+      );
+    }
+    if (data.containsKey('company_id')) {
+      context.handle(
+        _companyIdMeta,
+        companyId.isAcceptableOrUnknown(data['company_id']!, _companyIdMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {categoryName, companyId};
+  @override
+  CategoryTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CategoryTableData(
+      categoryName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}category_name'],
+      ),
+      companyId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}company_id'],
+      ),
+    );
+  }
+
+  @override
+  $CategoryTableTable createAlias(String alias) {
+    return $CategoryTableTable(attachedDatabase, alias);
+  }
+}
+
+class CategoryTableData extends DataClass
+    implements Insertable<CategoryTableData> {
+  final String? categoryName;
+  final int? companyId;
+  const CategoryTableData({this.categoryName, this.companyId});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || categoryName != null) {
+      map['category_name'] = Variable<String>(categoryName);
+    }
+    if (!nullToAbsent || companyId != null) {
+      map['company_id'] = Variable<int>(companyId);
+    }
+    return map;
+  }
+
+  CategoryTableCompanion toCompanion(bool nullToAbsent) {
+    return CategoryTableCompanion(
+      categoryName: categoryName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(categoryName),
+      companyId: companyId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(companyId),
+    );
+  }
+
+  factory CategoryTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CategoryTableData(
+      categoryName: serializer.fromJson<String?>(json['categoryName']),
+      companyId: serializer.fromJson<int?>(json['companyId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'categoryName': serializer.toJson<String?>(categoryName),
+      'companyId': serializer.toJson<int?>(companyId),
+    };
+  }
+
+  CategoryTableData copyWith({
+    Value<String?> categoryName = const Value.absent(),
+    Value<int?> companyId = const Value.absent(),
+  }) => CategoryTableData(
+    categoryName: categoryName.present ? categoryName.value : this.categoryName,
+    companyId: companyId.present ? companyId.value : this.companyId,
+  );
+  CategoryTableData copyWithCompanion(CategoryTableCompanion data) {
+    return CategoryTableData(
+      categoryName: data.categoryName.present
+          ? data.categoryName.value
+          : this.categoryName,
+      companyId: data.companyId.present ? data.companyId.value : this.companyId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CategoryTableData(')
+          ..write('categoryName: $categoryName, ')
+          ..write('companyId: $companyId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(categoryName, companyId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CategoryTableData &&
+          other.categoryName == this.categoryName &&
+          other.companyId == this.companyId);
+}
+
+class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
+  final Value<String?> categoryName;
+  final Value<int?> companyId;
+  final Value<int> rowid;
+  const CategoryTableCompanion({
+    this.categoryName = const Value.absent(),
+    this.companyId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CategoryTableCompanion.insert({
+    this.categoryName = const Value.absent(),
+    this.companyId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  static Insertable<CategoryTableData> custom({
+    Expression<String>? categoryName,
+    Expression<int>? companyId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (categoryName != null) 'category_name': categoryName,
+      if (companyId != null) 'company_id': companyId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CategoryTableCompanion copyWith({
+    Value<String?>? categoryName,
+    Value<int?>? companyId,
+    Value<int>? rowid,
+  }) {
+    return CategoryTableCompanion(
+      categoryName: categoryName ?? this.categoryName,
+      companyId: companyId ?? this.companyId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (categoryName.present) {
+      map['category_name'] = Variable<String>(categoryName.value);
+    }
+    if (companyId.present) {
+      map['company_id'] = Variable<int>(companyId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CategoryTableCompanion(')
+          ..write('categoryName: $categoryName, ')
+          ..write('companyId: $companyId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDb extends GeneratedDatabase {
   _$AppDb(QueryExecutor e) : super(e);
   $AppDbManager get managers => $AppDbManager(this);
@@ -12556,6 +13147,8 @@ abstract class _$AppDb extends GeneratedDatabase {
   );
   late final $ItemPriceDetailsTablesTable itemPriceDetailsTables =
       $ItemPriceDetailsTablesTable(this);
+  late final $GroupNameTableTable groupNameTable = $GroupNameTableTable(this);
+  late final $CategoryTableTable categoryTable = $CategoryTableTable(this);
   late final CompanyDao companyDao = CompanyDao(this as AppDb);
   late final RegistrationDetailDao registrationDetailDao =
       RegistrationDetailDao(this as AppDb);
@@ -12597,6 +13190,8 @@ abstract class _$AppDb extends GeneratedDatabase {
     itemMaster,
     priceLevelsTable,
     itemPriceDetailsTables,
+    groupNameTable,
+    categoryTable,
   ];
 }
 
@@ -16420,6 +17015,7 @@ typedef $$GodownRoutesTableProcessedTableManager =
 typedef $$PartyMasterTableCreateCompanionBuilder =
     PartyMasterCompanion Function({
       Value<int> ledgerId,
+      required int companyId,
       Value<String?> ledgerName,
       Value<String?> ledgerNameLocal,
       Value<String?> aliasName,
@@ -16461,6 +17057,7 @@ typedef $$PartyMasterTableCreateCompanionBuilder =
 typedef $$PartyMasterTableUpdateCompanionBuilder =
     PartyMasterCompanion Function({
       Value<int> ledgerId,
+      Value<int> companyId,
       Value<String?> ledgerName,
       Value<String?> ledgerNameLocal,
       Value<String?> aliasName,
@@ -16511,6 +17108,11 @@ class $$PartyMasterTableFilterComposer
   });
   ColumnFilters<int> get ledgerId => $composableBuilder(
     column: $table.ledgerId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get companyId => $composableBuilder(
+    column: $table.companyId,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -16714,6 +17316,11 @@ class $$PartyMasterTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<int> get companyId => $composableBuilder(
+    column: $table.companyId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get ledgerName => $composableBuilder(
     column: $table.ledgerName,
     builder: (column) => ColumnOrderings(column),
@@ -16912,6 +17519,9 @@ class $$PartyMasterTableAnnotationComposer
   GeneratedColumn<int> get ledgerId =>
       $composableBuilder(column: $table.ledgerId, builder: (column) => column);
 
+  GeneratedColumn<int> get companyId =>
+      $composableBuilder(column: $table.companyId, builder: (column) => column);
+
   GeneratedColumn<String> get ledgerName => $composableBuilder(
     column: $table.ledgerName,
     builder: (column) => column,
@@ -17080,6 +17690,7 @@ class $$PartyMasterTableTableManager
           updateCompanionCallback:
               ({
                 Value<int> ledgerId = const Value.absent(),
+                Value<int> companyId = const Value.absent(),
                 Value<String?> ledgerName = const Value.absent(),
                 Value<String?> ledgerNameLocal = const Value.absent(),
                 Value<String?> aliasName = const Value.absent(),
@@ -17119,6 +17730,7 @@ class $$PartyMasterTableTableManager
                 Value<String?> syncAction = const Value.absent(),
               }) => PartyMasterCompanion(
                 ledgerId: ledgerId,
+                companyId: companyId,
                 ledgerName: ledgerName,
                 ledgerNameLocal: ledgerNameLocal,
                 aliasName: aliasName,
@@ -17160,6 +17772,7 @@ class $$PartyMasterTableTableManager
           createCompanionCallback:
               ({
                 Value<int> ledgerId = const Value.absent(),
+                required int companyId,
                 Value<String?> ledgerName = const Value.absent(),
                 Value<String?> ledgerNameLocal = const Value.absent(),
                 Value<String?> aliasName = const Value.absent(),
@@ -17199,6 +17812,7 @@ class $$PartyMasterTableTableManager
                 Value<String?> syncAction = const Value.absent(),
               }) => PartyMasterCompanion.insert(
                 ledgerId: ledgerId,
+                companyId: companyId,
                 ledgerName: ledgerName,
                 ledgerNameLocal: ledgerNameLocal,
                 aliasName: aliasName,
@@ -17265,6 +17879,7 @@ typedef $$PartyMasterTableProcessedTableManager =
 typedef $$ItemMasterTableCreateCompanionBuilder =
     ItemMasterCompanion Function({
       Value<int> id,
+      required int companyId,
       required int stockItemId,
       required String itemName,
       Value<String> aliasName,
@@ -17275,7 +17890,7 @@ typedef $$ItemMasterTableCreateCompanionBuilder =
       required String unitName,
       required int decimalPlaces,
       Value<String?> altUnit,
-      Value<int?> altDecimalPlaces,
+      Value<double?> altDecimalPlaces,
       Value<double> unitConversion,
       Value<double> unitDenominator,
       Value<bool> isActive,
@@ -17286,6 +17901,7 @@ typedef $$ItemMasterTableCreateCompanionBuilder =
 typedef $$ItemMasterTableUpdateCompanionBuilder =
     ItemMasterCompanion Function({
       Value<int> id,
+      Value<int> companyId,
       Value<int> stockItemId,
       Value<String> itemName,
       Value<String> aliasName,
@@ -17296,7 +17912,7 @@ typedef $$ItemMasterTableUpdateCompanionBuilder =
       Value<String> unitName,
       Value<int> decimalPlaces,
       Value<String?> altUnit,
-      Value<int?> altDecimalPlaces,
+      Value<double?> altDecimalPlaces,
       Value<double> unitConversion,
       Value<double> unitDenominator,
       Value<bool> isActive,
@@ -17316,6 +17932,11 @@ class $$ItemMasterTableFilterComposer
   });
   ColumnFilters<int> get id => $composableBuilder(
     column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get companyId => $composableBuilder(
+    column: $table.companyId,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -17369,7 +17990,7 @@ class $$ItemMasterTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get altDecimalPlaces => $composableBuilder(
+  ColumnFilters<double> get altDecimalPlaces => $composableBuilder(
     column: $table.altDecimalPlaces,
     builder: (column) => ColumnFilters(column),
   );
@@ -17416,6 +18037,11 @@ class $$ItemMasterTableOrderingComposer
   });
   ColumnOrderings<int> get id => $composableBuilder(
     column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get companyId => $composableBuilder(
+    column: $table.companyId,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -17469,7 +18095,7 @@ class $$ItemMasterTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get altDecimalPlaces => $composableBuilder(
+  ColumnOrderings<double> get altDecimalPlaces => $composableBuilder(
     column: $table.altDecimalPlaces,
     builder: (column) => ColumnOrderings(column),
   );
@@ -17517,6 +18143,9 @@ class $$ItemMasterTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
+  GeneratedColumn<int> get companyId =>
+      $composableBuilder(column: $table.companyId, builder: (column) => column);
+
   GeneratedColumn<int> get stockItemId => $composableBuilder(
     column: $table.stockItemId,
     builder: (column) => column,
@@ -17557,7 +18186,7 @@ class $$ItemMasterTableAnnotationComposer
   GeneratedColumn<String> get altUnit =>
       $composableBuilder(column: $table.altUnit, builder: (column) => column);
 
-  GeneratedColumn<int> get altDecimalPlaces => $composableBuilder(
+  GeneratedColumn<double> get altDecimalPlaces => $composableBuilder(
     column: $table.altDecimalPlaces,
     builder: (column) => column,
   );
@@ -17619,6 +18248,7 @@ class $$ItemMasterTableTableManager
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
+                Value<int> companyId = const Value.absent(),
                 Value<int> stockItemId = const Value.absent(),
                 Value<String> itemName = const Value.absent(),
                 Value<String> aliasName = const Value.absent(),
@@ -17629,7 +18259,7 @@ class $$ItemMasterTableTableManager
                 Value<String> unitName = const Value.absent(),
                 Value<int> decimalPlaces = const Value.absent(),
                 Value<String?> altUnit = const Value.absent(),
-                Value<int?> altDecimalPlaces = const Value.absent(),
+                Value<double?> altDecimalPlaces = const Value.absent(),
                 Value<double> unitConversion = const Value.absent(),
                 Value<double> unitDenominator = const Value.absent(),
                 Value<bool> isActive = const Value.absent(),
@@ -17638,6 +18268,7 @@ class $$ItemMasterTableTableManager
                 Value<double?> taxPercent = const Value.absent(),
               }) => ItemMasterCompanion(
                 id: id,
+                companyId: companyId,
                 stockItemId: stockItemId,
                 itemName: itemName,
                 aliasName: aliasName,
@@ -17659,6 +18290,7 @@ class $$ItemMasterTableTableManager
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
+                required int companyId,
                 required int stockItemId,
                 required String itemName,
                 Value<String> aliasName = const Value.absent(),
@@ -17669,7 +18301,7 @@ class $$ItemMasterTableTableManager
                 required String unitName,
                 required int decimalPlaces,
                 Value<String?> altUnit = const Value.absent(),
-                Value<int?> altDecimalPlaces = const Value.absent(),
+                Value<double?> altDecimalPlaces = const Value.absent(),
                 Value<double> unitConversion = const Value.absent(),
                 Value<double> unitDenominator = const Value.absent(),
                 Value<bool> isActive = const Value.absent(),
@@ -17678,6 +18310,7 @@ class $$ItemMasterTableTableManager
                 Value<double?> taxPercent = const Value.absent(),
               }) => ItemMasterCompanion.insert(
                 id: id,
+                companyId: companyId,
                 stockItemId: stockItemId,
                 itemName: itemName,
                 aliasName: aliasName,
@@ -17724,6 +18357,7 @@ typedef $$ItemMasterTableProcessedTableManager =
 typedef $$PriceLevelsTableTableCreateCompanionBuilder =
     PriceLevelsTableCompanion Function({
       Value<int> id,
+      Value<int?> companyId,
       Value<String?> priceLevel,
       Value<bool> rateInclusive,
       Value<bool> isDefault,
@@ -17732,6 +18366,7 @@ typedef $$PriceLevelsTableTableCreateCompanionBuilder =
 typedef $$PriceLevelsTableTableUpdateCompanionBuilder =
     PriceLevelsTableCompanion Function({
       Value<int> id,
+      Value<int?> companyId,
       Value<String?> priceLevel,
       Value<bool> rateInclusive,
       Value<bool> isDefault,
@@ -17749,6 +18384,11 @@ class $$PriceLevelsTableTableFilterComposer
   });
   ColumnFilters<int> get id => $composableBuilder(
     column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get companyId => $composableBuilder(
+    column: $table.companyId,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -17787,6 +18427,11 @@ class $$PriceLevelsTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<int> get companyId => $composableBuilder(
+    column: $table.companyId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get priceLevel => $composableBuilder(
     column: $table.priceLevel,
     builder: (column) => ColumnOrderings(column),
@@ -17819,6 +18464,9 @@ class $$PriceLevelsTableTableAnnotationComposer
   });
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get companyId =>
+      $composableBuilder(column: $table.companyId, builder: (column) => column);
 
   GeneratedColumn<String> get priceLevel => $composableBuilder(
     column: $table.priceLevel,
@@ -17873,12 +18521,14 @@ class $$PriceLevelsTableTableTableManager
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
+                Value<int?> companyId = const Value.absent(),
                 Value<String?> priceLevel = const Value.absent(),
                 Value<bool> rateInclusive = const Value.absent(),
                 Value<bool> isDefault = const Value.absent(),
                 Value<bool> active = const Value.absent(),
               }) => PriceLevelsTableCompanion(
                 id: id,
+                companyId: companyId,
                 priceLevel: priceLevel,
                 rateInclusive: rateInclusive,
                 isDefault: isDefault,
@@ -17887,12 +18537,14 @@ class $$PriceLevelsTableTableTableManager
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
+                Value<int?> companyId = const Value.absent(),
                 Value<String?> priceLevel = const Value.absent(),
                 Value<bool> rateInclusive = const Value.absent(),
                 Value<bool> isDefault = const Value.absent(),
                 Value<bool> active = const Value.absent(),
               }) => PriceLevelsTableCompanion.insert(
                 id: id,
+                companyId: companyId,
                 priceLevel: priceLevel,
                 rateInclusive: rateInclusive,
                 isDefault: isDefault,
@@ -18235,6 +18887,294 @@ typedef $$ItemPriceDetailsTablesTableProcessedTableManager =
       ItemPriceDetailsTable,
       PrefetchHooks Function()
     >;
+typedef $$GroupNameTableTableCreateCompanionBuilder =
+    GroupNameTableCompanion Function({
+      required String groupName,
+      required int companyId,
+      Value<int> rowid,
+    });
+typedef $$GroupNameTableTableUpdateCompanionBuilder =
+    GroupNameTableCompanion Function({
+      Value<String> groupName,
+      Value<int> companyId,
+      Value<int> rowid,
+    });
+
+class $$GroupNameTableTableFilterComposer
+    extends Composer<_$AppDb, $GroupNameTableTable> {
+  $$GroupNameTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get groupName => $composableBuilder(
+    column: $table.groupName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get companyId => $composableBuilder(
+    column: $table.companyId,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$GroupNameTableTableOrderingComposer
+    extends Composer<_$AppDb, $GroupNameTableTable> {
+  $$GroupNameTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get groupName => $composableBuilder(
+    column: $table.groupName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get companyId => $composableBuilder(
+    column: $table.companyId,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$GroupNameTableTableAnnotationComposer
+    extends Composer<_$AppDb, $GroupNameTableTable> {
+  $$GroupNameTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get groupName =>
+      $composableBuilder(column: $table.groupName, builder: (column) => column);
+
+  GeneratedColumn<int> get companyId =>
+      $composableBuilder(column: $table.companyId, builder: (column) => column);
+}
+
+class $$GroupNameTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDb,
+          $GroupNameTableTable,
+          GroupNameTableData,
+          $$GroupNameTableTableFilterComposer,
+          $$GroupNameTableTableOrderingComposer,
+          $$GroupNameTableTableAnnotationComposer,
+          $$GroupNameTableTableCreateCompanionBuilder,
+          $$GroupNameTableTableUpdateCompanionBuilder,
+          (
+            GroupNameTableData,
+            BaseReferences<_$AppDb, $GroupNameTableTable, GroupNameTableData>,
+          ),
+          GroupNameTableData,
+          PrefetchHooks Function()
+        > {
+  $$GroupNameTableTableTableManager(_$AppDb db, $GroupNameTableTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$GroupNameTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$GroupNameTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$GroupNameTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> groupName = const Value.absent(),
+                Value<int> companyId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => GroupNameTableCompanion(
+                groupName: groupName,
+                companyId: companyId,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String groupName,
+                required int companyId,
+                Value<int> rowid = const Value.absent(),
+              }) => GroupNameTableCompanion.insert(
+                groupName: groupName,
+                companyId: companyId,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$GroupNameTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDb,
+      $GroupNameTableTable,
+      GroupNameTableData,
+      $$GroupNameTableTableFilterComposer,
+      $$GroupNameTableTableOrderingComposer,
+      $$GroupNameTableTableAnnotationComposer,
+      $$GroupNameTableTableCreateCompanionBuilder,
+      $$GroupNameTableTableUpdateCompanionBuilder,
+      (
+        GroupNameTableData,
+        BaseReferences<_$AppDb, $GroupNameTableTable, GroupNameTableData>,
+      ),
+      GroupNameTableData,
+      PrefetchHooks Function()
+    >;
+typedef $$CategoryTableTableCreateCompanionBuilder =
+    CategoryTableCompanion Function({
+      Value<String?> categoryName,
+      Value<int?> companyId,
+      Value<int> rowid,
+    });
+typedef $$CategoryTableTableUpdateCompanionBuilder =
+    CategoryTableCompanion Function({
+      Value<String?> categoryName,
+      Value<int?> companyId,
+      Value<int> rowid,
+    });
+
+class $$CategoryTableTableFilterComposer
+    extends Composer<_$AppDb, $CategoryTableTable> {
+  $$CategoryTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get categoryName => $composableBuilder(
+    column: $table.categoryName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get companyId => $composableBuilder(
+    column: $table.companyId,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$CategoryTableTableOrderingComposer
+    extends Composer<_$AppDb, $CategoryTableTable> {
+  $$CategoryTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get categoryName => $composableBuilder(
+    column: $table.categoryName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get companyId => $composableBuilder(
+    column: $table.companyId,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$CategoryTableTableAnnotationComposer
+    extends Composer<_$AppDb, $CategoryTableTable> {
+  $$CategoryTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get categoryName => $composableBuilder(
+    column: $table.categoryName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get companyId =>
+      $composableBuilder(column: $table.companyId, builder: (column) => column);
+}
+
+class $$CategoryTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDb,
+          $CategoryTableTable,
+          CategoryTableData,
+          $$CategoryTableTableFilterComposer,
+          $$CategoryTableTableOrderingComposer,
+          $$CategoryTableTableAnnotationComposer,
+          $$CategoryTableTableCreateCompanionBuilder,
+          $$CategoryTableTableUpdateCompanionBuilder,
+          (
+            CategoryTableData,
+            BaseReferences<_$AppDb, $CategoryTableTable, CategoryTableData>,
+          ),
+          CategoryTableData,
+          PrefetchHooks Function()
+        > {
+  $$CategoryTableTableTableManager(_$AppDb db, $CategoryTableTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CategoryTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CategoryTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$CategoryTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String?> categoryName = const Value.absent(),
+                Value<int?> companyId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CategoryTableCompanion(
+                categoryName: categoryName,
+                companyId: companyId,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                Value<String?> categoryName = const Value.absent(),
+                Value<int?> companyId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CategoryTableCompanion.insert(
+                categoryName: categoryName,
+                companyId: companyId,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$CategoryTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDb,
+      $CategoryTableTable,
+      CategoryTableData,
+      $$CategoryTableTableFilterComposer,
+      $$CategoryTableTableOrderingComposer,
+      $$CategoryTableTableAnnotationComposer,
+      $$CategoryTableTableCreateCompanionBuilder,
+      $$CategoryTableTableUpdateCompanionBuilder,
+      (
+        CategoryTableData,
+        BaseReferences<_$AppDb, $CategoryTableTable, CategoryTableData>,
+      ),
+      CategoryTableData,
+      PrefetchHooks Function()
+    >;
 
 class $AppDbManager {
   final _$AppDb _db;
@@ -18268,4 +19208,8 @@ class $AppDbManager {
         _db,
         _db.itemPriceDetailsTables,
       );
+  $$GroupNameTableTableTableManager get groupNameTable =>
+      $$GroupNameTableTableTableManager(_db, _db.groupNameTable);
+  $$CategoryTableTableTableManager get categoryTable =>
+      $$CategoryTableTableTableManager(_db, _db.categoryTable);
 }

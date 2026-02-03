@@ -30,7 +30,7 @@ class GetPriceLevel {
           final data = PriceLevelModel.fromJson(response.data);
           //  Logger.logInfo("Route List : ${data.toJson()}");
           final companions = data.priceLevels
-              .map((e) => e.toCompanion())
+              .map((e) => e.toCompanion(companyId: companyId))
               .toList();
           if (companions.isNotEmpty) {
             await appDb.priceLevelDao.clear();

@@ -135,6 +135,13 @@ class ItemMasterDao extends DatabaseAccessor<AppDb> with _$ItemMasterDaoMixin {
 
     return query.watch();
   }
+
+  Stream<ItemMasterData?> watchItemByStockItemId(int stockItemId) {
+  return (select(itemMaster)
+        ..where((tbl) => tbl.stockItemId.equals(stockItemId)))
+      .watchSingleOrNull();
+}
+
 }
 
 

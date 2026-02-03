@@ -99,3 +99,6 @@ enum NetworkQuality {
     }
   }
 }
+
+enum DiscountType { percentage, amount,none }
+

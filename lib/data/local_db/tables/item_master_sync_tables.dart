@@ -4,6 +4,8 @@ class ItemMaster extends Table {
   /// Local auto-increment primary key
   IntColumn get id => integer().autoIncrement()();
 
+  IntColumn get companyId => integer()();
+
   /// Server ID
   IntColumn get stockItemId => integer()();
 
@@ -19,7 +21,7 @@ class ItemMaster extends Table {
   IntColumn get decimalPlaces => integer()();
 
   TextColumn get altUnit => text().nullable()();
-  IntColumn get altDecimalPlaces => integer().nullable()();
+  RealColumn get altDecimalPlaces => real().nullable()();
 
   RealColumn get unitConversion => real().withDefault(const Constant(1))();
   RealColumn get unitDenominator => real().withDefault(const Constant(1))();
@@ -31,9 +33,8 @@ class ItemMaster extends Table {
   RealColumn get taxPercent => real().nullable()();
 
   /// Avoid duplicate server data
-@override
-List<Set<Column>> get uniqueKeys => [
-      {stockItemId},
-    ];
-
+  @override
+  List<Set<Column>> get uniqueKeys => [
+    {companyId, stockItemId},
+  ];
 }
