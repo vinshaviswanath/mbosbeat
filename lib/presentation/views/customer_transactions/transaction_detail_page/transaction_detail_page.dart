@@ -80,12 +80,13 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
         ),
       );
   }
- Future<int> _getNextVisitSequence(int ledgerId) async {
-  final prefs = sl<SharedPreferences>();
-  final key = 'visit_sequence_$ledgerId';
-  final lastSeq = prefs.getInt(key) ?? 0;
-  return lastSeq + 1;
-}
+
+  Future<int> _getNextVisitSequence(int ledgerId) async {
+    final prefs = sl<SharedPreferences>();
+    final key = 'visit_sequence_$ledgerId';
+    final lastSeq = prefs.getInt(key) ?? 0;
+    return lastSeq + 1;
+  }
 
   Future<void> _handleCheckIn(BuildContext context) async {
     final prefs = sl<SharedPreferences>();
@@ -94,7 +95,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
       _showSnack(context, "You are currently checked in with another party");
       return;
     }
-final visitSequence = await _getNextVisitSequence(widget.party.ledgerId);
+    final visitSequence = await _getNextVisitSequence(widget.party.ledgerId);
 
     final locationService = sl<LocationService>();
     final provider = context.read<UserProvider>();
@@ -200,10 +201,10 @@ final visitSequence = await _getNextVisitSequence(widget.party.ledgerId);
       //  if (response != null) {
       if (response!.status == 1) {
         final prefs = sl<SharedPreferences>();
-  final key = 'visit_sequence_${widget.party.ledgerId}';
+        final key = 'visit_sequence_${widget.party.ledgerId}';
 
-  final lastSeq = prefs.getInt(key) ?? 0;
-  await prefs.setInt(key, lastSeq + 1);
+        final lastSeq = prefs.getInt(key) ?? 0;
+        await prefs.setInt(key, lastSeq + 1);
         setState(() {
           checkOutTime = _getCurrentTime();
           checkInTime = null;

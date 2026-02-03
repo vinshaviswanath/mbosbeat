@@ -46,6 +46,7 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await _loadData();
+      await Future.delayed(Duration.zero);
       _initializeUpdateData();
     });
   }
@@ -193,23 +194,22 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                 .where((e) => e.active == 1 && e.name!.toLowerCase() != "admin")
                 .toList() ??
             [];
-
-        if (provider.selectedDesignation != null &&
-            !designationList.contains(provider.selectedDesignation)) {
-          provider.updateSelectedDesignation(null);
-        }
-
         final usersList =
             provider.usersList?.userMasterList
                 .where((e) => e.active == 1 && e.id != widget.user?.id)
                 .toList() ??
             [];
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (provider.selectedDesignation != null &&
+              !designationList.contains(provider.selectedDesignation)) {
+            provider.updateSelectedDesignation(null);
+          }
 
-        if (provider.selectedReportingTo != null &&
-            !usersList.contains(provider.selectedReportingTo)) {
-          provider.updateSelectedReportingTo(null);
-        }
-
+          if (provider.selectedReportingTo != null &&
+              !usersList.contains(provider.selectedReportingTo)) {
+            provider.updateSelectedReportingTo(null);
+          }
+        });
         final bool showNameErrorBorder =
             _submitted && userController.text.trim().isEmpty;
 

@@ -574,18 +574,7 @@ class CompanyCreationProvider extends ChangeNotifier {
     return _countryListDtos;
   }
 
-  // void selectCountry(BuildContext context, CountryListData? country) {
-  //   _selectedCountry = country;
-  //   _selectedState = null; // reset state selection
-  //   _statelists = []; // clear previous states
-  //   _registrationlists = []; // clear previous registration types
-  //   _selectedregistrationtype = null; // reset registration type selection
-  //   if (country != null) {
-  //     fetchStateList(context, country.id); // fetch states for this country
-  //     getRegistrationType(context, country.id);
-  //   }
-  //   notifyListeners();
-  // }
+ 
 
   void selectCountry(BuildContext context, CountryListData? country) {
     _selectedCountry = country;
@@ -1206,6 +1195,27 @@ class CompanyCreationProvider extends ChangeNotifier {
 
   bool validateRoute() {
     return _routeName.isValid() && _routeCode.isValid();
+  }
+
+  // B2B Controllers
+  TextEditingController b2bPrefix = TextEditingController();
+  TextEditingController b2bWidth = TextEditingController();
+  TextEditingController b2bSuffix = TextEditingController();
+  TextEditingController b2bDeclaration = TextEditingController();
+
+  // B2C Controllers
+  TextEditingController b2cPrefix = TextEditingController();
+  TextEditingController b2cWidth = TextEditingController();
+  TextEditingController b2cSuffix = TextEditingController();
+  TextEditingController b2cDeclaration = TextEditingController();
+
+  // ---- RESET ONLY B2C ----
+  void clearB2C() {
+    b2cPrefix.clear();
+    b2cWidth.clear();
+    b2cSuffix.clear();
+    b2cDeclaration.clear();
+    notifyListeners();
   }
 
   //get companyvuchertypelist
@@ -2109,6 +2119,8 @@ class CompanyCreationProvider extends ChangeNotifier {
     return _voucherNumberingRouteResponse;
   }
 
+  CompanyProfileModel? updatedCompany;
+
   Future<DefaultResponse?> updateCompanyProfile({
     required BuildContext context,
     required CompanyProfileModel params,
@@ -2134,9 +2146,8 @@ class CompanyCreationProvider extends ChangeNotifier {
       },
       (response) async {
         _defaultResponse = response;
-        // _voucherNumberingRouteController.add(
-        //   _voucherNumberingRouteResponse?.voucherNumberingModels ?? [],
-        // );
+        updatedCompany = params;
+        notifyListeners();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
@@ -2150,7 +2161,7 @@ class CompanyCreationProvider extends ChangeNotifier {
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           ),
         );
-        Logger.logSuccess("Company profile update successfull.");
+        Logger.logSuccess(response.message);
         notifyListeners();
       },
     );
@@ -2159,6 +2170,7 @@ class CompanyCreationProvider extends ChangeNotifier {
     return _defaultResponse;
   }
 
+  BankDetailsParams? updatedBankDetails;
   Future<DefaultResponse?> updateBankDetails({
     required BuildContext context,
     required BankDetailsParams params,
@@ -2184,9 +2196,8 @@ class CompanyCreationProvider extends ChangeNotifier {
       },
       (response) async {
         _defaultResponse = response;
-        // _voucherNumberingRouteController.add(
-        //   _voucherNumberingRouteResponse?.voucherNumberingModels ?? [],
-        // );
+        updatedBankDetails = params;
+        notifyListeners();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
@@ -2209,11 +2220,11 @@ class CompanyCreationProvider extends ChangeNotifier {
     return _defaultResponse;
   }
 
+  UpdateRegistrationParams? updateRegistartion;
   Future<DefaultResponse?> UpdateRegistrationDetail({
     required BuildContext context,
     required UpdateRegistrationParams params,
   }) async {
-    setLoading(true);
     setLoading(true);
 
     final result = await iCompanyCreationFacad.UpdateRegistrationDetail(
@@ -2234,9 +2245,8 @@ class CompanyCreationProvider extends ChangeNotifier {
       },
       (response) async {
         _defaultResponse = response;
-        // _voucherNumberingRouteController.add(
-        //   _voucherNumberingRouteResponse?.voucherNumberingModels ?? [],
-        // );
+        updateRegistartion = params;
+        notifyListeners();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
@@ -2257,27 +2267,6 @@ class CompanyCreationProvider extends ChangeNotifier {
     setLoading(false);
     notifyListeners();
     return _defaultResponse;
-  }
-
-  // B2B Controllers
-  TextEditingController b2bPrefix = TextEditingController();
-  TextEditingController b2bWidth = TextEditingController();
-  TextEditingController b2bSuffix = TextEditingController();
-  TextEditingController b2bDeclaration = TextEditingController();
-
-  // B2C Controllers
-  TextEditingController b2cPrefix = TextEditingController();
-  TextEditingController b2cWidth = TextEditingController();
-  TextEditingController b2cSuffix = TextEditingController();
-  TextEditingController b2cDeclaration = TextEditingController();
-
-  // ---- RESET ONLY B2C ----
-  void clearB2C() {
-    b2cPrefix.clear();
-    b2cWidth.clear();
-    b2cSuffix.clear();
-    b2cDeclaration.clear();
-    notifyListeners();
   }
 
   @override

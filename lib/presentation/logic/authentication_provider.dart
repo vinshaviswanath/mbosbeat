@@ -541,11 +541,6 @@ class AuthFormProvider with ChangeNotifier {
           // regtype for vouchertype tab
           await companyProvider.fetchCountryList(context);
 
-          if (companyProvider.countries.isEmpty) {
-            debugPrint("❌ No countries loaded in login");
-            return;
-          }
-
           //Select country
           final selectedCountry = companyProvider.countries.firstWhere(
             (c) => c.id.toString() == companyData!.country.toString(),
@@ -567,9 +562,7 @@ class AuthFormProvider with ChangeNotifier {
           );
 
           if (selectedCountry.id == 0) {
-            debugPrint(
-              "❌ Country not found for ID in login: ${companyData!.country}",
-            );
+            debugPrint("${companyData!.country}");
             return;
           }
 
@@ -799,7 +792,7 @@ class AuthFormProvider with ChangeNotifier {
           ).then((_) {
             resetSignUpForm();
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              context.pushNamed(AppRouterConst.userLogin);
+              context.pushNamed(AppRouterConst.login);
             });
           });
         }

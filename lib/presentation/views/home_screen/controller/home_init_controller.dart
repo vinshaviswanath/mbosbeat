@@ -19,32 +19,36 @@ class HomeInitController {
     final companyProvider = context.read<CompanyCreationProvider>();
     final userManagementProvider = context.read<UserManagementProvider>();
     final userProvider = context.read<UserProvider>();
+    userProvider.setHomeLoading(false);
 
-    _userId = await _appDb.registrationDetailDao.getLoggedInUserId();
-    if (_userId == null) return;
+    userProvider.setHomeLoading(true);
 
-    final companyId = company.id ?? 0;
+    try {
+      _userId = await _appDb.registrationDetailDao.getLoggedInUserId();
+      if (_userId == null) return;
 
-    await Future.wait([
-      companyProvider.fetchVoucherTypes(context, companyId),
-      companyProvider.getCompanySettings(context, companyId),
-      companyProvider.getAllGodowns(
+      final companyId = company.id ?? 0;
+
+      await Future.wait([
+        companyProvider.fetchVoucherTypes(context, companyId),
+        companyProvider.getCompanySettings(context, companyId),
+     companyProvider.getAllGodowns(
         context: context,
-        companyId: companyId.toString(),
-      ),
-      companyProvider.getAllRoutess(
-        context: context,
-        companyId: companyId.toString(),
-      ),
-      userManagementProvider.getUsersSettingsList(
-        context: context,
-        userId: _userId.toString(),
-      ),
-    ]);
+          companyId: companyId.toString(),
+        ),
+        companyProvider.getAllRoutess(
+          context: context,
+          companyId: companyId.toString(),
+        ),
+        userManagementProvider.getUsersSettingsList(
+          context: context,
+          userId: _userId.toString(),
+        ),
+      ]);
 
-    userProvider.setCompanyId(companyId);
-    await userProvider.partyMasterSync();
-    await userProvider.getItemMaster(
+      userProvider.setCompanyId(companyId);
+      await userProvider.partyMasterSync();
+   await userProvider.getItemMaster(
       context,
       params: ItemMasterQueryParams(
         companyId: companyId,
@@ -56,5 +60,11 @@ class HomeInitController {
     await userProvider.getItemPriceDetails(context, companyId: companyId);
     await userProvider.loadRouteState();
     await userProvider.load();
+    } catch (e, s) {
+      debugPrint("HomeInit error: $e");
+      debugPrintStack(stackTrace: s);
+    } finally {
+      userProvider.setHomeLoading(false);
+    }
   }
 }

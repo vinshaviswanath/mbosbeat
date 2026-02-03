@@ -87,14 +87,8 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget>
       );
 
       pincodeController.text = provider.pincode.value.fold((l) => "", (r) => r);
-      // stateController.text = provider.selectedState?.stateName ?? "";
-      // countrytController.text = provider.selectedCountry?.countryName ?? "";
-      // regTypeController.text =
-      //     provider.selectedregistrationtype?.registrationType ?? "";
 
-      // if (widget.companyData != null) {
       fillfeilds();
-      //  }
     });
   }
 
@@ -103,11 +97,11 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget>
 
     final provider = context.read<CompanyCreationProvider>();
 
-// Prevent glitch validation error
+    // Prevent glitch validation error
     provider.disableValidation();
 
     // UPDATE PROVIDER FIRST (this fixes validation)
- provider.updateCompanyName(widget.companyData!.companyName ?? "");
+    provider.updateCompanyName(widget.companyData!.companyName ?? "");
     provider.updateDisplayName(widget.companyData!.mailingName ?? "");
     provider.updateAddress1(widget.companyData!.address1 ?? "");
     provider.updateAddress2(widget.companyData!.address2 ?? "");
@@ -200,18 +194,6 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget>
     }
 
     debugPrint("🎯 Field filling completed.");
-
-    // provider.updateCompanyName(compnyNameController.text);
-    // provider.updateDisplayName(displayNameController.text);
-    // provider.updateAddress1(address1Controller.text);
-    // provider.updatePincode(pincodeController.text);
-    // provider.updateCountry(provider.selectedCountry?.countryName ?? "");
-    // provider.updateCountryState(provider.selectedState?.stateName ?? "");
-    // provider.updateRegType(
-    //   provider.selectedregistrationtype?.registrationType ?? "",
-    // );
-
-    // setState(() {}); // refresh UI with selected dropdown values
   }
 
   void _debugPrintAllFields(CompanyCreationProvider provider) {

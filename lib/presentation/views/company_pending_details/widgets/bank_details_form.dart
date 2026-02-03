@@ -70,6 +70,17 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.watch<CompanyCreationProvider>();
+    if (provider.updatedBankDetails != null) {
+      final updated = provider.updatedBankDetails!;
+      bankNameController.text = updated.bankName??"";
+      branchNameController.text = updated.branch??"";
+      accNoController.text = updated.accountNumber??"";
+      ifscController.text = updated.ifscCode??"";
+      upiPaymentAddressController.text = updated.upiAddress??"";
+      paymentNameController.text = updated.upiName??"";
+      currencyController.text = updated.currency??"";
+    }
     return Container(
       margin: EdgeInsets.only(top: 4, left: 16, right: 16),
       padding: EdgeInsets.only(left: 9, right: 9, top: 12, bottom: 20),
@@ -265,8 +276,8 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
                             ifscCode: ifscController.text,
                             hasUpi: isUpiEnabled,
                             upiAddress: upiPaymentAddressController.text,
-                            upiName: "",
-                            currency: currencyController.text,
+                     upiName: paymentNameController.text,
+                           currency: currencyController.text,
                           ),
                         )
                         .then((value) {

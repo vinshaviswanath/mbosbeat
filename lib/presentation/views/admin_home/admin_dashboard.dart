@@ -55,11 +55,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
       await provider.fetchCountryList(context);
 
-      if (provider.countries.isEmpty) {
-        debugPrint("❌ No countries loaded in admindashboard");
-        return;
-      }
-
       //Select country
       final selectedCountry = provider.countries.firstWhere(
         (c) => c.id.toString() == company.country.toString(),

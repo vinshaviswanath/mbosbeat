@@ -61,6 +61,7 @@ class AuthDialogs {
                           borderRadius: BorderRadius.circular(16),
                           onTap: () {
                             Navigator.of(ctx).pop(true);
+                            exitApp();
                           },
                           textStyle: context.textStyle.s12.white.w500,
                         ),

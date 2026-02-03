@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'dart:ui';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_dropdown_alert/alert_controller.dart';
 import 'package:mpos_beat/core/service/file_picker_serveice.dart';
@@ -32,7 +30,9 @@ class _CompanyInfoFormState extends State<CompanyInfoForm> {
     compnyController = TextEditingController(
       text: widget.company?.companyName ?? "",
     );
-    officePhoneController = TextEditingController();
+    officePhoneController = TextEditingController(
+      text: widget.company?.officeNo ?? "",
+    );
     mobileNumberController = TextEditingController(
       text: widget.company?.mobile ?? "",
     );
@@ -51,8 +51,15 @@ class _CompanyInfoFormState extends State<CompanyInfoForm> {
 
   @override
   Widget build(BuildContext context) {
-    print("Url :: ${Urls.baseURL}${widget.company?.companyLogoUrl}");
-    Logger.logInfo("Local :: ${imgPath?.path}");
+    final provider = context.watch<CompanyCreationProvider>();
+
+    if (provider.updatedCompany != null) {
+      final updated = provider.updatedCompany!;
+
+      officePhoneController.text = updated.officeNumber;
+      mobileNumberController.text = updated.mobileNumber;
+      emailController.text = updated.emailId;
+    }
     return Container(
       margin: EdgeInsets.only(top: 4, left: 16, right: 16),
       padding: EdgeInsets.only(left: 9, right: 9, top: 12, bottom: 20),
@@ -136,14 +143,10 @@ class _CompanyInfoFormState extends State<CompanyInfoForm> {
             ),
             h4,
             CustomTextField(
-              hint: "Enter Company Code",
+              hint: "Enter Company Name",
               controller: compnyController,
-              // focusNode: compnyFocusNode,
-              // onFieldSubmitted: (_) {
-              //   FocusScope.of(context).requestFocus(phoneFocusNode);
-              // },
+              readOnly: true,
               backgroundColor: ColorResources.white,
-              // inputFormatters: [noEmojiFormatter],
               onChange: (_) {},
               borderRadius: 15,
               hintColor: ColorResources.silverGray,
@@ -158,12 +161,8 @@ class _CompanyInfoFormState extends State<CompanyInfoForm> {
             CustomTextField(
               hint: "Enter Office Phone",
               controller: officePhoneController,
-              // focusNode: compnyFocusNode,
-              // onFieldSubmitted: (_) {
-              //   FocusScope.of(context).requestFocus(phoneFocusNode);
-              // },
+
               backgroundColor: ColorResources.white,
-              // inputFormatters: [noEmojiFormatter],
               onChange: (_) {},
               inputType: TextInputType.phone,
               maxLength: 10,
@@ -180,12 +179,8 @@ class _CompanyInfoFormState extends State<CompanyInfoForm> {
             CustomTextField(
               hint: "Enter Mobile Number",
               controller: mobileNumberController,
-              // focusNode: compnyFocusNode,
-              // onFieldSubmitted: (_) {
-              //   FocusScope.of(context).requestFocus(phoneFocusNode);
-              // },
+
               backgroundColor: ColorResources.white,
-              // inputFormatters: [noEmojiFormatter],
               onChange: (_) {},
               inputType: TextInputType.phone,
               maxLength: 10,
@@ -202,12 +197,8 @@ class _CompanyInfoFormState extends State<CompanyInfoForm> {
             CustomTextField(
               hint: "Enter Email ID",
               controller: emailController,
-              // focusNode: compnyFocusNode,
-              // onFieldSubmitted: (_) {
-              //   FocusScope.of(context).requestFocus(phoneFocusNode);
-              // },
+
               backgroundColor: ColorResources.white,
-              // inputFormatters: [noEmojiFormatter],
               onChange: (_) {},
               inputType: TextInputType.emailAddress,
               borderRadius: 15,
@@ -220,7 +211,6 @@ class _CompanyInfoFormState extends State<CompanyInfoForm> {
               children: [
                 CustomButton(
                   onTap: () {
-                    final provider = context.read<CompanyCreationProvider>();
                     final company = widget.company;
                     provider
                         .updateCompanyProfile(
@@ -235,7 +225,9 @@ class _CompanyInfoFormState extends State<CompanyInfoForm> {
                           ),
                         )
                         .then((value) {
-                          widget.onUpdate.call();
+                          if (value != null) {
+                            widget.onUpdate.call();
+                          }
                         });
                   },
                   width: context.getSize.width * 1 / 2.2,

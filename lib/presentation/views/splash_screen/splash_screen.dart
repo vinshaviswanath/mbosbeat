@@ -74,8 +74,8 @@ class _SplashScreenState extends State<SplashScreen> {
     switch (response.status) {
       case 1:
         // Normal login → Dashboard
-      await  userProvider.getDesignationList(context);
-      await  comProvider.getAllCompanies(context);
+        await userProvider.getDesignationList(context);
+        await comProvider.getAllCompanies(context);
 
         context.pushNamed(
           authProvider.loginResponse?.loginData?.designation?.toLowerCase() ==
@@ -118,7 +118,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
           //Select country
           final selectedCountry = companyProvider.countries.firstWhere(
-            (c) => c.id.toString() == companyData!.country.toString(),
+            (c) => c.id.toString() == companyData?.country.toString(),
             orElse: () => CountryListData(
               id: 0,
               countryName: "Unknown",

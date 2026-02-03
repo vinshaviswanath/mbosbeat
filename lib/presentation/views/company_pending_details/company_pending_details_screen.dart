@@ -99,7 +99,7 @@ class _CompanyPendingDetailsScreenState
                       },
                     )
                   : expandedIndex == 1
-                  ? BankDetailsForm(
+                 ? BankDetailsForm(
                       company: widget.company,
                       onUpdate: () {
                         setState(() {
@@ -107,7 +107,8 @@ class _CompanyPendingDetailsScreenState
                         });
                       },
                     )
-                  : RegistrationDetailsForm(company: widget.company),
+               ? BankDetailsForm(company: widget.company, )
+                : RegistrationDetailsForm(company: widget.company),
             ),
           );
         },
@@ -167,63 +168,3 @@ class CompanyDetailsCard extends StatelessWidget {
     );
   }
 }
-
-// class CompanyDetailsCard extends StatelessWidget {
-//   final String label;
-//   final Color bgColor;
-//   final void Function()? onTap;
-//   const CompanyDetailsCard({
-//     super.key,
-//     required this.label,
-//     required this.bgColor,
-//     this.onTap,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return GestureDetector(
-//       onTap: onTap,
-//       child: Container(
-//         padding: .all(16),
-//         margin: .only(left: 16, right: 16),
-//         decoration: BoxDecoration(
-//           borderRadius: BorderRadius.circular(8),
-//           color: bgColor,
-//         ),
-//         child: Row(
-//           mainAxisAlignment: .spaceBetween,
-//           children: [
-//             Text(label, style: context.textStyle.bold.s14.mutedIndigo),
-//             Row(
-//               children: [
-//                 Container(
-//                   height: 24,
-//                   decoration: BoxDecoration(
-//                     shape: BoxShape.circle,
-//                     border: Border.all(
-//                       width: 2,
-//                       color: ColorResources.indigoBlue,
-//                     ),
-//                   ),
-//                   child: Center(
-//                     child: Padding(
-//                       padding: const EdgeInsets.all(8),
-//                       child: SvgPicture.asset(
-//                         height: 8,
-//                         AppAssets.arrowDown,
-//                         colorFilter: ColorFilter.mode(
-//                           ColorResources.indigoBlue,
-//                           BlendMode.srcIn,
-//                         ),
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

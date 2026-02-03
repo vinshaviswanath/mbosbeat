@@ -36,6 +36,11 @@ class UpdateCompanyProfile {
           // backend expects empty string
           fields['CmpLogo'] = '';
         }
+        Logger.logInfo("UpdateCompanyProfile Request Fields: $fields");
+
+        Logger.logInfo(
+          "UpdateCompanyProfile Request Files: ${files.map((k, v) => MapEntry(k, v.path))}",
+        );
 
         final response = await httpClient.postFormData(
           Urls.updateCompanyProfile,
@@ -44,7 +49,11 @@ class UpdateCompanyProfile {
         );
 
         if (response.isOk) {
-          Logger.logInfo('Updated successful');
+          final data = DefaultResponse.fromJson(response.data);
+          Logger.logInfo(
+            "response .................................${data.toJson()}",
+          );
+          Logger.logInfo(response.message);
           return DefaultResponse.fromJson(response.data);
         }
 
@@ -56,4 +65,3 @@ class UpdateCompanyProfile {
     );
   }
 }
-

@@ -114,6 +114,16 @@ int? get selectedPriceLevelId => _selectedPriceLevelId;
     notifyListeners();
   }
 
+
+bool _homeLoading = false;
+bool get homeLoading => _homeLoading;
+
+void setHomeLoading(bool value) {
+  _homeLoading = value;
+  notifyListeners();
+}
+
+
   Future<void> loadRouteState() async {
     final prefs = await SharedPreferences.getInstance();
     _routeStarted = prefs.getBool(_kRouteStarted) ?? false;

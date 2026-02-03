@@ -27,7 +27,9 @@ class _HomeScreenState extends State<HomeScreen> {
     _controller = sl<HomeInitController>();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _controller.initialize(context, widget.company);
+      if (mounted) {
+        _controller.initialize(context, widget.company);
+      }
     });
   }
 
@@ -38,8 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (_, __) async {
-        final userId =
-            await appDb.registrationDetailDao.getLoggedInUserId();
+        final userId = await appDb.registrationDetailDao.getLoggedInUserId();
 
         final value = await appDb.userSettingsDao.getCompanySwitchingValue(
           userId ?? 0,
@@ -55,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         appBar: const HomeAppBar(),
         body: Selector<UserProvider, bool>(
-          selector: (_, p) => p.isLoading,
+          selector: (_, p) => p.homeLoading,
           builder: (_, isLoading, __) {
             if (isLoading) {
               return const HomeScreenShimmer();
