@@ -4,6 +4,8 @@ class PartyMaster extends Table {
   // Primary Key
   IntColumn get ledgerId => integer()();
 
+  IntColumn get companyId => integer()();
+
   // Basic info
   TextColumn get ledgerName => text().nullable()();
   TextColumn get ledgerNameLocal => text().nullable()();

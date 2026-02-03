@@ -16,45 +16,45 @@ class HomeInitController {
   int? get userId => _userId;
 
   Future<void> initialize(BuildContext context, Company company) async {
-    final companyProvider = context.read<CompanyCreationProvider>();
-    final userManagementProvider = context.read<UserManagementProvider>();
-    final userProvider = context.read<UserProvider>();
+    // final companyProvider = context.read<CompanyCreationProvider>();
+    // final userManagementProvider = context.read<UserManagementProvider>();
+    // final userProvider = context.read<UserProvider>();
 
-    _userId = await _appDb.registrationDetailDao.getLoggedInUserId();
-    if (_userId == null) return;
+    // _userId = await _appDb.registrationDetailDao.getLoggedInUserId();
+    // if (_userId == null) return;
 
-    final companyId = company.id ?? 0;
+    // final companyId = company.id ?? 0;
 
-    await Future.wait([
-      companyProvider.fetchVoucherTypes(context, companyId),
-      companyProvider.getCompanySettings(context, companyId),
-      companyProvider.getAllGodowns(
-        context: context,
-        companyId: companyId.toString(),
-      ),
-      companyProvider.getAllRoutess(
-        context: context,
-        companyId: companyId.toString(),
-      ),
-      userManagementProvider.getUsersSettingsList(
-        context: context,
-        userId: _userId.toString(),
-      ),
-    ]);
+    // await Future.wait([
+    //   companyProvider.fetchVoucherTypes(context, companyId),
+    //   companyProvider.getCompanySettings(context, companyId),
+    //   companyProvider.getAllGodowns(
+    //     context: context,
+    //     companyId: companyId.toString(),
+    //   ),
+    //   companyProvider.getAllRoutess(
+    //     context: context,
+    //     companyId: companyId.toString(),
+    //   ),
+    //   userManagementProvider.getUsersSettingsList(
+    //     context: context,
+    //     userId: _userId.toString(),
+    //   ),
+    // ]);
 
-    userProvider.setCompanyId(companyId);
-    await userProvider.partyMasterSync();
-    await userProvider.getItemMaster(
-      context,
-      params: ItemMasterQueryParams(
-        companyId: companyId,
-        pageNumber: 1,
-        lastSyncDateTime: DateTime.now(),
-      ),
-    );
-    await userProvider.getPriceLevel(context, companyId: companyId);
-    await userProvider.getItemPriceDetails(context, companyId: companyId);
-    await userProvider.loadRouteState();
-    await userProvider.load();
+    // userProvider.setCompanyId(companyId);
+    // await userProvider.partyMasterSync();
+    // await userProvider.getItemMaster(
+    //   context,
+    //   params: ItemMasterQueryParams(
+    //     companyId: companyId,
+    //     pageNumber: 1,
+    //     lastSyncDateTime: DateTime.now(),
+    //   ),
+    // );
+    // await userProvider.getPriceLevel(context, companyId: companyId);
+    // await userProvider.getItemPriceDetails(context, companyId: companyId);
+    // await userProvider.loadRouteState();
+    // await userProvider.load();
   }
 }

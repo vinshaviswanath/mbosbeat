@@ -3,7 +3,6 @@ import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/service/location_services.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
-import 'package:mpos_beat/data/models/party_MasterSync_model.dart';
 import 'package:mpos_beat/domain/request/checkin_params.dart';
 import 'package:mpos_beat/domain/request/checkout_params.dart';
 import 'package:mpos_beat/presentation/logic/user_provider.dart';
@@ -18,6 +17,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class TransactionDetailpage extends StatefulWidget {
   final TransactionArgs data;
   final PartyMasterData party;
+
   const TransactionDetailpage({
     super.key,
     required this.data,
@@ -39,14 +39,12 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
   void initState() {
     super.initState();
 
-    _tabController = TabController(length: 3, vsync: this);
-    _tabController.addListener(() {
-      setState(() {});
-    });
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _restoreCheckInState();
-      final provider = context.read<UserProvider>();
-      provider.getSkipReasons(context);
+    _tabController = TabController(length: 3, vsync: this)
+      ..addListener(() => setState(() {}));
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await _restoreCheckInState();
+      context.read<UserProvider>().getSkipReasons(context);
     });
   }
 
@@ -80,43 +78,46 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
         ),
       );
   }
- Future<int> _getNextVisitSequence(int ledgerId) async {
-  final prefs = sl<SharedPreferences>();
-  final key = 'visit_sequence_$ledgerId';
-  final lastSeq = prefs.getInt(key) ?? 0;
-  return lastSeq + 1;
-}
+
+  Future<int> _getNextVisitSequence(int ledgerId) async {
+    final prefs = sl<SharedPreferences>();
+    final key = 'visit_sequence_$ledgerId';
+    return (prefs.getInt(key) ?? 0) + 1;
+  }
+
+  /* ───────────────── CHECK-IN ───────────────── */
 
   Future<void> _handleCheckIn(BuildContext context) async {
     final prefs = sl<SharedPreferences>();
     final activePartyId = prefs.getInt('checkin_party_id');
+
     if (activePartyId != null && activePartyId != widget.party.ledgerId) {
       _showSnack(context, "You are currently checked in with another party");
       return;
     }
-final visitSequence = await _getNextVisitSequence(widget.party.ledgerId);
+
+    final visitSequence =
+        await _getNextVisitSequence(widget.party.ledgerId);
 
     final locationService = sl<LocationService>();
     final provider = context.read<UserProvider>();
-    final tripId = provider.currentTripId;
-    final tripID = prefs.getInt('current_trip_id');
-    print("tripID....$tripID");
+
     try {
       final position = await locationService.getCurrentLocation();
       final address = await locationService.getNormalAddress(
         position.latitude,
         position.longitude,
       );
+
       final now = DateTime.now();
       final response = await provider.checkIn(
         params: CheckinParams(
-          tripId: (tripID != null && tripID != 0) ? tripID : tripId ?? 0,
-
+          tripId: provider.currentTripId ?? 0,
           vistType: "Regular",
           visitSequence: visitSequence,
           partyId: widget.party.ledgerId,
           partyName: widget.party.ledgerName ?? "",
-          date: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+          date: DateFormat('yyyy-MM-dd').format(now),
           time: DateFormat("yyyy-MM-dd'T'HH:mm:ss").format(now),
           latitude: position.latitude,
           longitude: position.longitude,
@@ -124,29 +125,29 @@ final visitSequence = await _getNextVisitSequence(widget.party.ledgerId);
           address: address,
         ),
       );
-      if (response == null) return;
-      //    if (response != null) {
-      if (response.status == 1 && response.id != null) {
+
+      if (response?.status == 1 && response?.id != null) {
         setState(() {
-          _checkInId = response.id;
+          _checkInId = response!.id;
           checkInTime = _getCurrentTime();
           checkOutTime = null;
         });
-        final prefs = sl<SharedPreferences>();
-        await prefs.setInt('checkin_party_id', widget.party.ledgerId);
-        await prefs.setInt('checkin_id', response.id!);
-        await prefs.setString('checkin_time', checkInTime!);
-        _showSnack(context, response.message ?? "");
-        return;
-      }
 
-      _showSnack(context, response.message ?? "");
-      return;
+        await prefs.setInt('checkin_party_id', widget.party.ledgerId);
+        await prefs.setInt('checkin_id', response?.id ?? 0);
+        await prefs.setString('checkin_time', checkInTime!);
+
+        _showSnack(context, response?.message ?? "Checked in");
+      } else {
+        _showSnack(context, response?.message ?? "Check-in failed");
+      }
     } catch (e) {
       debugPrint("Check-in error: $e");
-      _showSnack(context, "Unable to check in. Please try again.");
+      _showSnack(context, "Unable to check in");
     }
   }
+
+  /* ───────────────── RESTORE CHECK-IN ───────────────── */
 
   Future<void> _restoreCheckInState() async {
     final prefs = sl<SharedPreferences>();
@@ -161,34 +162,34 @@ final visitSequence = await _getNextVisitSequence(widget.party.ledgerId);
       setState(() {
         _checkInId = savedCheckInId;
         checkInTime = savedCheckInTime;
-          _checkInId = response.id;
-          checkInTime = _getCurrentTime();
         checkOutTime = null;
       });
-    } else {
-      debugPrint("No active check-in to restore");
     }
   }
+
+  /* ───────────────── CHECK-OUT ───────────────── */
 
   Future<void> _handleCheckout(
     BuildContext context, {
     required String remarks,
   }) async {
+    if (_checkInId == null) return;
+
     final locationService = sl<LocationService>();
     final provider = context.read<UserProvider>();
-    final tripId = provider.currentTripId;
+
     try {
       final position = await locationService.getCurrentLocation();
       final address = await locationService.getNormalAddress(
         position.latitude,
         position.longitude,
       );
-      final now = DateTime.now();
+
       final response = await provider.checkOut(
         context,
         params: CheckoutParams(
-          tripId: tripId ?? 0,
-          time: DateFormat("yyyy-MM-dd'T'HH:mm:ss").format(now),
+          tripId: provider.currentTripId ?? 0,
+          time: DateFormat("yyyy-MM-dd'T'HH:mm:ss").format(DateTime.now()),
           latitude: position.latitude,
           longitude: position.longitude,
           accuracy: position.accuracy,
@@ -197,94 +198,67 @@ final visitSequence = await _getNextVisitSequence(widget.party.ledgerId);
           remarks: remarks,
         ),
       );
-      //  if (response != null) {
-      if (response!.status == 1) {
+
+      if (response?.status == 1) {
         final prefs = sl<SharedPreferences>();
-  final key = 'visit_sequence_${widget.party.ledgerId}';
+        final key = 'visit_sequence_${widget.party.ledgerId}';
+        prefs.setInt(key, (prefs.getInt(key) ?? 0) + 1);
 
-  final lastSeq = prefs.getInt(key) ?? 0;
-  await prefs.setInt(key, lastSeq + 1);
-        setState(() {
-          checkOutTime = _getCurrentTime();
-          checkInTime = null;
-             _checkInId = null;
-        });
-        await prefs.remove('checkin_party_id');
-        await prefs.remove('checkin_id');
-        await prefs.remove('checkin_time');
-
-        _showSnack(context, response.message ?? "");
-        // }
-          _showSnack(context, response.message ?? "Check-out successful");
-        }
-      } else if (response!.status == 0 &&
-          response.message ==
-              "Customer Already Check Out/ Invalid Check In ID") {
         setState(() {
           checkOutTime = _getCurrentTime();
           checkInTime = null;
           _checkInId = null;
         });
-        _showSnack(context, response.message!);
+
+        await prefs.remove('checkin_party_id');
+        await prefs.remove('checkin_id');
+        await prefs.remove('checkin_time');
+
+        _showSnack(context, response?.message ?? "Check-out successful");
       } else {
-        _showSnack(context, response.message ?? "Check-out failed");
+        _showSnack(context, response?.message ?? "Check-out failed");
       }
     } catch (e) {
       debugPrint("Check-out error: $e");
     }
   }
 
+  /* ───────────────── CHECKOUT REMARKS ───────────────── */
+
   Future<void> _showCheckoutRemarksDialog(BuildContext context) async {
-    final TextEditingController remarksController = TextEditingController();
+    final controller = TextEditingController();
 
     await showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(
-            "Checkout Remarks",
-            style: context.textStyle.s14.roboto.bold,
+      builder: (_) => AlertDialog(
+        title: const Text("Checkout Remarks"),
+        content: TextField(
+          controller: controller,
+          maxLines: 3,
+          decoration: const InputDecoration(hintText: "Enter remarks"),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("Cancel"),
           ),
-          content: TextField(
-            controller: remarksController,
-            maxLines: 3,
-            decoration: InputDecoration(
-              hintText: "Enter remarks",
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
+          ElevatedButton(
+            onPressed: () async {
+              if (controller.text.trim().isEmpty) {
+                _showSnack(context, "Please enter remarks");
+                return;
+              }
+              Navigator.pop(context);
+              await _handleCheckout(
+                context,
+                remarks: controller.text.trim(),
+              );
+            },
+            child: const Text("Submit"),
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text("Cancel"),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                final remarks = remarksController.text.trim();
-
-                if (remarks.isEmpty) {
-                  _showSnack(context, "Please enter remarks");
-                  return;
-                }
-
-                Navigator.pop(context);
-
-                await _handleCheckout(context, remarks: remarks).then((
-                  _,
-                ) async {
-                  // final prefs = sl<SharedPreferences>();
-                  // await prefs.remove('current_trip_id');
-                });
-                await _handleCheckout(context, remarks: remarks);
-              },
-              child: const Text("Submit"),
-            ),
-          ],
-        );
-      },
+        ],
+      ),
     );
   }
 
@@ -292,7 +266,6 @@ final visitSequence = await _getNextVisitSequence(widget.party.ledgerId);
   Widget build(BuildContext context) {
     final applocalization = context.l10n;
     final appDb = sl<AppDb>();
-    return Scaffold(
     Logger.logInfo("Party List :: ${widget.party.priceList}");
     return Scaffold(
       appBar: AppBar(

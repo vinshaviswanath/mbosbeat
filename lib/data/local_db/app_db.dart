@@ -56,9 +56,11 @@ import 'package:mpos_beat/data/local_db/daos/route_dao/route_dao.dart';
 import 'package:mpos_beat/data/local_db/daos/route_voucher_type_dao/route_voucher_type_dao.dart';
 import 'package:mpos_beat/data/local_db/daos/user_setting_dao/user_setting_dao.dart';
 import 'package:mpos_beat/data/local_db/daos/voucher_type_dao/voucher_type_dao.dart';
+import 'package:mpos_beat/data/local_db/tables/category_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/company_settings_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/godown_vehicles_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/godown_voucher_types_tables.dart';
+import 'package:mpos_beat/data/local_db/tables/group_name_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/item_master_sync_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/item_price_details_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/partymaster_sync_tables.dart';
@@ -96,6 +98,8 @@ part 'app_db.g.dart';
     ItemMaster,
     PriceLevelsTable,
     ItemPriceDetailsTables,
+    GroupNameTable,
+    CategoryTable,
   ],
   daos: [
     CompanyDao,
@@ -118,7 +122,7 @@ class AppDb extends _$AppDb {
   AppDb() : super(_openConnection());
 
   @override
-  int get schemaVersion => 18;
+  int get schemaVersion => 21;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -170,6 +174,7 @@ class AppDb extends _$AppDb {
         await m.alterTable(
           TableMigration(
             companies,
+
             newColumns: [
               companies.companyLogoUrl,
               companies.companyProfileUpdated,
@@ -193,16 +198,22 @@ class AppDb extends _$AppDb {
         await m.createTable(itemPriceDetailsTables);
       }
       if (from < 18) {
-  await m.alterTable(
-    TableMigration(
-      partyMaster,
-      newColumns: [
-        partyMaster.priceList,
-      ],
-    ),
-  );
-}
+        await m.alterTable(
+          TableMigration(partyMaster, newColumns: [partyMaster.priceList]),
+        );
+      }
+      if (from < 19) {
+        await m.addColumn(partyMaster, partyMaster.companyId);
+        await m.addColumn(itemMaster, itemMaster.companyId);
+      }
 
+      if (from < 20) {
+        await m.addColumn(priceLevelsTable, priceLevelsTable.companyId);
+      }
+      if (from < 21) {
+        await m.createTable(groupNameTable);
+        await m.createTable(categoryTable);
+      }
     },
   );
 }

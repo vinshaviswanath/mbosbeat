@@ -1,160 +1,203 @@
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/local_db/app_db.dart';
+import 'package:mpos_beat/data/models/product.dart';
+import 'package:mpos_beat/presentation/logic/customer_transaction_provider.dart';
+import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/transaction_order_booking_screen.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/widgets/order_details_widget.dart';
 
 class StockCard extends StatefulWidget {
-  final int itemId; // ✅ ADD
-  final int priceListId; // ✅ ADD
+  final int itemId;
+  final int priceListId;
   final String name;
   final int stock;
   final double mrp;
   final double tax;
   final double inclRate;
   final int companyId;
+  final TransactionOrderBookingRouteArgs data;
+  final Product item;
 
   const StockCard({
     super.key,
+    required this.itemId,
+    required this.priceListId,
     required this.name,
     required this.stock,
     required this.mrp,
     required this.tax,
     required this.inclRate,
     required this.companyId,
-    required this.itemId,
-    required this.priceListId,
+    required this.data,
+    required this.item,
   });
 
   @override
   State<StockCard> createState() => _StockCardState();
 }
 
-class _StockCardState extends State<StockCard> {
-  bool _showDetails = false;
+class _StockCardState extends State<StockCard>
+    with AutomaticKeepAliveClientMixin {
+  bool _expanded = false;
+
+  @override
+  bool get wantKeepAlive => _expanded;
 
   @override
   Widget build(BuildContext context) {
-    final appLocalizations = context.l10n;
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 12),
-      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+    super.build(context);
 
-      decoration: BoxDecoration(
-        color: ColorResources.lightGray,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.name,
-                      style: context.textStyle.dustyBlue.s12.w500.roboto,
-                    ),
-                    h4,
-                    Text(
-                      appLocalizations.stock_card_group,
-                      style: context.textStyle.dustyBlue.s09.w400.roboto,
-                    ),
-                    Text(
-                      appLocalizations.stock_card_category_name,
-                      style: context.textStyle.dustyBlue.s09.w400.roboto,
-                    ),
-                  ],
-                ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "${appLocalizations.stock_card_sealable_stock} ${widget.stock} ${appLocalizations.stock_card_qls}",
-                    style: context.textStyle.indigoBlue.s12.bold.roboto,
-                  ),
-                  Row(
+    /// 🔥 Rebuild ONLY when selection state changes
+    final isSelected = context.select<CustomerTransactionProvider, bool>(
+      (p) => p.isSelected(widget.itemId),
+    );
+
+    return RepaintBoundary(
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+        decoration: BoxDecoration(
+          color: ColorResources.lightGray,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: isSelected
+                ? ColorResources.indigoBlue
+                : ColorResources.transparent,
+            width: 1.5,
+          ),
+        ),
+        child: Column(
+          children: [
+            /// ================= HEADER =================
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                /// LEFT
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Column(
-                      //   crossAxisAlignment: CrossAxisAlignment.start,
-                      //   children: [
-                      //     Text(
-                      //       appLocalizations.stock_card_mrp,
-                      //       style: context.textStyle.rosePink.s09.w400.roboto,
-                      //     ),
-                      //     Text(
-                      //       widget.mrp.toStringAsFixed(0),
-                      //       style: context.textStyle.rosePink.s09.w400.roboto,
-                      //     ),
-                      //   ],
-                      // ),
-                      w18,
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Text(
+                        widget.name,
+                        style: context.textStyle.dustyBlue.s12.w500.roboto,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      h4,
+                      Row(
+                        mainAxisAlignment: .start,
                         children: [
                           Text(
-                            appLocalizations.stock_card_tax_percentage,
-                            style: context.textStyle.rosePink.s09.w400.roboto,
+                            "Group :",
+                            style: context.textStyle.dustyBlue.s09.w400.roboto,
                           ),
+                          w4,
                           Text(
-                            "${widget.tax.toStringAsFixed(0)}%",
-                            style: context.textStyle.rosePink.s09.w400.roboto,
+                            widget.item.groupName ?? "",
+                            style: context.textStyle.dustyBlue.s09.w400.roboto,
                           ),
                         ],
                       ),
-                      w16,
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Row(
+                        mainAxisAlignment: .start,
                         children: [
                           Text(
-                            appLocalizations.stock_card_inc_rate,
-                            style: context.textStyle.rosePink.s09.w400.roboto,
+                            "Category :",
+                            style: context.textStyle.dustyBlue.s09.w400.roboto,
                           ),
+                          w4,
                           Text(
-                            widget.inclRate.toStringAsFixed(2),
-                            style: context.textStyle.rosePink.s09.w400.roboto,
+                            widget.item.categoryName ?? "",
+                            style: context.textStyle.dustyBlue.s09.w400.roboto,
                           ),
                         ],
-                      ),
-                      w13,
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _showDetails = !_showDetails;
-                          });
-                        },
-                        child: CircleAvatar(
-                          radius: context.getSize.height * 0.010,
-                          backgroundColor: ColorResources.indigoBlue,
-                          child: Icon(
-                            _showDetails
-                                ? Icons.keyboard_arrow_up_rounded
-                                : Icons.keyboard_arrow_down_rounded,
-                            color: ColorResources.white,
-                            size: context.getSize.height * 0.016,
-                          ),
-                        ),
                       ),
                     ],
                   ),
-                ],
-              ),
-            ],
-          ),
-          if (_showDetails)
-            OrderDetailsWidget(
-              companyId: widget.companyId,
-              itemId: widget.itemId,
-              priceListId: widget.priceListId,
-              inclRate: widget.inclRate,
-              onDelete: () {
-                setState(() {
-                  _showDetails = false;
-                });
-              },
+                ),
+
+                /// RIGHT
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      "Stock ${widget.stock}",
+                      style: context.textStyle.indigoBlue.s12.bold.roboto,
+                    ),
+                    h4,
+                    Row(
+                      children: [
+                        _info("Tax", "${widget.tax.toStringAsFixed(0)}%"),
+                        w12,
+                        _info(
+                          "Inc Rate",
+                          widget.inclRate.toStringAsFixed(
+                            widget.data.party.companyId == 1 ? 2 : 3,
+                          ),
+                        ),
+                        w12,
+                        GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: _toggleExpand,
+                          child: CircleAvatar(
+                            radius: 12,
+                            backgroundColor: ColorResources.indigoBlue,
+                            child: Icon(
+                              _expanded
+                                  ? Icons.keyboard_arrow_up_rounded
+                                  : Icons.keyboard_arrow_down_rounded,
+                              color: ColorResources.white,
+                              size: 18,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
             ),
-        ],
+
+            /// ================= DETAILS (LAZY) =================
+            AnimatedSize(
+              duration: const Duration(milliseconds: 220),
+              curve: Curves.easeOutCubic,
+              alignment: Alignment.topCenter,
+              child: _expanded
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 12),
+                      child: OrderDetailsWidget(
+                        item: widget.item,
+                        data: widget.data,
+                        companyId: widget.companyId,
+                        itemId: widget.itemId,
+                        priceListId: widget.priceListId,
+                        onDelete: () {
+                          context.read<CustomerTransactionProvider>().resetQty(
+                            widget.itemId,
+                          );
+                          setState(() => _expanded = false);
+                        },
+                      ),
+                    )
+                  : const SizedBox.shrink(),
+            ),
+          ],
+        ),
       ),
+    );
+  }
+
+  void _toggleExpand() {
+    setState(() => _expanded = !_expanded);
+  }
+
+  Widget _info(String title, String value) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(title, style: context.textStyle.rosePink.s09.w400.roboto),
+        Text(value, style: context.textStyle.rosePink.s09.w400.roboto),
+      ],
     );
   }
 }
