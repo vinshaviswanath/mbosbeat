@@ -1,10 +1,8 @@
 import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/data_sources/user/item_master_sync/item_master_sync.dart';
-import 'package:mpos_beat/data/data_sources/user/party_MasterSync/party_MasterSync.dart';
 import 'package:mpos_beat/data/models/category_model.dart';
 import 'package:mpos_beat/data/models/group_model.dart';
-import 'package:mpos_beat/data/models/product.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_dropdown.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 import 'package:mpos_beat/presentation/logic/customer_transaction_provider.dart';
@@ -29,7 +27,19 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
   @override
   void initState() {
     super.initState();
+
+    final transactionProvider = context.read<CustomerTransactionProvider>();
+    
     _searchController = TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+     // transactionProvider.resetAddItemScreenState();
+      //  transactionProvider.resetPagination();
+      transactionProvider.loadNextPage(
+        companyId: widget.data.data.company.id!,
+        priceListId: widget.data.party.priceList ?? 0,
+        ledgerId: widget.data.party.ledgerId,
+      );
+    });
   }
 
   @override
@@ -82,7 +92,7 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
                 ? const Center(child: Text("Please select a Price Level"))
                 : Column(
                     children: [
-                      /// ===================== SEARCH FIELD (OUTSIDE STREAM) =====================
+                      /// ===================== SEARCH FIELD (OUTSIDE ) =====================
                       Padding(
                         padding: const EdgeInsets.all(16),
                         child: CustomTextField(
@@ -91,7 +101,17 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
                             _debounce?.cancel();
                             _debounce = Timer(
                               const Duration(milliseconds: 300),
-                              () => transactionProvider.updateSearch(value),
+                              () {
+                                transactionProvider.updateSearch(value);
+
+                                transactionProvider.resetPagination();
+
+                                transactionProvider.loadNextPage(
+                                  companyId: widget.data.data.company.id!,
+                                  priceListId: widget.data.party.priceList ?? 0,
+                                  ledgerId: widget.data.party.ledgerId,
+                                );
+                              },
                             );
                           },
                           hint: appLocalization.manage_user_screen_search_user,
@@ -112,158 +132,239 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
 
                       /// ===================== PRODUCT LIST =====================
                       Expanded(
-                        child: StreamBuilder<List<Product>>(
-                          stream: sl<PartyMasterSync>().fetchProduct(
-                            widget.data.data.company.id!,
-                            widget.data.party.ledgerId,
-                            widget.data.party.priceList ?? 0,
-                            transactionProvider.selectedGroup,
-                            transactionProvider.selectedCategory,
-                            transactionProvider.searchValue,
-                          ),
-                          builder: (context, snapshot) {
-                            if (!snapshot.hasData) {
+                        child: Consumer<CustomerTransactionProvider>(
+                          builder: (_, provider, __) {
+                            if (provider.pagedItems.isEmpty &&
+                                provider.isLoadingPage) {
                               return const Center(
                                 child: CircularProgressIndicator(),
                               );
                             }
 
-                            final items = snapshot.data!;
-                            if (items.isEmpty) {
+                            if (provider.pagedItems.isEmpty) {
                               return const Center(
                                 child: Text("No items found"),
                               );
                             }
 
-                            return CustomScrollView(
-                              keyboardDismissBehavior:
-                                  ScrollViewKeyboardDismissBehavior.onDrag,
-                              slivers: [
-                                /// ===================== FILTERS =====================
-                                SliverToBoxAdapter(
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 16,
-                                      vertical: 8,
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        /// -------- GROUP DROPDOWN --------
-                                        Expanded(
-                                          child: StreamBuilder<List<GroupModel>>(
-                                            stream: sl<ItemMasterSync>()
-                                                .groupNameList(
-                                                  widget.data.data.company.id ??
-                                                      0,
-                                                ),
-                                            builder: (_, snapshot) {
-                                              final groups =
-                                                  snapshot.data
-                                                      ?.map((e) => e.groupName)
-                                                      .toList() ??
-                                                  ['All'];
+                            return NotificationListener<ScrollNotification>(
+                              onNotification: (scrollInfo) {
+                                if (!provider.isLoadingPage &&
+                                    provider.hasMore &&
+                                    scrollInfo.metrics.pixels ==
+                                        scrollInfo.metrics.maxScrollExtent) {
+                                  provider.loadNextPage(
+                                    companyId: widget.data.data.company.id!,
+                                    priceListId:
+                                        widget.data.party.priceList ?? 0,
+                                    ledgerId: widget.data.party.ledgerId,
+                                  );
+                                }
+                                return false;
+                              },
+                              child: CustomScrollView(
+                                keyboardDismissBehavior:
+                                    ScrollViewKeyboardDismissBehavior.onDrag,
+                                slivers: [
+                                  /// ================= FILTERS =================
+                                  SliverToBoxAdapter(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 16,
+                                        vertical: 8,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          /// GROUP
+                                          Expanded(
+                                            child: StreamBuilder<List<GroupModel>>(
+                                              stream: sl<ItemMasterSync>()
+                                                  .groupNameList(
+                                                    widget
+                                                            .data
+                                                            .data
+                                                            .company
+                                                            .id ??
+                                                        0,
+                                                  ),
+                                              builder: (_, snapshot) {
+                                                final groups =
+                                                    snapshot.data
+                                                        ?.map(
+                                                          (e) => e.groupName,
+                                                        )
+                                                        .toList() ??
+                                                    ['All'];
 
-                                              return CustomDropdown<String>(
-                                                items: groups,
-                                                hintText: appLocalization
-                                                    .order_booking_add_item_select_group,
-                                                onChanged: (v) =>
-                                                    transactionProvider
-                                                        .selectGroup(
-                                                          v ?? 'All',
-                                                        ),
-                                              );
-                                            },
+                                                return CustomDropdown<String>(
+                                                  items: groups,
+                                                  hintText: appLocalization
+                                                      .order_booking_add_item_select_group,
+                                                  onChanged: (v) {
+                                                    provider.selectGroup(
+                                                      v ?? 'All',
+                                                    );
+
+                                                    provider.resetPagination();
+                                                    provider.loadNextPage(
+                                                      companyId: widget
+                                                          .data
+                                                          .data
+                                                          .company
+                                                          .id!,
+                                                      priceListId:
+                                                          widget
+                                                              .data
+                                                              .party
+                                                              .priceList ??
+                                                          0,
+                                                      ledgerId: widget
+                                                          .data
+                                                          .party
+                                                          .ledgerId,
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                            ),
                                           ),
-                                        ),
-                                        w8,
 
-                                        /// -------- CATEGORY DROPDOWN --------
-                                        Expanded(
-                                          child: StreamBuilder<List<CategoryModel>>(
-                                            stream: sl<ItemMasterSync>()
-                                                .categoryList(
-                                                  widget.data.data.company.id ??
-                                                      0,
-                                                ),
-                                            builder: (_, snapshot) {
-                                              final categories =
-                                                  snapshot.data
-                                                      ?.map(
-                                                        (e) => e.catgoryName,
-                                                      )
-                                                      .toList() ??
-                                                  ['All'];
+                                          w8,
 
-                                              return CustomDropdown<String>(
-                                                items: categories,
-                                                hintText: appLocalization
-                                                    .order_booking_add_item_select_category,
-                                                onChanged: (v) =>
-                                                    transactionProvider
-                                                        .selectCategory(
+                                          /// CATEGORY
+                                          Expanded(
+                                            child:
+                                                StreamBuilder<
+                                                  List<CategoryModel>
+                                                >(
+                                                  stream: sl<ItemMasterSync>()
+                                                      .categoryList(
+                                                        widget
+                                                                .data
+                                                                .data
+                                                                .company
+                                                                .id ??
+                                                            0,
+                                                      ),
+                                                  builder: (_, snapshot) {
+                                                    final categories =
+                                                        snapshot.data
+                                                            ?.map(
+                                                              (e) =>
+                                                                  e.catgoryName,
+                                                            )
+                                                            .toList() ??
+                                                        ['All'];
+
+                                                    return CustomDropdown<
+                                                      String
+                                                    >(
+                                                      items: categories,
+                                                      hintText: appLocalization
+                                                          .order_booking_add_item_select_category,
+                                                      onChanged: (v) {
+                                                        provider.selectCategory(
                                                           v ?? 'All',
-                                                        ),
-                                              );
-                                            },
+                                                        );
+
+                                                        provider
+                                                            .resetPagination();
+                                                        provider.loadNextPage(
+                                                          companyId: widget
+                                                              .data
+                                                              .data
+                                                              .company
+                                                              .id!,
+                                                          priceListId:
+                                                              widget
+                                                                  .data
+                                                                  .party
+                                                                  .priceList ??
+                                                              0,
+                                                          ledgerId: widget
+                                                              .data
+                                                              .party
+                                                              .ledgerId,
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
 
-                                /// ===================== ITEM LIST =====================
-                                SliverList(
-                                  delegate: SliverChildBuilderDelegate((
-                                    context,
-                                    index,
-                                  ) {
-                                    final item = items[index];
+                                  /// ================= ITEMS =================
+                                  SliverList(
+                                    delegate: SliverChildBuilderDelegate(
+                                      (context, index) {
+                                        if (index ==
+                                            provider.pagedItems.length) {
+                                          return const Padding(
+                                            padding: EdgeInsets.all(16),
+                                            child: Center(
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            ),
+                                          );
+                                        }
 
-                                    final selectedUnit = transactionProvider
-                                        .getSelectedUnit(
-                                          item.stockItemId,
-                                          item,
+                                        final item = provider.pagedItems[index];
+
+                                        final selectedUnit = provider
+                                            .getSelectedUnit(
+                                              item.stockItemId,
+                                              item,
+                                            );
+
+                                        final baseRate = item.rate;
+
+                                        final rate =
+                                            selectedUnit == item.unitName
+                                            ? baseRate
+                                            : baseRate *
+                                                  ((item.unitConversion) /
+                                                      (item.unitDenominator));
+
+                                        final tax = item.taxPercent;
+
+                                        final inclRate = rateInclusive
+                                            ? rate
+                                            : rate + (rate * tax / 100);
+
+                                        return Padding(
+                                          padding: const EdgeInsets.only(
+                                            bottom: 8,
+                                          ),
+                                          child: StockCard(
+                                            item: item,
+                                            data: widget.data,
+                                            name: item.itemName,
+                                            stock: 0,
+                                            mrp: rate,
+                                            tax: tax,
+                                            inclRate: inclRate,
+                                            companyId:
+                                                widget.data.data.company.id ??
+                                                0,
+                                            itemId: item.stockItemId,
+                                            priceListId: selectedPriceListId,
+                                          ),
                                         );
+                                      },
+                                      childCount:
+                                          provider.pagedItems.length +
+                                          (provider.hasMore ? 1 : 0),
+                                    ),
+                                  ),
 
-                                    final baseRate = item.rate;
-
-                                    final rate = selectedUnit == item.unitName
-                                        ? baseRate
-                                        : baseRate *
-                                              ((item.unitConversion) /
-                                                  (item.unitDenominator));
-
-                                    final tax = item.taxPercent;
-
-                                    final inclRate = rateInclusive
-                                        ? rate
-                                        : rate + (rate * tax / 100);
-
-                                    return Padding(
-                                      padding: const EdgeInsets.only(bottom: 8),
-                                      child: StockCard(
-                                        item: item,
-                                        data: widget.data,
-                                        name: item.itemName,
-                                        stock: 0,
-                                        mrp: rate,
-                                        tax: tax,
-                                        inclRate: inclRate,
-                                        companyId:
-                                            widget.data.data.company.id ?? 0,
-                                        itemId: item.stockItemId,
-                                        priceListId: selectedPriceListId,
-                                      ),
-                                    );
-                                  }, childCount: items.length),
-                                ),
-
-                                const SliverToBoxAdapter(
-                                  child: SizedBox(height: 120),
-                                ),
-                              ],
+                                  const SliverToBoxAdapter(
+                                    child: SizedBox(height: 120),
+                                  ),
+                                ],
+                              ),
                             );
                           },
                         ),

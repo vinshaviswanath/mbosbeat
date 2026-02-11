@@ -291,14 +291,15 @@ class AppRouter {
         path: "/telephonicOrderScreen",
         name: AppRouterConst.telephonicOrderScreen,
         builder: (context, state) {
-          return const TelephonicOrderScreen();
+          return  TelephonicOrderScreen();
         },
       ),
       GoRoute(
         path: "/salesScreen",
         name: AppRouterConst.salesScreen,
-        builder: (context, state) {
-          return const SalesScreen();
+         builder: (context, state) {
+          final data = state.extra as TransactionOrderBookingRouteArgs;
+          return SalesScreen(data: data);
         },
       ),
       GoRoute(

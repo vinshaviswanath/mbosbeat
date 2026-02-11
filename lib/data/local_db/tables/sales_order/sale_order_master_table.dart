@@ -59,6 +59,7 @@ class SaleOrderMasterTable extends Table {
   TextColumn get deliveryDate => text().nullable()();
 
   IntColumn get printCount => integer().nullable()();
+IntColumn get sync => integer().withDefault(const Constant(0))();
 
   TextColumn get pinCode => text().nullable()();
 

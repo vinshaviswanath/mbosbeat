@@ -84,10 +84,10 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
     final key = 'visit_sequence_$ledgerId';
     final lastSeq = prefs.getInt(key) ?? 0;
     return lastSeq + 1;
-    return (prefs.getInt(key) ?? 0) + 1;
+    //  return (prefs.getInt(key) ?? 0) + 1;
   }
 
-  /* ───────────────── CHECK-IN ───────────────── */
+  /* ────────────── CHECK-IN ────────────────*/
 
   Future<void> _handleCheckIn(BuildContext context) async {
     final prefs = sl<SharedPreferences>();
@@ -99,8 +99,6 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
     }
 
     final visitSequence = await _getNextVisitSequence(widget.party.ledgerId);
-    final visitSequence =
-        await _getNextVisitSequence(widget.party.ledgerId);
 
     final locationService = sl<LocationService>();
     final provider = context.read<UserProvider>();
@@ -142,7 +140,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
 
         _showSnack(context, response?.message ?? "Checked in");
       } else {
-        _showSnack(context, response?.message ?? "Check-in failed");
+        _showSnack(context, response?.message ?? "");
       }
     } catch (e) {
       debugPrint("Check-in error: $e");
@@ -256,10 +254,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
                 return;
               }
               Navigator.pop(context);
-              await _handleCheckout(
-                context,
-                remarks: controller.text.trim(),
-              );
+              await _handleCheckout(context, remarks: controller.text.trim());
             },
             child: const Text("Submit"),
           ),
@@ -598,7 +593,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
               child: TabBarView(
                 controller: _tabController,
                 children: [
-                  Tab1Transactions(data: widget.data,party: widget.party,),
+                  Tab1Transactions(data: widget.data, party: widget.party),
                   Tab2Outstanding(),
                   Tab3VisitHistory(),
                 ],

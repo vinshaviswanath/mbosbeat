@@ -107,7 +107,7 @@ class _CompanyPendingDetailsScreenState
                         });
                       },
                     )
-               ? BankDetailsForm(company: widget.company, )
+             
                 : RegistrationDetailsForm(company: widget.company),
             ),
           );

@@ -26,6 +26,8 @@ class SaleOrderDetailsTable extends Table {
 
   IntColumn get companyId => integer().nullable()();
 
+  IntColumn get sync => integer().withDefault(const Constant(0))();
+
   RealColumn get igst => real().nullable()();
   RealColumn get cgst => real().nullable()();
   RealColumn get sgst => real().nullable()();

@@ -33,7 +33,7 @@ class _GodownWiseScreenState extends State<GodownWiseScreen> {
         companyId: provider.selectedCompany?.id.toString() ?? '',
       );
     });
-    super.initState();
+     super.initState();
   }
 
   @override

@@ -445,10 +445,28 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                           borderColor: ColorResources.transparent,
                         ),
                         h16,
-                        Text(
-                          appLocalizations.email_ID,
-                          style: context.textStyle.s12.bluishGray.w400.roboto,
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: appLocalizations
+                                    .user_creation_screen_reporting_to,
+                                style: context
+                                    .textStyle
+                                    .s12
+                                    .bluishGray
+                                    .w400
+                                    .roboto,
+                              ),
+                              TextSpan(
+                                text: '*',
+                                style:
+                                    context.textStyle.s12.roseRed.w400.roboto,
+                              ),
+                            ],
+                          ),
                         ),
+
                         h4,
                         CustomTextField(
                           hint: appLocalizations.enter_email,

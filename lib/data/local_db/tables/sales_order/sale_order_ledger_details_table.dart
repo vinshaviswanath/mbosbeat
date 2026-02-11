@@ -8,6 +8,7 @@ class SaleOrderLedgerDetailsTable extends Table {
   IntColumn get mid => integer().nullable()();
 
   IntColumn get vchId => integer().nullable()();
+IntColumn get sync => integer().withDefault(const Constant(0))();
 
   TextColumn get ledger => text().nullable()();
 

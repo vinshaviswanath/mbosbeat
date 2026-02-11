@@ -1,14 +1,19 @@
+import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_switch.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
+import 'package:mpos_beat/presentation/logic/customer_transaction_provider.dart';
 import 'package:mpos_beat/presentation/views/transactions/purchase/widgets/discount_alert_widget.dart';
 import 'package:mpos_beat/presentation/views/transactions/sales/widgets/apply_coupon_widget.dart';
 import 'package:mpos_beat/presentation/views/transactions/sales/widgets/payment_mode_alert_widget.dart';
+import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/transaction_order_booking_screen.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/widgets/end_to_end_text_widget.dart';
 
 class SalesScreen extends StatefulWidget {
-  const SalesScreen({super.key});
+  final TransactionOrderBookingRouteArgs data;
+  const SalesScreen({super.key, required this.data});
 
   @override
   State<SalesScreen> createState() => _SalesScreenState();
@@ -17,15 +22,6 @@ class SalesScreen extends StatefulWidget {
 class _SalesScreenState extends State<SalesScreen> {
   String _selectedMode = "B2C";
 
-  final products = [
-    {
-      "name": "ASD 16 Rice 10Kg",
-      "qty": "0.0 Qls",
-      "rate": "3900.00 Qls",
-      "amount": "0.00",
-      "freeQty": "1.0 Qls",
-    },
-  ];
   @override
   Widget build(BuildContext context) {
     final appLocalizations = context.l10n;
@@ -76,31 +72,42 @@ class _SalesScreenState extends State<SalesScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Alackal Stores, Kuruppamthara",
+                        widget.data.party.ledgerName ?? "",
                         style: context.textStyle.s12.w500.indigoBlue.roboto,
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 15,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: ColorResources.rosePink,
-                        ),
-                        child: Center(
-                          child: Text(
-                            appLocalizations.add_item,
-                            style: context.textStyle.s10.white.w400,
+                      GestureDetector(
+                        onTap: () {
+                          context.pushNamed(
+                            AppRouterConst.orderBookingAddItemScreen,
+                            extra: TransactionOrderBookingRouteArgs(
+                              data: widget.data.data,
+                              party: widget.data.party,
+                            ),
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 15,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: ColorResources.rosePink,
+                          ),
+                          child: Center(
+                            child: Text(
+                              appLocalizations.add_item,
+                              style: context.textStyle.s10.white.w400,
+                            ),
                           ),
                         ),
                       ),
                     ],
                   ),
                   h4,
-                  const EndToEndTextWidget(
-                    text1: "T23-24/D-AM120",
-                    text2: "29-07-2024",
+                  EndToEndTextWidget(
+                    text1: widget.data.party.taxNumber ?? "",
+                    text2: widget.data.party.lastSyncOn?.toString() ?? "",
                   ),
                   h4,
                   Row(
@@ -259,65 +266,73 @@ class _SalesScreenState extends State<SalesScreen> {
               ),
             ),
           ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate((context, index) {
-              final product = products[index];
+          Consumer<CustomerTransactionProvider>(
+            builder: (context, txn, _) {
+              return StreamBuilder<List<SelectedOrderItem>>(
+                stream: txn.orderItemsStream(
+                  appDb: sl<AppDb>(),
+                  fallbackPriceLevelId: widget.data.party.priceList ?? 0,
+                ),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const SliverToBoxAdapter(
+                      child: Center(child: CircularProgressIndicator()),
+                    );
+                  }
 
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 3,
-                          child: Text(
-                            product["name"]!,
-                            style: context.textStyle.s09.w500.dustyBlue.roboto,
-                          ),
+                  final items = snapshot.data!;
+                  if (items.isEmpty) {
+                    return SliverToBoxAdapter(
+                      child: SizedBox(
+                        height: context.getSize.height * 0.3,
+                        child: Row(
+                          mainAxisAlignment: .center,
+                          crossAxisAlignment: .center,
+                          children: [
+                            Text(
+                              'No items added',
+                              style:
+                                  context.textStyle.s10.w400.dustyBlue.roboto,
+                            ),
+                          ],
                         ),
-                        Expanded(
-                          flex: 2,
-                          child: Text(
-                            product["qty"]!,
-                            textAlign: TextAlign.center,
-                            style: context.textStyle.s09.w400.dustyBlue.roboto,
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Text(
-                            product["rate"]!,
-                            textAlign: TextAlign.center,
-                            style: context.textStyle.s09.w400.dustyBlue.roboto,
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Text(
-                            product["amount"]!,
-                            textAlign: TextAlign.end,
-                            style: context.textStyle.s09.w400.dustyBlue.roboto,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4),
-                      child: Text(
-                        "${appLocalizations.free_qty} ${product["freeQty"]!}",
-                        style: context.textStyle.s09.w400.dustyBlue.roboto,
                       ),
-                    ),
-                  ],
-                ),
+                    );
+                  }
+
+                  return SliverList(
+                    delegate: SliverChildBuilderDelegate((context, index) {
+                      return Column(
+                        children: [
+                          OrderItemTile(
+                            data: items[index], // SelectedOrderItem
+                          ),
+                          if (items.last == items[index]) ...[
+                            h16,
+                            Row(
+                              mainAxisAlignment: .center,
+                              children: [
+                                Text(
+                                  "****** END OF THE LIST ******",
+                                  style: context
+                                      .textStyle
+                                      .s10
+                                      .w400
+                                      .dustyBlue
+                                      .roboto,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ],
+                      );
+                    }, childCount: items.length),
+                  );
+                },
               );
-            }, childCount: products.length),
+            },
           ),
+
           SliverFillRemaining(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 17),
