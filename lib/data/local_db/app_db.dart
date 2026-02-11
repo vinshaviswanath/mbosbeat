@@ -221,17 +221,9 @@ class AppDb extends _$AppDb {
         await m.createTable(categoryTable);
       }
       if (from < 22) {
-        await m.addColumn(
-          saleOrderDetailsTable,
-          saleOrderDetailsTable.sync,
-        );
-
-        await m.addColumn(
-          saleOrderLedgerDetailsTable,
-          saleOrderLedgerDetailsTable.sync,
-        );
-
-        await m.addColumn(saleOrderMasterTable, saleOrderMasterTable.sync);
+        await m.createTable(saleOrderDetailsTable);
+        await m.createTable(saleOrderLedgerDetailsTable);
+        await m.createTable(saleOrderMasterTable);
       }
     },
   );

@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart' show Value;
 import 'package:intl/intl.dart';
 import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
@@ -681,9 +682,25 @@ class _TransactionOrderBookingScreenState
                                 Expanded(
                                   child: CustomButton(
                                     buttonText: appLocalizations.save,
-                                    onTap: () {
+                                    onTap: () async {
+                                      final txn = context
+                                          .read<CustomerTransactionProvider>();
+                                      final db = context.read<AppDb>();
+
+                                      await saveOrder(
+                                        db: db,
+                                        txn: txn,
+                                        companyId: widget.data.data.company.id!,
+                                        ledgerName:
+                                            widget.data.party.ledgerName ?? "",
+                                        ledgerId: widget.data.party.ledgerId,
+                                      );
+
+                                      txn.clearSelectedItems(); // clear UI
+
                                       Navigator.pop(context);
                                     },
+
                                     isborderEnable: false,
                                     borderRadius: BorderRadius.circular(16),
                                   ),
@@ -868,4 +885,89 @@ class SelectedOrderItem {
 
   /// Amount = qty * inclRate - discount
   double get amount => qty * inclRate - discount;
+}
+
+Future<void> saveOrder({
+  required AppDb db,
+  required CustomerTransactionProvider txn,
+  required int companyId,
+  required String ledgerName,
+  required int ledgerId,
+}) async {
+  if (txn.selectedItemCount == 0) {
+    print("No items selected");
+    return;
+  }
+
+  await db.transaction(() async {
+    // 1️⃣ INSERT MASTER
+    final masterId = await db
+        .into(db.saleOrderMasterTable)
+        .insert(
+          SaleOrderMasterTableCompanion.insert(
+            partyId: Value(ledgerId),
+            party: Value(ledgerName),
+            voucherAmount: Value(txn.grandTotal),
+            companyId: Value(companyId),
+            sync: const Value(0),
+          ),
+        );
+
+    print("Inserted Master ID: $masterId");
+
+    // 2️⃣ INSERT DETAILS
+    for (final itemId in txn.selectedItemIds) {
+      final qty = txn.getQty(itemId);
+      final total = txn.subTotal; // OR use _itemTotal[itemId]
+
+      await db
+          .into(db.saleOrderDetailsTable)
+          .insert(
+            SaleOrderDetailsTableCompanion.insert(
+              mid: Value(masterId),
+              itemId: Value(itemId),
+              qty: Value(qty),
+              total: Value(total),
+              companyId: Value(companyId),
+              sync: const Value(0),
+            ),
+          );
+    }
+
+    // 3️⃣ INSERT LEDGER
+    await db
+        .into(db.saleOrderLedgerDetailsTable)
+        .insert(
+          SaleOrderLedgerDetailsTableCompanion.insert(
+            mid: Value(masterId),
+            ledger: Value(ledgerName),
+            amount: Value(txn.grandTotal),
+            companyId: Value(companyId),
+            sync: const Value(0),
+          ),
+        );
+  });
+
+  await printSavedData(db);
+}
+
+Future<void> printSavedData(AppDb db) async {
+  final masters = await db.select(db.saleOrderMasterTable).get();
+  final details = await db.select(db.saleOrderDetailsTable).get();
+  final ledger = await db.select(db.saleOrderLedgerDetailsTable).get();
+
+  print("==== MASTER TABLE ====");
+  for (var m in masters) {
+    print(m.toJson());
+  }
+
+  print("==== DETAILS TABLE ====");
+  for (var d in details) {
+    print(d.toJson());
+  }
+
+  print("==== LEDGER TABLE ====");
+  for (var l in ledger) {
+    print(l.toJson());
+  }
 }

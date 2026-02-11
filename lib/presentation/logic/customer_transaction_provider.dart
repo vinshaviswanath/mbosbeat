@@ -36,6 +36,8 @@ class CustomerTransactionProvider extends ChangeNotifier {
   final Map<int, double> _itemTotal = {};
   final Map<int, String> _selectedUnit = {};
   final Set<int> _selectedItems = {};
+  Set<int> get selectedItemIds => _selectedItems;
+
   final Map<int, double> _itemDiscount = {};
   final Map<int, DiscountType> _discountType = {};
 
@@ -426,6 +428,10 @@ void resetAddItemScreenState() {
   _hasMore = true;
   _isLoadingPage = false;
 
+  notifyListeners();
+}
+void clearOrder() {
+  _selectedItems.clear();
   notifyListeners();
 }
 

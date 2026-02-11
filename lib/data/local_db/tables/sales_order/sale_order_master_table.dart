@@ -16,7 +16,7 @@ class SaleOrderMasterTable extends Table {
   TextColumn get mob => text().nullable()();
 
   TextColumn get voucherDate => text().nullable()();
-  RealColumn get voucherAmount => real().nullable()();
+  RealColumn get voucherAmount => real()();
 
   IntColumn get status => integer().nullable()();
 
@@ -59,7 +59,7 @@ class SaleOrderMasterTable extends Table {
   TextColumn get deliveryDate => text().nullable()();
 
   IntColumn get printCount => integer().nullable()();
-IntColumn get sync => integer().withDefault(const Constant(0))();
+  IntColumn get sync => integer().withDefault(const Constant(0))();
 
   TextColumn get pinCode => text().nullable()();
 
