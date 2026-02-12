@@ -21,9 +21,21 @@ class SalesScreen extends StatefulWidget {
 
 class _SalesScreenState extends State<SalesScreen> {
   String _selectedMode = "B2C";
+  bool get hasTaxNumber {
+    final tax = widget.data.party.taxNumber;
+    return tax != null && tax.trim().isNotEmpty;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _selectedMode = hasTaxNumber ? "B2B" : "B2C";
+  }
 
   @override
   Widget build(BuildContext context) {
+    print("partymaster taxno on sales screen: ${widget.data.party.taxNumber}");
     final appLocalizations = context.l10n;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -120,89 +132,99 @@ class _SalesScreenState extends State<SalesScreen> {
                       ),
                       w10,
                       GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _selectedMode = "B2B";
-                          });
-                        },
-                        child: Row(
-                          children: [
-                            Container(
-                              width: context.getSize.width * 0.045,
-                              height: context.getSize.height * 0.022,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: _selectedMode == "B2B"
-                                      ? Colors.blue
-                                      : Colors.grey,
-                                  width: 2,
-                                ),
-                              ),
-                              child: Center(
-                                child: Container(
-                                  width: context.getSize.width * 0.0225,
-                                  height: context.getSize.height * 0.01,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
+                        onTap: hasTaxNumber
+                            ? () {
+                                setState(() {
+                                  _selectedMode = "B2B";
+                                });
+                              }
+                            : null,
+                        child: Opacity(
+                          opacity: hasTaxNumber ? 1 : 0.4,
+                          child: Row(
+                            children: [
+                              Container(
+                                width: context.getSize.width * 0.045,
+                                height: context.getSize.height * 0.022,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
                                     color: _selectedMode == "B2B"
-                                        ? Colors.orange
+                                        ? Colors.blue
                                         : Colors.grey,
+                                    width: 2,
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Container(
+                                    width: context.getSize.width * 0.0225,
+                                    height: context.getSize.height * 0.01,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: _selectedMode == "B2B"
+                                          ? Colors.orange
+                                          : Colors.grey,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            w6,
-                            Text(
-                              appLocalizations.b2b,
-                              style:
-                                  context.textStyle.s10.w500.dustyBlue.roboto,
-                            ),
-                          ],
+                              w6,
+                              Text(
+                                appLocalizations.b2b,
+                                style:
+                                    context.textStyle.s10.w500.dustyBlue.roboto,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       w20,
                       GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _selectedMode = "B2C";
-                          });
-                        },
-                        child: Row(
-                          children: [
-                            Container(
-                              width: context.getSize.width * 0.045,
-                              height: context.getSize.height * 0.022,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: _selectedMode == "B2C"
-                                      ? Colors.blue
-                                      : Colors.grey,
-                                  width: 2,
-                                ),
-                              ),
-                              child: Center(
-                                child: Container(
-                                  width: context.getSize.width * 0.0225,
-                                  height: context.getSize.height * 0.01,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
+                        onTap: !hasTaxNumber
+                            ? () {
+                                setState(() {
+                                  _selectedMode = "B2C";
+                                });
+                              }
+                            : null,
+                        child: Opacity(
+                          opacity: !hasTaxNumber ? 1 : 0.4,
+                          child: Row(
+                            children: [
+                              Container(
+                                width: context.getSize.width * 0.045,
+                                height: context.getSize.height * 0.022,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
                                     color: _selectedMode == "B2C"
-                                        ? Colors.orange
+                                        ? Colors.blue
                                         : Colors.grey,
+                                    width: 2,
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Container(
+                                    width: context.getSize.width * 0.0225,
+                                    height: context.getSize.height * 0.01,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: _selectedMode == "B2C"
+                                          ? Colors.orange
+                                          : Colors.grey,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            w6,
-                            Text(
-                              appLocalizations.b2c,
+                              w6,
+                              Text(
+                                appLocalizations.b2c,
 
-                              style:
-                                  context.textStyle.s10.w500.dustyBlue.roboto,
-                            ),
-                          ],
+                                style:
+                                    context.textStyle.s10.w500.dustyBlue.roboto,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       w20,
@@ -334,168 +356,214 @@ class _SalesScreenState extends State<SalesScreen> {
           ),
 
           SliverFillRemaining(
+            hasScrollBody: false,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 17),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Spacer(),
-                  // Divider(
-                  //   thickness: 1,
-                  //   color: ColorResources.bluishGray.withValues(alpha: 0.2),
-                  // ),
-                  // h16,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-
+              child: Consumer<CustomerTransactionProvider>(
+                builder: (context, txn, _) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        appLocalizations.cgst,
-                        style: context.textStyle.s10.w400.dustyBlue.roboto,
+                      const Spacer(),
+
+                      Divider(
+                        thickness: 1,
+                        color: ColorResources.bluishGray.withValues(alpha: 0.2),
                       ),
-                      w60,
-                      Text(
-                        "0.00",
-                        style: context.textStyle.s10.w400.dustyBlue.roboto,
+                      h16,
+
+                      /// Sub Total
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            appLocalizations.order_booking_sub_total,
+                            style: context.textStyle.s12.w500.indigoBlue.roboto,
+                          ),
+                          w60,
+                          Text(
+                            txn.subTotal.toStringAsFixed(2),
+                            style: context.textStyle.s12.w500.indigoBlue.roboto,
+                          ),
+                        ],
                       ),
+
+                      h12,
+
+                      /// CGST
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            appLocalizations.cgst,
+                            style: context.textStyle.s10.w400.dustyBlue.roboto,
+                          ),
+                          w60,
+                          Text(
+                            txn.cgst.toStringAsFixed(2),
+                            style: context.textStyle.s10.w400.dustyBlue.roboto,
+                          ),
+                        ],
+                      ),
+
                       h8,
-                    ],
-                  ),
-                  h8,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
 
-                    children: [
+                      /// SGST
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            appLocalizations.sgst,
+                            style: context.textStyle.s10.w400.dustyBlue.roboto,
+                          ),
+                          w60,
+                          Text(
+                            txn.sgst.toStringAsFixed(2),
+                            style: context.textStyle.s10.w400.dustyBlue.roboto,
+                          ),
+                        ],
+                      ),
+
+                      h8,
+
+                      /// CESS
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            appLocalizations.cess,
+                            style: context.textStyle.s10.w400.dustyBlue.roboto,
+                          ),
+                          w60,
+                          Text(
+                            txn.cess.toStringAsFixed(2),
+                            style: context.textStyle.s10.w400.dustyBlue.roboto,
+                          ),
+                        ],
+                      ),
+
+                      h8,
+
+                      /// Grand Total
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            appLocalizations.grand_total,
+                            style: context.textStyle.s12.w500.indigoBlue.roboto,
+                          ),
+                          w60,
+                          Text(
+                            txn.grandTotal.toStringAsFixed(2),
+                            style: context.textStyle.s12.w500.indigoBlue.roboto,
+                          ),
+                        ],
+                      ),
+                      h16,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            appLocalizations.discount_add_minus,
+                            style: context.textStyle.s12.w500.indigoBlue.roboto,
+                          ),
+                          CustomSwitch(
+                            borderColor: ColorResources.bluishGray,
+                            thumbColor: ColorResources.bluishGray,
+                            value: false,
+                            onChanged: (value) {
+                              if (value == true) {
+                                CustomDialog.showBottomCustomDialog(
+                                  child: const DiscountAlertWidget(),
+                                );
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                      h16,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            appLocalizations.sales_screen_coupon_discount,
+                            style: context.textStyle.s12.w500.indigoBlue.roboto,
+                          ),
+                          CustomSwitch(
+                            borderColor: ColorResources.bluishGray,
+                            thumbColor: ColorResources.bluishGray,
+                            value: false,
+                            onChanged: (value) {
+                              if (value == true) {
+                                CustomDialog.showBottomCustomDialog(
+                                  child: const ApplyCouponWidget(),
+                                );
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                      h16,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            appLocalizations.sales_screen_auto_receipt_req,
+                            style: context.textStyle.s12.w500.indigoBlue.roboto,
+                          ),
+                          CustomSwitch(
+                            borderColor: ColorResources.bluishGray,
+                            thumbColor: ColorResources.bluishGray,
+                            value: false,
+                            onChanged: (value) {
+                              if (value == true) {
+                                CustomDialog.showBottomCustomDialog(
+                                  child: const PaymentModeAlertWidget(),
+                                );
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                      h12,
                       Text(
-                        appLocalizations.sgst,
+                        appLocalizations.remarks,
                         style: context.textStyle.s10.w400.dustyBlue.roboto,
                       ),
-                      w60,
-                      Text(
-                        "0.00",
-                        style: context.textStyle.s10.w400.dustyBlue.roboto,
+                      h13,
+                      const CustomTextField(
+                        hint: "",
+                        borderRadius: 16,
+                        borderColor: ColorResources.ashGray,
                       ),
+                      h12,
+                      Row(
+                        children: [
+                          Expanded(
+                            child: CustomButton(
+                              buttonText: appLocalizations.save,
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              isborderEnable: false,
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                          ),
+                          w10,
+                          Expanded(
+                            child: CustomButton(
+                              buttonText: appLocalizations.cancel,
+                              isborderEnable: false,
+                              color: ColorResources.bluishGray,
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                          ),
+                        ],
+                      ),
+                      h16,
                     ],
-                  ),
-                  h8,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-
-                    children: [
-                      Text(
-                        appLocalizations.grand_total,
-                        style: context.textStyle.s12.w500.indigoBlue.roboto,
-                      ),
-                      w60,
-                      Text(
-                        "0.00",
-                        style: context.textStyle.s12.w500.indigoBlue.roboto,
-                      ),
-                    ],
-                  ),
-                  h32,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        appLocalizations.discount_add_minus,
-                        style: context.textStyle.s12.w500.indigoBlue.roboto,
-                      ),
-                      CustomSwitch(
-                        borderColor: ColorResources.bluishGray,
-                        thumbColor: ColorResources.bluishGray,
-                        value: false,
-                        onChanged: (value) {
-                          if (value == true) {
-                            CustomDialog.showBottomCustomDialog(
-                              child: const DiscountAlertWidget(),
-                            );
-                          }
-                        },
-                      ),
-                    ],
-                  ),
-                  h16,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        appLocalizations.sales_screen_coupon_discount,
-                        style: context.textStyle.s12.w500.indigoBlue.roboto,
-                      ),
-                      CustomSwitch(
-                        borderColor: ColorResources.bluishGray,
-                        thumbColor: ColorResources.bluishGray,
-                        value: false,
-                        onChanged: (value) {
-                          if (value == true) {
-                            CustomDialog.showBottomCustomDialog(
-                              child: const ApplyCouponWidget(),
-                            );
-                          }
-                        },
-                      ),
-                    ],
-                  ),
-                  h16,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        appLocalizations.sales_screen_auto_receipt_req,
-                        style: context.textStyle.s12.w500.indigoBlue.roboto,
-                      ),
-                      CustomSwitch(
-                        borderColor: ColorResources.bluishGray,
-                        thumbColor: ColorResources.bluishGray,
-                        value: false,
-                        onChanged: (value) {
-                          if (value == true) {
-                            CustomDialog.showBottomCustomDialog(
-                              child: const PaymentModeAlertWidget(),
-                            );
-                          }
-                        },
-                      ),
-                    ],
-                  ),
-                  h12,
-                  Text(
-                    appLocalizations.remarks,
-                    style: context.textStyle.s10.w400.dustyBlue.roboto,
-                  ),
-                  h13,
-                  const CustomTextField(
-                    hint: "",
-                    borderRadius: 16,
-                    borderColor: ColorResources.ashGray,
-                  ),
-                  h12,
-                  Row(
-                    children: [
-                      Expanded(
-                        child: CustomButton(
-                          buttonText: appLocalizations.save,
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          isborderEnable: false,
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                      ),
-                      w10,
-                      Expanded(
-                        child: CustomButton(
-                          buttonText: appLocalizations.cancel,
-                          isborderEnable: false,
-                          color: ColorResources.bluishGray,
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                      ),
-                    ],
-                  ),
-                  h16,
-                ],
+                  );
+                },
               ),
             ),
           ),

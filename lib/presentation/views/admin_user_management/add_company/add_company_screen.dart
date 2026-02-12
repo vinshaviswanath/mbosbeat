@@ -30,25 +30,7 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
 
   final Set<int> selectedCompanyIds = {};
   final List<CompanyList> selectedCompanyList = [];
-  @override
-  // void initState() {
-  //   super.initState();
-  //   WidgetsBinding.instance.addPostFrameCallback((_) async {
-  //     final provider = context.read<UserManagementProvider>();
-  //     await provider.getAllCompanies(context: context);
-  //     final pref = sl<SharedPreferences>();
-  //     final storedList = pref.getStringList('companies');
-  //     if (storedList != null && storedList.isNotEmpty) {
-  //       final loadedCompanies = storedList.map(int.parse).toList();
-  //       setState(() {
-  //         selectedCompanyIds.addAll(loadedCompanies);
-  //         selectedCompanyList.addAll(
-  //           loadedCompanies.map((id) => CompanyList(companyId: id)),
-  //         );
-  //       });
-  //     }
-  //   });
-  // }
+
   @override
   void initState() {
     super.initState();
@@ -240,29 +222,27 @@ class _AddCompanyScreenState extends State<AddCompanyScreen> {
           horizontal: context.getSize.width / 4,
           vertical: 16,
         ),
-        child: CustomButton(
-          borderRadius: BorderRadius.circular(16),
-          onTap: () async {
-            // final pref = sl<SharedPreferences>();
-            // await pref.setStringList(
-            //   'companies',
-            //   selectedCompanyList.map((e) => e.companyId.toString()).toList(),
-            // );
-            provider
-                .createUserCompanyMapping(
-                  context: context,
-                  userId: widget.userId,
-                  companyList: selectedCompanyList,
-                )
-                .then((_) {
-                  WidgetsBinding.instance.addPostFrameCallback((_) {
-                    context.pop();
-                    companyprovider.getAllCompanies(context);
+        child: SafeArea(
+          top: false,
+          child: CustomButton(
+            borderRadius: BorderRadius.circular(16),
+            onTap: () async {
+              provider
+                  .createUserCompanyMapping(
+                    context: context,
+                    userId: widget.userId,
+                    companyList: selectedCompanyList,
+                  )
+                  .then((_) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      context.pop();
+                      companyprovider.getAllCompanies(context);
+                    });
                   });
-                });
-          },
-          buttonText: appLocalization.save,
-          isborderEnable: false,
+            },
+            buttonText: appLocalization.save,
+            isborderEnable: false,
+          ),
         ),
       ),
     );

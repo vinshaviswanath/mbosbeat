@@ -133,49 +133,51 @@ class _VoucherTypeWidgetState extends State<VoucherTypeWidget> {
           ),
         ],
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(16),
-        child: CustomButton(
-          buttonText: appLocalization.company_info_widget_next,
-          isborderEnable: false,
-          onTap: () {
-            final provider = Provider.of<CompanyCreationProvider>(
-              context,
-              listen: false,
-            );
-
-            // Check if any voucher has isEnabled == 1
-            final hasEnabledVoucher = provider.voucherTypes.any(
-              (voucher) => voucher.isEnabled == 1,
-            );
-
-            print("hasEnabledVoucher: $hasEnabledVoucher");
-
-            if (hasEnabledVoucher) {
-              provider.completeVouchers(
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+          child: CustomButton(
+            buttonText: appLocalization.company_info_widget_next,
+            isborderEnable: false,
+            onTap: () {
+              final provider = Provider.of<CompanyCreationProvider>(
                 context,
-                companyId: widget.companyData?.id!,
+                listen: false,
               );
-              widget.onTap?.call();
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: const Text(
-                    "Please Complete voucher configuration",
-                    textAlign: TextAlign.center,
-                  ),
-                  behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 8,
-                  ),
-                ),
+
+              // Check if any voucher has isEnabled == 1
+              final hasEnabledVoucher = provider.voucherTypes.any(
+                (voucher) => voucher.isEnabled == 1,
               );
-            }
-          },
+
+              print("hasEnabledVoucher: $hasEnabledVoucher");
+
+              if (hasEnabledVoucher) {
+                provider.completeVouchers(
+                  context,
+                  companyId: widget.companyData?.id!,
+                );
+                widget.onTap?.call();
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: const Text(
+                      "Please Complete voucher configuration",
+                      textAlign: TextAlign.center,
+                    ),
+                    behavior: SnackBarBehavior.floating,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
+                  ),
+                );
+              }
+            },
+          ),
         ),
       ),
     );

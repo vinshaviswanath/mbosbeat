@@ -900,7 +900,7 @@ Future<void> saveOrder({
   }
 
   await db.transaction(() async {
-    // 1️⃣ INSERT MASTER
+    //  INSERT MASTER
     final masterId = await db
         .into(db.saleOrderMasterTable)
         .insert(
@@ -915,10 +915,10 @@ Future<void> saveOrder({
 
     print("Inserted Master ID: $masterId");
 
-    // 2️⃣ INSERT DETAILS
+    //  INSERT DETAILS
     for (final itemId in txn.selectedItemIds) {
       final qty = txn.getQty(itemId);
-      final total = txn.subTotal; // OR use _itemTotal[itemId]
+      final total = txn.subTotal; 
 
       await db
           .into(db.saleOrderDetailsTable)

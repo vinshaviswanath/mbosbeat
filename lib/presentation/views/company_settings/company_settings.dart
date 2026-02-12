@@ -70,7 +70,12 @@ class _CompanySettingsScreenState extends State<CompanySettingsScreen> {
             return CustomScrollView(
               slivers: [
                 SliverPadding(
-                  padding: const EdgeInsets.all(7),
+                  padding: EdgeInsets.fromLTRB(
+                    16,
+                    0,
+                    16,
+                    MediaQuery.of(context).padding.bottom + 16,
+                  ),
 
                   sliver: SliverList(
                     delegate: SliverChildBuilderDelegate(
@@ -139,10 +144,6 @@ class _CompanySettingsScreenState extends State<CompanySettingsScreen> {
                       },
                     ),
                   ),
-                ),
-                // Extra bottom space so last tooltip is fully visible
-                SliverToBoxAdapter(
-                  child: SizedBox(height: 50), // adjust height as needed
                 ),
               ],
             );

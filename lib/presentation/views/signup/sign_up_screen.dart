@@ -239,43 +239,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                 ),
-                SliverFillRemaining(
-                  hasScrollBody: false,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 16,
-                          right: 16,
-                          bottom: 24,
-                        ),
-                        child: CustomButton(
-                          onTap: () async {
-                            FocusScope.of(context).unfocus();
-
-                            final response = await provider.submitSignUp(
-                              context,
-                            );
-                            if (response != null && response.status == 1 ||
-                                response?.status == 20) {
-                              compnyController.clear();
-                              phoneController.clear();
-                              emailController.clear();
-                              passwordController.clear();
-                              confirmPasswordController.clear();
-                              // provider.resetSignUpForm();
-                            }
-                          },
-                          buttonText: appLocalization.sign_up,
-                          textStyle: context.textStyle.s16.white.bold.roboto,
-                          isborderEnable: false,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
               ],
+            ),
+
+            bottomNavigationBar: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 16, right: 16, bottom: 24),
+                child: CustomButton(
+                  onTap: () async {
+                    FocusScope.of(context).unfocus();
+
+                    final response = await provider.submitSignUp(context);
+                    if (response != null && response.status == 1 ||
+                        response?.status == 20) {
+                      compnyController.clear();
+                      phoneController.clear();
+                      emailController.clear();
+                      passwordController.clear();
+                      confirmPasswordController.clear();
+                      // provider.resetSignUpForm();
+                    }
+                  },
+                  buttonText: appLocalization.sign_up,
+                  textStyle: context.textStyle.s16.white.bold.roboto,
+                  isborderEnable: false,
+                ),
+              ),
             ),
           ),
         );
