@@ -671,4 +671,6 @@ void selectPriceLevelById(int? id, List<PriceLevelDetails> list) {
           return PartyMasterDetails.fromJson(row.data);
         });
   }
+  
+
 }

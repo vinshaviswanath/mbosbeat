@@ -411,28 +411,28 @@ class CustomerTransactionProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-void setQty(int itemId, double qty, double inclRate) {
-  updateQty(itemId, qty, inclRate);
-}
+  void setQty(int itemId, double qty, double inclRate) {
+    updateQty(itemId, qty, inclRate);
+  }
 
-// ===================== SCREEN RESET =====================
-void resetAddItemScreenState() {
-  // filters
-  _search = '';
-  _selectedGroup = 'All';
-  _selectedCategory = 'All';
+  // ===================== SCREEN RESET =====================
+  void resetAddItemScreenState() {
+    // filters
+    _search = '';
+    _selectedGroup = 'All';
+    _selectedCategory = 'All';
 
-  // pagination
-  _pagedItems.clear();
-  _page = 0;
-  _hasMore = true;
-  _isLoadingPage = false;
+    // pagination
+    _pagedItems.clear();
+    _page = 0;
+    _hasMore = true;
+    _isLoadingPage = false;
 
-  notifyListeners();
-}
-void clearOrder() {
-  _selectedItems.clear();
-  notifyListeners();
-}
+    notifyListeners();
+  }
 
+  void clearOrder() {
+    _selectedItems.clear();
+    notifyListeners();
+  }
 }

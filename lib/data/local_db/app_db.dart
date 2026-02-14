@@ -67,6 +67,10 @@ import 'package:mpos_beat/data/local_db/tables/partymaster_sync_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/price_level_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/route_voucher_types_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/routes_table.dart';
+import 'package:mpos_beat/data/local_db/tables/sales/sale_auto_receipt_table.dart';
+import 'package:mpos_beat/data/local_db/tables/sales/sales_details_table.dart';
+import 'package:mpos_beat/data/local_db/tables/sales/sales_ledger_details_table.dart';
+import 'package:mpos_beat/data/local_db/tables/sales/sales_master_table.dart';
 import 'package:mpos_beat/data/local_db/tables/sales_order/sale_order_details_table.dart';
 import 'package:mpos_beat/data/local_db/tables/sales_order/sale_order_ledger_details_table.dart';
 import 'package:mpos_beat/data/local_db/tables/sales_order/sale_order_master_table.dart';
@@ -106,6 +110,10 @@ part 'app_db.g.dart';
     SaleOrderDetailsTable,
     SaleOrderLedgerDetailsTable,
     SaleOrderMasterTable,
+    SaleMasterTable,
+    SaleDetailsTable,
+    SaleLedgerDetailsTable,
+    SaleAutoReceiptTable
   ],
   daos: [
     CompanyDao,
@@ -128,7 +136,7 @@ class AppDb extends _$AppDb {
   AppDb() : super(_openConnection());
 
   @override
-  int get schemaVersion => 22;
+  int get schemaVersion => 24;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -224,6 +232,14 @@ class AppDb extends _$AppDb {
         await m.createTable(saleOrderDetailsTable);
         await m.createTable(saleOrderLedgerDetailsTable);
         await m.createTable(saleOrderMasterTable);
+      }
+      if (from < 23) {
+        await m.createTable(saleDetailsTable);
+        await m.createTable(saleLedgerDetailsTable);
+        await m.createTable(saleMasterTable);
+      }
+      if (from < 24) {
+        await m.createTable(saleAutoReceiptTable);
       }
     },
   );

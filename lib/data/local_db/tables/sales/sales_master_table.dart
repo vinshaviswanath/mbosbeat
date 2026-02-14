@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 
-class SaleOrderMasterTable extends Table {
+class SaleMasterTable extends Table {
   // Auto increment & nullable by default in Drift
   IntColumn get id => integer().autoIncrement()();
 
@@ -16,7 +16,6 @@ class SaleOrderMasterTable extends Table {
   TextColumn get mob => text().nullable()();
 
   TextColumn get voucherDate => text().nullable()();
-
   RealColumn get voucherAmount => real()();
 
   IntColumn get status => integer().nullable()();
@@ -67,4 +66,5 @@ class SaleOrderMasterTable extends Table {
   IntColumn get uploadedServerId => integer().nullable()();
 
   TextColumn get mailingName => text().nullable()();
+  TextColumn get billingMode => text().withDefault(const Constant("B2C"))();
 }

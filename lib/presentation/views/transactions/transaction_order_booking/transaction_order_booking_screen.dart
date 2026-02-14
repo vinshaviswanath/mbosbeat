@@ -57,16 +57,19 @@ class _TransactionOrderBookingScreenState
     }
   }
 
+  final TextEditingController remarkController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final companyId = widget.data.data.company.id!;
     final ledgerId = widget.data.party.ledgerId;
     final appLocalizations = context.l10n;
+    final provider = context.read<CustomerTransactionProvider>();
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
+            provider.clearSelectedItems();
           },
           icon: Icon(
             Icons.keyboard_arrow_left,
@@ -112,7 +115,6 @@ class _TransactionOrderBookingScreenState
           }
 
           final party = snapshot.data!;
-          final priceLevel = party.selectedPriceLevel;
 
           return Stack(
             children: [
@@ -671,7 +673,8 @@ class _TransactionOrderBookingScreenState
                                   context.textStyle.s10.w400.dustyBlue.roboto,
                             ),
                             h13,
-                            const CustomTextField(
+                            CustomTextField(
+                              controller: remarkController,
                               hint: "",
                               borderRadius: 16,
                               borderColor: ColorResources.ashGray,
@@ -694,9 +697,17 @@ class _TransactionOrderBookingScreenState
                                         ledgerName:
                                             widget.data.party.ledgerName ?? "",
                                         ledgerId: widget.data.party.ledgerId,
+                                        priceLevelId:
+                                            context
+                                                .read<UserProvider>()
+                                                .selectedPriceLevel
+                                                ?.id ??
+                                            0,
+                                        remark: remarkController.text,
                                       );
 
-                                      txn.clearSelectedItems(); // clear UI
+                                      txn.clearSelectedItems(); 
+                                      remarkController.clear();
 
                                       Navigator.pop(context);
                                     },
@@ -893,6 +904,8 @@ Future<void> saveOrder({
   required int companyId,
   required String ledgerName,
   required int ledgerId,
+  required int priceLevelId,
+  required String remark,
 }) async {
   if (txn.selectedItemCount == 0) {
     print("No items selected");
@@ -907,9 +920,12 @@ Future<void> saveOrder({
           SaleOrderMasterTableCompanion.insert(
             partyId: Value(ledgerId),
             party: Value(ledgerName),
-            voucherAmount: Value(txn.grandTotal),
+            voucherAmount: txn.grandTotal,
             companyId: Value(companyId),
             sync: const Value(0),
+            priceList: Value(priceLevelId.toString()),
+            voucherDate: Value(DateFormat('yyyy-MM-dd').format(DateTime.now())),
+            narration: Value(remark.isEmpty ? null : remark),
           ),
         );
 
@@ -918,7 +934,9 @@ Future<void> saveOrder({
     //  INSERT DETAILS
     for (final itemId in txn.selectedItemIds) {
       final qty = txn.getQty(itemId);
-      final total = txn.subTotal; 
+      final discound = txn.getDiscount(itemId);
+
+      final total = txn.subTotal;
 
       await db
           .into(db.saleOrderDetailsTable)
@@ -930,6 +948,11 @@ Future<void> saveOrder({
               total: Value(total),
               companyId: Value(companyId),
               sync: const Value(0),
+              cess: Value(txn.cess),
+              cgst: Value(txn.cgst),
+              sgst: Value(txn.sgst),
+              disc: Value(discound),
+              fQty: Value(qty),
             ),
           );
     }
