@@ -67,6 +67,13 @@ import 'package:mpos_beat/data/local_db/tables/partymaster_sync_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/price_level_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/route_voucher_types_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/routes_table.dart';
+import 'package:mpos_beat/data/local_db/tables/sales/sale_auto_receipt_table.dart';
+import 'package:mpos_beat/data/local_db/tables/sales/sales_details_table.dart';
+import 'package:mpos_beat/data/local_db/tables/sales/sales_ledger_details_table.dart';
+import 'package:mpos_beat/data/local_db/tables/sales/sales_master_table.dart';
+import 'package:mpos_beat/data/local_db/tables/sales_order/sale_order_details_table.dart';
+import 'package:mpos_beat/data/local_db/tables/sales_order/sale_order_ledger_details_table.dart';
+import 'package:mpos_beat/data/local_db/tables/sales_order/sale_order_master_table.dart';
 import 'package:mpos_beat/data/local_db/tables/user_settings_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/voucher_types_tables.dart';
 import 'package:path/path.dart' as p;
@@ -100,6 +107,13 @@ part 'app_db.g.dart';
     ItemPriceDetailsTables,
     GroupNameTable,
     CategoryTable,
+    SaleOrderDetailsTable,
+    SaleOrderLedgerDetailsTable,
+    SaleOrderMasterTable,
+    SaleMasterTable,
+    SaleDetailsTable,
+    SaleLedgerDetailsTable,
+    SaleAutoReceiptTable
   ],
   daos: [
     CompanyDao,
@@ -122,7 +136,7 @@ class AppDb extends _$AppDb {
   AppDb() : super(_openConnection());
 
   @override
-  int get schemaVersion => 21;
+  int get schemaVersion => 24;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -213,6 +227,19 @@ class AppDb extends _$AppDb {
       if (from < 21) {
         await m.createTable(groupNameTable);
         await m.createTable(categoryTable);
+      }
+      if (from < 22) {
+        await m.createTable(saleOrderDetailsTable);
+        await m.createTable(saleOrderLedgerDetailsTable);
+        await m.createTable(saleOrderMasterTable);
+      }
+      if (from < 23) {
+        await m.createTable(saleDetailsTable);
+        await m.createTable(saleLedgerDetailsTable);
+        await m.createTable(saleMasterTable);
+      }
+      if (from < 24) {
+        await m.createTable(saleAutoReceiptTable);
       }
     },
   );

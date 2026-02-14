@@ -110,15 +110,17 @@ class PartyMasterSync {
   List<Product> _products = [];
   List<Product> get products => _products;
 
-  Stream<List<Product>> fetchProduct(
+  Future<List<Product>> fetchProduct(
     int companyId,
     int ledgerId,
     int selectedPriceLevelId,
     String? groupName,
     String? categoryName,
-    String? searchValue,
-  ) {
-    return appDb
+    String? searchValue, {
+    required int limit,
+    required int offset,
+  }) async {
+    final rows = await appDb
         .customSelect(
           buildQuery(),
           variables: [
@@ -131,10 +133,13 @@ class PartyMasterSync {
                   ? null
                   : '%$searchValue%',
             ),
+            Variable(limit),
+            Variable(offset),
           ],
         )
-        .watch()
-        .map((rows) => rows.map((r) => Product.fromJson(r.data)).toList());
+        .get();
+
+    return rows.map((r) => Product.fromJson(r.data)).toList();
   }
 
   Stream<List<Category>> listCateGory(String? cName) {
@@ -176,15 +181,21 @@ class PartyMasterSync {
         .select(['*'])
         .from('item_master i')
         .join(
-          'LEFT JOIN item_price_details_tables ip ON ip.item_id = i.stock_item_id AND ip.price_list = ?',
+          'LEFT JOIN item_price_details_tables ip'
+          ' ON ip.item_id = i.stock_item_id AND ip.price_list = ?',
         )
         .where(
-          'i.company_id = ? AND  (:category IS NULL OR i.category_name = :category) '
+          'i.company_id = ?'
+          ' AND  (:category IS NULL OR i.category_name = :category) '
           'AND (:group IS NULL OR i.group_name = :group) '
-          'AND (:search IS NULL OR LOWER(i.item_name) LIKE LOWER(:search) OR LOWER(i.alias_name) LIKE LOWER(:search) OR i.part_number LIKE :search) ',
+          'AND (:search IS NULL OR LOWER(i.item_name) LIKE LOWER(:search)'
+          ' OR LOWER(i.alias_name) LIKE LOWER(:search)'
+          ' OR i.part_number LIKE :search) ',
         );
 
-    return builder.build();
+    return '${builder.build()} '
+        'ORDER BY i.item_name COLLATE NOCASE '
+        'LIMIT ? OFFSET ?';
   }
 
   Future<PartyMasterDetails?> fetchParty(int companyId, int ledgerId) async {

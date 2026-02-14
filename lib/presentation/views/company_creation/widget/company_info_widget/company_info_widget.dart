@@ -524,34 +524,37 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget>
               ),
             ],
           ),
-          bottomNavigationBar: Padding(
-            padding: const EdgeInsets.all(16),
-            child: CustomButton(
-              buttonText: appLocalizations.company_info_widget_next,
-              isborderEnable: false,
-              onTap: () async {
-                _debugPrintAllFields(provider);
-                _debugPrintValidationErrors(provider);
+          bottomNavigationBar: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+              child: CustomButton(
+                buttonText: appLocalizations.company_info_widget_next,
+                isborderEnable: false,
+                onTap: () async {
+                  _debugPrintAllFields(provider);
+                  _debugPrintValidationErrors(provider);
 
-                provider.companyinfo(
-                  onSuccess: widget.onTap,
-                  context,
-                  params: CompanyInfoParams(
-                    id: widget.companyData?.id ?? 0,
-                    companyCode: "1",
-                    companyName: compnyNameController.text,
-                    displayName: displayNameController.text,
-                    address1: address1Controller.text,
-                    address2: address2Controller.text,
-                    address3: address3Controller.text,
-                    pincode: pincodeController.text,
-                    countryId: provider.selectedCountry?.id.toString() ?? '',
-                    stateId: provider.selectedState?.id.toString() ?? "",
-                    regType:
-                        provider.selectedregistrationtype?.id.toString() ?? "",
-                  ),
-                );
-              },
+                  provider.companyinfo(
+                    onSuccess: widget.onTap,
+                    context,
+                    params: CompanyInfoParams(
+                      id: widget.companyData?.id ?? 0,
+                      companyCode: "1",
+                      companyName: compnyNameController.text,
+                      displayName: displayNameController.text,
+                      address1: address1Controller.text,
+                      address2: address2Controller.text,
+                      address3: address3Controller.text,
+                      pincode: pincodeController.text,
+                      countryId: provider.selectedCountry?.id.toString() ?? '',
+                      stateId: provider.selectedState?.id.toString() ?? "",
+                      regType:
+                          provider.selectedregistrationtype?.id.toString() ??
+                          "",
+                    ),
+                  );
+                },
+              ),
             ),
           ),
         );

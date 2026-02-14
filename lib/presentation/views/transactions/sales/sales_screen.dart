@@ -1,14 +1,22 @@
+import 'package:drift/drift.dart' show Value;
+import 'package:intl/intl.dart';
+import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_switch.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
+import 'package:mpos_beat/presentation/logic/customer_transaction_provider.dart';
 import 'package:mpos_beat/presentation/views/transactions/purchase/widgets/discount_alert_widget.dart';
 import 'package:mpos_beat/presentation/views/transactions/sales/widgets/apply_coupon_widget.dart';
 import 'package:mpos_beat/presentation/views/transactions/sales/widgets/payment_mode_alert_widget.dart';
+import 'package:mpos_beat/presentation/views/transactions/sales_return/sales_return.dart';
+import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/transaction_order_booking_screen.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/widgets/end_to_end_text_widget.dart';
 
 class SalesScreen extends StatefulWidget {
-  const SalesScreen({super.key});
+  final TransactionOrderBookingRouteArgs data;
+  const SalesScreen({super.key, required this.data});
 
   @override
   State<SalesScreen> createState() => _SalesScreenState();
@@ -16,25 +24,48 @@ class SalesScreen extends StatefulWidget {
 
 class _SalesScreenState extends State<SalesScreen> {
   String _selectedMode = "B2C";
+  bool get hasTaxNumber {
+    final tax = widget.data.party.taxNumber;
+    return tax != null && tax.trim().isNotEmpty;
+  }
 
-  final products = [
-    {
-      "name": "ASD 16 Rice 10Kg",
-      "qty": "0.0 Qls",
-      "rate": "3900.00 Qls",
-      "amount": "0.00",
-      "freeQty": "1.0 Qls",
-    },
-  ];
+  @override
+  void initState() {
+    super.initState();
+
+    _selectedMode = hasTaxNumber ? "B2B" : "B2C";
+  }
+
+  final TextEditingController remarkController = TextEditingController();
+
+  PaymentData? selectedPayment;
+  Future<void> openPaymentDialog() async {
+    final result = await showDialog<PaymentData>(
+      context: context,
+      builder: (_) => const PaymentModeAlertWidget(),
+    );
+
+    print("Dialog Returned: $result");
+
+    if (result != null) {
+      setState(() {
+        selectedPayment = result;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    print("partymaster taxno on sales screen: ${widget.data.party.taxNumber}");
     final appLocalizations = context.l10n;
+    final provider = context.read<CustomerTransactionProvider>();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
+            provider.clearSelectedItems();
           },
           icon: Icon(
             Icons.keyboard_arrow_left,
@@ -76,31 +107,42 @@ class _SalesScreenState extends State<SalesScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Alackal Stores, Kuruppamthara",
+                        widget.data.party.ledgerName ?? "",
                         style: context.textStyle.s12.w500.indigoBlue.roboto,
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 15,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: ColorResources.rosePink,
-                        ),
-                        child: Center(
-                          child: Text(
-                            appLocalizations.add_item,
-                            style: context.textStyle.s10.white.w400,
+                      GestureDetector(
+                        onTap: () {
+                          context.pushNamed(
+                            AppRouterConst.orderBookingAddItemScreen,
+                            extra: TransactionOrderBookingRouteArgs(
+                              data: widget.data.data,
+                              party: widget.data.party,
+                            ),
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 15,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: ColorResources.rosePink,
+                          ),
+                          child: Center(
+                            child: Text(
+                              appLocalizations.add_item,
+                              style: context.textStyle.s10.white.w400,
+                            ),
                           ),
                         ),
                       ),
                     ],
                   ),
                   h4,
-                  const EndToEndTextWidget(
-                    text1: "T23-24/D-AM120",
-                    text2: "29-07-2024",
+                  EndToEndTextWidget(
+                    text1: widget.data.party.taxNumber ?? "",
+                    text2: widget.data.party.lastSyncOn?.toString() ?? "",
                   ),
                   h4,
                   Row(
@@ -113,89 +155,99 @@ class _SalesScreenState extends State<SalesScreen> {
                       ),
                       w10,
                       GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _selectedMode = "B2B";
-                          });
-                        },
-                        child: Row(
-                          children: [
-                            Container(
-                              width: context.getSize.width * 0.045,
-                              height: context.getSize.height * 0.022,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: _selectedMode == "B2B"
-                                      ? Colors.blue
-                                      : Colors.grey,
-                                  width: 2,
-                                ),
-                              ),
-                              child: Center(
-                                child: Container(
-                                  width: context.getSize.width * 0.0225,
-                                  height: context.getSize.height * 0.01,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
+                        onTap: hasTaxNumber
+                            ? () {
+                                setState(() {
+                                  _selectedMode = "B2B";
+                                });
+                              }
+                            : null,
+                        child: Opacity(
+                          opacity: hasTaxNumber ? 1 : 0.4,
+                          child: Row(
+                            children: [
+                              Container(
+                                width: context.getSize.width * 0.045,
+                                height: context.getSize.height * 0.022,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
                                     color: _selectedMode == "B2B"
-                                        ? Colors.orange
+                                        ? Colors.blue
                                         : Colors.grey,
+                                    width: 2,
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Container(
+                                    width: context.getSize.width * 0.0225,
+                                    height: context.getSize.height * 0.01,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: _selectedMode == "B2B"
+                                          ? Colors.orange
+                                          : Colors.grey,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            w6,
-                            Text(
-                              appLocalizations.b2b,
-                              style:
-                                  context.textStyle.s10.w500.dustyBlue.roboto,
-                            ),
-                          ],
+                              w6,
+                              Text(
+                                appLocalizations.b2b,
+                                style:
+                                    context.textStyle.s10.w500.dustyBlue.roboto,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       w20,
                       GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _selectedMode = "B2C";
-                          });
-                        },
-                        child: Row(
-                          children: [
-                            Container(
-                              width: context.getSize.width * 0.045,
-                              height: context.getSize.height * 0.022,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: _selectedMode == "B2C"
-                                      ? Colors.blue
-                                      : Colors.grey,
-                                  width: 2,
-                                ),
-                              ),
-                              child: Center(
-                                child: Container(
-                                  width: context.getSize.width * 0.0225,
-                                  height: context.getSize.height * 0.01,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
+                        onTap: !hasTaxNumber
+                            ? () {
+                                setState(() {
+                                  _selectedMode = "B2C";
+                                });
+                              }
+                            : null,
+                        child: Opacity(
+                          opacity: !hasTaxNumber ? 1 : 0.4,
+                          child: Row(
+                            children: [
+                              Container(
+                                width: context.getSize.width * 0.045,
+                                height: context.getSize.height * 0.022,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
                                     color: _selectedMode == "B2C"
-                                        ? Colors.orange
+                                        ? Colors.blue
                                         : Colors.grey,
+                                    width: 2,
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Container(
+                                    width: context.getSize.width * 0.0225,
+                                    height: context.getSize.height * 0.01,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: _selectedMode == "B2C"
+                                          ? Colors.orange
+                                          : Colors.grey,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            w6,
-                            Text(
-                              appLocalizations.b2c,
+                              w6,
+                              Text(
+                                appLocalizations.b2c,
 
-                              style:
-                                  context.textStyle.s10.w500.dustyBlue.roboto,
-                            ),
-                          ],
+                                style:
+                                    context.textStyle.s10.w500.dustyBlue.roboto,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       w20,
@@ -259,233 +311,440 @@ class _SalesScreenState extends State<SalesScreen> {
               ),
             ),
           ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate((context, index) {
-              final product = products[index];
-
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
+          Consumer<CustomerTransactionProvider>(
+            builder: (context, txn, _) {
+              return StreamBuilder<List<SelectedOrderItem>>(
+                stream: txn.orderItemsStream(
+                  appDb: sl<AppDb>(),
+                  fallbackPriceLevelId: widget.data.party.priceList ?? 0,
                 ),
-                child: Column(
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const SliverToBoxAdapter(
+                      child: Center(child: CircularProgressIndicator()),
+                    );
+                  }
+
+                  final items = snapshot.data!;
+                  if (items.isEmpty) {
+                    return SliverToBoxAdapter(
+                      child: SizedBox(
+                        height: context.getSize.height * 0.3,
+                        child: Row(
+                          mainAxisAlignment: .center,
+                          crossAxisAlignment: .center,
+                          children: [
+                            Text(
+                              'No items added',
+                              style:
+                                  context.textStyle.s10.w400.dustyBlue.roboto,
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+
+                  return SliverList(
+                    delegate: SliverChildBuilderDelegate((context, index) {
+                      return Column(
+                        children: [
+                          OrderItemTile(
+                            data: items[index], // SelectedOrderItem
+                          ),
+                          if (items.last == items[index]) ...[
+                            h16,
+                            Row(
+                              mainAxisAlignment: .center,
+                              children: [
+                                Text(
+                                  "****** END OF THE LIST ******",
+                                  style: context
+                                      .textStyle
+                                      .s10
+                                      .w400
+                                      .dustyBlue
+                                      .roboto,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ],
+                      );
+                    }, childCount: items.length),
+                  );
+                },
+              );
+            },
+          ),
+          SliverToBoxAdapter(
+            child: SizedBox(height: context.getSize.height * 0.4),
+          ),
+        ],
+      ),
+
+      bottomNavigationBar: SafeArea(
+        child: ColoredBox(
+          color: ColorResources.white,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 17),
+            child: Consumer<CustomerTransactionProvider>(
+              builder: (context, txn, _) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Divider(
+                      thickness: 1,
+                      color: ColorResources.bluishGray.withValues(alpha: 0.2),
+                    ),
+                    h16,
+
+                    /// Sub Total
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          appLocalizations.order_booking_sub_total,
+                          style: context.textStyle.s12.w500.indigoBlue.roboto,
+                        ),
+                        w60,
+                        Text(
+                          txn.subTotal.toStringAsFixed(2),
+                          style: context.textStyle.s12.w500.indigoBlue.roboto,
+                        ),
+                      ],
+                    ),
+
+                    h12,
+
+                    /// CGST
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          appLocalizations.cgst,
+                          style: context.textStyle.s10.w400.dustyBlue.roboto,
+                        ),
+                        w60,
+                        Text(
+                          txn.cgst.toStringAsFixed(2),
+                          style: context.textStyle.s10.w400.dustyBlue.roboto,
+                        ),
+                      ],
+                    ),
+
+                    h8,
+
+                    /// SGST
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          appLocalizations.sgst,
+                          style: context.textStyle.s10.w400.dustyBlue.roboto,
+                        ),
+                        w60,
+                        Text(
+                          txn.sgst.toStringAsFixed(2),
+                          style: context.textStyle.s10.w400.dustyBlue.roboto,
+                        ),
+                      ],
+                    ),
+
+                    h8,
+
+                    /// CESS
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          appLocalizations.cess,
+                          style: context.textStyle.s10.w400.dustyBlue.roboto,
+                        ),
+                        w60,
+                        Text(
+                          txn.cess.toStringAsFixed(2),
+                          style: context.textStyle.s10.w400.dustyBlue.roboto,
+                        ),
+                      ],
+                    ),
+
+                    h8,
+
+                    /// Grand Total
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          appLocalizations.grand_total,
+                          style: context.textStyle.s12.w500.indigoBlue.roboto,
+                        ),
+                        w60,
+                        Text(
+                          txn.grandTotal.toStringAsFixed(2),
+                          style: context.textStyle.s12.w500.indigoBlue.roboto,
+                        ),
+                      ],
+                    ),
+                    h16,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          appLocalizations.discount_add_minus,
+                          style: context.textStyle.s12.w500.indigoBlue.roboto,
+                        ),
+                        CustomSwitch(
+                          borderColor: ColorResources.bluishGray,
+                          thumbColor: ColorResources.bluishGray,
+                          value: false,
+                          onChanged: (value) {
+                            if (value == true) {
+                              CustomDialog.showBottomCustomDialog(
+                                child: const DiscountAlertWidget(),
+                              );
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                    h16,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          appLocalizations.sales_screen_coupon_discount,
+                          style: context.textStyle.s12.w500.indigoBlue.roboto,
+                        ),
+                        CustomSwitch(
+                          borderColor: ColorResources.bluishGray,
+                          thumbColor: ColorResources.bluishGray,
+                          value: false,
+                          onChanged: (value) {
+                            if (value == true) {
+                              CustomDialog.showBottomCustomDialog(
+                                child: const ApplyCouponWidget(),
+                              );
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                    h16,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          appLocalizations.sales_screen_auto_receipt_req,
+                          style: context.textStyle.s12.w500.indigoBlue.roboto,
+                        ),
+                        CustomSwitch(
+                          borderColor: ColorResources.bluishGray,
+                          thumbColor: ColorResources.bluishGray,
+                          value: false,
+                          onChanged: (value) async {
+                            if (value == true) {
+                              await openPaymentDialog();
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                    h12,
+                    Text(
+                      appLocalizations.remarks,
+                      style: context.textStyle.s10.w400.dustyBlue.roboto,
+                    ),
+                    h13,
+                    CustomTextField(
+                      hint: "",
+                      controller: remarkController,
+
+                      borderRadius: 16,
+                      borderColor: ColorResources.ashGray,
+                    ),
+                    h12,
                     Row(
                       children: [
                         Expanded(
-                          flex: 3,
-                          child: Text(
-                            product["name"]!,
-                            style: context.textStyle.s09.w500.dustyBlue.roboto,
+                          child: CustomButton(
+                            buttonText: appLocalizations.save,
+                            onTap: () async {
+                              final txn = context
+                                  .read<CustomerTransactionProvider>();
+                              final db = context.read<AppDb>();
+                              print(
+                                "Selected Payment Before Save: $selectedPayment",
+                              );
+                              print(
+                                "Payment Mode: ${selectedPayment?.paymentMode}",
+                              );
+                              print("Amount: ${selectedPayment?.amount}");
+
+                              await saveSale(
+                                db: db,
+                                txn: txn,
+                                companyId: widget.data.data.company.id!,
+                                ledgerName: widget.data.party.ledgerName ?? "",
+                                ledgerId: widget.data.party.ledgerId,
+                                billingMode: _selectedMode,
+                                gstNumber: widget.data.party.taxNumber,
+                                remark: remarkController.text,
+                                paymentData: selectedPayment,
+                              );
+
+                              txn.clearSelectedItems();
+                              remarkController.clear();
+                              Navigator.pop(context);
+                            },
+
+                            isborderEnable: false,
+                            borderRadius: BorderRadius.circular(16),
                           ),
                         ),
+                        w10,
                         Expanded(
-                          flex: 2,
-                          child: Text(
-                            product["qty"]!,
-                            textAlign: TextAlign.center,
-                            style: context.textStyle.s09.w400.dustyBlue.roboto,
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Text(
-                            product["rate"]!,
-                            textAlign: TextAlign.center,
-                            style: context.textStyle.s09.w400.dustyBlue.roboto,
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Text(
-                            product["amount"]!,
-                            textAlign: TextAlign.end,
-                            style: context.textStyle.s09.w400.dustyBlue.roboto,
+                          child: CustomButton(
+                            buttonText: appLocalizations.cancel,
+                            isborderEnable: false,
+                            color: ColorResources.bluishGray,
+                            borderRadius: BorderRadius.circular(16),
                           ),
                         ),
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4),
-                      child: Text(
-                        "${appLocalizations.free_qty} ${product["freeQty"]!}",
-                        style: context.textStyle.s09.w400.dustyBlue.roboto,
-                      ),
-                    ),
+                    h16,
                   ],
-                ),
-              );
-            }, childCount: products.length),
-          ),
-          SliverFillRemaining(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 17),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Spacer(),
-                  // Divider(
-                  //   thickness: 1,
-                  //   color: ColorResources.bluishGray.withValues(alpha: 0.2),
-                  // ),
-                  // h16,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-
-                    children: [
-                      Text(
-                        appLocalizations.cgst,
-                        style: context.textStyle.s10.w400.dustyBlue.roboto,
-                      ),
-                      w60,
-                      Text(
-                        "0.00",
-                        style: context.textStyle.s10.w400.dustyBlue.roboto,
-                      ),
-                      h8,
-                    ],
-                  ),
-                  h8,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-
-                    children: [
-                      Text(
-                        appLocalizations.sgst,
-                        style: context.textStyle.s10.w400.dustyBlue.roboto,
-                      ),
-                      w60,
-                      Text(
-                        "0.00",
-                        style: context.textStyle.s10.w400.dustyBlue.roboto,
-                      ),
-                    ],
-                  ),
-                  h8,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-
-                    children: [
-                      Text(
-                        appLocalizations.grand_total,
-                        style: context.textStyle.s12.w500.indigoBlue.roboto,
-                      ),
-                      w60,
-                      Text(
-                        "0.00",
-                        style: context.textStyle.s12.w500.indigoBlue.roboto,
-                      ),
-                    ],
-                  ),
-                  h32,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        appLocalizations.discount_add_minus,
-                        style: context.textStyle.s12.w500.indigoBlue.roboto,
-                      ),
-                      CustomSwitch(
-                        borderColor: ColorResources.bluishGray,
-                        thumbColor: ColorResources.bluishGray,
-                        value: false,
-                        onChanged: (value) {
-                          if (value == true) {
-                            CustomDialog.showBottomCustomDialog(
-                              child: const DiscountAlertWidget(),
-                            );
-                          }
-                        },
-                      ),
-                    ],
-                  ),
-                  h16,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        appLocalizations.sales_screen_coupon_discount,
-                        style: context.textStyle.s12.w500.indigoBlue.roboto,
-                      ),
-                      CustomSwitch(
-                        borderColor: ColorResources.bluishGray,
-                        thumbColor: ColorResources.bluishGray,
-                        value: false,
-                        onChanged: (value) {
-                          if (value == true) {
-                            CustomDialog.showBottomCustomDialog(
-                              child: const ApplyCouponWidget(),
-                            );
-                          }
-                        },
-                      ),
-                    ],
-                  ),
-                  h16,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        appLocalizations.sales_screen_auto_receipt_req,
-                        style: context.textStyle.s12.w500.indigoBlue.roboto,
-                      ),
-                      CustomSwitch(
-                        borderColor: ColorResources.bluishGray,
-                        thumbColor: ColorResources.bluishGray,
-                        value: false,
-                        onChanged: (value) {
-                          if (value == true) {
-                            CustomDialog.showBottomCustomDialog(
-                              child: const PaymentModeAlertWidget(),
-                            );
-                          }
-                        },
-                      ),
-                    ],
-                  ),
-                  h12,
-                  Text(
-                    appLocalizations.remarks,
-                    style: context.textStyle.s10.w400.dustyBlue.roboto,
-                  ),
-                  h13,
-                  const CustomTextField(
-                    hint: "",
-                    borderRadius: 16,
-                    borderColor: ColorResources.ashGray,
-                  ),
-                  h12,
-                  Row(
-                    children: [
-                      Expanded(
-                        child: CustomButton(
-                          buttonText: appLocalizations.save,
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          isborderEnable: false,
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                      ),
-                      w10,
-                      Expanded(
-                        child: CustomButton(
-                          buttonText: appLocalizations.cancel,
-                          isborderEnable: false,
-                          color: ColorResources.bluishGray,
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                      ),
-                    ],
-                  ),
-                  h16,
-                ],
-              ),
+                );
+              },
             ),
           ),
-        ],
+        ),
       ),
     );
+  }
+}
+
+Future<void> saveSale({
+  required AppDb db,
+  required CustomerTransactionProvider txn,
+  required int companyId,
+  required String ledgerName,
+  required int ledgerId,
+  required String billingMode,
+  required String? gstNumber,
+  required String remark,
+  PaymentData? paymentData,
+}) async {
+  if (txn.selectedItemCount == 0) {
+    print("No items selected");
+    return;
+  }
+
+  await db.transaction(() async {
+    /// 1️⃣ INSERT MASTER
+    final masterId = await db
+        .into(db.saleMasterTable)
+        .insert(
+          SaleMasterTableCompanion.insert(
+            partyId: Value(ledgerId),
+            party: Value(ledgerName),
+            voucherAmount: txn.grandTotal,
+            companyId: Value(companyId),
+            itemCount: Value(txn.selectedItemCount),
+            gstin: Value(gstNumber),
+            billingMode: Value(billingMode),
+            sync: const Value(0),
+            voucherDate: Value(DateFormat('yyyy-MM-dd').format(DateTime.now())),
+            narration: Value(remark.isEmpty ? null : remark),
+          ),
+        );
+
+    print("Inserted Master ID: $masterId");
+
+    /// 2️⃣ INSERT DETAILS
+
+    for (final itemId in txn.selectedItemIds) {
+      final qty = txn.getQty(itemId);
+      final discount = txn.getDiscount(itemId);
+
+      await db
+          .into(db.saleDetailsTable)
+          .insert(
+            SaleDetailsTableCompanion.insert(
+              mid: Value(masterId),
+              itemId: Value(itemId),
+              qty: Value(qty),
+              total: Value(txn.subTotal),
+              companyId: Value(companyId),
+              sync: const Value(0),
+              cgst: Value(txn.cgst),
+              sgst: Value(txn.sgst),
+              cess: Value(txn.cess),
+              disc: Value(discount),
+            ),
+          );
+    }
+
+    /// 3️⃣ INSERT LEDGER
+    await db
+        .into(db.saleLedgerDetailsTable)
+        .insert(
+          SaleLedgerDetailsTableCompanion.insert(
+            mid: Value(masterId),
+            ledger: Value(ledgerName),
+            amount: Value(txn.grandTotal),
+            companyId: Value(companyId),
+            sync: const Value(0),
+          ),
+        );
+    //insert autorecipt
+    await db
+        .into(db.saleAutoReceiptTable)
+        .insert(
+          SaleAutoReceiptTableCompanion.insert(
+            mid: Value(masterId),
+            companyId: Value(companyId),
+            paymentMode: Value(paymentData?.paymentMode),
+            amount: Value(paymentData?.amount),
+            upiReference: Value(paymentData?.upiReference),
+            chequeNumber: Value(paymentData?.chequeNumber),
+            chequeDate: Value(
+              DateFormat('yyyy-MM-dd').format(paymentData!.chequeDate!),
+            ),
+
+            sync: const Value(0),
+          ),
+        );
+  });
+
+  await printSavedSaleData(db);
+}
+
+Future<void> printSavedSaleData(AppDb db) async {
+  final masters = await db.select(db.saleMasterTable).get();
+  final details = await db.select(db.saleDetailsTable).get();
+  final ledger = await db.select(db.saleLedgerDetailsTable).get();
+  final autorecipt = await db.select(db.saleAutoReceiptTable).get();
+
+  print("==== SALE MASTER ====");
+  for (var m in masters) {
+    print(m.toJson());
+  }
+
+  print("==== SALE DETAILS ====");
+  for (var d in details) {
+    print(d.toJson());
+  }
+
+  print("==== SALE LEDGER ====");
+  for (var l in ledger) {
+    print(l.toJson());
+  }
+
+  print("==== SALE AUTO RECEIPT ====");
+  for (var r in autorecipt) {
+    print(r.toJson());
   }
 }

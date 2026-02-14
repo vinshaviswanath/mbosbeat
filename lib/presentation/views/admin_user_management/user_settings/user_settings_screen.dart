@@ -63,7 +63,12 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
           return CustomScrollView(
             slivers: [
               SliverPadding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: EdgeInsets.fromLTRB(
+                  16,
+                  0,
+                  16,
+                  MediaQuery.of(context).padding.bottom + 16,
+                ),
                 sliver: SliverList(
                   delegate: SliverChildBuilderDelegate(
                     childCount: data.length,

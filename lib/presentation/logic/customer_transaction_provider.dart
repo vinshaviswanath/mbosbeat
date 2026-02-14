@@ -1,4 +1,6 @@
+import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/data_sources/user/party_MasterSync/party_MasterSync.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/local_db/daos/item_price_details_dao/item_price_details_dao.dart';
 import 'package:mpos_beat/data/models/product.dart';
@@ -34,6 +36,8 @@ class CustomerTransactionProvider extends ChangeNotifier {
   final Map<int, double> _itemTotal = {};
   final Map<int, String> _selectedUnit = {};
   final Set<int> _selectedItems = {};
+  Set<int> get selectedItemIds => _selectedItems;
+
   final Map<int, double> _itemDiscount = {};
   final Map<int, DiscountType> _discountType = {};
 
@@ -215,11 +219,13 @@ class CustomerTransactionProvider extends ChangeNotifier {
   void selectCategory(String value) {
     if (_selectedCategory == value) return;
     _selectedCategory = value;
+    resetPagination();
     notifyListeners();
   }
 
   void updateSearch(String value) {
     _search = value;
+    resetPagination();
     notifyListeners();
   }
 
@@ -352,5 +358,81 @@ class CustomerTransactionProvider extends ChangeNotifier {
         item.unitConversion /
         (item.unitDenominator == 0 ? 1 : item.unitDenominator);
     return baseRate * conversion;
+  }
+
+  //pagination
+  final List<Product> _pagedItems = [];
+  List<Product> get pagedItems => _pagedItems;
+
+  int _page = 0;
+  final int _limit = 100;
+
+  bool _isLoadingPage = false;
+  bool _hasMore = true;
+
+  bool get isLoadingPage => _isLoadingPage;
+  bool get hasMore => _hasMore;
+  void resetPagination() {
+    _pagedItems.clear();
+    _page = 0;
+    _hasMore = true;
+    notifyListeners();
+  }
+
+  Future<void> loadNextPage({
+    required int companyId,
+    required int priceListId,
+    required int ledgerId,
+  }) async {
+    if (_isLoadingPage || !_hasMore) return;
+
+    _isLoadingPage = true;
+    notifyListeners();
+
+    final result = await sl<PartyMasterSync>().fetchProduct(
+      companyId,
+      priceListId,
+      ledgerId,
+      _selectedGroup,
+      _selectedCategory,
+      _search,
+      limit: _limit,
+      offset: _page * _limit,
+    );
+
+    if (result.length < _limit) {
+      _hasMore = false;
+    }
+
+    _pagedItems.addAll(result);
+    _page++;
+
+    _isLoadingPage = false;
+    notifyListeners();
+  }
+
+  void setQty(int itemId, double qty, double inclRate) {
+    updateQty(itemId, qty, inclRate);
+  }
+
+  // ===================== SCREEN RESET =====================
+  void resetAddItemScreenState() {
+    // filters
+    _search = '';
+    _selectedGroup = 'All';
+    _selectedCategory = 'All';
+
+    // pagination
+    _pagedItems.clear();
+    _page = 0;
+    _hasMore = true;
+    _isLoadingPage = false;
+
+    notifyListeners();
+  }
+
+  void clearOrder() {
+    _selectedItems.clear();
+    notifyListeners();
   }
 }

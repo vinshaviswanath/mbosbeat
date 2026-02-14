@@ -1161,5 +1161,5 @@ class UserManagementProvider with ChangeNotifier {
     return _companyCreationDtos;
   }
 
-  
+
 }

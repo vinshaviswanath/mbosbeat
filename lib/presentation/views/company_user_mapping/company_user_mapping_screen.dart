@@ -32,29 +32,6 @@ class _CompanyUserMappingScreenState extends State<CompanyUserMappingScreen> {
   final Set<int> selectedUserIds = {};
   final List<UserList> selectedUserList = [];
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   WidgetsBinding.instance.addPostFrameCallback((_) async {
-  //     final provider = context.read<UserManagementProvider>();
-  //     await provider.getAllUsersList(context);
-
-  //     final pref = sl<SharedPreferences>();
-  //     final storedList = pref.getStringList(
-  //       'company_users_${widget.companyId}',
-  //     );
-  //     if (storedList != null && storedList.isNotEmpty) {
-  //       final loadedUsers = storedList.map(int.parse).toList();
-  //       setState(() {
-  //         selectedUserIds.addAll(loadedUsers);
-  //         selectedUserList.addAll(
-  //           loadedUsers.map((id) => UserList(userId: id)),
-  //         );
-  //       });
-  //     }
-  //   });
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -254,32 +231,29 @@ class _CompanyUserMappingScreenState extends State<CompanyUserMappingScreen> {
           horizontal: context.getSize.width / 4,
           vertical: 12,
         ),
-        child: CustomButton(
-          borderRadius: BorderRadius.circular(16),
-          onTap: () async {
-            // final pref = sl<SharedPreferences>();
-            // await pref.setStringList(
-            //   'company_users_${widget.companyId}',
-            //   selectedUserList.map((e) => e.userId.toString()).toList(),
-            // );
+        child: SafeArea(
+          top: false,
+          child: CustomButton(
+            borderRadius: BorderRadius.circular(16),
+            onTap: () async {
+              provider
+                  .createCompanyMapping(
+                    context: context,
+                    companyId: widget.companyId,
+                    userList: selectedUserList,
+                  )
+                  .then(
+                    (_) => WidgetsBinding.instance.addPostFrameCallback((_) {
+                      context.pop();
+                      companyprovider.getAllCompanies(context);
+                    }),
+                  );
 
-            provider
-                .createCompanyMapping(
-                  context: context,
-                  companyId: widget.companyId,
-                  userList: selectedUserList,
-                )
-                .then(
-                  (_) => WidgetsBinding.instance.addPostFrameCallback((_) {
-                    context.pop();
-                    companyprovider.getAllCompanies(context);
-                  }),
-                );
-
-            print('selected userlist ${selectedUserList}');
-          },
-          buttonText: appLocalization.save,
-          isborderEnable: false,
+              print('selected userlist ${selectedUserList}');
+            },
+            buttonText: appLocalization.save,
+            isborderEnable: false,
+          ),
         ),
       ),
     );

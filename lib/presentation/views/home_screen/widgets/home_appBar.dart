@@ -45,51 +45,59 @@ class _HomeAppBarState extends State<HomeAppBar> {
         IconButton(
           icon: const Icon(Icons.sync),
           onPressed: () async {
-            final appDb = sl<AppDb>();
-            final companyProvider = context.read<CompanyCreationProvider>();
-            final userManagementProvider = context
-                .read<UserManagementProvider>();
             final userProvider = context.read<UserProvider>();
 
-            _userId = await appDb.registrationDetailDao.getLoggedInUserId();
-            if (_userId == null) return;
+            userProvider.setHomeLoading(true);
 
-            final companyId = widget.company.id ?? 0;
+            try {
+              final appDb = sl<AppDb>();
+              final companyProvider = context.read<CompanyCreationProvider>();
+              final userManagementProvider = context
+                  .read<UserManagementProvider>();
+              final userProvider = context.read<UserProvider>();
 
-            await Future.wait([
-              companyProvider.fetchVoucherTypes(context, companyId),
-              companyProvider.getCompanySettings(context, companyId),
-              companyProvider.getAllGodowns(
-                context: context,
-                companyId: companyId.toString(),
-              ),
-              companyProvider.getAllRoutess(
-                context: context,
-                companyId: companyId.toString(),
-              ),
-              userManagementProvider.getUsersSettingsList(
-                context: context,
-                userId: _userId.toString(),
-              ),
-            ]);
+              _userId = await appDb.registrationDetailDao.getLoggedInUserId();
+              if (_userId == null) return;
 
-            userProvider.setCompanyId(companyId);
-            await userProvider.partyMasterSync();
-            await userProvider.getItemMaster(
-              context,
-              params: ItemMasterQueryParams(
+              final companyId = widget.company.id ?? 0;
+
+              await Future.wait([
+                companyProvider.fetchVoucherTypes(context, companyId),
+                companyProvider.getCompanySettings(context, companyId),
+                companyProvider.getAllGodowns(
+                  context: context,
+                  companyId: companyId.toString(),
+                ),
+                companyProvider.getAllRoutess(
+                  context: context,
+                  companyId: companyId.toString(),
+                ),
+                userManagementProvider.getUsersSettingsList(
+                  context: context,
+                  userId: _userId.toString(),
+                ),
+              ]);
+
+              userProvider.setCompanyId(companyId);
+              await userProvider.partyMasterSync();
+              await userProvider.getItemMaster(
+                context,
+                params: ItemMasterQueryParams(
+                  companyId: companyId,
+                  pageNumber: 1,
+                  lastSyncDateTime: DateTime.now(),
+                ),
+              );
+              await userProvider.getPriceLevel(context, companyId: companyId);
+              await userProvider.getItemPriceDetails(
+                context,
                 companyId: companyId,
-                pageNumber: 1,
-                lastSyncDateTime: DateTime.now(),
-              ),
-            );
-            await userProvider.getPriceLevel(context, companyId: companyId);
-            await userProvider.getItemPriceDetails(
-              context,
-              companyId: companyId,
-            );
-            await userProvider.loadRouteState();
-            await userProvider.load();
+              );
+              await userProvider.loadRouteState();
+              await userProvider.load();
+            } finally {
+              userProvider.setHomeLoading(false);
+            }
           },
         ),
         IconButton(

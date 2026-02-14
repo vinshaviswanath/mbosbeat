@@ -76,34 +76,36 @@ class _IntegrationWidgetState extends State<IntegrationWidget> {
           ),
         ],
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(16),
-        child: CustomButton(
-          buttonText: appLocalizations.integration_type_finish,
-          isborderEnable: false,
-          onTap: () {
-            final provider = context.read<CompanyCreationProvider>();
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+          child: CustomButton(
+            buttonText: appLocalizations.integration_type_finish,
+            isborderEnable: false,
+            onTap: () {
+              final provider = context.read<CompanyCreationProvider>();
 
-            final integrationType = provider.selectedIntegrationType ?? '';
-            final serialNo = provider.integrationSerialNoController ?? '';
-            final stockInCloud = provider.stockInCloud;
+              final integrationType = provider.selectedIntegrationType ?? '';
+              final serialNo = provider.integrationSerialNoController ?? '';
+              final stockInCloud = provider.stockInCloud;
 
-            print('IntegrationType: $integrationType');
-            print('SerialNo: $serialNo');
-            print('StockInCloud: $stockInCloud');
+              print('IntegrationType: $integrationType');
+              print('SerialNo: $serialNo');
+              print('StockInCloud: $stockInCloud');
 
-            provider.integration(
-              context,
-              onSuccess: widget.onTap,
-              companyData: widget.companyData,
-              params: IntegrationParams(
-                companyid: companyId,
-                integrationType: integrationType,
-                serialNo: serialNo,
-                stockInCloud: stockInCloud,
-              ),
-            );
-          },
+              provider.integration(
+                context,
+                onSuccess: widget.onTap,
+                companyData: widget.companyData,
+                params: IntegrationParams(
+                  companyid: companyId,
+                  integrationType: integrationType,
+                  serialNo: serialNo,
+                  stockInCloud: stockInCloud,
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

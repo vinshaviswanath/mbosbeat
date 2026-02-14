@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 
-class SaleOrderDetailsTable extends Table {
+class SaleDetailsTable extends Table {
   // Local primary key
   IntColumn get id => integer().autoIncrement()();
 
