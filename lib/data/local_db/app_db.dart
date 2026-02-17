@@ -74,8 +74,12 @@ import 'package:mpos_beat/data/local_db/tables/sales/sales_master_table.dart';
 import 'package:mpos_beat/data/local_db/tables/sales_order/sale_order_details_table.dart';
 import 'package:mpos_beat/data/local_db/tables/sales_order/sale_order_ledger_details_table.dart';
 import 'package:mpos_beat/data/local_db/tables/sales_order/sale_order_master_table.dart';
+import 'package:mpos_beat/data/local_db/tables/sales_return/sales_return_details_table.dart';
+import 'package:mpos_beat/data/local_db/tables/sales_return/sales_return_ledger_details.dart';
+import 'package:mpos_beat/data/local_db/tables/sales_return/sales_return_master_table.dart';
 import 'package:mpos_beat/data/local_db/tables/user_settings_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/voucher_types_tables.dart';
+import 'package:mpos_beat/presentation/views/transactions/sales_return/sales_return.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:sqlite3/sqlite3.dart';
@@ -113,7 +117,10 @@ part 'app_db.g.dart';
     SaleMasterTable,
     SaleDetailsTable,
     SaleLedgerDetailsTable,
-    SaleAutoReceiptTable
+    SaleAutoReceiptTable,
+    SaleReturnMasterTable,
+    SaleReturnDetailsTable,
+    SaleReturnLedgerDetailsTable,
   ],
   daos: [
     CompanyDao,
@@ -136,7 +143,7 @@ class AppDb extends _$AppDb {
   AppDb() : super(_openConnection());
 
   @override
-  int get schemaVersion => 24;
+  int get schemaVersion => 25;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -240,6 +247,11 @@ class AppDb extends _$AppDb {
       }
       if (from < 24) {
         await m.createTable(saleAutoReceiptTable);
+      }
+      if (from < 25) {
+        await m.createTable(saleReturnMasterTable);
+        await m.createTable(saleReturnDetailsTable);
+        await m.createTable(saleReturnLedgerDetailsTable);
       }
     },
   );

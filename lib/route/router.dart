@@ -144,7 +144,7 @@ class AppRouter {
         path: "/login",
         name: AppRouterConst.login,
         builder: (context, state) {
-          return  LoginScreen();
+          return LoginScreen();
         },
       ),
       GoRoute(
@@ -291,13 +291,13 @@ class AppRouter {
         path: "/telephonicOrderScreen",
         name: AppRouterConst.telephonicOrderScreen,
         builder: (context, state) {
-          return  TelephonicOrderScreen();
+          return TelephonicOrderScreen();
         },
       ),
       GoRoute(
         path: "/salesScreen",
         name: AppRouterConst.salesScreen,
-         builder: (context, state) {
+        builder: (context, state) {
           final data = state.extra as TransactionOrderBookingRouteArgs;
           return SalesScreen(data: data);
         },
@@ -306,7 +306,8 @@ class AppRouter {
         path: "/salesReturnScreen",
         name: AppRouterConst.salesReturnScreen,
         builder: (context, state) {
-          return const SalesReturnScreen();
+              final data = state.extra as TransactionOrderBookingRouteArgs;
+          return SalesReturnScreen(data: data);
         },
       ),
       GoRoute(

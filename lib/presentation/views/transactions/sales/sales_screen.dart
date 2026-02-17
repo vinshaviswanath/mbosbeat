@@ -10,7 +10,6 @@ import 'package:mpos_beat/presentation/logic/customer_transaction_provider.dart'
 import 'package:mpos_beat/presentation/views/transactions/purchase/widgets/discount_alert_widget.dart';
 import 'package:mpos_beat/presentation/views/transactions/sales/widgets/apply_coupon_widget.dart';
 import 'package:mpos_beat/presentation/views/transactions/sales/widgets/payment_mode_alert_widget.dart';
-import 'package:mpos_beat/presentation/views/transactions/sales_return/sales_return.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/transaction_order_booking_screen.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/widgets/end_to_end_text_widget.dart';
 
