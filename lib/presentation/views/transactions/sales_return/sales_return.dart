@@ -1,64 +1,35 @@
+import 'package:drift/drift.dart' show Value;
+import 'package:intl/intl.dart';
+import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
+import 'package:mpos_beat/presentation/logic/customer_transaction_provider.dart';
+import 'package:mpos_beat/presentation/logic/user_provider.dart';
+import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/transaction_order_booking_screen.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/widgets/end_to_end_text_widget.dart';
 
 class SalesReturnScreen extends StatefulWidget {
-  const SalesReturnScreen({super.key});
+  final TransactionOrderBookingRouteArgs data;
+  const SalesReturnScreen({super.key, required this.data});
 
   @override
   State<SalesReturnScreen> createState() => _SalesReturnScreenState();
 }
 
-final List<Map<String, dynamic>> data = [
-  {
-    "product": "ASD 16 Rice 10Kg",
-    "qty": "5.0 Qls",
-    "rate": "3900.00 Qls",
-    "amount": "27300.00",
-    "damaged": "2.0 Qls",
-    "free": "1.0 Qls",
-    "saleable": "5.0 Qls",
-  },
-  {
-    "product": "ASD 16 Rice 10Kg",
-    "qty": "5.0 Qls",
-    "rate": "3900.00 Qls",
-    "amount": "5300.00",
-    "damaged": "2.0 Qls",
-    "free": "1.0 Qls",
-    "saleable": "5.0 Qls",
-  },
-  {
-    "product": "ASD 16 Rice 10Kg",
-    "qty": "5.0 Qls",
-    "rate": "3900.00 Qls",
-    "amount": "10300.00",
-    "damaged": "2.0 Qls",
-    "free": "1.0 Qls",
-    "saleable": "5.0 Qls",
-  },
-  {
-    "product": "ASD 16 Rice 10Kg",
-    "qty": "5.0 Qls",
-    "rate": "3900.00 Qls",
-    "amount": "6700.00",
-    "damaged": "2.0 Qls",
-    "free": "1.0 Qls",
-    "saleable": "5.0 Qls",
-  },
-];
-
-bool _showData = false;
-
 class _SalesReturnScreenState extends State<SalesReturnScreen> {
+  final TextEditingController remarkController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final appLocalizations = context.l10n;
+    final provider = context.read<CustomerTransactionProvider>();
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
+            provider.clearSelectedItems();
           },
           icon: Icon(
             Icons.keyboard_arrow_left,
@@ -82,10 +53,7 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
           ),
           IconButton(
             onPressed: () {},
-            icon:  Icon(
-              Icons.qr_code,
-              size: context.getSize.height * 0.022,
-            ),
+            icon: Icon(Icons.qr_code, size: context.getSize.height * 0.022),
           ),
         ],
       ),
@@ -102,15 +70,20 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Alackal Stores, Kuruppamthara",
+                        widget.data.party.ledgerName ?? "",
                         style: context.textStyle.s12.w500.indigoBlue.roboto,
                       ),
-                      InkWell(
+                      GestureDetector(
                         onTap: () {
-                          setState(() {
-                            _showData = !_showData;
-                          });
+                          context.pushNamed(
+                            AppRouterConst.orderBookingAddItemScreen,
+                            extra: TransactionOrderBookingRouteArgs(
+                              data: widget.data.data,
+                              party: widget.data.party,
+                            ),
+                          );
                         },
+
                         child: Container(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 15,
@@ -131,9 +104,9 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
                     ],
                   ),
                   h4,
-                  const EndToEndTextWidget(
-                    text1: "T23-24/D-AM120",
-                    text2: "29-07-2024",
+                  EndToEndTextWidget(
+                    text1: widget.data.party.taxNumber ?? "",
+                    text2: widget.data.party.lastSyncOn?.toString() ?? "",
                   ),
                   h4,
                   Divider(
@@ -173,13 +146,7 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
                           style: context.textStyle.s09.w500.dustyBlue.roboto,
                         ),
                       ),
-                      // Expanded(
-                      //   flex: 1,
-                      //   child: Text(
-                      //     "Discount",
-                      //     style: context.textStyle.s09.w500.dustyBlue.roboto,
-                      //   ),
-                      // ),
+
                       Expanded(
                         flex: 1,
                         child: Text(
@@ -199,285 +166,346 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
               ),
             ),
           ),
-          if (_showData)
-            SliverList(
-              delegate: SliverChildBuilderDelegate((context, index) {
-                final item = data[index];
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.only(
-                          left: 8,
-                          top: 6,
-                          bottom: 6,
-                          right: 8,
-                        ),
-                        decoration: BoxDecoration(
-                          color: ColorResources.lightGray,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+          Consumer<CustomerTransactionProvider>(
+            builder: (context, txn, _) {
+              return StreamBuilder<List<SelectedOrderItem>>(
+                stream: txn.orderItemsStream(
+                  appDb: sl<AppDb>(),
+                  fallbackPriceLevelId: widget.data.party.priceList ?? 0,
+                ),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const SliverToBoxAdapter(
+                      child: Center(child: CircularProgressIndicator()),
+                    );
+                  }
+
+                  final items = snapshot.data!;
+                  if (items.isEmpty) {
+                    return SliverToBoxAdapter(
+                      child: SizedBox(
+                        height: context.getSize.height * 0.3,
                         child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: .center,
+                          crossAxisAlignment: .center,
                           children: [
-                            Expanded(
-                              flex: 3,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    item["product"],
-                                    style: context
-                                        .textStyle
-                                        .s09
-                                        .w500
-                                        .dustyBlue
-                                        .roboto,
-                                  ),
-                                  Text(
-                                    "Damaged Qty: ${item["damaged"]}",
-                                    style: context
-                                        .textStyle
-                                        .s09
-                                        .w400
-                                        .rosePink
-                                        .roboto,
-                                  ),
-                                  Text(
-                                    "Free Qty: ${item["free"]}",
-                                    style: context
-                                        .textStyle
-                                        .s09
-                                        .w400
-                                        .dustyBlue
-                                        .roboto,
-                                  ),
-                                ],
-                              ),
+                            Text(
+                              'No items added',
+                              style:
+                                  context.textStyle.s10.w400.dustyBlue.roboto,
                             ),
-                            Expanded(
-                              flex: 1,
-                              child: Center(
-                                child: Text(
-                                  item["qty"],
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+
+                  return SliverList(
+                    delegate: SliverChildBuilderDelegate((context, index) {
+                      return Column(
+                        children: [
+                          OrderItemTile(
+                            data: items[index], // SelectedOrderItem
+                          ),
+                          if (items.last == items[index]) ...[
+                            h16,
+                            Row(
+                              mainAxisAlignment: .center,
+                              children: [
+                                Text(
+                                  "****** END OF THE LIST ******",
                                   style: context
                                       .textStyle
-                                      .s09
+                                      .s10
                                       .w400
-                                      .rosePink
+                                      .dustyBlue
                                       .roboto,
                                 ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 3,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    item["rate"],
-                                    style: context
-                                        .textStyle
-                                        .s09
-                                        .w400
-                                        .dustyBlue
-                                        .roboto,
-                                  ),
-                                  Text(
-                                    "Saleable Qty: ${item["saleable"]}",
-                                    style: context
-                                        .textStyle
-                                        .s09
-                                        .w400
-                                        .dustyBlue
-                                        .roboto,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Text(
-                                item["amount"],
-                                style:
-                                    context.textStyle.s09.w400.dustyBlue.roboto,
-                              ),
+                              ],
                             ),
                           ],
-                        ),
-                      ),
-                      Divider(
-                        thickness: 1,
-                        color: ColorResources.bluishGray.withValues(alpha: 0.2),
-                      ),
-                    ],
-                  ),
-                );
-              }, childCount: data.length),
-            ),
-          SliverFillRemaining(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 17),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Spacer(),
-                  // Divider(
-                  //   thickness: 1,
-                  //   color: ColorResources.bluishGray.withValues(alpha: 0.2),
-                  // ),
-                  // h16,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      w2,
-                      SizedBox(
-                        width: context.getSize.width / 3.4,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        ],
+                      );
+                    }, childCount: items.length),
+                  );
+                },
+              );
+            },
+          ),
 
-                          children: [
-                            Text(
-                              appLocalizations.cgst,
-                              style:
-                                  context.textStyle.s10.w400.dustyBlue.roboto,
-                            ),
-                            // w60,
-                            Text(
-                              "682.50",
-                              style:
-                                  context.textStyle.s10.w400.dustyBlue.roboto,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  h8,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      w2,
-                      SizedBox(
-                        width: context.getSize.width / 3.4,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                          children: [
-                            Text(
-                              appLocalizations.sgst,
-                              style:
-                                  context.textStyle.s10.w400.dustyBlue.roboto,
-                            ),
-                            // w60,
-                            Text(
-                              "682.50",
-                              style:
-                                  context.textStyle.s10.w400.dustyBlue.roboto,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  h8,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      w2,
-                      SizedBox(
-                        width: context.getSize.width / 3.4,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                          children: [
-                            Text(
-                              appLocalizations.cess,
-                              style:
-                                  context.textStyle.s10.w400.dustyBlue.roboto,
-                            ),
-                            // w60,
-                            Text(
-                              "0.00",
-                              style:
-                                  context.textStyle.s10.w400.dustyBlue.roboto,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  h8,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      w2,
-                      SizedBox(
-                        width: context.getSize.width / 2.5,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                          children: [
-                            Text(
-                              appLocalizations.grand_total,
-                              style:
-                                  context.textStyle.s12.w500.indigoBlue.roboto,
-                            ),
-                            // w60,
-                            Text(
-                              "0.00",
-                              style:
-                                  context.textStyle.s12.w500.indigoBlue.roboto,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  h12,
-                  Text(
-                    appLocalizations.remarks,
-                    style: context.textStyle.s10.w400.dustyBlue.roboto,
-                  ),
-                  h13,
-                  const CustomTextField(
-                    hint: "",
-                    borderRadius: 16,
-                    borderColor: ColorResources.ashGray,
-                  ),
-                  h12,
-                  Row(
-                    children: [
-                      Expanded(
-                        child: CustomButton(
-                          buttonText: appLocalizations.save,
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          isborderEnable: false,
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                      ),
-                      w10,
-                      Expanded(
-                        child: CustomButton(
-                          buttonText: appLocalizations.cancel,
-                          isborderEnable: false,
-                          color: ColorResources.bluishGray,
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                      ),
-                    ],
-                  ),
-                  h16,
-                ],
-              ),
-            ),
+          SliverToBoxAdapter(
+            child: SizedBox(height: context.getSize.height * 0.4),
           ),
         ],
       ),
+      bottomNavigationBar: SafeArea(
+        child: ColoredBox(
+          color: ColorResources.white,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 17),
+            child: Consumer<CustomerTransactionProvider>(
+              builder: (context, txn, _) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Divider(
+                      thickness: 1,
+                      color: ColorResources.bluishGray.withValues(alpha: 0.2),
+                    ),
+                    h16,
+
+                    /// Sub Total
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          appLocalizations.order_booking_sub_total,
+                          style: context.textStyle.s12.w500.indigoBlue.roboto,
+                        ),
+                        w60,
+                        Text(
+                          txn.subTotal.toStringAsFixed(2),
+                          style: context.textStyle.s12.w500.indigoBlue.roboto,
+                        ),
+                      ],
+                    ),
+
+                    h12,
+
+                    /// CGST
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          appLocalizations.cgst,
+                          style: context.textStyle.s10.w400.dustyBlue.roboto,
+                        ),
+                        w60,
+                        Text(
+                          txn.cgst.toStringAsFixed(2),
+                          style: context.textStyle.s10.w400.dustyBlue.roboto,
+                        ),
+                      ],
+                    ),
+
+                    h8,
+
+                    /// SGST
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          appLocalizations.sgst,
+                          style: context.textStyle.s10.w400.dustyBlue.roboto,
+                        ),
+                        w60,
+                        Text(
+                          txn.sgst.toStringAsFixed(2),
+                          style: context.textStyle.s10.w400.dustyBlue.roboto,
+                        ),
+                      ],
+                    ),
+
+                    h8,
+
+                    /// CESS
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          appLocalizations.cess,
+                          style: context.textStyle.s10.w400.dustyBlue.roboto,
+                        ),
+                        w60,
+                        Text(
+                          txn.cess.toStringAsFixed(2),
+                          style: context.textStyle.s10.w400.dustyBlue.roboto,
+                        ),
+                      ],
+                    ),
+
+                    h8,
+
+                    /// Grand Total
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          appLocalizations.grand_total,
+                          style: context.textStyle.s12.w500.indigoBlue.roboto,
+                        ),
+                        w60,
+                        Text(
+                          txn.grandTotal.toStringAsFixed(2),
+                          style: context.textStyle.s12.w500.indigoBlue.roboto,
+                        ),
+                      ],
+                    ),
+
+                    h12,
+                    Text(
+                      appLocalizations.remarks,
+                      style: context.textStyle.s10.w400.dustyBlue.roboto,
+                    ),
+                    h13,
+                    CustomTextField(
+                      hint: "",
+                      controller: remarkController,
+
+                      borderRadius: 16,
+                      borderColor: ColorResources.ashGray,
+                    ),
+                    h12,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: CustomButton(
+                            buttonText: appLocalizations.save,
+                            onTap: () async {
+                              final txn = context
+                                  .read<CustomerTransactionProvider>();
+                              final db = context.read<AppDb>();
+
+                              await saveSaleReturn(
+                                db: db,
+                                txn: txn,
+                                companyId: widget.data.data.company.id!,
+                                ledgerName: widget.data.party.ledgerName ?? "",
+                                ledgerId: widget.data.party.ledgerId,
+                                priceLevelId:
+                                    context
+                                        .read<UserProvider>()
+                                        .selectedPriceLevel
+                                        ?.id ??
+                                    0,
+                                remark: remarkController.text,
+                              );
+                              Navigator.pop(context);
+                            },
+
+                            isborderEnable: false,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                        ),
+                        w10,
+                        Expanded(
+                          child: CustomButton(
+                            buttonText: appLocalizations.cancel,
+                            isborderEnable: false,
+                            color: ColorResources.bluishGray,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                        ),
+                      ],
+                    ),
+                    h16,
+                  ],
+                );
+              },
+            ),
+          ),
+        ),
+      ),
     );
+  }
+}
+
+Future<void> saveSaleReturn({
+  required AppDb db,
+  required CustomerTransactionProvider txn,
+  required int companyId,
+  required String ledgerName,
+  required int ledgerId,
+  required int priceLevelId,
+  required String remark,
+}) async {
+  if (txn.selectedItemCount == 0) {
+    print("No items selected for return");
+    return;
+  }
+
+  await db.transaction(() async {
+    /// 1️⃣ INSERT MASTER
+    final masterId = await db
+        .into(db.saleReturnMasterTable)
+        .insert(
+          SaleReturnMasterTableCompanion.insert(
+            partyId: Value(ledgerId),
+            party: Value(ledgerName),
+            voucherAmount: txn.grandTotal,
+            companyId: Value(companyId),
+            priceList: Value(priceLevelId.toString()),
+            voucherDate: Value(DateFormat('yyyy-MM-dd').format(DateTime.now())),
+            narration: Value(remark.isEmpty ? null : remark),
+            itemCount: Value(txn.selectedItemCount),
+            sync: const Value(0),
+          ),
+        );
+
+    print("Inserted Sale Return Master ID: $masterId");
+
+    /// 2️⃣ INSERT DETAILS
+    for (final itemId in txn.selectedItemIds) {
+      final qty = txn.getQty(itemId);
+      final discount = txn.getDiscount(itemId);
+
+      final total = txn.subTotal;
+
+      await db
+          .into(db.saleReturnDetailsTable)
+          .insert(
+            SaleReturnDetailsTableCompanion.insert(
+              mid: Value(masterId),
+              itemId: Value(itemId),
+              qty: Value(qty),
+              total: Value(total),
+              disc: Value(discount),
+              ledger: Value(ledgerName),
+              companyId: Value(companyId),
+              sync: const Value(0),
+              cgst: Value(txn.cgst),
+              sgst: Value(txn.sgst),
+              cess: Value(txn.cess),
+              fQty: Value(qty),
+            ),
+          );
+    }
+
+    /// 3️⃣ INSERT LEDGER
+    await db
+        .into(db.saleReturnLedgerDetailsTable)
+        .insert(
+          SaleReturnLedgerDetailsTableCompanion.insert(
+            mid: Value(masterId),
+            ledger: Value(ledgerName),
+            amount: Value(txn.grandTotal),
+            companyId: Value(companyId),
+            sync: const Value(0),
+          ),
+        );
+  });
+
+  await printSaleReturnSavedData(db);
+}
+
+Future<void> printSaleReturnSavedData(AppDb db) async {
+  final masters = await db.select(db.saleReturnMasterTable).get();
+  final details = await db.select(db.saleReturnDetailsTable).get();
+  final ledger = await db.select(db.saleReturnLedgerDetailsTable).get();
+
+  print("==== SALE RETURN MASTER ====");
+  for (var m in masters) {
+    print(m.toJson());
+  }
+
+  print("==== SALE RETURN DETAILS ====");
+  for (var d in details) {
+    print(d.toJson());
+  }
+
+  print("==== SALE RETURN LEDGER ====");
+  for (var l in ledger) {
+    print(l.toJson());
   }
 }
