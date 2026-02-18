@@ -28,88 +28,100 @@ class OrderDetailsWidget extends StatefulWidget {
 
 class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
   late final TextEditingController _discountController;
+  late final TextEditingController _freeQtyController;
+
   DiscountType? _initializedDiscountType;
 
   @override
   void initState() {
     super.initState();
     _discountController = TextEditingController();
+    _freeQtyController = TextEditingController();
   }
 
   @override
   void dispose() {
     _discountController.dispose();
+    _freeQtyController.dispose();
     super.dispose();
   }
 
   String _formatDiscount(double value, DiscountType type) {
-    if (type == DiscountType.amount) {
-      return value.toStringAsFixed(2);
-    }
-    return value.toStringAsFixed(0);
+    return type == DiscountType.amount
+        ? value.toStringAsFixed(2)
+        : value.toStringAsFixed(0);
   }
 
-  List<TextInputFormatter> _inputFormatters(DiscountType type) {
-    if (type == DiscountType.amount) {
-      return [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}'))];
-    }
-    return [FilteringTextInputFormatter.digitsOnly];
+  List<TextInputFormatter> _discountFormatters(DiscountType type) {
+    return type == DiscountType.amount
+        ? [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}'))]
+        : [FilteringTextInputFormatter.digitsOnly];
   }
 
-  TextEditingController freeQtyController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final appLocalization = context.l10n;
     final provider = context.watch<CustomerTransactionProvider>();
+
     final qty = provider.getQty(widget.itemId);
 
-    // ---------------- BASE RATE / DISCOUNT ----------------
+    /// ---------------- BASE RATE ----------------
     final double baseRate = widget.item.rate;
+
+    /// ---------------- DISCOUNT INIT ----------------
+    final DiscountType discountType =
+        widget.item.discountType == 'A'
+            ? DiscountType.amount
+            : DiscountType.percentage;
+
     final double discountValue = widget.item.discount ?? 0;
 
-    final DiscountType discountType = widget.item.discountType == 'A'
-        ? DiscountType.amount
-        : DiscountType.percentage;
-
-    // Initialize discount once
     if (_initializedDiscountType == null) {
       _initializedDiscountType = discountType;
+
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        provider.setInitialDiscount(widget.itemId, discountValue, discountType);
-        _discountController.text = _formatDiscount(discountValue, discountType);
+        provider.setInitialDiscount(
+          widget.itemId,
+          discountValue,
+          discountType,
+        );
+        _discountController.text =
+            _formatDiscount(discountValue, discountType);
       });
     }
 
-    final currentType = provider.getDiscountType(widget.itemId) ?? discountType;
+    final currentDiscountType =
+        provider.getDiscountType(widget.itemId) ?? discountType;
 
-    // ---------------- UNIT ----------------
-    final String selectedUnit = provider.getSelectedUnit(widget.itemId);
+    /// ---------------- UNIT ----------------
+    final String selectedUnit =
+        provider.getSelectedUnit(widget.itemId, widget.item);
 
-    // ---------------- RATE (UNIT CONVERTED, NO TAX) ----------------
+    /// ---------------- RATE (EXCLUSIVE) ----------------
     final double rate = provider.getConvertedRate(
       item: widget.item,
       selectedUnit: selectedUnit,
       baseRate: baseRate,
     );
 
-    // ---------------- INCLUSIVE RATE ----------------
+    /// ---------------- INCLUSIVE RATE ----------------
     final double taxPercent = widget.item.taxPercent ?? 0;
     final double inclRate = rate + (rate * taxPercent / 100);
 
-    // ---------------- TOTAL ----------------
+    /// ---------------- TOTAL ----------------
     final double total = provider.calculateNetTotal(
       itemId: widget.itemId,
-      qty: qty.toDouble(),
+      qty: qty,
       inclRate: inclRate,
     );
 
     return Container(
-      decoration: const BoxDecoration(color: ColorResources.lightGray),
       padding: const EdgeInsets.all(12),
+      decoration: const BoxDecoration(color: ColorResources.lightGray),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          /// ---------------- QTY / RATE / DISCOUNT ----------------
+          /// ================= QTY / RATE / DISCOUNT =================
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -134,8 +146,9 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                         ),
                         child: Center(
                           child: Text(
-                            qty.toString(),
-                            style: context.textStyle.s10.w500.dustyBlue.roboto,
+                            qty.toStringAsFixed(0),
+                            style:
+                                context.textStyle.s10.w500.dustyBlue.roboto,
                           ),
                         ),
                       ),
@@ -144,14 +157,18 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                         children: [
                           QtyButton(
                             icon: Icons.remove,
-                            onTap: () =>
-                                provider.decrementQty(widget.itemId, inclRate),
+                            onTap: () => provider.decrementQty(
+                              widget.itemId,
+                              inclRate,
+                            ),
                           ),
                           h4,
                           QtyButton(
                             icon: Icons.add,
-                            onTap: () =>
-                                provider.incrementQty(widget.itemId, inclRate),
+                            onTap: () => provider.incrementQty(
+                              widget.itemId,
+                              inclRate,
+                            ),
                           ),
                         ],
                       ),
@@ -164,7 +181,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
               ValueColumn(
                 title: appLocalization.rate,
                 value: rate.toStringAsFixed(
-                  widget.data.party.companyId == 1 ? 2 : 3,
+                  widget.data.party.countryId == 1 ? 2 : 3,
                 ),
               ),
 
@@ -183,23 +200,26 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                     height: 35,
                     child: TextField(
                       controller: _discountController,
-                      keyboardType: const TextInputType.numberWithOptions(
-                        decimal: true,
-                      ),
-                      style: context.textStyle.s10.w500.dustyBlue.roboto,
+                      keyboardType:
+                          const TextInputType.numberWithOptions(decimal: true),
                       textAlign: TextAlign.center,
-                      inputFormatters: _inputFormatters(currentType),
+                      style:
+                          context.textStyle.s10.w500.dustyBlue.roboto,
+                      inputFormatters:
+                          _discountFormatters(currentDiscountType),
                       onChanged: (value) {
                         provider.updateDiscount(
                           widget.itemId,
                           double.tryParse(value) ?? 0,
+                          inclRate,
                         );
                       },
                       decoration: InputDecoration(
                         isDense: true,
-                        suffixText: currentType == DiscountType.percentage
-                            ? '%'
-                            : null,
+                        suffixText:
+                            currentDiscountType == DiscountType.percentage
+                                ? '%'
+                                : null,
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 4,
                           vertical: 6,
@@ -220,7 +240,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
 
           h12,
 
-          /// ---------------- FREE QTY / UNIT / TOTAL ----------------
+          /// ================= FREE QTY / UNIT / TOTAL =================
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -238,18 +258,17 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                     children: [
                       Container(
                         width: context.getSize.width * 0.13,
-                        padding: const EdgeInsets.symmetric(vertical: 2),
+                        padding: const EdgeInsets.symmetric(vertical: 4),
                         decoration: BoxDecoration(
                           border: Border.all(color: ColorResources.mistGray),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: TextField(
-                          controller: freeQtyController,
+                          controller: _freeQtyController,
                           textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             isCollapsed: true,
-                            contentPadding: EdgeInsets.symmetric(vertical: 4),
                             border: InputBorder.none,
                           ),
                         ),
@@ -265,40 +284,39 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                         ),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton<String>(
+                            value: selectedUnit,
                             isDense: true,
-                            value: widget.item.unitName,
-                            items:
-                                [
-                                      widget.item.unitName,
-                                      if (widget.item.altUnit.isNotEmpty &&
-                                          widget.item.unitName !=
-                                              widget.item.altUnit)
-                                        widget.item.altUnit,
-                                    ]
-                                    .map(
-                                      (u) => DropdownMenuItem(
-                                        value: u,
-                                        child: Text(
-                                          u,
-                                          style: context
-                                              .textStyle
-                                              .s10
-                                              .w300
-                                              .dustyBlue
-                                              .roboto,
-                                        ),
-                                      ),
-                                    )
-                                    .toList(),
+                            items: [
+                              widget.item.unitName,
+                              if (widget.item.altUnit.isNotEmpty &&
+                                  widget.item.altUnit !=
+                                      widget.item.unitName)
+                                widget.item.altUnit,
+                            ]
+                                .map(
+                                  (u) => DropdownMenuItem(
+                                    value: u,
+                                    child: Text(
+                                      u,
+                                      style: context.textStyle.s10.w300
+                                          .dustyBlue.roboto,
+                                    ),
+                                  ),
+                                )
+                                .toList(),
                             onChanged: (value) {
                               if (value != null) {
-                                provider.setUnit(widget.itemId, value);
+                                provider.setUnit(
+                                  widget.itemId,
+                                  value,
+                                  inclRate,
+                                );
                               }
                             },
                             icon: Icon(
                               Icons.keyboard_arrow_down_rounded,
-                              color: ColorResources.dustyBlue,
                               size: context.getSize.height * 0.016,
+                              color: ColorResources.dustyBlue,
                             ),
                           ),
                         ),
@@ -313,12 +331,14 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                 children: [
                   Text(
                     appLocalization.order_detail_widget_total,
-                    style: context.textStyle.s10.w400.indigoBlue.roboto,
+                    style:
+                        context.textStyle.s10.w400.indigoBlue.roboto,
                   ),
                   w8,
                   Text(
                     total.toStringAsFixed(2),
-                    style: context.textStyle.s14.bold.dustyBlue.roboto,
+                    style:
+                        context.textStyle.s14.bold.dustyBlue.roboto,
                   ),
                 ],
               ),
@@ -341,6 +361,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
     );
   }
 }
+
 
 class QtyButton extends StatelessWidget {
   final IconData icon;

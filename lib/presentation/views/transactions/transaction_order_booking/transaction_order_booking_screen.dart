@@ -751,24 +751,21 @@ class OrderItemTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final item = data.item;
-    final price = data.price;
+
     final qty = data.qty;
-
-    final rate = price?.rate ?? 0;
-    final discount = price?.discount ?? 0;
+    final rate = data.rate;             // ✅ base rate
+    final discount = data.discount;     // ✅ already stored discount
     final taxPercent = item.taxPercent ?? 0;
-    final freeQty = 1;
 
-    // final amount = (qty * rate) - discount;
-    final amount = data.amount;
-    final inclRate = (data.inclRate * qty) - discount;
+    final amount = data.amount;         // ✅ FINAL amount (correct)
+    final inclRate = data.inclRate;     // ✅ inclusive rate per unit
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          /// Item name
+          /// Item Name
           SizedBox(
             width: context.getSize.width * 0.25,
             child: Text(
@@ -784,16 +781,19 @@ class OrderItemTile extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              /// Tax
+              /// TAX %
               Expanded(
                 flex: 2,
                 child: Text(
                   'Tax : ${taxPercent.toStringAsFixed(0)}%',
-                  style: const TextStyle(fontSize: 11, color: Colors.grey),
+                  style: const TextStyle(
+                    fontSize: 11,
+                    color: Colors.grey,
+                  ),
                 ),
               ),
 
-              /// Quantity + Free
+              /// QTY
               Expanded(
                 flex: 2,
                 child: Column(
@@ -807,19 +807,11 @@ class OrderItemTile extends StatelessWidget {
                         color: Colors.green,
                       ),
                     ),
-                    if (freeQty > 0)
-                      Text(
-                        'Free ${freeQty.toStringAsFixed(2)} Qls',
-                        style: const TextStyle(
-                          fontSize: 11,
-                          color: Colors.pink,
-                        ),
-                      ),
                   ],
                 ),
               ),
 
-              /// Rate
+              /// RATE (exclusive)
               Expanded(
                 flex: 2,
                 child: Text(
@@ -833,11 +825,13 @@ class OrderItemTile extends StatelessWidget {
                 ),
               ),
 
-              /// Discount
+              /// DISCOUNT
               Expanded(
                 flex: 1,
                 child: Text(
-                  discount > 0 ? discount.toStringAsFixed(2) : '-',
+                  discount > 0
+                      ? discount.toStringAsFixed(2)
+                      : '-',
                   textAlign: TextAlign.end,
                   style: const TextStyle(
                     fontSize: 13,
@@ -847,15 +841,15 @@ class OrderItemTile extends StatelessWidget {
                 ),
               ),
 
-              /// Amount
+              /// AMOUNT (qty * inclRate - discount)
               Expanded(
                 flex: 2,
                 child: Text(
-                  inclRate.toStringAsFixed(2),
+                  amount.toStringAsFixed(2),
                   textAlign: TextAlign.end,
                   style: const TextStyle(
                     fontSize: 13,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w600,
                     color: Colors.green,
                   ),
                 ),
@@ -864,6 +858,7 @@ class OrderItemTile extends StatelessWidget {
           ),
 
           const SizedBox(height: 8),
+
           Divider(
             thickness: 1,
             color: ColorResources.bluishGray.withValues(alpha: 0.2),
@@ -873,6 +868,7 @@ class OrderItemTile extends StatelessWidget {
     );
   }
 }
+
 
 class SelectedOrderItem {
   final ItemMasterData item;

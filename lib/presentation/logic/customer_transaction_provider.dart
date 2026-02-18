@@ -11,24 +11,19 @@ class CustomerTransactionProvider extends ChangeNotifier {
 
   // ===================== ITEM SOURCE =====================
   late Stream<List<Product>> _itemsStream;
-  List<Product> _allItems =
-      []; // store all products locally for initial emission
+  List<Product> _allItems = [];
 
   void setProducts(List<Product> products) {
     _allItems = products;
-
-    // Convert the list to a stream for filteredItems
     attachItemsStream(Stream.value(_allItems));
   }
 
   void attachItemsStream(Stream<List<Product>> stream) {
-    _itemsStream = stream.asBroadcastStream(); // make it broadcast
-    // Listen to the stream and store locally
+    _itemsStream = stream.asBroadcastStream();
     _itemsStream.listen((items) {
       _allItems = items;
       notifyListeners();
     });
-    notifyListeners();
   }
 
   // ===================== ITEM STATE =====================
@@ -36,6 +31,7 @@ class CustomerTransactionProvider extends ChangeNotifier {
   final Map<int, double> _itemTotal = {};
   final Map<int, String> _selectedUnit = {};
   final Set<int> _selectedItems = {};
+
   Set<int> get selectedItemIds => _selectedItems;
 
   final Map<int, double> _itemDiscount = {};
@@ -73,11 +69,16 @@ class CustomerTransactionProvider extends ChangeNotifier {
   bool isSelected(int itemId) => _selectedItems.contains(itemId);
 
   // ===================== TOTALS =====================
-  double get subTotal => _itemTotal.values.fold(0.0, (sum, v) => sum + v);
+  double get subTotal =>
+      _itemTotal.values.fold(0.0, (sum, v) => sum + v);
+
   double get grandTotal => subTotal;
+
   int get selectedItemCount => _selectedItems.length;
 
   // ===================== ITEM ACTIONS =====================
+  double getQty(int itemId) => _itemQty[itemId] ?? 0;
+
   void updateQty(int itemId, double qty, double inclRate) {
     if (qty <= 0) {
       resetQty(itemId);
@@ -87,12 +88,7 @@ class CustomerTransactionProvider extends ChangeNotifier {
     _itemQty[itemId] = qty;
     _selectedItems.add(itemId);
 
-    _itemTotal[itemId] = calculateNetTotal(
-      itemId: itemId,
-      qty: qty,
-      inclRate: inclRate,
-    );
-
+    _recalculateItemTotal(itemId, inclRate);
     notifyListeners();
   }
 
@@ -132,23 +128,25 @@ class CustomerTransactionProvider extends ChangeNotifier {
     return _selectedUnit[itemId] ?? item.unitName;
   }
 
-  void setUnit(int itemId, String unit) {
+  void setUnit(int itemId, String unit, double inclRate) {
     if (_selectedUnit[itemId] == unit) return;
+
     _selectedUnit[itemId] = unit;
+    _recalculateItemTotal(itemId, inclRate);
     notifyListeners();
   }
 
   // ===================== DISCOUNT =====================
-  void updateDiscount(int itemId, double value) {
-    if (!_itemDiscount.containsKey(itemId)) return;
-
-    _itemDiscount[itemId] = value;
-    notifyListeners();
-  }
-
   void setInitialDiscount(int itemId, double value, DiscountType type) {
     _itemDiscount[itemId] = value;
     _discountType[itemId] = type;
+  }
+
+  void updateDiscount(int itemId, double value, double inclRate) {
+    if (!_itemDiscount.containsKey(itemId)) return;
+
+    _itemDiscount[itemId] = value;
+    _recalculateItemTotal(itemId, inclRate);
     notifyListeners();
   }
 
@@ -172,6 +170,17 @@ class CustomerTransactionProvider extends ChangeNotifier {
     }
 
     return total;
+  }
+
+    void _recalculateItemTotal(int itemId, double inclRate) {
+    final qty = _itemQty[itemId];
+    if (qty == null || qty <= 0) return;
+
+    _itemTotal[itemId] = calculateNetTotal(
+      itemId: itemId,
+      qty: qty,
+      inclRate: inclRate,
+    );
   }
 
   // ===================== FILTER STATE =====================
@@ -210,9 +219,11 @@ class CustomerTransactionProvider extends ChangeNotifier {
   }
 
   // ===================== FILTER ACTIONS =====================
+  
   void selectGroup(String value) {
     if (_selectedGroup == value) return;
     _selectedGroup = value;
+    resetPagination();
     notifyListeners();
   }
 
@@ -231,8 +242,15 @@ class CustomerTransactionProvider extends ChangeNotifier {
 
   // ===================== FILTERED ITEMS =====================
   Stream<List<Product>> get filteredItems async* {
-    // Always yield initial items first
-    var list = _allItems;
+    yield _applyFilters(_allItems);
+
+    await for (final items in _itemsStream) {
+      yield _applyFilters(items);
+    }
+  }
+
+  List<Product> _applyFilters(List<Product> items) {
+    var list = items;
 
     if (_selectedGroup != 'All') {
       list = list.where((e) => e.groupName == _selectedGroup).toList();
@@ -252,32 +270,7 @@ class CustomerTransactionProvider extends ChangeNotifier {
       }).toList();
     }
 
-    yield list;
-
-    // Then forward all future stream items
-    await for (final items in _itemsStream) {
-      var list = items;
-
-      if (_selectedGroup != 'All') {
-        list = list.where((e) => e.groupName == _selectedGroup).toList();
-      }
-
-      if (_selectedCategory != 'All') {
-        list = list.where((e) => e.categoryName == _selectedCategory).toList();
-      }
-
-      if (_search.isNotEmpty) {
-        final q = _search.toLowerCase();
-        list = list.where((e) {
-          return e.itemName.toLowerCase().contains(q) ||
-              e.stockItemId.toString().contains(q) ||
-              e.aliasName.toLowerCase().contains(q) ||
-              e.partNumber.toLowerCase().contains(q);
-        }).toList();
-      }
-
-      yield list;
-    }
+    return list;
   }
 
   // ===================== ORDER ITEMS STREAM =====================
@@ -301,7 +294,6 @@ class CustomerTransactionProvider extends ChangeNotifier {
             final itemId = item.item.stockItemId;
             final qty = _itemQty[itemId] ?? 0;
 
-            // Pick the correct price slab based on qty
             ItemPriceDetailsTable? slab;
             if (item.prices.isNotEmpty) {
               slab = item.prices.firstWhere(
@@ -312,39 +304,17 @@ class CustomerTransactionProvider extends ChangeNotifier {
               );
             }
 
-            final baseRate = slab?.rate ?? 0;
-            final selectedUnit = _selectedUnit[itemId] ?? item.item.unitName;
-
-            // Unit-aware rate conversion
-            double rate;
-            if (selectedUnit == item.item.unitName) {
-              rate = baseRate;
-            } else if (selectedUnit == item.item.altUnit) {
-              rate =
-                  baseRate *
-                  (item.item.unitDenominator) /
-                  (item.item.unitConversion);
-            } else {
-              rate = baseRate;
-            }
-
-            final taxPercent = item.item.taxPercent ?? 0;
-            final inclRate = rate + (rate * taxPercent / 100);
-
-            // Update total
-            _itemTotal[itemId] = calculateNetTotal(
-              itemId: itemId,
+            return SelectedOrderItem(
+              item: item.item,
+              price: slab,
               qty: qty,
-              inclRate: inclRate,
             );
-
-            return SelectedOrderItem(item: item.item, price: slab, qty: qty);
           }).toList();
         });
   }
 
-  // ===================== QTY =====================
-  double getQty(int itemId) => _itemQty[itemId] ?? 0;
+  // // ===================== QTY =====================
+  // double getQty(int itemId) => _itemQty[itemId] ?? 0;
 
   // ===================== RATE CONVERSION =====================
   double getConvertedRate({
@@ -357,6 +327,7 @@ class CustomerTransactionProvider extends ChangeNotifier {
     final conversion =
         item.unitConversion /
         (item.unitDenominator == 0 ? 1 : item.unitDenominator);
+
     return baseRate * conversion;
   }
 
