@@ -67,4 +67,13 @@ class SaleMasterTable extends Table {
 
   TextColumn get mailingName => text().nullable()();
   TextColumn get billingMode => text().withDefault(const Constant("B2C"))();
+  // discount
+  TextColumn get discountType => text().nullable()();
+ RealColumn get discountAmount => real().nullable()();
+
+  RealColumn get amount => real().nullable()();
+  //coupon discount
+
+RealColumn get coupontdiscountamount => real().nullable()();
+
 }

@@ -1,13 +1,15 @@
 import 'package:mpos_beat/core/utils/imports.dart';
 
-class PaymentModeAlertWidget extends StatefulWidget {
-  const PaymentModeAlertWidget({super.key});
+class AutoReceiptModeAlertWidget extends StatefulWidget {
+  const AutoReceiptModeAlertWidget({super.key});
 
   @override
-  State<PaymentModeAlertWidget> createState() => _PaymentModeAlertWidgetState();
+  State<AutoReceiptModeAlertWidget> createState() =>
+      _AutoReceiptModeAlertWidgetState();
 }
 
-class _PaymentModeAlertWidgetState extends State<PaymentModeAlertWidget> {
+class _AutoReceiptModeAlertWidgetState
+    extends State<AutoReceiptModeAlertWidget> {
   String? selectedType;
   final amountController = TextEditingController();
   final referenceController = TextEditingController();
@@ -384,7 +386,7 @@ class _PaymentModeAlertWidgetState extends State<PaymentModeAlertWidget> {
                   Expanded(
                     child: CustomButton(
                       onTap: () {
-                        final paymentData = PaymentData(
+                        final paymentData = AutoReceiptData(
                           paymentMode: selectedType,
                           amount: double.tryParse(amountController.text),
                           upiReference: referenceController.text,
@@ -423,14 +425,14 @@ class _PaymentModeAlertWidgetState extends State<PaymentModeAlertWidget> {
   }
 }
 
-class PaymentData {
+class AutoReceiptData {
   final String? paymentMode;
   final double? amount;
   final String? upiReference;
   final String? chequeNumber;
   final DateTime? chequeDate;
 
-  PaymentData({
+  AutoReceiptData({
     this.paymentMode,
     this.amount,
     this.upiReference,

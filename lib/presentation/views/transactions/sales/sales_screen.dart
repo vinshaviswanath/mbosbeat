@@ -3,10 +3,12 @@ import 'package:intl/intl.dart';
 import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/data_sources/user/party_MasterSync/party_MasterSync.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_switch.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 import 'package:mpos_beat/presentation/logic/customer_transaction_provider.dart';
+import 'package:mpos_beat/presentation/logic/user_provider.dart';
 import 'package:mpos_beat/presentation/views/transactions/purchase/widgets/discount_alert_widget.dart';
 import 'package:mpos_beat/presentation/views/transactions/sales/widgets/apply_coupon_widget.dart';
 import 'package:mpos_beat/presentation/views/transactions/sales/widgets/payment_mode_alert_widget.dart';
@@ -31,20 +33,31 @@ class _SalesScreenState extends State<SalesScreen> {
   @override
   void initState() {
     super.initState();
-
+    load();
     _selectedMode = hasTaxNumber ? "B2B" : "B2C";
   }
 
-  final TextEditingController remarkController = TextEditingController();
-
-  PaymentData? selectedPayment;
-  Future<void> openPaymentDialog() async {
-    final result = await showDialog<PaymentData>(
-      context: context,
-      builder: (_) => const PaymentModeAlertWidget(),
+  Future<void> load() async {
+    final party = await sl<PartyMasterSync>().fetchParty(
+      widget.data.data.company.id!,
+      widget.data.party.ledgerId,
     );
 
-    print("Dialog Returned: $result");
+    if (party != null) {
+      context.read<UserProvider>().setParty(party);
+    }
+  }
+
+  final TextEditingController remarkController = TextEditingController();
+  double couponAmount = 0.0;
+  double discountAmount = 0.0;
+  AutoReceiptData? selectedPayment;
+  DiscountData? selectedDiscount;
+  Future<void> openAutoReceiptDialog() async {
+    final result = await showDialog<AutoReceiptData>(
+      context: context,
+      builder: (_) => AutoReceiptModeAlertWidget(),
+    );
 
     if (result != null) {
       setState(() {
@@ -53,9 +66,34 @@ class _SalesScreenState extends State<SalesScreen> {
     }
   }
 
+  Future<void> openCouponDiscountDialog() async {
+    final result = await showDialog<CoupondiscountData>(
+      context: context,
+      builder: (_) => const CouponDiscountWidget(),
+    );
+
+    if (result != null) {
+      setState(() {
+        couponAmount = double.tryParse(result.discountAmount ?? "0") ?? 0.0;
+      });
+    }
+  }
+
+  Future<void> openDiscountDialog() async {
+    final result = await showDialog<DiscountData>(
+      context: context,
+      builder: (_) => const DiscountAlertWidget(),
+    );
+
+    if (result != null) {
+      setState(() {
+        selectedDiscount = result;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    print("partymaster taxno on sales screen: ${widget.data.party.taxNumber}");
     final appLocalizations = context.l10n;
     final provider = context.read<CustomerTransactionProvider>();
     return Scaffold(
@@ -498,11 +536,9 @@ class _SalesScreenState extends State<SalesScreen> {
                           borderColor: ColorResources.bluishGray,
                           thumbColor: ColorResources.bluishGray,
                           value: false,
-                          onChanged: (value) {
+                          onChanged: (value) async {
                             if (value == true) {
-                              CustomDialog.showBottomCustomDialog(
-                                child: const DiscountAlertWidget(),
-                              );
+                              await openDiscountDialog();
                             }
                           },
                         ),
@@ -520,11 +556,9 @@ class _SalesScreenState extends State<SalesScreen> {
                           borderColor: ColorResources.bluishGray,
                           thumbColor: ColorResources.bluishGray,
                           value: false,
-                          onChanged: (value) {
+                          onChanged: (value) async {
                             if (value == true) {
-                              CustomDialog.showBottomCustomDialog(
-                                child: const ApplyCouponWidget(),
-                              );
+                              await openCouponDiscountDialog();
                             }
                           },
                         ),
@@ -544,7 +578,7 @@ class _SalesScreenState extends State<SalesScreen> {
                           value: false,
                           onChanged: (value) async {
                             if (value == true) {
-                              await openPaymentDialog();
+                              await openAutoReceiptDialog();
                             }
                           },
                         ),
@@ -591,6 +625,9 @@ class _SalesScreenState extends State<SalesScreen> {
                                 gstNumber: widget.data.party.taxNumber,
                                 remark: remarkController.text,
                                 paymentData: selectedPayment,
+                                couponAmount: couponAmount,
+                                discountData: selectedDiscount,
+                                rate: txn.subTotal,
                               );
 
                               txn.clearSelectedItems();
@@ -634,15 +671,36 @@ Future<void> saveSale({
   required String billingMode,
   required String? gstNumber,
   required String remark,
-  PaymentData? paymentData,
+  AutoReceiptData? paymentData,
+  double couponAmount = 0.0,
+  DiscountData? discountData,
+  final double rate = 0.0,
 }) async {
   if (txn.selectedItemCount == 0) {
     print("No items selected");
     return;
   }
+  double finalAmount = txn.grandTotal;
 
+  // Apply main discount
+  if (discountData != null) {
+    if (discountData.type == "Amount") {
+      finalAmount -= discountData.amount ?? 0;
+    } else if (discountData.type == "Percentage") {
+      finalAmount -= finalAmount * ((discountData.amount ?? 0) / 100);
+    }
+  }
+
+  // Apply coupon
+  finalAmount -= couponAmount;
+
+  // Prevent negative amount
+  if (finalAmount < 0) {
+    finalAmount = 0;
+  }
   await db.transaction(() async {
     /// 1️⃣ INSERT MASTER
+    ///
     final masterId = await db
         .into(db.saleMasterTable)
         .insert(
@@ -657,6 +715,15 @@ Future<void> saveSale({
             sync: const Value(0),
             voucherDate: Value(DateFormat('yyyy-MM-dd').format(DateTime.now())),
             narration: Value(remark.isEmpty ? null : remark),
+            coupontdiscountamount: Value(couponAmount),
+
+            discountType: discountData != null
+                ? Value(discountData.type)
+                : const Value.absent(),
+
+            discountAmount: discountData != null
+                ? Value(discountData.amount)
+                : const Value.absent(),
           ),
         );
 
@@ -696,26 +763,31 @@ Future<void> saveSale({
             amount: Value(txn.grandTotal),
             companyId: Value(companyId),
             sync: const Value(0),
+            rate: Value(rate),
           ),
         );
     //insert autorecipt
-    await db
-        .into(db.saleAutoReceiptTable)
-        .insert(
-          SaleAutoReceiptTableCompanion.insert(
-            mid: Value(masterId),
-            companyId: Value(companyId),
-            paymentMode: Value(paymentData?.paymentMode),
-            amount: Value(paymentData?.amount),
-            upiReference: Value(paymentData?.upiReference),
-            chequeNumber: Value(paymentData?.chequeNumber),
-            chequeDate: Value(
-              DateFormat('yyyy-MM-dd').format(paymentData!.chequeDate!),
-            ),
+    if (paymentData != null) {
+      await db
+          .into(db.saleAutoReceiptTable)
+          .insert(
+            SaleAutoReceiptTableCompanion.insert(
+              mid: Value(masterId),
+              companyId: Value(companyId),
 
-            sync: const Value(0),
-          ),
-        );
+              paymentMode: Value(paymentData.paymentMode),
+              amount: Value(paymentData.amount),
+              upiReference: Value(paymentData.upiReference),
+              chequeNumber: Value(paymentData.chequeNumber),
+              chequeDate: paymentData.chequeDate != null
+                  ? Value(
+                      DateFormat('yyyy-MM-dd').format(paymentData.chequeDate!),
+                    )
+                  : const Value.absent(),
+              sync: const Value(0),
+            ),
+          );
+    }
   });
 
   await printSavedSaleData(db);
