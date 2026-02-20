@@ -143,7 +143,7 @@ class AppDb extends _$AppDb {
   AppDb() : super(_openConnection());
 
   @override
-  int get schemaVersion => 25;
+  int get schemaVersion => 27;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -253,6 +253,16 @@ class AppDb extends _$AppDb {
         await m.createTable(saleReturnDetailsTable);
         await m.createTable(saleReturnLedgerDetailsTable);
       }
+      if (from < 26) {
+        await m.addColumn(saleMasterTable, saleMasterTable.discountType);
+        await m.addColumn(saleMasterTable, saleMasterTable.discountAmount);
+        await m.addColumn(saleMasterTable, saleMasterTable.amount);
+        await m.addColumn(
+          saleMasterTable,
+          saleMasterTable.coupontdiscountamount,
+        );
+      }
+     
     },
   );
 }

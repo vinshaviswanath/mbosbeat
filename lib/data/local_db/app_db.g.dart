@@ -18305,6 +18305,48 @@ class $SaleMasterTableTable extends SaleMasterTable
     requiredDuringInsert: false,
     defaultValue: const Constant("B2C"),
   );
+  static const VerificationMeta _discountTypeMeta = const VerificationMeta(
+    'discountType',
+  );
+  @override
+  late final GeneratedColumn<String> discountType = GeneratedColumn<String>(
+    'discount_type',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _discountAmountMeta = const VerificationMeta(
+    'discountAmount',
+  );
+  @override
+  late final GeneratedColumn<double> discountAmount = GeneratedColumn<double>(
+    'discount_amount',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _amountMeta = const VerificationMeta('amount');
+  @override
+  late final GeneratedColumn<double> amount = GeneratedColumn<double>(
+    'amount',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _coupontdiscountamountMeta =
+      const VerificationMeta('coupontdiscountamount');
+  @override
+  late final GeneratedColumn<double> coupontdiscountamount =
+      GeneratedColumn<double>(
+        'coupontdiscountamount',
+        aliasedName,
+        true,
+        type: DriftSqlType.double,
+        requiredDuringInsert: false,
+      );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -18351,6 +18393,10 @@ class $SaleMasterTableTable extends SaleMasterTable
     uploadedServerId,
     mailingName,
     billingMode,
+    discountType,
+    discountAmount,
+    amount,
+    coupontdiscountamount,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -18666,6 +18712,39 @@ class $SaleMasterTableTable extends SaleMasterTable
         ),
       );
     }
+    if (data.containsKey('discount_type')) {
+      context.handle(
+        _discountTypeMeta,
+        discountType.isAcceptableOrUnknown(
+          data['discount_type']!,
+          _discountTypeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('discount_amount')) {
+      context.handle(
+        _discountAmountMeta,
+        discountAmount.isAcceptableOrUnknown(
+          data['discount_amount']!,
+          _discountAmountMeta,
+        ),
+      );
+    }
+    if (data.containsKey('amount')) {
+      context.handle(
+        _amountMeta,
+        amount.isAcceptableOrUnknown(data['amount']!, _amountMeta),
+      );
+    }
+    if (data.containsKey('coupontdiscountamount')) {
+      context.handle(
+        _coupontdiscountamountMeta,
+        coupontdiscountamount.isAcceptableOrUnknown(
+          data['coupontdiscountamount']!,
+          _coupontdiscountamountMeta,
+        ),
+      );
+    }
     return context;
   }
 
@@ -18851,6 +18930,22 @@ class $SaleMasterTableTable extends SaleMasterTable
         DriftSqlType.string,
         data['${effectivePrefix}billing_mode'],
       )!,
+      discountType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}discount_type'],
+      ),
+      discountAmount: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}discount_amount'],
+      ),
+      amount: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}amount'],
+      ),
+      coupontdiscountamount: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}coupontdiscountamount'],
+      ),
     );
   }
 
@@ -18906,6 +19001,10 @@ class SaleMasterTableData extends DataClass
   final int? uploadedServerId;
   final String? mailingName;
   final String billingMode;
+  final String? discountType;
+  final double? discountAmount;
+  final double? amount;
+  final double? coupontdiscountamount;
   const SaleMasterTableData({
     required this.id,
     this.vchId,
@@ -18951,6 +19050,10 @@ class SaleMasterTableData extends DataClass
     this.uploadedServerId,
     this.mailingName,
     required this.billingMode,
+    this.discountType,
+    this.discountAmount,
+    this.amount,
+    this.coupontdiscountamount,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -19079,6 +19182,18 @@ class SaleMasterTableData extends DataClass
       map['mailing_name'] = Variable<String>(mailingName);
     }
     map['billing_mode'] = Variable<String>(billingMode);
+    if (!nullToAbsent || discountType != null) {
+      map['discount_type'] = Variable<String>(discountType);
+    }
+    if (!nullToAbsent || discountAmount != null) {
+      map['discount_amount'] = Variable<double>(discountAmount);
+    }
+    if (!nullToAbsent || amount != null) {
+      map['amount'] = Variable<double>(amount);
+    }
+    if (!nullToAbsent || coupontdiscountamount != null) {
+      map['coupontdiscountamount'] = Variable<double>(coupontdiscountamount);
+    }
     return map;
   }
 
@@ -19206,6 +19321,18 @@ class SaleMasterTableData extends DataClass
           ? const Value.absent()
           : Value(mailingName),
       billingMode: Value(billingMode),
+      discountType: discountType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(discountType),
+      discountAmount: discountAmount == null && nullToAbsent
+          ? const Value.absent()
+          : Value(discountAmount),
+      amount: amount == null && nullToAbsent
+          ? const Value.absent()
+          : Value(amount),
+      coupontdiscountamount: coupontdiscountamount == null && nullToAbsent
+          ? const Value.absent()
+          : Value(coupontdiscountamount),
     );
   }
 
@@ -19259,6 +19386,12 @@ class SaleMasterTableData extends DataClass
       uploadedServerId: serializer.fromJson<int?>(json['uploadedServerId']),
       mailingName: serializer.fromJson<String?>(json['mailingName']),
       billingMode: serializer.fromJson<String>(json['billingMode']),
+      discountType: serializer.fromJson<String?>(json['discountType']),
+      discountAmount: serializer.fromJson<double?>(json['discountAmount']),
+      amount: serializer.fromJson<double?>(json['amount']),
+      coupontdiscountamount: serializer.fromJson<double?>(
+        json['coupontdiscountamount'],
+      ),
     );
   }
   @override
@@ -19309,6 +19442,12 @@ class SaleMasterTableData extends DataClass
       'uploadedServerId': serializer.toJson<int?>(uploadedServerId),
       'mailingName': serializer.toJson<String?>(mailingName),
       'billingMode': serializer.toJson<String>(billingMode),
+      'discountType': serializer.toJson<String?>(discountType),
+      'discountAmount': serializer.toJson<double?>(discountAmount),
+      'amount': serializer.toJson<double?>(amount),
+      'coupontdiscountamount': serializer.toJson<double?>(
+        coupontdiscountamount,
+      ),
     };
   }
 
@@ -19357,6 +19496,10 @@ class SaleMasterTableData extends DataClass
     Value<int?> uploadedServerId = const Value.absent(),
     Value<String?> mailingName = const Value.absent(),
     String? billingMode,
+    Value<String?> discountType = const Value.absent(),
+    Value<double?> discountAmount = const Value.absent(),
+    Value<double?> amount = const Value.absent(),
+    Value<double?> coupontdiscountamount = const Value.absent(),
   }) => SaleMasterTableData(
     id: id ?? this.id,
     vchId: vchId.present ? vchId.value : this.vchId,
@@ -19408,6 +19551,14 @@ class SaleMasterTableData extends DataClass
         : this.uploadedServerId,
     mailingName: mailingName.present ? mailingName.value : this.mailingName,
     billingMode: billingMode ?? this.billingMode,
+    discountType: discountType.present ? discountType.value : this.discountType,
+    discountAmount: discountAmount.present
+        ? discountAmount.value
+        : this.discountAmount,
+    amount: amount.present ? amount.value : this.amount,
+    coupontdiscountamount: coupontdiscountamount.present
+        ? coupontdiscountamount.value
+        : this.coupontdiscountamount,
   );
   SaleMasterTableData copyWithCompanion(SaleMasterTableCompanion data) {
     return SaleMasterTableData(
@@ -19483,6 +19634,16 @@ class SaleMasterTableData extends DataClass
       billingMode: data.billingMode.present
           ? data.billingMode.value
           : this.billingMode,
+      discountType: data.discountType.present
+          ? data.discountType.value
+          : this.discountType,
+      discountAmount: data.discountAmount.present
+          ? data.discountAmount.value
+          : this.discountAmount,
+      amount: data.amount.present ? data.amount.value : this.amount,
+      coupontdiscountamount: data.coupontdiscountamount.present
+          ? data.coupontdiscountamount.value
+          : this.coupontdiscountamount,
     );
   }
 
@@ -19532,7 +19693,11 @@ class SaleMasterTableData extends DataClass
           ..write('pinCode: $pinCode, ')
           ..write('uploadedServerId: $uploadedServerId, ')
           ..write('mailingName: $mailingName, ')
-          ..write('billingMode: $billingMode')
+          ..write('billingMode: $billingMode, ')
+          ..write('discountType: $discountType, ')
+          ..write('discountAmount: $discountAmount, ')
+          ..write('amount: $amount, ')
+          ..write('coupontdiscountamount: $coupontdiscountamount')
           ..write(')'))
         .toString();
   }
@@ -19583,6 +19748,10 @@ class SaleMasterTableData extends DataClass
     uploadedServerId,
     mailingName,
     billingMode,
+    discountType,
+    discountAmount,
+    amount,
+    coupontdiscountamount,
   ]);
   @override
   bool operator ==(Object other) =>
@@ -19631,7 +19800,11 @@ class SaleMasterTableData extends DataClass
           other.pinCode == this.pinCode &&
           other.uploadedServerId == this.uploadedServerId &&
           other.mailingName == this.mailingName &&
-          other.billingMode == this.billingMode);
+          other.billingMode == this.billingMode &&
+          other.discountType == this.discountType &&
+          other.discountAmount == this.discountAmount &&
+          other.amount == this.amount &&
+          other.coupontdiscountamount == this.coupontdiscountamount);
 }
 
 class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
@@ -19679,6 +19852,10 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
   final Value<int?> uploadedServerId;
   final Value<String?> mailingName;
   final Value<String> billingMode;
+  final Value<String?> discountType;
+  final Value<double?> discountAmount;
+  final Value<double?> amount;
+  final Value<double?> coupontdiscountamount;
   const SaleMasterTableCompanion({
     this.id = const Value.absent(),
     this.vchId = const Value.absent(),
@@ -19724,6 +19901,10 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
     this.uploadedServerId = const Value.absent(),
     this.mailingName = const Value.absent(),
     this.billingMode = const Value.absent(),
+    this.discountType = const Value.absent(),
+    this.discountAmount = const Value.absent(),
+    this.amount = const Value.absent(),
+    this.coupontdiscountamount = const Value.absent(),
   });
   SaleMasterTableCompanion.insert({
     this.id = const Value.absent(),
@@ -19770,6 +19951,10 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
     this.uploadedServerId = const Value.absent(),
     this.mailingName = const Value.absent(),
     this.billingMode = const Value.absent(),
+    this.discountType = const Value.absent(),
+    this.discountAmount = const Value.absent(),
+    this.amount = const Value.absent(),
+    this.coupontdiscountamount = const Value.absent(),
   }) : voucherAmount = Value(voucherAmount);
   static Insertable<SaleMasterTableData> custom({
     Expression<int>? id,
@@ -19816,6 +20001,10 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
     Expression<int>? uploadedServerId,
     Expression<String>? mailingName,
     Expression<String>? billingMode,
+    Expression<String>? discountType,
+    Expression<double>? discountAmount,
+    Expression<double>? amount,
+    Expression<double>? coupontdiscountamount,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -19862,6 +20051,11 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
       if (uploadedServerId != null) 'uploaded_server_id': uploadedServerId,
       if (mailingName != null) 'mailing_name': mailingName,
       if (billingMode != null) 'billing_mode': billingMode,
+      if (discountType != null) 'discount_type': discountType,
+      if (discountAmount != null) 'discount_amount': discountAmount,
+      if (amount != null) 'amount': amount,
+      if (coupontdiscountamount != null)
+        'coupontdiscountamount': coupontdiscountamount,
     });
   }
 
@@ -19910,6 +20104,10 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
     Value<int?>? uploadedServerId,
     Value<String?>? mailingName,
     Value<String>? billingMode,
+    Value<String?>? discountType,
+    Value<double?>? discountAmount,
+    Value<double?>? amount,
+    Value<double?>? coupontdiscountamount,
   }) {
     return SaleMasterTableCompanion(
       id: id ?? this.id,
@@ -19956,6 +20154,11 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
       uploadedServerId: uploadedServerId ?? this.uploadedServerId,
       mailingName: mailingName ?? this.mailingName,
       billingMode: billingMode ?? this.billingMode,
+      discountType: discountType ?? this.discountType,
+      discountAmount: discountAmount ?? this.discountAmount,
+      amount: amount ?? this.amount,
+      coupontdiscountamount:
+          coupontdiscountamount ?? this.coupontdiscountamount,
     );
   }
 
@@ -20094,6 +20297,20 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
     if (billingMode.present) {
       map['billing_mode'] = Variable<String>(billingMode.value);
     }
+    if (discountType.present) {
+      map['discount_type'] = Variable<String>(discountType.value);
+    }
+    if (discountAmount.present) {
+      map['discount_amount'] = Variable<double>(discountAmount.value);
+    }
+    if (amount.present) {
+      map['amount'] = Variable<double>(amount.value);
+    }
+    if (coupontdiscountamount.present) {
+      map['coupontdiscountamount'] = Variable<double>(
+        coupontdiscountamount.value,
+      );
+    }
     return map;
   }
 
@@ -20143,7 +20360,11 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
           ..write('pinCode: $pinCode, ')
           ..write('uploadedServerId: $uploadedServerId, ')
           ..write('mailingName: $mailingName, ')
-          ..write('billingMode: $billingMode')
+          ..write('billingMode: $billingMode, ')
+          ..write('discountType: $discountType, ')
+          ..write('discountAmount: $discountAmount, ')
+          ..write('amount: $amount, ')
+          ..write('coupontdiscountamount: $coupontdiscountamount')
           ..write(')'))
         .toString();
   }
@@ -36096,6 +36317,10 @@ typedef $$SaleMasterTableTableCreateCompanionBuilder =
       Value<int?> uploadedServerId,
       Value<String?> mailingName,
       Value<String> billingMode,
+      Value<String?> discountType,
+      Value<double?> discountAmount,
+      Value<double?> amount,
+      Value<double?> coupontdiscountamount,
     });
 typedef $$SaleMasterTableTableUpdateCompanionBuilder =
     SaleMasterTableCompanion Function({
@@ -36143,6 +36368,10 @@ typedef $$SaleMasterTableTableUpdateCompanionBuilder =
       Value<int?> uploadedServerId,
       Value<String?> mailingName,
       Value<String> billingMode,
+      Value<String?> discountType,
+      Value<double?> discountAmount,
+      Value<double?> amount,
+      Value<double?> coupontdiscountamount,
     });
 
 class $$SaleMasterTableTableFilterComposer
@@ -36371,6 +36600,26 @@ class $$SaleMasterTableTableFilterComposer
 
   ColumnFilters<String> get billingMode => $composableBuilder(
     column: $table.billingMode,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get discountType => $composableBuilder(
+    column: $table.discountType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get discountAmount => $composableBuilder(
+    column: $table.discountAmount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get amount => $composableBuilder(
+    column: $table.amount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get coupontdiscountamount => $composableBuilder(
+    column: $table.coupontdiscountamount,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -36603,6 +36852,26 @@ class $$SaleMasterTableTableOrderingComposer
     column: $table.billingMode,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get discountType => $composableBuilder(
+    column: $table.discountType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get discountAmount => $composableBuilder(
+    column: $table.discountAmount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get amount => $composableBuilder(
+    column: $table.amount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get coupontdiscountamount => $composableBuilder(
+    column: $table.coupontdiscountamount,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$SaleMasterTableTableAnnotationComposer
@@ -36773,6 +37042,24 @@ class $$SaleMasterTableTableAnnotationComposer
     column: $table.billingMode,
     builder: (column) => column,
   );
+
+  GeneratedColumn<String> get discountType => $composableBuilder(
+    column: $table.discountType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get discountAmount => $composableBuilder(
+    column: $table.discountAmount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get amount =>
+      $composableBuilder(column: $table.amount, builder: (column) => column);
+
+  GeneratedColumn<double> get coupontdiscountamount => $composableBuilder(
+    column: $table.coupontdiscountamount,
+    builder: (column) => column,
+  );
 }
 
 class $$SaleMasterTableTableTableManager
@@ -36850,6 +37137,10 @@ class $$SaleMasterTableTableTableManager
                 Value<int?> uploadedServerId = const Value.absent(),
                 Value<String?> mailingName = const Value.absent(),
                 Value<String> billingMode = const Value.absent(),
+                Value<String?> discountType = const Value.absent(),
+                Value<double?> discountAmount = const Value.absent(),
+                Value<double?> amount = const Value.absent(),
+                Value<double?> coupontdiscountamount = const Value.absent(),
               }) => SaleMasterTableCompanion(
                 id: id,
                 vchId: vchId,
@@ -36895,6 +37186,10 @@ class $$SaleMasterTableTableTableManager
                 uploadedServerId: uploadedServerId,
                 mailingName: mailingName,
                 billingMode: billingMode,
+                discountType: discountType,
+                discountAmount: discountAmount,
+                amount: amount,
+                coupontdiscountamount: coupontdiscountamount,
               ),
           createCompanionCallback:
               ({
@@ -36942,6 +37237,10 @@ class $$SaleMasterTableTableTableManager
                 Value<int?> uploadedServerId = const Value.absent(),
                 Value<String?> mailingName = const Value.absent(),
                 Value<String> billingMode = const Value.absent(),
+                Value<String?> discountType = const Value.absent(),
+                Value<double?> discountAmount = const Value.absent(),
+                Value<double?> amount = const Value.absent(),
+                Value<double?> coupontdiscountamount = const Value.absent(),
               }) => SaleMasterTableCompanion.insert(
                 id: id,
                 vchId: vchId,
@@ -36987,6 +37286,10 @@ class $$SaleMasterTableTableTableManager
                 uploadedServerId: uploadedServerId,
                 mailingName: mailingName,
                 billingMode: billingMode,
+                discountType: discountType,
+                discountAmount: discountAmount,
+                amount: amount,
+                coupontdiscountamount: coupontdiscountamount,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
