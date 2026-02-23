@@ -1,5 +1,4 @@
 import 'package:mpos_beat/core/utils/imports.dart';
-import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/models/product.dart';
 import 'package:mpos_beat/presentation/logic/customer_transaction_provider.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/transaction_order_booking_screen.dart';

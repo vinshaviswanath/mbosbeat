@@ -435,4 +435,6 @@ class CustomerTransactionProvider extends ChangeNotifier {
     _selectedItems.clear();
     notifyListeners();
   }
+
+
 }

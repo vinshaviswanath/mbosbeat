@@ -9,6 +9,7 @@ import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 import 'package:mpos_beat/presentation/logic/customer_transaction_provider.dart';
 import 'package:mpos_beat/presentation/logic/user_provider.dart';
 import 'package:mpos_beat/presentation/views/home_screen/transactions_container.dart';
+import 'package:mpos_beat/presentation/views/transactions/payment/payment_screen.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/widgets/end_to_end_text_widget.dart';
 
 class TransactionOrderBookingRouteArgs {
@@ -689,7 +690,18 @@ class _TransactionOrderBookingScreenState
                                       final txn = context
                                           .read<CustomerTransactionProvider>();
                                       final db = context.read<AppDb>();
-
+                                      // Get current selected items from provider stream once
+                                      final selectedItems = await txn
+                                          .orderItemsStream(
+                                            appDb: db,
+                                            fallbackPriceLevelId:
+                                                context
+                                                    .read<UserProvider>()
+                                                    .selectedPriceLevel
+                                                    ?.id ??
+                                                0,
+                                          )
+                                          .first;
                                       await saveOrder(
                                         db: db,
                                         txn: txn,
@@ -704,6 +716,7 @@ class _TransactionOrderBookingScreenState
                                                 ?.id ??
                                             0,
                                         remark: remarkController.text,
+                                        selectedItems: selectedItems,
                                       );
 
                                       txn.clearSelectedItems();
@@ -901,6 +914,7 @@ class SelectedOrderItem {
 Future<void> saveOrder({
   required AppDb db,
   required CustomerTransactionProvider txn,
+  required List<SelectedOrderItem> selectedItems,
   required int companyId,
   required String ledgerName,
   required int ledgerId,
@@ -926,17 +940,18 @@ Future<void> saveOrder({
             priceList: Value(priceLevelId.toString()),
             voucherDate: Value(DateFormat('yyyy-MM-dd').format(DateTime.now())),
             narration: Value(remark.isEmpty ? null : remark),
-            
           ),
         );
 
     print("Inserted Master ID: $masterId");
 
     //  INSERT DETAILS
-    for (final itemId in txn.selectedItemIds) {
-      final qty = txn.getQty(itemId);
-      final discound = txn.getDiscount(itemId);
-
+    for (final selected in selectedItems) {
+      final itemId = selected.item.stockItemId;
+      final itemName = selected.item.itemName;
+      final rate = selected.rate;
+      final qty = selected.qty;
+      final discount = txn.getDiscount(itemId);
       final total = txn.subTotal;
 
       await db
@@ -952,26 +967,27 @@ Future<void> saveOrder({
               cess: Value(txn.cess),
               cgst: Value(txn.cgst),
               sgst: Value(txn.sgst),
-              disc: Value(discound),
+              disc: Value(discount),
               fQty: Value(qty),
-              
+              itemName: Value(itemName),
+              rate: Value(rate),
+            ),
+          );
+
+      // 3️⃣ INSERT LEDGER
+      await db
+          .into(db.saleOrderLedgerDetailsTable)
+          .insert(
+            SaleOrderLedgerDetailsTableCompanion.insert(
+              mid: Value(masterId),
+              ledger: Value(ledgerName),
+              amount: Value(txn.grandTotal),
+              companyId: Value(companyId),
+              sync: const Value(0),
+              rate: Value(rate),
             ),
           );
     }
-
-    // 3️⃣ INSERT LEDGER
-    await db
-        .into(db.saleOrderLedgerDetailsTable)
-        .insert(
-          SaleOrderLedgerDetailsTableCompanion.insert(
-            mid: Value(masterId),
-            ledger: Value(ledgerName),
-            amount: Value(txn.grandTotal),
-            companyId: Value(companyId),
-            sync: const Value(0),
-            
-          ),
-        );
   });
 
   await printSavedData(db);

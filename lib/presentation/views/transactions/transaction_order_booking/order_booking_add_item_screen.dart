@@ -29,10 +29,10 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
     super.initState();
 
     final transactionProvider = context.read<CustomerTransactionProvider>();
-    
+
     _searchController = TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-     // transactionProvider.resetAddItemScreenState();
+      // transactionProvider.resetAddItemScreenState();
       //  transactionProvider.resetPagination();
       transactionProvider.loadNextPage(
         companyId: widget.data.data.company.id!,
@@ -52,6 +52,8 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
   @override
   Widget build(BuildContext context) {
     final transactionProvider = context.watch<CustomerTransactionProvider>();
+
+
     final userProvider = context.watch<UserProvider>();
 
     final selectedPriceListId = userProvider.selectedPriceLevelId;
