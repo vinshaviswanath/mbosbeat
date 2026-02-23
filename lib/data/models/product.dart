@@ -18,6 +18,9 @@ class Product {
   final int isDeleted;
   final String hsnCode;
   final double taxPercent;
+  final int? closingStock;
+  final int? cess;
+  final int? cost;
   final int applicableDate;
   final int itemId;
   final int priceList;
@@ -52,6 +55,9 @@ class Product {
     required this.isDeleted,
     required this.hsnCode,
     required this.taxPercent,
+    required this.closingStock,
+    required this.cess,
+    required this.cost,
     required this.applicableDate,
     required this.itemId,
     required this.priceList,
@@ -88,6 +94,9 @@ class Product {
       isDeleted: json['is_deleted'] ?? 0,
       hsnCode: json['hsn_code'] ?? '',
       taxPercent: (json['tax_percent'] ?? 0).toDouble(),
+      closingStock: json["closingStock"],
+      cess: json["cess"],
+      cost: json["cost"],
       applicableDate: json['applicable_date'] ?? 0,
       itemId: json['item_id'] ?? 0,
       priceList: json['price_list'] ?? 0,
@@ -129,6 +138,9 @@ class Product {
       'is_deleted': isDeleted,
       'hsn_code': hsnCode,
       'tax_percent': taxPercent,
+      "closingStock": closingStock,
+      "cess": cess,
+      "cost": cost,
       'applicable_date': applicableDate,
       'item_id': itemId,
       'price_list': priceList,

@@ -80,6 +80,7 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
                             extra: TransactionOrderBookingRouteArgs(
                               data: widget.data.data,
                               party: widget.data.party,
+                              vchTyp: widget.data.vchTyp
                             ),
                           );
                         },
@@ -167,71 +168,23 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
             ),
           ),
           Consumer<CustomerTransactionProvider>(
-            builder: (context, txn, _) {
-              return StreamBuilder<List<SelectedOrderItem>>(
-                stream: txn.orderItemsStream(
-                  appDb: sl<AppDb>(),
-                  fallbackPriceLevelId: widget.data.party.priceList ?? 0,
-                ),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return const SliverToBoxAdapter(
-                      child: Center(child: CircularProgressIndicator()),
-                    );
-                  }
+  builder: (context, provider, _) {
+    final items = provider.selectedOrderItems;
 
-                  final items = snapshot.data!;
-                  if (items.isEmpty) {
-                    return SliverToBoxAdapter(
-                      child: SizedBox(
-                        height: context.getSize.height * 0.3,
-                        child: Row(
-                          mainAxisAlignment: .center,
-                          crossAxisAlignment: .center,
-                          children: [
-                            Text(
-                              'No items added',
-                              style:
-                                  context.textStyle.s10.w400.dustyBlue.roboto,
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  }
+    if (items.isEmpty) {
+      return const SliverToBoxAdapter(child: SizedBox());
+    }
 
-                  return SliverList(
-                    delegate: SliverChildBuilderDelegate((context, index) {
-                      return Column(
-                        children: [
-                          OrderItemTile(
-                            data: items[index], // SelectedOrderItem
-                          ),
-                          if (items.last == items[index]) ...[
-                            h16,
-                            Row(
-                              mainAxisAlignment: .center,
-                              children: [
-                                Text(
-                                  "****** END OF THE LIST ******",
-                                  style: context
-                                      .textStyle
-                                      .s10
-                                      .w400
-                                      .dustyBlue
-                                      .roboto,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ],
-                      );
-                    }, childCount: items.length),
-                  );
-                },
-              );
-            },
-          ),
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (context, index) {
+          return OrderItemTile(data: items[index]);
+        },
+        childCount: items.length,
+      ),
+    );
+  },
+),
 
           SliverToBoxAdapter(
             child: SizedBox(height: context.getSize.height * 0.4),

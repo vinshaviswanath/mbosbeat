@@ -10804,6 +10804,35 @@ class $ItemMasterTable extends ItemMaster
     type: DriftSqlType.double,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _closingStockMeta = const VerificationMeta(
+    'closingStock',
+  );
+  @override
+  late final GeneratedColumn<int> closingStock = GeneratedColumn<int>(
+    'closing_stock',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _cessMeta = const VerificationMeta('cess');
+  @override
+  late final GeneratedColumn<int> cess = GeneratedColumn<int>(
+    'cess',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _costMeta = const VerificationMeta('cost');
+  @override
+  late final GeneratedColumn<int> cost = GeneratedColumn<int>(
+    'cost',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -10825,6 +10854,9 @@ class $ItemMasterTable extends ItemMaster
     isDeleted,
     hsnCode,
     taxPercent,
+    closingStock,
+    cess,
+    cost,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -10980,6 +11012,27 @@ class $ItemMasterTable extends ItemMaster
         taxPercent.isAcceptableOrUnknown(data['tax_percent']!, _taxPercentMeta),
       );
     }
+    if (data.containsKey('closing_stock')) {
+      context.handle(
+        _closingStockMeta,
+        closingStock.isAcceptableOrUnknown(
+          data['closing_stock']!,
+          _closingStockMeta,
+        ),
+      );
+    }
+    if (data.containsKey('cess')) {
+      context.handle(
+        _cessMeta,
+        cess.isAcceptableOrUnknown(data['cess']!, _cessMeta),
+      );
+    }
+    if (data.containsKey('cost')) {
+      context.handle(
+        _costMeta,
+        cost.isAcceptableOrUnknown(data['cost']!, _costMeta),
+      );
+    }
     return context;
   }
 
@@ -11069,6 +11122,18 @@ class $ItemMasterTable extends ItemMaster
         DriftSqlType.double,
         data['${effectivePrefix}tax_percent'],
       ),
+      closingStock: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}closing_stock'],
+      ),
+      cess: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}cess'],
+      ),
+      cost: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}cost'],
+      ),
     );
   }
 
@@ -11101,6 +11166,9 @@ class ItemMasterData extends DataClass implements Insertable<ItemMasterData> {
   final bool isDeleted;
   final String? hsnCode;
   final double? taxPercent;
+  final int? closingStock;
+  final int? cess;
+  final int? cost;
   const ItemMasterData({
     required this.id,
     required this.companyId,
@@ -11121,6 +11189,9 @@ class ItemMasterData extends DataClass implements Insertable<ItemMasterData> {
     required this.isDeleted,
     this.hsnCode,
     this.taxPercent,
+    this.closingStock,
+    this.cess,
+    this.cost,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -11157,6 +11228,15 @@ class ItemMasterData extends DataClass implements Insertable<ItemMasterData> {
     }
     if (!nullToAbsent || taxPercent != null) {
       map['tax_percent'] = Variable<double>(taxPercent);
+    }
+    if (!nullToAbsent || closingStock != null) {
+      map['closing_stock'] = Variable<int>(closingStock);
+    }
+    if (!nullToAbsent || cess != null) {
+      map['cess'] = Variable<int>(cess);
+    }
+    if (!nullToAbsent || cost != null) {
+      map['cost'] = Variable<int>(cost);
     }
     return map;
   }
@@ -11196,6 +11276,11 @@ class ItemMasterData extends DataClass implements Insertable<ItemMasterData> {
       taxPercent: taxPercent == null && nullToAbsent
           ? const Value.absent()
           : Value(taxPercent),
+      closingStock: closingStock == null && nullToAbsent
+          ? const Value.absent()
+          : Value(closingStock),
+      cess: cess == null && nullToAbsent ? const Value.absent() : Value(cess),
+      cost: cost == null && nullToAbsent ? const Value.absent() : Value(cost),
     );
   }
 
@@ -11224,6 +11309,9 @@ class ItemMasterData extends DataClass implements Insertable<ItemMasterData> {
       isDeleted: serializer.fromJson<bool>(json['isDeleted']),
       hsnCode: serializer.fromJson<String?>(json['hsnCode']),
       taxPercent: serializer.fromJson<double?>(json['taxPercent']),
+      closingStock: serializer.fromJson<int?>(json['closingStock']),
+      cess: serializer.fromJson<int?>(json['cess']),
+      cost: serializer.fromJson<int?>(json['cost']),
     );
   }
   @override
@@ -11249,6 +11337,9 @@ class ItemMasterData extends DataClass implements Insertable<ItemMasterData> {
       'isDeleted': serializer.toJson<bool>(isDeleted),
       'hsnCode': serializer.toJson<String?>(hsnCode),
       'taxPercent': serializer.toJson<double?>(taxPercent),
+      'closingStock': serializer.toJson<int?>(closingStock),
+      'cess': serializer.toJson<int?>(cess),
+      'cost': serializer.toJson<int?>(cost),
     };
   }
 
@@ -11272,6 +11363,9 @@ class ItemMasterData extends DataClass implements Insertable<ItemMasterData> {
     bool? isDeleted,
     Value<String?> hsnCode = const Value.absent(),
     Value<double?> taxPercent = const Value.absent(),
+    Value<int?> closingStock = const Value.absent(),
+    Value<int?> cess = const Value.absent(),
+    Value<int?> cost = const Value.absent(),
   }) => ItemMasterData(
     id: id ?? this.id,
     companyId: companyId ?? this.companyId,
@@ -11294,6 +11388,9 @@ class ItemMasterData extends DataClass implements Insertable<ItemMasterData> {
     isDeleted: isDeleted ?? this.isDeleted,
     hsnCode: hsnCode.present ? hsnCode.value : this.hsnCode,
     taxPercent: taxPercent.present ? taxPercent.value : this.taxPercent,
+    closingStock: closingStock.present ? closingStock.value : this.closingStock,
+    cess: cess.present ? cess.value : this.cess,
+    cost: cost.present ? cost.value : this.cost,
   );
   ItemMasterData copyWithCompanion(ItemMasterCompanion data) {
     return ItemMasterData(
@@ -11334,6 +11431,11 @@ class ItemMasterData extends DataClass implements Insertable<ItemMasterData> {
       taxPercent: data.taxPercent.present
           ? data.taxPercent.value
           : this.taxPercent,
+      closingStock: data.closingStock.present
+          ? data.closingStock.value
+          : this.closingStock,
+      cess: data.cess.present ? data.cess.value : this.cess,
+      cost: data.cost.present ? data.cost.value : this.cost,
     );
   }
 
@@ -11358,13 +11460,16 @@ class ItemMasterData extends DataClass implements Insertable<ItemMasterData> {
           ..write('isActive: $isActive, ')
           ..write('isDeleted: $isDeleted, ')
           ..write('hsnCode: $hsnCode, ')
-          ..write('taxPercent: $taxPercent')
+          ..write('taxPercent: $taxPercent, ')
+          ..write('closingStock: $closingStock, ')
+          ..write('cess: $cess, ')
+          ..write('cost: $cost')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(
+  int get hashCode => Object.hashAll([
     id,
     companyId,
     stockItemId,
@@ -11384,7 +11489,10 @@ class ItemMasterData extends DataClass implements Insertable<ItemMasterData> {
     isDeleted,
     hsnCode,
     taxPercent,
-  );
+    closingStock,
+    cess,
+    cost,
+  ]);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -11407,7 +11515,10 @@ class ItemMasterData extends DataClass implements Insertable<ItemMasterData> {
           other.isActive == this.isActive &&
           other.isDeleted == this.isDeleted &&
           other.hsnCode == this.hsnCode &&
-          other.taxPercent == this.taxPercent);
+          other.taxPercent == this.taxPercent &&
+          other.closingStock == this.closingStock &&
+          other.cess == this.cess &&
+          other.cost == this.cost);
 }
 
 class ItemMasterCompanion extends UpdateCompanion<ItemMasterData> {
@@ -11430,6 +11541,9 @@ class ItemMasterCompanion extends UpdateCompanion<ItemMasterData> {
   final Value<bool> isDeleted;
   final Value<String?> hsnCode;
   final Value<double?> taxPercent;
+  final Value<int?> closingStock;
+  final Value<int?> cess;
+  final Value<int?> cost;
   const ItemMasterCompanion({
     this.id = const Value.absent(),
     this.companyId = const Value.absent(),
@@ -11450,6 +11564,9 @@ class ItemMasterCompanion extends UpdateCompanion<ItemMasterData> {
     this.isDeleted = const Value.absent(),
     this.hsnCode = const Value.absent(),
     this.taxPercent = const Value.absent(),
+    this.closingStock = const Value.absent(),
+    this.cess = const Value.absent(),
+    this.cost = const Value.absent(),
   });
   ItemMasterCompanion.insert({
     this.id = const Value.absent(),
@@ -11471,6 +11588,9 @@ class ItemMasterCompanion extends UpdateCompanion<ItemMasterData> {
     this.isDeleted = const Value.absent(),
     this.hsnCode = const Value.absent(),
     this.taxPercent = const Value.absent(),
+    this.closingStock = const Value.absent(),
+    this.cess = const Value.absent(),
+    this.cost = const Value.absent(),
   }) : companyId = Value(companyId),
        stockItemId = Value(stockItemId),
        itemName = Value(itemName),
@@ -11496,6 +11616,9 @@ class ItemMasterCompanion extends UpdateCompanion<ItemMasterData> {
     Expression<bool>? isDeleted,
     Expression<String>? hsnCode,
     Expression<double>? taxPercent,
+    Expression<int>? closingStock,
+    Expression<int>? cess,
+    Expression<int>? cost,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -11517,6 +11640,9 @@ class ItemMasterCompanion extends UpdateCompanion<ItemMasterData> {
       if (isDeleted != null) 'is_deleted': isDeleted,
       if (hsnCode != null) 'hsn_code': hsnCode,
       if (taxPercent != null) 'tax_percent': taxPercent,
+      if (closingStock != null) 'closing_stock': closingStock,
+      if (cess != null) 'cess': cess,
+      if (cost != null) 'cost': cost,
     });
   }
 
@@ -11540,6 +11666,9 @@ class ItemMasterCompanion extends UpdateCompanion<ItemMasterData> {
     Value<bool>? isDeleted,
     Value<String?>? hsnCode,
     Value<double?>? taxPercent,
+    Value<int?>? closingStock,
+    Value<int?>? cess,
+    Value<int?>? cost,
   }) {
     return ItemMasterCompanion(
       id: id ?? this.id,
@@ -11561,6 +11690,9 @@ class ItemMasterCompanion extends UpdateCompanion<ItemMasterData> {
       isDeleted: isDeleted ?? this.isDeleted,
       hsnCode: hsnCode ?? this.hsnCode,
       taxPercent: taxPercent ?? this.taxPercent,
+      closingStock: closingStock ?? this.closingStock,
+      cess: cess ?? this.cess,
+      cost: cost ?? this.cost,
     );
   }
 
@@ -11624,6 +11756,15 @@ class ItemMasterCompanion extends UpdateCompanion<ItemMasterData> {
     if (taxPercent.present) {
       map['tax_percent'] = Variable<double>(taxPercent.value);
     }
+    if (closingStock.present) {
+      map['closing_stock'] = Variable<int>(closingStock.value);
+    }
+    if (cess.present) {
+      map['cess'] = Variable<int>(cess.value);
+    }
+    if (cost.present) {
+      map['cost'] = Variable<int>(cost.value);
+    }
     return map;
   }
 
@@ -11648,7 +11789,10 @@ class ItemMasterCompanion extends UpdateCompanion<ItemMasterData> {
           ..write('isActive: $isActive, ')
           ..write('isDeleted: $isDeleted, ')
           ..write('hsnCode: $hsnCode, ')
-          ..write('taxPercent: $taxPercent')
+          ..write('taxPercent: $taxPercent, ')
+          ..write('closingStock: $closingStock, ')
+          ..write('cess: $cess, ')
+          ..write('cost: $cost')
           ..write(')'))
         .toString();
   }
@@ -15617,6 +15761,18 @@ class $SaleOrderMasterTableTable extends SaleOrderMasterTable
     type: DriftSqlType.int,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _isCancelledMeta = const VerificationMeta(
+    'isCancelled',
+  );
+  @override
+  late final GeneratedColumn<int> isCancelled = GeneratedColumn<int>(
+    'is_cancelled',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
   static const VerificationMeta _partyIdMeta = const VerificationMeta(
     'partyId',
   );
@@ -16035,6 +16191,7 @@ class $SaleOrderMasterTableTable extends SaleOrderMasterTable
     id,
     vchId,
     voucherNo,
+    isCancelled,
     partyId,
     party,
     address,
@@ -16101,6 +16258,15 @@ class $SaleOrderMasterTableTable extends SaleOrderMasterTable
       context.handle(
         _voucherNoMeta,
         voucherNo.isAcceptableOrUnknown(data['voucher_no']!, _voucherNoMeta),
+      );
+    }
+    if (data.containsKey('is_cancelled')) {
+      context.handle(
+        _isCancelledMeta,
+        isCancelled.isAcceptableOrUnknown(
+          data['is_cancelled']!,
+          _isCancelledMeta,
+        ),
       );
     }
     if (data.containsKey('party_id')) {
@@ -16387,6 +16553,10 @@ class $SaleOrderMasterTableTable extends SaleOrderMasterTable
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
+  List<Set<GeneratedColumn>> get uniqueKeys => [
+    {companyId, vchType, voucherNo},
+  ];
+  @override
   SaleOrderMasterTableData map(
     Map<String, dynamic> data, {
     String? tablePrefix,
@@ -16405,6 +16575,10 @@ class $SaleOrderMasterTableTable extends SaleOrderMasterTable
         DriftSqlType.int,
         data['${effectivePrefix}voucher_no'],
       ),
+      isCancelled: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}is_cancelled'],
+      )!,
       partyId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}party_id'],
@@ -16579,6 +16753,7 @@ class SaleOrderMasterTableData extends DataClass
   final int id;
   final int? vchId;
   final int? voucherNo;
+  final int isCancelled;
   final int? partyId;
   final String? party;
   final String? address;
@@ -16623,6 +16798,7 @@ class SaleOrderMasterTableData extends DataClass
     required this.id,
     this.vchId,
     this.voucherNo,
+    required this.isCancelled,
     this.partyId,
     this.party,
     this.address,
@@ -16674,6 +16850,7 @@ class SaleOrderMasterTableData extends DataClass
     if (!nullToAbsent || voucherNo != null) {
       map['voucher_no'] = Variable<int>(voucherNo);
     }
+    map['is_cancelled'] = Variable<int>(isCancelled);
     if (!nullToAbsent || partyId != null) {
       map['party_id'] = Variable<int>(partyId);
     }
@@ -16802,6 +16979,7 @@ class SaleOrderMasterTableData extends DataClass
       voucherNo: voucherNo == null && nullToAbsent
           ? const Value.absent()
           : Value(voucherNo),
+      isCancelled: Value(isCancelled),
       partyId: partyId == null && nullToAbsent
           ? const Value.absent()
           : Value(partyId),
@@ -16928,6 +17106,7 @@ class SaleOrderMasterTableData extends DataClass
       id: serializer.fromJson<int>(json['id']),
       vchId: serializer.fromJson<int?>(json['vchId']),
       voucherNo: serializer.fromJson<int?>(json['voucherNo']),
+      isCancelled: serializer.fromJson<int>(json['isCancelled']),
       partyId: serializer.fromJson<int?>(json['partyId']),
       party: serializer.fromJson<String?>(json['party']),
       address: serializer.fromJson<String?>(json['address']),
@@ -16977,6 +17156,7 @@ class SaleOrderMasterTableData extends DataClass
       'id': serializer.toJson<int>(id),
       'vchId': serializer.toJson<int?>(vchId),
       'voucherNo': serializer.toJson<int?>(voucherNo),
+      'isCancelled': serializer.toJson<int>(isCancelled),
       'partyId': serializer.toJson<int?>(partyId),
       'party': serializer.toJson<String?>(party),
       'address': serializer.toJson<String?>(address),
@@ -17024,6 +17204,7 @@ class SaleOrderMasterTableData extends DataClass
     int? id,
     Value<int?> vchId = const Value.absent(),
     Value<int?> voucherNo = const Value.absent(),
+    int? isCancelled,
     Value<int?> partyId = const Value.absent(),
     Value<String?> party = const Value.absent(),
     Value<String?> address = const Value.absent(),
@@ -17068,6 +17249,7 @@ class SaleOrderMasterTableData extends DataClass
     id: id ?? this.id,
     vchId: vchId.present ? vchId.value : this.vchId,
     voucherNo: voucherNo.present ? voucherNo.value : this.voucherNo,
+    isCancelled: isCancelled ?? this.isCancelled,
     partyId: partyId.present ? partyId.value : this.partyId,
     party: party.present ? party.value : this.party,
     address: address.present ? address.value : this.address,
@@ -17122,6 +17304,9 @@ class SaleOrderMasterTableData extends DataClass
       id: data.id.present ? data.id.value : this.id,
       vchId: data.vchId.present ? data.vchId.value : this.vchId,
       voucherNo: data.voucherNo.present ? data.voucherNo.value : this.voucherNo,
+      isCancelled: data.isCancelled.present
+          ? data.isCancelled.value
+          : this.isCancelled,
       partyId: data.partyId.present ? data.partyId.value : this.partyId,
       party: data.party.present ? data.party.value : this.party,
       address: data.address.present ? data.address.value : this.address,
@@ -17197,6 +17382,7 @@ class SaleOrderMasterTableData extends DataClass
           ..write('id: $id, ')
           ..write('vchId: $vchId, ')
           ..write('voucherNo: $voucherNo, ')
+          ..write('isCancelled: $isCancelled, ')
           ..write('partyId: $partyId, ')
           ..write('party: $party, ')
           ..write('address: $address, ')
@@ -17246,6 +17432,7 @@ class SaleOrderMasterTableData extends DataClass
     id,
     vchId,
     voucherNo,
+    isCancelled,
     partyId,
     party,
     address,
@@ -17294,6 +17481,7 @@ class SaleOrderMasterTableData extends DataClass
           other.id == this.id &&
           other.vchId == this.vchId &&
           other.voucherNo == this.voucherNo &&
+          other.isCancelled == this.isCancelled &&
           other.partyId == this.partyId &&
           other.party == this.party &&
           other.address == this.address &&
@@ -17341,6 +17529,7 @@ class SaleOrderMasterTableCompanion
   final Value<int> id;
   final Value<int?> vchId;
   final Value<int?> voucherNo;
+  final Value<int> isCancelled;
   final Value<int?> partyId;
   final Value<String?> party;
   final Value<String?> address;
@@ -17385,6 +17574,7 @@ class SaleOrderMasterTableCompanion
     this.id = const Value.absent(),
     this.vchId = const Value.absent(),
     this.voucherNo = const Value.absent(),
+    this.isCancelled = const Value.absent(),
     this.partyId = const Value.absent(),
     this.party = const Value.absent(),
     this.address = const Value.absent(),
@@ -17430,6 +17620,7 @@ class SaleOrderMasterTableCompanion
     this.id = const Value.absent(),
     this.vchId = const Value.absent(),
     this.voucherNo = const Value.absent(),
+    this.isCancelled = const Value.absent(),
     this.partyId = const Value.absent(),
     this.party = const Value.absent(),
     this.address = const Value.absent(),
@@ -17475,6 +17666,7 @@ class SaleOrderMasterTableCompanion
     Expression<int>? id,
     Expression<int>? vchId,
     Expression<int>? voucherNo,
+    Expression<int>? isCancelled,
     Expression<int>? partyId,
     Expression<String>? party,
     Expression<String>? address,
@@ -17520,6 +17712,7 @@ class SaleOrderMasterTableCompanion
       if (id != null) 'id': id,
       if (vchId != null) 'vch_id': vchId,
       if (voucherNo != null) 'voucher_no': voucherNo,
+      if (isCancelled != null) 'is_cancelled': isCancelled,
       if (partyId != null) 'party_id': partyId,
       if (party != null) 'party': party,
       if (address != null) 'address': address,
@@ -17567,6 +17760,7 @@ class SaleOrderMasterTableCompanion
     Value<int>? id,
     Value<int?>? vchId,
     Value<int?>? voucherNo,
+    Value<int>? isCancelled,
     Value<int?>? partyId,
     Value<String?>? party,
     Value<String?>? address,
@@ -17612,6 +17806,7 @@ class SaleOrderMasterTableCompanion
       id: id ?? this.id,
       vchId: vchId ?? this.vchId,
       voucherNo: voucherNo ?? this.voucherNo,
+      isCancelled: isCancelled ?? this.isCancelled,
       partyId: partyId ?? this.partyId,
       party: party ?? this.party,
       address: address ?? this.address,
@@ -17666,6 +17861,9 @@ class SaleOrderMasterTableCompanion
     }
     if (voucherNo.present) {
       map['voucher_no'] = Variable<int>(voucherNo.value);
+    }
+    if (isCancelled.present) {
+      map['is_cancelled'] = Variable<int>(isCancelled.value);
     }
     if (partyId.present) {
       map['party_id'] = Variable<int>(partyId.value);
@@ -17796,6 +17994,7 @@ class SaleOrderMasterTableCompanion
           ..write('id: $id, ')
           ..write('vchId: $vchId, ')
           ..write('voucherNo: $voucherNo, ')
+          ..write('isCancelled: $isCancelled, ')
           ..write('partyId: $partyId, ')
           ..write('party: $party, ')
           ..write('address: $address, ')
@@ -29228,6 +29427,466 @@ class ReceiptEntryLedgerTableCompanion
   }
 }
 
+class $VoucherControlTableTable extends VoucherControlTable
+    with TableInfo<$VoucherControlTableTable, VoucherControlTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $VoucherControlTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _companyIdMeta = const VerificationMeta(
+    'companyId',
+  );
+  @override
+  late final GeneratedColumn<int> companyId = GeneratedColumn<int>(
+    'company_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _vchTypeMeta = const VerificationMeta(
+    'vchType',
+  );
+  @override
+  late final GeneratedColumn<String> vchType = GeneratedColumn<String>(
+    'vch_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _prefixMeta = const VerificationMeta('prefix');
+  @override
+  late final GeneratedColumn<String> prefix = GeneratedColumn<String>(
+    'prefix',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _finIdMeta = const VerificationMeta('finId');
+  @override
+  late final GeneratedColumn<int> finId = GeneratedColumn<int>(
+    'fin_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _lastNoMeta = const VerificationMeta('lastNo');
+  @override
+  late final GeneratedColumn<int> lastNo = GeneratedColumn<int>(
+    'last_no',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _createdTimeMeta = const VerificationMeta(
+    'createdTime',
+  );
+  @override
+  late final GeneratedColumn<String> createdTime = GeneratedColumn<String>(
+    'created_time',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    companyId,
+    vchType,
+    prefix,
+    finId,
+    lastNo,
+    createdTime,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'voucher_control_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<VoucherControlTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('company_id')) {
+      context.handle(
+        _companyIdMeta,
+        companyId.isAcceptableOrUnknown(data['company_id']!, _companyIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_companyIdMeta);
+    }
+    if (data.containsKey('vch_type')) {
+      context.handle(
+        _vchTypeMeta,
+        vchType.isAcceptableOrUnknown(data['vch_type']!, _vchTypeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_vchTypeMeta);
+    }
+    if (data.containsKey('prefix')) {
+      context.handle(
+        _prefixMeta,
+        prefix.isAcceptableOrUnknown(data['prefix']!, _prefixMeta),
+      );
+    }
+    if (data.containsKey('fin_id')) {
+      context.handle(
+        _finIdMeta,
+        finId.isAcceptableOrUnknown(data['fin_id']!, _finIdMeta),
+      );
+    }
+    if (data.containsKey('last_no')) {
+      context.handle(
+        _lastNoMeta,
+        lastNo.isAcceptableOrUnknown(data['last_no']!, _lastNoMeta),
+      );
+    }
+    if (data.containsKey('created_time')) {
+      context.handle(
+        _createdTimeMeta,
+        createdTime.isAcceptableOrUnknown(
+          data['created_time']!,
+          _createdTimeMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  VoucherControlTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return VoucherControlTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      companyId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}company_id'],
+      )!,
+      vchType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}vch_type'],
+      )!,
+      prefix: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}prefix'],
+      ),
+      finId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}fin_id'],
+      ),
+      lastNo: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}last_no'],
+      )!,
+      createdTime: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_time'],
+      ),
+    );
+  }
+
+  @override
+  $VoucherControlTableTable createAlias(String alias) {
+    return $VoucherControlTableTable(attachedDatabase, alias);
+  }
+}
+
+class VoucherControlTableData extends DataClass
+    implements Insertable<VoucherControlTableData> {
+  final int id;
+  final int companyId;
+
+  /// SO / SI / PI etc
+  final String vchType;
+
+  /// Prefix like SO/24-25
+  final String? prefix;
+
+  /// Financial year
+  final int? finId;
+
+  /// Last issued number
+  final int lastNo;
+  final String? createdTime;
+  const VoucherControlTableData({
+    required this.id,
+    required this.companyId,
+    required this.vchType,
+    this.prefix,
+    this.finId,
+    required this.lastNo,
+    this.createdTime,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['company_id'] = Variable<int>(companyId);
+    map['vch_type'] = Variable<String>(vchType);
+    if (!nullToAbsent || prefix != null) {
+      map['prefix'] = Variable<String>(prefix);
+    }
+    if (!nullToAbsent || finId != null) {
+      map['fin_id'] = Variable<int>(finId);
+    }
+    map['last_no'] = Variable<int>(lastNo);
+    if (!nullToAbsent || createdTime != null) {
+      map['created_time'] = Variable<String>(createdTime);
+    }
+    return map;
+  }
+
+  VoucherControlTableCompanion toCompanion(bool nullToAbsent) {
+    return VoucherControlTableCompanion(
+      id: Value(id),
+      companyId: Value(companyId),
+      vchType: Value(vchType),
+      prefix: prefix == null && nullToAbsent
+          ? const Value.absent()
+          : Value(prefix),
+      finId: finId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(finId),
+      lastNo: Value(lastNo),
+      createdTime: createdTime == null && nullToAbsent
+          ? const Value.absent()
+          : Value(createdTime),
+    );
+  }
+
+  factory VoucherControlTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return VoucherControlTableData(
+      id: serializer.fromJson<int>(json['id']),
+      companyId: serializer.fromJson<int>(json['companyId']),
+      vchType: serializer.fromJson<String>(json['vchType']),
+      prefix: serializer.fromJson<String?>(json['prefix']),
+      finId: serializer.fromJson<int?>(json['finId']),
+      lastNo: serializer.fromJson<int>(json['lastNo']),
+      createdTime: serializer.fromJson<String?>(json['createdTime']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'companyId': serializer.toJson<int>(companyId),
+      'vchType': serializer.toJson<String>(vchType),
+      'prefix': serializer.toJson<String?>(prefix),
+      'finId': serializer.toJson<int?>(finId),
+      'lastNo': serializer.toJson<int>(lastNo),
+      'createdTime': serializer.toJson<String?>(createdTime),
+    };
+  }
+
+  VoucherControlTableData copyWith({
+    int? id,
+    int? companyId,
+    String? vchType,
+    Value<String?> prefix = const Value.absent(),
+    Value<int?> finId = const Value.absent(),
+    int? lastNo,
+    Value<String?> createdTime = const Value.absent(),
+  }) => VoucherControlTableData(
+    id: id ?? this.id,
+    companyId: companyId ?? this.companyId,
+    vchType: vchType ?? this.vchType,
+    prefix: prefix.present ? prefix.value : this.prefix,
+    finId: finId.present ? finId.value : this.finId,
+    lastNo: lastNo ?? this.lastNo,
+    createdTime: createdTime.present ? createdTime.value : this.createdTime,
+  );
+  VoucherControlTableData copyWithCompanion(VoucherControlTableCompanion data) {
+    return VoucherControlTableData(
+      id: data.id.present ? data.id.value : this.id,
+      companyId: data.companyId.present ? data.companyId.value : this.companyId,
+      vchType: data.vchType.present ? data.vchType.value : this.vchType,
+      prefix: data.prefix.present ? data.prefix.value : this.prefix,
+      finId: data.finId.present ? data.finId.value : this.finId,
+      lastNo: data.lastNo.present ? data.lastNo.value : this.lastNo,
+      createdTime: data.createdTime.present
+          ? data.createdTime.value
+          : this.createdTime,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VoucherControlTableData(')
+          ..write('id: $id, ')
+          ..write('companyId: $companyId, ')
+          ..write('vchType: $vchType, ')
+          ..write('prefix: $prefix, ')
+          ..write('finId: $finId, ')
+          ..write('lastNo: $lastNo, ')
+          ..write('createdTime: $createdTime')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, companyId, vchType, prefix, finId, lastNo, createdTime);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is VoucherControlTableData &&
+          other.id == this.id &&
+          other.companyId == this.companyId &&
+          other.vchType == this.vchType &&
+          other.prefix == this.prefix &&
+          other.finId == this.finId &&
+          other.lastNo == this.lastNo &&
+          other.createdTime == this.createdTime);
+}
+
+class VoucherControlTableCompanion
+    extends UpdateCompanion<VoucherControlTableData> {
+  final Value<int> id;
+  final Value<int> companyId;
+  final Value<String> vchType;
+  final Value<String?> prefix;
+  final Value<int?> finId;
+  final Value<int> lastNo;
+  final Value<String?> createdTime;
+  const VoucherControlTableCompanion({
+    this.id = const Value.absent(),
+    this.companyId = const Value.absent(),
+    this.vchType = const Value.absent(),
+    this.prefix = const Value.absent(),
+    this.finId = const Value.absent(),
+    this.lastNo = const Value.absent(),
+    this.createdTime = const Value.absent(),
+  });
+  VoucherControlTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int companyId,
+    required String vchType,
+    this.prefix = const Value.absent(),
+    this.finId = const Value.absent(),
+    this.lastNo = const Value.absent(),
+    this.createdTime = const Value.absent(),
+  }) : companyId = Value(companyId),
+       vchType = Value(vchType);
+  static Insertable<VoucherControlTableData> custom({
+    Expression<int>? id,
+    Expression<int>? companyId,
+    Expression<String>? vchType,
+    Expression<String>? prefix,
+    Expression<int>? finId,
+    Expression<int>? lastNo,
+    Expression<String>? createdTime,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (companyId != null) 'company_id': companyId,
+      if (vchType != null) 'vch_type': vchType,
+      if (prefix != null) 'prefix': prefix,
+      if (finId != null) 'fin_id': finId,
+      if (lastNo != null) 'last_no': lastNo,
+      if (createdTime != null) 'created_time': createdTime,
+    });
+  }
+
+  VoucherControlTableCompanion copyWith({
+    Value<int>? id,
+    Value<int>? companyId,
+    Value<String>? vchType,
+    Value<String?>? prefix,
+    Value<int?>? finId,
+    Value<int>? lastNo,
+    Value<String?>? createdTime,
+  }) {
+    return VoucherControlTableCompanion(
+      id: id ?? this.id,
+      companyId: companyId ?? this.companyId,
+      vchType: vchType ?? this.vchType,
+      prefix: prefix ?? this.prefix,
+      finId: finId ?? this.finId,
+      lastNo: lastNo ?? this.lastNo,
+      createdTime: createdTime ?? this.createdTime,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (companyId.present) {
+      map['company_id'] = Variable<int>(companyId.value);
+    }
+    if (vchType.present) {
+      map['vch_type'] = Variable<String>(vchType.value);
+    }
+    if (prefix.present) {
+      map['prefix'] = Variable<String>(prefix.value);
+    }
+    if (finId.present) {
+      map['fin_id'] = Variable<int>(finId.value);
+    }
+    if (lastNo.present) {
+      map['last_no'] = Variable<int>(lastNo.value);
+    }
+    if (createdTime.present) {
+      map['created_time'] = Variable<String>(createdTime.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VoucherControlTableCompanion(')
+          ..write('id: $id, ')
+          ..write('companyId: $companyId, ')
+          ..write('vchType: $vchType, ')
+          ..write('prefix: $prefix, ')
+          ..write('finId: $finId, ')
+          ..write('lastNo: $lastNo, ')
+          ..write('createdTime: $createdTime')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDb extends GeneratedDatabase {
   _$AppDb(QueryExecutor e) : super(e);
   $AppDbManager get managers => $AppDbManager(this);
@@ -29280,6 +29939,8 @@ abstract class _$AppDb extends GeneratedDatabase {
       $ReceiptEntryTableTable(this);
   late final $ReceiptEntryLedgerTableTable receiptEntryLedgerTable =
       $ReceiptEntryLedgerTableTable(this);
+  late final $VoucherControlTableTable voucherControlTable =
+      $VoucherControlTableTable(this);
   late final CompanyDao companyDao = CompanyDao(this as AppDb);
   late final RegistrationDetailDao registrationDetailDao =
       RegistrationDetailDao(this as AppDb);
@@ -29301,6 +29962,9 @@ abstract class _$AppDb extends GeneratedDatabase {
   late final ItemMasterDao itemMasterDao = ItemMasterDao(this as AppDb);
   late final PriceLevelDao priceLevelDao = PriceLevelDao(this as AppDb);
   late final PriceListDetailsDao priceListDetailsDao = PriceListDetailsDao(
+    this as AppDb,
+  );
+  late final SaleOrderMasterDao saleOrderMasterDao = SaleOrderMasterDao(
     this as AppDb,
   );
   @override
@@ -29335,6 +29999,7 @@ abstract class _$AppDb extends GeneratedDatabase {
     saleReturnLedgerDetailsTable,
     receiptEntryTable,
     receiptEntryLedgerTable,
+    voucherControlTable,
   ];
 }
 
@@ -34040,6 +34705,9 @@ typedef $$ItemMasterTableCreateCompanionBuilder =
       Value<bool> isDeleted,
       Value<String?> hsnCode,
       Value<double?> taxPercent,
+      Value<int?> closingStock,
+      Value<int?> cess,
+      Value<int?> cost,
     });
 typedef $$ItemMasterTableUpdateCompanionBuilder =
     ItemMasterCompanion Function({
@@ -34062,6 +34730,9 @@ typedef $$ItemMasterTableUpdateCompanionBuilder =
       Value<bool> isDeleted,
       Value<String?> hsnCode,
       Value<double?> taxPercent,
+      Value<int?> closingStock,
+      Value<int?> cess,
+      Value<int?> cost,
     });
 
 class $$ItemMasterTableFilterComposer
@@ -34165,6 +34836,21 @@ class $$ItemMasterTableFilterComposer
 
   ColumnFilters<double> get taxPercent => $composableBuilder(
     column: $table.taxPercent,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get closingStock => $composableBuilder(
+    column: $table.closingStock,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get cess => $composableBuilder(
+    column: $table.cess,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get cost => $composableBuilder(
+    column: $table.cost,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -34272,6 +34958,21 @@ class $$ItemMasterTableOrderingComposer
     column: $table.taxPercent,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<int> get closingStock => $composableBuilder(
+    column: $table.closingStock,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get cess => $composableBuilder(
+    column: $table.cess,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get cost => $composableBuilder(
+    column: $table.cost,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$ItemMasterTableAnnotationComposer
@@ -34357,6 +35058,17 @@ class $$ItemMasterTableAnnotationComposer
     column: $table.taxPercent,
     builder: (column) => column,
   );
+
+  GeneratedColumn<int> get closingStock => $composableBuilder(
+    column: $table.closingStock,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get cess =>
+      $composableBuilder(column: $table.cess, builder: (column) => column);
+
+  GeneratedColumn<int> get cost =>
+      $composableBuilder(column: $table.cost, builder: (column) => column);
 }
 
 class $$ItemMasterTableTableManager
@@ -34409,6 +35121,9 @@ class $$ItemMasterTableTableManager
                 Value<bool> isDeleted = const Value.absent(),
                 Value<String?> hsnCode = const Value.absent(),
                 Value<double?> taxPercent = const Value.absent(),
+                Value<int?> closingStock = const Value.absent(),
+                Value<int?> cess = const Value.absent(),
+                Value<int?> cost = const Value.absent(),
               }) => ItemMasterCompanion(
                 id: id,
                 companyId: companyId,
@@ -34429,6 +35144,9 @@ class $$ItemMasterTableTableManager
                 isDeleted: isDeleted,
                 hsnCode: hsnCode,
                 taxPercent: taxPercent,
+                closingStock: closingStock,
+                cess: cess,
+                cost: cost,
               ),
           createCompanionCallback:
               ({
@@ -34451,6 +35169,9 @@ class $$ItemMasterTableTableManager
                 Value<bool> isDeleted = const Value.absent(),
                 Value<String?> hsnCode = const Value.absent(),
                 Value<double?> taxPercent = const Value.absent(),
+                Value<int?> closingStock = const Value.absent(),
+                Value<int?> cess = const Value.absent(),
+                Value<int?> cost = const Value.absent(),
               }) => ItemMasterCompanion.insert(
                 id: id,
                 companyId: companyId,
@@ -34471,6 +35192,9 @@ class $$ItemMasterTableTableManager
                 isDeleted: isDeleted,
                 hsnCode: hsnCode,
                 taxPercent: taxPercent,
+                closingStock: closingStock,
+                cess: cess,
+                cost: cost,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
@@ -36447,6 +37171,7 @@ typedef $$SaleOrderMasterTableTableCreateCompanionBuilder =
       Value<int> id,
       Value<int?> vchId,
       Value<int?> voucherNo,
+      Value<int> isCancelled,
       Value<int?> partyId,
       Value<String?> party,
       Value<String?> address,
@@ -36493,6 +37218,7 @@ typedef $$SaleOrderMasterTableTableUpdateCompanionBuilder =
       Value<int> id,
       Value<int?> vchId,
       Value<int?> voucherNo,
+      Value<int> isCancelled,
       Value<int?> partyId,
       Value<String?> party,
       Value<String?> address,
@@ -36556,6 +37282,11 @@ class $$SaleOrderMasterTableTableFilterComposer
 
   ColumnFilters<int> get voucherNo => $composableBuilder(
     column: $table.voucherNo,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get isCancelled => $composableBuilder(
+    column: $table.isCancelled,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -36784,6 +37515,11 @@ class $$SaleOrderMasterTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<int> get isCancelled => $composableBuilder(
+    column: $table.isCancelled,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<int> get partyId => $composableBuilder(
     column: $table.partyId,
     builder: (column) => ColumnOrderings(column),
@@ -37003,6 +37739,11 @@ class $$SaleOrderMasterTableTableAnnotationComposer
   GeneratedColumn<int> get voucherNo =>
       $composableBuilder(column: $table.voucherNo, builder: (column) => column);
 
+  GeneratedColumn<int> get isCancelled => $composableBuilder(
+    column: $table.isCancelled,
+    builder: (column) => column,
+  );
+
   GeneratedColumn<int> get partyId =>
       $composableBuilder(column: $table.partyId, builder: (column) => column);
 
@@ -37196,6 +37937,7 @@ class $$SaleOrderMasterTableTableTableManager
                 Value<int> id = const Value.absent(),
                 Value<int?> vchId = const Value.absent(),
                 Value<int?> voucherNo = const Value.absent(),
+                Value<int> isCancelled = const Value.absent(),
                 Value<int?> partyId = const Value.absent(),
                 Value<String?> party = const Value.absent(),
                 Value<String?> address = const Value.absent(),
@@ -37240,6 +37982,7 @@ class $$SaleOrderMasterTableTableTableManager
                 id: id,
                 vchId: vchId,
                 voucherNo: voucherNo,
+                isCancelled: isCancelled,
                 partyId: partyId,
                 party: party,
                 address: address,
@@ -37286,6 +38029,7 @@ class $$SaleOrderMasterTableTableTableManager
                 Value<int> id = const Value.absent(),
                 Value<int?> vchId = const Value.absent(),
                 Value<int?> voucherNo = const Value.absent(),
+                Value<int> isCancelled = const Value.absent(),
                 Value<int?> partyId = const Value.absent(),
                 Value<String?> party = const Value.absent(),
                 Value<String?> address = const Value.absent(),
@@ -37330,6 +38074,7 @@ class $$SaleOrderMasterTableTableTableManager
                 id: id,
                 vchId: vchId,
                 voucherNo: voucherNo,
+                isCancelled: isCancelled,
                 partyId: partyId,
                 party: party,
                 address: address,
@@ -42509,6 +43254,256 @@ typedef $$ReceiptEntryLedgerTableTableProcessedTableManager =
       ReceiptEntryLedgerTableData,
       PrefetchHooks Function()
     >;
+typedef $$VoucherControlTableTableCreateCompanionBuilder =
+    VoucherControlTableCompanion Function({
+      Value<int> id,
+      required int companyId,
+      required String vchType,
+      Value<String?> prefix,
+      Value<int?> finId,
+      Value<int> lastNo,
+      Value<String?> createdTime,
+    });
+typedef $$VoucherControlTableTableUpdateCompanionBuilder =
+    VoucherControlTableCompanion Function({
+      Value<int> id,
+      Value<int> companyId,
+      Value<String> vchType,
+      Value<String?> prefix,
+      Value<int?> finId,
+      Value<int> lastNo,
+      Value<String?> createdTime,
+    });
+
+class $$VoucherControlTableTableFilterComposer
+    extends Composer<_$AppDb, $VoucherControlTableTable> {
+  $$VoucherControlTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get companyId => $composableBuilder(
+    column: $table.companyId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get vchType => $composableBuilder(
+    column: $table.vchType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get prefix => $composableBuilder(
+    column: $table.prefix,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get finId => $composableBuilder(
+    column: $table.finId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get lastNo => $composableBuilder(
+    column: $table.lastNo,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdTime => $composableBuilder(
+    column: $table.createdTime,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$VoucherControlTableTableOrderingComposer
+    extends Composer<_$AppDb, $VoucherControlTableTable> {
+  $$VoucherControlTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get companyId => $composableBuilder(
+    column: $table.companyId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get vchType => $composableBuilder(
+    column: $table.vchType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get prefix => $composableBuilder(
+    column: $table.prefix,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get finId => $composableBuilder(
+    column: $table.finId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get lastNo => $composableBuilder(
+    column: $table.lastNo,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdTime => $composableBuilder(
+    column: $table.createdTime,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$VoucherControlTableTableAnnotationComposer
+    extends Composer<_$AppDb, $VoucherControlTableTable> {
+  $$VoucherControlTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get companyId =>
+      $composableBuilder(column: $table.companyId, builder: (column) => column);
+
+  GeneratedColumn<String> get vchType =>
+      $composableBuilder(column: $table.vchType, builder: (column) => column);
+
+  GeneratedColumn<String> get prefix =>
+      $composableBuilder(column: $table.prefix, builder: (column) => column);
+
+  GeneratedColumn<int> get finId =>
+      $composableBuilder(column: $table.finId, builder: (column) => column);
+
+  GeneratedColumn<int> get lastNo =>
+      $composableBuilder(column: $table.lastNo, builder: (column) => column);
+
+  GeneratedColumn<String> get createdTime => $composableBuilder(
+    column: $table.createdTime,
+    builder: (column) => column,
+  );
+}
+
+class $$VoucherControlTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDb,
+          $VoucherControlTableTable,
+          VoucherControlTableData,
+          $$VoucherControlTableTableFilterComposer,
+          $$VoucherControlTableTableOrderingComposer,
+          $$VoucherControlTableTableAnnotationComposer,
+          $$VoucherControlTableTableCreateCompanionBuilder,
+          $$VoucherControlTableTableUpdateCompanionBuilder,
+          (
+            VoucherControlTableData,
+            BaseReferences<
+              _$AppDb,
+              $VoucherControlTableTable,
+              VoucherControlTableData
+            >,
+          ),
+          VoucherControlTableData,
+          PrefetchHooks Function()
+        > {
+  $$VoucherControlTableTableTableManager(
+    _$AppDb db,
+    $VoucherControlTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$VoucherControlTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$VoucherControlTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$VoucherControlTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> companyId = const Value.absent(),
+                Value<String> vchType = const Value.absent(),
+                Value<String?> prefix = const Value.absent(),
+                Value<int?> finId = const Value.absent(),
+                Value<int> lastNo = const Value.absent(),
+                Value<String?> createdTime = const Value.absent(),
+              }) => VoucherControlTableCompanion(
+                id: id,
+                companyId: companyId,
+                vchType: vchType,
+                prefix: prefix,
+                finId: finId,
+                lastNo: lastNo,
+                createdTime: createdTime,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int companyId,
+                required String vchType,
+                Value<String?> prefix = const Value.absent(),
+                Value<int?> finId = const Value.absent(),
+                Value<int> lastNo = const Value.absent(),
+                Value<String?> createdTime = const Value.absent(),
+              }) => VoucherControlTableCompanion.insert(
+                id: id,
+                companyId: companyId,
+                vchType: vchType,
+                prefix: prefix,
+                finId: finId,
+                lastNo: lastNo,
+                createdTime: createdTime,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$VoucherControlTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDb,
+      $VoucherControlTableTable,
+      VoucherControlTableData,
+      $$VoucherControlTableTableFilterComposer,
+      $$VoucherControlTableTableOrderingComposer,
+      $$VoucherControlTableTableAnnotationComposer,
+      $$VoucherControlTableTableCreateCompanionBuilder,
+      $$VoucherControlTableTableUpdateCompanionBuilder,
+      (
+        VoucherControlTableData,
+        BaseReferences<
+          _$AppDb,
+          $VoucherControlTableTable,
+          VoucherControlTableData
+        >,
+      ),
+      VoucherControlTableData,
+      PrefetchHooks Function()
+    >;
 
 class $AppDbManager {
   final _$AppDb _db;
@@ -42587,4 +43582,6 @@ class $AppDbManager {
         _db,
         _db.receiptEntryLedgerTable,
       );
+  $$VoucherControlTableTableTableManager get voucherControlTable =>
+      $$VoucherControlTableTableTableManager(_db, _db.voucherControlTable);
 }

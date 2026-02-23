@@ -6,7 +6,8 @@ class SaleOrderMasterTable extends Table {
 
   IntColumn get vchId => integer().nullable()();
   IntColumn get voucherNo => integer().nullable()();
-
+IntColumn get isCancelled =>
+    integer().withDefault(const Constant(0))();
   IntColumn get partyId => integer().nullable()();
   TextColumn get party => text().nullable()();
 
@@ -67,4 +68,10 @@ class SaleOrderMasterTable extends Table {
   IntColumn get uploadedServerId => integer().nullable()();
 
   TextColumn get mailingName => text().nullable()();
+
+  @override
+List<Set<Column>> get uniqueKeys => [
+  {companyId, vchType, voucherNo}
+];
 }
+

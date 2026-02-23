@@ -32,6 +32,10 @@ class ItemMaster extends Table {
   TextColumn get hsnCode => text().nullable()();
   RealColumn get taxPercent => real().nullable()();
 
+  IntColumn get closingStock => integer().nullable()();
+  IntColumn get cess => integer().nullable()();
+  IntColumn get cost => integer().nullable()();
+
   /// Avoid duplicate server data
   @override
   List<Set<Column>> get uniqueKeys => [

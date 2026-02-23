@@ -5,6 +5,7 @@ import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/data_sources/user/party_MasterSync/party_MasterSync.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/models/party_details.dart';
+import 'package:mpos_beat/data/models/product.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 import 'package:mpos_beat/presentation/logic/customer_transaction_provider.dart';
 import 'package:mpos_beat/presentation/logic/user_provider.dart';
@@ -15,8 +16,13 @@ import 'package:mpos_beat/presentation/views/transactions/transaction_order_book
 class TransactionOrderBookingRouteArgs {
   final PartyMasterData party;
   final TransactionArgs data;
+  final VoucherType vchTyp;
 
-  TransactionOrderBookingRouteArgs({required this.party, required this.data});
+  TransactionOrderBookingRouteArgs({
+    required this.party,
+    required this.data,
+    required this.vchTyp,
+  });
 }
 
 class TransactionOrderBookingScreen extends StatefulWidget {
@@ -31,23 +37,41 @@ class TransactionOrderBookingScreen extends StatefulWidget {
 
 class _TransactionOrderBookingScreenState
     extends State<TransactionOrderBookingScreen> {
+  String? voucherNo;
   @override
   void initState() {
     super.initState();
     context.read<UserProvider>().attachDb(context.read<AppDb>());
-    load();
+    // load();
+    generateVoucher();
   }
 
-  Future<void> load() async {
-    final party = await sl<PartyMasterSync>().fetchParty(
-      widget.data.data.company.id!,
-      widget.data.party.ledgerId,
+  Future<void> generateVoucher() async {
+    final db = context.read<AppDb>();
+
+    final vNo = await VoucherGenerator.generate(
+      db: db,
+      voucher: widget.data.vchTyp,
+      companyId: widget.data.data.company.id!,
     );
 
-    if (party != null) {
-      context.read<UserProvider>().setParty(party);
+    if (mounted) {
+      setState(() {
+        voucherNo = vNo;
+      });
     }
   }
+
+  // Future<void> load() async {
+  //   final party = await sl<PartyMasterSync>().fetchParty(
+  //     widget.data.data.company.id!,
+  //     widget.data.party.ledgerId,
+  //   );
+
+  //   if (party != null) {
+  //     context.read<UserProvider>().setParty(party);
+  //   }
+  // }
 
   @override
   void didUpdateWidget(covariant TransactionOrderBookingScreen oldWidget) {
@@ -64,6 +88,10 @@ class _TransactionOrderBookingScreenState
     final companyId = widget.data.data.company.id!;
     final ledgerId = widget.data.party.ledgerId;
     final appLocalizations = context.l10n;
+    final b2bVoucherNo =
+        "${widget.data.vchTyp.b2BPrefix}/${widget.data.vchTyp.b2BSuffix}";
+    final b2cVoucherNo =
+        "${widget.data.vchTyp.b2CPrefix}/${widget.data.vchTyp.b2CSuffix}";
     final provider = context.read<CustomerTransactionProvider>();
     return Scaffold(
       appBar: AppBar(
@@ -146,6 +174,7 @@ class _TransactionOrderBookingScreenState
                                     extra: TransactionOrderBookingRouteArgs(
                                       data: widget.data.data,
                                       party: widget.data.party,
+                                      vchTyp: widget.data.vchTyp,
                                     ),
                                   );
                                 },
@@ -179,7 +208,8 @@ class _TransactionOrderBookingScreenState
                           ),
                           h4,
                           EndToEndTextWidget(
-                            text1: appLocalizations.order_booking_voucher_no,
+                            text1:
+                                "${appLocalizations.order_booking_voucher_no} ${voucherNo ?? "..."}",
                             text2: appLocalizations.order_booking_balance,
                           ),
                           h4,
@@ -436,76 +466,17 @@ class _TransactionOrderBookingScreenState
                     ),
                   ),
                   Consumer<CustomerTransactionProvider>(
-                    builder: (context, txn, _) {
-                      return StreamBuilder<List<SelectedOrderItem>>(
-                        stream: txn.orderItemsStream(
-                          appDb: sl<AppDb>(),
-                          fallbackPriceLevelId:
-                              widget.data.party.priceList ?? 0,
-                        ),
-                        builder: (context, snapshot) {
-                          if (!snapshot.hasData) {
-                            return const SliverToBoxAdapter(
-                              child: Center(child: CircularProgressIndicator()),
-                            );
-                          }
+                    builder: (context, provider, _) {
+                      final items = provider.selectedOrderItems;
 
-                          final items = snapshot.data!;
-                          if (items.isEmpty) {
-                            return SliverToBoxAdapter(
-                              child: SizedBox(
-                                height: context.getSize.height * 0.3,
-                                child: Row(
-                                  mainAxisAlignment: .center,
-                                  crossAxisAlignment: .center,
-                                  children: [
-                                    Text(
-                                      'No items added',
-                                      style: context
-                                          .textStyle
-                                          .s10
-                                          .w400
-                                          .dustyBlue
-                                          .roboto,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          }
+                      if (items.isEmpty) {
+                        return const SliverToBoxAdapter(child: SizedBox());
+                      }
 
-                          return SliverList(
-                            delegate: SliverChildBuilderDelegate((
-                              context,
-                              index,
-                            ) {
-                              return Column(
-                                children: [
-                                  OrderItemTile(
-                                    data: items[index], // SelectedOrderItem
-                                  ),
-                                  if (items.last == items[index]) ...[
-                                    h16,
-                                    Row(
-                                      mainAxisAlignment: .center,
-                                      children: [
-                                        Text(
-                                          "****** END OF THE LIST ******",
-                                          style: context
-                                              .textStyle
-                                              .s10
-                                              .w400
-                                              .dustyBlue
-                                              .roboto,
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ],
-                              );
-                            }, childCount: items.length),
-                          );
-                        },
+                      return SliverList(
+                        delegate: SliverChildBuilderDelegate((context, index) {
+                          return OrderItemTile(data: items[index]);
+                        }, childCount: items.length),
                       );
                     },
                   ),
@@ -535,10 +506,11 @@ class _TransactionOrderBookingScreenState
                               ),
                             ),
                             h16,
+
+                            /// ⭐ SUBTOTAL (exclusive)
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                // Total amount of selected products without tax
                                 Text(
                                   appLocalizations.order_booking_sub_total,
                                   style: context
@@ -550,7 +522,7 @@ class _TransactionOrderBookingScreenState
                                 ),
                                 w60,
                                 Text(
-                                  txn.subTotal.toStringAsFixed(2),
+                                  txn.billSubTotal.toStringAsFixed(2),
                                   style: context
                                       .textStyle
                                       .s12
@@ -560,12 +532,13 @@ class _TransactionOrderBookingScreenState
                                 ),
                               ],
                             ),
+
                             h12,
+
+                            /// ⭐ CGST (multi slab)
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
-
                               children: [
-                                //CGST
                                 Text(
                                   appLocalizations.cgst,
                                   style: context
@@ -577,7 +550,7 @@ class _TransactionOrderBookingScreenState
                                 ),
                                 w60,
                                 Text(
-                                  txn.cgst.toStringAsFixed(2),
+                                  txn.totalCgst.toStringAsFixed(2),
                                   style: context
                                       .textStyle
                                       .s10
@@ -587,10 +560,12 @@ class _TransactionOrderBookingScreenState
                                 ),
                               ],
                             ),
+
                             h8,
+
+                            /// ⭐ SGST (multi slab)
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
-                              //SGST
                               children: [
                                 Text(
                                   appLocalizations.sgst,
@@ -603,7 +578,7 @@ class _TransactionOrderBookingScreenState
                                 ),
                                 w60,
                                 Text(
-                                  txn.sgst.toStringAsFixed(2),
+                                  txn.totalSgst.toStringAsFixed(2),
                                   style: context
                                       .textStyle
                                       .s10
@@ -615,9 +590,10 @@ class _TransactionOrderBookingScreenState
                             ),
 
                             h8,
+
+                            /// ⭐ CESS (optional future use)
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
-                              //CESS
                               children: [
                                 Text(
                                   appLocalizations.cess,
@@ -630,7 +606,7 @@ class _TransactionOrderBookingScreenState
                                 ),
                                 w60,
                                 Text(
-                                  txn.cess.toStringAsFixed(2),
+                                  txn.totalCess.toStringAsFixed(2),
                                   style: context
                                       .textStyle
                                       .s10
@@ -638,14 +614,15 @@ class _TransactionOrderBookingScreenState
                                       .dustyBlue
                                       .roboto,
                                 ),
-                                // w8,
                               ],
                             ),
+
                             h8,
+
+                            /// ⭐ GRAND TOTAL
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                //Grand Total including tax
                                 Text(
                                   appLocalizations.grand_total,
                                   style: context
@@ -667,20 +644,28 @@ class _TransactionOrderBookingScreenState
                                 ),
                               ],
                             ),
+
                             h21,
+
+                            /// ⭐ REMARK
                             Text(
                               appLocalizations.remarks,
                               style:
                                   context.textStyle.s10.w400.dustyBlue.roboto,
                             ),
+
                             h13,
+
                             CustomTextField(
                               controller: remarkController,
                               hint: "",
                               borderRadius: 16,
                               borderColor: ColorResources.ashGray,
                             ),
+
                             h12,
+
+                            /// ⭐ ACTION BUTTONS
                             Row(
                               children: [
                                 Expanded(
@@ -715,16 +700,15 @@ class _TransactionOrderBookingScreenState
                                                 .selectedPriceLevel
                                                 ?.id ??
                                             0,
+                                        voucherNo: voucherNo ?? "",
                                         remark: remarkController.text,
                                         selectedItems: selectedItems,
                                       );
 
                                       txn.clearSelectedItems();
                                       remarkController.clear();
-
                                       Navigator.pop(context);
                                     },
-
                                     isborderEnable: false,
                                     borderRadius: BorderRadius.circular(16),
                                   ),
@@ -740,6 +724,7 @@ class _TransactionOrderBookingScreenState
                                 ),
                               ],
                             ),
+
                             h16,
                           ],
                         );
@@ -766,12 +751,13 @@ class OrderItemTile extends StatelessWidget {
     final item = data.item;
 
     final qty = data.qty;
-    final rate = data.rate;             // ✅ base rate
-    final discount = data.discount;     // ✅ already stored discount
+    final freeQty = 0;
+    final rate = data.rate; // ✅ base rate
+    final discount = data.discount; // ✅ already stored discount
     final taxPercent = item.taxPercent ?? 0;
 
-    final amount = data.amount;         // ✅ FINAL amount (correct)
-    final inclRate = data.inclRate;     // ✅ inclusive rate per unit
+    final amount = data.amount; // ✅ FINAL amount (correct)
+    final inclRate = data.inclRate; // ✅ inclusive rate per unit
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -799,10 +785,7 @@ class OrderItemTile extends StatelessWidget {
                 flex: 2,
                 child: Text(
                   'Tax : ${taxPercent.toStringAsFixed(0)}%',
-                  style: const TextStyle(
-                    fontSize: 11,
-                    color: Colors.grey,
-                  ),
+                  style: const TextStyle(fontSize: 11, color: Colors.grey),
                 ),
               ),
 
@@ -819,6 +802,10 @@ class OrderItemTile extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                         color: Colors.green,
                       ),
+                    ),
+                    Text(
+                      'Free ${freeQty.toStringAsFixed(2)} Qls',
+                      style: const TextStyle(fontSize: 11, color: Colors.pink),
                     ),
                   ],
                 ),
@@ -842,9 +829,7 @@ class OrderItemTile extends StatelessWidget {
               Expanded(
                 flex: 1,
                 child: Text(
-                  discount > 0
-                      ? discount.toStringAsFixed(2)
-                      : '-',
+                  discount > 0 ? discount.toStringAsFixed(2) : '-',
                   textAlign: TextAlign.end,
                   style: const TextStyle(
                     fontSize: 13,
@@ -882,29 +867,22 @@ class OrderItemTile extends StatelessWidget {
   }
 }
 
-
 class SelectedOrderItem {
-  final ItemMasterData item;
-  final ItemPriceDetailsTable? price;
+  final Product item;
   final double qty;
+  final double rate;
+  final double discount;
+  final double amount;
+  final double inclRate;
 
   SelectedOrderItem({
     required this.item,
-    required this.price,
     required this.qty,
+    required this.rate,
+    required this.discount,
+    required this.amount,
+    required this.inclRate,
   });
-
-  double get rate => price?.rate ?? 0;
-  double get discount => price?.discount ?? 0;
-
-  /// Inclusive rate = rate + tax
-  double get inclRate {
-    final taxPercent = item.taxPercent ?? 0;
-    return rate + (rate * taxPercent / 100);
-  }
-
-  /// Amount = qty * inclRate - discount
-  double get amount => qty * inclRate - discount;
 }
 
 Future<void> saveOrder({
@@ -916,12 +894,14 @@ Future<void> saveOrder({
   required int ledgerId,
   required int priceLevelId,
   required String remark,
+  required String voucherNo,
 }) async {
   if (txn.selectedItemCount == 0) {
     print("No items selected");
     return;
   }
 
+  final vchNo = int.parse(voucherNo);
   await db.transaction(() async {
     //  INSERT MASTER
     final masterId = await db
@@ -931,6 +911,7 @@ Future<void> saveOrder({
             partyId: Value(ledgerId),
             party: Value(ledgerName),
             voucherAmount: txn.grandTotal,
+            voucherNo: Value(vchNo),
             companyId: Value(companyId),
             sync: const Value(0),
             priceList: Value(priceLevelId.toString()),
@@ -985,7 +966,6 @@ Future<void> saveOrder({
           );
     }
   });
-
   await printSavedData(db);
 }
 
@@ -1007,5 +987,42 @@ Future<void> printSavedData(AppDb db) async {
   print("==== LEDGER TABLE ====");
   for (var l in ledger) {
     print(l.toJson());
+  }
+}
+
+class VoucherGenerator {
+  static Future<String> generate({
+    required AppDb db,
+    required VoucherType voucher,
+    required int companyId,
+  }) async {
+    final lastVoucher = await db.saleOrderMasterDao.getLastVoucherNo(companyId);
+
+    /// Determine mode
+    final isB2C = voucher.hasB2B == 1;
+
+    final prefix = isB2C ? voucher.b2CPrefix : voucher.b2BPrefix;
+    final suffix = isB2C ? voucher.b2CSuffix : voucher.b2BSuffix;
+    final width = isB2C ? voucher.b2CWidth : voucher.b2BWidth;
+
+    int nextNumber = 1;
+
+    /// Extract last numeric part
+    if (lastVoucher != null && lastVoucher.isNotEmpty) {
+      final parts = lastVoucher.split('/');
+
+      if (parts.length >= 2) {
+        final numberPart = parts[1];
+
+        final parsed = int.tryParse(numberPart);
+        if (parsed != null) {
+          nextNumber = parsed + 1;
+        }
+      }
+    }
+
+    final padded = nextNumber.toString().padLeft(width, '0');
+
+    return "$prefix$padded$suffix";
   }
 }

@@ -168,9 +168,10 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                           QtyButton(
                             icon: Icons.add,
                             onTap: () => provider.incrementQty(
-                              widget.itemId,
-                              inclRate,
-                            ),
+    widget.itemId,
+    inclRate,
+    item: widget.item,   // ⭐ PASS PRODUCT
+  ),
                           ),
                         ],
                       ),
