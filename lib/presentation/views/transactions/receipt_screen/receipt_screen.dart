@@ -19,9 +19,8 @@ class ReceiptScreen extends StatefulWidget {
   State<ReceiptScreen> createState() => _ReceiptScreenState();
 }
 
-String? selected;
-
 class _ReceiptScreenState extends State<ReceiptScreen> {
+  String? selected;
   final options = ["Cash", "Cheque", "UPI"];
 
   final TextEditingController receiptnoController = TextEditingController();
@@ -32,8 +31,20 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
   final TextEditingController bankNameController = TextEditingController();
   final TextEditingController branchNameController = TextEditingController();
   final TextEditingController advanceController = TextEditingController();
-
+  double advanceAmount = 0.0;
   @override
+  void initState() {
+    super.initState();
+
+    amountController.addListener(() {
+      final value = double.tryParse(amountController.text) ?? 0.0;
+
+      setState(() {
+        advanceAmount = value;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final appLocalizations = context.l10n;
@@ -283,7 +294,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                                 final pickedDate = await showDatePicker(
                                   context: context,
                                   initialDate: DateTime.now(),
-                                  firstDate: DateTime(2000),
+                                  firstDate: DateTime.now(),
                                   lastDate: DateTime(2100),
                                 );
 
@@ -507,7 +518,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                             ),
                             // w60,
                             Text(
-                              "0.00",
+                              advanceAmount.toStringAsFixed(2),
                               style:
                                   context.textStyle.s12.w500.indigoBlue.roboto,
                             ),
@@ -540,9 +551,11 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                               bankName: bankNameController.text,
                               branchName: branchNameController.text,
                               narration: narrationController.text,
-                              advance: int.tryParse(advanceController.text),
+                              advance: advanceAmount.toInt(),
                             );
-
+                            setState(() {
+                              selected = null;
+                            });
                             Navigator.pop(context);
                           },
                           isborderEnable: false,

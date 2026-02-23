@@ -926,6 +926,7 @@ Future<void> saveOrder({
             priceList: Value(priceLevelId.toString()),
             voucherDate: Value(DateFormat('yyyy-MM-dd').format(DateTime.now())),
             narration: Value(remark.isEmpty ? null : remark),
+            
           ),
         );
 
@@ -953,6 +954,7 @@ Future<void> saveOrder({
               sgst: Value(txn.sgst),
               disc: Value(discound),
               fQty: Value(qty),
+              
             ),
           );
     }
@@ -967,6 +969,7 @@ Future<void> saveOrder({
             amount: Value(txn.grandTotal),
             companyId: Value(companyId),
             sync: const Value(0),
+            
           ),
         );
   });
