@@ -68,10 +68,12 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
     /// ---------------- BASE RATE ----------------
     final double baseRate = widget.item.rate;
 
-    /// ---------------- DISCOUNT INIT ----------------
+  /// ---------------- DISCOUNT INIT ----------------
     final DiscountType discountType =
         widget.item.discountType == 'A'
-            ? DiscountType.amount
+   final double discountValue = widget.item.discount;
+
+           ? DiscountType.amount
             : DiscountType.percentage;
 
     final double discountValue = widget.item.discount ?? 0;
