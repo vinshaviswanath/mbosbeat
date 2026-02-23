@@ -29,6 +29,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
   final TextEditingController chequeNoController = TextEditingController();
   final TextEditingController chequeDateController = TextEditingController();
   final TextEditingController bankNameController = TextEditingController();
+  final TextEditingController referenceController = TextEditingController();
   final TextEditingController branchNameController = TextEditingController();
   final TextEditingController advanceController = TextEditingController();
   double advanceAmount = 0.0;
@@ -148,21 +149,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                     hintColor: ColorResources.silverGray,
                     borderColor: ColorResources.transparent,
                   ),
-                  h16,
-                  Text(
-                    appLocalizations.transaction_payment_screen_amount,
-                    style: context.textStyle.s12.bluishGray.w400.roboto,
-                  ),
-                  h4,
-                  CustomTextField(
-                    hint: "",
-                    controller: amountController,
-                    backgroundColor: ColorResources.lightGray,
-                    inputType: TextInputType.emailAddress,
-                    borderRadius: 12,
-                    hintColor: ColorResources.silverGray,
-                    borderColor: ColorResources.transparent,
-                  ),
+
                   h16,
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -182,13 +169,13 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                                 setState(() {
                                   selected = option;
                                 });
-                                CustomDialog.showBottomCustomDialog(
-                                  child: selected == 'Cash'
-                                      ? const ReceiptCashAlertWidget()
-                                      : selected == 'Cheque'
-                                      ? const ReceiptChequeAlertWidget()
-                                      : const SizedBox.shrink(),
-                                );
+                                // CustomDialog.showBottomCustomDialog(
+                                //   child: selected == 'Cash'
+                                //       ? const ReceiptCashAlertWidget()
+                                //       : selected == 'Cheque'
+                                //       ? const ReceiptChequeAlertWidget()
+                                //       : const SizedBox.shrink(),
+                                // );
                               },
                               child: Row(
                                 children: [
@@ -237,115 +224,162 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                       h10,
                     ],
                   ),
-                  CustomDropdown(
-                    label: appLocalizations.transaction_payment_screen_account,
-                    items: const [],
-                    hintText: "",
-                    onChanged: (value) {},
-                  ),
-                  h16,
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              appLocalizations
-                                  .transaction_payment_screen_cheque_no,
-                              style:
-                                  context.textStyle.s12.bluishGray.w400.roboto,
-                            ),
-                            h4,
-                            CustomTextField(
-                              hint: "",
-                              controller: chequeNoController,
-                              backgroundColor: ColorResources.lightGray,
-                              inputType: TextInputType.emailAddress,
-                              borderRadius: 12,
-                              hintColor: ColorResources.silverGray,
-                              borderColor: ColorResources.transparent,
-                            ),
-                          ],
+                  //h16,
+                  if (selected == 'Cash' ||
+                      selected == 'Cheque' ||
+                      selected == 'UPI') ...[
+                    Text(
+                      appLocalizations.transaction_payment_screen_amount,
+                      style: context.textStyle.s12.bluishGray.w400.roboto,
+                    ),
+                    h4,
+                    CustomTextField(
+                      hint: "",
+                      controller: amountController,
+                      backgroundColor: ColorResources.lightGray,
+                      inputType: TextInputType.emailAddress,
+                      borderRadius: 12,
+                      hintColor: ColorResources.silverGray,
+                      borderColor: ColorResources.transparent,
+                    ),
+                  ],
+                  if (selected == 'Cheque') ...[
+                    CustomDropdown(
+                      label:
+                          appLocalizations.transaction_payment_screen_account,
+                      items: const [],
+                      hintText: "",
+                      onChanged: (value) {},
+                    ),
+                    h16,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                appLocalizations
+                                    .transaction_payment_screen_cheque_no,
+                                style: context
+                                    .textStyle
+                                    .s12
+                                    .bluishGray
+                                    .w400
+                                    .roboto,
+                              ),
+                              h4,
+                              CustomTextField(
+                                hint: "",
+                                controller: chequeNoController,
+                                backgroundColor: ColorResources.lightGray,
+                                inputType: TextInputType.emailAddress,
+                                borderRadius: 12,
+                                hintColor: ColorResources.silverGray,
+                                borderColor: ColorResources.transparent,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      w4,
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              appLocalizations
-                                  .transaction_payment_screen_cheque_date,
-                              style:
-                                  context.textStyle.s12.bluishGray.w400.roboto,
-                            ),
-                            h10,
-                            CustomTextField(
-                              hint: "",
-                              controller: chequeDateController,
-                              backgroundColor: ColorResources.lightGray,
-                              inputType: TextInputType.none,
-                              borderRadius: 12,
-                              hintColor: ColorResources.silverGray,
-                              borderColor: ColorResources.transparent,
-                              readOnly: true,
-                              onTap: () async {
-                                final pickedDate = await showDatePicker(
-                                  context: context,
-                                  initialDate: DateTime.now(),
-                                  firstDate: DateTime.now(),
-                                  lastDate: DateTime(2100),
-                                );
+                        w4,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                appLocalizations
+                                    .transaction_payment_screen_cheque_date,
+                                style: context
+                                    .textStyle
+                                    .s12
+                                    .bluishGray
+                                    .w400
+                                    .roboto,
+                              ),
+                              h10,
+                              CustomTextField(
+                                hint: "",
+                                controller: chequeDateController,
+                                backgroundColor: ColorResources.lightGray,
+                                inputType: TextInputType.none,
+                                borderRadius: 12,
+                                hintColor: ColorResources.silverGray,
+                                borderColor: ColorResources.transparent,
+                                readOnly: true,
+                                onTap: () async {
+                                  final pickedDate = await showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime.now(),
+                                    lastDate: DateTime(2100),
+                                  );
 
-                                if (pickedDate != null) {
-                                  chequeDateController.text = DateFormat(
-                                    'yyyy-MM-dd',
-                                  ).format(pickedDate);
-                                }
-                              },
-                            ),
-                          ],
+                                  if (pickedDate != null) {
+                                    chequeDateController.text = DateFormat(
+                                      'dd-MM-yyyy',
+                                    ).format(pickedDate);
+                                  }
+                                },
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  h16,
-                  Text(
-                    appLocalizations.transaction_payment_screen_bank_name,
-                    style: context.textStyle.s12.bluishGray.w400.roboto,
-                  ),
-                  h4,
-                  CustomTextField(
-                    hint: "",
-                    controller: bankNameController,
-                    backgroundColor: ColorResources.lightGray,
-                    inputType: TextInputType.emailAddress,
-                    borderRadius: 12,
-                    hintColor: ColorResources.silverGray,
-                    borderColor: ColorResources.transparent,
-                  ),
-                  h16,
-                  Text(
-                    appLocalizations.transaction_payment_screen_branch_name,
-                    style: context.textStyle.s12.bluishGray.w400.roboto,
-                  ),
-                  h4,
-                  CustomTextField(
-                    hint: "",
-                    controller: branchNameController,
-                    backgroundColor: ColorResources.lightGray,
-                    inputType: TextInputType.emailAddress,
-                    borderRadius: 12,
-                    hintColor: ColorResources.silverGray,
-                    borderColor: ColorResources.transparent,
-                  ),
+                      ],
+                    ),
+                    h16,
+                    Text(
+                      appLocalizations.transaction_payment_screen_bank_name,
+                      style: context.textStyle.s12.bluishGray.w400.roboto,
+                    ),
+                    h4,
+                    CustomTextField(
+                      hint: "",
+                      controller: bankNameController,
+                      backgroundColor: ColorResources.lightGray,
+                      inputType: TextInputType.emailAddress,
+                      borderRadius: 12,
+                      hintColor: ColorResources.silverGray,
+                      borderColor: ColorResources.transparent,
+                    ),
+                    h16,
+                    Text(
+                      appLocalizations.transaction_payment_screen_branch_name,
+                      style: context.textStyle.s12.bluishGray.w400.roboto,
+                    ),
+                    h4,
+                    CustomTextField(
+                      hint: "",
+                      controller: branchNameController,
+                      backgroundColor: ColorResources.lightGray,
+                      inputType: TextInputType.emailAddress,
+                      borderRadius: 12,
+                      hintColor: ColorResources.silverGray,
+                      borderColor: ColorResources.transparent,
+                    ),
+                  ],
+                  if (selected == 'UPI') ...[
+                    h16,
+                    Text(
+                      "Refernce",
+                      style: context.textStyle.s12.bluishGray.w400.roboto,
+                    ),
+                    h4,
+                    CustomTextField(
+                      hint: "",
+                      controller: referenceController,
+                      backgroundColor: ColorResources.lightGray,
+                      inputType: TextInputType.emailAddress,
+                      borderRadius: 12,
+                      hintColor: ColorResources.silverGray,
+                      borderColor: ColorResources.transparent,
+                    ),
+                  ],
                   h16,
                   Text(
                     appLocalizations.transaction_payment_screen_narration,
                     style: context.textStyle.s12.bluishGray.w400.roboto,
                   ),
-                  h4,
+                  h10,
                   CustomTextField(
                     hint: "",
                     controller: narrationController,
