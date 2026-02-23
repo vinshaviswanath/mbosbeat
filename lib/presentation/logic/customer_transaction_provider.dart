@@ -69,35 +69,62 @@ class CustomerTransactionProvider extends ChangeNotifier {
   bool isSelected(int itemId) => _selectedItems.contains(itemId);
 
   // ===================== TOTALS =====================
-  double get subTotal =>
-      _itemTotal.values.fold(0.0, (sum, v) => sum + v);
+  double get subTotal => _itemTotal.values.fold(0.0, (sum, v) => sum + v);
 
-  double get grandTotal => subTotal;
+  // double get billSubTotal =>
+
+  double get grandTotal => _itemTotal.values.fold(0.0, (sum, v) => sum + v);
+
+  double get billTotal => subTotal + totalCgst + totalSgst;
 
   int get selectedItemCount => _selectedItems.length;
 
+  final Map<int, Product> _selectedItemObjects = {};
+
+  double get totalQty {
+    double qty = 0;
+    for (final q in _itemQty.values) {
+      qty += q;
+    }
+    return qty;
+  }
+
   // ===================== ITEM ACTIONS =====================
   double getQty(int itemId) => _itemQty[itemId] ?? 0;
+  final Map<int, double> _itemInclusiveRate = {};
 
-  void updateQty(int itemId, double qty, double inclRate) {
+  void updateQty(int itemId, double qty, double inclRate, {Product? item}) {
     if (qty <= 0) {
       resetQty(itemId);
       return;
     }
 
     _itemQty[itemId] = qty;
+    _itemInclusiveRate[itemId] = inclRate; // ⭐ store
     _selectedItems.add(itemId);
 
-    _recalculateItemTotal(itemId, inclRate);
+    if (item != null) {
+      _selectedItemObjects[itemId] = item;
+    }
+
+    _recalculateItemTotal(itemId);
     notifyListeners();
   }
 
-  void incrementQty(int itemId, double inclRate) {
-    updateQty(itemId, (_itemQty[itemId] ?? 0) + 1, inclRate);
+  void incrementQty(int itemId, double inclRate, {Product? item}) {
+    final newQty = (_itemQty[itemId] ?? 0) + 1;
+    updateQty(itemId, newQty, inclRate, item: item);
   }
 
   void decrementQty(int itemId, double inclRate) {
-    updateQty(itemId, (_itemQty[itemId] ?? 0) - 1, inclRate);
+    final current = _itemQty[itemId] ?? 0;
+    final newQty = current - 1;
+
+    if (newQty <= 0) {
+      resetQty(itemId);
+    } else {
+      updateQty(itemId, newQty, inclRate);
+    }
   }
 
   void resetQty(int itemId) {
@@ -107,6 +134,7 @@ class CustomerTransactionProvider extends ChangeNotifier {
     _itemDiscount.remove(itemId);
     _discountType.remove(itemId);
     _selectedItems.remove(itemId);
+    _selectedItemObjects.remove(itemId);
     notifyListeners();
   }
 
@@ -119,6 +147,7 @@ class CustomerTransactionProvider extends ChangeNotifier {
     _selectedItems.clear();
     expandedItemId = null;
     _selectedIndex = null;
+    _selectedItemObjects.clear();
     notifyListeners();
   }
 
@@ -132,7 +161,7 @@ class CustomerTransactionProvider extends ChangeNotifier {
     if (_selectedUnit[itemId] == unit) return;
 
     _selectedUnit[itemId] = unit;
-    _recalculateItemTotal(itemId, inclRate);
+    _recalculateItemTotal(itemId);
     notifyListeners();
   }
 
@@ -146,7 +175,7 @@ class CustomerTransactionProvider extends ChangeNotifier {
     if (!_itemDiscount.containsKey(itemId)) return;
 
     _itemDiscount[itemId] = value;
-    _recalculateItemTotal(itemId, inclRate);
+    _recalculateItemTotal(itemId);
     notifyListeners();
   }
 
@@ -172,15 +201,27 @@ class CustomerTransactionProvider extends ChangeNotifier {
     return total;
   }
 
-    void _recalculateItemTotal(int itemId, double inclRate) {
+  void _recalculateItemTotal(int itemId) {
     final qty = _itemQty[itemId];
-    if (qty == null || qty <= 0) return;
+    final inclRate = _itemInclusiveRate[itemId];
 
-    _itemTotal[itemId] = calculateNetTotal(
-      itemId: itemId,
-      qty: qty,
-      inclRate: inclRate,
-    );
+    if (qty == null || inclRate == null) return;
+
+    /// ⭐ inclusive base
+    final base = inclRate * qty;
+
+    final discount = _itemDiscount[itemId] ?? 0;
+    final type = _discountType[itemId];
+
+    double net = base;
+
+    if (type == DiscountType.percentage) {
+      net -= base * discount / 100;
+    } else if (type == DiscountType.amount) {
+      net -= discount;
+    }
+
+    _itemTotal[itemId] = net.clamp(0, double.infinity);
   }
 
   // ===================== FILTER STATE =====================
@@ -219,7 +260,7 @@ class CustomerTransactionProvider extends ChangeNotifier {
   }
 
   // ===================== FILTER ACTIONS =====================
-  
+
   void selectGroup(String value) {
     if (_selectedGroup == value) return;
     _selectedGroup = value;
@@ -273,44 +314,55 @@ class CustomerTransactionProvider extends ChangeNotifier {
     return list;
   }
 
-  // ===================== ORDER ITEMS STREAM =====================
-  Stream<List<SelectedOrderItem>> orderItemsStream({
-    required int fallbackPriceLevelId,
-    required AppDb appDb,
-  }) {
-    if (_itemQty.isEmpty) {
-      return Stream.value([]);
+  List<SelectedOrderItem> get selectedOrderItems {
+    final list = <SelectedOrderItem>[];
+
+    for (final itemId in _selectedItems) {
+      final item = _selectedItemObjects[itemId];
+      if (item == null) continue;
+
+      final qty = _itemQty[itemId] ?? 0;
+      final discount = _itemDiscount[itemId] ?? 0;
+
+      /// ⭐ exclusive rate snapshot
+      final exclusiveRate = item.rate;
+
+      final taxPercent = item.taxPercent ?? 0;
+
+      /// ⭐ subtotal before tax
+      final sub = exclusiveRate * qty;
+
+      /// ⭐ discount apply
+      double net = sub;
+      final type = _discountType[itemId];
+
+      if (type == DiscountType.percentage) {
+        net -= sub * discount / 100;
+      } else if (type == DiscountType.amount) {
+        net -= discount;
+      }
+
+      /// ⭐ tax
+      final tax = net * taxPercent / 100;
+
+      final finalAmount = net + tax;
+
+      final amount = qty * exclusiveRate;
+      final inclRate = qty > 0 ? finalAmount / qty : 0;
+
+      list.add(
+        SelectedOrderItem(
+          item: item,
+          qty: qty,
+          rate: exclusiveRate,
+          discount: discount,
+          amount: amount,
+          inclRate: inclRate.toDouble(),
+        ),
+      );
     }
 
-    final priceLevelId = selectedPriceLevelId ?? fallbackPriceLevelId;
-
-    return appDb
-        .watchSelectedOrderItems(
-          priceLevelId: priceLevelId,
-          itemIds: _selectedItems.toList(),
-        )
-        .map((items) {
-          return items.map((item) {
-            final itemId = item.item.stockItemId;
-            final qty = _itemQty[itemId] ?? 0;
-
-            ItemPriceDetailsTable? slab;
-            if (item.prices.isNotEmpty) {
-              slab = item.prices.firstWhere(
-                (p) =>
-                    qty >= (p.fromQty ?? 0) &&
-                    (p.toQty == 0 || qty <= (p.toQty ?? 0)),
-                orElse: () => item.prices.first,
-              );
-            }
-
-            return SelectedOrderItem(
-              item: item.item,
-              price: slab,
-              qty: qty,
-            );
-          }).toList();
-        });
+    return list;
   }
 
   // // ===================== QTY =====================
@@ -405,5 +457,96 @@ class CustomerTransactionProvider extends ChangeNotifier {
   void clearOrder() {
     _selectedItems.clear();
     notifyListeners();
+  }
+
+double get billSubTotal {
+  double total = 0;
+
+  for (final itemId in _selectedItems) {
+    final item = _selectedItemObjects[itemId];
+    if (item == null) continue;
+
+    final qty = _itemQty[itemId] ?? 0;
+
+    /// ⭐ exclusive rate from item master
+    total += item.rate * qty;
+  }
+
+  return total;
+}
+
+  // Total CGST (multi slab)
+double get totalCgst {
+  double cgst = 0;
+
+  for (final itemId in _selectedItems) {
+    final product = _selectedItemObjects[itemId];
+    if (product == null) continue;
+
+    final qty = _itemQty[itemId] ?? 0;
+    final discount = _itemDiscount[itemId] ?? 0;
+    final type = _discountType[itemId];
+
+    /// ⭐ exclusive base
+    double base = product.rate * qty;
+
+    /// ⭐ apply discount BEFORE tax
+    if (type == DiscountType.percentage) {
+      base -= base * discount / 100;
+    } else if (type == DiscountType.amount) {
+      base -= discount;
+    }
+
+    final taxPercent = product.taxPercent ?? 0;
+
+    cgst += base * (taxPercent / 2) / 100;
+  }
+
+  return cgst;
+}
+
+  // Total SGST
+double get totalSgst {
+  double sgst = 0;
+
+  for (final itemId in _selectedItems) {
+    final product = _selectedItemObjects[itemId];
+    if (product == null) continue;
+
+    final qty = _itemQty[itemId] ?? 0;
+    final discount = _itemDiscount[itemId] ?? 0;
+    final type = _discountType[itemId];
+
+    double base = product.rate * qty;
+
+    if (type == DiscountType.percentage) {
+      base -= base * discount / 100;
+    } else if (type == DiscountType.amount) {
+      base -= discount;
+    }
+
+    final taxPercent = product.taxPercent ?? 0;
+
+    sgst += base * (taxPercent / 2) / 100;
+  }
+
+  return sgst;
+}
+
+  // Total Cess
+  double get totalCess {
+    double cess = 0;
+
+    for (final itemId in _selectedItems) {
+      final product = _selectedItemObjects[itemId];
+      if (product == null) continue;
+
+      final base = _itemTotal[itemId] ?? 0;
+      final cessPercent = product.cess ?? 0;
+
+      cess += base * cessPercent / 100;
+    }
+
+    return cess;
   }
 }

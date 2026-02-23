@@ -2,6 +2,7 @@ import 'package:intl/intl.dart';
 import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/service/location_services.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/data_sources/user/party_MasterSync/party_MasterSync.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/domain/request/checkin_params.dart';
 import 'package:mpos_beat/domain/request/checkout_params.dart';
@@ -41,11 +42,22 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
 
     _tabController = TabController(length: 3, vsync: this)
       ..addListener(() => setState(() {}));
-
+    load();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await _restoreCheckInState();
       context.read<UserProvider>().getSkipReasons(context);
     });
+  }
+
+  Future<void> load() async {
+    final party = await sl<PartyMasterSync>().fetchParty(
+      widget.data.company.id!,
+      widget.party.ledgerId,
+    );
+
+    if (party != null) {
+      context.read<UserProvider>().setParty(party);
+    }
   }
 
   @override

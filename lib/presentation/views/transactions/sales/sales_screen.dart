@@ -29,23 +29,25 @@ class _SalesScreenState extends State<SalesScreen> {
     return tax != null && tax.trim().isNotEmpty;
   }
 
-  @override
-  void initState() {
-    super.initState();
-    load();
-    _selectedMode = hasTaxNumber ? "B2B" : "B2C";
-  }
+@override
+void initState() {
+  super.initState();
+  load();
+  _selectedMode = hasTaxNumber ? "B2B" : "B2C";
+}
 
-  Future<void> load() async {
-    final party = await sl<PartyMasterSync>().fetchParty(
-      widget.data.data.company.id!,
-      widget.data.party.ledgerId,
-    );
+Future<void> load() async {
+  final party = await sl<PartyMasterSync>().fetchParty(
+    widget.data.data.company.id!,
+    widget.data.party.ledgerId,
+  );
 
-    if (party != null) {
-      context.read<UserProvider>().setParty(party);
-    }
+  if (!mounted) return;   // ⭐ IMPORTANT
+
+  if (party != null) {
+    context.read<UserProvider>().setParty(party);
   }
+}
 
   final TextEditingController remarkController = TextEditingController();
   double couponAmount = 0.0;
@@ -153,6 +155,7 @@ class _SalesScreenState extends State<SalesScreen> {
                             extra: TransactionOrderBookingRouteArgs(
                               data: widget.data.data,
                               party: widget.data.party,
+                              vchTyp: widget.data.vchTyp
                             ),
                           );
                         },
@@ -347,72 +350,24 @@ class _SalesScreenState extends State<SalesScreen> {
               ),
             ),
           ),
-          Consumer<CustomerTransactionProvider>(
-            builder: (context, txn, _) {
-              return StreamBuilder<List<SelectedOrderItem>>(
-                stream: txn.orderItemsStream(
-                  appDb: sl<AppDb>(),
-                  fallbackPriceLevelId: widget.data.party.priceList ?? 0,
-                ),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return const SliverToBoxAdapter(
-                      child: Center(child: CircularProgressIndicator()),
-                    );
-                  }
+Consumer<CustomerTransactionProvider>(
+  builder: (context, provider, _) {
+    final items = provider.selectedOrderItems;
 
-                  final items = snapshot.data!;
-                  if (items.isEmpty) {
-                    return SliverToBoxAdapter(
-                      child: SizedBox(
-                        height: context.getSize.height * 0.3,
-                        child: Row(
-                          mainAxisAlignment: .center,
-                          crossAxisAlignment: .center,
-                          children: [
-                            Text(
-                              'No items added',
-                              style:
-                                  context.textStyle.s10.w400.dustyBlue.roboto,
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  }
+    if (items.isEmpty) {
+      return const SliverToBoxAdapter(child: SizedBox());
+    }
 
-                  return SliverList(
-                    delegate: SliverChildBuilderDelegate((context, index) {
-                      return Column(
-                        children: [
-                          OrderItemTile(
-                            data: items[index], // SelectedOrderItem
-                          ),
-                          if (items.last == items[index]) ...[
-                            h16,
-                            Row(
-                              mainAxisAlignment: .center,
-                              children: [
-                                Text(
-                                  "****** END OF THE LIST ******",
-                                  style: context
-                                      .textStyle
-                                      .s10
-                                      .w400
-                                      .dustyBlue
-                                      .roboto,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ],
-                      );
-                    }, childCount: items.length),
-                  );
-                },
-              );
-            },
-          ),
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (context, index) {
+          return OrderItemTile(data: items[index]);
+        },
+        childCount: items.length,
+      ),
+    );
+  },
+),
           SliverToBoxAdapter(
             child: SizedBox(height: context.getSize.height * 0.4),
           ),

@@ -54,6 +54,7 @@ import 'package:mpos_beat/data/local_db/daos/partymaster_sync_dao/party_master_s
 import 'package:mpos_beat/data/local_db/daos/price_lavel_dao/price_level_sync_dao.dart';
 import 'package:mpos_beat/data/local_db/daos/route_dao/route_dao.dart';
 import 'package:mpos_beat/data/local_db/daos/route_voucher_type_dao/route_voucher_type_dao.dart';
+import 'package:mpos_beat/data/local_db/daos/sales_order_master_dao/sales_order_master_dao.dart';
 import 'package:mpos_beat/data/local_db/daos/user_setting_dao/user_setting_dao.dart';
 import 'package:mpos_beat/data/local_db/daos/voucher_type_dao/voucher_type_dao.dart';
 import 'package:mpos_beat/data/local_db/tables/category_tables.dart';
@@ -76,6 +77,7 @@ import 'package:mpos_beat/data/local_db/tables/sales/sales_master_table.dart';
 import 'package:mpos_beat/data/local_db/tables/sales_order/sale_order_details_table.dart';
 import 'package:mpos_beat/data/local_db/tables/sales_order/sale_order_ledger_details_table.dart';
 import 'package:mpos_beat/data/local_db/tables/sales_order/sale_order_master_table.dart';
+import 'package:mpos_beat/data/local_db/tables/sales_order/voucher_controls_table.dart';
 import 'package:mpos_beat/data/local_db/tables/sales_return/sales_return_details_table.dart';
 import 'package:mpos_beat/data/local_db/tables/sales_return/sales_return_ledger_details.dart';
 import 'package:mpos_beat/data/local_db/tables/sales_return/sales_return_master_table.dart';
@@ -125,6 +127,7 @@ part 'app_db.g.dart';
     SaleReturnLedgerDetailsTable,
     ReceiptEntryTable,
     ReceiptEntryLedgerTable,
+    VoucherControlTable,
   ],
   daos: [
     CompanyDao,
@@ -141,13 +144,14 @@ part 'app_db.g.dart';
     ItemMasterDao,
     PriceLevelDao,
     PriceListDetailsDao,
+    SaleOrderMasterDao,
   ],
 )
 class AppDb extends _$AppDb {
   AppDb() : super(_openConnection());
 
   @override
-  int get schemaVersion => 28;
+  int get schemaVersion => 30;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -269,6 +273,19 @@ class AppDb extends _$AppDb {
       if (from < 28) {
         await m.createTable(receiptEntryTable);
         await m.createTable(receiptEntryLedgerTable);
+      }
+      if (from < 29) {
+        await m.createTable(voucherControlTable);
+
+        await m.addColumn(
+          saleOrderMasterTable,
+          saleOrderMasterTable.isCancelled,
+        );
+      }
+      if (from < 30) {
+        await m.addColumn(itemMaster, itemMaster.closingStock);
+        await m.addColumn(itemMaster, itemMaster.cess);
+        await m.addColumn(itemMaster, itemMaster.cost);
       }
     },
   );
