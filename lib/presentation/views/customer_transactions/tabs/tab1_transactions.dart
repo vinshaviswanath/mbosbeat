@@ -129,7 +129,13 @@ class _Tab1TransactionsState extends State<Tab1Transactions> {
                       ),
                     );
                   } else if (voucher.voucherMenuName == "Receipt") {
-                    context.pushNamed(AppRouterConst.receiptScreen);
+                    context.pushNamed(
+                      AppRouterConst.receiptScreen,
+                      extra: TransactionOrderBookingRouteArgs(
+                        data: widget.data,
+                        party: widget.party,
+                      ),
+                    );
                   } else if (voucher.voucherMenuName == "Payments") {
                     context.pushNamed(AppRouterConst.paymentScreen);
                   } else if (voucher.voucherMenuName == "Purchase") {

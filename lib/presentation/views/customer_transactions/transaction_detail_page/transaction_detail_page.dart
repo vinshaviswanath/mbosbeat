@@ -281,12 +281,12 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
             context.pop();
           },
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.edit_note_outlined, size: 22),
-            onPressed: () {},
-          ),
-        ],
+        // actions: [
+        //   IconButton(
+        //     icon: Icon(Icons.edit_note_outlined, size: 22),
+        //     onPressed: () {},
+        //   ),
+        // ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),

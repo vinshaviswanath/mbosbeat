@@ -1,49 +1,39 @@
+import 'package:drift/drift.dart' show Value;
+
+import 'package:intl/intl.dart';
 import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_dropdown.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 import 'package:mpos_beat/presentation/views/transactions/receipt_screen/widget/receipt_cash_alert_widget.dart';
 import 'package:mpos_beat/presentation/views/transactions/receipt_screen/widget/receipt_cheque_alert_widget.dart';
+import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/transaction_order_booking_screen.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/widgets/end_to_end_text_widget.dart';
 
 class ReceiptScreen extends StatefulWidget {
-  const ReceiptScreen({super.key});
+  final TransactionOrderBookingRouteArgs data;
+  const ReceiptScreen({super.key, required this.data});
 
   @override
   State<ReceiptScreen> createState() => _ReceiptScreenState();
 }
 
-final List<Map<String, String>> receipts = [
-  {
-    "name": "M1B2B-0011/22-23",
-    "date": "10.00 Qls",
-    "billType": "1800.00/Qls",
-    "amount": "18000.00",
-  },
-  {
-    "name": "M1B2B-0012/22-23",
-    "date": "10.00 Qls",
-    "billType": "1800.00/Qls",
-    "amount": "18000.00",
-  },
-  {
-    "name": "M1B2B-0016/22-23",
-    "date": "10.00 Qls",
-    "billType": "1800.00/Qls",
-    "amount": "18000.00",
-  },
-  {
-    "name": "M1B2B-0018/22-23",
-    "date": "10.00 Qls",
-    "billType": "1800.00/Qls",
-    "amount": "18000.00",
-  },
-];
-
 String? selected;
 
 class _ReceiptScreenState extends State<ReceiptScreen> {
   final options = ["Cash", "Cheque", "UPI"];
+
+  final TextEditingController receiptnoController = TextEditingController();
+  final TextEditingController amountController = TextEditingController();
+  final TextEditingController narrationController = TextEditingController();
+  final TextEditingController chequeNoController = TextEditingController();
+  final TextEditingController chequeDateController = TextEditingController();
+  final TextEditingController bankNameController = TextEditingController();
+  final TextEditingController branchNameController = TextEditingController();
+  final TextEditingController advanceController = TextEditingController();
+
+  @override
   @override
   Widget build(BuildContext context) {
     final appLocalizations = context.l10n;
@@ -64,20 +54,20 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
           style: context.textStyle.s20.indigoBlue.bold.roboto,
         ),
         centerTitle: true,
-        actions: [
-          SvgPicture.asset(
-            AppAssets.refresh,
-            height: context.getSize.height * 0.022,
-            colorFilter: const ColorFilter.mode(
-              ColorResources.indigoBlue,
-              BlendMode.srcIn,
-            ),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.qr_code, size: context.getSize.height * 0.022),
-          ),
-        ],
+        // actions: [
+        //   SvgPicture.asset(
+        //     AppAssets.refresh,
+        //     height: context.getSize.height * 0.022,
+        //     colorFilter: const ColorFilter.mode(
+        //       ColorResources.indigoBlue,
+        //       BlendMode.srcIn,
+        //     ),
+        //   ),
+        //   IconButton(
+        //     onPressed: () {},
+        //     icon: Icon(Icons.qr_code, size: context.getSize.height * 0.022),
+        //   ),
+        // ],
         // toolbarHeight: 65,
       ),
       body: CustomScrollView(
@@ -93,17 +83,17 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Alackal Stores, Kuruppamthara",
+                        widget.data.party.ledgerName ?? "",
                         style: context.textStyle.s12.w500.indigoBlue.roboto,
                       ),
                       Text(
-                        "29-07-2024",
+                        DateTime.now().toString().split(" ").first,
                         style: context.textStyle.s09.w400.dustyBlue.roboto,
                       ),
                     ],
                   ),
                   EndToEndTextWidget(
-                    text1: "T23-24/D-AM120",
+                    text1: widget.data.party.taxNumber ?? "",
                     text2:
                         appLocalizations.transaction_payment_screen_outstanding,
                     textStyle2: context.textStyle.s10.dustyBlue.w500.roboto,
@@ -112,7 +102,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        "-8689.00",
+                        widget.data.party.closingBalance.toString(),
                         style: context.textStyle.s12.bold.indigoBlue.roboto,
                       ),
                     ],
@@ -137,14 +127,11 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                     style: context.textStyle.s12.bluishGray.w400.roboto,
                   ),
                   h4,
-                  const CustomTextField(
+                  CustomTextField(
                     hint: "",
-                    // controller: compnyController,
+                    controller: receiptnoController,
                     backgroundColor: ColorResources.lightGray,
-                    // autovalidateMode: provider.registerAutovalidateMode,
-                    // failure: provider.companyName.getFailure,
-                    // inputFormatters: [noEmojiFormatter],
-                    // onChange: provider.updateCompanyName,
+
                     inputType: TextInputType.emailAddress,
                     borderRadius: 12,
                     hintColor: ColorResources.silverGray,
@@ -156,8 +143,9 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                     style: context.textStyle.s12.bluishGray.w400.roboto,
                   ),
                   h4,
-                  const CustomTextField(
+                  CustomTextField(
                     hint: "",
+                    controller: amountController,
                     backgroundColor: ColorResources.lightGray,
                     inputType: TextInputType.emailAddress,
                     borderRadius: 12,
@@ -242,13 +230,7 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                     label: appLocalizations.transaction_payment_screen_account,
                     items: const [],
                     hintText: "",
-                    // value: selectedReportingTo,
-                    // autovalidateMode: provider.userCreateAutovalidateMode,
-                    // failure: provider.reportingTo.getFailure,
-                    onChanged: (value) {
-                      // setState(() => selectedReportingTo = value);
-                      // provider.updateReportingTo(value ?? '');
-                    },
+                    onChanged: (value) {},
                   ),
                   h16,
                   Row(
@@ -264,8 +246,9 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                                   context.textStyle.s12.bluishGray.w400.roboto,
                             ),
                             h4,
-                            const CustomTextField(
+                            CustomTextField(
                               hint: "",
+                              controller: chequeNoController,
                               backgroundColor: ColorResources.lightGray,
                               inputType: TextInputType.emailAddress,
                               borderRadius: 12,
@@ -287,13 +270,29 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                                   context.textStyle.s12.bluishGray.w400.roboto,
                             ),
                             h10,
-                            const CustomTextField(
+                            CustomTextField(
                               hint: "",
+                              controller: chequeDateController,
                               backgroundColor: ColorResources.lightGray,
-                              inputType: TextInputType.emailAddress,
+                              inputType: TextInputType.none,
                               borderRadius: 12,
                               hintColor: ColorResources.silverGray,
                               borderColor: ColorResources.transparent,
+                              readOnly: true,
+                              onTap: () async {
+                                final pickedDate = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(2000),
+                                  lastDate: DateTime(2100),
+                                );
+
+                                if (pickedDate != null) {
+                                  chequeDateController.text = DateFormat(
+                                    'yyyy-MM-dd',
+                                  ).format(pickedDate);
+                                }
+                              },
                             ),
                           ],
                         ),
@@ -306,8 +305,9 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                     style: context.textStyle.s12.bluishGray.w400.roboto,
                   ),
                   h4,
-                  const CustomTextField(
+                  CustomTextField(
                     hint: "",
+                    controller: bankNameController,
                     backgroundColor: ColorResources.lightGray,
                     inputType: TextInputType.emailAddress,
                     borderRadius: 12,
@@ -320,8 +320,9 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                     style: context.textStyle.s12.bluishGray.w400.roboto,
                   ),
                   h4,
-                  const CustomTextField(
+                  CustomTextField(
                     hint: "",
+                    controller: branchNameController,
                     backgroundColor: ColorResources.lightGray,
                     inputType: TextInputType.emailAddress,
                     borderRadius: 12,
@@ -334,9 +335,9 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                     style: context.textStyle.s12.bluishGray.w400.roboto,
                   ),
                   h4,
-                  const CustomTextField(
+                  CustomTextField(
                     hint: "",
-
+                    controller: narrationController,
                     backgroundColor: ColorResources.white,
                     inputType: TextInputType.emailAddress,
                     borderRadius: 12,
@@ -345,29 +346,29 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                     maxLines: 4,
                     minLines: 3,
                   ),
-                  h16,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 15,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: ColorResources.rosePink,
-                        ),
-                        child: Center(
-                          child: Text(
-                            appLocalizations
-                                .transaction_payment_screen_add_bills,
-                            style: context.textStyle.s10.white.w400,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  //  h16,
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.end,
+                  //   children: [
+                  //     Container(
+                  //       padding: const EdgeInsets.symmetric(
+                  //         horizontal: 15,
+                  //         vertical: 4,
+                  //       ),
+                  //       decoration: BoxDecoration(
+                  //         borderRadius: BorderRadius.circular(12),
+                  //         color: ColorResources.rosePink,
+                  //       ),
+                  //       child: Center(
+                  //         child: Text(
+                  //           appLocalizations
+                  //               .transaction_payment_screen_add_bills,
+                  //           style: context.textStyle.s10.white.w400,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               ),
             ),
@@ -377,117 +378,117 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
               padding: const EdgeInsets.all(12.0),
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 3,
-                        child: Text(
-                          appLocalizations.name,
-                          style: context.textStyle.s10.w500.dustyBlue.roboto,
-                        ),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                          appLocalizations.date,
-                          textAlign: TextAlign.center,
-                          style: context.textStyle.s10.w500.dustyBlue.roboto,
-                        ),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                          appLocalizations.bill_type,
-                          textAlign: TextAlign.center,
-                          style: context.textStyle.s10.w500.dustyBlue.roboto,
-                        ),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                          appLocalizations.amount,
-                          textAlign: TextAlign.end,
-                          style: context.textStyle.s10.w500.dustyBlue.roboto,
-                        ),
-                      ),
-                    ],
-                  ),
-                  h4,
-                  Divider(
-                    thickness: 1,
-                    color: ColorResources.bluishGray.withValues(alpha: 0.2),
-                  ),
-                  h4,
-                  ...receipts.map((receipt) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                flex: 3,
-                                child: Text(
-                                  receipt["name"]!,
-                                  style: context
-                                      .textStyle
-                                      .s09
-                                      .w500
-                                      .dustyBlue
-                                      .roboto,
-                                ),
-                              ),
-                              Expanded(
-                                flex: 2,
-                                child: Text(
-                                  receipt["date"]!,
-                                  textAlign: TextAlign.center,
-                                  style: context
-                                      .textStyle
-                                      .s09
-                                      .w400
-                                      .dustyBlue
-                                      .roboto,
-                                ),
-                              ),
-                              Expanded(
-                                flex: 2,
-                                child: Text(
-                                  receipt["billType"]!,
-                                  textAlign: TextAlign.center,
-                                  style: context
-                                      .textStyle
-                                      .s09
-                                      .w400
-                                      .dustyBlue
-                                      .roboto,
-                                ),
-                              ),
-                              Expanded(
-                                flex: 2,
-                                child: Text(
-                                  receipt["amount"]!,
-                                  textAlign: TextAlign.end,
-                                  style: context
-                                      .textStyle
-                                      .s09
-                                      .w400
-                                      .dustyBlue
-                                      .roboto,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Divider(
-                            thickness: 1,
-                            color: ColorResources.bluishGray.withValues(
-                              alpha: 0.2,
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  }),
+                  // Row(
+                  //   children: [
+                  //     Expanded(
+                  //       flex: 3,
+                  //       child: Text(
+                  //         appLocalizations.name,
+                  //         style: context.textStyle.s10.w500.dustyBlue.roboto,
+                  //       ),
+                  //     ),
+                  //     Expanded(
+                  //       flex: 2,
+                  //       child: Text(
+                  //         appLocalizations.date,
+                  //         textAlign: TextAlign.center,
+                  //         style: context.textStyle.s10.w500.dustyBlue.roboto,
+                  //       ),
+                  //     ),
+                  //     Expanded(
+                  //       flex: 2,
+                  //       child: Text(
+                  //         appLocalizations.bill_type,
+                  //         textAlign: TextAlign.center,
+                  //         style: context.textStyle.s10.w500.dustyBlue.roboto,
+                  //       ),
+                  //     ),
+                  //     Expanded(
+                  //       flex: 2,
+                  //       child: Text(
+                  //         appLocalizations.amount,
+                  //         textAlign: TextAlign.end,
+                  //         style: context.textStyle.s10.w500.dustyBlue.roboto,
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                  // h4,
+                  // Divider(
+                  //   thickness: 1,
+                  //   color: ColorResources.bluishGray.withValues(alpha: 0.2),
+                  // ),
+                  // h4,
+                  // ...receipts.map((receipt) {
+                  //   return Padding(
+                  //     padding: const EdgeInsets.symmetric(vertical: 4),
+                  //     child: Column(
+                  //       children: [
+                  //         Row(
+                  //           children: [
+                  //             Expanded(
+                  //               flex: 3,
+                  //               child: Text(
+                  //                 receipt["name"]!,
+                  //                 style: context
+                  //                     .textStyle
+                  //                     .s09
+                  //                     .w500
+                  //                     .dustyBlue
+                  //                     .roboto,
+                  //               ),
+                  //             ),
+                  //             Expanded(
+                  //               flex: 2,
+                  //               child: Text(
+                  //                 receipt["date"]!,
+                  //                 textAlign: TextAlign.center,
+                  //                 style: context
+                  //                     .textStyle
+                  //                     .s09
+                  //                     .w400
+                  //                     .dustyBlue
+                  //                     .roboto,
+                  //               ),
+                  //             ),
+                  //             Expanded(
+                  //               flex: 2,
+                  //               child: Text(
+                  //                 receipt["billType"]!,
+                  //                 textAlign: TextAlign.center,
+                  //                 style: context
+                  //                     .textStyle
+                  //                     .s09
+                  //                     .w400
+                  //                     .dustyBlue
+                  //                     .roboto,
+                  //               ),
+                  //             ),
+                  //             Expanded(
+                  //               flex: 2,
+                  //               child: Text(
+                  //                 receipt["amount"]!,
+                  //                 textAlign: TextAlign.end,
+                  //                 style: context
+                  //                     .textStyle
+                  //                     .s09
+                  //                     .w400
+                  //                     .dustyBlue
+                  //                     .roboto,
+                  //               ),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //         Divider(
+                  //           thickness: 1,
+                  //           color: ColorResources.bluishGray.withValues(
+                  //             alpha: 0.2,
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   );
+                  // }),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -522,7 +523,26 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                         child: CustomButton(
                           buttonText: appLocalizations.submit,
                           textStyle: context.textStyle.s12.w500.white.roboto,
-                          onTap: () {
+                          onTap: () async {
+                            final db = context.read<AppDb>();
+
+                            await saveReceipt(
+                              db: db,
+                              companyId: widget.data.data.company.id!,
+                              ledgerName: widget.data.party.ledgerName ?? "",
+                              ledgerId: widget.data.party.ledgerId,
+                              receiptNo: int.tryParse(receiptnoController.text),
+                              amount:
+                                  double.tryParse(amountController.text) ?? 0.0,
+                              paymentMode: selected,
+                              chequeNo: int.tryParse(chequeNoController.text),
+                              chequeDate: chequeDateController.text,
+                              bankName: bankNameController.text,
+                              branchName: branchNameController.text,
+                              narration: narrationController.text,
+                              advance: int.tryParse(advanceController.text),
+                            );
+
                             Navigator.pop(context);
                           },
                           isborderEnable: false,
@@ -548,5 +568,83 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
         ],
       ),
     );
+  }
+}
+
+Future<void> saveReceipt({
+  required AppDb db,
+  required int companyId,
+  required String ledgerName,
+  required int ledgerId,
+  int? receiptNo,
+  required double amount,
+  String? paymentMode,
+  int? chequeNo,
+  String? chequeDate,
+  String? bankName,
+  String? branchName,
+  String? narration,
+  int? advance,
+}) async {
+  if (amount <= 0) {
+    print("Invalid receipt amount");
+    return;
+  }
+
+  await db.transaction(() async {
+    /// 1️⃣ INSERT RECEIPT MASTER
+    final receiptId = await db
+        .into(db.receiptEntryTable)
+        .insert(
+          ReceiptEntryTableCompanion.insert(
+            mid: const Value(null),
+            companyId: Value(companyId),
+            receiptNo: Value(receiptNo),
+            amount: Value(amount),
+            paymentMode: Value(paymentMode),
+            chequeNo: Value(chequeNo),
+            chequeDate: chequeDate != null && chequeDate.isNotEmpty
+                ? Value(chequeDate)
+                : const Value.absent(),
+            bankname: Value(bankName),
+            branchname: Value(branchName),
+            narration: narration != null && narration.isNotEmpty
+                ? Value(narration)
+                : const Value.absent(),
+            advance: Value(advance),
+          ),
+        );
+
+    print("Inserted Receipt ID: $receiptId");
+
+    /// 2️⃣ INSERT LEDGER ENTRY
+    await db
+        .into(db.receiptEntryLedgerTable)
+        .insert(
+          ReceiptEntryLedgerTableCompanion.insert(
+            mid: Value(receiptId),
+            companyId: Value(companyId),
+            ledger: Value(ledgerName),
+            balance: Value(amount),
+            receiptdate: Value(DateFormat('yyyy-MM-dd').format(DateTime.now())),
+          ),
+        );
+  });
+
+  await printSavedReceiptData(db);
+}
+
+Future<void> printSavedReceiptData(AppDb db) async {
+  final receipts = await db.select(db.receiptEntryTable).get();
+  final ledger = await db.select(db.receiptEntryLedgerTable).get();
+
+  print("==== RECEIPT MASTER ====");
+  for (var r in receipts) {
+    print(r.toJson());
+  }
+
+  print("==== RECEIPT LEDGER ====");
+  for (var l in ledger) {
+    print(l.toJson());
   }
 }
