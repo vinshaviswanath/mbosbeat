@@ -28105,6 +28105,1129 @@ class SaleReturnLedgerDetailsTableCompanion
   }
 }
 
+class $ReceiptEntryTableTable extends ReceiptEntryTable
+    with TableInfo<$ReceiptEntryTableTable, ReceiptEntryTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ReceiptEntryTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _midMeta = const VerificationMeta('mid');
+  @override
+  late final GeneratedColumn<int> mid = GeneratedColumn<int>(
+    'mid',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _companyIdMeta = const VerificationMeta(
+    'companyId',
+  );
+  @override
+  late final GeneratedColumn<int> companyId = GeneratedColumn<int>(
+    'company_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _receiptNoMeta = const VerificationMeta(
+    'receiptNo',
+  );
+  @override
+  late final GeneratedColumn<int> receiptNo = GeneratedColumn<int>(
+    'receipt_no',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _amountMeta = const VerificationMeta('amount');
+  @override
+  late final GeneratedColumn<double> amount = GeneratedColumn<double>(
+    'amount',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _paymentModeMeta = const VerificationMeta(
+    'paymentMode',
+  );
+  @override
+  late final GeneratedColumn<String> paymentMode = GeneratedColumn<String>(
+    'payment_mode',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _chequeNoMeta = const VerificationMeta(
+    'chequeNo',
+  );
+  @override
+  late final GeneratedColumn<int> chequeNo = GeneratedColumn<int>(
+    'cheque_no',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _chequeDateMeta = const VerificationMeta(
+    'chequeDate',
+  );
+  @override
+  late final GeneratedColumn<String> chequeDate = GeneratedColumn<String>(
+    'cheque_date',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _banknameMeta = const VerificationMeta(
+    'bankname',
+  );
+  @override
+  late final GeneratedColumn<String> bankname = GeneratedColumn<String>(
+    'bankname',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _branchnameMeta = const VerificationMeta(
+    'branchname',
+  );
+  @override
+  late final GeneratedColumn<String> branchname = GeneratedColumn<String>(
+    'branchname',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _narrationMeta = const VerificationMeta(
+    'narration',
+  );
+  @override
+  late final GeneratedColumn<String> narration = GeneratedColumn<String>(
+    'narration',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _advanceMeta = const VerificationMeta(
+    'advance',
+  );
+  @override
+  late final GeneratedColumn<int> advance = GeneratedColumn<int>(
+    'advance',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    mid,
+    companyId,
+    receiptNo,
+    amount,
+    paymentMode,
+    chequeNo,
+    chequeDate,
+    bankname,
+    branchname,
+    narration,
+    advance,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'receipt_entry_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ReceiptEntryTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('mid')) {
+      context.handle(
+        _midMeta,
+        mid.isAcceptableOrUnknown(data['mid']!, _midMeta),
+      );
+    }
+    if (data.containsKey('company_id')) {
+      context.handle(
+        _companyIdMeta,
+        companyId.isAcceptableOrUnknown(data['company_id']!, _companyIdMeta),
+      );
+    }
+    if (data.containsKey('receipt_no')) {
+      context.handle(
+        _receiptNoMeta,
+        receiptNo.isAcceptableOrUnknown(data['receipt_no']!, _receiptNoMeta),
+      );
+    }
+    if (data.containsKey('amount')) {
+      context.handle(
+        _amountMeta,
+        amount.isAcceptableOrUnknown(data['amount']!, _amountMeta),
+      );
+    }
+    if (data.containsKey('payment_mode')) {
+      context.handle(
+        _paymentModeMeta,
+        paymentMode.isAcceptableOrUnknown(
+          data['payment_mode']!,
+          _paymentModeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('cheque_no')) {
+      context.handle(
+        _chequeNoMeta,
+        chequeNo.isAcceptableOrUnknown(data['cheque_no']!, _chequeNoMeta),
+      );
+    }
+    if (data.containsKey('cheque_date')) {
+      context.handle(
+        _chequeDateMeta,
+        chequeDate.isAcceptableOrUnknown(data['cheque_date']!, _chequeDateMeta),
+      );
+    }
+    if (data.containsKey('bankname')) {
+      context.handle(
+        _banknameMeta,
+        bankname.isAcceptableOrUnknown(data['bankname']!, _banknameMeta),
+      );
+    }
+    if (data.containsKey('branchname')) {
+      context.handle(
+        _branchnameMeta,
+        branchname.isAcceptableOrUnknown(data['branchname']!, _branchnameMeta),
+      );
+    }
+    if (data.containsKey('narration')) {
+      context.handle(
+        _narrationMeta,
+        narration.isAcceptableOrUnknown(data['narration']!, _narrationMeta),
+      );
+    }
+    if (data.containsKey('advance')) {
+      context.handle(
+        _advanceMeta,
+        advance.isAcceptableOrUnknown(data['advance']!, _advanceMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ReceiptEntryTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ReceiptEntryTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      mid: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}mid'],
+      ),
+      companyId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}company_id'],
+      ),
+      receiptNo: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}receipt_no'],
+      ),
+      amount: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}amount'],
+      ),
+      paymentMode: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}payment_mode'],
+      ),
+      chequeNo: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}cheque_no'],
+      ),
+      chequeDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}cheque_date'],
+      ),
+      bankname: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}bankname'],
+      ),
+      branchname: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}branchname'],
+      ),
+      narration: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}narration'],
+      ),
+      advance: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}advance'],
+      ),
+    );
+  }
+
+  @override
+  $ReceiptEntryTableTable createAlias(String alias) {
+    return $ReceiptEntryTableTable(attachedDatabase, alias);
+  }
+}
+
+class ReceiptEntryTableData extends DataClass
+    implements Insertable<ReceiptEntryTableData> {
+  final int id;
+  final int? mid;
+  final int? companyId;
+  final int? receiptNo;
+  final double? amount;
+  final String? paymentMode;
+  final int? chequeNo;
+  final String? chequeDate;
+  final String? bankname;
+  final String? branchname;
+  final String? narration;
+  final int? advance;
+  const ReceiptEntryTableData({
+    required this.id,
+    this.mid,
+    this.companyId,
+    this.receiptNo,
+    this.amount,
+    this.paymentMode,
+    this.chequeNo,
+    this.chequeDate,
+    this.bankname,
+    this.branchname,
+    this.narration,
+    this.advance,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    if (!nullToAbsent || mid != null) {
+      map['mid'] = Variable<int>(mid);
+    }
+    if (!nullToAbsent || companyId != null) {
+      map['company_id'] = Variable<int>(companyId);
+    }
+    if (!nullToAbsent || receiptNo != null) {
+      map['receipt_no'] = Variable<int>(receiptNo);
+    }
+    if (!nullToAbsent || amount != null) {
+      map['amount'] = Variable<double>(amount);
+    }
+    if (!nullToAbsent || paymentMode != null) {
+      map['payment_mode'] = Variable<String>(paymentMode);
+    }
+    if (!nullToAbsent || chequeNo != null) {
+      map['cheque_no'] = Variable<int>(chequeNo);
+    }
+    if (!nullToAbsent || chequeDate != null) {
+      map['cheque_date'] = Variable<String>(chequeDate);
+    }
+    if (!nullToAbsent || bankname != null) {
+      map['bankname'] = Variable<String>(bankname);
+    }
+    if (!nullToAbsent || branchname != null) {
+      map['branchname'] = Variable<String>(branchname);
+    }
+    if (!nullToAbsent || narration != null) {
+      map['narration'] = Variable<String>(narration);
+    }
+    if (!nullToAbsent || advance != null) {
+      map['advance'] = Variable<int>(advance);
+    }
+    return map;
+  }
+
+  ReceiptEntryTableCompanion toCompanion(bool nullToAbsent) {
+    return ReceiptEntryTableCompanion(
+      id: Value(id),
+      mid: mid == null && nullToAbsent ? const Value.absent() : Value(mid),
+      companyId: companyId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(companyId),
+      receiptNo: receiptNo == null && nullToAbsent
+          ? const Value.absent()
+          : Value(receiptNo),
+      amount: amount == null && nullToAbsent
+          ? const Value.absent()
+          : Value(amount),
+      paymentMode: paymentMode == null && nullToAbsent
+          ? const Value.absent()
+          : Value(paymentMode),
+      chequeNo: chequeNo == null && nullToAbsent
+          ? const Value.absent()
+          : Value(chequeNo),
+      chequeDate: chequeDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(chequeDate),
+      bankname: bankname == null && nullToAbsent
+          ? const Value.absent()
+          : Value(bankname),
+      branchname: branchname == null && nullToAbsent
+          ? const Value.absent()
+          : Value(branchname),
+      narration: narration == null && nullToAbsent
+          ? const Value.absent()
+          : Value(narration),
+      advance: advance == null && nullToAbsent
+          ? const Value.absent()
+          : Value(advance),
+    );
+  }
+
+  factory ReceiptEntryTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ReceiptEntryTableData(
+      id: serializer.fromJson<int>(json['id']),
+      mid: serializer.fromJson<int?>(json['mid']),
+      companyId: serializer.fromJson<int?>(json['companyId']),
+      receiptNo: serializer.fromJson<int?>(json['receiptNo']),
+      amount: serializer.fromJson<double?>(json['amount']),
+      paymentMode: serializer.fromJson<String?>(json['paymentMode']),
+      chequeNo: serializer.fromJson<int?>(json['chequeNo']),
+      chequeDate: serializer.fromJson<String?>(json['chequeDate']),
+      bankname: serializer.fromJson<String?>(json['bankname']),
+      branchname: serializer.fromJson<String?>(json['branchname']),
+      narration: serializer.fromJson<String?>(json['narration']),
+      advance: serializer.fromJson<int?>(json['advance']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'mid': serializer.toJson<int?>(mid),
+      'companyId': serializer.toJson<int?>(companyId),
+      'receiptNo': serializer.toJson<int?>(receiptNo),
+      'amount': serializer.toJson<double?>(amount),
+      'paymentMode': serializer.toJson<String?>(paymentMode),
+      'chequeNo': serializer.toJson<int?>(chequeNo),
+      'chequeDate': serializer.toJson<String?>(chequeDate),
+      'bankname': serializer.toJson<String?>(bankname),
+      'branchname': serializer.toJson<String?>(branchname),
+      'narration': serializer.toJson<String?>(narration),
+      'advance': serializer.toJson<int?>(advance),
+    };
+  }
+
+  ReceiptEntryTableData copyWith({
+    int? id,
+    Value<int?> mid = const Value.absent(),
+    Value<int?> companyId = const Value.absent(),
+    Value<int?> receiptNo = const Value.absent(),
+    Value<double?> amount = const Value.absent(),
+    Value<String?> paymentMode = const Value.absent(),
+    Value<int?> chequeNo = const Value.absent(),
+    Value<String?> chequeDate = const Value.absent(),
+    Value<String?> bankname = const Value.absent(),
+    Value<String?> branchname = const Value.absent(),
+    Value<String?> narration = const Value.absent(),
+    Value<int?> advance = const Value.absent(),
+  }) => ReceiptEntryTableData(
+    id: id ?? this.id,
+    mid: mid.present ? mid.value : this.mid,
+    companyId: companyId.present ? companyId.value : this.companyId,
+    receiptNo: receiptNo.present ? receiptNo.value : this.receiptNo,
+    amount: amount.present ? amount.value : this.amount,
+    paymentMode: paymentMode.present ? paymentMode.value : this.paymentMode,
+    chequeNo: chequeNo.present ? chequeNo.value : this.chequeNo,
+    chequeDate: chequeDate.present ? chequeDate.value : this.chequeDate,
+    bankname: bankname.present ? bankname.value : this.bankname,
+    branchname: branchname.present ? branchname.value : this.branchname,
+    narration: narration.present ? narration.value : this.narration,
+    advance: advance.present ? advance.value : this.advance,
+  );
+  ReceiptEntryTableData copyWithCompanion(ReceiptEntryTableCompanion data) {
+    return ReceiptEntryTableData(
+      id: data.id.present ? data.id.value : this.id,
+      mid: data.mid.present ? data.mid.value : this.mid,
+      companyId: data.companyId.present ? data.companyId.value : this.companyId,
+      receiptNo: data.receiptNo.present ? data.receiptNo.value : this.receiptNo,
+      amount: data.amount.present ? data.amount.value : this.amount,
+      paymentMode: data.paymentMode.present
+          ? data.paymentMode.value
+          : this.paymentMode,
+      chequeNo: data.chequeNo.present ? data.chequeNo.value : this.chequeNo,
+      chequeDate: data.chequeDate.present
+          ? data.chequeDate.value
+          : this.chequeDate,
+      bankname: data.bankname.present ? data.bankname.value : this.bankname,
+      branchname: data.branchname.present
+          ? data.branchname.value
+          : this.branchname,
+      narration: data.narration.present ? data.narration.value : this.narration,
+      advance: data.advance.present ? data.advance.value : this.advance,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReceiptEntryTableData(')
+          ..write('id: $id, ')
+          ..write('mid: $mid, ')
+          ..write('companyId: $companyId, ')
+          ..write('receiptNo: $receiptNo, ')
+          ..write('amount: $amount, ')
+          ..write('paymentMode: $paymentMode, ')
+          ..write('chequeNo: $chequeNo, ')
+          ..write('chequeDate: $chequeDate, ')
+          ..write('bankname: $bankname, ')
+          ..write('branchname: $branchname, ')
+          ..write('narration: $narration, ')
+          ..write('advance: $advance')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    mid,
+    companyId,
+    receiptNo,
+    amount,
+    paymentMode,
+    chequeNo,
+    chequeDate,
+    bankname,
+    branchname,
+    narration,
+    advance,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ReceiptEntryTableData &&
+          other.id == this.id &&
+          other.mid == this.mid &&
+          other.companyId == this.companyId &&
+          other.receiptNo == this.receiptNo &&
+          other.amount == this.amount &&
+          other.paymentMode == this.paymentMode &&
+          other.chequeNo == this.chequeNo &&
+          other.chequeDate == this.chequeDate &&
+          other.bankname == this.bankname &&
+          other.branchname == this.branchname &&
+          other.narration == this.narration &&
+          other.advance == this.advance);
+}
+
+class ReceiptEntryTableCompanion
+    extends UpdateCompanion<ReceiptEntryTableData> {
+  final Value<int> id;
+  final Value<int?> mid;
+  final Value<int?> companyId;
+  final Value<int?> receiptNo;
+  final Value<double?> amount;
+  final Value<String?> paymentMode;
+  final Value<int?> chequeNo;
+  final Value<String?> chequeDate;
+  final Value<String?> bankname;
+  final Value<String?> branchname;
+  final Value<String?> narration;
+  final Value<int?> advance;
+  const ReceiptEntryTableCompanion({
+    this.id = const Value.absent(),
+    this.mid = const Value.absent(),
+    this.companyId = const Value.absent(),
+    this.receiptNo = const Value.absent(),
+    this.amount = const Value.absent(),
+    this.paymentMode = const Value.absent(),
+    this.chequeNo = const Value.absent(),
+    this.chequeDate = const Value.absent(),
+    this.bankname = const Value.absent(),
+    this.branchname = const Value.absent(),
+    this.narration = const Value.absent(),
+    this.advance = const Value.absent(),
+  });
+  ReceiptEntryTableCompanion.insert({
+    this.id = const Value.absent(),
+    this.mid = const Value.absent(),
+    this.companyId = const Value.absent(),
+    this.receiptNo = const Value.absent(),
+    this.amount = const Value.absent(),
+    this.paymentMode = const Value.absent(),
+    this.chequeNo = const Value.absent(),
+    this.chequeDate = const Value.absent(),
+    this.bankname = const Value.absent(),
+    this.branchname = const Value.absent(),
+    this.narration = const Value.absent(),
+    this.advance = const Value.absent(),
+  });
+  static Insertable<ReceiptEntryTableData> custom({
+    Expression<int>? id,
+    Expression<int>? mid,
+    Expression<int>? companyId,
+    Expression<int>? receiptNo,
+    Expression<double>? amount,
+    Expression<String>? paymentMode,
+    Expression<int>? chequeNo,
+    Expression<String>? chequeDate,
+    Expression<String>? bankname,
+    Expression<String>? branchname,
+    Expression<String>? narration,
+    Expression<int>? advance,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (mid != null) 'mid': mid,
+      if (companyId != null) 'company_id': companyId,
+      if (receiptNo != null) 'receipt_no': receiptNo,
+      if (amount != null) 'amount': amount,
+      if (paymentMode != null) 'payment_mode': paymentMode,
+      if (chequeNo != null) 'cheque_no': chequeNo,
+      if (chequeDate != null) 'cheque_date': chequeDate,
+      if (bankname != null) 'bankname': bankname,
+      if (branchname != null) 'branchname': branchname,
+      if (narration != null) 'narration': narration,
+      if (advance != null) 'advance': advance,
+    });
+  }
+
+  ReceiptEntryTableCompanion copyWith({
+    Value<int>? id,
+    Value<int?>? mid,
+    Value<int?>? companyId,
+    Value<int?>? receiptNo,
+    Value<double?>? amount,
+    Value<String?>? paymentMode,
+    Value<int?>? chequeNo,
+    Value<String?>? chequeDate,
+    Value<String?>? bankname,
+    Value<String?>? branchname,
+    Value<String?>? narration,
+    Value<int?>? advance,
+  }) {
+    return ReceiptEntryTableCompanion(
+      id: id ?? this.id,
+      mid: mid ?? this.mid,
+      companyId: companyId ?? this.companyId,
+      receiptNo: receiptNo ?? this.receiptNo,
+      amount: amount ?? this.amount,
+      paymentMode: paymentMode ?? this.paymentMode,
+      chequeNo: chequeNo ?? this.chequeNo,
+      chequeDate: chequeDate ?? this.chequeDate,
+      bankname: bankname ?? this.bankname,
+      branchname: branchname ?? this.branchname,
+      narration: narration ?? this.narration,
+      advance: advance ?? this.advance,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (mid.present) {
+      map['mid'] = Variable<int>(mid.value);
+    }
+    if (companyId.present) {
+      map['company_id'] = Variable<int>(companyId.value);
+    }
+    if (receiptNo.present) {
+      map['receipt_no'] = Variable<int>(receiptNo.value);
+    }
+    if (amount.present) {
+      map['amount'] = Variable<double>(amount.value);
+    }
+    if (paymentMode.present) {
+      map['payment_mode'] = Variable<String>(paymentMode.value);
+    }
+    if (chequeNo.present) {
+      map['cheque_no'] = Variable<int>(chequeNo.value);
+    }
+    if (chequeDate.present) {
+      map['cheque_date'] = Variable<String>(chequeDate.value);
+    }
+    if (bankname.present) {
+      map['bankname'] = Variable<String>(bankname.value);
+    }
+    if (branchname.present) {
+      map['branchname'] = Variable<String>(branchname.value);
+    }
+    if (narration.present) {
+      map['narration'] = Variable<String>(narration.value);
+    }
+    if (advance.present) {
+      map['advance'] = Variable<int>(advance.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReceiptEntryTableCompanion(')
+          ..write('id: $id, ')
+          ..write('mid: $mid, ')
+          ..write('companyId: $companyId, ')
+          ..write('receiptNo: $receiptNo, ')
+          ..write('amount: $amount, ')
+          ..write('paymentMode: $paymentMode, ')
+          ..write('chequeNo: $chequeNo, ')
+          ..write('chequeDate: $chequeDate, ')
+          ..write('bankname: $bankname, ')
+          ..write('branchname: $branchname, ')
+          ..write('narration: $narration, ')
+          ..write('advance: $advance')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ReceiptEntryLedgerTableTable extends ReceiptEntryLedgerTable
+    with TableInfo<$ReceiptEntryLedgerTableTable, ReceiptEntryLedgerTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ReceiptEntryLedgerTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _midMeta = const VerificationMeta('mid');
+  @override
+  late final GeneratedColumn<int> mid = GeneratedColumn<int>(
+    'mid',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _companyIdMeta = const VerificationMeta(
+    'companyId',
+  );
+  @override
+  late final GeneratedColumn<int> companyId = GeneratedColumn<int>(
+    'company_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _ledgerMeta = const VerificationMeta('ledger');
+  @override
+  late final GeneratedColumn<String> ledger = GeneratedColumn<String>(
+    'ledger',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _balanceMeta = const VerificationMeta(
+    'balance',
+  );
+  @override
+  late final GeneratedColumn<double> balance = GeneratedColumn<double>(
+    'balance',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _receiptdateMeta = const VerificationMeta(
+    'receiptdate',
+  );
+  @override
+  late final GeneratedColumn<String> receiptdate = GeneratedColumn<String>(
+    'receiptdate',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    mid,
+    companyId,
+    ledger,
+    balance,
+    receiptdate,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'receipt_entry_ledger_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ReceiptEntryLedgerTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('mid')) {
+      context.handle(
+        _midMeta,
+        mid.isAcceptableOrUnknown(data['mid']!, _midMeta),
+      );
+    }
+    if (data.containsKey('company_id')) {
+      context.handle(
+        _companyIdMeta,
+        companyId.isAcceptableOrUnknown(data['company_id']!, _companyIdMeta),
+      );
+    }
+    if (data.containsKey('ledger')) {
+      context.handle(
+        _ledgerMeta,
+        ledger.isAcceptableOrUnknown(data['ledger']!, _ledgerMeta),
+      );
+    }
+    if (data.containsKey('balance')) {
+      context.handle(
+        _balanceMeta,
+        balance.isAcceptableOrUnknown(data['balance']!, _balanceMeta),
+      );
+    }
+    if (data.containsKey('receiptdate')) {
+      context.handle(
+        _receiptdateMeta,
+        receiptdate.isAcceptableOrUnknown(
+          data['receiptdate']!,
+          _receiptdateMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ReceiptEntryLedgerTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ReceiptEntryLedgerTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      mid: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}mid'],
+      ),
+      companyId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}company_id'],
+      ),
+      ledger: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}ledger'],
+      ),
+      balance: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}balance'],
+      ),
+      receiptdate: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}receiptdate'],
+      ),
+    );
+  }
+
+  @override
+  $ReceiptEntryLedgerTableTable createAlias(String alias) {
+    return $ReceiptEntryLedgerTableTable(attachedDatabase, alias);
+  }
+}
+
+class ReceiptEntryLedgerTableData extends DataClass
+    implements Insertable<ReceiptEntryLedgerTableData> {
+  final int id;
+  final int? mid;
+  final int? companyId;
+  final String? ledger;
+  final double? balance;
+  final String? receiptdate;
+  const ReceiptEntryLedgerTableData({
+    required this.id,
+    this.mid,
+    this.companyId,
+    this.ledger,
+    this.balance,
+    this.receiptdate,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    if (!nullToAbsent || mid != null) {
+      map['mid'] = Variable<int>(mid);
+    }
+    if (!nullToAbsent || companyId != null) {
+      map['company_id'] = Variable<int>(companyId);
+    }
+    if (!nullToAbsent || ledger != null) {
+      map['ledger'] = Variable<String>(ledger);
+    }
+    if (!nullToAbsent || balance != null) {
+      map['balance'] = Variable<double>(balance);
+    }
+    if (!nullToAbsent || receiptdate != null) {
+      map['receiptdate'] = Variable<String>(receiptdate);
+    }
+    return map;
+  }
+
+  ReceiptEntryLedgerTableCompanion toCompanion(bool nullToAbsent) {
+    return ReceiptEntryLedgerTableCompanion(
+      id: Value(id),
+      mid: mid == null && nullToAbsent ? const Value.absent() : Value(mid),
+      companyId: companyId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(companyId),
+      ledger: ledger == null && nullToAbsent
+          ? const Value.absent()
+          : Value(ledger),
+      balance: balance == null && nullToAbsent
+          ? const Value.absent()
+          : Value(balance),
+      receiptdate: receiptdate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(receiptdate),
+    );
+  }
+
+  factory ReceiptEntryLedgerTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ReceiptEntryLedgerTableData(
+      id: serializer.fromJson<int>(json['id']),
+      mid: serializer.fromJson<int?>(json['mid']),
+      companyId: serializer.fromJson<int?>(json['companyId']),
+      ledger: serializer.fromJson<String?>(json['ledger']),
+      balance: serializer.fromJson<double?>(json['balance']),
+      receiptdate: serializer.fromJson<String?>(json['receiptdate']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'mid': serializer.toJson<int?>(mid),
+      'companyId': serializer.toJson<int?>(companyId),
+      'ledger': serializer.toJson<String?>(ledger),
+      'balance': serializer.toJson<double?>(balance),
+      'receiptdate': serializer.toJson<String?>(receiptdate),
+    };
+  }
+
+  ReceiptEntryLedgerTableData copyWith({
+    int? id,
+    Value<int?> mid = const Value.absent(),
+    Value<int?> companyId = const Value.absent(),
+    Value<String?> ledger = const Value.absent(),
+    Value<double?> balance = const Value.absent(),
+    Value<String?> receiptdate = const Value.absent(),
+  }) => ReceiptEntryLedgerTableData(
+    id: id ?? this.id,
+    mid: mid.present ? mid.value : this.mid,
+    companyId: companyId.present ? companyId.value : this.companyId,
+    ledger: ledger.present ? ledger.value : this.ledger,
+    balance: balance.present ? balance.value : this.balance,
+    receiptdate: receiptdate.present ? receiptdate.value : this.receiptdate,
+  );
+  ReceiptEntryLedgerTableData copyWithCompanion(
+    ReceiptEntryLedgerTableCompanion data,
+  ) {
+    return ReceiptEntryLedgerTableData(
+      id: data.id.present ? data.id.value : this.id,
+      mid: data.mid.present ? data.mid.value : this.mid,
+      companyId: data.companyId.present ? data.companyId.value : this.companyId,
+      ledger: data.ledger.present ? data.ledger.value : this.ledger,
+      balance: data.balance.present ? data.balance.value : this.balance,
+      receiptdate: data.receiptdate.present
+          ? data.receiptdate.value
+          : this.receiptdate,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReceiptEntryLedgerTableData(')
+          ..write('id: $id, ')
+          ..write('mid: $mid, ')
+          ..write('companyId: $companyId, ')
+          ..write('ledger: $ledger, ')
+          ..write('balance: $balance, ')
+          ..write('receiptdate: $receiptdate')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, mid, companyId, ledger, balance, receiptdate);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ReceiptEntryLedgerTableData &&
+          other.id == this.id &&
+          other.mid == this.mid &&
+          other.companyId == this.companyId &&
+          other.ledger == this.ledger &&
+          other.balance == this.balance &&
+          other.receiptdate == this.receiptdate);
+}
+
+class ReceiptEntryLedgerTableCompanion
+    extends UpdateCompanion<ReceiptEntryLedgerTableData> {
+  final Value<int> id;
+  final Value<int?> mid;
+  final Value<int?> companyId;
+  final Value<String?> ledger;
+  final Value<double?> balance;
+  final Value<String?> receiptdate;
+  const ReceiptEntryLedgerTableCompanion({
+    this.id = const Value.absent(),
+    this.mid = const Value.absent(),
+    this.companyId = const Value.absent(),
+    this.ledger = const Value.absent(),
+    this.balance = const Value.absent(),
+    this.receiptdate = const Value.absent(),
+  });
+  ReceiptEntryLedgerTableCompanion.insert({
+    this.id = const Value.absent(),
+    this.mid = const Value.absent(),
+    this.companyId = const Value.absent(),
+    this.ledger = const Value.absent(),
+    this.balance = const Value.absent(),
+    this.receiptdate = const Value.absent(),
+  });
+  static Insertable<ReceiptEntryLedgerTableData> custom({
+    Expression<int>? id,
+    Expression<int>? mid,
+    Expression<int>? companyId,
+    Expression<String>? ledger,
+    Expression<double>? balance,
+    Expression<String>? receiptdate,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (mid != null) 'mid': mid,
+      if (companyId != null) 'company_id': companyId,
+      if (ledger != null) 'ledger': ledger,
+      if (balance != null) 'balance': balance,
+      if (receiptdate != null) 'receiptdate': receiptdate,
+    });
+  }
+
+  ReceiptEntryLedgerTableCompanion copyWith({
+    Value<int>? id,
+    Value<int?>? mid,
+    Value<int?>? companyId,
+    Value<String?>? ledger,
+    Value<double?>? balance,
+    Value<String?>? receiptdate,
+  }) {
+    return ReceiptEntryLedgerTableCompanion(
+      id: id ?? this.id,
+      mid: mid ?? this.mid,
+      companyId: companyId ?? this.companyId,
+      ledger: ledger ?? this.ledger,
+      balance: balance ?? this.balance,
+      receiptdate: receiptdate ?? this.receiptdate,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (mid.present) {
+      map['mid'] = Variable<int>(mid.value);
+    }
+    if (companyId.present) {
+      map['company_id'] = Variable<int>(companyId.value);
+    }
+    if (ledger.present) {
+      map['ledger'] = Variable<String>(ledger.value);
+    }
+    if (balance.present) {
+      map['balance'] = Variable<double>(balance.value);
+    }
+    if (receiptdate.present) {
+      map['receiptdate'] = Variable<String>(receiptdate.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReceiptEntryLedgerTableCompanion(')
+          ..write('id: $id, ')
+          ..write('mid: $mid, ')
+          ..write('companyId: $companyId, ')
+          ..write('ledger: $ledger, ')
+          ..write('balance: $balance, ')
+          ..write('receiptdate: $receiptdate')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDb extends GeneratedDatabase {
   _$AppDb(QueryExecutor e) : super(e);
   $AppDbManager get managers => $AppDbManager(this);
@@ -28153,6 +29276,10 @@ abstract class _$AppDb extends GeneratedDatabase {
       $SaleReturnDetailsTableTable(this);
   late final $SaleReturnLedgerDetailsTableTable saleReturnLedgerDetailsTable =
       $SaleReturnLedgerDetailsTableTable(this);
+  late final $ReceiptEntryTableTable receiptEntryTable =
+      $ReceiptEntryTableTable(this);
+  late final $ReceiptEntryLedgerTableTable receiptEntryLedgerTable =
+      $ReceiptEntryLedgerTableTable(this);
   late final CompanyDao companyDao = CompanyDao(this as AppDb);
   late final RegistrationDetailDao registrationDetailDao =
       RegistrationDetailDao(this as AppDb);
@@ -28206,6 +29333,8 @@ abstract class _$AppDb extends GeneratedDatabase {
     saleReturnMasterTable,
     saleReturnDetailsTable,
     saleReturnLedgerDetailsTable,
+    receiptEntryTable,
+    receiptEntryLedgerTable,
   ];
 }
 
@@ -40804,6 +41933,582 @@ typedef $$SaleReturnLedgerDetailsTableTableProcessedTableManager =
       SaleReturnLedgerDetailsTableData,
       PrefetchHooks Function()
     >;
+typedef $$ReceiptEntryTableTableCreateCompanionBuilder =
+    ReceiptEntryTableCompanion Function({
+      Value<int> id,
+      Value<int?> mid,
+      Value<int?> companyId,
+      Value<int?> receiptNo,
+      Value<double?> amount,
+      Value<String?> paymentMode,
+      Value<int?> chequeNo,
+      Value<String?> chequeDate,
+      Value<String?> bankname,
+      Value<String?> branchname,
+      Value<String?> narration,
+      Value<int?> advance,
+    });
+typedef $$ReceiptEntryTableTableUpdateCompanionBuilder =
+    ReceiptEntryTableCompanion Function({
+      Value<int> id,
+      Value<int?> mid,
+      Value<int?> companyId,
+      Value<int?> receiptNo,
+      Value<double?> amount,
+      Value<String?> paymentMode,
+      Value<int?> chequeNo,
+      Value<String?> chequeDate,
+      Value<String?> bankname,
+      Value<String?> branchname,
+      Value<String?> narration,
+      Value<int?> advance,
+    });
+
+class $$ReceiptEntryTableTableFilterComposer
+    extends Composer<_$AppDb, $ReceiptEntryTableTable> {
+  $$ReceiptEntryTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get mid => $composableBuilder(
+    column: $table.mid,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get companyId => $composableBuilder(
+    column: $table.companyId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get receiptNo => $composableBuilder(
+    column: $table.receiptNo,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get amount => $composableBuilder(
+    column: $table.amount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get paymentMode => $composableBuilder(
+    column: $table.paymentMode,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get chequeNo => $composableBuilder(
+    column: $table.chequeNo,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get chequeDate => $composableBuilder(
+    column: $table.chequeDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get bankname => $composableBuilder(
+    column: $table.bankname,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get branchname => $composableBuilder(
+    column: $table.branchname,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get narration => $composableBuilder(
+    column: $table.narration,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get advance => $composableBuilder(
+    column: $table.advance,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ReceiptEntryTableTableOrderingComposer
+    extends Composer<_$AppDb, $ReceiptEntryTableTable> {
+  $$ReceiptEntryTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get mid => $composableBuilder(
+    column: $table.mid,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get companyId => $composableBuilder(
+    column: $table.companyId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get receiptNo => $composableBuilder(
+    column: $table.receiptNo,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get amount => $composableBuilder(
+    column: $table.amount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get paymentMode => $composableBuilder(
+    column: $table.paymentMode,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get chequeNo => $composableBuilder(
+    column: $table.chequeNo,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get chequeDate => $composableBuilder(
+    column: $table.chequeDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get bankname => $composableBuilder(
+    column: $table.bankname,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get branchname => $composableBuilder(
+    column: $table.branchname,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get narration => $composableBuilder(
+    column: $table.narration,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get advance => $composableBuilder(
+    column: $table.advance,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ReceiptEntryTableTableAnnotationComposer
+    extends Composer<_$AppDb, $ReceiptEntryTableTable> {
+  $$ReceiptEntryTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get mid =>
+      $composableBuilder(column: $table.mid, builder: (column) => column);
+
+  GeneratedColumn<int> get companyId =>
+      $composableBuilder(column: $table.companyId, builder: (column) => column);
+
+  GeneratedColumn<int> get receiptNo =>
+      $composableBuilder(column: $table.receiptNo, builder: (column) => column);
+
+  GeneratedColumn<double> get amount =>
+      $composableBuilder(column: $table.amount, builder: (column) => column);
+
+  GeneratedColumn<String> get paymentMode => $composableBuilder(
+    column: $table.paymentMode,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get chequeNo =>
+      $composableBuilder(column: $table.chequeNo, builder: (column) => column);
+
+  GeneratedColumn<String> get chequeDate => $composableBuilder(
+    column: $table.chequeDate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get bankname =>
+      $composableBuilder(column: $table.bankname, builder: (column) => column);
+
+  GeneratedColumn<String> get branchname => $composableBuilder(
+    column: $table.branchname,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get narration =>
+      $composableBuilder(column: $table.narration, builder: (column) => column);
+
+  GeneratedColumn<int> get advance =>
+      $composableBuilder(column: $table.advance, builder: (column) => column);
+}
+
+class $$ReceiptEntryTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDb,
+          $ReceiptEntryTableTable,
+          ReceiptEntryTableData,
+          $$ReceiptEntryTableTableFilterComposer,
+          $$ReceiptEntryTableTableOrderingComposer,
+          $$ReceiptEntryTableTableAnnotationComposer,
+          $$ReceiptEntryTableTableCreateCompanionBuilder,
+          $$ReceiptEntryTableTableUpdateCompanionBuilder,
+          (
+            ReceiptEntryTableData,
+            BaseReferences<
+              _$AppDb,
+              $ReceiptEntryTableTable,
+              ReceiptEntryTableData
+            >,
+          ),
+          ReceiptEntryTableData,
+          PrefetchHooks Function()
+        > {
+  $$ReceiptEntryTableTableTableManager(
+    _$AppDb db,
+    $ReceiptEntryTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ReceiptEntryTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ReceiptEntryTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ReceiptEntryTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int?> mid = const Value.absent(),
+                Value<int?> companyId = const Value.absent(),
+                Value<int?> receiptNo = const Value.absent(),
+                Value<double?> amount = const Value.absent(),
+                Value<String?> paymentMode = const Value.absent(),
+                Value<int?> chequeNo = const Value.absent(),
+                Value<String?> chequeDate = const Value.absent(),
+                Value<String?> bankname = const Value.absent(),
+                Value<String?> branchname = const Value.absent(),
+                Value<String?> narration = const Value.absent(),
+                Value<int?> advance = const Value.absent(),
+              }) => ReceiptEntryTableCompanion(
+                id: id,
+                mid: mid,
+                companyId: companyId,
+                receiptNo: receiptNo,
+                amount: amount,
+                paymentMode: paymentMode,
+                chequeNo: chequeNo,
+                chequeDate: chequeDate,
+                bankname: bankname,
+                branchname: branchname,
+                narration: narration,
+                advance: advance,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int?> mid = const Value.absent(),
+                Value<int?> companyId = const Value.absent(),
+                Value<int?> receiptNo = const Value.absent(),
+                Value<double?> amount = const Value.absent(),
+                Value<String?> paymentMode = const Value.absent(),
+                Value<int?> chequeNo = const Value.absent(),
+                Value<String?> chequeDate = const Value.absent(),
+                Value<String?> bankname = const Value.absent(),
+                Value<String?> branchname = const Value.absent(),
+                Value<String?> narration = const Value.absent(),
+                Value<int?> advance = const Value.absent(),
+              }) => ReceiptEntryTableCompanion.insert(
+                id: id,
+                mid: mid,
+                companyId: companyId,
+                receiptNo: receiptNo,
+                amount: amount,
+                paymentMode: paymentMode,
+                chequeNo: chequeNo,
+                chequeDate: chequeDate,
+                bankname: bankname,
+                branchname: branchname,
+                narration: narration,
+                advance: advance,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ReceiptEntryTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDb,
+      $ReceiptEntryTableTable,
+      ReceiptEntryTableData,
+      $$ReceiptEntryTableTableFilterComposer,
+      $$ReceiptEntryTableTableOrderingComposer,
+      $$ReceiptEntryTableTableAnnotationComposer,
+      $$ReceiptEntryTableTableCreateCompanionBuilder,
+      $$ReceiptEntryTableTableUpdateCompanionBuilder,
+      (
+        ReceiptEntryTableData,
+        BaseReferences<_$AppDb, $ReceiptEntryTableTable, ReceiptEntryTableData>,
+      ),
+      ReceiptEntryTableData,
+      PrefetchHooks Function()
+    >;
+typedef $$ReceiptEntryLedgerTableTableCreateCompanionBuilder =
+    ReceiptEntryLedgerTableCompanion Function({
+      Value<int> id,
+      Value<int?> mid,
+      Value<int?> companyId,
+      Value<String?> ledger,
+      Value<double?> balance,
+      Value<String?> receiptdate,
+    });
+typedef $$ReceiptEntryLedgerTableTableUpdateCompanionBuilder =
+    ReceiptEntryLedgerTableCompanion Function({
+      Value<int> id,
+      Value<int?> mid,
+      Value<int?> companyId,
+      Value<String?> ledger,
+      Value<double?> balance,
+      Value<String?> receiptdate,
+    });
+
+class $$ReceiptEntryLedgerTableTableFilterComposer
+    extends Composer<_$AppDb, $ReceiptEntryLedgerTableTable> {
+  $$ReceiptEntryLedgerTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get mid => $composableBuilder(
+    column: $table.mid,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get companyId => $composableBuilder(
+    column: $table.companyId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get ledger => $composableBuilder(
+    column: $table.ledger,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get balance => $composableBuilder(
+    column: $table.balance,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get receiptdate => $composableBuilder(
+    column: $table.receiptdate,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ReceiptEntryLedgerTableTableOrderingComposer
+    extends Composer<_$AppDb, $ReceiptEntryLedgerTableTable> {
+  $$ReceiptEntryLedgerTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get mid => $composableBuilder(
+    column: $table.mid,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get companyId => $composableBuilder(
+    column: $table.companyId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get ledger => $composableBuilder(
+    column: $table.ledger,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get balance => $composableBuilder(
+    column: $table.balance,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get receiptdate => $composableBuilder(
+    column: $table.receiptdate,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ReceiptEntryLedgerTableTableAnnotationComposer
+    extends Composer<_$AppDb, $ReceiptEntryLedgerTableTable> {
+  $$ReceiptEntryLedgerTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get mid =>
+      $composableBuilder(column: $table.mid, builder: (column) => column);
+
+  GeneratedColumn<int> get companyId =>
+      $composableBuilder(column: $table.companyId, builder: (column) => column);
+
+  GeneratedColumn<String> get ledger =>
+      $composableBuilder(column: $table.ledger, builder: (column) => column);
+
+  GeneratedColumn<double> get balance =>
+      $composableBuilder(column: $table.balance, builder: (column) => column);
+
+  GeneratedColumn<String> get receiptdate => $composableBuilder(
+    column: $table.receiptdate,
+    builder: (column) => column,
+  );
+}
+
+class $$ReceiptEntryLedgerTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDb,
+          $ReceiptEntryLedgerTableTable,
+          ReceiptEntryLedgerTableData,
+          $$ReceiptEntryLedgerTableTableFilterComposer,
+          $$ReceiptEntryLedgerTableTableOrderingComposer,
+          $$ReceiptEntryLedgerTableTableAnnotationComposer,
+          $$ReceiptEntryLedgerTableTableCreateCompanionBuilder,
+          $$ReceiptEntryLedgerTableTableUpdateCompanionBuilder,
+          (
+            ReceiptEntryLedgerTableData,
+            BaseReferences<
+              _$AppDb,
+              $ReceiptEntryLedgerTableTable,
+              ReceiptEntryLedgerTableData
+            >,
+          ),
+          ReceiptEntryLedgerTableData,
+          PrefetchHooks Function()
+        > {
+  $$ReceiptEntryLedgerTableTableTableManager(
+    _$AppDb db,
+    $ReceiptEntryLedgerTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ReceiptEntryLedgerTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$ReceiptEntryLedgerTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$ReceiptEntryLedgerTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int?> mid = const Value.absent(),
+                Value<int?> companyId = const Value.absent(),
+                Value<String?> ledger = const Value.absent(),
+                Value<double?> balance = const Value.absent(),
+                Value<String?> receiptdate = const Value.absent(),
+              }) => ReceiptEntryLedgerTableCompanion(
+                id: id,
+                mid: mid,
+                companyId: companyId,
+                ledger: ledger,
+                balance: balance,
+                receiptdate: receiptdate,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int?> mid = const Value.absent(),
+                Value<int?> companyId = const Value.absent(),
+                Value<String?> ledger = const Value.absent(),
+                Value<double?> balance = const Value.absent(),
+                Value<String?> receiptdate = const Value.absent(),
+              }) => ReceiptEntryLedgerTableCompanion.insert(
+                id: id,
+                mid: mid,
+                companyId: companyId,
+                ledger: ledger,
+                balance: balance,
+                receiptdate: receiptdate,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ReceiptEntryLedgerTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDb,
+      $ReceiptEntryLedgerTableTable,
+      ReceiptEntryLedgerTableData,
+      $$ReceiptEntryLedgerTableTableFilterComposer,
+      $$ReceiptEntryLedgerTableTableOrderingComposer,
+      $$ReceiptEntryLedgerTableTableAnnotationComposer,
+      $$ReceiptEntryLedgerTableTableCreateCompanionBuilder,
+      $$ReceiptEntryLedgerTableTableUpdateCompanionBuilder,
+      (
+        ReceiptEntryLedgerTableData,
+        BaseReferences<
+          _$AppDb,
+          $ReceiptEntryLedgerTableTable,
+          ReceiptEntryLedgerTableData
+        >,
+      ),
+      ReceiptEntryLedgerTableData,
+      PrefetchHooks Function()
+    >;
 
 class $AppDbManager {
   final _$AppDb _db;
@@ -40874,5 +42579,12 @@ class $AppDbManager {
       $$SaleReturnLedgerDetailsTableTableTableManager(
         _db,
         _db.saleReturnLedgerDetailsTable,
+      );
+  $$ReceiptEntryTableTableTableManager get receiptEntryTable =>
+      $$ReceiptEntryTableTableTableManager(_db, _db.receiptEntryTable);
+  $$ReceiptEntryLedgerTableTableTableManager get receiptEntryLedgerTable =>
+      $$ReceiptEntryLedgerTableTableTableManager(
+        _db,
+        _db.receiptEntryLedgerTable,
       );
 }

@@ -1,7 +1,6 @@
 import 'package:drift/drift.dart' show Value;
 import 'package:intl/intl.dart';
 import 'package:mpos_beat/core/di/injection.dart';
-import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/data_sources/user/party_MasterSync/party_MasterSync.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
@@ -115,20 +114,20 @@ class _SalesScreenState extends State<SalesScreen> {
           style: context.textStyle.s20.indigoBlue.bold.roboto,
         ),
         centerTitle: true,
-        actions: [
-          SvgPicture.asset(
-            AppAssets.refresh,
-            height: context.getSize.height * 0.022,
-            colorFilter: const ColorFilter.mode(
-              ColorResources.indigoBlue,
-              BlendMode.srcIn,
-            ),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.qr_code, size: context.getSize.height * 0.022),
-          ),
-        ],
+        // actions: [
+        //   SvgPicture.asset(
+        //     AppAssets.refresh,
+        //     height: context.getSize.height * 0.022,
+        //     colorFilter: const ColorFilter.mode(
+        //       ColorResources.indigoBlue,
+        //       BlendMode.srcIn,
+        //     ),
+        //   ),
+        //   IconButton(
+        //     onPressed: () {},
+        //     icon: Icon(Icons.qr_code, size: context.getSize.height * 0.022),
+        //   ),
+        // ],
         // toolbarHeight: 65,
       ),
       body: CustomScrollView(

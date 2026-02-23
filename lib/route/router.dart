@@ -306,7 +306,7 @@ class AppRouter {
         path: "/salesReturnScreen",
         name: AppRouterConst.salesReturnScreen,
         builder: (context, state) {
-              final data = state.extra as TransactionOrderBookingRouteArgs;
+          final data = state.extra as TransactionOrderBookingRouteArgs;
           return SalesReturnScreen(data: data);
         },
       ),
@@ -328,7 +328,8 @@ class AppRouter {
         path: "/receiptScreen",
         name: AppRouterConst.receiptScreen,
         builder: (context, state) {
-          return const ReceiptScreen();
+          final data = state.extra as TransactionOrderBookingRouteArgs;
+          return ReceiptScreen(data: data);
         },
       ),
       GoRoute(

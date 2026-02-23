@@ -146,8 +146,6 @@ class _ReceiptCashAlertWidgetState extends State<ReceiptCashAlertWidget> {
                   keyboardType: TextInputType.number,
                   style: context.textStyle.s10.w500.indigoBlue.roboto,
                   decoration: InputDecoration(
-                    // hintText: "20475.00",
-                    // hintStyle: context.textStyle.s10.w500.indigoBlue.roboto,
                     isCollapsed: true,
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: 12,

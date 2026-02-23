@@ -42,20 +42,20 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
           style: context.textStyle.s20.indigoBlue.bold.roboto,
         ),
         centerTitle: true,
-        actions: [
-          SvgPicture.asset(
-            AppAssets.refresh,
-            height: context.getSize.height * 0.022,
-            colorFilter: const ColorFilter.mode(
-              ColorResources.indigoBlue,
-              BlendMode.srcIn,
-            ),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.qr_code, size: context.getSize.height * 0.022),
-          ),
-        ],
+        // actions: [
+        //   SvgPicture.asset(
+        //     AppAssets.refresh,
+        //     height: context.getSize.height * 0.022,
+        //     colorFilter: const ColorFilter.mode(
+        //       ColorResources.indigoBlue,
+        //       BlendMode.srcIn,
+        //     ),
+        //   ),
+        //   IconButton(
+        //     onPressed: () {},
+        //     icon: Icon(Icons.qr_code, size: context.getSize.height * 0.022),
+        //   ),
+        // ],
       ),
       body: CustomScrollView(
         physics: const NeverScrollableScrollPhysics(),
@@ -381,6 +381,8 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
                                     0,
                                 remark: remarkController.text,
                               );
+                              txn.clearSelectedItems();
+                              remarkController.clear();
                               Navigator.pop(context);
                             },
 

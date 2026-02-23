@@ -65,6 +65,8 @@ import 'package:mpos_beat/data/local_db/tables/item_master_sync_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/item_price_details_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/partymaster_sync_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/price_level_tables.dart';
+import 'package:mpos_beat/data/local_db/tables/receipt/receipt_entry_ledger_table.dart';
+import 'package:mpos_beat/data/local_db/tables/receipt/receipt_entry_table.dart';
 import 'package:mpos_beat/data/local_db/tables/route_voucher_types_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/routes_table.dart';
 import 'package:mpos_beat/data/local_db/tables/sales/sale_auto_receipt_table.dart';
@@ -121,6 +123,8 @@ part 'app_db.g.dart';
     SaleReturnMasterTable,
     SaleReturnDetailsTable,
     SaleReturnLedgerDetailsTable,
+    ReceiptEntryTable,
+    ReceiptEntryLedgerTable,
   ],
   daos: [
     CompanyDao,
@@ -143,7 +147,7 @@ class AppDb extends _$AppDb {
   AppDb() : super(_openConnection());
 
   @override
-  int get schemaVersion => 27;
+  int get schemaVersion => 28;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -262,7 +266,10 @@ class AppDb extends _$AppDb {
           saleMasterTable.coupontdiscountamount,
         );
       }
-     
+      if (from < 28) {
+        await m.createTable(receiptEntryTable);
+        await m.createTable(receiptEntryLedgerTable);
+      }
     },
   );
 }
