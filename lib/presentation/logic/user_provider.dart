@@ -607,6 +607,20 @@ void selectPriceLevelById(int? id, List<PriceLevelDetails> list) {
   }
 }
 
+void applyParty(PartyMasterDetails party) {
+  setParty(party);
+
+  if (party.priceList > 0 && party.priceLevels.isNotEmpty) {
+    final auto = party.priceLevels.firstWhere(
+      (e) => e.id == party.priceList,
+      orElse: () => party.priceLevels.first,
+    );
+    setSelectedPriceLevel(auto);
+  } else {
+    clearSelectedPriceLevel();
+  }
+}
+
 
   /// ---------------- PARTY CHANGE HANDLING ----------------
   void onPartyChanged() {

@@ -213,7 +213,7 @@ class PartyMasterSync {
          )
        ) AS price_levels_json
     FROM price_levels_table pl
-  """;
+   """;
 
     final builder = SqlQueryBuilder();
 
