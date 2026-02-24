@@ -41,7 +41,7 @@ class _TransactionOrderBookingScreenState
   void initState() {
     super.initState();
     context.read<UserProvider>().attachDb(context.read<AppDb>());
-    // load();
+    load();
     generateVoucher();
   }
 
@@ -61,16 +61,16 @@ class _TransactionOrderBookingScreenState
     }
   }
 
-  // Future<void> load() async {
-  //   final party = await sl<PartyMasterSync>().fetchParty(
-  //     widget.data.data.company.id!,
-  //     widget.data.party.ledgerId,
-  //   );
+  Future<void> load() async {
+    final party = await sl<PartyMasterSync>().fetchParty(
+      widget.data.data.company.id!,
+      widget.data.party.ledgerId,
+    );
 
-  //   if (party != null) {
-  //     context.read<UserProvider>().setParty(party);
-  //   }
-  // }
+    if (party != null) {
+      context.read<UserProvider>().setParty(party);
+    }
+  }
 
   @override
   void didUpdateWidget(covariant TransactionOrderBookingScreen oldWidget) {
@@ -87,10 +87,6 @@ class _TransactionOrderBookingScreenState
     final companyId = widget.data.data.company.id!;
     final ledgerId = widget.data.party.ledgerId;
     final appLocalizations = context.l10n;
-    final b2bVoucherNo =
-        "${widget.data.vchTyp.b2BPrefix}/${widget.data.vchTyp.b2BSuffix}";
-    final b2cVoucherNo =
-        "${widget.data.vchTyp.b2CPrefix}/${widget.data.vchTyp.b2CSuffix}";
     final provider = context.read<CustomerTransactionProvider>();
     return Scaffold(
       appBar: AppBar(
@@ -345,6 +341,7 @@ class _TransactionOrderBookingScreenState
                                                   );
                                                 }).toList(),
                                                 onChanged: (value) {
+                                                  Logger.logSuccess("${party.priceList}");
                                                   if (value != null) {
                                                     userProvider
                                                         .setSelectedPriceLevel(
@@ -887,7 +884,7 @@ Future<void> saveOrder({
     return;
   }
 
-  final vchNo = int.parse(voucherNo);
+  // final vchNo = int.parse(voucherNo);
   await db.transaction(() async {
     //  INSERT MASTER
     final masterId = await db
@@ -897,7 +894,7 @@ Future<void> saveOrder({
             partyId: Value(ledgerId),
             party: Value(ledgerName),
             voucherAmount: txn.grandTotal,
-            voucherNo: Value(vchNo),
+            voucherNo: Value(voucherNo),
             companyId: Value(companyId),
             sync: const Value(0),
             priceList: Value(priceLevelId.toString()),

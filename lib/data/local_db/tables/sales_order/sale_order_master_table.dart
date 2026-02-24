@@ -5,7 +5,7 @@ class SaleOrderMasterTable extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   IntColumn get vchId => integer().nullable()();
-  IntColumn get voucherNo => integer().nullable()();
+  TextColumn get voucherNo => text().nullable()();
 IntColumn get isCancelled =>
     integer().withDefault(const Constant(0))();
   IntColumn get partyId => integer().nullable()();

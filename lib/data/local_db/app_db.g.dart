@@ -15754,11 +15754,11 @@ class $SaleOrderMasterTableTable extends SaleOrderMasterTable
     'voucherNo',
   );
   @override
-  late final GeneratedColumn<int> voucherNo = GeneratedColumn<int>(
+  late final GeneratedColumn<String> voucherNo = GeneratedColumn<String>(
     'voucher_no',
     aliasedName,
     true,
-    type: DriftSqlType.int,
+    type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
   static const VerificationMeta _isCancelledMeta = const VerificationMeta(
@@ -16572,7 +16572,7 @@ class $SaleOrderMasterTableTable extends SaleOrderMasterTable
         data['${effectivePrefix}vch_id'],
       ),
       voucherNo: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
+        DriftSqlType.string,
         data['${effectivePrefix}voucher_no'],
       ),
       isCancelled: attachedDatabase.typeMapping.read(
@@ -16752,7 +16752,7 @@ class SaleOrderMasterTableData extends DataClass
     implements Insertable<SaleOrderMasterTableData> {
   final int id;
   final int? vchId;
-  final int? voucherNo;
+  final String? voucherNo;
   final int isCancelled;
   final int? partyId;
   final String? party;
@@ -16848,7 +16848,7 @@ class SaleOrderMasterTableData extends DataClass
       map['vch_id'] = Variable<int>(vchId);
     }
     if (!nullToAbsent || voucherNo != null) {
-      map['voucher_no'] = Variable<int>(voucherNo);
+      map['voucher_no'] = Variable<String>(voucherNo);
     }
     map['is_cancelled'] = Variable<int>(isCancelled);
     if (!nullToAbsent || partyId != null) {
@@ -17105,7 +17105,7 @@ class SaleOrderMasterTableData extends DataClass
     return SaleOrderMasterTableData(
       id: serializer.fromJson<int>(json['id']),
       vchId: serializer.fromJson<int?>(json['vchId']),
-      voucherNo: serializer.fromJson<int?>(json['voucherNo']),
+      voucherNo: serializer.fromJson<String?>(json['voucherNo']),
       isCancelled: serializer.fromJson<int>(json['isCancelled']),
       partyId: serializer.fromJson<int?>(json['partyId']),
       party: serializer.fromJson<String?>(json['party']),
@@ -17155,7 +17155,7 @@ class SaleOrderMasterTableData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'vchId': serializer.toJson<int?>(vchId),
-      'voucherNo': serializer.toJson<int?>(voucherNo),
+      'voucherNo': serializer.toJson<String?>(voucherNo),
       'isCancelled': serializer.toJson<int>(isCancelled),
       'partyId': serializer.toJson<int?>(partyId),
       'party': serializer.toJson<String?>(party),
@@ -17203,7 +17203,7 @@ class SaleOrderMasterTableData extends DataClass
   SaleOrderMasterTableData copyWith({
     int? id,
     Value<int?> vchId = const Value.absent(),
-    Value<int?> voucherNo = const Value.absent(),
+    Value<String?> voucherNo = const Value.absent(),
     int? isCancelled,
     Value<int?> partyId = const Value.absent(),
     Value<String?> party = const Value.absent(),
@@ -17528,7 +17528,7 @@ class SaleOrderMasterTableCompanion
     extends UpdateCompanion<SaleOrderMasterTableData> {
   final Value<int> id;
   final Value<int?> vchId;
-  final Value<int?> voucherNo;
+  final Value<String?> voucherNo;
   final Value<int> isCancelled;
   final Value<int?> partyId;
   final Value<String?> party;
@@ -17665,7 +17665,7 @@ class SaleOrderMasterTableCompanion
   static Insertable<SaleOrderMasterTableData> custom({
     Expression<int>? id,
     Expression<int>? vchId,
-    Expression<int>? voucherNo,
+    Expression<String>? voucherNo,
     Expression<int>? isCancelled,
     Expression<int>? partyId,
     Expression<String>? party,
@@ -17759,7 +17759,7 @@ class SaleOrderMasterTableCompanion
   SaleOrderMasterTableCompanion copyWith({
     Value<int>? id,
     Value<int?>? vchId,
-    Value<int?>? voucherNo,
+    Value<String?>? voucherNo,
     Value<int>? isCancelled,
     Value<int?>? partyId,
     Value<String?>? party,
@@ -17860,7 +17860,7 @@ class SaleOrderMasterTableCompanion
       map['vch_id'] = Variable<int>(vchId.value);
     }
     if (voucherNo.present) {
-      map['voucher_no'] = Variable<int>(voucherNo.value);
+      map['voucher_no'] = Variable<String>(voucherNo.value);
     }
     if (isCancelled.present) {
       map['is_cancelled'] = Variable<int>(isCancelled.value);
@@ -37170,7 +37170,7 @@ typedef $$SaleOrderMasterTableTableCreateCompanionBuilder =
     SaleOrderMasterTableCompanion Function({
       Value<int> id,
       Value<int?> vchId,
-      Value<int?> voucherNo,
+      Value<String?> voucherNo,
       Value<int> isCancelled,
       Value<int?> partyId,
       Value<String?> party,
@@ -37217,7 +37217,7 @@ typedef $$SaleOrderMasterTableTableUpdateCompanionBuilder =
     SaleOrderMasterTableCompanion Function({
       Value<int> id,
       Value<int?> vchId,
-      Value<int?> voucherNo,
+      Value<String?> voucherNo,
       Value<int> isCancelled,
       Value<int?> partyId,
       Value<String?> party,
@@ -37280,7 +37280,7 @@ class $$SaleOrderMasterTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get voucherNo => $composableBuilder(
+  ColumnFilters<String> get voucherNo => $composableBuilder(
     column: $table.voucherNo,
     builder: (column) => ColumnFilters(column),
   );
@@ -37510,7 +37510,7 @@ class $$SaleOrderMasterTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get voucherNo => $composableBuilder(
+  ColumnOrderings<String> get voucherNo => $composableBuilder(
     column: $table.voucherNo,
     builder: (column) => ColumnOrderings(column),
   );
@@ -37736,7 +37736,7 @@ class $$SaleOrderMasterTableTableAnnotationComposer
   GeneratedColumn<int> get vchId =>
       $composableBuilder(column: $table.vchId, builder: (column) => column);
 
-  GeneratedColumn<int> get voucherNo =>
+  GeneratedColumn<String> get voucherNo =>
       $composableBuilder(column: $table.voucherNo, builder: (column) => column);
 
   GeneratedColumn<int> get isCancelled => $composableBuilder(
@@ -37936,7 +37936,7 @@ class $$SaleOrderMasterTableTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<int?> vchId = const Value.absent(),
-                Value<int?> voucherNo = const Value.absent(),
+                Value<String?> voucherNo = const Value.absent(),
                 Value<int> isCancelled = const Value.absent(),
                 Value<int?> partyId = const Value.absent(),
                 Value<String?> party = const Value.absent(),
@@ -38028,7 +38028,7 @@ class $$SaleOrderMasterTableTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<int?> vchId = const Value.absent(),
-                Value<int?> voucherNo = const Value.absent(),
+                Value<String?> voucherNo = const Value.absent(),
                 Value<int> isCancelled = const Value.absent(),
                 Value<int?> partyId = const Value.absent(),
                 Value<String?> party = const Value.absent(),

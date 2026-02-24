@@ -56,7 +56,17 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
     );
 
     if (party != null) {
-      context.read<UserProvider>().setParty(party);
+      context.read<UserProvider>().applyParty(party);
+    }
+  }
+
+  @override
+  void didUpdateWidget(TransactionDetailpage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.party.ledgerId != widget.party.ledgerId) {
+      context.read<UserProvider>().clearSelectedPriceLevel();
+      load();
     }
   }
 
