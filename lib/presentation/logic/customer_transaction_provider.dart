@@ -313,7 +313,11 @@ class CustomerTransactionProvider extends ChangeNotifier {
 
     return list;
   }
-
+final Map<int, double> _itemFreeQty = {};
+void updateFreeQty(int itemId, double freeQty) {
+  _itemFreeQty[itemId] = freeQty;
+  notifyListeners();
+}
   List<SelectedOrderItem> get selectedOrderItems {
     final list = <SelectedOrderItem>[];
 
@@ -349,7 +353,8 @@ class CustomerTransactionProvider extends ChangeNotifier {
 
       final amount = qty * exclusiveRate;
       final inclRate = qty > 0 ? finalAmount / qty : 0;
-
+final freeQty = _itemFreeQty[itemId] ?? 0;
+      
       list.add(
         SelectedOrderItem(
           item: item,
@@ -358,6 +363,7 @@ class CustomerTransactionProvider extends ChangeNotifier {
           discount: discount,
           amount: amount,
           inclRate: inclRate.toDouble(),
+           freeQty: freeQty,
         ),
       );
     }

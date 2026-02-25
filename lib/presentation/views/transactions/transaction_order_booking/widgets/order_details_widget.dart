@@ -69,10 +69,9 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
     final double baseRate = widget.item.rate;
 
     /// ---------------- DISCOUNT INIT ----------------
-    final DiscountType discountType =
-        widget.item.discountType == 'A'
-            ? DiscountType.amount
-            : DiscountType.percentage;
+    final DiscountType discountType = widget.item.discountType == 'A'
+        ? DiscountType.amount
+        : DiscountType.percentage;
 
     final double discountValue = widget.item.discount ?? 0;
 
@@ -80,13 +79,8 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
       _initializedDiscountType = discountType;
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        provider.setInitialDiscount(
-          widget.itemId,
-          discountValue,
-          discountType,
-        );
-        _discountController.text =
-            _formatDiscount(discountValue, discountType);
+        provider.setInitialDiscount(widget.itemId, discountValue, discountType);
+        _discountController.text = _formatDiscount(discountValue, discountType);
       });
     }
 
@@ -94,8 +88,10 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
         provider.getDiscountType(widget.itemId) ?? discountType;
 
     /// ---------------- UNIT ----------------
-    final String selectedUnit =
-        provider.getSelectedUnit(widget.itemId, widget.item);
+    final String selectedUnit = provider.getSelectedUnit(
+      widget.itemId,
+      widget.item,
+    );
 
     /// ---------------- RATE (EXCLUSIVE) ----------------
     final double rate = provider.getConvertedRate(
@@ -147,8 +143,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                         child: Center(
                           child: Text(
                             qty.toStringAsFixed(0),
-                            style:
-                                context.textStyle.s10.w500.dustyBlue.roboto,
+                            style: context.textStyle.s10.w500.dustyBlue.roboto,
                           ),
                         ),
                       ),
@@ -157,19 +152,17 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                         children: [
                           QtyButton(
                             icon: Icons.remove,
-                            onTap: () => provider.decrementQty(
-                              widget.itemId,
-                              inclRate,
-                            ),
+                            onTap: () =>
+                                provider.decrementQty(widget.itemId, inclRate),
                           ),
                           h4,
                           QtyButton(
                             icon: Icons.add,
                             onTap: () => provider.incrementQty(
-    widget.itemId,
-    inclRate,
-    item: widget.item,   // ⭐ PASS PRODUCT
-  ),
+                              widget.itemId,
+                              inclRate,
+                              item: widget.item, // ⭐ PASS PRODUCT
+                            ),
                           ),
                         ],
                       ),
@@ -201,13 +194,12 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                     height: 35,
                     child: TextField(
                       controller: _discountController,
-                      keyboardType:
-                          const TextInputType.numberWithOptions(decimal: true),
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
                       textAlign: TextAlign.center,
-                      style:
-                          context.textStyle.s10.w500.dustyBlue.roboto,
-                      inputFormatters:
-                          _discountFormatters(currentDiscountType),
+                      style: context.textStyle.s10.w500.dustyBlue.roboto,
+                      inputFormatters: _discountFormatters(currentDiscountType),
                       onChanged: (value) {
                         provider.updateDiscount(
                           widget.itemId,
@@ -219,8 +211,8 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                         isDense: true,
                         suffixText:
                             currentDiscountType == DiscountType.percentage
-                                ? '%'
-                                : null,
+                            ? '%'
+                            : null,
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 4,
                           vertical: 6,
@@ -272,6 +264,13 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                             isCollapsed: true,
                             border: InputBorder.none,
                           ),
+                          onChanged: (value) {
+                            final freeQty = double.tryParse(value) ?? 0;
+
+                            context
+                                .read<CustomerTransactionProvider>()
+                                .updateFreeQty(widget.itemId, freeQty);
+                          },
                         ),
                       ),
                       w6,
@@ -287,24 +286,29 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                           child: DropdownButton<String>(
                             value: selectedUnit,
                             isDense: true,
-                            items: [
-                              widget.item.unitName,
-                              if (widget.item.altUnit.isNotEmpty &&
-                                  widget.item.altUnit !=
-                                      widget.item.unitName)
-                                widget.item.altUnit,
-                            ]
-                                .map(
-                                  (u) => DropdownMenuItem(
-                                    value: u,
-                                    child: Text(
-                                      u,
-                                      style: context.textStyle.s10.w300
-                                          .dustyBlue.roboto,
-                                    ),
-                                  ),
-                                )
-                                .toList(),
+                            items:
+                                [
+                                      widget.item.unitName,
+                                      if (widget.item.altUnit.isNotEmpty &&
+                                          widget.item.altUnit !=
+                                              widget.item.unitName)
+                                        widget.item.altUnit,
+                                    ]
+                                    .map(
+                                      (u) => DropdownMenuItem(
+                                        value: u,
+                                        child: Text(
+                                          u,
+                                          style: context
+                                              .textStyle
+                                              .s10
+                                              .w300
+                                              .dustyBlue
+                                              .roboto,
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
                             onChanged: (value) {
                               if (value != null) {
                                 provider.setUnit(
@@ -332,14 +336,12 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                 children: [
                   Text(
                     appLocalization.order_detail_widget_total,
-                    style:
-                        context.textStyle.s10.w400.indigoBlue.roboto,
+                    style: context.textStyle.s10.w400.indigoBlue.roboto,
                   ),
                   w8,
                   Text(
                     total.toStringAsFixed(2),
-                    style:
-                        context.textStyle.s14.bold.dustyBlue.roboto,
+                    style: context.textStyle.s14.bold.dustyBlue.roboto,
                   ),
                 ],
               ),
@@ -362,7 +364,6 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
     );
   }
 }
-
 
 class QtyButton extends StatelessWidget {
   final IconData icon;

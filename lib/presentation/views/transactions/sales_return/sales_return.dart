@@ -20,6 +20,30 @@ class SalesReturnScreen extends StatefulWidget {
 class _SalesReturnScreenState extends State<SalesReturnScreen> {
   final TextEditingController remarkController = TextEditingController();
 
+  String? voucherNo;
+  Future<void> generateVoucher() async {
+    final db = context.read<AppDb>();
+
+    final vNo = await VoucherGenerator.generate(
+      db: db,
+      voucher: widget.data.vchTyp,
+      companyId: widget.data.data.company.id!,
+    );
+
+    if (mounted) {
+      setState(() {
+        voucherNo = vNo;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    generateVoucher();
+  }
+
   @override
   Widget build(BuildContext context) {
     final appLocalizations = context.l10n;
@@ -80,7 +104,7 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
                             extra: TransactionOrderBookingRouteArgs(
                               data: widget.data.data,
                               party: widget.data.party,
-                              vchTyp: widget.data.vchTyp
+                              vchTyp: widget.data.vchTyp,
                             ),
                           );
                         },
@@ -168,23 +192,20 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
             ),
           ),
           Consumer<CustomerTransactionProvider>(
-  builder: (context, provider, _) {
-    final items = provider.selectedOrderItems;
+            builder: (context, provider, _) {
+              final items = provider.selectedOrderItems;
 
-    if (items.isEmpty) {
-      return const SliverToBoxAdapter(child: SizedBox());
-    }
+              if (items.isEmpty) {
+                return const SliverToBoxAdapter(child: SizedBox());
+              }
 
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (context, index) {
-          return OrderItemTile(data: items[index]);
-        },
-        childCount: items.length,
-      ),
-    );
-  },
-),
+              return SliverList(
+                delegate: SliverChildBuilderDelegate((context, index) {
+                  return OrderItemTile(data: items[index]);
+                }, childCount: items.length),
+              );
+            },
+          ),
 
           SliverToBoxAdapter(
             child: SizedBox(height: context.getSize.height * 0.4),
@@ -332,6 +353,7 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
                                         .selectedPriceLevel
                                         ?.id ??
                                     0,
+                                voucherNo: voucherNo ?? "",
                                 remark: remarkController.text,
                               );
                               txn.clearSelectedItems();
@@ -374,6 +396,7 @@ Future<void> saveSaleReturn({
   required int ledgerId,
   required int priceLevelId,
   required String remark,
+  required String voucherNo,
 }) async {
   if (txn.selectedItemCount == 0) {
     print("No items selected for return");
@@ -395,6 +418,7 @@ Future<void> saveSaleReturn({
             narration: Value(remark.isEmpty ? null : remark),
             itemCount: Value(txn.selectedItemCount),
             sync: const Value(0),
+            voucherNo: Value(voucherNo),
           ),
         );
 
@@ -426,6 +450,11 @@ Future<void> saveSaleReturn({
             ),
           );
     }
+    double ledgerAmount = 0;
+
+    for (final item in txn.selectedOrderItems) {
+      ledgerAmount += item.amount;
+    }
 
     /// 3️⃣ INSERT LEDGER
     await db
@@ -437,6 +466,7 @@ Future<void> saveSaleReturn({
             amount: Value(txn.grandTotal),
             companyId: Value(companyId),
             sync: const Value(0),
+            rate: Value(ledgerAmount),
           ),
         );
   });

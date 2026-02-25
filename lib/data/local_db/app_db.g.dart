@@ -16103,22 +16103,22 @@ class $SaleOrderMasterTableTable extends SaleOrderMasterTable
     'createdTime',
   );
   @override
-  late final GeneratedColumn<String> createdTime = GeneratedColumn<String>(
+  late final GeneratedColumn<DateTime> createdTime = GeneratedColumn<DateTime>(
     'created_time',
     aliasedName,
     true,
-    type: DriftSqlType.string,
+    type: DriftSqlType.dateTime,
     requiredDuringInsert: false,
   );
   static const VerificationMeta _updatedTimeMeta = const VerificationMeta(
     'updatedTime',
   );
   @override
-  late final GeneratedColumn<String> updatedTime = GeneratedColumn<String>(
+  late final GeneratedColumn<DateTime> updatedTime = GeneratedColumn<DateTime>(
     'updated_time',
     aliasedName,
     true,
-    type: DriftSqlType.string,
+    type: DriftSqlType.dateTime,
     requiredDuringInsert: false,
   );
   static const VerificationMeta _deliveryDateMeta = const VerificationMeta(
@@ -16708,11 +16708,11 @@ class $SaleOrderMasterTableTable extends SaleOrderMasterTable
         data['${effectivePrefix}fin_id'],
       ),
       createdTime: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
+        DriftSqlType.dateTime,
         data['${effectivePrefix}created_time'],
       ),
       updatedTime: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
+        DriftSqlType.dateTime,
         data['${effectivePrefix}updated_time'],
       ),
       deliveryDate: attachedDatabase.typeMapping.read(
@@ -16786,8 +16786,8 @@ class SaleOrderMasterTableData extends DataClass
   final int? visitId;
   final int? stockStatus;
   final int? finId;
-  final String? createdTime;
-  final String? updatedTime;
+  final DateTime? createdTime;
+  final DateTime? updatedTime;
   final String? deliveryDate;
   final int? printCount;
   final int sync;
@@ -16946,10 +16946,10 @@ class SaleOrderMasterTableData extends DataClass
       map['fin_id'] = Variable<int>(finId);
     }
     if (!nullToAbsent || createdTime != null) {
-      map['created_time'] = Variable<String>(createdTime);
+      map['created_time'] = Variable<DateTime>(createdTime);
     }
     if (!nullToAbsent || updatedTime != null) {
-      map['updated_time'] = Variable<String>(updatedTime);
+      map['updated_time'] = Variable<DateTime>(updatedTime);
     }
     if (!nullToAbsent || deliveryDate != null) {
       map['delivery_date'] = Variable<String>(deliveryDate);
@@ -17139,8 +17139,8 @@ class SaleOrderMasterTableData extends DataClass
       visitId: serializer.fromJson<int?>(json['visitId']),
       stockStatus: serializer.fromJson<int?>(json['stockStatus']),
       finId: serializer.fromJson<int?>(json['finId']),
-      createdTime: serializer.fromJson<String?>(json['createdTime']),
-      updatedTime: serializer.fromJson<String?>(json['updatedTime']),
+      createdTime: serializer.fromJson<DateTime?>(json['createdTime']),
+      updatedTime: serializer.fromJson<DateTime?>(json['updatedTime']),
       deliveryDate: serializer.fromJson<String?>(json['deliveryDate']),
       printCount: serializer.fromJson<int?>(json['printCount']),
       sync: serializer.fromJson<int>(json['sync']),
@@ -17189,8 +17189,8 @@ class SaleOrderMasterTableData extends DataClass
       'visitId': serializer.toJson<int?>(visitId),
       'stockStatus': serializer.toJson<int?>(stockStatus),
       'finId': serializer.toJson<int?>(finId),
-      'createdTime': serializer.toJson<String?>(createdTime),
-      'updatedTime': serializer.toJson<String?>(updatedTime),
+      'createdTime': serializer.toJson<DateTime?>(createdTime),
+      'updatedTime': serializer.toJson<DateTime?>(updatedTime),
       'deliveryDate': serializer.toJson<String?>(deliveryDate),
       'printCount': serializer.toJson<int?>(printCount),
       'sync': serializer.toJson<int>(sync),
@@ -17237,8 +17237,8 @@ class SaleOrderMasterTableData extends DataClass
     Value<int?> visitId = const Value.absent(),
     Value<int?> stockStatus = const Value.absent(),
     Value<int?> finId = const Value.absent(),
-    Value<String?> createdTime = const Value.absent(),
-    Value<String?> updatedTime = const Value.absent(),
+    Value<DateTime?> createdTime = const Value.absent(),
+    Value<DateTime?> updatedTime = const Value.absent(),
     Value<String?> deliveryDate = const Value.absent(),
     Value<int?> printCount = const Value.absent(),
     int? sync,
@@ -17562,8 +17562,8 @@ class SaleOrderMasterTableCompanion
   final Value<int?> visitId;
   final Value<int?> stockStatus;
   final Value<int?> finId;
-  final Value<String?> createdTime;
-  final Value<String?> updatedTime;
+  final Value<DateTime?> createdTime;
+  final Value<DateTime?> updatedTime;
   final Value<String?> deliveryDate;
   final Value<int?> printCount;
   final Value<int> sync;
@@ -17699,8 +17699,8 @@ class SaleOrderMasterTableCompanion
     Expression<int>? visitId,
     Expression<int>? stockStatus,
     Expression<int>? finId,
-    Expression<String>? createdTime,
-    Expression<String>? updatedTime,
+    Expression<DateTime>? createdTime,
+    Expression<DateTime>? updatedTime,
     Expression<String>? deliveryDate,
     Expression<int>? printCount,
     Expression<int>? sync,
@@ -17793,8 +17793,8 @@ class SaleOrderMasterTableCompanion
     Value<int?>? visitId,
     Value<int?>? stockStatus,
     Value<int?>? finId,
-    Value<String?>? createdTime,
-    Value<String?>? updatedTime,
+    Value<DateTime?>? createdTime,
+    Value<DateTime?>? updatedTime,
     Value<String?>? deliveryDate,
     Value<int?>? printCount,
     Value<int>? sync,
@@ -17962,10 +17962,10 @@ class SaleOrderMasterTableCompanion
       map['fin_id'] = Variable<int>(finId.value);
     }
     if (createdTime.present) {
-      map['created_time'] = Variable<String>(createdTime.value);
+      map['created_time'] = Variable<DateTime>(createdTime.value);
     }
     if (updatedTime.present) {
-      map['updated_time'] = Variable<String>(updatedTime.value);
+      map['updated_time'] = Variable<DateTime>(updatedTime.value);
     }
     if (deliveryDate.present) {
       map['delivery_date'] = Variable<String>(deliveryDate.value);
@@ -18072,11 +18072,11 @@ class $SaleMasterTableTable extends SaleMasterTable
     'voucherNo',
   );
   @override
-  late final GeneratedColumn<int> voucherNo = GeneratedColumn<int>(
+  late final GeneratedColumn<String> voucherNo = GeneratedColumn<String>(
     'voucher_no',
     aliasedName,
     true,
-    type: DriftSqlType.int,
+    type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
   static const VerificationMeta _partyIdMeta = const VerificationMeta(
@@ -18962,7 +18962,7 @@ class $SaleMasterTableTable extends SaleMasterTable
         data['${effectivePrefix}vch_id'],
       ),
       voucherNo: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
+        DriftSqlType.string,
         data['${effectivePrefix}voucher_no'],
       ),
       partyId: attachedDatabase.typeMapping.read(
@@ -19158,7 +19158,7 @@ class SaleMasterTableData extends DataClass
     implements Insertable<SaleMasterTableData> {
   final int id;
   final int? vchId;
-  final int? voucherNo;
+  final String? voucherNo;
   final int? partyId;
   final String? party;
   final String? address;
@@ -19262,7 +19262,7 @@ class SaleMasterTableData extends DataClass
       map['vch_id'] = Variable<int>(vchId);
     }
     if (!nullToAbsent || voucherNo != null) {
-      map['voucher_no'] = Variable<int>(voucherNo);
+      map['voucher_no'] = Variable<String>(voucherNo);
     }
     if (!nullToAbsent || partyId != null) {
       map['party_id'] = Variable<int>(partyId);
@@ -19543,7 +19543,7 @@ class SaleMasterTableData extends DataClass
     return SaleMasterTableData(
       id: serializer.fromJson<int>(json['id']),
       vchId: serializer.fromJson<int?>(json['vchId']),
-      voucherNo: serializer.fromJson<int?>(json['voucherNo']),
+      voucherNo: serializer.fromJson<String?>(json['voucherNo']),
       partyId: serializer.fromJson<int?>(json['partyId']),
       party: serializer.fromJson<String?>(json['party']),
       address: serializer.fromJson<String?>(json['address']),
@@ -19599,7 +19599,7 @@ class SaleMasterTableData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'vchId': serializer.toJson<int?>(vchId),
-      'voucherNo': serializer.toJson<int?>(voucherNo),
+      'voucherNo': serializer.toJson<String?>(voucherNo),
       'partyId': serializer.toJson<int?>(partyId),
       'party': serializer.toJson<String?>(party),
       'address': serializer.toJson<String?>(address),
@@ -19653,7 +19653,7 @@ class SaleMasterTableData extends DataClass
   SaleMasterTableData copyWith({
     int? id,
     Value<int?> vchId = const Value.absent(),
-    Value<int?> voucherNo = const Value.absent(),
+    Value<String?> voucherNo = const Value.absent(),
     Value<int?> partyId = const Value.absent(),
     Value<String?> party = const Value.absent(),
     Value<String?> address = const Value.absent(),
@@ -20009,7 +20009,7 @@ class SaleMasterTableData extends DataClass
 class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
   final Value<int> id;
   final Value<int?> vchId;
-  final Value<int?> voucherNo;
+  final Value<String?> voucherNo;
   final Value<int?> partyId;
   final Value<String?> party;
   final Value<String?> address;
@@ -20158,7 +20158,7 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
   static Insertable<SaleMasterTableData> custom({
     Expression<int>? id,
     Expression<int>? vchId,
-    Expression<int>? voucherNo,
+    Expression<String>? voucherNo,
     Expression<int>? partyId,
     Expression<String>? party,
     Expression<String>? address,
@@ -20261,7 +20261,7 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
   SaleMasterTableCompanion copyWith({
     Value<int>? id,
     Value<int?>? vchId,
-    Value<int?>? voucherNo,
+    Value<String?>? voucherNo,
     Value<int?>? partyId,
     Value<String?>? party,
     Value<String?>? address,
@@ -20371,7 +20371,7 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
       map['vch_id'] = Variable<int>(vchId.value);
     }
     if (voucherNo.present) {
-      map['voucher_no'] = Variable<int>(voucherNo.value);
+      map['voucher_no'] = Variable<String>(voucherNo.value);
     }
     if (partyId.present) {
       map['party_id'] = Variable<int>(partyId.value);
@@ -23618,11 +23618,11 @@ class $SaleReturnMasterTableTable extends SaleReturnMasterTable
     'voucherNo',
   );
   @override
-  late final GeneratedColumn<int> voucherNo = GeneratedColumn<int>(
+  late final GeneratedColumn<String> voucherNo = GeneratedColumn<String>(
     'voucher_no',
     aliasedName,
     true,
-    type: DriftSqlType.int,
+    type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
   static const VerificationMeta _partyIdMeta = const VerificationMeta(
@@ -24410,7 +24410,7 @@ class $SaleReturnMasterTableTable extends SaleReturnMasterTable
         data['${effectivePrefix}vch_id'],
       ),
       voucherNo: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
+        DriftSqlType.string,
         data['${effectivePrefix}voucher_no'],
       ),
       partyId: attachedDatabase.typeMapping.read(
@@ -24586,7 +24586,7 @@ class SaleReturnMasterTableData extends DataClass
     implements Insertable<SaleReturnMasterTableData> {
   final int id;
   final int? vchId;
-  final int? voucherNo;
+  final String? voucherNo;
   final int? partyId;
   final String? party;
   final String? address;
@@ -24680,7 +24680,7 @@ class SaleReturnMasterTableData extends DataClass
       map['vch_id'] = Variable<int>(vchId);
     }
     if (!nullToAbsent || voucherNo != null) {
-      map['voucher_no'] = Variable<int>(voucherNo);
+      map['voucher_no'] = Variable<String>(voucherNo);
     }
     if (!nullToAbsent || partyId != null) {
       map['party_id'] = Variable<int>(partyId);
@@ -24935,7 +24935,7 @@ class SaleReturnMasterTableData extends DataClass
     return SaleReturnMasterTableData(
       id: serializer.fromJson<int>(json['id']),
       vchId: serializer.fromJson<int?>(json['vchId']),
-      voucherNo: serializer.fromJson<int?>(json['voucherNo']),
+      voucherNo: serializer.fromJson<String?>(json['voucherNo']),
       partyId: serializer.fromJson<int?>(json['partyId']),
       party: serializer.fromJson<String?>(json['party']),
       address: serializer.fromJson<String?>(json['address']),
@@ -24984,7 +24984,7 @@ class SaleReturnMasterTableData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'vchId': serializer.toJson<int?>(vchId),
-      'voucherNo': serializer.toJson<int?>(voucherNo),
+      'voucherNo': serializer.toJson<String?>(voucherNo),
       'partyId': serializer.toJson<int?>(partyId),
       'party': serializer.toJson<String?>(party),
       'address': serializer.toJson<String?>(address),
@@ -25031,7 +25031,7 @@ class SaleReturnMasterTableData extends DataClass
   SaleReturnMasterTableData copyWith({
     int? id,
     Value<int?> vchId = const Value.absent(),
-    Value<int?> voucherNo = const Value.absent(),
+    Value<String?> voucherNo = const Value.absent(),
     Value<int?> partyId = const Value.absent(),
     Value<String?> party = const Value.absent(),
     Value<String?> address = const Value.absent(),
@@ -25348,7 +25348,7 @@ class SaleReturnMasterTableCompanion
     extends UpdateCompanion<SaleReturnMasterTableData> {
   final Value<int> id;
   final Value<int?> vchId;
-  final Value<int?> voucherNo;
+  final Value<String?> voucherNo;
   final Value<int?> partyId;
   final Value<String?> party;
   final Value<String?> address;
@@ -25482,7 +25482,7 @@ class SaleReturnMasterTableCompanion
   static Insertable<SaleReturnMasterTableData> custom({
     Expression<int>? id,
     Expression<int>? vchId,
-    Expression<int>? voucherNo,
+    Expression<String>? voucherNo,
     Expression<int>? partyId,
     Expression<String>? party,
     Expression<String>? address,
@@ -25574,7 +25574,7 @@ class SaleReturnMasterTableCompanion
   SaleReturnMasterTableCompanion copyWith({
     Value<int>? id,
     Value<int?>? vchId,
-    Value<int?>? voucherNo,
+    Value<String?>? voucherNo,
     Value<int?>? partyId,
     Value<String?>? party,
     Value<String?>? address,
@@ -25673,7 +25673,7 @@ class SaleReturnMasterTableCompanion
       map['vch_id'] = Variable<int>(vchId.value);
     }
     if (voucherNo.present) {
-      map['voucher_no'] = Variable<int>(voucherNo.value);
+      map['voucher_no'] = Variable<String>(voucherNo.value);
     }
     if (partyId.present) {
       map['party_id'] = Variable<int>(partyId.value);
@@ -37204,8 +37204,8 @@ typedef $$SaleOrderMasterTableTableCreateCompanionBuilder =
       Value<int?> visitId,
       Value<int?> stockStatus,
       Value<int?> finId,
-      Value<String?> createdTime,
-      Value<String?> updatedTime,
+      Value<DateTime?> createdTime,
+      Value<DateTime?> updatedTime,
       Value<String?> deliveryDate,
       Value<int?> printCount,
       Value<int> sync,
@@ -37251,8 +37251,8 @@ typedef $$SaleOrderMasterTableTableUpdateCompanionBuilder =
       Value<int?> visitId,
       Value<int?> stockStatus,
       Value<int?> finId,
-      Value<String?> createdTime,
-      Value<String?> updatedTime,
+      Value<DateTime?> createdTime,
+      Value<DateTime?> updatedTime,
       Value<String?> deliveryDate,
       Value<int?> printCount,
       Value<int> sync,
@@ -37450,12 +37450,12 @@ class $$SaleOrderMasterTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get createdTime => $composableBuilder(
+  ColumnFilters<DateTime> get createdTime => $composableBuilder(
     column: $table.createdTime,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get updatedTime => $composableBuilder(
+  ColumnFilters<DateTime> get updatedTime => $composableBuilder(
     column: $table.updatedTime,
     builder: (column) => ColumnFilters(column),
   );
@@ -37680,12 +37680,12 @@ class $$SaleOrderMasterTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get createdTime => $composableBuilder(
+  ColumnOrderings<DateTime> get createdTime => $composableBuilder(
     column: $table.createdTime,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get updatedTime => $composableBuilder(
+  ColumnOrderings<DateTime> get updatedTime => $composableBuilder(
     column: $table.updatedTime,
     builder: (column) => ColumnOrderings(column),
   );
@@ -37854,12 +37854,12 @@ class $$SaleOrderMasterTableTableAnnotationComposer
   GeneratedColumn<int> get finId =>
       $composableBuilder(column: $table.finId, builder: (column) => column);
 
-  GeneratedColumn<String> get createdTime => $composableBuilder(
+  GeneratedColumn<DateTime> get createdTime => $composableBuilder(
     column: $table.createdTime,
     builder: (column) => column,
   );
 
-  GeneratedColumn<String> get updatedTime => $composableBuilder(
+  GeneratedColumn<DateTime> get updatedTime => $composableBuilder(
     column: $table.updatedTime,
     builder: (column) => column,
   );
@@ -37970,8 +37970,8 @@ class $$SaleOrderMasterTableTableTableManager
                 Value<int?> visitId = const Value.absent(),
                 Value<int?> stockStatus = const Value.absent(),
                 Value<int?> finId = const Value.absent(),
-                Value<String?> createdTime = const Value.absent(),
-                Value<String?> updatedTime = const Value.absent(),
+                Value<DateTime?> createdTime = const Value.absent(),
+                Value<DateTime?> updatedTime = const Value.absent(),
                 Value<String?> deliveryDate = const Value.absent(),
                 Value<int?> printCount = const Value.absent(),
                 Value<int> sync = const Value.absent(),
@@ -38062,8 +38062,8 @@ class $$SaleOrderMasterTableTableTableManager
                 Value<int?> visitId = const Value.absent(),
                 Value<int?> stockStatus = const Value.absent(),
                 Value<int?> finId = const Value.absent(),
-                Value<String?> createdTime = const Value.absent(),
-                Value<String?> updatedTime = const Value.absent(),
+                Value<DateTime?> createdTime = const Value.absent(),
+                Value<DateTime?> updatedTime = const Value.absent(),
                 Value<String?> deliveryDate = const Value.absent(),
                 Value<int?> printCount = const Value.absent(),
                 Value<int> sync = const Value.absent(),
@@ -38149,7 +38149,7 @@ typedef $$SaleMasterTableTableCreateCompanionBuilder =
     SaleMasterTableCompanion Function({
       Value<int> id,
       Value<int?> vchId,
-      Value<int?> voucherNo,
+      Value<String?> voucherNo,
       Value<int?> partyId,
       Value<String?> party,
       Value<String?> address,
@@ -38200,7 +38200,7 @@ typedef $$SaleMasterTableTableUpdateCompanionBuilder =
     SaleMasterTableCompanion Function({
       Value<int> id,
       Value<int?> vchId,
-      Value<int?> voucherNo,
+      Value<String?> voucherNo,
       Value<int?> partyId,
       Value<String?> party,
       Value<String?> address,
@@ -38267,7 +38267,7 @@ class $$SaleMasterTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get voucherNo => $composableBuilder(
+  ColumnFilters<String> get voucherNo => $composableBuilder(
     column: $table.voucherNo,
     builder: (column) => ColumnFilters(column),
   );
@@ -38517,7 +38517,7 @@ class $$SaleMasterTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get voucherNo => $composableBuilder(
+  ColumnOrderings<String> get voucherNo => $composableBuilder(
     column: $table.voucherNo,
     builder: (column) => ColumnOrderings(column),
   );
@@ -38763,7 +38763,7 @@ class $$SaleMasterTableTableAnnotationComposer
   GeneratedColumn<int> get vchId =>
       $composableBuilder(column: $table.vchId, builder: (column) => column);
 
-  GeneratedColumn<int> get voucherNo =>
+  GeneratedColumn<String> get voucherNo =>
       $composableBuilder(column: $table.voucherNo, builder: (column) => column);
 
   GeneratedColumn<int> get partyId =>
@@ -38969,7 +38969,7 @@ class $$SaleMasterTableTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<int?> vchId = const Value.absent(),
-                Value<int?> voucherNo = const Value.absent(),
+                Value<String?> voucherNo = const Value.absent(),
                 Value<int?> partyId = const Value.absent(),
                 Value<String?> party = const Value.absent(),
                 Value<String?> address = const Value.absent(),
@@ -39069,7 +39069,7 @@ class $$SaleMasterTableTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<int?> vchId = const Value.absent(),
-                Value<int?> voucherNo = const Value.absent(),
+                Value<String?> voucherNo = const Value.absent(),
                 Value<int?> partyId = const Value.absent(),
                 Value<String?> party = const Value.absent(),
                 Value<String?> address = const Value.absent(),
@@ -40597,7 +40597,7 @@ typedef $$SaleReturnMasterTableTableCreateCompanionBuilder =
     SaleReturnMasterTableCompanion Function({
       Value<int> id,
       Value<int?> vchId,
-      Value<int?> voucherNo,
+      Value<String?> voucherNo,
       Value<int?> partyId,
       Value<String?> party,
       Value<String?> address,
@@ -40643,7 +40643,7 @@ typedef $$SaleReturnMasterTableTableUpdateCompanionBuilder =
     SaleReturnMasterTableCompanion Function({
       Value<int> id,
       Value<int?> vchId,
-      Value<int?> voucherNo,
+      Value<String?> voucherNo,
       Value<int?> partyId,
       Value<String?> party,
       Value<String?> address,
@@ -40705,7 +40705,7 @@ class $$SaleReturnMasterTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get voucherNo => $composableBuilder(
+  ColumnFilters<String> get voucherNo => $composableBuilder(
     column: $table.voucherNo,
     builder: (column) => ColumnFilters(column),
   );
@@ -40930,7 +40930,7 @@ class $$SaleReturnMasterTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get voucherNo => $composableBuilder(
+  ColumnOrderings<String> get voucherNo => $composableBuilder(
     column: $table.voucherNo,
     builder: (column) => ColumnOrderings(column),
   );
@@ -41151,7 +41151,7 @@ class $$SaleReturnMasterTableTableAnnotationComposer
   GeneratedColumn<int> get vchId =>
       $composableBuilder(column: $table.vchId, builder: (column) => column);
 
-  GeneratedColumn<int> get voucherNo =>
+  GeneratedColumn<String> get voucherNo =>
       $composableBuilder(column: $table.voucherNo, builder: (column) => column);
 
   GeneratedColumn<int> get partyId =>
@@ -41349,7 +41349,7 @@ class $$SaleReturnMasterTableTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<int?> vchId = const Value.absent(),
-                Value<int?> voucherNo = const Value.absent(),
+                Value<String?> voucherNo = const Value.absent(),
                 Value<int?> partyId = const Value.absent(),
                 Value<String?> party = const Value.absent(),
                 Value<String?> address = const Value.absent(),
@@ -41439,7 +41439,7 @@ class $$SaleReturnMasterTableTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<int?> vchId = const Value.absent(),
-                Value<int?> voucherNo = const Value.absent(),
+                Value<String?> voucherNo = const Value.absent(),
                 Value<int?> partyId = const Value.absent(),
                 Value<String?> party = const Value.absent(),
                 Value<String?> address = const Value.absent(),
