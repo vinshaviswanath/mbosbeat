@@ -948,16 +948,17 @@ Future<void> saveSaleOrder({
             voucherDate: Value(DateFormat('yyyy-MM-dd').format(DateTime.now())),
             narration: Value(remark.isEmpty ? null : remark),
 
-            mob: mobileNumber != null
-                ? Value(mobileNumber)
-                : const Value.absent(),
+            mob: Value(mobileNumber)
           ),
         );
 
     print("Inserted Master ID: $masterId");
 
     //  INSERT DETAILS
-    for (final item in txn.selectedOrderItems)
+    for (final item in txn.selectedOrderItems) {
+      final gross = item.rate * item.qty;
+      final discountValue = gross * (item.discount / 100);
+
       await db
           .into(db.saleOrderDetailsTable)
           .insert(
@@ -976,8 +977,10 @@ Future<void> saveSaleOrder({
               fUnit: Value(item.item.unitName),
               itemName: Value(item.item.itemName),
               rate: Value(item.amount),
+              discVal: Value(discountValue),
             ),
           );
+    }
     double ledgerAmount = 0;
 
     for (final item in txn.selectedOrderItems) {

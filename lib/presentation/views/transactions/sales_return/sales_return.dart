@@ -239,7 +239,7 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
                         ),
                         w60,
                         Text(
-                          txn.subTotal.toStringAsFixed(2),
+                          txn.billSubTotal.toStringAsFixed(2),
                           style: context.textStyle.s12.w500.indigoBlue.roboto,
                         ),
                       ],
@@ -355,6 +355,15 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
                                     0,
                                 voucherNo: voucherNo ?? "",
                                 remark: remarkController.text,
+                                mobileNumber: widget.data.party.mobile ?? '',
+                                address2: widget.data.party.address2 ?? '',
+                                address: widget.data.party.address1 ?? '',
+                                pinCode: widget.data.party.pinCode ?? '',
+                                email: widget.data.party.email ?? '',
+                                lattitude: widget.data.party.latitude ?? 0.0,
+                                longitude: widget.data.party.longitude ?? 0.0,
+                                mailingName:
+                                    widget.data.party.mailingName ?? '',
                               );
                               txn.clearSelectedItems();
                               remarkController.clear();
@@ -397,6 +406,15 @@ Future<void> saveSaleReturn({
   required int priceLevelId,
   required String remark,
   required String voucherNo,
+    required String? mobileNumber,
+  required String address2,
+  required String address,
+  required String pinCode,
+  required String email,
+  required double lattitude,
+  required double longitude,
+  required String mailingName,
+
 }) async {
   if (txn.selectedItemCount == 0) {
     print("No items selected for return");
@@ -419,6 +437,15 @@ Future<void> saveSaleReturn({
             itemCount: Value(txn.selectedItemCount),
             sync: const Value(0),
             voucherNo: Value(voucherNo),
+               address2: Value(address2),
+            address: Value(address),
+            createdTime: Value(DateTime.now()),
+
+            pinCode: Value(pinCode),
+
+            lattitude: Value(lattitude),
+            longitude: Value(longitude),
+            mailingName: Value(mailingName),
           ),
         );
 

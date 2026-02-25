@@ -416,7 +416,7 @@ class _SalesScreenState extends State<SalesScreen> {
                         ),
                         w60,
                         Text(
-                          txn.subTotal.toStringAsFixed(2),
+                          txn.billSubTotal.toStringAsFixed(2),
                           style: context.textStyle.s12.w500.indigoBlue.roboto,
                         ),
                       ],
@@ -598,6 +598,15 @@ class _SalesScreenState extends State<SalesScreen> {
                                 discountData: selectedDiscount,
                                 rate: txn.subTotal,
                                 voucherNo: voucherNo ?? "",
+                                mobileNumber: widget.data.party.mobile ?? '',
+                                address2: widget.data.party.address2 ?? '',
+                                address: widget.data.party.address1 ?? '',
+                                pinCode: widget.data.party.pinCode ?? '',
+                                email: widget.data.party.email ?? '',
+                                lattitude: widget.data.party.latitude ?? 0.0,
+                                longitude: widget.data.party.longitude ?? 0.0,
+                                mailingName:
+                                    widget.data.party.mailingName ?? '',
                               );
 
                               txn.clearSelectedItems();
@@ -646,6 +655,14 @@ Future<void> saveSale({
   DiscountData? discountData,
   final double rate = 0.0,
   required String voucherNo,
+  required String? mobileNumber,
+  required String address2,
+  required String address,
+  required String pinCode,
+  required String email,
+  required double lattitude,
+  required double longitude,
+  required String mailingName,
 }) async {
   if (txn.selectedItemCount == 0) {
     print("No items selected");
@@ -695,6 +712,13 @@ Future<void> saveSale({
             discountAmount: discountData != null
                 ? Value(discountData.amount)
                 : const Value.absent(),
+            address2: Value(address2),
+            address: Value(address),
+            pinCode: Value(pinCode),
+            lattitude: Value(lattitude),
+            longitude: Value(longitude),
+            mailingName: Value(mailingName),
+            mob: Value(mobileNumber),
           ),
         );
 

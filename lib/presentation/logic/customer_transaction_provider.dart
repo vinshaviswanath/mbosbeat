@@ -38,24 +38,22 @@ class CustomerTransactionProvider extends ChangeNotifier {
   final Map<int, double> _itemDiscount = {};
   final Map<int, DiscountType> _discountType = {};
   bool hasDiscount(int itemId) {
-  return _itemDiscount.containsKey(itemId);
-}
+    return _itemDiscount.containsKey(itemId);
+  }
 
   int? expandedItemId;
   int? selectedPriceLevelId;
 
   Map<int, double> _freeQty = {};
 
-bool hasFreeQty(int id) => _freeQty.containsKey(id);
+  bool hasFreeQty(int id) => _freeQty.containsKey(id);
 
-double getFreeQty(int id) => _freeQty[id] ?? 0;
+  double getFreeQty(int id) => _freeQty[id] ?? 0;
 
-void updateFreeQty(int id, double v) {
-  _freeQty[id] = v;
-  notifyListeners();
-}
-
-
+  void updateFreeQty(int id, double v) {
+    _freeQty[id] = v;
+    notifyListeners();
+  }
 
   // ===================== TAX =====================
   final double cgstRate = 9;
@@ -145,18 +143,18 @@ void updateFreeQty(int id, double v) {
   }
 
   void incrementFreeQty(int itemId) {
-  final current = _freeQty[itemId] ?? 0;
-  _freeQty[itemId] = current + 1;
-  notifyListeners();
-}
-
-void decrementFreeQty(int itemId) {
-  final current = _freeQty[itemId] ?? 0;
-  if (current > 0) {
-    _freeQty[itemId] = current - 1;
+    final current = _freeQty[itemId] ?? 0;
+    _freeQty[itemId] = current + 1;
     notifyListeners();
   }
-}
+
+  void decrementFreeQty(int itemId) {
+    final current = _freeQty[itemId] ?? 0;
+    if (current > 0) {
+      _freeQty[itemId] = current - 1;
+      notifyListeners();
+    }
+  }
 
   void resetQty(int itemId) {
     _itemQty.remove(itemId);
@@ -198,13 +196,13 @@ void decrementFreeQty(int itemId) {
   }
 
   String getSelectedFreeUnit(int itemId, Product item) {
-  return _selectedFreeUnit[itemId] ?? item.unitName;
-}
+    return _selectedFreeUnit[itemId] ?? item.unitName;
+  }
 
-void setFreeUnit(int itemId, String unit) {
-  _selectedFreeUnit[itemId] = unit;
-  notifyListeners();
-}
+  void setFreeUnit(int itemId, String unit) {
+    _selectedFreeUnit[itemId] = unit;
+    notifyListeners();
+  }
 
   // ===================== DISCOUNT =====================
   void setInitialDiscount(int itemId, double value, DiscountType type) {
@@ -354,11 +352,12 @@ void setFreeUnit(int itemId, String unit) {
 
     return list;
   }
-final Map<int, double> _itemFreeQty = {};
-void updateFreeQty(int itemId, double freeQty) {
-  _itemFreeQty[itemId] = freeQty;
-  notifyListeners();
-}
+
+  final Map<int, double> _itemFreeQty = {};
+  // void updateFreeQty(int itemId, double freeQty) {
+  //   _itemFreeQty[itemId] = freeQty;
+  //   notifyListeners();
+  // }
   List<SelectedOrderItem> get selectedOrderItems {
     final list = <SelectedOrderItem>[];
 
@@ -394,8 +393,8 @@ void updateFreeQty(int itemId, double freeQty) {
 
       final amount = qty * exclusiveRate;
       final inclRate = qty > 0 ? finalAmount / qty : 0;
-final freeQty = _itemFreeQty[itemId] ?? 0;
-      
+      final freeQty = _itemFreeQty[itemId] ?? 0;
+
       list.add(
         SelectedOrderItem(
           item: item,
@@ -404,7 +403,7 @@ final freeQty = _itemFreeQty[itemId] ?? 0;
           discount: discount,
           amount: amount,
           inclRate: inclRate.toDouble(),
-           freeQty: freeQty,
+          freeQty: freeQty,
         ),
       );
     }
@@ -481,9 +480,9 @@ final freeQty = _itemFreeQty[itemId] ?? 0;
     notifyListeners();
   }
 
-void setQty(int itemId, double qty, double inclRate, {Product? item}) {
-  updateQty(itemId, qty, inclRate, item: item);
-}
+  void setQty(int itemId, double qty, double inclRate, {Product? item}) {
+    updateQty(itemId, qty, inclRate, item: item);
+  }
 
   // ===================== SCREEN RESET =====================
   void resetAddItemScreenState() {
@@ -506,79 +505,79 @@ void setQty(int itemId, double qty, double inclRate, {Product? item}) {
     notifyListeners();
   }
 
-double get billSubTotal {
-  double total = 0;
+  double get billSubTotal {
+    double total = 0;
 
-  for (final itemId in _selectedItems) {
-    final item = _selectedItemObjects[itemId];
-    if (item == null) continue;
+    for (final itemId in _selectedItems) {
+      final item = _selectedItemObjects[itemId];
+      if (item == null) continue;
 
-    final qty = _itemQty[itemId] ?? 0;
+      final qty = _itemQty[itemId] ?? 0;
 
-    /// ⭝ exclusive rate from item master
-    total += item.rate * qty;
+      /// ⭝ exclusive rate from item master
+      total += item.rate * qty;
+    }
+
+    return total;
   }
-
-  return total;
-}
 
   // Total CGST (multi slab)
-double get totalCgst {
-  double cgst = 0;
+  double get totalCgst {
+    double cgst = 0;
 
-  for (final itemId in _selectedItems) {
-    final product = _selectedItemObjects[itemId];
-    if (product == null) continue;
+    for (final itemId in _selectedItems) {
+      final product = _selectedItemObjects[itemId];
+      if (product == null) continue;
 
-    final qty = _itemQty[itemId] ?? 0;
-    final discount = _itemDiscount[itemId] ?? 0;
-    final type = _discountType[itemId];
+      final qty = _itemQty[itemId] ?? 0;
+      final discount = _itemDiscount[itemId] ?? 0;
+      final type = _discountType[itemId];
 
-    /// ⭝ exclusive base
-    double base = product.rate * qty;
+      /// ⭝ exclusive base
+      double base = product.rate * qty;
 
-    /// ⭝ apply discount BEFORE tax
-    if (type == DiscountType.percentage) {
-      base -= base * discount / 100;
-    } else if (type == DiscountType.amount) {
-      base -= discount;
+      /// ⭝ apply discount BEFORE tax
+      if (type == DiscountType.percentage) {
+        base -= base * discount / 100;
+      } else if (type == DiscountType.amount) {
+        base -= discount;
+      }
+
+      final taxPercent = product.taxPercent ?? 0;
+
+      cgst += base * (taxPercent / 2) / 100;
     }
 
-    final taxPercent = product.taxPercent ?? 0;
-
-    cgst += base * (taxPercent / 2) / 100;
+    return cgst;
   }
-
-  return cgst;
-}
 
   // Total SGST
-double get totalSgst {
-  double sgst = 0;
+  double get totalSgst {
+    double sgst = 0;
 
-  for (final itemId in _selectedItems) {
-    final product = _selectedItemObjects[itemId];
-    if (product == null) continue;
+    for (final itemId in _selectedItems) {
+      final product = _selectedItemObjects[itemId];
+      if (product == null) continue;
 
-    final qty = _itemQty[itemId] ?? 0;
-    final discount = _itemDiscount[itemId] ?? 0;
-    final type = _discountType[itemId];
+      final qty = _itemQty[itemId] ?? 0;
+      final discount = _itemDiscount[itemId] ?? 0;
+      final type = _discountType[itemId];
 
-    double base = product.rate * qty;
+      double base = product.rate * qty;
 
-    if (type == DiscountType.percentage) {
-      base -= base * discount / 100;
-    } else if (type == DiscountType.amount) {
-      base -= discount;
+      if (type == DiscountType.percentage) {
+        base -= base * discount / 100;
+      } else if (type == DiscountType.amount) {
+        base -= discount;
+      }
+
+      final taxPercent = product.taxPercent ?? 0;
+
+      sgst += base * (taxPercent / 2) / 100;
     }
 
-    final taxPercent = product.taxPercent ?? 0;
-
-    sgst += base * (taxPercent / 2) / 100;
+    return sgst;
   }
-
-  return sgst;
-}
 
   // Total Cess
   double get totalCess {

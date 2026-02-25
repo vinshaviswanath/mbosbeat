@@ -54,9 +54,8 @@ class SaleReturnMasterTable extends Table {
 
   IntColumn get stockStatus => integer().nullable()();
   IntColumn get finId => integer().nullable()();
-
-  TextColumn get createdTime => text().nullable()();
-  TextColumn get updatedTime => text().nullable()();
+  DateTimeColumn get createdTime => dateTime().nullable()();
+  DateTimeColumn get updatedTime => dateTime().nullable()();
   TextColumn get deliveryDate => text().nullable()();
 
   IntColumn get printCount => integer().nullable()();

@@ -23955,22 +23955,22 @@ class $SaleReturnMasterTableTable extends SaleReturnMasterTable
     'createdTime',
   );
   @override
-  late final GeneratedColumn<String> createdTime = GeneratedColumn<String>(
+  late final GeneratedColumn<DateTime> createdTime = GeneratedColumn<DateTime>(
     'created_time',
     aliasedName,
     true,
-    type: DriftSqlType.string,
+    type: DriftSqlType.dateTime,
     requiredDuringInsert: false,
   );
   static const VerificationMeta _updatedTimeMeta = const VerificationMeta(
     'updatedTime',
   );
   @override
-  late final GeneratedColumn<String> updatedTime = GeneratedColumn<String>(
+  late final GeneratedColumn<DateTime> updatedTime = GeneratedColumn<DateTime>(
     'updated_time',
     aliasedName,
     true,
-    type: DriftSqlType.string,
+    type: DriftSqlType.dateTime,
     requiredDuringInsert: false,
   );
   static const VerificationMeta _deliveryDateMeta = const VerificationMeta(
@@ -24542,11 +24542,11 @@ class $SaleReturnMasterTableTable extends SaleReturnMasterTable
         data['${effectivePrefix}fin_id'],
       ),
       createdTime: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
+        DriftSqlType.dateTime,
         data['${effectivePrefix}created_time'],
       ),
       updatedTime: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
+        DriftSqlType.dateTime,
         data['${effectivePrefix}updated_time'],
       ),
       deliveryDate: attachedDatabase.typeMapping.read(
@@ -24619,8 +24619,8 @@ class SaleReturnMasterTableData extends DataClass
   final int? visitId;
   final int? stockStatus;
   final int? finId;
-  final String? createdTime;
-  final String? updatedTime;
+  final DateTime? createdTime;
+  final DateTime? updatedTime;
   final String? deliveryDate;
   final int? printCount;
   final int sync;
@@ -24777,10 +24777,10 @@ class SaleReturnMasterTableData extends DataClass
       map['fin_id'] = Variable<int>(finId);
     }
     if (!nullToAbsent || createdTime != null) {
-      map['created_time'] = Variable<String>(createdTime);
+      map['created_time'] = Variable<DateTime>(createdTime);
     }
     if (!nullToAbsent || updatedTime != null) {
-      map['updated_time'] = Variable<String>(updatedTime);
+      map['updated_time'] = Variable<DateTime>(updatedTime);
     }
     if (!nullToAbsent || deliveryDate != null) {
       map['delivery_date'] = Variable<String>(deliveryDate);
@@ -24968,8 +24968,8 @@ class SaleReturnMasterTableData extends DataClass
       visitId: serializer.fromJson<int?>(json['visitId']),
       stockStatus: serializer.fromJson<int?>(json['stockStatus']),
       finId: serializer.fromJson<int?>(json['finId']),
-      createdTime: serializer.fromJson<String?>(json['createdTime']),
-      updatedTime: serializer.fromJson<String?>(json['updatedTime']),
+      createdTime: serializer.fromJson<DateTime?>(json['createdTime']),
+      updatedTime: serializer.fromJson<DateTime?>(json['updatedTime']),
       deliveryDate: serializer.fromJson<String?>(json['deliveryDate']),
       printCount: serializer.fromJson<int?>(json['printCount']),
       sync: serializer.fromJson<int>(json['sync']),
@@ -25017,8 +25017,8 @@ class SaleReturnMasterTableData extends DataClass
       'visitId': serializer.toJson<int?>(visitId),
       'stockStatus': serializer.toJson<int?>(stockStatus),
       'finId': serializer.toJson<int?>(finId),
-      'createdTime': serializer.toJson<String?>(createdTime),
-      'updatedTime': serializer.toJson<String?>(updatedTime),
+      'createdTime': serializer.toJson<DateTime?>(createdTime),
+      'updatedTime': serializer.toJson<DateTime?>(updatedTime),
       'deliveryDate': serializer.toJson<String?>(deliveryDate),
       'printCount': serializer.toJson<int?>(printCount),
       'sync': serializer.toJson<int>(sync),
@@ -25064,8 +25064,8 @@ class SaleReturnMasterTableData extends DataClass
     Value<int?> visitId = const Value.absent(),
     Value<int?> stockStatus = const Value.absent(),
     Value<int?> finId = const Value.absent(),
-    Value<String?> createdTime = const Value.absent(),
-    Value<String?> updatedTime = const Value.absent(),
+    Value<DateTime?> createdTime = const Value.absent(),
+    Value<DateTime?> updatedTime = const Value.absent(),
     Value<String?> deliveryDate = const Value.absent(),
     Value<int?> printCount = const Value.absent(),
     int? sync,
@@ -25381,8 +25381,8 @@ class SaleReturnMasterTableCompanion
   final Value<int?> visitId;
   final Value<int?> stockStatus;
   final Value<int?> finId;
-  final Value<String?> createdTime;
-  final Value<String?> updatedTime;
+  final Value<DateTime?> createdTime;
+  final Value<DateTime?> updatedTime;
   final Value<String?> deliveryDate;
   final Value<int?> printCount;
   final Value<int> sync;
@@ -25515,8 +25515,8 @@ class SaleReturnMasterTableCompanion
     Expression<int>? visitId,
     Expression<int>? stockStatus,
     Expression<int>? finId,
-    Expression<String>? createdTime,
-    Expression<String>? updatedTime,
+    Expression<DateTime>? createdTime,
+    Expression<DateTime>? updatedTime,
     Expression<String>? deliveryDate,
     Expression<int>? printCount,
     Expression<int>? sync,
@@ -25607,8 +25607,8 @@ class SaleReturnMasterTableCompanion
     Value<int?>? visitId,
     Value<int?>? stockStatus,
     Value<int?>? finId,
-    Value<String?>? createdTime,
-    Value<String?>? updatedTime,
+    Value<DateTime?>? createdTime,
+    Value<DateTime?>? updatedTime,
     Value<String?>? deliveryDate,
     Value<int?>? printCount,
     Value<int>? sync,
@@ -25772,10 +25772,10 @@ class SaleReturnMasterTableCompanion
       map['fin_id'] = Variable<int>(finId.value);
     }
     if (createdTime.present) {
-      map['created_time'] = Variable<String>(createdTime.value);
+      map['created_time'] = Variable<DateTime>(createdTime.value);
     }
     if (updatedTime.present) {
-      map['updated_time'] = Variable<String>(updatedTime.value);
+      map['updated_time'] = Variable<DateTime>(updatedTime.value);
     }
     if (deliveryDate.present) {
       map['delivery_date'] = Variable<String>(deliveryDate.value);
@@ -40630,8 +40630,8 @@ typedef $$SaleReturnMasterTableTableCreateCompanionBuilder =
       Value<int?> visitId,
       Value<int?> stockStatus,
       Value<int?> finId,
-      Value<String?> createdTime,
-      Value<String?> updatedTime,
+      Value<DateTime?> createdTime,
+      Value<DateTime?> updatedTime,
       Value<String?> deliveryDate,
       Value<int?> printCount,
       Value<int> sync,
@@ -40676,8 +40676,8 @@ typedef $$SaleReturnMasterTableTableUpdateCompanionBuilder =
       Value<int?> visitId,
       Value<int?> stockStatus,
       Value<int?> finId,
-      Value<String?> createdTime,
-      Value<String?> updatedTime,
+      Value<DateTime?> createdTime,
+      Value<DateTime?> updatedTime,
       Value<String?> deliveryDate,
       Value<int?> printCount,
       Value<int> sync,
@@ -40870,12 +40870,12 @@ class $$SaleReturnMasterTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get createdTime => $composableBuilder(
+  ColumnFilters<DateTime> get createdTime => $composableBuilder(
     column: $table.createdTime,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get updatedTime => $composableBuilder(
+  ColumnFilters<DateTime> get updatedTime => $composableBuilder(
     column: $table.updatedTime,
     builder: (column) => ColumnFilters(column),
   );
@@ -41095,12 +41095,12 @@ class $$SaleReturnMasterTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get createdTime => $composableBuilder(
+  ColumnOrderings<DateTime> get createdTime => $composableBuilder(
     column: $table.createdTime,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get updatedTime => $composableBuilder(
+  ColumnOrderings<DateTime> get updatedTime => $composableBuilder(
     column: $table.updatedTime,
     builder: (column) => ColumnOrderings(column),
   );
@@ -41264,12 +41264,12 @@ class $$SaleReturnMasterTableTableAnnotationComposer
   GeneratedColumn<int> get finId =>
       $composableBuilder(column: $table.finId, builder: (column) => column);
 
-  GeneratedColumn<String> get createdTime => $composableBuilder(
+  GeneratedColumn<DateTime> get createdTime => $composableBuilder(
     column: $table.createdTime,
     builder: (column) => column,
   );
 
-  GeneratedColumn<String> get updatedTime => $composableBuilder(
+  GeneratedColumn<DateTime> get updatedTime => $composableBuilder(
     column: $table.updatedTime,
     builder: (column) => column,
   );
@@ -41382,8 +41382,8 @@ class $$SaleReturnMasterTableTableTableManager
                 Value<int?> visitId = const Value.absent(),
                 Value<int?> stockStatus = const Value.absent(),
                 Value<int?> finId = const Value.absent(),
-                Value<String?> createdTime = const Value.absent(),
-                Value<String?> updatedTime = const Value.absent(),
+                Value<DateTime?> createdTime = const Value.absent(),
+                Value<DateTime?> updatedTime = const Value.absent(),
                 Value<String?> deliveryDate = const Value.absent(),
                 Value<int?> printCount = const Value.absent(),
                 Value<int> sync = const Value.absent(),
@@ -41472,8 +41472,8 @@ class $$SaleReturnMasterTableTableTableManager
                 Value<int?> visitId = const Value.absent(),
                 Value<int?> stockStatus = const Value.absent(),
                 Value<int?> finId = const Value.absent(),
-                Value<String?> createdTime = const Value.absent(),
-                Value<String?> updatedTime = const Value.absent(),
+                Value<DateTime?> createdTime = const Value.absent(),
+                Value<DateTime?> updatedTime = const Value.absent(),
                 Value<String?> deliveryDate = const Value.absent(),
                 Value<int?> printCount = const Value.absent(),
                 Value<int> sync = const Value.absent(),
