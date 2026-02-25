@@ -141,10 +141,10 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
       widget.itemId,
       widget.item,
     );
-  final String selectedUnit = provider.getSelectedUnit(
-      widget.itemId,
-      widget.item,
-    );
+  // final String selectedUnit = provider.getSelectedUnit(
+  //     widget.itemId,
+  //     widget.item,
+  //   );
 
     /// ---------------- RATE (EXCLUSIVE) ----------------
     final double rate = provider.getConvertedRate(
@@ -269,8 +269,8 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                               size: context.getSize.height * 0.016,
                               color: ColorResources.dustyBlue,
                             ),
-                      qty.toStringAsFixed(0),
-                            style: context.textStyle.s10.w500.dustyBlue.roboto,
+                    //  qty.toStringAsFixed(0),
+                         //   style: context.textStyle.s10.w500.dustyBlue.roboto,
                     ),
                         ),
                       ),
@@ -403,13 +403,13 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                             isCollapsed: true,
                             border: InputBorder.none,
                           ),
-                          onChanged: (value) {
-                            final freeQty = double.tryParse(value) ?? 0;
+                          // onChanged: (value) {
+                          //   final freeQty = double.tryParse(value) ?? 0;
 
-                            context
-                                .read<CustomerTransactionProvider>()
-                                .updateFreeQty(widget.itemId, freeQty);
-                          },
+                          //   context
+                          //       .read<CustomerTransactionProvider>()
+                          //       .updateFreeQty(widget.itemId, freeQty);
+                          // },
                         ),
                       ),
                       w6,
