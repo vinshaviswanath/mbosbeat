@@ -354,7 +354,11 @@ void setFreeUnit(int itemId, String unit) {
 
     return list;
   }
-
+final Map<int, double> _itemFreeQty = {};
+void updateFreeQty(int itemId, double freeQty) {
+  _itemFreeQty[itemId] = freeQty;
+  notifyListeners();
+}
   List<SelectedOrderItem> get selectedOrderItems {
     final list = <SelectedOrderItem>[];
 
@@ -390,7 +394,8 @@ void setFreeUnit(int itemId, String unit) {
 
       final amount = qty * exclusiveRate;
       final inclRate = qty > 0 ? finalAmount / qty : 0;
-
+final freeQty = _itemFreeQty[itemId] ?? 0;
+      
       list.add(
         SelectedOrderItem(
           item: item,
@@ -399,6 +404,7 @@ void setFreeUnit(int itemId, String unit) {
           discount: discount,
           amount: amount,
           inclRate: inclRate.toDouble(),
+           freeQty: freeQty,
         ),
       );
     }

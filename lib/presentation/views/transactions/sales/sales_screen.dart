@@ -29,25 +29,43 @@ class _SalesScreenState extends State<SalesScreen> {
     return tax != null && tax.trim().isNotEmpty;
   }
 
-@override
-void initState() {
-  super.initState();
-  load();
-  _selectedMode = hasTaxNumber ? "B2B" : "B2C";
-}
-
-Future<void> load() async {
-  final party = await sl<PartyMasterSync>().fetchParty(
-    widget.data.data.company.id!,
-    widget.data.party.ledgerId,
-  );
-
-  if (!mounted) return;   // ⭐ IMPORTANT
-
-  if (party != null) {
-    context.read<UserProvider>().setParty(party);
+  String? voucherNo;
+  @override
+  void initState() {
+    super.initState();
+    load();
+    _selectedMode = hasTaxNumber ? "B2B" : "B2C";
+    generateVoucher();
   }
-}
+
+  Future<void> generateVoucher() async {
+    final db = context.read<AppDb>();
+
+    final vNo = await VoucherGenerator.generate(
+      db: db,
+      voucher: widget.data.vchTyp,
+      companyId: widget.data.data.company.id!,
+    );
+
+    if (mounted) {
+      setState(() {
+        voucherNo = vNo;
+      });
+    }
+  }
+
+  Future<void> load() async {
+    final party = await sl<PartyMasterSync>().fetchParty(
+      widget.data.data.company.id!,
+      widget.data.party.ledgerId,
+    );
+
+    if (!mounted) return; // ⭐ IMPORTANT
+
+    if (party != null) {
+      context.read<UserProvider>().setParty(party);
+    }
+  }
 
   final TextEditingController remarkController = TextEditingController();
   double couponAmount = 0.0;
@@ -155,7 +173,7 @@ Future<void> load() async {
                             extra: TransactionOrderBookingRouteArgs(
                               data: widget.data.data,
                               party: widget.data.party,
-                              vchTyp: widget.data.vchTyp
+                              vchTyp: widget.data.vchTyp,
                             ),
                           );
                         },
@@ -350,24 +368,21 @@ Future<void> load() async {
               ),
             ),
           ),
-Consumer<CustomerTransactionProvider>(
-  builder: (context, provider, _) {
-    final items = provider.selectedOrderItems;
+          Consumer<CustomerTransactionProvider>(
+            builder: (context, provider, _) {
+              final items = provider.selectedOrderItems;
 
-    if (items.isEmpty) {
-      return const SliverToBoxAdapter(child: SizedBox());
-    }
+              if (items.isEmpty) {
+                return const SliverToBoxAdapter(child: SizedBox());
+              }
 
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (context, index) {
-          return OrderItemTile(data: items[index]);
-        },
-        childCount: items.length,
-      ),
-    );
-  },
-),
+              return SliverList(
+                delegate: SliverChildBuilderDelegate((context, index) {
+                  return OrderItemTile(data: items[index]);
+                }, childCount: items.length),
+              );
+            },
+          ),
           SliverToBoxAdapter(
             child: SizedBox(height: context.getSize.height * 0.4),
           ),
@@ -582,6 +597,7 @@ Consumer<CustomerTransactionProvider>(
                                 couponAmount: couponAmount,
                                 discountData: selectedDiscount,
                                 rate: txn.subTotal,
+                                voucherNo: voucherNo ?? "",
                               );
 
                               txn.clearSelectedItems();
@@ -629,6 +645,7 @@ Future<void> saveSale({
   double couponAmount = 0.0,
   DiscountData? discountData,
   final double rate = 0.0,
+  required String voucherNo,
 }) async {
   if (txn.selectedItemCount == 0) {
     print("No items selected");
@@ -670,7 +687,7 @@ Future<void> saveSale({
             voucherDate: Value(DateFormat('yyyy-MM-dd').format(DateTime.now())),
             narration: Value(remark.isEmpty ? null : remark),
             coupontdiscountamount: Value(couponAmount),
-
+            voucherNo: Value(voucherNo),
             discountType: discountData != null
                 ? Value(discountData.type)
                 : const Value.absent(),
@@ -685,24 +702,25 @@ Future<void> saveSale({
 
     /// 2️⃣ INSERT DETAILS
 
-    for (final itemId in txn.selectedItemIds) {
-      final qty = txn.getQty(itemId);
-      final discount = txn.getDiscount(itemId);
-
+    for (final item in txn.selectedOrderItems) {
       await db
           .into(db.saleDetailsTable)
           .insert(
             SaleDetailsTableCompanion.insert(
               mid: Value(masterId),
-              itemId: Value(itemId),
-              qty: Value(qty),
+              itemId: Value(item.item.id),
+              qty: Value(item.qty),
               total: Value(txn.subTotal),
               companyId: Value(companyId),
               sync: const Value(0),
               cgst: Value(txn.cgst),
               sgst: Value(txn.sgst),
               cess: Value(txn.cess),
-              disc: Value(discount),
+              disc: Value(item.discount),
+              fQty: Value(item.freeQty),
+              fUnit: Value(item.item.unitName),
+              itemName: Value(item.item.itemName),
+              rate: Value(item.rate),
             ),
           );
     }

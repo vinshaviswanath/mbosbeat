@@ -5,7 +5,7 @@ class SaleReturnMasterTable extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   IntColumn get vchId => integer().nullable()();
-  IntColumn get voucherNo => integer().nullable()();
+  TextColumn get voucherNo => text().nullable()();
 
   IntColumn get partyId => integer().nullable()();
   TextColumn get party => text().nullable()();

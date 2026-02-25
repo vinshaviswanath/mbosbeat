@@ -5,8 +5,7 @@ class SaleMasterTable extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   IntColumn get vchId => integer().nullable()();
-  IntColumn get voucherNo => integer().nullable()();
-
+  TextColumn get voucherNo => text().nullable()();
   IntColumn get partyId => integer().nullable()();
   TextColumn get party => text().nullable()();
 
@@ -69,11 +68,10 @@ class SaleMasterTable extends Table {
   TextColumn get billingMode => text().withDefault(const Constant("B2C"))();
   // discount
   TextColumn get discountType => text().nullable()();
- RealColumn get discountAmount => real().nullable()();
+  RealColumn get discountAmount => real().nullable()();
 
   RealColumn get amount => real().nullable()();
   //coupon discount
 
-RealColumn get coupontdiscountamount => real().nullable()();
-
+  RealColumn get coupontdiscountamount => real().nullable()();
 }

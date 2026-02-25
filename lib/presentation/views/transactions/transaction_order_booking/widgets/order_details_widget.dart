@@ -90,14 +90,16 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
       _initializedDiscountType = discountType;
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (!provider.hasDiscount(widget.itemId)) {
+     if (!provider.hasDiscount(widget.itemId)) {
           provider.setInitialDiscount(
             widget.itemId,
             discountValue,
             discountType,
           );
         }
-      });
+       provider.setInitialDiscount(widget.itemId, discountValue, discountType);
+        _discountController.text = _formatDiscount(discountValue, discountType);
+     });
     }
 
     final currentDiscountType =
@@ -130,12 +132,16 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
     }
 
     /// ---------------- UNIT ----------------
-    final String selectedUnit = provider.getSelectedUnit(
+   final String selectedUnit = provider.getSelectedUnit(
       widget.itemId,
       widget.item,
     );
 
     final selectedFreeUnit = provider.getSelectedFreeUnit(
+      widget.itemId,
+      widget.item,
+    );
+  final String selectedUnit = provider.getSelectedUnit(
       widget.itemId,
       widget.item,
     );
@@ -238,7 +244,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                                       (u) => DropdownMenuItem(
                                         value: u,
                                         child: Text(
-                                          u,
+                                         u,
                                           style: context
                                               .textStyle
                                               .s10
@@ -263,7 +269,9 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                               size: context.getSize.height * 0.016,
                               color: ColorResources.dustyBlue,
                             ),
-                          ),
+                      qty.toStringAsFixed(0),
+                            style: context.textStyle.s10.w500.dustyBlue.roboto,
+                    ),
                         ),
                       ),
                       w6,
@@ -271,16 +279,15 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                         children: [
                           QtyButton(
                             icon: Icons.remove,
-                            onTap: () =>
+         onTap: () =>
                                 provider.decrementQty(widget.itemId, inclRate),
-                          ),
-                          h4,
+                          ), h4,
                           QtyButton(
                             icon: Icons.add,
                             onTap: () => provider.incrementQty(
                               widget.itemId,
                               inclRate,
-                              item: widget.item, // ⭐ PASS PRODUCT
+                              item: widget.item, // ⭝ PASS PRODUCT
                             ),
                           ),
                         ],
@@ -396,6 +403,13 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                             isCollapsed: true,
                             border: InputBorder.none,
                           ),
+                          onChanged: (value) {
+                            final freeQty = double.tryParse(value) ?? 0;
+
+                            context
+                                .read<CustomerTransactionProvider>()
+                                .updateFreeQty(widget.itemId, freeQty);
+                          },
                         ),
                       ),
                       w6,

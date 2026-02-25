@@ -6,8 +6,7 @@ class SaleOrderMasterTable extends Table {
 
   IntColumn get vchId => integer().nullable()();
   TextColumn get voucherNo => text().nullable()();
-IntColumn get isCancelled =>
-    integer().withDefault(const Constant(0))();
+  IntColumn get isCancelled => integer().withDefault(const Constant(0))();
   IntColumn get partyId => integer().nullable()();
   TextColumn get party => text().nullable()();
 
@@ -56,8 +55,8 @@ IntColumn get isCancelled =>
   IntColumn get stockStatus => integer().nullable()();
   IntColumn get finId => integer().nullable()();
 
-  TextColumn get createdTime => text().nullable()();
-  TextColumn get updatedTime => text().nullable()();
+  DateTimeColumn get createdTime => dateTime().nullable()();
+  DateTimeColumn get updatedTime => dateTime().nullable()();
   TextColumn get deliveryDate => text().nullable()();
 
   IntColumn get printCount => integer().nullable()();
@@ -70,8 +69,7 @@ IntColumn get isCancelled =>
   TextColumn get mailingName => text().nullable()();
 
   @override
-List<Set<Column>> get uniqueKeys => [
-  {companyId, vchType, voucherNo}
-];
+  List<Set<Column>> get uniqueKeys => [
+    {companyId, vchType, voucherNo},
+  ];
 }
-

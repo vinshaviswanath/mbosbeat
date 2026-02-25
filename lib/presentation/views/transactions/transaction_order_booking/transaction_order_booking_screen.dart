@@ -674,7 +674,7 @@ class _TransactionOrderBookingScreenState
                                           .read<CustomerTransactionProvider>();
                                       final db = context.read<AppDb>();
 
-                                      await saveOrder(
+                                      await saveSaleOrder(
                                         db: db,
                                         txn: txn,
                                         companyId: widget.data.data.company.id!,
@@ -689,6 +689,21 @@ class _TransactionOrderBookingScreenState
                                             0,
                                         voucherNo: voucherNo ?? "",
                                         remark: remarkController.text,
+                                        mobileNumber:
+                                            widget.data.party.mobile ?? '',
+                                        address2:
+                                            widget.data.party.address2 ?? '',
+                                        address:
+                                            widget.data.party.address1 ?? '',
+                                        pinCode:
+                                            widget.data.party.pinCode ?? '',
+                                        email: widget.data.party.email ?? '',
+                                        lattitude:
+                                            widget.data.party.latitude ?? 0.0,
+                                        longitude:
+                                            widget.data.party.longitude ?? 0.0,
+                                        mailingName:
+                                            widget.data.party.mailingName ?? '',
                                       );
 
                                       txn.clearSelectedItems();
@@ -867,6 +882,7 @@ class SelectedOrderItem {
   final double discount;
   final double amount;
   final double inclRate;
+  final double freeQty;
 
   SelectedOrderItem({
     required this.item,
@@ -875,10 +891,11 @@ class SelectedOrderItem {
     required this.discount,
     required this.amount,
     required this.inclRate,
+    required this.freeQty,
   });
 }
 
-Future<void> saveOrder({
+Future<void> saveSaleOrder({
   required AppDb db,
   required CustomerTransactionProvider txn,
   required int companyId,
@@ -887,6 +904,14 @@ Future<void> saveOrder({
   required int priceLevelId,
   required String remark,
   required String voucherNo,
+  required String? mobileNumber,
+  required String address2,
+  required String address,
+  required String pinCode,
+  required String email,
+  required double lattitude,
+  required double longitude,
+  required String mailingName,
 }) async {
   if (txn.selectedItemCount == 0) {
     print("No items selected");
@@ -901,6 +926,17 @@ Future<void> saveOrder({
         .into(db.saleOrderMasterTable)
         .insert(
           SaleOrderMasterTableCompanion.insert(
+            address2: Value(address2),
+            address: Value(address),
+            createdTime: Value(DateTime.now()),
+
+            pinCode: Value(pinCode),
+            itemCount: Value(txn.selectedItemCount),
+
+            lattitude: Value(lattitude),
+            longitude: Value(longitude),
+            mailingName: Value(mailingName),
+
             partyId: Value(ledgerId),
             party: Value(ledgerName),
             voucherAmount: txn.grandTotal,
@@ -911,37 +947,42 @@ Future<void> saveOrder({
             priceList: Value(priceLevelId.toString()),
             voucherDate: Value(DateFormat('yyyy-MM-dd').format(DateTime.now())),
             narration: Value(remark.isEmpty ? null : remark),
+
+            mob: mobileNumber != null
+                ? Value(mobileNumber)
+                : const Value.absent(),
           ),
         );
 
     print("Inserted Master ID: $masterId");
 
     //  INSERT DETAILS
-    for (final itemId in txn.selectedItemIds) {
-      final qty = txn.getQty(itemId);
-      final discound = txn.getDiscount(itemId);
-
-      final total = txn.subTotal;
-
+    for (final item in txn.selectedOrderItems)
       await db
           .into(db.saleOrderDetailsTable)
           .insert(
             SaleOrderDetailsTableCompanion.insert(
               mid: Value(masterId),
-              itemId: Value(itemId),
-              qty: Value(qty),
-              total: Value(total),
+              itemId: Value(item.item.id),
+              qty: Value(item.qty),
+              total: Value(item.inclRate),
               companyId: Value(companyId),
               sync: const Value(0),
               cess: Value(txn.cess),
               cgst: Value(txn.cgst),
               sgst: Value(txn.sgst),
-              disc: Value(discound),
-              fQty: Value(qty),
+              disc: Value(item.discount),
+              fQty: Value(item.freeQty),
+              fUnit: Value(item.item.unitName),
+              itemName: Value(item.item.itemName),
+              rate: Value(item.amount),
             ),
           );
-    }
+    double ledgerAmount = 0;
 
+    for (final item in txn.selectedOrderItems) {
+      ledgerAmount += item.amount;
+    }
     // 3️⃣ INSERT LEDGER
     await db
         .into(db.saleOrderLedgerDetailsTable)
@@ -952,6 +993,7 @@ Future<void> saveOrder({
             amount: Value(txn.grandTotal),
             companyId: Value(companyId),
             sync: const Value(0),
+            rate: Value(ledgerAmount),
           ),
         );
   });
