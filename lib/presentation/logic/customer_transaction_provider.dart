@@ -29,16 +29,33 @@ class CustomerTransactionProvider extends ChangeNotifier {
   // ===================== ITEM STATE =====================
   final Map<int, double> _itemQty = {};
   final Map<int, double> _itemTotal = {};
-  final Map<int, String> _selectedUnit = {};
+  final Map<int, String> _selectedQtyUnit = {};
+  final Map<int, String> _selectedFreeUnit = {};
   final Set<int> _selectedItems = {};
 
   Set<int> get selectedItemIds => _selectedItems;
 
   final Map<int, double> _itemDiscount = {};
   final Map<int, DiscountType> _discountType = {};
+  bool hasDiscount(int itemId) {
+  return _itemDiscount.containsKey(itemId);
+}
 
   int? expandedItemId;
   int? selectedPriceLevelId;
+
+  Map<int, double> _freeQty = {};
+
+bool hasFreeQty(int id) => _freeQty.containsKey(id);
+
+double getFreeQty(int id) => _freeQty[id] ?? 0;
+
+void updateFreeQty(int id, double v) {
+  _freeQty[id] = v;
+  notifyListeners();
+}
+
+
 
   // ===================== TAX =====================
   final double cgstRate = 9;
@@ -127,13 +144,28 @@ class CustomerTransactionProvider extends ChangeNotifier {
     }
   }
 
+  void incrementFreeQty(int itemId) {
+  final current = _freeQty[itemId] ?? 0;
+  _freeQty[itemId] = current + 1;
+  notifyListeners();
+}
+
+void decrementFreeQty(int itemId) {
+  final current = _freeQty[itemId] ?? 0;
+  if (current > 0) {
+    _freeQty[itemId] = current - 1;
+    notifyListeners();
+  }
+}
+
   void resetQty(int itemId) {
     _itemQty.remove(itemId);
     _itemTotal.remove(itemId);
-    _selectedUnit.remove(itemId);
+    _selectedQtyUnit.remove(itemId);
     _itemDiscount.remove(itemId);
     _discountType.remove(itemId);
     _selectedItems.remove(itemId);
+    _freeQty.remove(itemId);
     _selectedItemObjects.remove(itemId);
     notifyListeners();
   }
@@ -141,7 +173,7 @@ class CustomerTransactionProvider extends ChangeNotifier {
   void clearSelectedItems() {
     _itemQty.clear();
     _itemTotal.clear();
-    _selectedUnit.clear();
+    _selectedQtyUnit.clear();
     _itemDiscount.clear();
     _discountType.clear();
     _selectedItems.clear();
@@ -153,17 +185,26 @@ class CustomerTransactionProvider extends ChangeNotifier {
 
   // ===================== UNIT =====================
   String getSelectedUnit(int itemId, [Product? item]) {
-    if (item == null) return _selectedUnit[itemId] ?? '';
-    return _selectedUnit[itemId] ?? item.unitName;
+    if (item == null) return _selectedQtyUnit[itemId] ?? '';
+    return _selectedQtyUnit[itemId] ?? item.unitName;
   }
 
   void setUnit(int itemId, String unit, double inclRate) {
-    if (_selectedUnit[itemId] == unit) return;
+    if (_selectedQtyUnit[itemId] == unit) return;
 
-    _selectedUnit[itemId] = unit;
+    _selectedQtyUnit[itemId] = unit;
     _recalculateItemTotal(itemId);
     notifyListeners();
   }
+
+  String getSelectedFreeUnit(int itemId, Product item) {
+  return _selectedFreeUnit[itemId] ?? item.unitName;
+}
+
+void setFreeUnit(int itemId, String unit) {
+  _selectedFreeUnit[itemId] = unit;
+  notifyListeners();
+}
 
   // ===================== DISCOUNT =====================
   void setInitialDiscount(int itemId, double value, DiscountType type) {
@@ -434,9 +475,9 @@ class CustomerTransactionProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setQty(int itemId, double qty, double inclRate) {
-    updateQty(itemId, qty, inclRate);
-  }
+void setQty(int itemId, double qty, double inclRate, {Product? item}) {
+  updateQty(itemId, qty, inclRate, item: item);
+}
 
   // ===================== SCREEN RESET =====================
   void resetAddItemScreenState() {

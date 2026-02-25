@@ -49,6 +49,20 @@ class SaleOrderMasterDao extends DatabaseAccessor<AppDb>
     return row?.voucherNo.toString();
   }
 
+  Future<int?> getLastVchId(int companyId) async {
+  final row = await customSelect(
+    'SELECT MAX(vch_id) AS maxId FROM sale_order_master_table WHERE company_id = ?',
+    variables: [Variable(companyId)],
+  ).getSingle();
+
+  return row.data['maxId'] as int?;
+}
+
+Future<int> getNextVchId(int companyId) async {
+  final last = await getLastVchId(companyId);
+  return (last ?? 0) + 1;
+}
+
   /// 🔹 Print debug
   Future<void> printAll() async {
     final list = await getAll();
@@ -64,4 +78,8 @@ class SaleOrderMasterDao extends DatabaseAccessor<AppDb>
           ..where((tbl) => tbl.companyId.equals(companyId)))
         .go();
   }
+
+  Future<int> clearTable() {
+  return delete(saleOrderMasterTable).go();
+}
 }

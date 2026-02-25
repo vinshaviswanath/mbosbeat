@@ -341,7 +341,9 @@ class _TransactionOrderBookingScreenState
                                                   );
                                                 }).toList(),
                                                 onChanged: (value) {
-                                                  Logger.logSuccess("${party.priceList}");
+                                                  Logger.logSuccess(
+                                                    "${party.priceList}",
+                                                  );
                                                   if (value != null) {
                                                     userProvider
                                                         .setSelectedPriceLevel(
@@ -735,13 +737,15 @@ class OrderItemTile extends StatelessWidget {
     final item = data.item;
 
     final qty = data.qty;
-    final freeQty = 0;
     final rate = data.rate; // ✅ base rate
     final discount = data.discount; // ✅ already stored discount
     final taxPercent = item.taxPercent ?? 0;
 
     final amount = data.amount; // ✅ FINAL amount (correct)
     final inclRate = data.inclRate; // ✅ inclusive rate per unit
+    final provider = context.watch<CustomerTransactionProvider>();
+    final freeQty = provider.getFreeQty(data.item.itemId);
+    final freeUnit = provider.getSelectedFreeUnit(data.item.itemId, data.item);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -767,9 +771,19 @@ class OrderItemTile extends StatelessWidget {
               /// TAX %
               Expanded(
                 flex: 2,
-                child: Text(
-                  'Tax : ${taxPercent.toStringAsFixed(0)}%',
-                  style: const TextStyle(fontSize: 11, color: Colors.grey),
+                child: RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'Tax : ',
+                        style: context.textStyle.s08.w400.dustyBlue,
+                      ),
+                      TextSpan(
+                        text: '${taxPercent.toStringAsFixed(0)}%',
+                        style: context.textStyle.s09.w700.dustyBlue,
+                      ),
+                    ],
+                  ),
                 ),
               ),
 
@@ -781,16 +795,23 @@ class OrderItemTile extends StatelessWidget {
                   children: [
                     Text(
                       '${qty.toStringAsFixed(2)} Qls',
-                      style: const TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.green,
+                      style: context.textStyle.s11.w400.leafGreen,
+                    ),
+                    if (freeQty > 0)
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: 'Free ',
+                              style: context.textStyle.s08.w400.rosePink,
+                            ),
+                            TextSpan(
+                              text: '${freeQty.toStringAsFixed(2)} $freeUnit',
+                              style: context.textStyle.s11.w400.leafGreen,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Text(
-                      'Free ${freeQty.toStringAsFixed(2)} Qls',
-                      style: const TextStyle(fontSize: 11, color: Colors.pink),
-                    ),
                   ],
                 ),
               ),
@@ -801,11 +822,7 @@ class OrderItemTile extends StatelessWidget {
                 child: Text(
                   rate.toStringAsFixed(2),
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.green,
-                  ),
+                  style: context.textStyle.s11.w400.dustyBlue,
                 ),
               ),
 
@@ -815,11 +832,7 @@ class OrderItemTile extends StatelessWidget {
                 child: Text(
                   discount > 0 ? discount.toStringAsFixed(2) : '-',
                   textAlign: TextAlign.end,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.green,
-                  ),
+                  style: context.textStyle.s11.w400.dustyBlue,
                 ),
               ),
 
@@ -829,11 +842,7 @@ class OrderItemTile extends StatelessWidget {
                 child: Text(
                   amount.toStringAsFixed(2),
                   textAlign: TextAlign.end,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.green,
-                  ),
+                  style: context.textStyle.s11.w400.dustyBlue,
                 ),
               ),
             ],
@@ -887,6 +896,7 @@ Future<void> saveOrder({
   // final vchNo = int.parse(voucherNo);
   await db.transaction(() async {
     //  INSERT MASTER
+    final nextVchId = await db.saleOrderMasterDao.getNextVchId(companyId);
     final masterId = await db
         .into(db.saleOrderMasterTable)
         .insert(
@@ -894,6 +904,7 @@ Future<void> saveOrder({
             partyId: Value(ledgerId),
             party: Value(ledgerName),
             voucherAmount: txn.grandTotal,
+            vchId: Value(nextVchId),
             voucherNo: Value(voucherNo),
             companyId: Value(companyId),
             sync: const Value(0),

@@ -38,6 +38,7 @@ void CommonLogoutDialog(context) {
                         await prefs.remove("token");
                         final appDb = sl<AppDb>();
                         await appDb.registrationDetailDao.clearAll();
+                        // await appDb.saleOrderMasterDao.clearTable();
                         await userProvider.clearAttendance();
 
                         /// Close dialog first
@@ -46,16 +47,16 @@ void CommonLogoutDialog(context) {
                         /// Navigate after closing dialog
                         context.pushNamed(AppRouterConst.userLogin);
                       },
-                      child: Text(
-                        'Logout',
-                        style: context.textStyle.s14.roboto.white,
-                      ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: ColorResources.indigoBlue,
                         minimumSize: Size(150, 50),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
+                      ),
+                      child: Text(
+                        'Logout',
+                        style: context.textStyle.s14.roboto.white,
                       ),
                     ),
                   ),
@@ -65,16 +66,16 @@ void CommonLogoutDialog(context) {
                       onPressed: () {
                         context.pop();
                       },
-                      child: Text(
-                        'Cancel',
-                        style: context.textStyle.s14.roboto.white,
-                      ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: ColorResources.indigoBlue,
                         minimumSize: Size(150, 50),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
+                      ),
+                      child: Text(
+                        'Cancel',
+                        style: context.textStyle.s14.roboto.white,
                       ),
                     ),
                   ),
