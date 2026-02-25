@@ -27,8 +27,9 @@ class OrderDetailsWidget extends StatefulWidget {
 }
 
 class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
-  late final TextEditingController _discountController;
-  late final TextEditingController _freeQtyController;
+  late TextEditingController _discountController;
+  late TextEditingController _freeQtyController;
+  late TextEditingController _qtyController;
 
   DiscountType? _initializedDiscountType;
 
@@ -37,12 +38,14 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
     super.initState();
     _discountController = TextEditingController();
     _freeQtyController = TextEditingController();
+    _qtyController = TextEditingController(text: "0");
   }
 
   @override
   void dispose() {
     _discountController.dispose();
     _freeQtyController.dispose();
+    _qtyController.dispose();
     super.dispose();
   }
 
@@ -64,15 +67,22 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
     final provider = context.watch<CustomerTransactionProvider>();
 
     final qty = provider.getQty(widget.itemId);
+    final formattedQty = qty == 0 ? '' : qty.toStringAsFixed(0);
+
+    if (_qtyController.text != formattedQty) {
+      _qtyController.value = TextEditingValue(
+        text: formattedQty,
+        selection: TextSelection.collapsed(offset: formattedQty.length),
+      );
+    }
 
     /// ---------------- BASE RATE ----------------
     final double baseRate = widget.item.rate;
 
     /// ---------------- DISCOUNT INIT ----------------
-    final DiscountType discountType =
-        widget.item.discountType == 'A'
-            ? DiscountType.amount
-            : DiscountType.percentage;
+    final DiscountType discountType = widget.item.discountType == 'A'
+        ? DiscountType.amount
+        : DiscountType.percentage;
 
     final double discountValue = widget.item.discount ?? 0;
 
@@ -80,22 +90,55 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
       _initializedDiscountType = discountType;
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        provider.setInitialDiscount(
-          widget.itemId,
-          discountValue,
-          discountType,
-        );
-        _discountController.text =
-            _formatDiscount(discountValue, discountType);
+        if (!provider.hasDiscount(widget.itemId)) {
+          provider.setInitialDiscount(
+            widget.itemId,
+            discountValue,
+            discountType,
+          );
+        }
       });
     }
 
     final currentDiscountType =
         provider.getDiscountType(widget.itemId) ?? discountType;
 
+    final providerDiscount = provider.getDiscount(widget.itemId);
+    final formattedDiscount = _formatDiscount(
+      providerDiscount,
+      currentDiscountType,
+    );
+
+    if (_discountController.text != formattedDiscount) {
+      _discountController.value = TextEditingValue(
+        text: formattedDiscount,
+        selection: TextSelection.collapsed(offset: formattedDiscount.length),
+      );
+    }
+
+    /// ---------------- FREE QTY ----------------
+    final providerFreeQty = provider.getFreeQty(widget.itemId);
+    final formattedFreeQty = providerFreeQty == 0
+        ? ''
+        : providerFreeQty.toStringAsFixed(0);
+
+    if (_freeQtyController.text != formattedFreeQty) {
+      _freeQtyController.value = TextEditingValue(
+        text: formattedFreeQty,
+        selection: TextSelection.collapsed(offset: formattedFreeQty.length),
+      );
+    }
+
     /// ---------------- UNIT ----------------
-    final String selectedUnit =
-        provider.getSelectedUnit(widget.itemId, widget.item);
+    final String selectedUnit = provider.getSelectedUnit(
+      widget.itemId,
+      widget.item,
+    );
+
+    final selectedFreeUnit = provider.getSelectedFreeUnit(
+      widget.itemId,
+      widget.item,
+    );
 
     /// ---------------- RATE (EXCLUSIVE) ----------------
     final double rate = provider.getConvertedRate(
@@ -139,16 +182,87 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                     children: [
                       Container(
                         width: context.getSize.width * 0.13,
-                        padding: const EdgeInsets.symmetric(vertical: 6),
+                        padding: const EdgeInsets.symmetric(vertical: 4),
                         decoration: BoxDecoration(
                           border: Border.all(color: ColorResources.mistGray),
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        child: Center(
-                          child: Text(
-                            qty.toStringAsFixed(0),
-                            style:
-                                context.textStyle.s10.w500.dustyBlue.roboto,
+                        child: TextField(
+                          controller: _qtyController,
+                          textAlign: TextAlign.center,
+                          style: context.textStyle.s10.w500.dustyBlue.roboto,
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
+
+                          onChanged: (v) {
+                            provider.setQty(
+                              widget.itemId,
+                              double.tryParse(v) ?? 0,
+                              inclRate,
+                              item: widget.item,
+                            );
+                          },
+
+                          decoration: const InputDecoration(
+                            isCollapsed: true,
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                      w6,
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 1,
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: ColorResources.mistGray),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                            value: selectedUnit,
+                            style: context.textStyle.s10.w500.dustyBlue.roboto,
+                            isDense: true,
+                            items:
+                                [
+                                      widget.item.unitName,
+                                      if (widget.item.altUnit.isNotEmpty &&
+                                          widget.item.altUnit !=
+                                              widget.item.unitName)
+                                        widget.item.altUnit,
+                                    ]
+                                    .map(
+                                      (u) => DropdownMenuItem(
+                                        value: u,
+                                        child: Text(
+                                          u,
+                                          style: context
+                                              .textStyle
+                                              .s10
+                                              .w300
+                                              .dustyBlue
+                                              .roboto,
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                            onChanged: (value) {
+                              if (value != null) {
+                                provider.setUnit(
+                                  widget.itemId,
+                                  value,
+                                  inclRate,
+                                );
+                              }
+                            },
+                            icon: Icon(
+                              Icons.keyboard_arrow_down_rounded,
+                              size: context.getSize.height * 0.016,
+                              color: ColorResources.dustyBlue,
+                            ),
                           ),
                         ),
                       ),
@@ -157,19 +271,17 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                         children: [
                           QtyButton(
                             icon: Icons.remove,
-                            onTap: () => provider.decrementQty(
-                              widget.itemId,
-                              inclRate,
-                            ),
+                            onTap: () =>
+                                provider.decrementQty(widget.itemId, inclRate),
                           ),
                           h4,
                           QtyButton(
                             icon: Icons.add,
                             onTap: () => provider.incrementQty(
-    widget.itemId,
-    inclRate,
-    item: widget.item,   // ⭐ PASS PRODUCT
-  ),
+                              widget.itemId,
+                              inclRate,
+                              item: widget.item, // ⭐ PASS PRODUCT
+                            ),
                           ),
                         ],
                       ),
@@ -201,13 +313,12 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                     height: 35,
                     child: TextField(
                       controller: _discountController,
-                      keyboardType:
-                          const TextInputType.numberWithOptions(decimal: true),
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
                       textAlign: TextAlign.center,
-                      style:
-                          context.textStyle.s10.w500.dustyBlue.roboto,
-                      inputFormatters:
-                          _discountFormatters(currentDiscountType),
+                      style: context.textStyle.s10.w500.dustyBlue.roboto,
+                      inputFormatters: _discountFormatters(currentDiscountType),
                       onChanged: (value) {
                         provider.updateDiscount(
                           widget.itemId,
@@ -219,8 +330,8 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                         isDense: true,
                         suffixText:
                             currentDiscountType == DiscountType.percentage
-                                ? '%'
-                                : null,
+                            ? '%'
+                            : null,
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 4,
                           vertical: 6,
@@ -244,6 +355,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
           /// ================= FREE QTY / UNIT / TOTAL =================
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               /// FREE QTY + UNIT
               Column(
@@ -266,8 +378,20 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                         ),
                         child: TextField(
                           controller: _freeQtyController,
+                          style: context.textStyle.s10.w500.dustyBlue.roboto,
                           textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
+
+                          onChanged: (v) {
+                            provider.updateFreeQty(
+                              widget.itemId,
+                              double.tryParse(v) ?? 0,
+                            );
+                          },
+
                           decoration: const InputDecoration(
                             isCollapsed: true,
                             border: InputBorder.none,
@@ -278,40 +402,45 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
 
                       /// UNIT DROPDOWN
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 1,
+                        ),
                         decoration: BoxDecoration(
                           border: Border.all(color: ColorResources.mistGray),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton<String>(
-                            value: selectedUnit,
+                            value: selectedFreeUnit,
+                            style: context.textStyle.s10.w500.dustyBlue.roboto,
                             isDense: true,
-                            items: [
-                              widget.item.unitName,
-                              if (widget.item.altUnit.isNotEmpty &&
-                                  widget.item.altUnit !=
-                                      widget.item.unitName)
-                                widget.item.altUnit,
-                            ]
-                                .map(
-                                  (u) => DropdownMenuItem(
-                                    value: u,
-                                    child: Text(
-                                      u,
-                                      style: context.textStyle.s10.w300
-                                          .dustyBlue.roboto,
-                                    ),
-                                  ),
-                                )
-                                .toList(),
+                            items:
+                                [
+                                      widget.item.unitName,
+                                      if (widget.item.altUnit.isNotEmpty &&
+                                          widget.item.altUnit !=
+                                              widget.item.unitName)
+                                        widget.item.altUnit,
+                                    ]
+                                    .map(
+                                      (u) => DropdownMenuItem(
+                                        value: u,
+                                        child: Text(
+                                          u,
+                                          style: context
+                                              .textStyle
+                                              .s10
+                                              .w300
+                                              .dustyBlue
+                                              .roboto,
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
                             onChanged: (value) {
                               if (value != null) {
-                                provider.setUnit(
-                                  widget.itemId,
-                                  value,
-                                  inclRate,
-                                );
+                                provider.setFreeUnit(widget.itemId, value);
                               }
                             },
                             icon: Icon(
@@ -321,6 +450,24 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                             ),
                           ),
                         ),
+                      ),
+                      w6,
+
+                      /// +/- BUTTONS
+                      Column(
+                        children: [
+                          QtyButton(
+                            icon: Icons.remove,
+                            onTap: () =>
+                                provider.decrementFreeQty(widget.itemId),
+                          ),
+                          h4,
+                          QtyButton(
+                            icon: Icons.add,
+                            onTap: () =>
+                                provider.incrementFreeQty(widget.itemId),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -332,28 +479,23 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                 children: [
                   Text(
                     appLocalization.order_detail_widget_total,
-                    style:
-                        context.textStyle.s10.w400.indigoBlue.roboto,
+                    style: context.textStyle.s10.w400.indigoBlue.roboto,
                   ),
                   w8,
                   Text(
                     total.toStringAsFixed(2),
-                    style:
-                        context.textStyle.s14.bold.dustyBlue.roboto,
+                    style: context.textStyle.s14.bold.dustyBlue.roboto,
                   ),
                 ],
               ),
 
               /// DELETE
-              IconButton(
-                icon: const Icon(
-                  Icons.delete,
-                  color: ColorResources.crimsonRed,
-                ),
-                onPressed: () {
+              InkWell(
+                onTap: () {
                   provider.resetQty(widget.itemId);
                   widget.onDelete?.call();
                 },
+                child: Icon(Icons.delete, color: ColorResources.crimsonRed),
               ),
             ],
           ),
@@ -362,7 +504,6 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
     );
   }
 }
-
 
 class QtyButton extends StatelessWidget {
   final IconData icon;
