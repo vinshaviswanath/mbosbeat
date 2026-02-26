@@ -28,13 +28,13 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
   void initState() {
     super.initState();
 
-    final transactionProvider = context.read<CustomerTransactionProvider>();
-    
     _searchController = TextEditingController();
+
+    /// ⭐ detect clear search automatically
+    _searchController.addListener(_handleSearchClear);
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
-     // transactionProvider.resetAddItemScreenState();
-      //  transactionProvider.resetPagination();
-      transactionProvider.loadNextPage(
+      context.read<CustomerTransactionProvider>().loadNextPage(
         companyId: widget.data.data.company.id!,
         priceListId: widget.data.party.priceList ?? 0,
         ledgerId: widget.data.party.ledgerId,
@@ -42,9 +42,22 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
     });
   }
 
+  void _handleSearchClear() {
+    final provider = context.read<CustomerTransactionProvider>();
+
+    /// when user clears search
+    if (_searchController.text.isEmpty && provider.searchValue.isNotEmpty) {
+      provider.clearSearchAndReload(
+        companyId: widget.data.data.company.id!,
+        priceListId: widget.data.party.priceList ?? 0,
+        ledgerId: widget.data.party.ledgerId,
+      );
+    }
+  }
+
   @override
   void dispose() {
-    _debounce?.cancel();
+    _searchController.removeListener(_handleSearchClear);
     _searchController.dispose();
     super.dispose();
   }
@@ -58,6 +71,19 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
     final rateInclusive = userProvider.rateInclusive;
 
     final appLocalization = context.l10n;
+
+    void performSearch(String value) {
+      final transactionProvider = context.read<CustomerTransactionProvider>();
+
+      transactionProvider.updateSearch(value.trim());
+      transactionProvider.resetPagination();
+
+      transactionProvider.loadNextPage(
+        companyId: widget.data.data.company.id!,
+        priceListId: widget.data.party.priceList ?? 0,
+        ledgerId: widget.data.party.ledgerId,
+      );
+    }
 
     return PopScope(
       canPop: false,
@@ -96,23 +122,26 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
                       Padding(
                         padding: const EdgeInsets.all(16),
                         child: CustomTextField(
+                          textInputAction: TextInputAction.search,
                           controller: _searchController,
-                          onChange: (value) {
-                            _debounce?.cancel();
-                            _debounce = Timer(
-                              const Duration(milliseconds: 300),
-                              () {
-                                transactionProvider.updateSearch(value);
 
-                                transactionProvider.resetPagination();
+                          onFieldSubmitted: (value) {
+                            final keyword = value.trim();
 
-                                transactionProvider.loadNextPage(
-                                  companyId: widget.data.data.company.id!,
-                                  priceListId: widget.data.party.priceList ?? 0,
-                                  ledgerId: widget.data.party.ledgerId,
-                                );
-                              },
-                            );
+                            if (keyword.isEmpty) {
+                              transactionProvider.clearSearchAndReload(
+                                companyId: widget.data.data.company.id!,
+                                ledgerId: widget.data.party.ledgerId,
+                                priceListId: widget.data.party.priceList ?? 0,
+                              );
+                            } else {
+                              transactionProvider.searchAndReload(
+                                keyword,
+                                companyId: widget.data.data.company.id!,
+                                ledgerId: widget.data.party.ledgerId,
+                                priceListId: widget.data.party.priceList ?? 0,
+                              );
+                            }
                           },
                           hint: appLocalization.manage_user_screen_search_user,
                           suffixIcon: Padding(
@@ -134,14 +163,15 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
                       Expanded(
                         child: Consumer<CustomerTransactionProvider>(
                           builder: (_, provider, __) {
-                            if (provider.pagedItems.isEmpty &&
-                                provider.isLoadingPage) {
+                            final list = provider.sortedPagedItems;
+
+                            if (list.isEmpty && provider.isLoadingPage) {
                               return const Center(
                                 child: CircularProgressIndicator(),
                               );
                             }
 
-                            if (provider.pagedItems.isEmpty) {
+                            if (list.isEmpty) {
                               return const Center(
                                 child: Text("No items found"),
                               );
@@ -300,8 +330,9 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
                                   SliverList(
                                     delegate: SliverChildBuilderDelegate(
                                       (context, index) {
-                                        if (index ==
-                                            provider.pagedItems.length) {
+                                        final list = provider.sortedPagedItems;
+
+                                        if (index == list.length) {
                                           return const Padding(
                                             padding: EdgeInsets.all(16),
                                             child: Center(
@@ -311,7 +342,7 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
                                           );
                                         }
 
-                                        final item = provider.pagedItems[index];
+                                        final item = list[index];
 
                                         final selectedUnit = provider
                                             .getSelectedUnit(
@@ -339,10 +370,11 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
                                             bottom: 8,
                                           ),
                                           child: StockCard(
+                                            key: ValueKey(item.stockItemId),
                                             item: item,
                                             data: widget.data,
                                             name: item.itemName,
-                                            stock: 0,
+                                            stock: item.closingStock ?? 0,
                                             mrp: rate,
                                             tax: tax,
                                             inclRate: inclRate,
@@ -355,7 +387,7 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
                                         );
                                       },
                                       childCount:
-                                          provider.pagedItems.length +
+                                          provider.sortedPagedItems.length +
                                           (provider.hasMore ? 1 : 0),
                                     ),
                                   ),
@@ -405,10 +437,17 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
                       ],
                     ),
                     CustomButton(
+                      color: transactionProvider.selectedItemIds.isEmpty
+                          ? ColorResources.ashGray
+                          : null,
                       buttonText: transactionProvider.selectedItemCount
                           .toString(),
                       isborderEnable: false,
-                      onTap: () => Navigator.of(context).pop(),
+                      onTap: () {
+                        if (transactionProvider.selectedItemIds.isNotEmpty) {
+                          Navigator.of(context).pop();
+                        } else {}
+                      },
                       width: context.getSize.width / 2.5,
                       borderRadius: BorderRadius.circular(16),
                       icon: Icons.shopping_cart,
