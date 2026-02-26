@@ -10,6 +10,8 @@ import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 import 'package:mpos_beat/presentation/logic/customer_transaction_provider.dart';
 import 'package:mpos_beat/presentation/logic/user_provider.dart';
 import 'package:mpos_beat/presentation/views/home_screen/transactions_container.dart';
+import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/widgets/clear_items_warning_dialog.dart';
+import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/widgets/confirm_bill_dialog.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/widgets/end_to_end_text_widget.dart';
 
 class TransactionOrderBookingRouteArgs {
@@ -88,191 +90,225 @@ class _TransactionOrderBookingScreenState
     final ledgerId = widget.data.party.ledgerId;
     final appLocalizations = context.l10n;
     final provider = context.read<CustomerTransactionProvider>();
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-            provider.clearSelectedItems();
-          },
-          icon: Icon(
-            Icons.keyboard_arrow_left,
-            color: ColorResources.indigoBlue,
-            size: context.getSize.height * 0.024,
+    return PopScope(
+      canPop: provider.selectedItemIds.isNotEmpty ? false : true,
+      onPopInvokedWithResult: (_, __) {
+        provider.selectedItemIds.isNotEmpty
+            ? clearItemsWarningDialog(context)
+            : null;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              provider.selectedItemIds.isNotEmpty
+                  ? clearItemsWarningDialog(context)
+                  : Navigator.pop(context);
+            },
+            icon: Icon(
+              Icons.keyboard_arrow_left,
+              color: ColorResources.indigoBlue,
+              size: context.getSize.height * 0.024,
+            ),
           ),
-        ),
-        title: Text(
-          appLocalizations.transaction_order_booking_screen_order_booking,
-          style: context.textStyle.s20.indigoBlue.bold.roboto,
-        ),
-        centerTitle: true,
-        // actions: [
-        //   SvgPicture.asset(
-        //     AppAssets.refresh,
-        //     height: context.getSize.height * 0.022,
-        //     colorFilter: const ColorFilter.mode(
-        //       ColorResources.indigoBlue,
-        //       BlendMode.srcIn,
-        //     ),
-        //   ),
-        //   w10,
-        //   SvgPicture.asset(
-        //     AppAssets.qr,
-        //     height: context.getSize.height * 0.022,
-        //     colorFilter: const ColorFilter.mode(
-        //       ColorResources.indigoBlue,
-        //       BlendMode.srcIn,
-        //     ),
-        //   ),
+          title: Text(
+            appLocalizations.transaction_order_booking_screen_order_booking,
+            style: context.textStyle.s20.indigoBlue.bold.roboto,
+          ),
+          centerTitle: true,
+          // actions: [
+          //   SvgPicture.asset(
+          //     AppAssets.refresh,
+          //     height: context.getSize.height * 0.022,
+          //     colorFilter: const ColorFilter.mode(
+          //       ColorResources.indigoBlue,
+          //       BlendMode.srcIn,
+          //     ),
+          //   ),
+          //   w10,
+          //   SvgPicture.asset(
+          //     AppAssets.qr,
+          //     height: context.getSize.height * 0.022,
+          //     colorFilter: const ColorFilter.mode(
+          //       ColorResources.indigoBlue,
+          //       BlendMode.srcIn,
+          //     ),
+          //   ),
 
-        //   w10,
-        // ],
-      ),
-      body: StreamBuilder<PartyMasterDetails?>(
-        stream: context.read<UserProvider>().partyDetailsStream(
-          companyId,
-          ledgerId,
+          //   w10,
+          // ],
         ),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
-          }
+        body: StreamBuilder<PartyMasterDetails?>(
+          stream: context.read<UserProvider>().partyDetailsStream(
+            companyId,
+            ledgerId,
+          ),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(child: CircularProgressIndicator());
+            }
 
-          final party = snapshot.data!;
+            final party = snapshot.data!;
 
-          return Stack(
-            children: [
-              CustomScrollView(
-                slivers: [
-                  const SliverToBoxAdapter(child: h16),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                party.ledgerName,
-                                style: context
-                                    .textStyle
-                                    .s12
-                                    .w500
-                                    .indigoBlue
-                                    .roboto,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  context.pushNamed(
-                                    AppRouterConst.orderBookingAddItemScreen,
-                                    extra: TransactionOrderBookingRouteArgs(
-                                      data: widget.data.data,
-                                      party: widget.data.party,
-                                      vchTyp: widget.data.vchTyp,
+            return Stack(
+              children: [
+                CustomScrollView(
+                  slivers: [
+                    const SliverToBoxAdapter(child: h16),
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  party.ledgerName,
+                                  style: context
+                                      .textStyle
+                                      .s12
+                                      .w500
+                                      .indigoBlue
+                                      .roboto,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    context.pushNamed(
+                                      AppRouterConst.orderBookingAddItemScreen,
+                                      extra: TransactionOrderBookingRouteArgs(
+                                        data: widget.data.data,
+                                        party: widget.data.party,
+                                        vchTyp: widget.data.vchTyp,
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 15,
+                                      vertical: 4,
                                     ),
-                                  );
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 15,
-                                    vertical: 4,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    color: ColorResources.rosePink,
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      appLocalizations.add_item,
-                                      style: context.textStyle.s10.white.w400,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: ColorResources.rosePink,
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        appLocalizations.add_item,
+                                        style: context.textStyle.s10.white.w400,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          h4,
-                          EndToEndTextWidget(
-                            text1: party.countryId == 1
-                                ? "GST No. ${party.taxNumber}"
-                                : "VAT No. ${party.taxNumber}",
-                            text2: DateFormat(
-                              'dd-MM-yyyy',
-                            ).format(DateTime.now()),
-                          ),
-                          h4,
-                          EndToEndTextWidget(
-                            text1:
-                                "${appLocalizations.order_booking_voucher_no} ${voucherNo ?? "..."}",
-                            text2: appLocalizations.order_booking_balance,
-                          ),
-                          h4,
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    appLocalizations.order_booking_price_list,
-                                    style: context
-                                        .textStyle
-                                        .s09
-                                        .w400
-                                        .dustyBlue
-                                        .roboto,
-                                  ),
-                                  w8,
-                                  Consumer<UserProvider>(
-                                    builder: (context, userProvider, _) {
-                                      final party = userProvider.selectedParty;
+                              ],
+                            ),
+                            h4,
+                            EndToEndTextWidget(
+                              text1: party.countryId == 1
+                                  ? "GST No. ${party.taxNumber}"
+                                  : "VAT No. ${party.taxNumber}",
+                              text2: DateFormat(
+                                'dd-MM-yyyy',
+                              ).format(DateTime.now()),
+                            ),
+                            h4,
+                            EndToEndTextWidget(
+                              text1:
+                                  "${appLocalizations.order_booking_voucher_no} ${voucherNo ?? "..."}",
+                              text2: appLocalizations.order_booking_balance,
+                            ),
+                            h4,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      appLocalizations.order_booking_price_list,
+                                      style: context
+                                          .textStyle
+                                          .s09
+                                          .w400
+                                          .dustyBlue
+                                          .roboto,
+                                    ),
+                                    w8,
+                                    Consumer<UserProvider>(
+                                      builder: (context, userProvider, _) {
+                                        final party =
+                                            userProvider.selectedParty;
 
-                                      if (party == null) {
-                                        return const SizedBox(
-                                          height: 20,
-                                          width: 20,
-                                          child: CircularProgressIndicator(
-                                            strokeWidth: 2,
-                                          ),
-                                        );
-                                      }
-
-                                      // Parse price levels from JSON if needed
-                                      final priceLevels = party.priceLevels;
-
-                                      // Auto-select price level if price_list has a value
-                                      if (party.priceList > 0) {
-                                        // Auto-select the price level based on price_list
-                                        PriceLevelDetails? autoSelected;
-                                        if (priceLevels.isNotEmpty) {
-                                          autoSelected = priceLevels.firstWhere(
-                                            (e) => e.id == party.priceList,
-                                            orElse: () => priceLevels
-                                                .first, // always returns a valid PriceLevelDetails
+                                        if (party == null) {
+                                          return const SizedBox(
+                                            height: 20,
+                                            width: 20,
+                                            child: CircularProgressIndicator(
+                                              strokeWidth: 2,
+                                            ),
                                           );
                                         }
 
-                                        // Update provider with auto-selected price level
-                                        if (autoSelected != null &&
-                                            userProvider
-                                                    .selectedPriceLevel
-                                                    ?.id !=
-                                                autoSelected.id) {
-                                          WidgetsBinding.instance
-                                              .addPostFrameCallback((_) {
-                                                userProvider
-                                                    .setSelectedPriceLevel(
-                                                      autoSelected!,
-                                                    );
-                                              });
+                                        // Parse price levels from JSON if needed
+                                        final priceLevels = party.priceLevels;
+
+                                        // Auto-select price level if price_list has a value
+                                        if (party.priceList > 0) {
+                                          // Auto-select the price level based on price_list
+                                          PriceLevelDetails? autoSelected;
+                                          if (priceLevels.isNotEmpty) {
+                                            autoSelected = priceLevels.firstWhere(
+                                              (e) => e.id == party.priceList,
+                                              orElse: () => priceLevels
+                                                  .first, // always returns a valid PriceLevelDetails
+                                            );
+                                          }
+
+                                          // Update provider with auto-selected price level
+                                          if (autoSelected != null &&
+                                              userProvider
+                                                      .selectedPriceLevel
+                                                      ?.id !=
+                                                  autoSelected.id) {
+                                            WidgetsBinding.instance
+                                                .addPostFrameCallback((_) {
+                                                  userProvider
+                                                      .setSelectedPriceLevel(
+                                                        autoSelected!,
+                                                      );
+                                                });
+                                          }
+                                          // Show label instead of dropdown
+                                          final selectedPriceLevel =
+                                              userProvider.selectedPriceLevel;
+                                          return Container(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 8,
+                                              vertical: 4,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: ColorResources.lightGray,
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            child: Text(
+                                              selectedPriceLevel?.priceLevel ??
+                                                  '-',
+                                              style: context
+                                                  .textStyle
+                                                  .s09
+                                                  .w300
+                                                  .dustyBlue
+                                                  .roboto,
+                                            ),
+                                          );
                                         }
-                                        // Show label instead of dropdown
-                                        final selectedPriceLevel =
-                                            userProvider.selectedPriceLevel;
+
+                                        // If price_list == 0, show dropdown to select
                                         return Container(
+                                          height:
+                                              context.getSize.height * 0.022,
                                           padding: const EdgeInsets.symmetric(
                                             horizontal: 8,
-                                            vertical: 4,
                                           ),
                                           decoration: BoxDecoration(
                                             color: ColorResources.lightGray,
@@ -280,223 +316,73 @@ class _TransactionOrderBookingScreenState
                                               8,
                                             ),
                                           ),
-                                          child: Text(
-                                            selectedPriceLevel?.priceLevel ??
-                                                '-',
-                                            style: context
-                                                .textStyle
-                                                .s09
-                                                .w300
-                                                .dustyBlue
-                                                .roboto,
+                                          child: DropdownButtonHideUnderline(
+                                            child:
+                                                DropdownButton<
+                                                  PriceLevelDetails
+                                                >(
+                                                  value: userProvider
+                                                      .selectedPriceLevel,
+                                                  hint: Text(
+                                                    "Select Price",
+                                                    style: context
+                                                        .textStyle
+                                                        .s09
+                                                        .w300
+                                                        .dustyBlue
+                                                        .roboto,
+                                                  ),
+                                                  icon: Icon(
+                                                    Icons.keyboard_arrow_down,
+                                                    size:
+                                                        context.getSize.height *
+                                                        0.016,
+                                                    color: ColorResources
+                                                        .indigoBlue,
+                                                  ),
+                                                  items: priceLevels.map((e) {
+                                                    return DropdownMenuItem<
+                                                      PriceLevelDetails
+                                                    >(
+                                                      value: e,
+                                                      child: Text(
+                                                        e.priceLevel,
+                                                        style: const TextStyle(
+                                                          fontSize: 10,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }).toList(),
+                                                  onChanged: (value) {
+                                                    Logger.logSuccess(
+                                                      "${party.priceList}",
+                                                    );
+                                                    if (value != null) {
+                                                      userProvider
+                                                          .setSelectedPriceLevel(
+                                                            value,
+                                                          );
+                                                    }
+                                                  },
+                                                ),
                                           ),
                                         );
-                                      }
-
-                                      // If price_list == 0, show dropdown to select
-                                      return Container(
-                                        height: context.getSize.height * 0.022,
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 8,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: ColorResources.lightGray,
-                                          borderRadius: BorderRadius.circular(
-                                            8,
-                                          ),
-                                        ),
-                                        child: DropdownButtonHideUnderline(
-                                          child:
-                                              DropdownButton<PriceLevelDetails>(
-                                                value: userProvider
-                                                    .selectedPriceLevel,
-                                                hint: Text(
-                                                  "Select Price",
-                                                  style: context
-                                                      .textStyle
-                                                      .s09
-                                                      .w300
-                                                      .dustyBlue
-                                                      .roboto,
-                                                ),
-                                                icon: Icon(
-                                                  Icons.keyboard_arrow_down,
-                                                  size:
-                                                      context.getSize.height *
-                                                      0.016,
-                                                  color:
-                                                      ColorResources.indigoBlue,
-                                                ),
-                                                items: priceLevels.map((e) {
-                                                  return DropdownMenuItem<
-                                                    PriceLevelDetails
-                                                  >(
-                                                    value: e,
-                                                    child: Text(
-                                                      e.priceLevel,
-                                                      style: const TextStyle(
-                                                        fontSize: 10,
-                                                      ),
-                                                    ),
-                                                  );
-                                                }).toList(),
-                                                onChanged: (value) {
-                                                  Logger.logSuccess(
-                                                    "${party.priceList}",
-                                                  );
-                                                  if (value != null) {
-                                                    userProvider
-                                                        .setSelectedPriceLevel(
-                                                          value,
-                                                        );
-                                                  }
-                                                },
-                                              ),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
-                              Text(
-                                "${party.closingBalance}",
-                                style: context
-                                    .textStyle
-                                    .s12
-                                    .bold
-                                    .indigoBlue
-                                    .roboto,
-                              ),
-                            ],
-                          ),
-                          h4,
-                          Divider(
-                            thickness: 1,
-                            color: ColorResources.bluishGray.withValues(
-                              alpha: 0.2,
+                                      },
+                                    ),
+                                  ],
+                                ),
+                                Text(
+                                  "${party.closingBalance}",
+                                  style: context
+                                      .textStyle
+                                      .s12
+                                      .bold
+                                      .indigoBlue
+                                      .roboto,
+                                ),
+                              ],
                             ),
-                          ),
-                          h16,
-                        ],
-                      ),
-                    ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: .end,
-                            children: [
-                              Expanded(
-                                flex: 2,
-                                child: Text(
-                                  appLocalizations.product_name,
-                                  style: context
-                                      .textStyle
-                                      .s10
-                                      .w500
-                                      .dustyBlue
-                                      .roboto,
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: Text(
-                                  appLocalizations.order_booking_quantity,
-                                  style: context
-                                      .textStyle
-                                      .s10
-                                      .w500
-                                      .dustyBlue
-                                      .roboto,
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: Text(
-                                  appLocalizations.rate,
-                                  style: context
-                                      .textStyle
-                                      .s10
-                                      .w500
-                                      .dustyBlue
-                                      .roboto,
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: Text(
-                                  appLocalizations.discount,
-                                  style: context
-                                      .textStyle
-                                      .s10
-                                      .w500
-                                      .dustyBlue
-                                      .roboto,
-                                ),
-                              ),
-                              Expanded(
-                                flex: 0,
-                                child: Text(
-                                  appLocalizations.amount,
-                                  style: context
-                                      .textStyle
-                                      .s10
-                                      .w500
-                                      .dustyBlue
-                                      .roboto,
-                                ),
-                              ),
-                            ],
-                          ),
-                          h2,
-                          Divider(
-                            thickness: 1,
-                            color: ColorResources.bluishGray.withValues(
-                              alpha: 0.2,
-                            ),
-                          ),
-                          h4,
-                        ],
-                      ),
-                    ),
-                  ),
-                  Consumer<CustomerTransactionProvider>(
-                    builder: (context, provider, _) {
-                      final items = provider.selectedOrderItems;
-
-                      if (items.isEmpty) {
-                        return const SliverToBoxAdapter(child: SizedBox());
-                      }
-
-                      return SliverList(
-                        delegate: SliverChildBuilderDelegate((context, index) {
-                          return OrderItemTile(data: items[index]);
-                        }, childCount: items.length),
-                      );
-                    },
-                  ),
-
-                  SliverToBoxAdapter(
-                    child: SizedBox(height: context.getSize.height * 0.4),
-                  ),
-                ],
-              ),
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: 0,
-                child: ColoredBox(
-                  color: ColorResources.white,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 17),
-                    child: Consumer<CustomerTransactionProvider>(
-                      builder: (context, txn, _) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                            h4,
                             Divider(
                               thickness: 1,
                               color: ColorResources.bluishGray.withValues(
@@ -504,191 +390,341 @@ class _TransactionOrderBookingScreenState
                               ),
                             ),
                             h16,
-
-                            /// ⭐ SUBTOTAL (exclusive)
+                          ],
+                        ),
+                      ),
+                    ),
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Column(
+                          children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  appLocalizations.order_booking_sub_total,
-                                  style: context
-                                      .textStyle
-                                      .s12
-                                      .w500
-                                      .indigoBlue
-                                      .roboto,
-                                ),
-                                w60,
-                                Text(
-                                  txn.billSubTotal.toStringAsFixed(2),
-                                  style: context
-                                      .textStyle
-                                      .s12
-                                      .w500
-                                      .indigoBlue
-                                      .roboto,
-                                ),
-                              ],
-                            ),
-
-                            h12,
-
-                            /// ⭐ CGST (multi slab)
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  appLocalizations.cgst,
-                                  style: context
-                                      .textStyle
-                                      .s10
-                                      .w400
-                                      .dustyBlue
-                                      .roboto,
-                                ),
-                                w60,
-                                Text(
-                                  txn.totalCgst.toStringAsFixed(2),
-                                  style: context
-                                      .textStyle
-                                      .s10
-                                      .w400
-                                      .dustyBlue
-                                      .roboto,
-                                ),
-                              ],
-                            ),
-
-                            h8,
-
-                            /// ⭐ SGST (multi slab)
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  appLocalizations.sgst,
-                                  style: context
-                                      .textStyle
-                                      .s10
-                                      .w400
-                                      .dustyBlue
-                                      .roboto,
-                                ),
-                                w60,
-                                Text(
-                                  txn.totalSgst.toStringAsFixed(2),
-                                  style: context
-                                      .textStyle
-                                      .s10
-                                      .w400
-                                      .dustyBlue
-                                      .roboto,
-                                ),
-                              ],
-                            ),
-
-                            h8,
-
-                            /// ⭐ CESS (optional future use)
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  appLocalizations.cess,
-                                  style: context
-                                      .textStyle
-                                      .s10
-                                      .w400
-                                      .dustyBlue
-                                      .roboto,
-                                ),
-                                w60,
-                                Text(
-                                  txn.totalCess.toStringAsFixed(2),
-                                  style: context
-                                      .textStyle
-                                      .s10
-                                      .w400
-                                      .dustyBlue
-                                      .roboto,
-                                ),
-                              ],
-                            ),
-
-                            h8,
-
-                            /// ⭐ GRAND TOTAL
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  appLocalizations.grand_total,
-                                  style: context
-                                      .textStyle
-                                      .s12
-                                      .w500
-                                      .indigoBlue
-                                      .roboto,
-                                ),
-                                w60,
-                                Text(
-                                  txn.grandTotal.toStringAsFixed(2),
-                                  style: context
-                                      .textStyle
-                                      .s12
-                                      .w500
-                                      .indigoBlue
-                                      .roboto,
-                                ),
-                              ],
-                            ),
-
-                            h21,
-
-                            /// ⭐ REMARK
-                            Text(
-                              appLocalizations.remarks,
-                              style:
-                                  context.textStyle.s10.w400.dustyBlue.roboto,
-                            ),
-
-                            h13,
-
-                            CustomTextField(
-                              controller: remarkController,
-                              hint: "",
-                              borderRadius: 16,
-                              borderColor: ColorResources.ashGray,
-                            ),
-
-                            h12,
-
-                            /// ⭐ ACTION BUTTONS
-                            Row(
+                              mainAxisAlignment: .end,
                               children: [
                                 Expanded(
-                                  child: CustomButton(
-                                    buttonText: appLocalizations.save,
-                                    onTap: () async {
-                                      final txn = context
-                                          .read<CustomerTransactionProvider>();
-                                      final db = context.read<AppDb>();
+                                  flex: 2,
+                                  child: Text(
+                                    appLocalizations.product_name,
+                                    style: context
+                                        .textStyle
+                                        .s10
+                                        .w500
+                                        .dustyBlue
+                                        .roboto,
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    appLocalizations.order_booking_quantity,
+                                    style: context
+                                        .textStyle
+                                        .s10
+                                        .w500
+                                        .dustyBlue
+                                        .roboto,
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    appLocalizations.rate,
+                                    style: context
+                                        .textStyle
+                                        .s10
+                                        .w500
+                                        .dustyBlue
+                                        .roboto,
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    appLocalizations.discount,
+                                    style: context
+                                        .textStyle
+                                        .s10
+                                        .w500
+                                        .dustyBlue
+                                        .roboto,
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 0,
+                                  child: Text(
+                                    appLocalizations.amount,
+                                    style: context
+                                        .textStyle
+                                        .s10
+                                        .w500
+                                        .dustyBlue
+                                        .roboto,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            h2,
+                            Divider(
+                              thickness: 1,
+                              color: ColorResources.bluishGray.withValues(
+                                alpha: 0.2,
+                              ),
+                            ),
+                            h4,
+                          ],
+                        ),
+                      ),
+                    ),
+                    Consumer<CustomerTransactionProvider>(
+                      builder: (context, provider, _) {
+                        final items = provider.selectedOrderItems;
+
+                        if (items.isEmpty) {
+                          return const SliverToBoxAdapter(child: SizedBox());
+                        }
+
+                        return SliverList(
+                          delegate: SliverChildBuilderDelegate((
+                            context,
+                            index,
+                          ) {
+                            return OrderItemTile(data: items[index]);
+                          }, childCount: items.length),
+                        );
+                      },
+                    ),
+
+                    SliverToBoxAdapter(
+                      child: SizedBox(height: context.getSize.height * 0.4),
+                    ),
+                  ],
+                ),
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: ColoredBox(
+                    color: ColorResources.white,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 17),
+                      child: Consumer<CustomerTransactionProvider>(
+                        builder: (context, txn, _) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Divider(
+                                thickness: 1,
+                                color: ColorResources.bluishGray.withValues(
+                                  alpha: 0.2,
+                                ),
+                              ),
+                              h16,
+
+                              /// ⭝ SUBTOTAL (exclusive)
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    appLocalizations.order_booking_sub_total,
+                                    style: context
+                                        .textStyle
+                                        .s12
+                                        .w500
+                                        .indigoBlue
+                                        .roboto,
+                                  ),
+                                  w60,
+                                  Text(
+                                    txn.billSubTotal.toStringAsFixed(2),
+                                    style: context
+                                        .textStyle
+                                        .s12
+                                        .w500
+                                        .indigoBlue
+                                        .roboto,
+                                  ),
+                                ],
+                              ),
+
+                              h12,
+
+                              /// ⭝ CGST (multi slab)
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    appLocalizations.cgst,
+                                    style: context
+                                        .textStyle
+                                        .s10
+                                        .w400
+                                        .dustyBlue
+                                        .roboto,
+                                  ),
+                                  w60,
+                                  Text(
+                                    txn.totalCgst.toStringAsFixed(2),
+                                    style: context
+                                        .textStyle
+                                        .s10
+                                        .w400
+                                        .dustyBlue
+                                        .roboto,
+                                  ),
+                                ],
+                              ),
+
+                              h8,
+
+                              /// ⭝ SGST (multi slab)
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    appLocalizations.sgst,
+                                    style: context
+                                        .textStyle
+                                        .s10
+                                        .w400
+                                        .dustyBlue
+                                        .roboto,
+                                  ),
+                                  w60,
+                                  Text(
+                                    txn.totalSgst.toStringAsFixed(2),
+                                    style: context
+                                        .textStyle
+                                        .s10
+                                        .w400
+                                        .dustyBlue
+                                        .roboto,
+                                  ),
+                                ],
+                              ),
+
+                              h8,
+
+                              /// ⭝ CESS (optional future use)
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    appLocalizations.cess,
+                                    style: context
+                                        .textStyle
+                                        .s10
+                                        .w400
+                                        .dustyBlue
+                                        .roboto,
+                                  ),
+                                  w60,
+                                  Text(
+                                    txn.totalCess.toStringAsFixed(2),
+                                    style: context
+                                        .textStyle
+                                        .s10
+                                        .w400
+                                        .dustyBlue
+                                        .roboto,
+                                  ),
+                                ],
+                              ),
+
+                              h8,
+
+                              /// ⭝ GRAND TOTAL
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    appLocalizations.grand_total,
+                                    style: context
+                                        .textStyle
+                                        .s12
+                                        .w500
+                                        .indigoBlue
+                                        .roboto,
+                                  ),
+                                  w60,
+                                  Text(
+                                    txn.grandTotal.toStringAsFixed(2),
+                                    style: context
+                                        .textStyle
+                                        .s12
+                                        .w500
+                                        .indigoBlue
+                                        .roboto,
+                                  ),
+                                ],
+                              ),
+
+                              h21,
+
+                              /// ⭝ REMARK
+                              Text(
+                                appLocalizations.remarks,
+                                style:
+                                    context.textStyle.s10.w400.dustyBlue.roboto,
+                              ),
+
+                              h13,
+
+                              CustomTextField(
+                                controller: remarkController,
+                                hint: "",
+                                borderRadius: 16,
+                                borderColor: ColorResources.ashGray,
+                              ),
+
+                              h12,
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: CustomButton(
+                                      color: provider.selectedItemIds.isEmpty
+                                          ? ColorResources.ashGray
+                                          : null,
+                                      buttonText: appLocalizations.save,
+                                      onTap: () async {
+                                        if (provider
+                                            .selectedItemIds
+                                            .isNotEmpty) {
+                                          confirmBillDialog(
+                                            context,
+                                            onSave: () async {
+                                              final txn = context
+                                                  .read<
+                                                    CustomerTransactionProvider
+                                                  >();
+                                              final db = context.read<AppDb>();
 
                                       await saveSaleOrder(
-                                        db: db,
-                                        txn: txn,
-                                        companyId: widget.data.data.company.id!,
-                                        ledgerName:
-                                            widget.data.party.ledgerName ?? "",
-                                        ledgerId: widget.data.party.ledgerId,
-                                        priceLevelId:
-                                            context
-                                                .read<UserProvider>()
-                                                .selectedPriceLevel
-                                                ?.id ??
-                                            0,
-                                        voucherNo: voucherNo ?? "",
-                                        remark: remarkController.text,
+
+                                              await saveOrder(
+                                                db: db,
+                                                txn: txn,
+                                                companyId: widget
+                                                    .data
+                                                    .data
+                                                    .company
+                                                    .id!,
+                                                ledgerName:
+                                                    widget
+                                                        .data
+                                                        .party
+                                                        .ledgerName ??
+                                                    "",
+                                                ledgerId:
+                                                    widget.data.party.ledgerId,
+                                                priceLevelId:
+                                                    context
+                                                        .read<UserProvider>()
+                                                        .selectedPriceLevel
+                                                        ?.id ??
+                                                    0,
+                                                voucherNo: voucherNo ?? "",
+                                                remark: remarkController.text,
                                         mobileNumber:
                                             widget.data.party.mobile ?? '',
                                         address2:
@@ -705,38 +741,43 @@ class _TransactionOrderBookingScreenState
                                         mailingName:
                                             widget.data.party.mailingName ?? '',
                                       );
+                                              );
 
-                                      txn.clearSelectedItems();
-                                      remarkController.clear();
-                                      Navigator.pop(context);
-                                    },
-                                    isborderEnable: false,
-                                    borderRadius: BorderRadius.circular(16),
+                                              txn.clearSelectedItems();
+                                              remarkController.clear();
+                                              Navigator.pop(context);
+                                            },
+                                          );
+                                        } else {}
+                                      },
+                                      isborderEnable: false,
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
                                   ),
-                                ),
-                                w10,
-                                Expanded(
-                                  child: CustomButton(
-                                    buttonText: appLocalizations.cancel,
-                                    isborderEnable: false,
-                                    color: ColorResources.bluishGray,
-                                    borderRadius: BorderRadius.circular(16),
+                                  w10,
+                                  Expanded(
+                                    child: CustomButton(
+                                      buttonText: appLocalizations.cancel,
+                                      isborderEnable: false,
+                                      color: ColorResources.bluishGray,
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
+                                ],
+                              ),
 
-                            h16,
-                          ],
-                        );
-                      },
+                              h16,
+                            ],
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          );
-        },
+              ],
+            );
+          },
+        ),
       ),
     );
   }
@@ -986,7 +1027,7 @@ Future<void> saveSaleOrder({
     for (final item in txn.selectedOrderItems) {
       ledgerAmount += item.amount;
     }
-    // 3️⃣ INSERT LEDGER
+    // 3︝⃣ INSERT LEDGER
     await db
         .into(db.saleOrderLedgerDetailsTable)
         .insert(

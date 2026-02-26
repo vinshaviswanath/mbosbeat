@@ -1,8 +1,6 @@
 import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/data_sources/user/party_MasterSync/party_MasterSync.dart';
-import 'package:mpos_beat/data/local_db/app_db.dart';
-import 'package:mpos_beat/data/local_db/daos/item_price_details_dao/item_price_details_dao.dart';
 import 'package:mpos_beat/data/models/product.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/transaction_order_booking_screen.dart';
 
@@ -12,6 +10,10 @@ class CustomerTransactionProvider extends ChangeNotifier {
   // ===================== ITEM SOURCE =====================
   late Stream<List<Product>> _itemsStream;
   List<Product> _allItems = [];
+
+  List<Product> _normalCache = [];
+  int _normalCachePage = 0;
+  bool _hasNormalCache = false;
 
   void setProducts(List<Product> products) {
     _allItems = products;
@@ -52,6 +54,20 @@ class CustomerTransactionProvider extends ChangeNotifier {
 
   void updateFreeQty(int id, double v) {
     _freeQty[id] = v;
+    notifyListeners();
+  }
+
+  void toggleExpanded(int itemId) {
+    if (expandedItemId == itemId) {
+      expandedItemId = null;
+    } else {
+      expandedItemId = itemId;
+    }
+    notifyListeners();
+  }
+
+  void collapseExpanded() {
+    expandedItemId = null;
     notifyListeners();
   }
 
@@ -115,7 +131,7 @@ class CustomerTransactionProvider extends ChangeNotifier {
     }
 
     _itemQty[itemId] = qty;
-    _itemInclusiveRate[itemId] = inclRate; // ⭝ store
+    _itemInclusiveRate[itemId] = inclRate; // ⭐ store
     _selectedItems.add(itemId);
 
     if (item != null) {
@@ -170,6 +186,7 @@ class CustomerTransactionProvider extends ChangeNotifier {
 
   void clearSelectedItems() {
     _itemQty.clear();
+    _freeQty.clear();
     _itemTotal.clear();
     _selectedQtyUnit.clear();
     _itemDiscount.clear();
@@ -246,7 +263,7 @@ class CustomerTransactionProvider extends ChangeNotifier {
 
     if (qty == null || inclRate == null) return;
 
-    /// ⭝ inclusive base
+    /// inclusive base
     final base = inclRate * qty;
 
     final discount = _itemDiscount[itemId] ?? 0;
@@ -285,6 +302,33 @@ class CustomerTransactionProvider extends ChangeNotifier {
     yield ['All', ...groups];
   }
 
+void applyAllFilterFromCache() {
+  if (_normalCache.isEmpty) return;
+
+  /// ⭐ reset filter state
+  _selectedGroup = 'All';
+  _selectedCategory = 'All';
+  _search = '';
+
+  _pagedItems
+    ..clear()
+    ..addAll(_normalCache);
+
+  _page = _normalCachePage;
+  _hasMore = true;
+
+  notifyListeners();
+}
+
+void restoreNormalFromCache() {
+  if (_selectedGroup == 'All' &&
+      _selectedCategory == 'All' &&
+      _search.isEmpty) {
+    _pagedItems = List.from(_normalCache);
+    notifyListeners();
+  }
+}
+
   // ===================== CATEGORY STREAM =====================
   Stream<List<String>> get categoryStream async* {
     final items = _allItems;
@@ -300,12 +344,12 @@ class CustomerTransactionProvider extends ChangeNotifier {
 
   // ===================== FILTER ACTIONS =====================
 
-  void selectGroup(String value) {
-    if (_selectedGroup == value) return;
-    _selectedGroup = value;
-    resetPagination();
-    notifyListeners();
-  }
+void selectGroup(String value) {
+  if (_selectedGroup == value) return;
+  _selectedGroup = value;
+  resetPagination();
+  notifyListeners();
+}
 
   void selectCategory(String value) {
     if (_selectedCategory == value) return;
@@ -317,6 +361,23 @@ class CustomerTransactionProvider extends ChangeNotifier {
   void updateSearch(String value) {
     _search = value;
     resetPagination();
+    notifyListeners();
+  }
+
+  void clearSearch({
+    required int companyId,
+    required int priceListId,
+    required int ledgerId,
+  }) {
+    _search = "";
+    resetPagination();
+
+    loadNextPage(
+      companyId: companyId,
+      priceListId: priceListId,
+      ledgerId: ledgerId,
+    );
+
     notifyListeners();
   }
 
@@ -353,11 +414,6 @@ class CustomerTransactionProvider extends ChangeNotifier {
     return list;
   }
 
-  final Map<int, double> _itemFreeQty = {};
-  // void updateFreeQty(int itemId, double freeQty) {
-  //   _itemFreeQty[itemId] = freeQty;
-  //   notifyListeners();
-  // }
   List<SelectedOrderItem> get selectedOrderItems {
     final list = <SelectedOrderItem>[];
 
@@ -368,15 +424,15 @@ class CustomerTransactionProvider extends ChangeNotifier {
       final qty = _itemQty[itemId] ?? 0;
       final discount = _itemDiscount[itemId] ?? 0;
 
-      /// ⭝ exclusive rate snapshot
+      /// exclusive rate snapshot
       final exclusiveRate = item.rate;
 
-      final taxPercent = item.taxPercent ?? 0;
+      final taxPercent = item.taxPercent;
 
-      /// ⭝ subtotal before tax
+      /// subtotal before tax
       final sub = exclusiveRate * qty;
 
-      /// ⭝ discount apply
+      /// discount apply
       double net = sub;
       final type = _discountType[itemId];
 
@@ -386,14 +442,13 @@ class CustomerTransactionProvider extends ChangeNotifier {
         net -= discount;
       }
 
-      /// ⭝ tax
+      /// tax
       final tax = net * taxPercent / 100;
 
       final finalAmount = net + tax;
 
       final amount = qty * exclusiveRate;
       final inclRate = qty > 0 ? finalAmount / qty : 0;
-      final freeQty = _itemFreeQty[itemId] ?? 0;
 
       list.add(
         SelectedOrderItem(
@@ -403,7 +458,6 @@ class CustomerTransactionProvider extends ChangeNotifier {
           discount: discount,
           amount: amount,
           inclRate: inclRate.toDouble(),
-          freeQty: freeQty,
         ),
       );
     }
@@ -430,7 +484,7 @@ class CustomerTransactionProvider extends ChangeNotifier {
   }
 
   //pagination
-  final List<Product> _pagedItems = [];
+   List<Product> _pagedItems = [];
   List<Product> get pagedItems => _pagedItems;
 
   int _page = 0;
@@ -469,15 +523,99 @@ class CustomerTransactionProvider extends ChangeNotifier {
       offset: _page * _limit,
     );
 
-    if (result.length < _limit) {
-      _hasMore = false;
+    /// prevent duplicates
+    final newItems = result
+        .where((e) => !_pagedItems.any((p) => p.stockItemId == e.stockItemId))
+        .toList();
+
+    _pagedItems.addAll(newItems);
+
+    if (_search.isEmpty) {
+      _normalCache = List.from(_pagedItems);
+      _normalCachePage = _page;
+      _hasNormalCache = true;
     }
 
-    _pagedItems.addAll(result);
-    _page++;
+    if (result.length < _limit) {
+      _hasMore = false;
+    } else {
+      _page++;
+    }
 
     _isLoadingPage = false;
     notifyListeners();
+  }
+
+  List<Product> get sortedPagedItems {
+    final selectedItems = _selectedItemObjects.values.toList();
+
+    final pageItems = _pagedItems.where(
+      (item) => !_selectedItems.contains(item.stockItemId),
+    );
+
+    return [...selectedItems, ...pageItems];
+  }
+
+
+
+  Future<void> searchAndReload(
+    String keyword, {
+    required int companyId,
+    required int priceListId,
+    required int ledgerId,
+  }) async {
+    if (_search == keyword && _pagedItems.isNotEmpty) return;
+
+    _search = keyword;
+
+    _pagedItems.clear();
+    _page = 0;
+    _hasMore = true;
+
+    notifyListeners();
+
+    await loadNextPage(
+      companyId: companyId,
+      priceListId: priceListId,
+      ledgerId: ledgerId,
+    );
+  }
+
+  Future<void> clearSearchAndReload({
+    required int companyId,
+    required int priceListId,
+    required int ledgerId,
+  }) async {
+    /// already normal mode → do nothing
+    if (_search.isEmpty) return;
+
+    _search = '';
+
+    /// restore cache if exists
+    if (_hasNormalCache) {
+      _pagedItems
+        ..clear()
+        ..addAll(_normalCache);
+
+      _page = _normalCachePage;
+      _hasMore = true;
+
+      notifyListeners();
+      return;
+    }
+
+    /// fallback (first launch case)
+    _pagedItems.clear();
+    _page = 0;
+    _hasMore = true;
+
+    notifyListeners();
+
+    await loadNextPage(
+      companyId: companyId,
+      priceListId: priceListId,
+      ledgerId: ledgerId,
+    );
   }
 
   void setQty(int itemId, double qty, double inclRate, {Product? item}) {
@@ -513,9 +651,19 @@ class CustomerTransactionProvider extends ChangeNotifier {
       if (item == null) continue;
 
       final qty = _itemQty[itemId] ?? 0;
+      final discount = _itemDiscount[itemId] ?? 0;
+      final type = _discountType[itemId];
 
-      /// ⭝ exclusive rate from item master
-      total += item.rate * qty;
+      double base = item.rate * qty;
+
+      /// apply discount BEFORE tax
+      if (type == DiscountType.percentage) {
+        base -= base * discount / 100;
+      } else if (type == DiscountType.amount) {
+        base -= discount;
+      }
+
+      total += base.clamp(0, double.infinity);
     }
 
     return total;
@@ -533,17 +681,17 @@ class CustomerTransactionProvider extends ChangeNotifier {
       final discount = _itemDiscount[itemId] ?? 0;
       final type = _discountType[itemId];
 
-      /// ⭝ exclusive base
+      /// exclusive base
       double base = product.rate * qty;
 
-      /// ⭝ apply discount BEFORE tax
+      /// apply discount BEFORE tax
       if (type == DiscountType.percentage) {
         base -= base * discount / 100;
       } else if (type == DiscountType.amount) {
         base -= discount;
       }
 
-      final taxPercent = product.taxPercent ?? 0;
+      final taxPercent = product.taxPercent;
 
       cgst += base * (taxPercent / 2) / 100;
     }
@@ -571,7 +719,7 @@ class CustomerTransactionProvider extends ChangeNotifier {
         base -= discount;
       }
 
-      final taxPercent = product.taxPercent ?? 0;
+      final taxPercent = product.taxPercent;
 
       sgst += base * (taxPercent / 2) / 100;
     }

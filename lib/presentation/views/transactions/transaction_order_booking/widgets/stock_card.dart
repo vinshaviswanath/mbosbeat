@@ -4,7 +4,7 @@ import 'package:mpos_beat/presentation/logic/customer_transaction_provider.dart'
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/transaction_order_booking_screen.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/widgets/order_details_widget.dart';
 
-class StockCard extends StatefulWidget {
+class StockCard extends StatelessWidget {
   final int itemId;
   final int priceListId;
   final String name;
@@ -31,23 +31,15 @@ class StockCard extends StatefulWidget {
   });
 
   @override
-  State<StockCard> createState() => _StockCardState();
-}
-
-class _StockCardState extends State<StockCard>
-    with AutomaticKeepAliveClientMixin {
-  bool _expanded = false;
-
-  @override
-  bool get wantKeepAlive => _expanded;
-
-  @override
   Widget build(BuildContext context) {
-    super.build(context);
-
-    /// 🔥 Rebuild ONLY when selection state changes
+    /// 🔥 Selection listener (rebuild only when needed)
     final isSelected = context.select<CustomerTransactionProvider, bool>(
-      (p) => p.isSelected(widget.itemId),
+      (p) => p.isSelected(itemId),
+    );
+
+    /// 🔥 Expansion listener (ID based — stable)
+    final isExpanded = context.select<CustomerTransactionProvider, bool>(
+      (p) => p.expandedItemId == itemId,
     );
 
     return RepaintBoundary(
@@ -76,14 +68,13 @@ class _StockCardState extends State<StockCard>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.name,
+                        name,
                         style: context.textStyle.dustyBlue.s12.w500.roboto,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
                       h4,
                       Row(
-                        mainAxisAlignment: .start,
                         children: [
                           Text(
                             "Group :",
@@ -91,13 +82,12 @@ class _StockCardState extends State<StockCard>
                           ),
                           w4,
                           Text(
-                            widget.item.groupName ?? "",
+                            item.groupName ?? "",
                             style: context.textStyle.dustyBlue.s09.w400.roboto,
                           ),
                         ],
                       ),
                       Row(
-                        mainAxisAlignment: .start,
                         children: [
                           Text(
                             "Category :",
@@ -105,7 +95,7 @@ class _StockCardState extends State<StockCard>
                           ),
                           w4,
                           Text(
-                            widget.item.categoryName ?? "",
+                            item.categoryName ?? "",
                             style: context.textStyle.dustyBlue.s09.w400.roboto,
                           ),
                         ],
@@ -119,29 +109,34 @@ class _StockCardState extends State<StockCard>
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      "Stock ${widget.stock}",
+                      "Stock $stock",
                       style: context.textStyle.indigoBlue.s12.bold.roboto,
                     ),
                     h4,
                     Row(
                       children: [
-                        _info("Tax", "${widget.tax.toStringAsFixed(0)}%"),
+                        _info(context, "Tax", "${tax.toStringAsFixed(0)}%"),
                         w12,
                         _info(
+                          context,
                           "Inc Rate",
-                          widget.inclRate.toStringAsFixed(
-                            widget.data.party.companyId == 1 ? 2 : 3,
+                          inclRate.toStringAsFixed(
+                            data.party.companyId == 1 ? 2 : 3,
                           ),
                         ),
                         w12,
                         GestureDetector(
                           behavior: HitTestBehavior.opaque,
-                          onTap: _toggleExpand,
+                          onTap: () {
+                            context
+                                .read<CustomerTransactionProvider>()
+                                .toggleExpanded(itemId);
+                          },
                           child: CircleAvatar(
                             radius: 12,
                             backgroundColor: ColorResources.indigoBlue,
                             child: Icon(
-                              _expanded
+                              isExpanded
                                   ? Icons.keyboard_arrow_up_rounded
                                   : Icons.keyboard_arrow_down_rounded,
                               color: ColorResources.white,
@@ -156,25 +151,28 @@ class _StockCardState extends State<StockCard>
               ],
             ),
 
-            /// ================= DETAILS (LAZY) =================
+            /// ================= DETAILS =================
             AnimatedSize(
               duration: const Duration(milliseconds: 220),
               curve: Curves.easeOutCubic,
               alignment: Alignment.topCenter,
-              child: _expanded
+              child: isExpanded
                   ? Padding(
                       padding: const EdgeInsets.only(top: 12),
                       child: OrderDetailsWidget(
-                        item: widget.item,
-                        data: widget.data,
-                        companyId: widget.companyId,
-                        itemId: widget.itemId,
-                        priceListId: widget.priceListId,
+                        item: item,
+                        data: data,
+                        companyId: companyId,
+                        itemId: itemId,
+                        priceListId: priceListId,
                         onDelete: () {
                           context.read<CustomerTransactionProvider>().resetQty(
-                            widget.itemId,
+                            itemId,
                           );
-                          setState(() => _expanded = false);
+
+                          context
+                              .read<CustomerTransactionProvider>()
+                              .collapseExpanded();
                         },
                       ),
                     )
@@ -186,11 +184,7 @@ class _StockCardState extends State<StockCard>
     );
   }
 
-  void _toggleExpand() {
-    setState(() => _expanded = !_expanded);
-  }
-
-  Widget _info(String title, String value) {
+  Widget _info(BuildContext context, String title, String value) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
