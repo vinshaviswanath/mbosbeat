@@ -103,41 +103,39 @@ class PartyMasterDetails {
 
     final List<PriceLevelDetails> parsedPriceLevels =
         (rawPriceLevels != null && rawPriceLevels.toString().isNotEmpty)
-            ? (jsonDecode(rawPriceLevels) as List)
-                .map(
-                  (e) => PriceLevelDetails.fromJson(
-                    e as Map<String, dynamic>,
-                  ),
-                )
-                .toList()
-            : <PriceLevelDetails>[];
+        ? (jsonDecode(rawPriceLevels) as List)
+              .map((e) => PriceLevelDetails.fromJson(e as Map<String, dynamic>))
+              .toList()
+        : <PriceLevelDetails>[];
 
     return PartyMasterDetails(
-      ledgerId: json['ledger_id'],
-      companyId: json['company_id'],
+      ledgerId: (json['ledger_id'] ?? 0),
+      companyId: (json['company_id'] ?? 0),
       ledgerName: json['ledger_name'] ?? '',
       ledgerNameLocal: json['ledger_name_local'] ?? '',
       aliasName: json['alias_name'] ?? '',
       ledDesc: json['led_desc'] ?? '',
-      groupId: json['group_id'] ?? 0,
+      groupId: (json['group_id'] ?? 0),
+
       groupName: json['group_name'] ?? '',
       isActive: json['is_active'] == 1,
       isDeleted: json['is_deleted'] == 1,
       creditLimit: (json['credit_limit'] ?? 0).toDouble(),
-      dueDays: json['due_days'] ?? 0,
+      dueDays: (json['due_days'] ?? 0),
       address1: json['address1'] ?? '',
       address2: json['address2'] ?? '',
       address3: json['address3'] ?? '',
       city: json['city'] ?? '',
-      stateId: json['state_id'] ?? 0,
+      stateId: (json['state_id'] ?? 0),
+
       stateName: json['state_name'] ?? '',
-      countryId: json['country_id'] ?? 0,
+      countryId: (json['country_id'] ?? 0),
       countryName: json['country_name'] ?? '',
       pinCode: json['pin_code'] ?? '',
       latitude: (json['latitude'] ?? 0).toDouble(),
       longitude: (json['longitude'] ?? 0).toDouble(),
-      distanceFromCompanyKm:
-          (json['distance_from_company_k_m'] ?? 0).toDouble(),
+      distanceFromCompanyKm: (json['distance_from_company_k_m'] ?? 0)
+          .toDouble(),
       mailingName: json['mailing_name'] ?? '',
       contactPerson: json['contact_person'] ?? '',
       mobile: (json['mobile'] ?? '').toString().trim(),
@@ -148,10 +146,12 @@ class PartyMasterDetails {
       stateCode: json['state_code'] ?? '',
       closingBalance: (json['closing_balance'] ?? 0).toDouble(),
       onAccountValue: (json['on_account_value'] ?? 0).toDouble(),
-      routeId: json['route_id'] ?? 0,
+      routeId: (json['route_id'] ?? 0),
       routeName: json['route_name'] ?? '',
-      priceList: json['price_list'] ?? 0,
-      lastSyncOn: json['last_sync_on'] ?? 0,
+
+      priceList: (json['price_list'] ?? 0),
+
+      lastSyncOn: (json['last_sync_on'] ?? 0),
       syncAction: json['sync_action'] ?? '',
       priceLevels: parsedPriceLevels,
     );
@@ -172,22 +172,21 @@ class PartyMasterDetails {
   }
 
   /// ✅ Auto-selected price level using priceList
-PriceLevelDetails? get selectedPriceLevel {
-  // 1️⃣ Match by price_list id
-  for (final level in priceLevels) {
-    if (level.id == priceList) {
-      return level;
+  PriceLevelDetails? get selectedPriceLevel {
+    // 1️⃣ Match by price_list id
+    for (final level in priceLevels) {
+      if (level.id == priceList) {
+        return level;
+      }
     }
+
+    // 2️⃣ Fallback to default price level
+    final def = defaultPriceLevel;
+    if (def != null) return def;
+
+    // 3️⃣ Final fallback
+    return priceLevels.isNotEmpty ? priceLevels.first : null;
   }
-
-  // 2️⃣ Fallback to default price level
-  final def = defaultPriceLevel;
-  if (def != null) return def;
-
-  // 3️⃣ Final fallback
-  return priceLevels.isNotEmpty ? priceLevels.first : null;
-}
-
 }
 
 /// ===============================
