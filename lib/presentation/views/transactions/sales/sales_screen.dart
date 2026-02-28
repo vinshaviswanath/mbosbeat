@@ -741,7 +741,7 @@ Future<void> saveSale({
               sgst: Value(txn.sgst),
               cess: Value(txn.cess),
               disc: Value(item.discount),
-              fQty: Value(item.freeQty),
+              //  fQty: Value(item.freeQty),
               fUnit: Value(item.item.unitName),
               itemName: Value(item.item.itemName),
               rate: Value(item.rate),

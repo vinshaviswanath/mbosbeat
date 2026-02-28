@@ -302,32 +302,32 @@ class CustomerTransactionProvider extends ChangeNotifier {
     yield ['All', ...groups];
   }
 
-void applyAllFilterFromCache() {
-  if (_normalCache.isEmpty) return;
+  void applyAllFilterFromCache() {
+    if (_normalCache.isEmpty) return;
 
-  /// ⭐ reset filter state
-  _selectedGroup = 'All';
-  _selectedCategory = 'All';
-  _search = '';
+    /// ⭐ reset filter state
+    _selectedGroup = 'All';
+    _selectedCategory = 'All';
+    _search = '';
 
-  _pagedItems
-    ..clear()
-    ..addAll(_normalCache);
+    _pagedItems
+      ..clear()
+      ..addAll(_normalCache);
 
-  _page = _normalCachePage;
-  _hasMore = true;
+    _page = _normalCachePage;
+    _hasMore = true;
 
-  notifyListeners();
-}
-
-void restoreNormalFromCache() {
-  if (_selectedGroup == 'All' &&
-      _selectedCategory == 'All' &&
-      _search.isEmpty) {
-    _pagedItems = List.from(_normalCache);
     notifyListeners();
   }
-}
+
+  void restoreNormalFromCache() {
+    if (_selectedGroup == 'All' &&
+        _selectedCategory == 'All' &&
+        _search.isEmpty) {
+      _pagedItems = List.from(_normalCache);
+      notifyListeners();
+    }
+  }
 
   // ===================== CATEGORY STREAM =====================
   Stream<List<String>> get categoryStream async* {
@@ -344,18 +344,50 @@ void restoreNormalFromCache() {
 
   // ===================== FILTER ACTIONS =====================
 
-void selectGroup(String value) {
-  if (_selectedGroup == value) return;
-  _selectedGroup = value;
-  resetPagination();
-  notifyListeners();
-}
+  Future<void> selectGroup(
+    String value, {
+    required int companyId,
+    required int priceListId,
+    required int ledgerId,
+  }) async {
+    if (_selectedGroup == value) return;
 
-  void selectCategory(String value) {
-    if (_selectedCategory == value) return;
-    _selectedCategory = value;
-    resetPagination();
+    _selectedGroup = value;
+
+    _pagedItems.clear();
+    _page = 0;
+    _hasMore = true;
+
     notifyListeners();
+
+    await loadNextPage(
+      companyId: companyId,
+      priceListId: priceListId,
+      ledgerId: ledgerId,
+    );
+  }
+
+  Future<void> selectCategory(
+    String value, {
+    required int companyId,
+    required int priceListId,
+    required int ledgerId,
+  }) async {
+    if (_selectedCategory == value) return;
+
+    _selectedCategory = value;
+
+    _pagedItems.clear();
+    _page = 0;
+    _hasMore = true;
+
+    notifyListeners();
+
+    await loadNextPage(
+      companyId: companyId,
+      priceListId: priceListId,
+      ledgerId: ledgerId,
+    );
   }
 
   void updateSearch(String value) {
@@ -484,7 +516,7 @@ void selectGroup(String value) {
   }
 
   //pagination
-   List<Product> _pagedItems = [];
+  List<Product> _pagedItems = [];
   List<Product> get pagedItems => _pagedItems;
 
   int _page = 0;
@@ -556,8 +588,6 @@ void selectGroup(String value) {
     return [...selectedItems, ...pageItems];
   }
 
-
-
   Future<void> searchAndReload(
     String keyword, {
     required int companyId,
@@ -624,16 +654,18 @@ void selectGroup(String value) {
 
   // ===================== SCREEN RESET =====================
   void resetAddItemScreenState() {
-    // filters
     _search = '';
     _selectedGroup = 'All';
     _selectedCategory = 'All';
 
-    // pagination
     _pagedItems.clear();
     _page = 0;
     _hasMore = true;
     _isLoadingPage = false;
+
+    _normalCache.clear();
+    _hasNormalCache = false;
+    _normalCachePage = 0;
 
     notifyListeners();
   }

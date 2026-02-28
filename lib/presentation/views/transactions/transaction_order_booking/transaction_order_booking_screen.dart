@@ -699,8 +699,6 @@ class _TransactionOrderBookingScreenState
                                                   >();
                                               final db = context.read<AppDb>();
 
-                                      await saveSaleOrder(
-
                                               await saveOrder(
                                                 db: db,
                                                 txn: txn,
@@ -725,22 +723,45 @@ class _TransactionOrderBookingScreenState
                                                     0,
                                                 voucherNo: voucherNo ?? "",
                                                 remark: remarkController.text,
-                                        mobileNumber:
-                                            widget.data.party.mobile ?? '',
-                                        address2:
-                                            widget.data.party.address2 ?? '',
-                                        address:
-                                            widget.data.party.address1 ?? '',
-                                        pinCode:
-                                            widget.data.party.pinCode ?? '',
-                                        email: widget.data.party.email ?? '',
-                                        lattitude:
-                                            widget.data.party.latitude ?? 0.0,
-                                        longitude:
-                                            widget.data.party.longitude ?? 0.0,
-                                        mailingName:
-                                            widget.data.party.mailingName ?? '',
-                                      );
+                                                mobileNumber:
+                                                    widget.data.party.mobile ??
+                                                    '',
+                                                address2:
+                                                    widget
+                                                        .data
+                                                        .party
+                                                        .address2 ??
+                                                    '',
+                                                address:
+                                                    widget
+                                                        .data
+                                                        .party
+                                                        .address1 ??
+                                                    '',
+                                                pinCode:
+                                                    widget.data.party.pinCode ??
+                                                    '',
+                                                email:
+                                                    widget.data.party.email ??
+                                                    '',
+                                                lattitude:
+                                                    widget
+                                                        .data
+                                                        .party
+                                                        .latitude ??
+                                                    0.0,
+                                                longitude:
+                                                    widget
+                                                        .data
+                                                        .party
+                                                        .longitude ??
+                                                    0.0,
+                                                mailingName:
+                                                    widget
+                                                        .data
+                                                        .party
+                                                        .mailingName ??
+                                                    '',
                                               );
 
                                               txn.clearSelectedItems();
@@ -923,7 +944,6 @@ class SelectedOrderItem {
   final double discount;
   final double amount;
   final double inclRate;
-  final double freeQty;
 
   SelectedOrderItem({
     required this.item,
@@ -932,11 +952,10 @@ class SelectedOrderItem {
     required this.discount,
     required this.amount,
     required this.inclRate,
-    required this.freeQty,
   });
 }
 
-Future<void> saveSaleOrder({
+Future<void> saveOrder({
   required AppDb db,
   required CustomerTransactionProvider txn,
   required int companyId,
@@ -989,7 +1008,7 @@ Future<void> saveSaleOrder({
             voucherDate: Value(DateFormat('yyyy-MM-dd').format(DateTime.now())),
             narration: Value(remark.isEmpty ? null : remark),
 
-            mob: Value(mobileNumber)
+            mob: Value(mobileNumber),
           ),
         );
 
@@ -1014,7 +1033,7 @@ Future<void> saveSaleOrder({
               cgst: Value(txn.cgst),
               sgst: Value(txn.sgst),
               disc: Value(item.discount),
-              fQty: Value(item.freeQty),
+             // fQty: Value(item.freeQty),
               fUnit: Value(item.item.unitName),
               itemName: Value(item.item.itemName),
               rate: Value(item.amount),

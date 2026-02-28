@@ -34,10 +34,15 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
     _searchController.addListener(_handleSearchClear);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      // transactionProvider.resetAddItemScreenState();
+      final transactionProvider = context.read<CustomerTransactionProvider>();
+      transactionProvider.selectGroup(
+        'All',
+        companyId: widget.data.data.company.id!,
+        priceListId: widget.data.party.priceList ?? 0,
+        ledgerId: widget.data.party.ledgerId,
+      );
       //  transactionProvider.resetPagination();
       transactionProvider.loadNextPage(
-      context.read<CustomerTransactionProvider>().loadNextPage(
         companyId: widget.data.data.company.id!,
         priceListId: widget.data.party.priceList ?? 0,
         ledgerId: widget.data.party.ledgerId,
@@ -68,7 +73,6 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
   @override
   Widget build(BuildContext context) {
     final transactionProvider = context.watch<CustomerTransactionProvider>();
-
 
     final userProvider = context.watch<UserProvider>();
 
@@ -223,25 +227,24 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
                                                         0,
                                                   ),
                                               builder: (_, snapshot) {
-                                                final groups =
+                                                final dbGroups =
                                                     snapshot.data
                                                         ?.map(
                                                           (e) => e.groupName,
                                                         )
                                                         .toList() ??
-                                                    ['All'];
-
+                                                    [];
+                                                final groups = [
+                                                  'All',
+                                                  ...dbGroups,
+                                                ];
                                                 return CustomDropdown<String>(
                                                   items: groups,
                                                   hintText: appLocalization
                                                       .order_booking_add_item_select_group,
-                                                  onChanged: (v) {
-                                                    provider.selectGroup(
+                                                  onChanged: (v) async {
+                                                    await provider.selectGroup(
                                                       v ?? 'All',
-                                                    );
-
-                                                    provider.resetPagination();
-                                                    provider.loadNextPage(
                                                       companyId: widget
                                                           .data
                                                           .data
@@ -258,6 +261,25 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
                                                           .party
                                                           .ledgerId,
                                                     );
+
+                                                    // provider.resetPagination();
+                                                    // provider.loadNextPage(
+                                                    //   companyId: widget
+                                                    //       .data
+                                                    //       .data
+                                                    //       .company
+                                                    //       .id!,
+                                                    //   priceListId:
+                                                    //       widget
+                                                    //           .data
+                                                    //           .party
+                                                    //           .priceList ??
+                                                    //       0,
+                                                    //   ledgerId: widget
+                                                    //       .data
+                                                    //       .party
+                                                    //       .ledgerId,
+                                                    // );
                                                   },
                                                 );
                                               },
@@ -268,43 +290,36 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
 
                                           /// CATEGORY
                                           Expanded(
-                                            child:
-                                                StreamBuilder<
-                                                  List<CategoryModel>
-                                                >(
-                                                  stream: sl<ItemMasterSync>()
-                                                      .categoryList(
-                                                        widget
-                                                                .data
-                                                                .data
-                                                                .company
-                                                                .id ??
-                                                            0,
-                                                      ),
-                                                  builder: (_, snapshot) {
-                                                    final categories =
-                                                        snapshot.data
-                                                            ?.map(
-                                                              (e) =>
-                                                                  e.catgoryName,
-                                                            )
-                                                            .toList() ??
-                                                        ['All'];
-
-                                                    return CustomDropdown<
-                                                      String
-                                                    >(
-                                                      items: categories,
-                                                      hintText: appLocalization
-                                                          .order_booking_add_item_select_category,
-                                                      onChanged: (v) {
-                                                        provider.selectCategory(
+                                            child: StreamBuilder<List<CategoryModel>>(
+                                              stream: sl<ItemMasterSync>()
+                                                  .categoryList(
+                                                    widget
+                                                            .data
+                                                            .data
+                                                            .company
+                                                            .id ??
+                                                        0,
+                                                  ),
+                                              builder: (_, snapshot) {
+                                                final dbcategories =
+                                                    snapshot.data
+                                                        ?.map(
+                                                          (e) => e.catgoryName,
+                                                        )
+                                                        .toList() ??
+                                                    [];
+                                                final categories = [
+                                                  'All',
+                                                  ...dbcategories,
+                                                ];
+                                                return CustomDropdown<String>(
+                                                  items: categories,
+                                                  hintText: appLocalization
+                                                      .order_booking_add_item_select_category,
+                                                  onChanged: (v) async {
+                                                    await provider
+                                                        .selectCategory(
                                                           v ?? 'All',
-                                                        );
-
-                                                        provider
-                                                            .resetPagination();
-                                                        provider.loadNextPage(
                                                           companyId: widget
                                                               .data
                                                               .data
@@ -321,10 +336,29 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
                                                               .party
                                                               .ledgerId,
                                                         );
-                                                      },
-                                                    );
+
+                                                    // provider.resetPagination();
+                                                    // provider.loadNextPage(
+                                                    //   companyId: widget
+                                                    //       .data
+                                                    //       .data
+                                                    //       .company
+                                                    //       .id!,
+                                                    //   priceListId:
+                                                    //       widget
+                                                    //           .data
+                                                    //           .party
+                                                    //           .priceList ??
+                                                    //       0,
+                                                    //   ledgerId: widget
+                                                    //       .data
+                                                    //       .party
+                                                    //       .ledgerId,
+                                                    // );
                                                   },
-                                                ),
+                                                );
+                                              },
+                                            ),
                                           ),
                                         ],
                                       ),
