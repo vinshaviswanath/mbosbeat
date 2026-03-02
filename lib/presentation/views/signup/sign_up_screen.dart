@@ -243,6 +243,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
 
             bottomNavigationBar: SafeArea(
+              top: false,
               child: Padding(
                 padding: const EdgeInsets.only(left: 16, right: 16, bottom: 24),
                 child: CustomButton(

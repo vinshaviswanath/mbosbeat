@@ -168,6 +168,118 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
                         ),
                       ),
 
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 8,
+                        ),
+                        child: Row(
+                          children: [
+                            /// GROUP
+                            Expanded(
+                              child: StreamBuilder<List<GroupModel>>(
+                                stream: sl<ItemMasterSync>().groupNameList(
+                                  widget.data.data.company.id ?? 0,
+                                ),
+                                builder: (_, snapshot) {
+                                  final dbGroups =
+                                      snapshot.data
+                                          ?.map((e) => e.groupName)
+                                          .toList() ??
+                                      [];
+                                  final groups = ['All', ...dbGroups];
+                                  return CustomDropdown<String>(
+                                    items: groups,
+                                    hintText: appLocalization
+                                        .order_booking_add_item_select_group,
+                                    onChanged: (v) async {
+                                      await transactionProvider.selectGroup(
+                                        v ?? 'All',
+                                        companyId: widget.data.data.company.id!,
+                                        priceListId:
+                                            widget.data.party.priceList ?? 0,
+                                        ledgerId: widget.data.party.ledgerId,
+                                      );
+
+                                      // provider.resetPagination();
+                                      // provider.loadNextPage(
+                                      //   companyId: widget
+                                      //       .data
+                                      //       .data
+                                      //       .company
+                                      //       .id!,
+                                      //   priceListId:
+                                      //       widget
+                                      //           .data
+                                      //           .party
+                                      //           .priceList ??
+                                      //       0,
+                                      //   ledgerId: widget
+                                      //       .data
+                                      //       .party
+                                      //       .ledgerId,
+                                      // );
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
+
+                            w8,
+
+                            /// CATEGORY
+                            Expanded(
+                              child: StreamBuilder<List<CategoryModel>>(
+                                stream: sl<ItemMasterSync>().categoryList(
+                                  widget.data.data.company.id ?? 0,
+                                ),
+                                builder: (_, snapshot) {
+                                  final dbcategories =
+                                      snapshot.data
+                                          ?.map((e) => e.catgoryName)
+                                          .toList() ??
+                                      [];
+                                  final categories = ['All', ...dbcategories];
+                                  return CustomDropdown<String>(
+                                    items: categories,
+                                    hintText: appLocalization
+                                        .order_booking_add_item_select_category,
+                                    onChanged: (v) async {
+                                      await transactionProvider.selectCategory(
+                                        v ?? 'All',
+                                        companyId: widget.data.data.company.id!,
+                                        priceListId:
+                                            widget.data.party.priceList ?? 0,
+                                        ledgerId: widget.data.party.ledgerId,
+                                      );
+
+                                      // provider.resetPagination();
+                                      // provider.loadNextPage(
+                                      //   companyId: widget
+                                      //       .data
+                                      //       .data
+                                      //       .company
+                                      //       .id!,
+                                      //   priceListId:
+                                      //       widget
+                                      //           .data
+                                      //           .party
+                                      //           .priceList ??
+                                      //       0,
+                                      //   ledgerId: widget
+                                      //       .data
+                                      //       .party
+                                      //       .ledgerId,
+                                      // );
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
                       /// ===================== PRODUCT LIST =====================
                       Expanded(
                         child: Consumer<CustomerTransactionProvider>(
@@ -205,166 +317,6 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
                                 keyboardDismissBehavior:
                                     ScrollViewKeyboardDismissBehavior.onDrag,
                                 slivers: [
-                                  /// ================= FILTERS =================
-                                  SliverToBoxAdapter(
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 16,
-                                        vertical: 8,
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          /// GROUP
-                                          Expanded(
-                                            child: StreamBuilder<List<GroupModel>>(
-                                              stream: sl<ItemMasterSync>()
-                                                  .groupNameList(
-                                                    widget
-                                                            .data
-                                                            .data
-                                                            .company
-                                                            .id ??
-                                                        0,
-                                                  ),
-                                              builder: (_, snapshot) {
-                                                final dbGroups =
-                                                    snapshot.data
-                                                        ?.map(
-                                                          (e) => e.groupName,
-                                                        )
-                                                        .toList() ??
-                                                    [];
-                                                final groups = [
-                                                  'All',
-                                                  ...dbGroups,
-                                                ];
-                                                return CustomDropdown<String>(
-                                                  items: groups,
-                                                  hintText: appLocalization
-                                                      .order_booking_add_item_select_group,
-                                                  onChanged: (v) async {
-                                                    await provider.selectGroup(
-                                                      v ?? 'All',
-                                                      companyId: widget
-                                                          .data
-                                                          .data
-                                                          .company
-                                                          .id!,
-                                                      priceListId:
-                                                          widget
-                                                              .data
-                                                              .party
-                                                              .priceList ??
-                                                          0,
-                                                      ledgerId: widget
-                                                          .data
-                                                          .party
-                                                          .ledgerId,
-                                                    );
-
-                                                    // provider.resetPagination();
-                                                    // provider.loadNextPage(
-                                                    //   companyId: widget
-                                                    //       .data
-                                                    //       .data
-                                                    //       .company
-                                                    //       .id!,
-                                                    //   priceListId:
-                                                    //       widget
-                                                    //           .data
-                                                    //           .party
-                                                    //           .priceList ??
-                                                    //       0,
-                                                    //   ledgerId: widget
-                                                    //       .data
-                                                    //       .party
-                                                    //       .ledgerId,
-                                                    // );
-                                                  },
-                                                );
-                                              },
-                                            ),
-                                          ),
-
-                                          w8,
-
-                                          /// CATEGORY
-                                          Expanded(
-                                            child: StreamBuilder<List<CategoryModel>>(
-                                              stream: sl<ItemMasterSync>()
-                                                  .categoryList(
-                                                    widget
-                                                            .data
-                                                            .data
-                                                            .company
-                                                            .id ??
-                                                        0,
-                                                  ),
-                                              builder: (_, snapshot) {
-                                                final dbcategories =
-                                                    snapshot.data
-                                                        ?.map(
-                                                          (e) => e.catgoryName,
-                                                        )
-                                                        .toList() ??
-                                                    [];
-                                                final categories = [
-                                                  'All',
-                                                  ...dbcategories,
-                                                ];
-                                                return CustomDropdown<String>(
-                                                  items: categories,
-                                                  hintText: appLocalization
-                                                      .order_booking_add_item_select_category,
-                                                  onChanged: (v) async {
-                                                    await provider
-                                                        .selectCategory(
-                                                          v ?? 'All',
-                                                          companyId: widget
-                                                              .data
-                                                              .data
-                                                              .company
-                                                              .id!,
-                                                          priceListId:
-                                                              widget
-                                                                  .data
-                                                                  .party
-                                                                  .priceList ??
-                                                              0,
-                                                          ledgerId: widget
-                                                              .data
-                                                              .party
-                                                              .ledgerId,
-                                                        );
-
-                                                    // provider.resetPagination();
-                                                    // provider.loadNextPage(
-                                                    //   companyId: widget
-                                                    //       .data
-                                                    //       .data
-                                                    //       .company
-                                                    //       .id!,
-                                                    //   priceListId:
-                                                    //       widget
-                                                    //           .data
-                                                    //           .party
-                                                    //           .priceList ??
-                                                    //       0,
-                                                    //   ledgerId: widget
-                                                    //       .data
-                                                    //       .party
-                                                    //       .ledgerId,
-                                                    // );
-                                                  },
-                                                );
-                                              },
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-
                                   /// ================= ITEMS =================
                                   SliverList(
                                     delegate: SliverChildBuilderDelegate(

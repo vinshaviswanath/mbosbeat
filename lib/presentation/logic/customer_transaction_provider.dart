@@ -7,13 +7,349 @@ import 'package:mpos_beat/presentation/views/transactions/transaction_order_book
 class CustomerTransactionProvider extends ChangeNotifier {
   CustomerTransactionProvider();
 
-  // ===================== ITEM SOURCE =====================
+  /// ---------------------------------------------------------------------------
+  /// CustomerTransactionProvider
+  /// ---------------------------------------------------------------------------
+  ///
+  /// This provider manages the complete business logic for:
+  ///
+  /// • Product listing (stream + pagination)
+  /// • Item selection & quantity handling
+  /// • Discount calculations
+  /// • Tax calculations (CGST / SGST / CESS)
+  /// • Unit conversion
+  /// • Filtering (Group / Category / Search)
+  /// • Pagination with caching
+  ///
+  /// It is designed to power the "Add Item" screen in a transaction flow.
+  ///
+  /// Architecture style:
+  /// - State stored locally in memory
+  /// - Notifies UI using ChangeNotifier
+  /// - Supports incremental pagination
+  /// - Supports multi-slab tax calculation
+  ///
+  /// ---------------------------------------------------------------------------
+  // =========================================================
+  // ======================== VARIABLES =======================
+  // =========================================================
+
+  // -------------------------------------------------------------------------
+  // ITEM SOURCE
+  // -------------------------------------------------------------------------
+
+  /// Broadcast stream that provides product updates.
+  /// Attached using [attachItemsStream].
   late Stream<List<Product>> _itemsStream;
+
+  /// Holds the complete in-memory product list.
+  /// Used for filtering and group/category stream generation.
   List<Product> _allItems = [];
 
+  /// Cached normal (unfiltered) paginated list.
+  /// Used to quickly restore state when search/filter is cleared.
   List<Product> _normalCache = [];
+
+  /// Stores the page index when cache was last updated.
   int _normalCachePage = 0;
+
+  /// Indicates whether a valid normal cache exists.
   bool _hasNormalCache = false;
+
+  // -------------------------------------------------------------------------
+  // ITEM STATE (Transaction Level)
+  // -------------------------------------------------------------------------
+  /// Stores quantity per itemId.
+  final Map<int, double> _itemQty = {};
+
+  /// Stores computed net total (after discount) per itemId.
+  final Map<int, double> _itemTotal = {};
+
+  /// Stores inclusive rate per itemId.
+  /// This is important for recalculation when discount changes.
+  final Map<int, double> _itemInclusiveRate = {};
+
+  /// Stores selected quantity unit per itemId.
+  final Map<int, String> _selectedQtyUnit = {};
+
+  /// Stores selected free quantity unit per itemId.
+  final Map<int, String> _selectedFreeUnit = {};
+
+  /// Stores discount value per itemId.
+  final Map<int, double> _itemDiscount = {};
+
+  /// Stores discount type (percentage or amount) per itemId.
+  final Map<int, DiscountType> _discountType = {};
+
+  /// Stores free quantity per itemId.
+  final Map<int, double> _freeQty = {};
+
+  /// Stores full Product object for selected items.
+  /// Used for tax & subtotal calculations.
+  final Map<int, Product> _selectedItemObjects = {};
+
+  /// Stores selected itemIds.
+  final Set<int> _selectedItems = {};
+
+  /// Stores currently expanded itemId in UI.
+  int? expandedItemId;
+
+  /// Stores selected price level (if multi price level support).
+  int? selectedPriceLevelId;
+
+  /// Stores selected UI index (for selection highlighting).
+  int? _selectedIndex;
+
+  // -------------------------------------------------------------------------
+  // FILTER STATE
+  // -------------------------------------------------------------------------
+
+  /// Current search keyword.
+  String _search = '';
+
+  /// Selected group filter.
+  String _selectedGroup = 'All';
+
+  /// Selected category filter.
+  String _selectedCategory = 'All';
+
+  // -------------------------------------------------------------------------
+  // PAGINATION STATE
+  // -------------------------------------------------------------------------
+
+  /// Currently loaded paginated items.
+  List<Product> _pagedItems = [];
+
+  /// Current page index.
+  int _page = 0;
+
+  /// Items per page limit.
+  final int _limit = 100;
+
+  /// Prevents multiple concurrent API calls.
+  bool _isLoadingPage = false;
+
+  /// Indicates if more pages are available.
+  bool _hasMore = true;
+
+  // -------------------------------------------------------------------------
+  // TAX RATES (Default Slab)
+  // -------------------------------------------------------------------------
+
+  /// Default CGST rate.
+  final double cgstRate = 9;
+
+  /// Default SGST rate.
+  final double sgstRate = 9;
+
+  /// Default CESS rate.
+  final double cessRate = 0;
+
+  // =========================================================
+  // ======================== GETTERS =========================
+  // =========================================================
+
+  /// Returns selected item IDs.
+  Set<int> get selectedItemIds => _selectedItems;
+
+  /// Returns currently selected index.
+  int? get selectedIndex => _selectedIndex;
+
+  /// Returns pagination loading state.
+  bool get isLoadingPage => _isLoadingPage;
+
+  /// Returns whether more pages exist.
+  bool get hasMore => _hasMore;
+
+  /// Returns current search value.
+  String get searchValue => _search;
+
+  /// Returns selected group.
+  String get selectedGroup => _selectedGroup;
+
+  /// Returns selected category.
+  String get selectedCategory => _selectedCategory;
+
+  /// Returns paginated items.
+  List<Product> get pagedItems => _pagedItems;
+
+  /// Returns subtotal of selected items (after discount).
+  double get subTotal => _itemTotal.values.fold(0.0, (sum, v) => sum + v);
+
+  /// Grand total currently equals subtotal.
+  /// (Tax added separately in billTotal)
+  double get grandTotal => subTotal;
+
+  /// Total bill including tax.
+  double get billTotal => subTotal + totalCgst + totalSgst;
+
+  /// Number of selected items.
+  int get selectedItemCount => _selectedItems.length;
+
+  /// Total quantity of all selected items.
+  double get totalQty => _itemQty.values.fold(0.0, (sum, v) => sum + v);
+
+  /// CGST based on subtotal.
+  double get cgst => subTotal * cgstRate / 100;
+
+  /// SGST based on subtotal.
+  double get sgst => subTotal * sgstRate / 100;
+
+  /// CESS based on subtotal.
+  double get cess => subTotal * cessRate / 100;
+
+  // =========================================================
+  // ======================== TAX LOGIC =======================
+  // =========================================================
+
+  /// Calculates subtotal BEFORE tax but AFTER discount.
+  double get billSubTotal {
+    double total = 0;
+
+    for (final itemId in _selectedItems) {
+      final item = _selectedItemObjects[itemId];
+      if (item == null) continue;
+
+      final qty = _itemQty[itemId] ?? 0;
+      final discount = _itemDiscount[itemId] ?? 0;
+      final type = _discountType[itemId];
+
+      double base = item.rate * qty;
+
+      // Apply discount BEFORE tax calculation
+      if (type == DiscountType.percentage) {
+        base -= base * discount / 100;
+      } else if (type == DiscountType.amount) {
+        base -= discount;
+      }
+
+      total += base.clamp(0, double.infinity);
+    }
+
+    return total;
+  }
+
+  /// Calculates total CGST across all selected items.
+  /// Supports multi tax slab via product.taxPercent.
+  double get totalCgst {
+    double cgst = 0;
+
+    for (final itemId in _selectedItems) {
+      final product = _selectedItemObjects[itemId];
+      if (product == null) continue;
+
+      double base = _calculateDiscountedBase(product, itemId);
+
+      cgst += base * (product.taxPercent / 2) / 100;
+    }
+
+    return cgst;
+  }
+
+  /// Calculates total SGST across all selected items.
+  double get totalSgst {
+    double sgst = 0;
+
+    for (final itemId in _selectedItems) {
+      final product = _selectedItemObjects[itemId];
+      if (product == null) continue;
+
+      double base = _calculateDiscountedBase(product, itemId);
+
+      sgst += base * (product.taxPercent / 2) / 100;
+    }
+
+    return sgst;
+  }
+
+  /// Calculates total CESS across all selected items.
+  double get totalCess {
+    double cess = 0;
+
+    for (final itemId in _selectedItems) {
+      final product = _selectedItemObjects[itemId];
+      if (product == null) continue;
+
+      final base = _itemTotal[itemId] ?? 0;
+      cess += base * (product.cess ?? 0) / 100;
+    }
+
+    return cess;
+  }
+
+  /// Helper: calculates discounted base before tax.
+  double _calculateDiscountedBase(Product product, int itemId) {
+    final qty = _itemQty[itemId] ?? 0;
+    final discount = _itemDiscount[itemId] ?? 0;
+    final type = _discountType[itemId];
+
+    double base = product.rate * qty;
+
+    if (type == DiscountType.percentage) {
+      base -= base * discount / 100;
+    } else if (type == DiscountType.amount) {
+      base -= discount;
+    }
+
+    return base.clamp(0, double.infinity);
+  }
+
+  List<Product> get sortedPagedItems {
+    final selectedItems = _selectedItemObjects.values.toList();
+
+    final pageItems = _pagedItems.where(
+      (item) => !_selectedItems.contains(item.stockItemId),
+    );
+
+    return [...selectedItems, ...pageItems];
+  }
+
+  List<SelectedOrderItem> get selectedOrderItems {
+    final list = <SelectedOrderItem>[];
+
+    for (final itemId in _selectedItems) {
+      final item = _selectedItemObjects[itemId];
+      if (item == null) continue;
+
+      final qty = _itemQty[itemId] ?? 0;
+      final discount = _itemDiscount[itemId] ?? 0;
+
+      final exclusiveRate = item.rate;
+      final taxPercent = item.taxPercent;
+
+      final sub = exclusiveRate * qty;
+
+      double net = sub;
+      final type = _discountType[itemId];
+
+      if (type == DiscountType.percentage) {
+        net -= sub * discount / 100;
+      } else if (type == DiscountType.amount) {
+        net -= discount;
+      }
+
+      final tax = net * taxPercent / 100;
+      final finalAmount = net + tax;
+
+      final amount = qty * exclusiveRate;
+      final inclRate = qty > 0 ? finalAmount / qty : 0;
+
+      list.add(
+        SelectedOrderItem(
+          item: item,
+          qty: qty,
+          rate: exclusiveRate,
+          discount: discount,
+          amount: amount,
+          inclRate: inclRate.toDouble(),
+        ),
+      );
+    }
+
+    return list;
+  }
+
+  // ===================== ITEM SOURCE =====================
 
   void setProducts(List<Product> products) {
     _allItems = products;
@@ -29,24 +365,9 @@ class CustomerTransactionProvider extends ChangeNotifier {
   }
 
   // ===================== ITEM STATE =====================
-  final Map<int, double> _itemQty = {};
-  final Map<int, double> _itemTotal = {};
-  final Map<int, String> _selectedQtyUnit = {};
-  final Map<int, String> _selectedFreeUnit = {};
-  final Set<int> _selectedItems = {};
-
-  Set<int> get selectedItemIds => _selectedItems;
-
-  final Map<int, double> _itemDiscount = {};
-  final Map<int, DiscountType> _discountType = {};
   bool hasDiscount(int itemId) {
     return _itemDiscount.containsKey(itemId);
   }
-
-  int? expandedItemId;
-  int? selectedPriceLevelId;
-
-  Map<int, double> _freeQty = {};
 
   bool hasFreeQty(int id) => _freeQty.containsKey(id);
 
@@ -71,18 +392,7 @@ class CustomerTransactionProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ===================== TAX =====================
-  final double cgstRate = 9;
-  final double sgstRate = 9;
-  final double cessRate = 0;
-
-  double get cgst => subTotal * cgstRate / 100;
-  double get sgst => subTotal * sgstRate / 100;
-  double get cess => subTotal * cessRate / 100;
-
   // ===================== INDEX SELECTION =====================
-  int? _selectedIndex;
-  int? get selectedIndex => _selectedIndex;
 
   bool isSelectedByIndex(int index) => _selectedIndex == index;
 
@@ -99,30 +409,8 @@ class CustomerTransactionProvider extends ChangeNotifier {
   // ===================== ITEM SELECTION =====================
   bool isSelected(int itemId) => _selectedItems.contains(itemId);
 
-  // ===================== TOTALS =====================
-  double get subTotal => _itemTotal.values.fold(0.0, (sum, v) => sum + v);
-
-  // double get billSubTotal =>
-
-  double get grandTotal => _itemTotal.values.fold(0.0, (sum, v) => sum + v);
-
-  double get billTotal => subTotal + totalCgst + totalSgst;
-
-  int get selectedItemCount => _selectedItems.length;
-
-  final Map<int, Product> _selectedItemObjects = {};
-
-  double get totalQty {
-    double qty = 0;
-    for (final q in _itemQty.values) {
-      qty += q;
-    }
-    return qty;
-  }
-
   // ===================== ITEM ACTIONS =====================
   double getQty(int itemId) => _itemQty[itemId] ?? 0;
-  final Map<int, double> _itemInclusiveRate = {};
 
   void updateQty(int itemId, double qty, double inclRate, {Product? item}) {
     if (qty <= 0) {
@@ -279,15 +567,6 @@ class CustomerTransactionProvider extends ChangeNotifier {
 
     _itemTotal[itemId] = net.clamp(0, double.infinity);
   }
-
-  // ===================== FILTER STATE =====================
-  String _search = '';
-  String _selectedGroup = 'All';
-  String _selectedCategory = 'All';
-
-  String get searchValue => _search;
-  String get selectedGroup => _selectedGroup;
-  String get selectedCategory => _selectedCategory;
 
   // ===================== GROUP STREAM =====================
   Stream<List<String>> get groupStream async* {
@@ -446,57 +725,6 @@ class CustomerTransactionProvider extends ChangeNotifier {
     return list;
   }
 
-  List<SelectedOrderItem> get selectedOrderItems {
-    final list = <SelectedOrderItem>[];
-
-    for (final itemId in _selectedItems) {
-      final item = _selectedItemObjects[itemId];
-      if (item == null) continue;
-
-      final qty = _itemQty[itemId] ?? 0;
-      final discount = _itemDiscount[itemId] ?? 0;
-
-      /// exclusive rate snapshot
-      final exclusiveRate = item.rate;
-
-      final taxPercent = item.taxPercent;
-
-      /// subtotal before tax
-      final sub = exclusiveRate * qty;
-
-      /// discount apply
-      double net = sub;
-      final type = _discountType[itemId];
-
-      if (type == DiscountType.percentage) {
-        net -= sub * discount / 100;
-      } else if (type == DiscountType.amount) {
-        net -= discount;
-      }
-
-      /// tax
-      final tax = net * taxPercent / 100;
-
-      final finalAmount = net + tax;
-
-      final amount = qty * exclusiveRate;
-      final inclRate = qty > 0 ? finalAmount / qty : 0;
-
-      list.add(
-        SelectedOrderItem(
-          item: item,
-          qty: qty,
-          rate: exclusiveRate,
-          discount: discount,
-          amount: amount,
-          inclRate: inclRate.toDouble(),
-        ),
-      );
-    }
-
-    return list;
-  }
-
   // // ===================== QTY =====================
   // double getQty(int itemId) => _itemQty[itemId] ?? 0;
 
@@ -515,18 +743,13 @@ class CustomerTransactionProvider extends ChangeNotifier {
     return baseRate * conversion;
   }
 
-  //pagination
-  List<Product> _pagedItems = [];
-  List<Product> get pagedItems => _pagedItems;
+  // =========================================================
+  // ======================== PAGINATION ======================
+  // =========================================================
 
-  int _page = 0;
-  final int _limit = 100;
+  /// Loads next page from backend.
+  /// Prevents duplicate loading & merges unique items.
 
-  bool _isLoadingPage = false;
-  bool _hasMore = true;
-
-  bool get isLoadingPage => _isLoadingPage;
-  bool get hasMore => _hasMore;
   void resetPagination() {
     _pagedItems.clear();
     _page = 0;
@@ -555,7 +778,6 @@ class CustomerTransactionProvider extends ChangeNotifier {
       offset: _page * _limit,
     );
 
-    /// prevent duplicates
     final newItems = result
         .where((e) => !_pagedItems.any((p) => p.stockItemId == e.stockItemId))
         .toList();
@@ -576,16 +798,6 @@ class CustomerTransactionProvider extends ChangeNotifier {
 
     _isLoadingPage = false;
     notifyListeners();
-  }
-
-  List<Product> get sortedPagedItems {
-    final selectedItems = _selectedItemObjects.values.toList();
-
-    final pageItems = _pagedItems.where(
-      (item) => !_selectedItems.contains(item.stockItemId),
-    );
-
-    return [...selectedItems, ...pageItems];
   }
 
   Future<void> searchAndReload(
@@ -673,106 +885,5 @@ class CustomerTransactionProvider extends ChangeNotifier {
   void clearOrder() {
     _selectedItems.clear();
     notifyListeners();
-  }
-
-  double get billSubTotal {
-    double total = 0;
-
-    for (final itemId in _selectedItems) {
-      final item = _selectedItemObjects[itemId];
-      if (item == null) continue;
-
-      final qty = _itemQty[itemId] ?? 0;
-      final discount = _itemDiscount[itemId] ?? 0;
-      final type = _discountType[itemId];
-
-      double base = item.rate * qty;
-
-      /// apply discount BEFORE tax
-      if (type == DiscountType.percentage) {
-        base -= base * discount / 100;
-      } else if (type == DiscountType.amount) {
-        base -= discount;
-      }
-
-      total += base.clamp(0, double.infinity);
-    }
-
-    return total;
-  }
-
-  // Total CGST (multi slab)
-  double get totalCgst {
-    double cgst = 0;
-
-    for (final itemId in _selectedItems) {
-      final product = _selectedItemObjects[itemId];
-      if (product == null) continue;
-
-      final qty = _itemQty[itemId] ?? 0;
-      final discount = _itemDiscount[itemId] ?? 0;
-      final type = _discountType[itemId];
-
-      /// exclusive base
-      double base = product.rate * qty;
-
-      /// apply discount BEFORE tax
-      if (type == DiscountType.percentage) {
-        base -= base * discount / 100;
-      } else if (type == DiscountType.amount) {
-        base -= discount;
-      }
-
-      final taxPercent = product.taxPercent;
-
-      cgst += base * (taxPercent / 2) / 100;
-    }
-
-    return cgst;
-  }
-
-  // Total SGST
-  double get totalSgst {
-    double sgst = 0;
-
-    for (final itemId in _selectedItems) {
-      final product = _selectedItemObjects[itemId];
-      if (product == null) continue;
-
-      final qty = _itemQty[itemId] ?? 0;
-      final discount = _itemDiscount[itemId] ?? 0;
-      final type = _discountType[itemId];
-
-      double base = product.rate * qty;
-
-      if (type == DiscountType.percentage) {
-        base -= base * discount / 100;
-      } else if (type == DiscountType.amount) {
-        base -= discount;
-      }
-
-      final taxPercent = product.taxPercent;
-
-      sgst += base * (taxPercent / 2) / 100;
-    }
-
-    return sgst;
-  }
-
-  // Total Cess
-  double get totalCess {
-    double cess = 0;
-
-    for (final itemId in _selectedItems) {
-      final product = _selectedItemObjects[itemId];
-      if (product == null) continue;
-
-      final base = _itemTotal[itemId] ?? 0;
-      final cessPercent = product.cess ?? 0;
-
-      cess += base * cessPercent / 100;
-    }
-
-    return cess;
   }
 }
