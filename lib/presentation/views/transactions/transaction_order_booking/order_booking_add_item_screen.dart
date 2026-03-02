@@ -21,7 +21,7 @@ class OrderBookingAddItemScreen extends StatefulWidget {
 }
 
 class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
-  // Timer? _debounce;
+  Timer? _debounce;
   late TextEditingController _searchController;
 
   @override
