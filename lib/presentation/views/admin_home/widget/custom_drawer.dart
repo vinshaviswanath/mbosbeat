@@ -681,7 +681,8 @@ class _CustomDrawerState extends State<CustomDrawer>
                                     ),
                                     h8,
                                     Row(
-                                      mainAxisAlignment: .center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           "Version: $appVersion",

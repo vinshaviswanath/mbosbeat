@@ -172,34 +172,6 @@ class _TransactionOrderBookingScreenState
                                       .indigoBlue
                                       .roboto,
                                 ),
-                                GestureDetector(
-                                  onTap: () {
-                                    context.pushNamed(
-                                      AppRouterConst.orderBookingAddItemScreen,
-                                      extra: TransactionOrderBookingRouteArgs(
-                                        data: widget.data.data,
-                                        party: widget.data.party,
-                                        vchTyp: widget.data.vchTyp,
-                                      ),
-                                    );
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 15,
-                                      vertical: 4,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      color: ColorResources.rosePink,
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        appLocalizations.add_item,
-                                        style: context.textStyle.s10.white.w400,
-                                      ),
-                                    ),
-                                  ),
-                                ),
                               ],
                             ),
                             h4,
@@ -383,6 +355,40 @@ class _TransactionOrderBookingScreenState
                               ],
                             ),
                             h4,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    context.pushNamed(
+                                      AppRouterConst.orderBookingAddItemScreen,
+                                      extra: TransactionOrderBookingRouteArgs(
+                                        data: widget.data.data,
+                                        party: widget.data.party,
+                                        vchTyp: widget.data.vchTyp,
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 15,
+                                      vertical: 4,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: ColorResources.rosePink,
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        appLocalizations.add_item,
+                                        style: context.textStyle.s10.white.w400,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            h4,
                             Divider(
                               thickness: 1,
                               color: ColorResources.bluishGray.withValues(
@@ -400,7 +406,7 @@ class _TransactionOrderBookingScreenState
                         child: Column(
                           children: [
                             Row(
-                              mainAxisAlignment: .end,
+                              mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Expanded(
                                   flex: 2,
@@ -766,7 +772,6 @@ class _TransactionOrderBookingScreenState
 
                                               txn.clearSelectedItems();
                                               remarkController.clear();
-                                              Navigator.pop(context);
                                             },
                                           );
                                         } else {}
@@ -831,7 +836,7 @@ class OrderItemTile extends StatelessWidget {
         children: [
           /// Item Name
           SizedBox(
-            width: context.getSize.width * 0.25,
+            width: context.getSize.width,
             child: Text(
               item.itemName,
               style: const TextStyle(
@@ -841,7 +846,7 @@ class OrderItemTile extends StatelessWidget {
               ),
             ),
           ),
-
+          h4,
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -1033,7 +1038,7 @@ Future<void> saveOrder({
               cgst: Value(txn.cgst),
               sgst: Value(txn.sgst),
               disc: Value(item.discount),
-             // fQty: Value(item.freeQty),
+              // fQty: Value(item.freeQty),
               fUnit: Value(item.item.unitName),
               itemName: Value(item.item.itemName),
               rate: Value(item.amount),

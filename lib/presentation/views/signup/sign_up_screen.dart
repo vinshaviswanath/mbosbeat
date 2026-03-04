@@ -77,7 +77,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
-                      crossAxisAlignment: .start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           appLocalization.sign_up_company_name,
@@ -94,7 +94,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           backgroundColor: ColorResources.lightGray,
                           autovalidateMode: provider.registerAutovalidateMode,
                           failure: provider.companyName.getFailure,
-                          inputFormatters: [noSpaceFormatter],
+                          // inputFormatters: [noSpaceFormatter],
                           onChange: provider.updateCompanyName,
                           inputType: TextInputType.emailAddress,
                           borderRadius: 12,

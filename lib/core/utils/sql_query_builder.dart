@@ -93,3 +93,92 @@ class SqlQueryBuilder {
     return buffer.toString();
   }
 }
+
+class QueryBuilder {
+  final List<String> _selectColumns = [];
+  String? _fromTable;
+  final List<String> _joins = [];
+  final List<String> _whereConditions = [];
+  final List<dynamic> _args = [];
+  final List<String> _groupBy = [];
+  String? _orderBy;
+  int? _limit;
+  int? _offset;
+
+  QueryBuilder select(List<String> columns) {
+    _selectColumns.addAll(columns);
+    return this;
+  }
+
+  QueryBuilder from(String table) {
+    _fromTable = table;
+    return this;
+  }
+
+  QueryBuilder join(String joinSql, [List<dynamic>? args]) {
+    _joins.add(joinSql);
+    if (args != null) {
+      _args.addAll(args);
+    }
+    return this;
+  }
+
+  QueryBuilder where(String condition, [List<dynamic>? args]) {
+    _whereConditions.add(condition);
+    if (args != null) {
+      _args.addAll(args);
+    }
+    return this;
+  }
+
+  QueryBuilder orderBy(String order) {
+    _orderBy = order;
+    return this;
+  }
+
+  QueryBuilder limit(int limit) {
+    _limit = limit;
+    return this;
+  }
+
+  QueryBuilder offset(int offset) {
+    _offset = offset;
+    return this;
+  }
+
+  (String, List<dynamic>) build() {
+    final buffer = StringBuffer();
+
+    buffer.write(
+      'SELECT ${_selectColumns.isNotEmpty ? _selectColumns.join(", ") : "*"}\n',
+    );
+
+    if (_fromTable != null) buffer.write('FROM $_fromTable\n');
+
+    if (_joins.isNotEmpty) {
+      buffer.writeln(_joins.join("\n"));
+    }
+
+    if (_whereConditions.isNotEmpty) {
+      buffer.writeln('WHERE ${_whereConditions.join(' AND ')}');
+    }
+
+    if (_groupBy.isNotEmpty) {
+      buffer.writeln('GROUP BY ${_groupBy.join(", ")}');
+    }
+
+    if (_orderBy != null) {
+      buffer.writeln('ORDER BY $_orderBy');
+    }
+
+    if (_limit != null) {
+      buffer.writeln('LIMIT $_limit');
+    }
+
+    if (_offset != null) {
+      buffer.writeln('OFFSET $_offset');
+    }
+
+    return (buffer.toString(), _args);
+  }
+}

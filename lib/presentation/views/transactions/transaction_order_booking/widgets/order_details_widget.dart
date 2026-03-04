@@ -1,5 +1,7 @@
 import 'package:flutter/services.dart';
+import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/models/product.dart';
 import 'package:mpos_beat/presentation/logic/customer_transaction_provider.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/transaction_order_booking_screen.dart';
@@ -63,6 +65,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final appDb = sl<AppDb>();
     final appLocalization = context.l10n;
     final provider = context.watch<CustomerTransactionProvider>();
 
@@ -90,16 +93,16 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
       _initializedDiscountType = discountType;
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
-     if (!provider.hasDiscount(widget.itemId)) {
+        if (!provider.hasDiscount(widget.itemId)) {
           provider.setInitialDiscount(
             widget.itemId,
             discountValue,
             discountType,
           );
         }
-       provider.setInitialDiscount(widget.itemId, discountValue, discountType);
+        provider.setInitialDiscount(widget.itemId, discountValue, discountType);
         _discountController.text = _formatDiscount(discountValue, discountType);
-     });
+      });
     }
 
     final currentDiscountType =
@@ -132,7 +135,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
     }
 
     /// ---------------- UNIT ----------------
-   final String selectedUnit = provider.getSelectedUnit(
+    final String selectedUnit = provider.getSelectedUnit(
       widget.itemId,
       widget.item,
     );
@@ -141,10 +144,10 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
       widget.itemId,
       widget.item,
     );
-  // final String selectedUnit = provider.getSelectedUnit(
-  //     widget.itemId,
-  //     widget.item,
-  //   );
+    // final String selectedUnit = provider.getSelectedUnit(
+    //     widget.itemId,
+    //     widget.item,
+    //   );
 
     /// ---------------- RATE (EXCLUSIVE) ----------------
     final double rate = provider.getConvertedRate(
@@ -244,7 +247,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                                       (u) => DropdownMenuItem(
                                         value: u,
                                         child: Text(
-                                         u,
+                                          u,
                                           style: context
                                               .textStyle
                                               .s10
@@ -269,9 +272,9 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                               size: context.getSize.height * 0.016,
                               color: ColorResources.dustyBlue,
                             ),
-                    //  qty.toStringAsFixed(0),
-                         //   style: context.textStyle.s10.w500.dustyBlue.roboto,
-                    ),
+                            //  qty.toStringAsFixed(0),
+                            //   style: context.textStyle.s10.w500.dustyBlue.roboto,
+                          ),
                         ),
                       ),
                       w6,
@@ -279,9 +282,10 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                         children: [
                           QtyButton(
                             icon: Icons.remove,
-         onTap: () =>
+                            onTap: () =>
                                 provider.decrementQty(widget.itemId, inclRate),
-                          ), h4,
+                          ),
+                          h4,
                           QtyButton(
                             icon: Icons.add,
                             onTap: () => provider.incrementQty(
@@ -306,53 +310,68 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
               ),
 
               /// DISCOUNT
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    appLocalization.discount,
-                    style: context.textStyle.s10.w400.indigoBlue.roboto
-                        .copyWith(decoration: TextDecoration.underline),
-                  ),
-                  h4,
-                  SizedBox(
-                    width: 60,
-                    height: 35,
-                    child: TextField(
-                      controller: _discountController,
-                      keyboardType: const TextInputType.numberWithOptions(
-                        decimal: true,
+              StreamBuilder<bool>(
+                stream: provider.watchDiscountVisibility(
+                  userId: widget.data.data.userDetails.userId,
+                  companyId: widget.companyId,
+                ),
+                builder: (context, snapshot) {
+                  final showDiscount = snapshot.data ?? false;
+
+                  if (!showDiscount) {
+                    return const SizedBox.shrink();
+                  }
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        appLocalization.discount,
+                        style: context.textStyle.s10.w400.indigoBlue.roboto
+                            .copyWith(decoration: TextDecoration.underline),
                       ),
-                      textAlign: TextAlign.center,
-                      style: context.textStyle.s10.w500.dustyBlue.roboto,
-                      inputFormatters: _discountFormatters(currentDiscountType),
-                      onChanged: (value) {
-                        provider.updateDiscount(
-                          widget.itemId,
-                          double.tryParse(value) ?? 0,
-                          inclRate,
-                        );
-                      },
-                      decoration: InputDecoration(
-                        isDense: true,
-                        suffixText:
-                            currentDiscountType == DiscountType.percentage
-                            ? '%'
-                            : null,
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 4,
-                          vertical: 6,
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: const BorderSide(
-                            color: ColorResources.mistGray,
+                      h4,
+                      SizedBox(
+                        width: 60,
+                        height: 35,
+                        child: TextField(
+                          controller: _discountController,
+                          keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true,
+                          ),
+                          textAlign: TextAlign.center,
+                          style: context.textStyle.s10.w500.dustyBlue.roboto,
+                          inputFormatters: _discountFormatters(
+                            currentDiscountType,
+                          ),
+                          onChanged: (value) {
+                            provider.updateDiscount(
+                              widget.itemId,
+                              double.tryParse(value) ?? 0,
+                              inclRate,
+                            );
+                          },
+                          decoration: InputDecoration(
+                            isDense: true,
+                            suffixText:
+                                currentDiscountType == DiscountType.percentage
+                                ? '%'
+                                : null,
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 4,
+                              vertical: 6,
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide: const BorderSide(
+                                color: ColorResources.mistGray,
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                ],
+                    ],
+                  );
+                },
               ),
             ],
           ),
@@ -365,127 +384,145 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               /// FREE QTY + UNIT
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    appLocalization.free_qty,
-                    style: context.textStyle.s10.w400.indigoBlue.roboto
-                        .copyWith(decoration: TextDecoration.underline),
-                  ),
-                  h4,
-                  Row(
+              StreamBuilder<bool>(
+                stream: appDb.companySettingsDao.watchFreeQuantitytEnabled(
+                  companyId: widget.companyId,
+                ),
+                builder: (context, snapshot) {
+                  final showDiscount = snapshot.data ?? false;
+
+                  if (!showDiscount) {
+                    return const SizedBox.shrink();
+                  }
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        width: context.getSize.width * 0.13,
-                        padding: const EdgeInsets.symmetric(vertical: 4),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: ColorResources.mistGray),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: TextField(
-                          controller: _freeQtyController,
-                          style: context.textStyle.s10.w500.dustyBlue.roboto,
-                          textAlign: TextAlign.center,
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                          ],
-
-                          onChanged: (v) {
-                            provider.updateFreeQty(
-                              widget.itemId,
-                              double.tryParse(v) ?? 0,
-                            );
-                          },
-
-                          decoration: const InputDecoration(
-                            isCollapsed: true,
-                            border: InputBorder.none,
-                          ),
-                          // onChanged: (value) {
-                          //   final freeQty = double.tryParse(value) ?? 0;
-
-                          //   context
-                          //       .read<CustomerTransactionProvider>()
-                          //       .updateFreeQty(widget.itemId, freeQty);
-                          // },
-                        ),
+                      Text(
+                        appLocalization.free_qty,
+                        style: context.textStyle.s10.w400.indigoBlue.roboto
+                            .copyWith(decoration: TextDecoration.underline),
                       ),
-                      w6,
+                      h4,
+                      Row(
+                        children: [
+                          Container(
+                            width: context.getSize.width * 0.13,
+                            padding: const EdgeInsets.symmetric(vertical: 4),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: ColorResources.mistGray,
+                              ),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: TextField(
+                              controller: _freeQtyController,
+                              style:
+                                  context.textStyle.s10.w500.dustyBlue.roboto,
+                              textAlign: TextAlign.center,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
 
-                      /// UNIT DROPDOWN
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 1,
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: ColorResources.mistGray),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton<String>(
-                            value: selectedFreeUnit,
-                            style: context.textStyle.s10.w500.dustyBlue.roboto,
-                            isDense: true,
-                            items:
-                                [
-                                      widget.item.unitName,
-                                      if (widget.item.altUnit.isNotEmpty &&
-                                          widget.item.altUnit !=
-                                              widget.item.unitName)
-                                        widget.item.altUnit,
-                                    ]
-                                    .map(
-                                      (u) => DropdownMenuItem(
-                                        value: u,
-                                        child: Text(
-                                          u,
-                                          style: context
-                                              .textStyle
-                                              .s10
-                                              .w300
-                                              .dustyBlue
-                                              .roboto,
-                                        ),
-                                      ),
-                                    )
-                                    .toList(),
-                            onChanged: (value) {
-                              if (value != null) {
-                                provider.setFreeUnit(widget.itemId, value);
-                              }
-                            },
-                            icon: Icon(
-                              Icons.keyboard_arrow_down_rounded,
-                              size: context.getSize.height * 0.016,
-                              color: ColorResources.dustyBlue,
+                              onChanged: (v) {
+                                provider.updateFreeQty(
+                                  widget.itemId,
+                                  double.tryParse(v) ?? 0,
+                                );
+                              },
+
+                              decoration: const InputDecoration(
+                                isCollapsed: true,
+                                border: InputBorder.none,
+                              ),
+                              // onChanged: (value) {
+                              //   final freeQty = double.tryParse(value) ?? 0;
+
+                              //   context
+                              //       .read<CustomerTransactionProvider>()
+                              //       .updateFreeQty(widget.itemId, freeQty);
+                              // },
                             ),
                           ),
-                        ),
-                      ),
-                      w6,
+                          w6,
 
-                      /// +/- BUTTONS
-                      Column(
-                        children: [
-                          QtyButton(
-                            icon: Icons.remove,
-                            onTap: () =>
-                                provider.decrementFreeQty(widget.itemId),
+                          /// UNIT DROPDOWN
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 1,
+                            ),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: ColorResources.mistGray,
+                              ),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                value: selectedFreeUnit,
+                                style:
+                                    context.textStyle.s10.w500.dustyBlue.roboto,
+                                isDense: true,
+                                items:
+                                    [
+                                          widget.item.unitName,
+                                          if (widget.item.altUnit.isNotEmpty &&
+                                              widget.item.altUnit !=
+                                                  widget.item.unitName)
+                                            widget.item.altUnit,
+                                        ]
+                                        .map(
+                                          (u) => DropdownMenuItem(
+                                            value: u,
+                                            child: Text(
+                                              u,
+                                              style: context
+                                                  .textStyle
+                                                  .s10
+                                                  .w300
+                                                  .dustyBlue
+                                                  .roboto,
+                                            ),
+                                          ),
+                                        )
+                                        .toList(),
+                                onChanged: (value) {
+                                  if (value != null) {
+                                    provider.setFreeUnit(widget.itemId, value);
+                                  }
+                                },
+                                icon: Icon(
+                                  Icons.keyboard_arrow_down_rounded,
+                                  size: context.getSize.height * 0.016,
+                                  color: ColorResources.dustyBlue,
+                                ),
+                              ),
+                            ),
                           ),
-                          h4,
-                          QtyButton(
-                            icon: Icons.add,
-                            onTap: () =>
-                                provider.incrementFreeQty(widget.itemId),
+                          w6,
+
+                          /// +/- BUTTONS
+                          Column(
+                            children: [
+                              QtyButton(
+                                icon: Icons.remove,
+                                onTap: () =>
+                                    provider.decrementFreeQty(widget.itemId),
+                              ),
+                              h4,
+                              QtyButton(
+                                icon: Icons.add,
+                                onTap: () =>
+                                    provider.incrementFreeQty(widget.itemId),
+                              ),
+                            ],
                           ),
                         ],
                       ),
                     ],
-                  ),
-                ],
+                  );
+                },
               ),
 
               /// TOTAL

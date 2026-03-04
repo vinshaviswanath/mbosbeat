@@ -64,4 +64,25 @@ class UserSettingsDao extends DatabaseAccessor<AppDb>
   return result?.value;
 }
 
+Future<bool> isEditDiscountEnabled(int userId) async {
+  final result = await (select(userSettingsTable)
+        ..where((tbl) =>
+            tbl.userId.equals(userId) &
+            tbl.menuName.equals("Edit Discount"))
+        ..limit(1))
+      .getSingleOrNull();
+
+  return result?.value?.toLowerCase() == "true";
+}
+
+Stream<bool> watchEditDiscountEnabled(int userId) {
+  return (select(userSettingsTable)
+        ..where((tbl) =>
+            tbl.userId.equals(userId) &
+            tbl.menuName.equals("Edit Discount"))
+        ..limit(1))
+      .watchSingleOrNull()
+      .map((row) => row?.value?.toLowerCase() == "true");
+}
+
 }

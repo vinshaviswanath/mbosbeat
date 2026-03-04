@@ -71,8 +71,8 @@ class _Tab1TransactionsState extends State<Tab1Transactions> {
         final vouchers = snapshot.data ?? [];
         if (vouchers.isEmpty) {
           return Column(
-            mainAxisAlignment: .center,
-            crossAxisAlignment: .center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.asset(
                 AppAssets.noData,
@@ -110,7 +110,7 @@ class _Tab1TransactionsState extends State<Tab1Transactions> {
                       extra: TransactionOrderBookingRouteArgs(
                         data: widget.data,
                         party: widget.party,
-                        vchTyp: voucher
+                        vchTyp: voucher,
                       ),
                     );
                   } else if (voucher.voucherMenuName == "Sales") {
@@ -119,7 +119,7 @@ class _Tab1TransactionsState extends State<Tab1Transactions> {
                       extra: TransactionOrderBookingRouteArgs(
                         data: widget.data,
                         party: widget.party,
-                        vchTyp: voucher
+                        vchTyp: voucher,
                       ),
                     );
                   } else if (voucher.voucherMenuName == "Sales Return") {
@@ -128,7 +128,7 @@ class _Tab1TransactionsState extends State<Tab1Transactions> {
                       extra: TransactionOrderBookingRouteArgs(
                         data: widget.data,
                         party: widget.party,
-                        vchTyp: voucher
+                        vchTyp: voucher,
                       ),
                     );
                   } else if (voucher.voucherMenuName == "Receipt") {
@@ -137,7 +137,7 @@ class _Tab1TransactionsState extends State<Tab1Transactions> {
                       extra: TransactionOrderBookingRouteArgs(
                         data: widget.data,
                         party: widget.party,
-                        vchTyp: voucher
+                        vchTyp: voucher,
                       ),
                     );
                   } else if (voucher.voucherMenuName == "Payments") {

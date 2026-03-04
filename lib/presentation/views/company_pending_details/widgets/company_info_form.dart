@@ -70,13 +70,13 @@ class _CompanyInfoFormState extends State<CompanyInfoForm> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5),
         child: Column(
-          crossAxisAlignment: .start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              mainAxisAlignment: .center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Column(
-                  crossAxisAlignment: .center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Stack(
                       children: [
@@ -207,7 +207,7 @@ class _CompanyInfoFormState extends State<CompanyInfoForm> {
             ),
             h20,
             Row(
-              mainAxisAlignment: .center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CustomButton(
                   onTap: () {

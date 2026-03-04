@@ -138,7 +138,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
           if (selectedCountry.id == 0) {
             debugPrint(
-              "❌ Country not found for ID in Splashscreen: ${companyData!.country}",
+              "❌ Country not found for ID in Splashscreen: ${companyData?.country}",
             );
             return;
           }

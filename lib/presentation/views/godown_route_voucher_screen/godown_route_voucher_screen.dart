@@ -94,7 +94,7 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    mainAxisAlignment: .center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         "How are you going to manage Voucher Type?\n(Godown / Routewise)",
@@ -420,7 +420,7 @@ class _GodownRouteVoucherScreenState extends State<GodownRouteVoucherScreen> {
                                       h16,
                                       SingleCompanyPrefixSuffix(
                                         data: data,
-                                     //   companydata:CompanyVoucherTypesListData,
+                                        //   companydata:CompanyVoucherTypesListData,
                                       ),
                                     ],
                                     if (data.hasB2B == 1) ...[

@@ -230,7 +230,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                         automaticallyImplyLeading: false,
                                         actions: [
                                           PopupMenuButton<int>(
-                                            padding: .zero,
+                                            padding: EdgeInsets.zero,
                                             offset: Offset(-8, 40),
                                             icon: Icon(
                                               Icons.more_vert,
@@ -239,7 +239,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
                                             itemBuilder: (context) => [
                                               PopupMenuItem(
-                                                padding: .symmetric(
+                                                padding: EdgeInsets.symmetric(
                                                   horizontal: 12,
                                                   vertical: 8,
                                                 ),
@@ -248,7 +248,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                   children: [
                                                     Row(
                                                       mainAxisAlignment:
-                                                          .spaceBetween,
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
                                                       children: [
                                                         Text(
                                                           provider.isGodown
@@ -284,7 +285,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                 value: 2,
                                                 child: Row(
                                                   mainAxisAlignment:
-                                                      .spaceBetween,
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
                                                     Text("Settings"),
                                                     SvgPicture.asset(

@@ -59,15 +59,19 @@ class MyApp extends StatelessWidget {
         builder: (context, themeProvider, _) {
           final themeMode = themeProvider.themeMode;
 
-          return MaterialApp.router(
-            scaffoldMessengerKey: AppDetails.rootScaffoldMessengerKey,
-            routerConfig: AppRouter.router,
-            debugShowCheckedModeBanner: false,
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
-            supportedLocales: AppLocalizations.supportedLocales,
-            locale: const Locale("en"),
-            title: 'mPOS Beat',
-            theme: AppTheme.getTheme(themeMode, context),
+          return SafeArea(
+            bottom: true,
+            top: false,
+            child: MaterialApp.router(
+              scaffoldMessengerKey: AppDetails.rootScaffoldMessengerKey,
+              routerConfig: AppRouter.router,
+              debugShowCheckedModeBanner: false,
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
+              locale: const Locale("en"),
+              title: 'mPOS Beat',
+              theme: AppTheme.getTheme(themeMode, context),
+            ),
           );
         },
       ),

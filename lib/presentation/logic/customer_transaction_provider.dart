@@ -1,11 +1,16 @@
 import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/data_sources/user/party_MasterSync/party_MasterSync.dart';
+import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/models/product.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/transaction_order_booking_screen.dart';
+import 'package:rxdart/rxdart.dart';
 
 class CustomerTransactionProvider extends ChangeNotifier {
   CustomerTransactionProvider();
+
+  /// Database
+  AppDb _db = sl<AppDb>();
 
   /// ---------------------------------------------------------------------------
   /// CustomerTransactionProvider
@@ -100,6 +105,9 @@ class CustomerTransactionProvider extends ChangeNotifier {
   /// Stores selected UI index (for selection highlighting).
   int? _selectedIndex;
 
+  /// Last moved item to the top of the list
+  int? lastMovedToTopItemId;
+
   // -------------------------------------------------------------------------
   // FILTER STATE
   // -------------------------------------------------------------------------
@@ -121,7 +129,7 @@ class CustomerTransactionProvider extends ChangeNotifier {
   List<Product> _pagedItems = [];
 
   /// Current page index.
-  int _page = 0;
+  int _page = 1;
 
   /// Items per page limit.
   final int _limit = 100;
@@ -413,20 +421,35 @@ class CustomerTransactionProvider extends ChangeNotifier {
   double getQty(int itemId) => _itemQty[itemId] ?? 0;
 
   void updateQty(int itemId, double qty, double inclRate, {Product? item}) {
+    /// If qty becomes zero → remove item
     if (qty <= 0) {
       resetQty(itemId);
       return;
     }
 
+    /// 🔥 Check if item was NOT previously selected
+    final wasAlreadySelected = _selectedItems.contains(itemId);
+
+    /// Update quantity & inclusive rate
     _itemQty[itemId] = qty;
-    _itemInclusiveRate[itemId] = inclRate; // ⭐ store
+    _itemInclusiveRate[itemId] = inclRate;
+
+    /// Add to selected set
     _selectedItems.add(itemId);
 
+    /// Store product reference if available
     if (item != null) {
       _selectedItemObjects[itemId] = item;
     }
 
+    /// 🔥 If this is a NEW selection → mark for scroll
+    if (!wasAlreadySelected) {
+      lastMovedToTopItemId = itemId;
+    }
+
+    /// Recalculate total
     _recalculateItemTotal(itemId);
+
     notifyListeners();
   }
 
@@ -750,12 +773,12 @@ class CustomerTransactionProvider extends ChangeNotifier {
   /// Loads next page from backend.
   /// Prevents duplicate loading & merges unique items.
 
-  void resetPagination() {
-    _pagedItems.clear();
-    _page = 0;
-    _hasMore = true;
-    notifyListeners();
-  }
+void resetPagination() {
+  _pagedItems.clear();
+  _page = 1;
+  _hasMore = true;
+  notifyListeners();
+}
 
   Future<void> loadNextPage({
     required int companyId,
@@ -767,16 +790,17 @@ class CustomerTransactionProvider extends ChangeNotifier {
     _isLoadingPage = true;
     notifyListeners();
 
-    final result = await sl<PartyMasterSync>().fetchProduct(
-      companyId,
-      priceListId,
-      ledgerId,
-      _selectedGroup,
-      _selectedCategory,
-      _search,
-      limit: _limit,
-      offset: _page * _limit,
-    );
+final result = await sl<PartyMasterSync>().fetchProduct(
+  companyId,
+  priceListId,
+  ledgerId,
+  _selectedGroup,
+  _selectedCategory,
+  _search,
+  limit: _limit,
+  offset: (_page - 1) * _limit,
+);
+    Logger.logInfo("fetchProduct ${result.length}");
 
     final newItems = result
         .where((e) => !_pagedItems.any((p) => p.stockItemId == e.stockItemId))
@@ -885,5 +909,22 @@ class CustomerTransactionProvider extends ChangeNotifier {
   void clearOrder() {
     _selectedItems.clear();
     notifyListeners();
+  }
+
+  Stream<bool> watchDiscountVisibility({
+    required int userId,
+    required int companyId,
+  }) {
+    final userStream = _db.userSettingsDao.watchEditDiscountEnabled(userId);
+
+    final companyStream = _db.companySettingsDao.watchItemwiseDiscountEnabled(
+      companyId,
+    );
+
+    return Rx.combineLatest2<bool, bool, bool>(
+      userStream,
+      companyStream,
+      (userEnabled, companyEnabled) => userEnabled && companyEnabled,
+    );
   }
 }

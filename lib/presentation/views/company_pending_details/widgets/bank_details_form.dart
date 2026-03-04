@@ -73,13 +73,13 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
     final provider = context.watch<CompanyCreationProvider>();
     if (provider.updatedBankDetails != null) {
       final updated = provider.updatedBankDetails!;
-      bankNameController.text = updated.bankName??"";
-      branchNameController.text = updated.branch??"";
-      accNoController.text = updated.accountNumber??"";
-      ifscController.text = updated.ifscCode??"";
-      upiPaymentAddressController.text = updated.upiAddress??"";
-      paymentNameController.text = updated.upiName??"";
-      currencyController.text = updated.currency??"";
+      bankNameController.text = updated.bankName ?? "";
+      branchNameController.text = updated.branch ?? "";
+      accNoController.text = updated.accountNumber ?? "";
+      ifscController.text = updated.ifscCode ?? "";
+      upiPaymentAddressController.text = updated.upiAddress ?? "";
+      paymentNameController.text = updated.upiName ?? "";
+      currencyController.text = updated.currency ?? "";
     }
     return Container(
       margin: EdgeInsets.only(top: 4, left: 16, right: 16),
@@ -91,7 +91,7 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5),
         child: Column(
-          crossAxisAlignment: .start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               "Bank Name",
@@ -172,7 +172,7 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
             ),
             h20,
             Row(
-              mainAxisAlignment: .spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   "Enable UPI",
@@ -259,7 +259,7 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
             ],
             h20,
             Row(
-              mainAxisAlignment: .center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CustomButton(
                   onTap: () {
@@ -276,8 +276,8 @@ class _BankDetailsFormState extends State<BankDetailsForm> {
                             ifscCode: ifscController.text,
                             hasUpi: isUpiEnabled,
                             upiAddress: upiPaymentAddressController.text,
-                     upiName: paymentNameController.text,
-                           currency: currencyController.text,
+                            upiName: paymentNameController.text,
+                            currency: currencyController.text,
                           ),
                         )
                         .then((value) {

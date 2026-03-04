@@ -43,7 +43,7 @@ class _CompanyPendingDetailsScreenState
         ),
         centerTitle: true,
         leading: Padding(
-          padding: .only(left: 12),
+          padding: EdgeInsets.only(left: 12),
           child: GestureDetector(
             onTap: () {
               context.pop();
@@ -99,7 +99,7 @@ class _CompanyPendingDetailsScreenState
                       },
                     )
                   : expandedIndex == 1
-                 ? BankDetailsForm(
+                  ? BankDetailsForm(
                       company: widget.company,
                       onUpdate: () {
                         setState(() {
@@ -107,8 +107,7 @@ class _CompanyPendingDetailsScreenState
                         });
                       },
                     )
-             
-                : RegistrationDetailsForm(company: widget.company),
+                  : RegistrationDetailsForm(company: widget.company),
             ),
           );
         },
@@ -132,14 +131,14 @@ class CompanyDetailsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: .all(16),
-      margin: .only(left: 16, right: 16),
+      padding: EdgeInsets.all(16),
+      margin: EdgeInsets.only(left: 16, right: 16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         color: bgColor,
       ),
       child: Row(
-        mainAxisAlignment: .spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(data, style: context.textStyle.bold.s14.mutedIndigo),
           Row(
