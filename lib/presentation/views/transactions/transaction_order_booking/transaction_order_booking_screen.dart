@@ -729,9 +729,11 @@ class _TransactionOrderBookingScreenState
                                                     0,
                                                 voucherNo: voucherNo ?? "",
                                                 remark: remarkController.text,
-                                                mobileNumber:
-                                                    widget.data.party.mobile ??
-                                                    '',
+                                                mobileNumber: widget
+                                                    .data
+                                                    .party
+                                                    .mobile!
+                                                    .trim(),
                                                 address2:
                                                     widget
                                                         .data
@@ -772,7 +774,7 @@ class _TransactionOrderBookingScreenState
 
                                               txn.clearSelectedItems();
                                               remarkController.clear();
-                                            },
+     },
                                           );
                                         } else {}
                                       },
@@ -819,12 +821,11 @@ class OrderItemTile extends StatelessWidget {
     final item = data.item;
 
     final qty = data.qty;
-    final rate = data.rate; // ✅ base rate
-    final discount = data.discount; // ✅ already stored discount
-    final taxPercent = item.taxPercent ?? 0;
+    final rate = data.rate;
+    final discount = data.discount;
+    final taxPercent = item.taxPercent;
 
-    final amount = data.amount; // ✅ FINAL amount (correct)
-    final inclRate = data.inclRate; // ✅ inclusive rate per unit
+    final amount = data.amount;
     final provider = context.watch<CustomerTransactionProvider>();
     final freeQty = provider.getFreeQty(data.item.itemId);
     final freeUnit = provider.getSelectedFreeUnit(data.item.itemId, data.item);
@@ -1034,36 +1035,41 @@ Future<void> saveOrder({
               total: Value(item.inclRate),
               companyId: Value(companyId),
               sync: const Value(0),
-              cess: Value(txn.cess),
-              cgst: Value(txn.cgst),
-              sgst: Value(txn.sgst),
-              disc: Value(item.discount),
+
+              //  disc: Value(item.discount),
               // fQty: Value(item.freeQty),
               fUnit: Value(item.item.unitName),
               itemName: Value(item.item.itemName),
               rate: Value(item.amount),
-              discVal: Value(discountValue),
+              //  discVal: Value(discountValue),
             ),
           );
     }
-    double ledgerAmount = 0;
 
-    for (final item in txn.selectedOrderItems) {
-      ledgerAmount += item.amount;
+    // ================= INSERT LEDGER =================
+
+    // Tax ledgers
+    final Map<String, double> taxLedgers = {
+      "CGST": txn.totalCgst,
+      "SGST": txn.totalSgst,
+      "CESS": txn.totalCess,
+    };
+
+    for (final entry in taxLedgers.entries) {
+      if (entry.value > 0) {
+        await db
+            .into(db.saleOrderLedgerDetailsTable)
+            .insert(
+              SaleOrderLedgerDetailsTableCompanion.insert(
+                mid: Value(masterId),
+                voucherName: Value(entry.key),
+                amount: Value(entry.value),
+                companyId: Value(companyId),
+               
+              ),
+            );
+      }
     }
-    // 3︝⃣ INSERT LEDGER
-    await db
-        .into(db.saleOrderLedgerDetailsTable)
-        .insert(
-          SaleOrderLedgerDetailsTableCompanion.insert(
-            mid: Value(masterId),
-            ledger: Value(ledgerName),
-            amount: Value(txn.grandTotal),
-            companyId: Value(companyId),
-            sync: const Value(0),
-            rate: Value(ledgerAmount),
-          ),
-        );
   });
   await printSavedData(db);
 }

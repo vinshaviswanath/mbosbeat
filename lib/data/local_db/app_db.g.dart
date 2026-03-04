@@ -13369,26 +13369,6 @@ class $SaleOrderDetailsTableTable extends SaleOrderDetailsTable
     type: DriftSqlType.double,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _discMeta = const VerificationMeta('disc');
-  @override
-  late final GeneratedColumn<double> disc = GeneratedColumn<double>(
-    'disc',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _discValMeta = const VerificationMeta(
-    'discVal',
-  );
-  @override
-  late final GeneratedColumn<double> discVal = GeneratedColumn<double>(
-    'disc_val',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
   static const VerificationMeta _ledgerMeta = const VerificationMeta('ledger');
   @override
   late final GeneratedColumn<String> ledger = GeneratedColumn<String>(
@@ -13418,42 +13398,6 @@ class $SaleOrderDetailsTableTable extends SaleOrderDetailsTable
     type: DriftSqlType.int,
     requiredDuringInsert: false,
     defaultValue: const Constant(0),
-  );
-  static const VerificationMeta _igstMeta = const VerificationMeta('igst');
-  @override
-  late final GeneratedColumn<double> igst = GeneratedColumn<double>(
-    'igst',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _cgstMeta = const VerificationMeta('cgst');
-  @override
-  late final GeneratedColumn<double> cgst = GeneratedColumn<double>(
-    'cgst',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _sgstMeta = const VerificationMeta('sgst');
-  @override
-  late final GeneratedColumn<double> sgst = GeneratedColumn<double>(
-    'sgst',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _cessMeta = const VerificationMeta('cess');
-  @override
-  late final GeneratedColumn<double> cess = GeneratedColumn<double>(
-    'cess',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
   );
   static const VerificationMeta _hsnMeta = const VerificationMeta('hsn');
   @override
@@ -13526,28 +13470,6 @@ class $SaleOrderDetailsTableTable extends SaleOrderDetailsTable
     aliasedName,
     true,
     type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _cessAmtMeta = const VerificationMeta(
-    'cessAmt',
-  );
-  @override
-  late final GeneratedColumn<double> cessAmt = GeneratedColumn<double>(
-    'cess_amt',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _stkNegPermissionMeta = const VerificationMeta(
-    'stkNegPermission',
-  );
-  @override
-  late final GeneratedColumn<String> stkNegPermission = GeneratedColumn<String>(
-    'stk_neg_permission',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
   static const VerificationMeta _discTypeMeta = const VerificationMeta(
@@ -13670,15 +13592,9 @@ class $SaleOrderDetailsTableTable extends SaleOrderDetailsTable
     vat,
     vatAmt,
     total,
-    disc,
-    discVal,
     ledger,
     companyId,
     sync,
-    igst,
-    cgst,
-    sgst,
-    cess,
     hsn,
     enteredRate,
     enteredDisc,
@@ -13686,8 +13602,6 @@ class $SaleOrderDetailsTableTable extends SaleOrderDetailsTable
     enteredFQty,
     fQty,
     addDiscVal,
-    cessAmt,
-    stkNegPermission,
     discType,
     priceList,
     convQty,
@@ -13768,18 +13682,6 @@ class $SaleOrderDetailsTableTable extends SaleOrderDetailsTable
         total.isAcceptableOrUnknown(data['total']!, _totalMeta),
       );
     }
-    if (data.containsKey('disc')) {
-      context.handle(
-        _discMeta,
-        disc.isAcceptableOrUnknown(data['disc']!, _discMeta),
-      );
-    }
-    if (data.containsKey('disc_val')) {
-      context.handle(
-        _discValMeta,
-        discVal.isAcceptableOrUnknown(data['disc_val']!, _discValMeta),
-      );
-    }
     if (data.containsKey('ledger')) {
       context.handle(
         _ledgerMeta,
@@ -13796,30 +13698,6 @@ class $SaleOrderDetailsTableTable extends SaleOrderDetailsTable
       context.handle(
         _syncMeta,
         sync.isAcceptableOrUnknown(data['sync']!, _syncMeta),
-      );
-    }
-    if (data.containsKey('igst')) {
-      context.handle(
-        _igstMeta,
-        igst.isAcceptableOrUnknown(data['igst']!, _igstMeta),
-      );
-    }
-    if (data.containsKey('cgst')) {
-      context.handle(
-        _cgstMeta,
-        cgst.isAcceptableOrUnknown(data['cgst']!, _cgstMeta),
-      );
-    }
-    if (data.containsKey('sgst')) {
-      context.handle(
-        _sgstMeta,
-        sgst.isAcceptableOrUnknown(data['sgst']!, _sgstMeta),
-      );
-    }
-    if (data.containsKey('cess')) {
-      context.handle(
-        _cessMeta,
-        cess.isAcceptableOrUnknown(data['cess']!, _cessMeta),
       );
     }
     if (data.containsKey('hsn')) {
@@ -13876,21 +13754,6 @@ class $SaleOrderDetailsTableTable extends SaleOrderDetailsTable
         addDiscVal.isAcceptableOrUnknown(
           data['add_disc_val']!,
           _addDiscValMeta,
-        ),
-      );
-    }
-    if (data.containsKey('cess_amt')) {
-      context.handle(
-        _cessAmtMeta,
-        cessAmt.isAcceptableOrUnknown(data['cess_amt']!, _cessAmtMeta),
-      );
-    }
-    if (data.containsKey('stk_neg_permission')) {
-      context.handle(
-        _stkNegPermissionMeta,
-        stkNegPermission.isAcceptableOrUnknown(
-          data['stk_neg_permission']!,
-          _stkNegPermissionMeta,
         ),
       );
     }
@@ -14009,14 +13872,6 @@ class $SaleOrderDetailsTableTable extends SaleOrderDetailsTable
         DriftSqlType.double,
         data['${effectivePrefix}total'],
       ),
-      disc: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}disc'],
-      ),
-      discVal: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}disc_val'],
-      ),
       ledger: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}ledger'],
@@ -14029,22 +13884,6 @@ class $SaleOrderDetailsTableTable extends SaleOrderDetailsTable
         DriftSqlType.int,
         data['${effectivePrefix}sync'],
       )!,
-      igst: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}igst'],
-      ),
-      cgst: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}cgst'],
-      ),
-      sgst: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}sgst'],
-      ),
-      cess: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}cess'],
-      ),
       hsn: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}hsn'],
@@ -14072,14 +13911,6 @@ class $SaleOrderDetailsTableTable extends SaleOrderDetailsTable
       addDiscVal: attachedDatabase.typeMapping.read(
         DriftSqlType.double,
         data['${effectivePrefix}add_disc_val'],
-      ),
-      cessAmt: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}cess_amt'],
-      ),
-      stkNegPermission: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}stk_neg_permission'],
       ),
       discType: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
@@ -14142,15 +13973,9 @@ class SaleOrderDetailsTableData extends DataClass
   final double? vat;
   final double? vatAmt;
   final double? total;
-  final double? disc;
-  final double? discVal;
   final String? ledger;
   final int? companyId;
   final int sync;
-  final double? igst;
-  final double? cgst;
-  final double? sgst;
-  final double? cess;
   final String? hsn;
   final double? enteredRate;
   final double? enteredDisc;
@@ -14158,8 +13983,6 @@ class SaleOrderDetailsTableData extends DataClass
   final String? enteredFQty;
   final double? fQty;
   final double? addDiscVal;
-  final double? cessAmt;
-  final String? stkNegPermission;
   final String? discType;
   final String? priceList;
   final double? convQty;
@@ -14181,15 +14004,9 @@ class SaleOrderDetailsTableData extends DataClass
     this.vat,
     this.vatAmt,
     this.total,
-    this.disc,
-    this.discVal,
     this.ledger,
     this.companyId,
     required this.sync,
-    this.igst,
-    this.cgst,
-    this.sgst,
-    this.cess,
     this.hsn,
     this.enteredRate,
     this.enteredDisc,
@@ -14197,8 +14014,6 @@ class SaleOrderDetailsTableData extends DataClass
     this.enteredFQty,
     this.fQty,
     this.addDiscVal,
-    this.cessAmt,
-    this.stkNegPermission,
     this.discType,
     this.priceList,
     this.convQty,
@@ -14241,12 +14056,6 @@ class SaleOrderDetailsTableData extends DataClass
     if (!nullToAbsent || total != null) {
       map['total'] = Variable<double>(total);
     }
-    if (!nullToAbsent || disc != null) {
-      map['disc'] = Variable<double>(disc);
-    }
-    if (!nullToAbsent || discVal != null) {
-      map['disc_val'] = Variable<double>(discVal);
-    }
     if (!nullToAbsent || ledger != null) {
       map['ledger'] = Variable<String>(ledger);
     }
@@ -14254,18 +14063,6 @@ class SaleOrderDetailsTableData extends DataClass
       map['company_id'] = Variable<int>(companyId);
     }
     map['sync'] = Variable<int>(sync);
-    if (!nullToAbsent || igst != null) {
-      map['igst'] = Variable<double>(igst);
-    }
-    if (!nullToAbsent || cgst != null) {
-      map['cgst'] = Variable<double>(cgst);
-    }
-    if (!nullToAbsent || sgst != null) {
-      map['sgst'] = Variable<double>(sgst);
-    }
-    if (!nullToAbsent || cess != null) {
-      map['cess'] = Variable<double>(cess);
-    }
     if (!nullToAbsent || hsn != null) {
       map['hsn'] = Variable<String>(hsn);
     }
@@ -14286,12 +14083,6 @@ class SaleOrderDetailsTableData extends DataClass
     }
     if (!nullToAbsent || addDiscVal != null) {
       map['add_disc_val'] = Variable<double>(addDiscVal);
-    }
-    if (!nullToAbsent || cessAmt != null) {
-      map['cess_amt'] = Variable<double>(cessAmt);
-    }
-    if (!nullToAbsent || stkNegPermission != null) {
-      map['stk_neg_permission'] = Variable<String>(stkNegPermission);
     }
     if (!nullToAbsent || discType != null) {
       map['disc_type'] = Variable<String>(discType);
@@ -14346,10 +14137,6 @@ class SaleOrderDetailsTableData extends DataClass
       total: total == null && nullToAbsent
           ? const Value.absent()
           : Value(total),
-      disc: disc == null && nullToAbsent ? const Value.absent() : Value(disc),
-      discVal: discVal == null && nullToAbsent
-          ? const Value.absent()
-          : Value(discVal),
       ledger: ledger == null && nullToAbsent
           ? const Value.absent()
           : Value(ledger),
@@ -14357,10 +14144,6 @@ class SaleOrderDetailsTableData extends DataClass
           ? const Value.absent()
           : Value(companyId),
       sync: Value(sync),
-      igst: igst == null && nullToAbsent ? const Value.absent() : Value(igst),
-      cgst: cgst == null && nullToAbsent ? const Value.absent() : Value(cgst),
-      sgst: sgst == null && nullToAbsent ? const Value.absent() : Value(sgst),
-      cess: cess == null && nullToAbsent ? const Value.absent() : Value(cess),
       hsn: hsn == null && nullToAbsent ? const Value.absent() : Value(hsn),
       enteredRate: enteredRate == null && nullToAbsent
           ? const Value.absent()
@@ -14378,12 +14161,6 @@ class SaleOrderDetailsTableData extends DataClass
       addDiscVal: addDiscVal == null && nullToAbsent
           ? const Value.absent()
           : Value(addDiscVal),
-      cessAmt: cessAmt == null && nullToAbsent
-          ? const Value.absent()
-          : Value(cessAmt),
-      stkNegPermission: stkNegPermission == null && nullToAbsent
-          ? const Value.absent()
-          : Value(stkNegPermission),
       discType: discType == null && nullToAbsent
           ? const Value.absent()
           : Value(discType),
@@ -14433,15 +14210,9 @@ class SaleOrderDetailsTableData extends DataClass
       vat: serializer.fromJson<double?>(json['vat']),
       vatAmt: serializer.fromJson<double?>(json['vatAmt']),
       total: serializer.fromJson<double?>(json['total']),
-      disc: serializer.fromJson<double?>(json['disc']),
-      discVal: serializer.fromJson<double?>(json['discVal']),
       ledger: serializer.fromJson<String?>(json['ledger']),
       companyId: serializer.fromJson<int?>(json['companyId']),
       sync: serializer.fromJson<int>(json['sync']),
-      igst: serializer.fromJson<double?>(json['igst']),
-      cgst: serializer.fromJson<double?>(json['cgst']),
-      sgst: serializer.fromJson<double?>(json['sgst']),
-      cess: serializer.fromJson<double?>(json['cess']),
       hsn: serializer.fromJson<String?>(json['hsn']),
       enteredRate: serializer.fromJson<double?>(json['enteredRate']),
       enteredDisc: serializer.fromJson<double?>(json['enteredDisc']),
@@ -14449,8 +14220,6 @@ class SaleOrderDetailsTableData extends DataClass
       enteredFQty: serializer.fromJson<String?>(json['enteredFQty']),
       fQty: serializer.fromJson<double?>(json['fQty']),
       addDiscVal: serializer.fromJson<double?>(json['addDiscVal']),
-      cessAmt: serializer.fromJson<double?>(json['cessAmt']),
-      stkNegPermission: serializer.fromJson<String?>(json['stkNegPermission']),
       discType: serializer.fromJson<String?>(json['discType']),
       priceList: serializer.fromJson<String?>(json['priceList']),
       convQty: serializer.fromJson<double?>(json['convQty']),
@@ -14477,15 +14246,9 @@ class SaleOrderDetailsTableData extends DataClass
       'vat': serializer.toJson<double?>(vat),
       'vatAmt': serializer.toJson<double?>(vatAmt),
       'total': serializer.toJson<double?>(total),
-      'disc': serializer.toJson<double?>(disc),
-      'discVal': serializer.toJson<double?>(discVal),
       'ledger': serializer.toJson<String?>(ledger),
       'companyId': serializer.toJson<int?>(companyId),
       'sync': serializer.toJson<int>(sync),
-      'igst': serializer.toJson<double?>(igst),
-      'cgst': serializer.toJson<double?>(cgst),
-      'sgst': serializer.toJson<double?>(sgst),
-      'cess': serializer.toJson<double?>(cess),
       'hsn': serializer.toJson<String?>(hsn),
       'enteredRate': serializer.toJson<double?>(enteredRate),
       'enteredDisc': serializer.toJson<double?>(enteredDisc),
@@ -14493,8 +14256,6 @@ class SaleOrderDetailsTableData extends DataClass
       'enteredFQty': serializer.toJson<String?>(enteredFQty),
       'fQty': serializer.toJson<double?>(fQty),
       'addDiscVal': serializer.toJson<double?>(addDiscVal),
-      'cessAmt': serializer.toJson<double?>(cessAmt),
-      'stkNegPermission': serializer.toJson<String?>(stkNegPermission),
       'discType': serializer.toJson<String?>(discType),
       'priceList': serializer.toJson<String?>(priceList),
       'convQty': serializer.toJson<double?>(convQty),
@@ -14519,15 +14280,9 @@ class SaleOrderDetailsTableData extends DataClass
     Value<double?> vat = const Value.absent(),
     Value<double?> vatAmt = const Value.absent(),
     Value<double?> total = const Value.absent(),
-    Value<double?> disc = const Value.absent(),
-    Value<double?> discVal = const Value.absent(),
     Value<String?> ledger = const Value.absent(),
     Value<int?> companyId = const Value.absent(),
     int? sync,
-    Value<double?> igst = const Value.absent(),
-    Value<double?> cgst = const Value.absent(),
-    Value<double?> sgst = const Value.absent(),
-    Value<double?> cess = const Value.absent(),
     Value<String?> hsn = const Value.absent(),
     Value<double?> enteredRate = const Value.absent(),
     Value<double?> enteredDisc = const Value.absent(),
@@ -14535,8 +14290,6 @@ class SaleOrderDetailsTableData extends DataClass
     Value<String?> enteredFQty = const Value.absent(),
     Value<double?> fQty = const Value.absent(),
     Value<double?> addDiscVal = const Value.absent(),
-    Value<double?> cessAmt = const Value.absent(),
-    Value<String?> stkNegPermission = const Value.absent(),
     Value<String?> discType = const Value.absent(),
     Value<String?> priceList = const Value.absent(),
     Value<double?> convQty = const Value.absent(),
@@ -14558,15 +14311,9 @@ class SaleOrderDetailsTableData extends DataClass
     vat: vat.present ? vat.value : this.vat,
     vatAmt: vatAmt.present ? vatAmt.value : this.vatAmt,
     total: total.present ? total.value : this.total,
-    disc: disc.present ? disc.value : this.disc,
-    discVal: discVal.present ? discVal.value : this.discVal,
     ledger: ledger.present ? ledger.value : this.ledger,
     companyId: companyId.present ? companyId.value : this.companyId,
     sync: sync ?? this.sync,
-    igst: igst.present ? igst.value : this.igst,
-    cgst: cgst.present ? cgst.value : this.cgst,
-    sgst: sgst.present ? sgst.value : this.sgst,
-    cess: cess.present ? cess.value : this.cess,
     hsn: hsn.present ? hsn.value : this.hsn,
     enteredRate: enteredRate.present ? enteredRate.value : this.enteredRate,
     enteredDisc: enteredDisc.present ? enteredDisc.value : this.enteredDisc,
@@ -14574,10 +14321,6 @@ class SaleOrderDetailsTableData extends DataClass
     enteredFQty: enteredFQty.present ? enteredFQty.value : this.enteredFQty,
     fQty: fQty.present ? fQty.value : this.fQty,
     addDiscVal: addDiscVal.present ? addDiscVal.value : this.addDiscVal,
-    cessAmt: cessAmt.present ? cessAmt.value : this.cessAmt,
-    stkNegPermission: stkNegPermission.present
-        ? stkNegPermission.value
-        : this.stkNegPermission,
     discType: discType.present ? discType.value : this.discType,
     priceList: priceList.present ? priceList.value : this.priceList,
     convQty: convQty.present ? convQty.value : this.convQty,
@@ -14603,15 +14346,9 @@ class SaleOrderDetailsTableData extends DataClass
       vat: data.vat.present ? data.vat.value : this.vat,
       vatAmt: data.vatAmt.present ? data.vatAmt.value : this.vatAmt,
       total: data.total.present ? data.total.value : this.total,
-      disc: data.disc.present ? data.disc.value : this.disc,
-      discVal: data.discVal.present ? data.discVal.value : this.discVal,
       ledger: data.ledger.present ? data.ledger.value : this.ledger,
       companyId: data.companyId.present ? data.companyId.value : this.companyId,
       sync: data.sync.present ? data.sync.value : this.sync,
-      igst: data.igst.present ? data.igst.value : this.igst,
-      cgst: data.cgst.present ? data.cgst.value : this.cgst,
-      sgst: data.sgst.present ? data.sgst.value : this.sgst,
-      cess: data.cess.present ? data.cess.value : this.cess,
       hsn: data.hsn.present ? data.hsn.value : this.hsn,
       enteredRate: data.enteredRate.present
           ? data.enteredRate.value
@@ -14629,10 +14366,6 @@ class SaleOrderDetailsTableData extends DataClass
       addDiscVal: data.addDiscVal.present
           ? data.addDiscVal.value
           : this.addDiscVal,
-      cessAmt: data.cessAmt.present ? data.cessAmt.value : this.cessAmt,
-      stkNegPermission: data.stkNegPermission.present
-          ? data.stkNegPermission.value
-          : this.stkNegPermission,
       discType: data.discType.present ? data.discType.value : this.discType,
       priceList: data.priceList.present ? data.priceList.value : this.priceList,
       convQty: data.convQty.present ? data.convQty.value : this.convQty,
@@ -14661,15 +14394,9 @@ class SaleOrderDetailsTableData extends DataClass
           ..write('vat: $vat, ')
           ..write('vatAmt: $vatAmt, ')
           ..write('total: $total, ')
-          ..write('disc: $disc, ')
-          ..write('discVal: $discVal, ')
           ..write('ledger: $ledger, ')
           ..write('companyId: $companyId, ')
           ..write('sync: $sync, ')
-          ..write('igst: $igst, ')
-          ..write('cgst: $cgst, ')
-          ..write('sgst: $sgst, ')
-          ..write('cess: $cess, ')
           ..write('hsn: $hsn, ')
           ..write('enteredRate: $enteredRate, ')
           ..write('enteredDisc: $enteredDisc, ')
@@ -14677,8 +14404,6 @@ class SaleOrderDetailsTableData extends DataClass
           ..write('enteredFQty: $enteredFQty, ')
           ..write('fQty: $fQty, ')
           ..write('addDiscVal: $addDiscVal, ')
-          ..write('cessAmt: $cessAmt, ')
-          ..write('stkNegPermission: $stkNegPermission, ')
           ..write('discType: $discType, ')
           ..write('priceList: $priceList, ')
           ..write('convQty: $convQty, ')
@@ -14705,15 +14430,9 @@ class SaleOrderDetailsTableData extends DataClass
     vat,
     vatAmt,
     total,
-    disc,
-    discVal,
     ledger,
     companyId,
     sync,
-    igst,
-    cgst,
-    sgst,
-    cess,
     hsn,
     enteredRate,
     enteredDisc,
@@ -14721,8 +14440,6 @@ class SaleOrderDetailsTableData extends DataClass
     enteredFQty,
     fQty,
     addDiscVal,
-    cessAmt,
-    stkNegPermission,
     discType,
     priceList,
     convQty,
@@ -14748,15 +14465,9 @@ class SaleOrderDetailsTableData extends DataClass
           other.vat == this.vat &&
           other.vatAmt == this.vatAmt &&
           other.total == this.total &&
-          other.disc == this.disc &&
-          other.discVal == this.discVal &&
           other.ledger == this.ledger &&
           other.companyId == this.companyId &&
           other.sync == this.sync &&
-          other.igst == this.igst &&
-          other.cgst == this.cgst &&
-          other.sgst == this.sgst &&
-          other.cess == this.cess &&
           other.hsn == this.hsn &&
           other.enteredRate == this.enteredRate &&
           other.enteredDisc == this.enteredDisc &&
@@ -14764,8 +14475,6 @@ class SaleOrderDetailsTableData extends DataClass
           other.enteredFQty == this.enteredFQty &&
           other.fQty == this.fQty &&
           other.addDiscVal == this.addDiscVal &&
-          other.cessAmt == this.cessAmt &&
-          other.stkNegPermission == this.stkNegPermission &&
           other.discType == this.discType &&
           other.priceList == this.priceList &&
           other.convQty == this.convQty &&
@@ -14790,15 +14499,9 @@ class SaleOrderDetailsTableCompanion
   final Value<double?> vat;
   final Value<double?> vatAmt;
   final Value<double?> total;
-  final Value<double?> disc;
-  final Value<double?> discVal;
   final Value<String?> ledger;
   final Value<int?> companyId;
   final Value<int> sync;
-  final Value<double?> igst;
-  final Value<double?> cgst;
-  final Value<double?> sgst;
-  final Value<double?> cess;
   final Value<String?> hsn;
   final Value<double?> enteredRate;
   final Value<double?> enteredDisc;
@@ -14806,8 +14509,6 @@ class SaleOrderDetailsTableCompanion
   final Value<String?> enteredFQty;
   final Value<double?> fQty;
   final Value<double?> addDiscVal;
-  final Value<double?> cessAmt;
-  final Value<String?> stkNegPermission;
   final Value<String?> discType;
   final Value<String?> priceList;
   final Value<double?> convQty;
@@ -14829,15 +14530,9 @@ class SaleOrderDetailsTableCompanion
     this.vat = const Value.absent(),
     this.vatAmt = const Value.absent(),
     this.total = const Value.absent(),
-    this.disc = const Value.absent(),
-    this.discVal = const Value.absent(),
     this.ledger = const Value.absent(),
     this.companyId = const Value.absent(),
     this.sync = const Value.absent(),
-    this.igst = const Value.absent(),
-    this.cgst = const Value.absent(),
-    this.sgst = const Value.absent(),
-    this.cess = const Value.absent(),
     this.hsn = const Value.absent(),
     this.enteredRate = const Value.absent(),
     this.enteredDisc = const Value.absent(),
@@ -14845,8 +14540,6 @@ class SaleOrderDetailsTableCompanion
     this.enteredFQty = const Value.absent(),
     this.fQty = const Value.absent(),
     this.addDiscVal = const Value.absent(),
-    this.cessAmt = const Value.absent(),
-    this.stkNegPermission = const Value.absent(),
     this.discType = const Value.absent(),
     this.priceList = const Value.absent(),
     this.convQty = const Value.absent(),
@@ -14869,15 +14562,9 @@ class SaleOrderDetailsTableCompanion
     this.vat = const Value.absent(),
     this.vatAmt = const Value.absent(),
     this.total = const Value.absent(),
-    this.disc = const Value.absent(),
-    this.discVal = const Value.absent(),
     this.ledger = const Value.absent(),
     this.companyId = const Value.absent(),
     this.sync = const Value.absent(),
-    this.igst = const Value.absent(),
-    this.cgst = const Value.absent(),
-    this.sgst = const Value.absent(),
-    this.cess = const Value.absent(),
     this.hsn = const Value.absent(),
     this.enteredRate = const Value.absent(),
     this.enteredDisc = const Value.absent(),
@@ -14885,8 +14572,6 @@ class SaleOrderDetailsTableCompanion
     this.enteredFQty = const Value.absent(),
     this.fQty = const Value.absent(),
     this.addDiscVal = const Value.absent(),
-    this.cessAmt = const Value.absent(),
-    this.stkNegPermission = const Value.absent(),
     this.discType = const Value.absent(),
     this.priceList = const Value.absent(),
     this.convQty = const Value.absent(),
@@ -14909,15 +14594,9 @@ class SaleOrderDetailsTableCompanion
     Expression<double>? vat,
     Expression<double>? vatAmt,
     Expression<double>? total,
-    Expression<double>? disc,
-    Expression<double>? discVal,
     Expression<String>? ledger,
     Expression<int>? companyId,
     Expression<int>? sync,
-    Expression<double>? igst,
-    Expression<double>? cgst,
-    Expression<double>? sgst,
-    Expression<double>? cess,
     Expression<String>? hsn,
     Expression<double>? enteredRate,
     Expression<double>? enteredDisc,
@@ -14925,8 +14604,6 @@ class SaleOrderDetailsTableCompanion
     Expression<String>? enteredFQty,
     Expression<double>? fQty,
     Expression<double>? addDiscVal,
-    Expression<double>? cessAmt,
-    Expression<String>? stkNegPermission,
     Expression<String>? discType,
     Expression<String>? priceList,
     Expression<double>? convQty,
@@ -14949,15 +14626,9 @@ class SaleOrderDetailsTableCompanion
       if (vat != null) 'vat': vat,
       if (vatAmt != null) 'vat_amt': vatAmt,
       if (total != null) 'total': total,
-      if (disc != null) 'disc': disc,
-      if (discVal != null) 'disc_val': discVal,
       if (ledger != null) 'ledger': ledger,
       if (companyId != null) 'company_id': companyId,
       if (sync != null) 'sync': sync,
-      if (igst != null) 'igst': igst,
-      if (cgst != null) 'cgst': cgst,
-      if (sgst != null) 'sgst': sgst,
-      if (cess != null) 'cess': cess,
       if (hsn != null) 'hsn': hsn,
       if (enteredRate != null) 'entered_rate': enteredRate,
       if (enteredDisc != null) 'entered_disc': enteredDisc,
@@ -14965,8 +14636,6 @@ class SaleOrderDetailsTableCompanion
       if (enteredFQty != null) 'entered_f_qty': enteredFQty,
       if (fQty != null) 'f_qty': fQty,
       if (addDiscVal != null) 'add_disc_val': addDiscVal,
-      if (cessAmt != null) 'cess_amt': cessAmt,
-      if (stkNegPermission != null) 'stk_neg_permission': stkNegPermission,
       if (discType != null) 'disc_type': discType,
       if (priceList != null) 'price_list': priceList,
       if (convQty != null) 'conv_qty': convQty,
@@ -14991,15 +14660,9 @@ class SaleOrderDetailsTableCompanion
     Value<double?>? vat,
     Value<double?>? vatAmt,
     Value<double?>? total,
-    Value<double?>? disc,
-    Value<double?>? discVal,
     Value<String?>? ledger,
     Value<int?>? companyId,
     Value<int>? sync,
-    Value<double?>? igst,
-    Value<double?>? cgst,
-    Value<double?>? sgst,
-    Value<double?>? cess,
     Value<String?>? hsn,
     Value<double?>? enteredRate,
     Value<double?>? enteredDisc,
@@ -15007,8 +14670,6 @@ class SaleOrderDetailsTableCompanion
     Value<String?>? enteredFQty,
     Value<double?>? fQty,
     Value<double?>? addDiscVal,
-    Value<double?>? cessAmt,
-    Value<String?>? stkNegPermission,
     Value<String?>? discType,
     Value<String?>? priceList,
     Value<double?>? convQty,
@@ -15031,15 +14692,9 @@ class SaleOrderDetailsTableCompanion
       vat: vat ?? this.vat,
       vatAmt: vatAmt ?? this.vatAmt,
       total: total ?? this.total,
-      disc: disc ?? this.disc,
-      discVal: discVal ?? this.discVal,
       ledger: ledger ?? this.ledger,
       companyId: companyId ?? this.companyId,
       sync: sync ?? this.sync,
-      igst: igst ?? this.igst,
-      cgst: cgst ?? this.cgst,
-      sgst: sgst ?? this.sgst,
-      cess: cess ?? this.cess,
       hsn: hsn ?? this.hsn,
       enteredRate: enteredRate ?? this.enteredRate,
       enteredDisc: enteredDisc ?? this.enteredDisc,
@@ -15047,8 +14702,6 @@ class SaleOrderDetailsTableCompanion
       enteredFQty: enteredFQty ?? this.enteredFQty,
       fQty: fQty ?? this.fQty,
       addDiscVal: addDiscVal ?? this.addDiscVal,
-      cessAmt: cessAmt ?? this.cessAmt,
-      stkNegPermission: stkNegPermission ?? this.stkNegPermission,
       discType: discType ?? this.discType,
       priceList: priceList ?? this.priceList,
       convQty: convQty ?? this.convQty,
@@ -15095,12 +14748,6 @@ class SaleOrderDetailsTableCompanion
     if (total.present) {
       map['total'] = Variable<double>(total.value);
     }
-    if (disc.present) {
-      map['disc'] = Variable<double>(disc.value);
-    }
-    if (discVal.present) {
-      map['disc_val'] = Variable<double>(discVal.value);
-    }
     if (ledger.present) {
       map['ledger'] = Variable<String>(ledger.value);
     }
@@ -15109,18 +14756,6 @@ class SaleOrderDetailsTableCompanion
     }
     if (sync.present) {
       map['sync'] = Variable<int>(sync.value);
-    }
-    if (igst.present) {
-      map['igst'] = Variable<double>(igst.value);
-    }
-    if (cgst.present) {
-      map['cgst'] = Variable<double>(cgst.value);
-    }
-    if (sgst.present) {
-      map['sgst'] = Variable<double>(sgst.value);
-    }
-    if (cess.present) {
-      map['cess'] = Variable<double>(cess.value);
     }
     if (hsn.present) {
       map['hsn'] = Variable<String>(hsn.value);
@@ -15142,12 +14777,6 @@ class SaleOrderDetailsTableCompanion
     }
     if (addDiscVal.present) {
       map['add_disc_val'] = Variable<double>(addDiscVal.value);
-    }
-    if (cessAmt.present) {
-      map['cess_amt'] = Variable<double>(cessAmt.value);
-    }
-    if (stkNegPermission.present) {
-      map['stk_neg_permission'] = Variable<String>(stkNegPermission.value);
     }
     if (discType.present) {
       map['disc_type'] = Variable<String>(discType.value);
@@ -15195,15 +14824,9 @@ class SaleOrderDetailsTableCompanion
           ..write('vat: $vat, ')
           ..write('vatAmt: $vatAmt, ')
           ..write('total: $total, ')
-          ..write('disc: $disc, ')
-          ..write('discVal: $discVal, ')
           ..write('ledger: $ledger, ')
           ..write('companyId: $companyId, ')
           ..write('sync: $sync, ')
-          ..write('igst: $igst, ')
-          ..write('cgst: $cgst, ')
-          ..write('sgst: $sgst, ')
-          ..write('cess: $cess, ')
           ..write('hsn: $hsn, ')
           ..write('enteredRate: $enteredRate, ')
           ..write('enteredDisc: $enteredDisc, ')
@@ -15211,8 +14834,6 @@ class SaleOrderDetailsTableCompanion
           ..write('enteredFQty: $enteredFQty, ')
           ..write('fQty: $fQty, ')
           ..write('addDiscVal: $addDiscVal, ')
-          ..write('cessAmt: $cessAmt, ')
-          ..write('stkNegPermission: $stkNegPermission, ')
           ..write('discType: $discType, ')
           ..write('priceList: $priceList, ')
           ..write('convQty: $convQty, ')
@@ -15279,15 +14900,6 @@ class $SaleOrderLedgerDetailsTableTable extends SaleOrderLedgerDetailsTable
     requiredDuringInsert: false,
     defaultValue: const Constant(0),
   );
-  static const VerificationMeta _ledgerMeta = const VerificationMeta('ledger');
-  @override
-  late final GeneratedColumn<String> ledger = GeneratedColumn<String>(
-    'ledger',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
   static const VerificationMeta _rateMeta = const VerificationMeta('rate');
   @override
   late final GeneratedColumn<double> rate = GeneratedColumn<double>(
@@ -15317,16 +14929,27 @@ class $SaleOrderLedgerDetailsTableTable extends SaleOrderLedgerDetailsTable
     type: DriftSqlType.int,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _voucherNameMeta = const VerificationMeta(
+    'voucherName',
+  );
+  @override
+  late final GeneratedColumn<String> voucherName = GeneratedColumn<String>(
+    'voucher_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
     mid,
     vchId,
     sync,
-    ledger,
     rate,
     amount,
     companyId,
+    voucherName,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -15361,12 +14984,6 @@ class $SaleOrderLedgerDetailsTableTable extends SaleOrderLedgerDetailsTable
         sync.isAcceptableOrUnknown(data['sync']!, _syncMeta),
       );
     }
-    if (data.containsKey('ledger')) {
-      context.handle(
-        _ledgerMeta,
-        ledger.isAcceptableOrUnknown(data['ledger']!, _ledgerMeta),
-      );
-    }
     if (data.containsKey('rate')) {
       context.handle(
         _rateMeta,
@@ -15383,6 +15000,15 @@ class $SaleOrderLedgerDetailsTableTable extends SaleOrderLedgerDetailsTable
       context.handle(
         _companyIdMeta,
         companyId.isAcceptableOrUnknown(data['company_id']!, _companyIdMeta),
+      );
+    }
+    if (data.containsKey('voucher_name')) {
+      context.handle(
+        _voucherNameMeta,
+        voucherName.isAcceptableOrUnknown(
+          data['voucher_name']!,
+          _voucherNameMeta,
+        ),
       );
     }
     return context;
@@ -15413,10 +15039,6 @@ class $SaleOrderLedgerDetailsTableTable extends SaleOrderLedgerDetailsTable
         DriftSqlType.int,
         data['${effectivePrefix}sync'],
       )!,
-      ledger: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}ledger'],
-      ),
       rate: attachedDatabase.typeMapping.read(
         DriftSqlType.double,
         data['${effectivePrefix}rate'],
@@ -15428,6 +15050,10 @@ class $SaleOrderLedgerDetailsTableTable extends SaleOrderLedgerDetailsTable
       companyId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}company_id'],
+      ),
+      voucherName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}voucher_name'],
       ),
     );
   }
@@ -15444,19 +15070,19 @@ class SaleOrderLedgerDetailsTableData extends DataClass
   final int? mid;
   final int? vchId;
   final int sync;
-  final String? ledger;
   final double? rate;
   final double? amount;
   final int? companyId;
+  final String? voucherName;
   const SaleOrderLedgerDetailsTableData({
     required this.id,
     this.mid,
     this.vchId,
     required this.sync,
-    this.ledger,
     this.rate,
     this.amount,
     this.companyId,
+    this.voucherName,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -15469,9 +15095,6 @@ class SaleOrderLedgerDetailsTableData extends DataClass
       map['vch_id'] = Variable<int>(vchId);
     }
     map['sync'] = Variable<int>(sync);
-    if (!nullToAbsent || ledger != null) {
-      map['ledger'] = Variable<String>(ledger);
-    }
     if (!nullToAbsent || rate != null) {
       map['rate'] = Variable<double>(rate);
     }
@@ -15480,6 +15103,9 @@ class SaleOrderLedgerDetailsTableData extends DataClass
     }
     if (!nullToAbsent || companyId != null) {
       map['company_id'] = Variable<int>(companyId);
+    }
+    if (!nullToAbsent || voucherName != null) {
+      map['voucher_name'] = Variable<String>(voucherName);
     }
     return map;
   }
@@ -15492,9 +15118,6 @@ class SaleOrderLedgerDetailsTableData extends DataClass
           ? const Value.absent()
           : Value(vchId),
       sync: Value(sync),
-      ledger: ledger == null && nullToAbsent
-          ? const Value.absent()
-          : Value(ledger),
       rate: rate == null && nullToAbsent ? const Value.absent() : Value(rate),
       amount: amount == null && nullToAbsent
           ? const Value.absent()
@@ -15502,6 +15125,9 @@ class SaleOrderLedgerDetailsTableData extends DataClass
       companyId: companyId == null && nullToAbsent
           ? const Value.absent()
           : Value(companyId),
+      voucherName: voucherName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(voucherName),
     );
   }
 
@@ -15515,10 +15141,10 @@ class SaleOrderLedgerDetailsTableData extends DataClass
       mid: serializer.fromJson<int?>(json['mid']),
       vchId: serializer.fromJson<int?>(json['vchId']),
       sync: serializer.fromJson<int>(json['sync']),
-      ledger: serializer.fromJson<String?>(json['ledger']),
       rate: serializer.fromJson<double?>(json['rate']),
       amount: serializer.fromJson<double?>(json['amount']),
       companyId: serializer.fromJson<int?>(json['companyId']),
+      voucherName: serializer.fromJson<String?>(json['voucherName']),
     );
   }
   @override
@@ -15529,10 +15155,10 @@ class SaleOrderLedgerDetailsTableData extends DataClass
       'mid': serializer.toJson<int?>(mid),
       'vchId': serializer.toJson<int?>(vchId),
       'sync': serializer.toJson<int>(sync),
-      'ledger': serializer.toJson<String?>(ledger),
       'rate': serializer.toJson<double?>(rate),
       'amount': serializer.toJson<double?>(amount),
       'companyId': serializer.toJson<int?>(companyId),
+      'voucherName': serializer.toJson<String?>(voucherName),
     };
   }
 
@@ -15541,19 +15167,19 @@ class SaleOrderLedgerDetailsTableData extends DataClass
     Value<int?> mid = const Value.absent(),
     Value<int?> vchId = const Value.absent(),
     int? sync,
-    Value<String?> ledger = const Value.absent(),
     Value<double?> rate = const Value.absent(),
     Value<double?> amount = const Value.absent(),
     Value<int?> companyId = const Value.absent(),
+    Value<String?> voucherName = const Value.absent(),
   }) => SaleOrderLedgerDetailsTableData(
     id: id ?? this.id,
     mid: mid.present ? mid.value : this.mid,
     vchId: vchId.present ? vchId.value : this.vchId,
     sync: sync ?? this.sync,
-    ledger: ledger.present ? ledger.value : this.ledger,
     rate: rate.present ? rate.value : this.rate,
     amount: amount.present ? amount.value : this.amount,
     companyId: companyId.present ? companyId.value : this.companyId,
+    voucherName: voucherName.present ? voucherName.value : this.voucherName,
   );
   SaleOrderLedgerDetailsTableData copyWithCompanion(
     SaleOrderLedgerDetailsTableCompanion data,
@@ -15563,10 +15189,12 @@ class SaleOrderLedgerDetailsTableData extends DataClass
       mid: data.mid.present ? data.mid.value : this.mid,
       vchId: data.vchId.present ? data.vchId.value : this.vchId,
       sync: data.sync.present ? data.sync.value : this.sync,
-      ledger: data.ledger.present ? data.ledger.value : this.ledger,
       rate: data.rate.present ? data.rate.value : this.rate,
       amount: data.amount.present ? data.amount.value : this.amount,
       companyId: data.companyId.present ? data.companyId.value : this.companyId,
+      voucherName: data.voucherName.present
+          ? data.voucherName.value
+          : this.voucherName,
     );
   }
 
@@ -15577,17 +15205,17 @@ class SaleOrderLedgerDetailsTableData extends DataClass
           ..write('mid: $mid, ')
           ..write('vchId: $vchId, ')
           ..write('sync: $sync, ')
-          ..write('ledger: $ledger, ')
           ..write('rate: $rate, ')
           ..write('amount: $amount, ')
-          ..write('companyId: $companyId')
+          ..write('companyId: $companyId, ')
+          ..write('voucherName: $voucherName')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode =>
-      Object.hash(id, mid, vchId, sync, ledger, rate, amount, companyId);
+      Object.hash(id, mid, vchId, sync, rate, amount, companyId, voucherName);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -15596,10 +15224,10 @@ class SaleOrderLedgerDetailsTableData extends DataClass
           other.mid == this.mid &&
           other.vchId == this.vchId &&
           other.sync == this.sync &&
-          other.ledger == this.ledger &&
           other.rate == this.rate &&
           other.amount == this.amount &&
-          other.companyId == this.companyId);
+          other.companyId == this.companyId &&
+          other.voucherName == this.voucherName);
 }
 
 class SaleOrderLedgerDetailsTableCompanion
@@ -15608,49 +15236,49 @@ class SaleOrderLedgerDetailsTableCompanion
   final Value<int?> mid;
   final Value<int?> vchId;
   final Value<int> sync;
-  final Value<String?> ledger;
   final Value<double?> rate;
   final Value<double?> amount;
   final Value<int?> companyId;
+  final Value<String?> voucherName;
   const SaleOrderLedgerDetailsTableCompanion({
     this.id = const Value.absent(),
     this.mid = const Value.absent(),
     this.vchId = const Value.absent(),
     this.sync = const Value.absent(),
-    this.ledger = const Value.absent(),
     this.rate = const Value.absent(),
     this.amount = const Value.absent(),
     this.companyId = const Value.absent(),
+    this.voucherName = const Value.absent(),
   });
   SaleOrderLedgerDetailsTableCompanion.insert({
     this.id = const Value.absent(),
     this.mid = const Value.absent(),
     this.vchId = const Value.absent(),
     this.sync = const Value.absent(),
-    this.ledger = const Value.absent(),
     this.rate = const Value.absent(),
     this.amount = const Value.absent(),
     this.companyId = const Value.absent(),
+    this.voucherName = const Value.absent(),
   });
   static Insertable<SaleOrderLedgerDetailsTableData> custom({
     Expression<int>? id,
     Expression<int>? mid,
     Expression<int>? vchId,
     Expression<int>? sync,
-    Expression<String>? ledger,
     Expression<double>? rate,
     Expression<double>? amount,
     Expression<int>? companyId,
+    Expression<String>? voucherName,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (mid != null) 'mid': mid,
       if (vchId != null) 'vch_id': vchId,
       if (sync != null) 'sync': sync,
-      if (ledger != null) 'ledger': ledger,
       if (rate != null) 'rate': rate,
       if (amount != null) 'amount': amount,
       if (companyId != null) 'company_id': companyId,
+      if (voucherName != null) 'voucher_name': voucherName,
     });
   }
 
@@ -15659,20 +15287,20 @@ class SaleOrderLedgerDetailsTableCompanion
     Value<int?>? mid,
     Value<int?>? vchId,
     Value<int>? sync,
-    Value<String?>? ledger,
     Value<double?>? rate,
     Value<double?>? amount,
     Value<int?>? companyId,
+    Value<String?>? voucherName,
   }) {
     return SaleOrderLedgerDetailsTableCompanion(
       id: id ?? this.id,
       mid: mid ?? this.mid,
       vchId: vchId ?? this.vchId,
       sync: sync ?? this.sync,
-      ledger: ledger ?? this.ledger,
       rate: rate ?? this.rate,
       amount: amount ?? this.amount,
       companyId: companyId ?? this.companyId,
+      voucherName: voucherName ?? this.voucherName,
     );
   }
 
@@ -15691,9 +15319,6 @@ class SaleOrderLedgerDetailsTableCompanion
     if (sync.present) {
       map['sync'] = Variable<int>(sync.value);
     }
-    if (ledger.present) {
-      map['ledger'] = Variable<String>(ledger.value);
-    }
     if (rate.present) {
       map['rate'] = Variable<double>(rate.value);
     }
@@ -15702,6 +15327,9 @@ class SaleOrderLedgerDetailsTableCompanion
     }
     if (companyId.present) {
       map['company_id'] = Variable<int>(companyId.value);
+    }
+    if (voucherName.present) {
+      map['voucher_name'] = Variable<String>(voucherName.value);
     }
     return map;
   }
@@ -15713,10 +15341,10 @@ class SaleOrderLedgerDetailsTableCompanion
           ..write('mid: $mid, ')
           ..write('vchId: $vchId, ')
           ..write('sync: $sync, ')
-          ..write('ledger: $ledger, ')
           ..write('rate: $rate, ')
           ..write('amount: $amount, ')
-          ..write('companyId: $companyId')
+          ..write('companyId: $companyId, ')
+          ..write('voucherName: $voucherName')
           ..write(')'))
         .toString();
   }
@@ -15855,15 +15483,6 @@ class $SaleOrderMasterTableTable extends SaleOrderMasterTable
     type: DriftSqlType.double,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _statusMeta = const VerificationMeta('status');
-  @override
-  late final GeneratedColumn<int> status = GeneratedColumn<int>(
-    'status',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-  );
   static const VerificationMeta _priceListMeta = const VerificationMeta(
     'priceList',
   );
@@ -15968,28 +15587,6 @@ class $SaleOrderMasterTableTable extends SaleOrderMasterTable
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _partyParentMeta = const VerificationMeta(
-    'partyParent',
-  );
-  @override
-  late final GeneratedColumn<String> partyParent = GeneratedColumn<String>(
-    'party_parent',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _addDiscTypeMeta = const VerificationMeta(
-    'addDiscType',
-  );
-  @override
-  late final GeneratedColumn<String> addDiscType = GeneratedColumn<String>(
-    'add_disc_type',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
   static const VerificationMeta _addDiscEnteredMeta = const VerificationMeta(
     'addDiscEntered',
   );
@@ -16014,17 +15611,6 @@ class $SaleOrderMasterTableTable extends SaleOrderMasterTable
   @override
   late final GeneratedColumn<String> suffix = GeneratedColumn<String>(
     'suffix',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _voucherNumberMeta = const VerificationMeta(
-    'voucherNumber',
-  );
-  @override
-  late final GeneratedColumn<String> voucherNumber = GeneratedColumn<String>(
-    'voucher_number',
     aliasedName,
     true,
     type: DriftSqlType.string,
@@ -16079,26 +15665,6 @@ class $SaleOrderMasterTableTable extends SaleOrderMasterTable
     type: DriftSqlType.int,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _stockStatusMeta = const VerificationMeta(
-    'stockStatus',
-  );
-  @override
-  late final GeneratedColumn<int> stockStatus = GeneratedColumn<int>(
-    'stock_status',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _finIdMeta = const VerificationMeta('finId');
-  @override
-  late final GeneratedColumn<int> finId = GeneratedColumn<int>(
-    'fin_id',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-  );
   static const VerificationMeta _createdTimeMeta = const VerificationMeta(
     'createdTime',
   );
@@ -16130,17 +15696,6 @@ class $SaleOrderMasterTableTable extends SaleOrderMasterTable
     aliasedName,
     true,
     type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _printCountMeta = const VerificationMeta(
-    'printCount',
-  );
-  @override
-  late final GeneratedColumn<int> printCount = GeneratedColumn<int>(
-    'print_count',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
     requiredDuringInsert: false,
   );
   static const VerificationMeta _syncMeta = const VerificationMeta('sync');
@@ -16200,7 +15755,6 @@ class $SaleOrderMasterTableTable extends SaleOrderMasterTable
     mob,
     voucherDate,
     voucherAmount,
-    status,
     priceList,
     narration,
     lattitude,
@@ -16211,23 +15765,17 @@ class $SaleOrderMasterTableTable extends SaleOrderMasterTable
     itemCount,
     gstin,
     state,
-    partyParent,
-    addDiscType,
     addDiscEntered,
     prefix,
     suffix,
-    voucherNumber,
     vchType,
     invNo,
     godown,
     tripId,
     visitId,
-    stockStatus,
-    finId,
     createdTime,
     updatedTime,
     deliveryDate,
-    printCount,
     sync,
     pinCode,
     uploadedServerId,
@@ -16325,12 +15873,6 @@ class $SaleOrderMasterTableTable extends SaleOrderMasterTable
     } else if (isInserting) {
       context.missing(_voucherAmountMeta);
     }
-    if (data.containsKey('status')) {
-      context.handle(
-        _statusMeta,
-        status.isAcceptableOrUnknown(data['status']!, _statusMeta),
-      );
-    }
     if (data.containsKey('price_list')) {
       context.handle(
         _priceListMeta,
@@ -16391,24 +15933,6 @@ class $SaleOrderMasterTableTable extends SaleOrderMasterTable
         state.isAcceptableOrUnknown(data['state']!, _stateMeta),
       );
     }
-    if (data.containsKey('party_parent')) {
-      context.handle(
-        _partyParentMeta,
-        partyParent.isAcceptableOrUnknown(
-          data['party_parent']!,
-          _partyParentMeta,
-        ),
-      );
-    }
-    if (data.containsKey('add_disc_type')) {
-      context.handle(
-        _addDiscTypeMeta,
-        addDiscType.isAcceptableOrUnknown(
-          data['add_disc_type']!,
-          _addDiscTypeMeta,
-        ),
-      );
-    }
     if (data.containsKey('add_disc_entered')) {
       context.handle(
         _addDiscEnteredMeta,
@@ -16428,15 +15952,6 @@ class $SaleOrderMasterTableTable extends SaleOrderMasterTable
       context.handle(
         _suffixMeta,
         suffix.isAcceptableOrUnknown(data['suffix']!, _suffixMeta),
-      );
-    }
-    if (data.containsKey('voucher_number')) {
-      context.handle(
-        _voucherNumberMeta,
-        voucherNumber.isAcceptableOrUnknown(
-          data['voucher_number']!,
-          _voucherNumberMeta,
-        ),
       );
     }
     if (data.containsKey('vch_type')) {
@@ -16469,21 +15984,6 @@ class $SaleOrderMasterTableTable extends SaleOrderMasterTable
         visitId.isAcceptableOrUnknown(data['visit_id']!, _visitIdMeta),
       );
     }
-    if (data.containsKey('stock_status')) {
-      context.handle(
-        _stockStatusMeta,
-        stockStatus.isAcceptableOrUnknown(
-          data['stock_status']!,
-          _stockStatusMeta,
-        ),
-      );
-    }
-    if (data.containsKey('fin_id')) {
-      context.handle(
-        _finIdMeta,
-        finId.isAcceptableOrUnknown(data['fin_id']!, _finIdMeta),
-      );
-    }
     if (data.containsKey('created_time')) {
       context.handle(
         _createdTimeMeta,
@@ -16509,12 +16009,6 @@ class $SaleOrderMasterTableTable extends SaleOrderMasterTable
           data['delivery_date']!,
           _deliveryDateMeta,
         ),
-      );
-    }
-    if (data.containsKey('print_count')) {
-      context.handle(
-        _printCountMeta,
-        printCount.isAcceptableOrUnknown(data['print_count']!, _printCountMeta),
       );
     }
     if (data.containsKey('sync')) {
@@ -16611,10 +16105,6 @@ class $SaleOrderMasterTableTable extends SaleOrderMasterTable
         DriftSqlType.double,
         data['${effectivePrefix}voucher_amount'],
       )!,
-      status: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}status'],
-      ),
       priceList: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}price_list'],
@@ -16655,14 +16145,6 @@ class $SaleOrderMasterTableTable extends SaleOrderMasterTable
         DriftSqlType.string,
         data['${effectivePrefix}state'],
       ),
-      partyParent: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}party_parent'],
-      ),
-      addDiscType: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}add_disc_type'],
-      ),
       addDiscEntered: attachedDatabase.typeMapping.read(
         DriftSqlType.double,
         data['${effectivePrefix}add_disc_entered'],
@@ -16674,10 +16156,6 @@ class $SaleOrderMasterTableTable extends SaleOrderMasterTable
       suffix: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}suffix'],
-      ),
-      voucherNumber: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}voucher_number'],
       ),
       vchType: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
@@ -16699,14 +16177,6 @@ class $SaleOrderMasterTableTable extends SaleOrderMasterTable
         DriftSqlType.int,
         data['${effectivePrefix}visit_id'],
       ),
-      stockStatus: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}stock_status'],
-      ),
-      finId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}fin_id'],
-      ),
       createdTime: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}created_time'],
@@ -16718,10 +16188,6 @@ class $SaleOrderMasterTableTable extends SaleOrderMasterTable
       deliveryDate: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}delivery_date'],
-      ),
-      printCount: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}print_count'],
       ),
       sync: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
@@ -16762,7 +16228,6 @@ class SaleOrderMasterTableData extends DataClass
   final String? mob;
   final String? voucherDate;
   final double voucherAmount;
-  final int? status;
   final String? priceList;
   final String? narration;
   final double? lattitude;
@@ -16773,23 +16238,17 @@ class SaleOrderMasterTableData extends DataClass
   final int? itemCount;
   final String? gstin;
   final String? state;
-  final String? partyParent;
-  final String? addDiscType;
   final double? addDiscEntered;
   final String? prefix;
   final String? suffix;
-  final String? voucherNumber;
   final String? vchType;
   final int? invNo;
   final String? godown;
   final int? tripId;
   final int? visitId;
-  final int? stockStatus;
-  final int? finId;
   final DateTime? createdTime;
   final DateTime? updatedTime;
   final String? deliveryDate;
-  final int? printCount;
   final int sync;
   final String? pinCode;
   final int? uploadedServerId;
@@ -16807,7 +16266,6 @@ class SaleOrderMasterTableData extends DataClass
     this.mob,
     this.voucherDate,
     required this.voucherAmount,
-    this.status,
     this.priceList,
     this.narration,
     this.lattitude,
@@ -16818,23 +16276,17 @@ class SaleOrderMasterTableData extends DataClass
     this.itemCount,
     this.gstin,
     this.state,
-    this.partyParent,
-    this.addDiscType,
     this.addDiscEntered,
     this.prefix,
     this.suffix,
-    this.voucherNumber,
     this.vchType,
     this.invNo,
     this.godown,
     this.tripId,
     this.visitId,
-    this.stockStatus,
-    this.finId,
     this.createdTime,
     this.updatedTime,
     this.deliveryDate,
-    this.printCount,
     required this.sync,
     this.pinCode,
     this.uploadedServerId,
@@ -16873,9 +16325,6 @@ class SaleOrderMasterTableData extends DataClass
       map['voucher_date'] = Variable<String>(voucherDate);
     }
     map['voucher_amount'] = Variable<double>(voucherAmount);
-    if (!nullToAbsent || status != null) {
-      map['status'] = Variable<int>(status);
-    }
     if (!nullToAbsent || priceList != null) {
       map['price_list'] = Variable<String>(priceList);
     }
@@ -16906,12 +16355,6 @@ class SaleOrderMasterTableData extends DataClass
     if (!nullToAbsent || state != null) {
       map['state'] = Variable<String>(state);
     }
-    if (!nullToAbsent || partyParent != null) {
-      map['party_parent'] = Variable<String>(partyParent);
-    }
-    if (!nullToAbsent || addDiscType != null) {
-      map['add_disc_type'] = Variable<String>(addDiscType);
-    }
     if (!nullToAbsent || addDiscEntered != null) {
       map['add_disc_entered'] = Variable<double>(addDiscEntered);
     }
@@ -16920,9 +16363,6 @@ class SaleOrderMasterTableData extends DataClass
     }
     if (!nullToAbsent || suffix != null) {
       map['suffix'] = Variable<String>(suffix);
-    }
-    if (!nullToAbsent || voucherNumber != null) {
-      map['voucher_number'] = Variable<String>(voucherNumber);
     }
     if (!nullToAbsent || vchType != null) {
       map['vch_type'] = Variable<String>(vchType);
@@ -16939,12 +16379,6 @@ class SaleOrderMasterTableData extends DataClass
     if (!nullToAbsent || visitId != null) {
       map['visit_id'] = Variable<int>(visitId);
     }
-    if (!nullToAbsent || stockStatus != null) {
-      map['stock_status'] = Variable<int>(stockStatus);
-    }
-    if (!nullToAbsent || finId != null) {
-      map['fin_id'] = Variable<int>(finId);
-    }
     if (!nullToAbsent || createdTime != null) {
       map['created_time'] = Variable<DateTime>(createdTime);
     }
@@ -16953,9 +16387,6 @@ class SaleOrderMasterTableData extends DataClass
     }
     if (!nullToAbsent || deliveryDate != null) {
       map['delivery_date'] = Variable<String>(deliveryDate);
-    }
-    if (!nullToAbsent || printCount != null) {
-      map['print_count'] = Variable<int>(printCount);
     }
     map['sync'] = Variable<int>(sync);
     if (!nullToAbsent || pinCode != null) {
@@ -17000,9 +16431,6 @@ class SaleOrderMasterTableData extends DataClass
           ? const Value.absent()
           : Value(voucherDate),
       voucherAmount: Value(voucherAmount),
-      status: status == null && nullToAbsent
-          ? const Value.absent()
-          : Value(status),
       priceList: priceList == null && nullToAbsent
           ? const Value.absent()
           : Value(priceList),
@@ -17033,12 +16461,6 @@ class SaleOrderMasterTableData extends DataClass
       state: state == null && nullToAbsent
           ? const Value.absent()
           : Value(state),
-      partyParent: partyParent == null && nullToAbsent
-          ? const Value.absent()
-          : Value(partyParent),
-      addDiscType: addDiscType == null && nullToAbsent
-          ? const Value.absent()
-          : Value(addDiscType),
       addDiscEntered: addDiscEntered == null && nullToAbsent
           ? const Value.absent()
           : Value(addDiscEntered),
@@ -17048,9 +16470,6 @@ class SaleOrderMasterTableData extends DataClass
       suffix: suffix == null && nullToAbsent
           ? const Value.absent()
           : Value(suffix),
-      voucherNumber: voucherNumber == null && nullToAbsent
-          ? const Value.absent()
-          : Value(voucherNumber),
       vchType: vchType == null && nullToAbsent
           ? const Value.absent()
           : Value(vchType),
@@ -17066,12 +16485,6 @@ class SaleOrderMasterTableData extends DataClass
       visitId: visitId == null && nullToAbsent
           ? const Value.absent()
           : Value(visitId),
-      stockStatus: stockStatus == null && nullToAbsent
-          ? const Value.absent()
-          : Value(stockStatus),
-      finId: finId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(finId),
       createdTime: createdTime == null && nullToAbsent
           ? const Value.absent()
           : Value(createdTime),
@@ -17081,9 +16494,6 @@ class SaleOrderMasterTableData extends DataClass
       deliveryDate: deliveryDate == null && nullToAbsent
           ? const Value.absent()
           : Value(deliveryDate),
-      printCount: printCount == null && nullToAbsent
-          ? const Value.absent()
-          : Value(printCount),
       sync: Value(sync),
       pinCode: pinCode == null && nullToAbsent
           ? const Value.absent()
@@ -17115,7 +16525,6 @@ class SaleOrderMasterTableData extends DataClass
       mob: serializer.fromJson<String?>(json['mob']),
       voucherDate: serializer.fromJson<String?>(json['voucherDate']),
       voucherAmount: serializer.fromJson<double>(json['voucherAmount']),
-      status: serializer.fromJson<int?>(json['status']),
       priceList: serializer.fromJson<String?>(json['priceList']),
       narration: serializer.fromJson<String?>(json['narration']),
       lattitude: serializer.fromJson<double?>(json['lattitude']),
@@ -17126,23 +16535,17 @@ class SaleOrderMasterTableData extends DataClass
       itemCount: serializer.fromJson<int?>(json['itemCount']),
       gstin: serializer.fromJson<String?>(json['gstin']),
       state: serializer.fromJson<String?>(json['state']),
-      partyParent: serializer.fromJson<String?>(json['partyParent']),
-      addDiscType: serializer.fromJson<String?>(json['addDiscType']),
       addDiscEntered: serializer.fromJson<double?>(json['addDiscEntered']),
       prefix: serializer.fromJson<String?>(json['prefix']),
       suffix: serializer.fromJson<String?>(json['suffix']),
-      voucherNumber: serializer.fromJson<String?>(json['voucherNumber']),
       vchType: serializer.fromJson<String?>(json['vchType']),
       invNo: serializer.fromJson<int?>(json['invNo']),
       godown: serializer.fromJson<String?>(json['godown']),
       tripId: serializer.fromJson<int?>(json['tripId']),
       visitId: serializer.fromJson<int?>(json['visitId']),
-      stockStatus: serializer.fromJson<int?>(json['stockStatus']),
-      finId: serializer.fromJson<int?>(json['finId']),
       createdTime: serializer.fromJson<DateTime?>(json['createdTime']),
       updatedTime: serializer.fromJson<DateTime?>(json['updatedTime']),
       deliveryDate: serializer.fromJson<String?>(json['deliveryDate']),
-      printCount: serializer.fromJson<int?>(json['printCount']),
       sync: serializer.fromJson<int>(json['sync']),
       pinCode: serializer.fromJson<String?>(json['pinCode']),
       uploadedServerId: serializer.fromJson<int?>(json['uploadedServerId']),
@@ -17165,7 +16568,6 @@ class SaleOrderMasterTableData extends DataClass
       'mob': serializer.toJson<String?>(mob),
       'voucherDate': serializer.toJson<String?>(voucherDate),
       'voucherAmount': serializer.toJson<double>(voucherAmount),
-      'status': serializer.toJson<int?>(status),
       'priceList': serializer.toJson<String?>(priceList),
       'narration': serializer.toJson<String?>(narration),
       'lattitude': serializer.toJson<double?>(lattitude),
@@ -17176,23 +16578,17 @@ class SaleOrderMasterTableData extends DataClass
       'itemCount': serializer.toJson<int?>(itemCount),
       'gstin': serializer.toJson<String?>(gstin),
       'state': serializer.toJson<String?>(state),
-      'partyParent': serializer.toJson<String?>(partyParent),
-      'addDiscType': serializer.toJson<String?>(addDiscType),
       'addDiscEntered': serializer.toJson<double?>(addDiscEntered),
       'prefix': serializer.toJson<String?>(prefix),
       'suffix': serializer.toJson<String?>(suffix),
-      'voucherNumber': serializer.toJson<String?>(voucherNumber),
       'vchType': serializer.toJson<String?>(vchType),
       'invNo': serializer.toJson<int?>(invNo),
       'godown': serializer.toJson<String?>(godown),
       'tripId': serializer.toJson<int?>(tripId),
       'visitId': serializer.toJson<int?>(visitId),
-      'stockStatus': serializer.toJson<int?>(stockStatus),
-      'finId': serializer.toJson<int?>(finId),
       'createdTime': serializer.toJson<DateTime?>(createdTime),
       'updatedTime': serializer.toJson<DateTime?>(updatedTime),
       'deliveryDate': serializer.toJson<String?>(deliveryDate),
-      'printCount': serializer.toJson<int?>(printCount),
       'sync': serializer.toJson<int>(sync),
       'pinCode': serializer.toJson<String?>(pinCode),
       'uploadedServerId': serializer.toJson<int?>(uploadedServerId),
@@ -17213,7 +16609,6 @@ class SaleOrderMasterTableData extends DataClass
     Value<String?> mob = const Value.absent(),
     Value<String?> voucherDate = const Value.absent(),
     double? voucherAmount,
-    Value<int?> status = const Value.absent(),
     Value<String?> priceList = const Value.absent(),
     Value<String?> narration = const Value.absent(),
     Value<double?> lattitude = const Value.absent(),
@@ -17224,23 +16619,17 @@ class SaleOrderMasterTableData extends DataClass
     Value<int?> itemCount = const Value.absent(),
     Value<String?> gstin = const Value.absent(),
     Value<String?> state = const Value.absent(),
-    Value<String?> partyParent = const Value.absent(),
-    Value<String?> addDiscType = const Value.absent(),
     Value<double?> addDiscEntered = const Value.absent(),
     Value<String?> prefix = const Value.absent(),
     Value<String?> suffix = const Value.absent(),
-    Value<String?> voucherNumber = const Value.absent(),
     Value<String?> vchType = const Value.absent(),
     Value<int?> invNo = const Value.absent(),
     Value<String?> godown = const Value.absent(),
     Value<int?> tripId = const Value.absent(),
     Value<int?> visitId = const Value.absent(),
-    Value<int?> stockStatus = const Value.absent(),
-    Value<int?> finId = const Value.absent(),
     Value<DateTime?> createdTime = const Value.absent(),
     Value<DateTime?> updatedTime = const Value.absent(),
     Value<String?> deliveryDate = const Value.absent(),
-    Value<int?> printCount = const Value.absent(),
     int? sync,
     Value<String?> pinCode = const Value.absent(),
     Value<int?> uploadedServerId = const Value.absent(),
@@ -17258,7 +16647,6 @@ class SaleOrderMasterTableData extends DataClass
     mob: mob.present ? mob.value : this.mob,
     voucherDate: voucherDate.present ? voucherDate.value : this.voucherDate,
     voucherAmount: voucherAmount ?? this.voucherAmount,
-    status: status.present ? status.value : this.status,
     priceList: priceList.present ? priceList.value : this.priceList,
     narration: narration.present ? narration.value : this.narration,
     lattitude: lattitude.present ? lattitude.value : this.lattitude,
@@ -17269,27 +16657,19 @@ class SaleOrderMasterTableData extends DataClass
     itemCount: itemCount.present ? itemCount.value : this.itemCount,
     gstin: gstin.present ? gstin.value : this.gstin,
     state: state.present ? state.value : this.state,
-    partyParent: partyParent.present ? partyParent.value : this.partyParent,
-    addDiscType: addDiscType.present ? addDiscType.value : this.addDiscType,
     addDiscEntered: addDiscEntered.present
         ? addDiscEntered.value
         : this.addDiscEntered,
     prefix: prefix.present ? prefix.value : this.prefix,
     suffix: suffix.present ? suffix.value : this.suffix,
-    voucherNumber: voucherNumber.present
-        ? voucherNumber.value
-        : this.voucherNumber,
     vchType: vchType.present ? vchType.value : this.vchType,
     invNo: invNo.present ? invNo.value : this.invNo,
     godown: godown.present ? godown.value : this.godown,
     tripId: tripId.present ? tripId.value : this.tripId,
     visitId: visitId.present ? visitId.value : this.visitId,
-    stockStatus: stockStatus.present ? stockStatus.value : this.stockStatus,
-    finId: finId.present ? finId.value : this.finId,
     createdTime: createdTime.present ? createdTime.value : this.createdTime,
     updatedTime: updatedTime.present ? updatedTime.value : this.updatedTime,
     deliveryDate: deliveryDate.present ? deliveryDate.value : this.deliveryDate,
-    printCount: printCount.present ? printCount.value : this.printCount,
     sync: sync ?? this.sync,
     pinCode: pinCode.present ? pinCode.value : this.pinCode,
     uploadedServerId: uploadedServerId.present
@@ -17319,7 +16699,6 @@ class SaleOrderMasterTableData extends DataClass
       voucherAmount: data.voucherAmount.present
           ? data.voucherAmount.value
           : this.voucherAmount,
-      status: data.status.present ? data.status.value : this.status,
       priceList: data.priceList.present ? data.priceList.value : this.priceList,
       narration: data.narration.present ? data.narration.value : this.narration,
       lattitude: data.lattitude.present ? data.lattitude.value : this.lattitude,
@@ -17330,29 +16709,16 @@ class SaleOrderMasterTableData extends DataClass
       itemCount: data.itemCount.present ? data.itemCount.value : this.itemCount,
       gstin: data.gstin.present ? data.gstin.value : this.gstin,
       state: data.state.present ? data.state.value : this.state,
-      partyParent: data.partyParent.present
-          ? data.partyParent.value
-          : this.partyParent,
-      addDiscType: data.addDiscType.present
-          ? data.addDiscType.value
-          : this.addDiscType,
       addDiscEntered: data.addDiscEntered.present
           ? data.addDiscEntered.value
           : this.addDiscEntered,
       prefix: data.prefix.present ? data.prefix.value : this.prefix,
       suffix: data.suffix.present ? data.suffix.value : this.suffix,
-      voucherNumber: data.voucherNumber.present
-          ? data.voucherNumber.value
-          : this.voucherNumber,
       vchType: data.vchType.present ? data.vchType.value : this.vchType,
       invNo: data.invNo.present ? data.invNo.value : this.invNo,
       godown: data.godown.present ? data.godown.value : this.godown,
       tripId: data.tripId.present ? data.tripId.value : this.tripId,
       visitId: data.visitId.present ? data.visitId.value : this.visitId,
-      stockStatus: data.stockStatus.present
-          ? data.stockStatus.value
-          : this.stockStatus,
-      finId: data.finId.present ? data.finId.value : this.finId,
       createdTime: data.createdTime.present
           ? data.createdTime.value
           : this.createdTime,
@@ -17362,9 +16728,6 @@ class SaleOrderMasterTableData extends DataClass
       deliveryDate: data.deliveryDate.present
           ? data.deliveryDate.value
           : this.deliveryDate,
-      printCount: data.printCount.present
-          ? data.printCount.value
-          : this.printCount,
       sync: data.sync.present ? data.sync.value : this.sync,
       pinCode: data.pinCode.present ? data.pinCode.value : this.pinCode,
       uploadedServerId: data.uploadedServerId.present
@@ -17391,7 +16754,6 @@ class SaleOrderMasterTableData extends DataClass
           ..write('mob: $mob, ')
           ..write('voucherDate: $voucherDate, ')
           ..write('voucherAmount: $voucherAmount, ')
-          ..write('status: $status, ')
           ..write('priceList: $priceList, ')
           ..write('narration: $narration, ')
           ..write('lattitude: $lattitude, ')
@@ -17402,23 +16764,17 @@ class SaleOrderMasterTableData extends DataClass
           ..write('itemCount: $itemCount, ')
           ..write('gstin: $gstin, ')
           ..write('state: $state, ')
-          ..write('partyParent: $partyParent, ')
-          ..write('addDiscType: $addDiscType, ')
           ..write('addDiscEntered: $addDiscEntered, ')
           ..write('prefix: $prefix, ')
           ..write('suffix: $suffix, ')
-          ..write('voucherNumber: $voucherNumber, ')
           ..write('vchType: $vchType, ')
           ..write('invNo: $invNo, ')
           ..write('godown: $godown, ')
           ..write('tripId: $tripId, ')
           ..write('visitId: $visitId, ')
-          ..write('stockStatus: $stockStatus, ')
-          ..write('finId: $finId, ')
           ..write('createdTime: $createdTime, ')
           ..write('updatedTime: $updatedTime, ')
           ..write('deliveryDate: $deliveryDate, ')
-          ..write('printCount: $printCount, ')
           ..write('sync: $sync, ')
           ..write('pinCode: $pinCode, ')
           ..write('uploadedServerId: $uploadedServerId, ')
@@ -17441,7 +16797,6 @@ class SaleOrderMasterTableData extends DataClass
     mob,
     voucherDate,
     voucherAmount,
-    status,
     priceList,
     narration,
     lattitude,
@@ -17452,23 +16807,17 @@ class SaleOrderMasterTableData extends DataClass
     itemCount,
     gstin,
     state,
-    partyParent,
-    addDiscType,
     addDiscEntered,
     prefix,
     suffix,
-    voucherNumber,
     vchType,
     invNo,
     godown,
     tripId,
     visitId,
-    stockStatus,
-    finId,
     createdTime,
     updatedTime,
     deliveryDate,
-    printCount,
     sync,
     pinCode,
     uploadedServerId,
@@ -17490,7 +16839,6 @@ class SaleOrderMasterTableData extends DataClass
           other.mob == this.mob &&
           other.voucherDate == this.voucherDate &&
           other.voucherAmount == this.voucherAmount &&
-          other.status == this.status &&
           other.priceList == this.priceList &&
           other.narration == this.narration &&
           other.lattitude == this.lattitude &&
@@ -17501,23 +16849,17 @@ class SaleOrderMasterTableData extends DataClass
           other.itemCount == this.itemCount &&
           other.gstin == this.gstin &&
           other.state == this.state &&
-          other.partyParent == this.partyParent &&
-          other.addDiscType == this.addDiscType &&
           other.addDiscEntered == this.addDiscEntered &&
           other.prefix == this.prefix &&
           other.suffix == this.suffix &&
-          other.voucherNumber == this.voucherNumber &&
           other.vchType == this.vchType &&
           other.invNo == this.invNo &&
           other.godown == this.godown &&
           other.tripId == this.tripId &&
           other.visitId == this.visitId &&
-          other.stockStatus == this.stockStatus &&
-          other.finId == this.finId &&
           other.createdTime == this.createdTime &&
           other.updatedTime == this.updatedTime &&
           other.deliveryDate == this.deliveryDate &&
-          other.printCount == this.printCount &&
           other.sync == this.sync &&
           other.pinCode == this.pinCode &&
           other.uploadedServerId == this.uploadedServerId &&
@@ -17538,7 +16880,6 @@ class SaleOrderMasterTableCompanion
   final Value<String?> mob;
   final Value<String?> voucherDate;
   final Value<double> voucherAmount;
-  final Value<int?> status;
   final Value<String?> priceList;
   final Value<String?> narration;
   final Value<double?> lattitude;
@@ -17549,23 +16890,17 @@ class SaleOrderMasterTableCompanion
   final Value<int?> itemCount;
   final Value<String?> gstin;
   final Value<String?> state;
-  final Value<String?> partyParent;
-  final Value<String?> addDiscType;
   final Value<double?> addDiscEntered;
   final Value<String?> prefix;
   final Value<String?> suffix;
-  final Value<String?> voucherNumber;
   final Value<String?> vchType;
   final Value<int?> invNo;
   final Value<String?> godown;
   final Value<int?> tripId;
   final Value<int?> visitId;
-  final Value<int?> stockStatus;
-  final Value<int?> finId;
   final Value<DateTime?> createdTime;
   final Value<DateTime?> updatedTime;
   final Value<String?> deliveryDate;
-  final Value<int?> printCount;
   final Value<int> sync;
   final Value<String?> pinCode;
   final Value<int?> uploadedServerId;
@@ -17583,7 +16918,6 @@ class SaleOrderMasterTableCompanion
     this.mob = const Value.absent(),
     this.voucherDate = const Value.absent(),
     this.voucherAmount = const Value.absent(),
-    this.status = const Value.absent(),
     this.priceList = const Value.absent(),
     this.narration = const Value.absent(),
     this.lattitude = const Value.absent(),
@@ -17594,23 +16928,17 @@ class SaleOrderMasterTableCompanion
     this.itemCount = const Value.absent(),
     this.gstin = const Value.absent(),
     this.state = const Value.absent(),
-    this.partyParent = const Value.absent(),
-    this.addDiscType = const Value.absent(),
     this.addDiscEntered = const Value.absent(),
     this.prefix = const Value.absent(),
     this.suffix = const Value.absent(),
-    this.voucherNumber = const Value.absent(),
     this.vchType = const Value.absent(),
     this.invNo = const Value.absent(),
     this.godown = const Value.absent(),
     this.tripId = const Value.absent(),
     this.visitId = const Value.absent(),
-    this.stockStatus = const Value.absent(),
-    this.finId = const Value.absent(),
     this.createdTime = const Value.absent(),
     this.updatedTime = const Value.absent(),
     this.deliveryDate = const Value.absent(),
-    this.printCount = const Value.absent(),
     this.sync = const Value.absent(),
     this.pinCode = const Value.absent(),
     this.uploadedServerId = const Value.absent(),
@@ -17629,7 +16957,6 @@ class SaleOrderMasterTableCompanion
     this.mob = const Value.absent(),
     this.voucherDate = const Value.absent(),
     required double voucherAmount,
-    this.status = const Value.absent(),
     this.priceList = const Value.absent(),
     this.narration = const Value.absent(),
     this.lattitude = const Value.absent(),
@@ -17640,23 +16967,17 @@ class SaleOrderMasterTableCompanion
     this.itemCount = const Value.absent(),
     this.gstin = const Value.absent(),
     this.state = const Value.absent(),
-    this.partyParent = const Value.absent(),
-    this.addDiscType = const Value.absent(),
     this.addDiscEntered = const Value.absent(),
     this.prefix = const Value.absent(),
     this.suffix = const Value.absent(),
-    this.voucherNumber = const Value.absent(),
     this.vchType = const Value.absent(),
     this.invNo = const Value.absent(),
     this.godown = const Value.absent(),
     this.tripId = const Value.absent(),
     this.visitId = const Value.absent(),
-    this.stockStatus = const Value.absent(),
-    this.finId = const Value.absent(),
     this.createdTime = const Value.absent(),
     this.updatedTime = const Value.absent(),
     this.deliveryDate = const Value.absent(),
-    this.printCount = const Value.absent(),
     this.sync = const Value.absent(),
     this.pinCode = const Value.absent(),
     this.uploadedServerId = const Value.absent(),
@@ -17675,7 +16996,6 @@ class SaleOrderMasterTableCompanion
     Expression<String>? mob,
     Expression<String>? voucherDate,
     Expression<double>? voucherAmount,
-    Expression<int>? status,
     Expression<String>? priceList,
     Expression<String>? narration,
     Expression<double>? lattitude,
@@ -17686,23 +17006,17 @@ class SaleOrderMasterTableCompanion
     Expression<int>? itemCount,
     Expression<String>? gstin,
     Expression<String>? state,
-    Expression<String>? partyParent,
-    Expression<String>? addDiscType,
     Expression<double>? addDiscEntered,
     Expression<String>? prefix,
     Expression<String>? suffix,
-    Expression<String>? voucherNumber,
     Expression<String>? vchType,
     Expression<int>? invNo,
     Expression<String>? godown,
     Expression<int>? tripId,
     Expression<int>? visitId,
-    Expression<int>? stockStatus,
-    Expression<int>? finId,
     Expression<DateTime>? createdTime,
     Expression<DateTime>? updatedTime,
     Expression<String>? deliveryDate,
-    Expression<int>? printCount,
     Expression<int>? sync,
     Expression<String>? pinCode,
     Expression<int>? uploadedServerId,
@@ -17721,7 +17035,6 @@ class SaleOrderMasterTableCompanion
       if (mob != null) 'mob': mob,
       if (voucherDate != null) 'voucher_date': voucherDate,
       if (voucherAmount != null) 'voucher_amount': voucherAmount,
-      if (status != null) 'status': status,
       if (priceList != null) 'price_list': priceList,
       if (narration != null) 'narration': narration,
       if (lattitude != null) 'lattitude': lattitude,
@@ -17732,23 +17045,17 @@ class SaleOrderMasterTableCompanion
       if (itemCount != null) 'item_count': itemCount,
       if (gstin != null) 'gstin': gstin,
       if (state != null) 'state': state,
-      if (partyParent != null) 'party_parent': partyParent,
-      if (addDiscType != null) 'add_disc_type': addDiscType,
       if (addDiscEntered != null) 'add_disc_entered': addDiscEntered,
       if (prefix != null) 'prefix': prefix,
       if (suffix != null) 'suffix': suffix,
-      if (voucherNumber != null) 'voucher_number': voucherNumber,
       if (vchType != null) 'vch_type': vchType,
       if (invNo != null) 'inv_no': invNo,
       if (godown != null) 'godown': godown,
       if (tripId != null) 'trip_id': tripId,
       if (visitId != null) 'visit_id': visitId,
-      if (stockStatus != null) 'stock_status': stockStatus,
-      if (finId != null) 'fin_id': finId,
       if (createdTime != null) 'created_time': createdTime,
       if (updatedTime != null) 'updated_time': updatedTime,
       if (deliveryDate != null) 'delivery_date': deliveryDate,
-      if (printCount != null) 'print_count': printCount,
       if (sync != null) 'sync': sync,
       if (pinCode != null) 'pin_code': pinCode,
       if (uploadedServerId != null) 'uploaded_server_id': uploadedServerId,
@@ -17769,7 +17076,6 @@ class SaleOrderMasterTableCompanion
     Value<String?>? mob,
     Value<String?>? voucherDate,
     Value<double>? voucherAmount,
-    Value<int?>? status,
     Value<String?>? priceList,
     Value<String?>? narration,
     Value<double?>? lattitude,
@@ -17780,23 +17086,17 @@ class SaleOrderMasterTableCompanion
     Value<int?>? itemCount,
     Value<String?>? gstin,
     Value<String?>? state,
-    Value<String?>? partyParent,
-    Value<String?>? addDiscType,
     Value<double?>? addDiscEntered,
     Value<String?>? prefix,
     Value<String?>? suffix,
-    Value<String?>? voucherNumber,
     Value<String?>? vchType,
     Value<int?>? invNo,
     Value<String?>? godown,
     Value<int?>? tripId,
     Value<int?>? visitId,
-    Value<int?>? stockStatus,
-    Value<int?>? finId,
     Value<DateTime?>? createdTime,
     Value<DateTime?>? updatedTime,
     Value<String?>? deliveryDate,
-    Value<int?>? printCount,
     Value<int>? sync,
     Value<String?>? pinCode,
     Value<int?>? uploadedServerId,
@@ -17815,7 +17115,6 @@ class SaleOrderMasterTableCompanion
       mob: mob ?? this.mob,
       voucherDate: voucherDate ?? this.voucherDate,
       voucherAmount: voucherAmount ?? this.voucherAmount,
-      status: status ?? this.status,
       priceList: priceList ?? this.priceList,
       narration: narration ?? this.narration,
       lattitude: lattitude ?? this.lattitude,
@@ -17826,23 +17125,17 @@ class SaleOrderMasterTableCompanion
       itemCount: itemCount ?? this.itemCount,
       gstin: gstin ?? this.gstin,
       state: state ?? this.state,
-      partyParent: partyParent ?? this.partyParent,
-      addDiscType: addDiscType ?? this.addDiscType,
       addDiscEntered: addDiscEntered ?? this.addDiscEntered,
       prefix: prefix ?? this.prefix,
       suffix: suffix ?? this.suffix,
-      voucherNumber: voucherNumber ?? this.voucherNumber,
       vchType: vchType ?? this.vchType,
       invNo: invNo ?? this.invNo,
       godown: godown ?? this.godown,
       tripId: tripId ?? this.tripId,
       visitId: visitId ?? this.visitId,
-      stockStatus: stockStatus ?? this.stockStatus,
-      finId: finId ?? this.finId,
       createdTime: createdTime ?? this.createdTime,
       updatedTime: updatedTime ?? this.updatedTime,
       deliveryDate: deliveryDate ?? this.deliveryDate,
-      printCount: printCount ?? this.printCount,
       sync: sync ?? this.sync,
       pinCode: pinCode ?? this.pinCode,
       uploadedServerId: uploadedServerId ?? this.uploadedServerId,
@@ -17889,9 +17182,6 @@ class SaleOrderMasterTableCompanion
     if (voucherAmount.present) {
       map['voucher_amount'] = Variable<double>(voucherAmount.value);
     }
-    if (status.present) {
-      map['status'] = Variable<int>(status.value);
-    }
     if (priceList.present) {
       map['price_list'] = Variable<String>(priceList.value);
     }
@@ -17922,12 +17212,6 @@ class SaleOrderMasterTableCompanion
     if (state.present) {
       map['state'] = Variable<String>(state.value);
     }
-    if (partyParent.present) {
-      map['party_parent'] = Variable<String>(partyParent.value);
-    }
-    if (addDiscType.present) {
-      map['add_disc_type'] = Variable<String>(addDiscType.value);
-    }
     if (addDiscEntered.present) {
       map['add_disc_entered'] = Variable<double>(addDiscEntered.value);
     }
@@ -17936,9 +17220,6 @@ class SaleOrderMasterTableCompanion
     }
     if (suffix.present) {
       map['suffix'] = Variable<String>(suffix.value);
-    }
-    if (voucherNumber.present) {
-      map['voucher_number'] = Variable<String>(voucherNumber.value);
     }
     if (vchType.present) {
       map['vch_type'] = Variable<String>(vchType.value);
@@ -17955,12 +17236,6 @@ class SaleOrderMasterTableCompanion
     if (visitId.present) {
       map['visit_id'] = Variable<int>(visitId.value);
     }
-    if (stockStatus.present) {
-      map['stock_status'] = Variable<int>(stockStatus.value);
-    }
-    if (finId.present) {
-      map['fin_id'] = Variable<int>(finId.value);
-    }
     if (createdTime.present) {
       map['created_time'] = Variable<DateTime>(createdTime.value);
     }
@@ -17969,9 +17244,6 @@ class SaleOrderMasterTableCompanion
     }
     if (deliveryDate.present) {
       map['delivery_date'] = Variable<String>(deliveryDate.value);
-    }
-    if (printCount.present) {
-      map['print_count'] = Variable<int>(printCount.value);
     }
     if (sync.present) {
       map['sync'] = Variable<int>(sync.value);
@@ -18003,7 +17275,6 @@ class SaleOrderMasterTableCompanion
           ..write('mob: $mob, ')
           ..write('voucherDate: $voucherDate, ')
           ..write('voucherAmount: $voucherAmount, ')
-          ..write('status: $status, ')
           ..write('priceList: $priceList, ')
           ..write('narration: $narration, ')
           ..write('lattitude: $lattitude, ')
@@ -18014,23 +17285,17 @@ class SaleOrderMasterTableCompanion
           ..write('itemCount: $itemCount, ')
           ..write('gstin: $gstin, ')
           ..write('state: $state, ')
-          ..write('partyParent: $partyParent, ')
-          ..write('addDiscType: $addDiscType, ')
           ..write('addDiscEntered: $addDiscEntered, ')
           ..write('prefix: $prefix, ')
           ..write('suffix: $suffix, ')
-          ..write('voucherNumber: $voucherNumber, ')
           ..write('vchType: $vchType, ')
           ..write('invNo: $invNo, ')
           ..write('godown: $godown, ')
           ..write('tripId: $tripId, ')
           ..write('visitId: $visitId, ')
-          ..write('stockStatus: $stockStatus, ')
-          ..write('finId: $finId, ')
           ..write('createdTime: $createdTime, ')
           ..write('updatedTime: $updatedTime, ')
           ..write('deliveryDate: $deliveryDate, ')
-          ..write('printCount: $printCount, ')
           ..write('sync: $sync, ')
           ..write('pinCode: $pinCode, ')
           ..write('uploadedServerId: $uploadedServerId, ')
@@ -18161,15 +17426,6 @@ class $SaleMasterTableTable extends SaleMasterTable
     type: DriftSqlType.double,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _statusMeta = const VerificationMeta('status');
-  @override
-  late final GeneratedColumn<int> status = GeneratedColumn<int>(
-    'status',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-  );
   static const VerificationMeta _priceListMeta = const VerificationMeta(
     'priceList',
   );
@@ -18274,28 +17530,6 @@ class $SaleMasterTableTable extends SaleMasterTable
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _partyParentMeta = const VerificationMeta(
-    'partyParent',
-  );
-  @override
-  late final GeneratedColumn<String> partyParent = GeneratedColumn<String>(
-    'party_parent',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _addDiscTypeMeta = const VerificationMeta(
-    'addDiscType',
-  );
-  @override
-  late final GeneratedColumn<String> addDiscType = GeneratedColumn<String>(
-    'add_disc_type',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
   static const VerificationMeta _addDiscEnteredMeta = const VerificationMeta(
     'addDiscEntered',
   );
@@ -18320,17 +17554,6 @@ class $SaleMasterTableTable extends SaleMasterTable
   @override
   late final GeneratedColumn<String> suffix = GeneratedColumn<String>(
     'suffix',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _voucherNumberMeta = const VerificationMeta(
-    'voucherNumber',
-  );
-  @override
-  late final GeneratedColumn<String> voucherNumber = GeneratedColumn<String>(
-    'voucher_number',
     aliasedName,
     true,
     type: DriftSqlType.string,
@@ -18385,26 +17608,6 @@ class $SaleMasterTableTable extends SaleMasterTable
     type: DriftSqlType.int,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _stockStatusMeta = const VerificationMeta(
-    'stockStatus',
-  );
-  @override
-  late final GeneratedColumn<int> stockStatus = GeneratedColumn<int>(
-    'stock_status',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _finIdMeta = const VerificationMeta('finId');
-  @override
-  late final GeneratedColumn<int> finId = GeneratedColumn<int>(
-    'fin_id',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-  );
   static const VerificationMeta _createdTimeMeta = const VerificationMeta(
     'createdTime',
   );
@@ -18436,17 +17639,6 @@ class $SaleMasterTableTable extends SaleMasterTable
     aliasedName,
     true,
     type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _printCountMeta = const VerificationMeta(
-    'printCount',
-  );
-  @override
-  late final GeneratedColumn<int> printCount = GeneratedColumn<int>(
-    'print_count',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
     requiredDuringInsert: false,
   );
   static const VerificationMeta _syncMeta = const VerificationMeta('sync');
@@ -18504,48 +17696,6 @@ class $SaleMasterTableTable extends SaleMasterTable
     requiredDuringInsert: false,
     defaultValue: const Constant("B2C"),
   );
-  static const VerificationMeta _discountTypeMeta = const VerificationMeta(
-    'discountType',
-  );
-  @override
-  late final GeneratedColumn<String> discountType = GeneratedColumn<String>(
-    'discount_type',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _discountAmountMeta = const VerificationMeta(
-    'discountAmount',
-  );
-  @override
-  late final GeneratedColumn<double> discountAmount = GeneratedColumn<double>(
-    'discount_amount',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _amountMeta = const VerificationMeta('amount');
-  @override
-  late final GeneratedColumn<double> amount = GeneratedColumn<double>(
-    'amount',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _coupontdiscountamountMeta =
-      const VerificationMeta('coupontdiscountamount');
-  @override
-  late final GeneratedColumn<double> coupontdiscountamount =
-      GeneratedColumn<double>(
-        'coupontdiscountamount',
-        aliasedName,
-        true,
-        type: DriftSqlType.double,
-        requiredDuringInsert: false,
-      );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -18559,7 +17709,6 @@ class $SaleMasterTableTable extends SaleMasterTable
     mob,
     voucherDate,
     voucherAmount,
-    status,
     priceList,
     narration,
     lattitude,
@@ -18570,32 +17719,22 @@ class $SaleMasterTableTable extends SaleMasterTable
     itemCount,
     gstin,
     state,
-    partyParent,
-    addDiscType,
     addDiscEntered,
     prefix,
     suffix,
-    voucherNumber,
     vchType,
     invNo,
     godown,
     tripId,
     visitId,
-    stockStatus,
-    finId,
     createdTime,
     updatedTime,
     deliveryDate,
-    printCount,
     sync,
     pinCode,
     uploadedServerId,
     mailingName,
     billingMode,
-    discountType,
-    discountAmount,
-    amount,
-    coupontdiscountamount,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -18680,12 +17819,6 @@ class $SaleMasterTableTable extends SaleMasterTable
     } else if (isInserting) {
       context.missing(_voucherAmountMeta);
     }
-    if (data.containsKey('status')) {
-      context.handle(
-        _statusMeta,
-        status.isAcceptableOrUnknown(data['status']!, _statusMeta),
-      );
-    }
     if (data.containsKey('price_list')) {
       context.handle(
         _priceListMeta,
@@ -18746,24 +17879,6 @@ class $SaleMasterTableTable extends SaleMasterTable
         state.isAcceptableOrUnknown(data['state']!, _stateMeta),
       );
     }
-    if (data.containsKey('party_parent')) {
-      context.handle(
-        _partyParentMeta,
-        partyParent.isAcceptableOrUnknown(
-          data['party_parent']!,
-          _partyParentMeta,
-        ),
-      );
-    }
-    if (data.containsKey('add_disc_type')) {
-      context.handle(
-        _addDiscTypeMeta,
-        addDiscType.isAcceptableOrUnknown(
-          data['add_disc_type']!,
-          _addDiscTypeMeta,
-        ),
-      );
-    }
     if (data.containsKey('add_disc_entered')) {
       context.handle(
         _addDiscEnteredMeta,
@@ -18783,15 +17898,6 @@ class $SaleMasterTableTable extends SaleMasterTable
       context.handle(
         _suffixMeta,
         suffix.isAcceptableOrUnknown(data['suffix']!, _suffixMeta),
-      );
-    }
-    if (data.containsKey('voucher_number')) {
-      context.handle(
-        _voucherNumberMeta,
-        voucherNumber.isAcceptableOrUnknown(
-          data['voucher_number']!,
-          _voucherNumberMeta,
-        ),
       );
     }
     if (data.containsKey('vch_type')) {
@@ -18824,21 +17930,6 @@ class $SaleMasterTableTable extends SaleMasterTable
         visitId.isAcceptableOrUnknown(data['visit_id']!, _visitIdMeta),
       );
     }
-    if (data.containsKey('stock_status')) {
-      context.handle(
-        _stockStatusMeta,
-        stockStatus.isAcceptableOrUnknown(
-          data['stock_status']!,
-          _stockStatusMeta,
-        ),
-      );
-    }
-    if (data.containsKey('fin_id')) {
-      context.handle(
-        _finIdMeta,
-        finId.isAcceptableOrUnknown(data['fin_id']!, _finIdMeta),
-      );
-    }
     if (data.containsKey('created_time')) {
       context.handle(
         _createdTimeMeta,
@@ -18864,12 +17955,6 @@ class $SaleMasterTableTable extends SaleMasterTable
           data['delivery_date']!,
           _deliveryDateMeta,
         ),
-      );
-    }
-    if (data.containsKey('print_count')) {
-      context.handle(
-        _printCountMeta,
-        printCount.isAcceptableOrUnknown(data['print_count']!, _printCountMeta),
       );
     }
     if (data.containsKey('sync')) {
@@ -18908,39 +17993,6 @@ class $SaleMasterTableTable extends SaleMasterTable
         billingMode.isAcceptableOrUnknown(
           data['billing_mode']!,
           _billingModeMeta,
-        ),
-      );
-    }
-    if (data.containsKey('discount_type')) {
-      context.handle(
-        _discountTypeMeta,
-        discountType.isAcceptableOrUnknown(
-          data['discount_type']!,
-          _discountTypeMeta,
-        ),
-      );
-    }
-    if (data.containsKey('discount_amount')) {
-      context.handle(
-        _discountAmountMeta,
-        discountAmount.isAcceptableOrUnknown(
-          data['discount_amount']!,
-          _discountAmountMeta,
-        ),
-      );
-    }
-    if (data.containsKey('amount')) {
-      context.handle(
-        _amountMeta,
-        amount.isAcceptableOrUnknown(data['amount']!, _amountMeta),
-      );
-    }
-    if (data.containsKey('coupontdiscountamount')) {
-      context.handle(
-        _coupontdiscountamountMeta,
-        coupontdiscountamount.isAcceptableOrUnknown(
-          data['coupontdiscountamount']!,
-          _coupontdiscountamountMeta,
         ),
       );
     }
@@ -18997,10 +18049,6 @@ class $SaleMasterTableTable extends SaleMasterTable
         DriftSqlType.double,
         data['${effectivePrefix}voucher_amount'],
       )!,
-      status: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}status'],
-      ),
       priceList: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}price_list'],
@@ -19041,14 +18089,6 @@ class $SaleMasterTableTable extends SaleMasterTable
         DriftSqlType.string,
         data['${effectivePrefix}state'],
       ),
-      partyParent: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}party_parent'],
-      ),
-      addDiscType: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}add_disc_type'],
-      ),
       addDiscEntered: attachedDatabase.typeMapping.read(
         DriftSqlType.double,
         data['${effectivePrefix}add_disc_entered'],
@@ -19060,10 +18100,6 @@ class $SaleMasterTableTable extends SaleMasterTable
       suffix: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}suffix'],
-      ),
-      voucherNumber: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}voucher_number'],
       ),
       vchType: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
@@ -19085,14 +18121,6 @@ class $SaleMasterTableTable extends SaleMasterTable
         DriftSqlType.int,
         data['${effectivePrefix}visit_id'],
       ),
-      stockStatus: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}stock_status'],
-      ),
-      finId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}fin_id'],
-      ),
       createdTime: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}created_time'],
@@ -19104,10 +18132,6 @@ class $SaleMasterTableTable extends SaleMasterTable
       deliveryDate: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}delivery_date'],
-      ),
-      printCount: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}print_count'],
       ),
       sync: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
@@ -19129,22 +18153,6 @@ class $SaleMasterTableTable extends SaleMasterTable
         DriftSqlType.string,
         data['${effectivePrefix}billing_mode'],
       )!,
-      discountType: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}discount_type'],
-      ),
-      discountAmount: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}discount_amount'],
-      ),
-      amount: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}amount'],
-      ),
-      coupontdiscountamount: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}coupontdiscountamount'],
-      ),
     );
   }
 
@@ -19167,7 +18175,6 @@ class SaleMasterTableData extends DataClass
   final String? mob;
   final String? voucherDate;
   final double voucherAmount;
-  final int? status;
   final String? priceList;
   final String? narration;
   final double? lattitude;
@@ -19178,32 +18185,22 @@ class SaleMasterTableData extends DataClass
   final int? itemCount;
   final String? gstin;
   final String? state;
-  final String? partyParent;
-  final String? addDiscType;
   final double? addDiscEntered;
   final String? prefix;
   final String? suffix;
-  final String? voucherNumber;
   final String? vchType;
   final int? invNo;
   final String? godown;
   final int? tripId;
   final int? visitId;
-  final int? stockStatus;
-  final int? finId;
   final String? createdTime;
   final String? updatedTime;
   final String? deliveryDate;
-  final int? printCount;
   final int sync;
   final String? pinCode;
   final int? uploadedServerId;
   final String? mailingName;
   final String billingMode;
-  final String? discountType;
-  final double? discountAmount;
-  final double? amount;
-  final double? coupontdiscountamount;
   const SaleMasterTableData({
     required this.id,
     this.vchId,
@@ -19216,7 +18213,6 @@ class SaleMasterTableData extends DataClass
     this.mob,
     this.voucherDate,
     required this.voucherAmount,
-    this.status,
     this.priceList,
     this.narration,
     this.lattitude,
@@ -19227,32 +18223,22 @@ class SaleMasterTableData extends DataClass
     this.itemCount,
     this.gstin,
     this.state,
-    this.partyParent,
-    this.addDiscType,
     this.addDiscEntered,
     this.prefix,
     this.suffix,
-    this.voucherNumber,
     this.vchType,
     this.invNo,
     this.godown,
     this.tripId,
     this.visitId,
-    this.stockStatus,
-    this.finId,
     this.createdTime,
     this.updatedTime,
     this.deliveryDate,
-    this.printCount,
     required this.sync,
     this.pinCode,
     this.uploadedServerId,
     this.mailingName,
     required this.billingMode,
-    this.discountType,
-    this.discountAmount,
-    this.amount,
-    this.coupontdiscountamount,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -19286,9 +18272,6 @@ class SaleMasterTableData extends DataClass
       map['voucher_date'] = Variable<String>(voucherDate);
     }
     map['voucher_amount'] = Variable<double>(voucherAmount);
-    if (!nullToAbsent || status != null) {
-      map['status'] = Variable<int>(status);
-    }
     if (!nullToAbsent || priceList != null) {
       map['price_list'] = Variable<String>(priceList);
     }
@@ -19319,12 +18302,6 @@ class SaleMasterTableData extends DataClass
     if (!nullToAbsent || state != null) {
       map['state'] = Variable<String>(state);
     }
-    if (!nullToAbsent || partyParent != null) {
-      map['party_parent'] = Variable<String>(partyParent);
-    }
-    if (!nullToAbsent || addDiscType != null) {
-      map['add_disc_type'] = Variable<String>(addDiscType);
-    }
     if (!nullToAbsent || addDiscEntered != null) {
       map['add_disc_entered'] = Variable<double>(addDiscEntered);
     }
@@ -19333,9 +18310,6 @@ class SaleMasterTableData extends DataClass
     }
     if (!nullToAbsent || suffix != null) {
       map['suffix'] = Variable<String>(suffix);
-    }
-    if (!nullToAbsent || voucherNumber != null) {
-      map['voucher_number'] = Variable<String>(voucherNumber);
     }
     if (!nullToAbsent || vchType != null) {
       map['vch_type'] = Variable<String>(vchType);
@@ -19352,12 +18326,6 @@ class SaleMasterTableData extends DataClass
     if (!nullToAbsent || visitId != null) {
       map['visit_id'] = Variable<int>(visitId);
     }
-    if (!nullToAbsent || stockStatus != null) {
-      map['stock_status'] = Variable<int>(stockStatus);
-    }
-    if (!nullToAbsent || finId != null) {
-      map['fin_id'] = Variable<int>(finId);
-    }
     if (!nullToAbsent || createdTime != null) {
       map['created_time'] = Variable<String>(createdTime);
     }
@@ -19366,9 +18334,6 @@ class SaleMasterTableData extends DataClass
     }
     if (!nullToAbsent || deliveryDate != null) {
       map['delivery_date'] = Variable<String>(deliveryDate);
-    }
-    if (!nullToAbsent || printCount != null) {
-      map['print_count'] = Variable<int>(printCount);
     }
     map['sync'] = Variable<int>(sync);
     if (!nullToAbsent || pinCode != null) {
@@ -19381,18 +18346,6 @@ class SaleMasterTableData extends DataClass
       map['mailing_name'] = Variable<String>(mailingName);
     }
     map['billing_mode'] = Variable<String>(billingMode);
-    if (!nullToAbsent || discountType != null) {
-      map['discount_type'] = Variable<String>(discountType);
-    }
-    if (!nullToAbsent || discountAmount != null) {
-      map['discount_amount'] = Variable<double>(discountAmount);
-    }
-    if (!nullToAbsent || amount != null) {
-      map['amount'] = Variable<double>(amount);
-    }
-    if (!nullToAbsent || coupontdiscountamount != null) {
-      map['coupontdiscountamount'] = Variable<double>(coupontdiscountamount);
-    }
     return map;
   }
 
@@ -19425,9 +18378,6 @@ class SaleMasterTableData extends DataClass
           ? const Value.absent()
           : Value(voucherDate),
       voucherAmount: Value(voucherAmount),
-      status: status == null && nullToAbsent
-          ? const Value.absent()
-          : Value(status),
       priceList: priceList == null && nullToAbsent
           ? const Value.absent()
           : Value(priceList),
@@ -19458,12 +18408,6 @@ class SaleMasterTableData extends DataClass
       state: state == null && nullToAbsent
           ? const Value.absent()
           : Value(state),
-      partyParent: partyParent == null && nullToAbsent
-          ? const Value.absent()
-          : Value(partyParent),
-      addDiscType: addDiscType == null && nullToAbsent
-          ? const Value.absent()
-          : Value(addDiscType),
       addDiscEntered: addDiscEntered == null && nullToAbsent
           ? const Value.absent()
           : Value(addDiscEntered),
@@ -19473,9 +18417,6 @@ class SaleMasterTableData extends DataClass
       suffix: suffix == null && nullToAbsent
           ? const Value.absent()
           : Value(suffix),
-      voucherNumber: voucherNumber == null && nullToAbsent
-          ? const Value.absent()
-          : Value(voucherNumber),
       vchType: vchType == null && nullToAbsent
           ? const Value.absent()
           : Value(vchType),
@@ -19491,12 +18432,6 @@ class SaleMasterTableData extends DataClass
       visitId: visitId == null && nullToAbsent
           ? const Value.absent()
           : Value(visitId),
-      stockStatus: stockStatus == null && nullToAbsent
-          ? const Value.absent()
-          : Value(stockStatus),
-      finId: finId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(finId),
       createdTime: createdTime == null && nullToAbsent
           ? const Value.absent()
           : Value(createdTime),
@@ -19506,9 +18441,6 @@ class SaleMasterTableData extends DataClass
       deliveryDate: deliveryDate == null && nullToAbsent
           ? const Value.absent()
           : Value(deliveryDate),
-      printCount: printCount == null && nullToAbsent
-          ? const Value.absent()
-          : Value(printCount),
       sync: Value(sync),
       pinCode: pinCode == null && nullToAbsent
           ? const Value.absent()
@@ -19520,18 +18452,6 @@ class SaleMasterTableData extends DataClass
           ? const Value.absent()
           : Value(mailingName),
       billingMode: Value(billingMode),
-      discountType: discountType == null && nullToAbsent
-          ? const Value.absent()
-          : Value(discountType),
-      discountAmount: discountAmount == null && nullToAbsent
-          ? const Value.absent()
-          : Value(discountAmount),
-      amount: amount == null && nullToAbsent
-          ? const Value.absent()
-          : Value(amount),
-      coupontdiscountamount: coupontdiscountamount == null && nullToAbsent
-          ? const Value.absent()
-          : Value(coupontdiscountamount),
     );
   }
 
@@ -19552,7 +18472,6 @@ class SaleMasterTableData extends DataClass
       mob: serializer.fromJson<String?>(json['mob']),
       voucherDate: serializer.fromJson<String?>(json['voucherDate']),
       voucherAmount: serializer.fromJson<double>(json['voucherAmount']),
-      status: serializer.fromJson<int?>(json['status']),
       priceList: serializer.fromJson<String?>(json['priceList']),
       narration: serializer.fromJson<String?>(json['narration']),
       lattitude: serializer.fromJson<double?>(json['lattitude']),
@@ -19563,34 +18482,22 @@ class SaleMasterTableData extends DataClass
       itemCount: serializer.fromJson<int?>(json['itemCount']),
       gstin: serializer.fromJson<String?>(json['gstin']),
       state: serializer.fromJson<String?>(json['state']),
-      partyParent: serializer.fromJson<String?>(json['partyParent']),
-      addDiscType: serializer.fromJson<String?>(json['addDiscType']),
       addDiscEntered: serializer.fromJson<double?>(json['addDiscEntered']),
       prefix: serializer.fromJson<String?>(json['prefix']),
       suffix: serializer.fromJson<String?>(json['suffix']),
-      voucherNumber: serializer.fromJson<String?>(json['voucherNumber']),
       vchType: serializer.fromJson<String?>(json['vchType']),
       invNo: serializer.fromJson<int?>(json['invNo']),
       godown: serializer.fromJson<String?>(json['godown']),
       tripId: serializer.fromJson<int?>(json['tripId']),
       visitId: serializer.fromJson<int?>(json['visitId']),
-      stockStatus: serializer.fromJson<int?>(json['stockStatus']),
-      finId: serializer.fromJson<int?>(json['finId']),
       createdTime: serializer.fromJson<String?>(json['createdTime']),
       updatedTime: serializer.fromJson<String?>(json['updatedTime']),
       deliveryDate: serializer.fromJson<String?>(json['deliveryDate']),
-      printCount: serializer.fromJson<int?>(json['printCount']),
       sync: serializer.fromJson<int>(json['sync']),
       pinCode: serializer.fromJson<String?>(json['pinCode']),
       uploadedServerId: serializer.fromJson<int?>(json['uploadedServerId']),
       mailingName: serializer.fromJson<String?>(json['mailingName']),
       billingMode: serializer.fromJson<String>(json['billingMode']),
-      discountType: serializer.fromJson<String?>(json['discountType']),
-      discountAmount: serializer.fromJson<double?>(json['discountAmount']),
-      amount: serializer.fromJson<double?>(json['amount']),
-      coupontdiscountamount: serializer.fromJson<double?>(
-        json['coupontdiscountamount'],
-      ),
     );
   }
   @override
@@ -19608,7 +18515,6 @@ class SaleMasterTableData extends DataClass
       'mob': serializer.toJson<String?>(mob),
       'voucherDate': serializer.toJson<String?>(voucherDate),
       'voucherAmount': serializer.toJson<double>(voucherAmount),
-      'status': serializer.toJson<int?>(status),
       'priceList': serializer.toJson<String?>(priceList),
       'narration': serializer.toJson<String?>(narration),
       'lattitude': serializer.toJson<double?>(lattitude),
@@ -19619,34 +18525,22 @@ class SaleMasterTableData extends DataClass
       'itemCount': serializer.toJson<int?>(itemCount),
       'gstin': serializer.toJson<String?>(gstin),
       'state': serializer.toJson<String?>(state),
-      'partyParent': serializer.toJson<String?>(partyParent),
-      'addDiscType': serializer.toJson<String?>(addDiscType),
       'addDiscEntered': serializer.toJson<double?>(addDiscEntered),
       'prefix': serializer.toJson<String?>(prefix),
       'suffix': serializer.toJson<String?>(suffix),
-      'voucherNumber': serializer.toJson<String?>(voucherNumber),
       'vchType': serializer.toJson<String?>(vchType),
       'invNo': serializer.toJson<int?>(invNo),
       'godown': serializer.toJson<String?>(godown),
       'tripId': serializer.toJson<int?>(tripId),
       'visitId': serializer.toJson<int?>(visitId),
-      'stockStatus': serializer.toJson<int?>(stockStatus),
-      'finId': serializer.toJson<int?>(finId),
       'createdTime': serializer.toJson<String?>(createdTime),
       'updatedTime': serializer.toJson<String?>(updatedTime),
       'deliveryDate': serializer.toJson<String?>(deliveryDate),
-      'printCount': serializer.toJson<int?>(printCount),
       'sync': serializer.toJson<int>(sync),
       'pinCode': serializer.toJson<String?>(pinCode),
       'uploadedServerId': serializer.toJson<int?>(uploadedServerId),
       'mailingName': serializer.toJson<String?>(mailingName),
       'billingMode': serializer.toJson<String>(billingMode),
-      'discountType': serializer.toJson<String?>(discountType),
-      'discountAmount': serializer.toJson<double?>(discountAmount),
-      'amount': serializer.toJson<double?>(amount),
-      'coupontdiscountamount': serializer.toJson<double?>(
-        coupontdiscountamount,
-      ),
     };
   }
 
@@ -19662,7 +18556,6 @@ class SaleMasterTableData extends DataClass
     Value<String?> mob = const Value.absent(),
     Value<String?> voucherDate = const Value.absent(),
     double? voucherAmount,
-    Value<int?> status = const Value.absent(),
     Value<String?> priceList = const Value.absent(),
     Value<String?> narration = const Value.absent(),
     Value<double?> lattitude = const Value.absent(),
@@ -19673,32 +18566,22 @@ class SaleMasterTableData extends DataClass
     Value<int?> itemCount = const Value.absent(),
     Value<String?> gstin = const Value.absent(),
     Value<String?> state = const Value.absent(),
-    Value<String?> partyParent = const Value.absent(),
-    Value<String?> addDiscType = const Value.absent(),
     Value<double?> addDiscEntered = const Value.absent(),
     Value<String?> prefix = const Value.absent(),
     Value<String?> suffix = const Value.absent(),
-    Value<String?> voucherNumber = const Value.absent(),
     Value<String?> vchType = const Value.absent(),
     Value<int?> invNo = const Value.absent(),
     Value<String?> godown = const Value.absent(),
     Value<int?> tripId = const Value.absent(),
     Value<int?> visitId = const Value.absent(),
-    Value<int?> stockStatus = const Value.absent(),
-    Value<int?> finId = const Value.absent(),
     Value<String?> createdTime = const Value.absent(),
     Value<String?> updatedTime = const Value.absent(),
     Value<String?> deliveryDate = const Value.absent(),
-    Value<int?> printCount = const Value.absent(),
     int? sync,
     Value<String?> pinCode = const Value.absent(),
     Value<int?> uploadedServerId = const Value.absent(),
     Value<String?> mailingName = const Value.absent(),
     String? billingMode,
-    Value<String?> discountType = const Value.absent(),
-    Value<double?> discountAmount = const Value.absent(),
-    Value<double?> amount = const Value.absent(),
-    Value<double?> coupontdiscountamount = const Value.absent(),
   }) => SaleMasterTableData(
     id: id ?? this.id,
     vchId: vchId.present ? vchId.value : this.vchId,
@@ -19711,7 +18594,6 @@ class SaleMasterTableData extends DataClass
     mob: mob.present ? mob.value : this.mob,
     voucherDate: voucherDate.present ? voucherDate.value : this.voucherDate,
     voucherAmount: voucherAmount ?? this.voucherAmount,
-    status: status.present ? status.value : this.status,
     priceList: priceList.present ? priceList.value : this.priceList,
     narration: narration.present ? narration.value : this.narration,
     lattitude: lattitude.present ? lattitude.value : this.lattitude,
@@ -19722,27 +18604,19 @@ class SaleMasterTableData extends DataClass
     itemCount: itemCount.present ? itemCount.value : this.itemCount,
     gstin: gstin.present ? gstin.value : this.gstin,
     state: state.present ? state.value : this.state,
-    partyParent: partyParent.present ? partyParent.value : this.partyParent,
-    addDiscType: addDiscType.present ? addDiscType.value : this.addDiscType,
     addDiscEntered: addDiscEntered.present
         ? addDiscEntered.value
         : this.addDiscEntered,
     prefix: prefix.present ? prefix.value : this.prefix,
     suffix: suffix.present ? suffix.value : this.suffix,
-    voucherNumber: voucherNumber.present
-        ? voucherNumber.value
-        : this.voucherNumber,
     vchType: vchType.present ? vchType.value : this.vchType,
     invNo: invNo.present ? invNo.value : this.invNo,
     godown: godown.present ? godown.value : this.godown,
     tripId: tripId.present ? tripId.value : this.tripId,
     visitId: visitId.present ? visitId.value : this.visitId,
-    stockStatus: stockStatus.present ? stockStatus.value : this.stockStatus,
-    finId: finId.present ? finId.value : this.finId,
     createdTime: createdTime.present ? createdTime.value : this.createdTime,
     updatedTime: updatedTime.present ? updatedTime.value : this.updatedTime,
     deliveryDate: deliveryDate.present ? deliveryDate.value : this.deliveryDate,
-    printCount: printCount.present ? printCount.value : this.printCount,
     sync: sync ?? this.sync,
     pinCode: pinCode.present ? pinCode.value : this.pinCode,
     uploadedServerId: uploadedServerId.present
@@ -19750,14 +18624,6 @@ class SaleMasterTableData extends DataClass
         : this.uploadedServerId,
     mailingName: mailingName.present ? mailingName.value : this.mailingName,
     billingMode: billingMode ?? this.billingMode,
-    discountType: discountType.present ? discountType.value : this.discountType,
-    discountAmount: discountAmount.present
-        ? discountAmount.value
-        : this.discountAmount,
-    amount: amount.present ? amount.value : this.amount,
-    coupontdiscountamount: coupontdiscountamount.present
-        ? coupontdiscountamount.value
-        : this.coupontdiscountamount,
   );
   SaleMasterTableData copyWithCompanion(SaleMasterTableCompanion data) {
     return SaleMasterTableData(
@@ -19776,7 +18642,6 @@ class SaleMasterTableData extends DataClass
       voucherAmount: data.voucherAmount.present
           ? data.voucherAmount.value
           : this.voucherAmount,
-      status: data.status.present ? data.status.value : this.status,
       priceList: data.priceList.present ? data.priceList.value : this.priceList,
       narration: data.narration.present ? data.narration.value : this.narration,
       lattitude: data.lattitude.present ? data.lattitude.value : this.lattitude,
@@ -19787,29 +18652,16 @@ class SaleMasterTableData extends DataClass
       itemCount: data.itemCount.present ? data.itemCount.value : this.itemCount,
       gstin: data.gstin.present ? data.gstin.value : this.gstin,
       state: data.state.present ? data.state.value : this.state,
-      partyParent: data.partyParent.present
-          ? data.partyParent.value
-          : this.partyParent,
-      addDiscType: data.addDiscType.present
-          ? data.addDiscType.value
-          : this.addDiscType,
       addDiscEntered: data.addDiscEntered.present
           ? data.addDiscEntered.value
           : this.addDiscEntered,
       prefix: data.prefix.present ? data.prefix.value : this.prefix,
       suffix: data.suffix.present ? data.suffix.value : this.suffix,
-      voucherNumber: data.voucherNumber.present
-          ? data.voucherNumber.value
-          : this.voucherNumber,
       vchType: data.vchType.present ? data.vchType.value : this.vchType,
       invNo: data.invNo.present ? data.invNo.value : this.invNo,
       godown: data.godown.present ? data.godown.value : this.godown,
       tripId: data.tripId.present ? data.tripId.value : this.tripId,
       visitId: data.visitId.present ? data.visitId.value : this.visitId,
-      stockStatus: data.stockStatus.present
-          ? data.stockStatus.value
-          : this.stockStatus,
-      finId: data.finId.present ? data.finId.value : this.finId,
       createdTime: data.createdTime.present
           ? data.createdTime.value
           : this.createdTime,
@@ -19819,9 +18671,6 @@ class SaleMasterTableData extends DataClass
       deliveryDate: data.deliveryDate.present
           ? data.deliveryDate.value
           : this.deliveryDate,
-      printCount: data.printCount.present
-          ? data.printCount.value
-          : this.printCount,
       sync: data.sync.present ? data.sync.value : this.sync,
       pinCode: data.pinCode.present ? data.pinCode.value : this.pinCode,
       uploadedServerId: data.uploadedServerId.present
@@ -19833,16 +18682,6 @@ class SaleMasterTableData extends DataClass
       billingMode: data.billingMode.present
           ? data.billingMode.value
           : this.billingMode,
-      discountType: data.discountType.present
-          ? data.discountType.value
-          : this.discountType,
-      discountAmount: data.discountAmount.present
-          ? data.discountAmount.value
-          : this.discountAmount,
-      amount: data.amount.present ? data.amount.value : this.amount,
-      coupontdiscountamount: data.coupontdiscountamount.present
-          ? data.coupontdiscountamount.value
-          : this.coupontdiscountamount,
     );
   }
 
@@ -19860,7 +18699,6 @@ class SaleMasterTableData extends DataClass
           ..write('mob: $mob, ')
           ..write('voucherDate: $voucherDate, ')
           ..write('voucherAmount: $voucherAmount, ')
-          ..write('status: $status, ')
           ..write('priceList: $priceList, ')
           ..write('narration: $narration, ')
           ..write('lattitude: $lattitude, ')
@@ -19871,32 +18709,22 @@ class SaleMasterTableData extends DataClass
           ..write('itemCount: $itemCount, ')
           ..write('gstin: $gstin, ')
           ..write('state: $state, ')
-          ..write('partyParent: $partyParent, ')
-          ..write('addDiscType: $addDiscType, ')
           ..write('addDiscEntered: $addDiscEntered, ')
           ..write('prefix: $prefix, ')
           ..write('suffix: $suffix, ')
-          ..write('voucherNumber: $voucherNumber, ')
           ..write('vchType: $vchType, ')
           ..write('invNo: $invNo, ')
           ..write('godown: $godown, ')
           ..write('tripId: $tripId, ')
           ..write('visitId: $visitId, ')
-          ..write('stockStatus: $stockStatus, ')
-          ..write('finId: $finId, ')
           ..write('createdTime: $createdTime, ')
           ..write('updatedTime: $updatedTime, ')
           ..write('deliveryDate: $deliveryDate, ')
-          ..write('printCount: $printCount, ')
           ..write('sync: $sync, ')
           ..write('pinCode: $pinCode, ')
           ..write('uploadedServerId: $uploadedServerId, ')
           ..write('mailingName: $mailingName, ')
-          ..write('billingMode: $billingMode, ')
-          ..write('discountType: $discountType, ')
-          ..write('discountAmount: $discountAmount, ')
-          ..write('amount: $amount, ')
-          ..write('coupontdiscountamount: $coupontdiscountamount')
+          ..write('billingMode: $billingMode')
           ..write(')'))
         .toString();
   }
@@ -19914,7 +18742,6 @@ class SaleMasterTableData extends DataClass
     mob,
     voucherDate,
     voucherAmount,
-    status,
     priceList,
     narration,
     lattitude,
@@ -19925,32 +18752,22 @@ class SaleMasterTableData extends DataClass
     itemCount,
     gstin,
     state,
-    partyParent,
-    addDiscType,
     addDiscEntered,
     prefix,
     suffix,
-    voucherNumber,
     vchType,
     invNo,
     godown,
     tripId,
     visitId,
-    stockStatus,
-    finId,
     createdTime,
     updatedTime,
     deliveryDate,
-    printCount,
     sync,
     pinCode,
     uploadedServerId,
     mailingName,
     billingMode,
-    discountType,
-    discountAmount,
-    amount,
-    coupontdiscountamount,
   ]);
   @override
   bool operator ==(Object other) =>
@@ -19967,7 +18784,6 @@ class SaleMasterTableData extends DataClass
           other.mob == this.mob &&
           other.voucherDate == this.voucherDate &&
           other.voucherAmount == this.voucherAmount &&
-          other.status == this.status &&
           other.priceList == this.priceList &&
           other.narration == this.narration &&
           other.lattitude == this.lattitude &&
@@ -19978,32 +18794,22 @@ class SaleMasterTableData extends DataClass
           other.itemCount == this.itemCount &&
           other.gstin == this.gstin &&
           other.state == this.state &&
-          other.partyParent == this.partyParent &&
-          other.addDiscType == this.addDiscType &&
           other.addDiscEntered == this.addDiscEntered &&
           other.prefix == this.prefix &&
           other.suffix == this.suffix &&
-          other.voucherNumber == this.voucherNumber &&
           other.vchType == this.vchType &&
           other.invNo == this.invNo &&
           other.godown == this.godown &&
           other.tripId == this.tripId &&
           other.visitId == this.visitId &&
-          other.stockStatus == this.stockStatus &&
-          other.finId == this.finId &&
           other.createdTime == this.createdTime &&
           other.updatedTime == this.updatedTime &&
           other.deliveryDate == this.deliveryDate &&
-          other.printCount == this.printCount &&
           other.sync == this.sync &&
           other.pinCode == this.pinCode &&
           other.uploadedServerId == this.uploadedServerId &&
           other.mailingName == this.mailingName &&
-          other.billingMode == this.billingMode &&
-          other.discountType == this.discountType &&
-          other.discountAmount == this.discountAmount &&
-          other.amount == this.amount &&
-          other.coupontdiscountamount == this.coupontdiscountamount);
+          other.billingMode == this.billingMode);
 }
 
 class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
@@ -20018,7 +18824,6 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
   final Value<String?> mob;
   final Value<String?> voucherDate;
   final Value<double> voucherAmount;
-  final Value<int?> status;
   final Value<String?> priceList;
   final Value<String?> narration;
   final Value<double?> lattitude;
@@ -20029,32 +18834,22 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
   final Value<int?> itemCount;
   final Value<String?> gstin;
   final Value<String?> state;
-  final Value<String?> partyParent;
-  final Value<String?> addDiscType;
   final Value<double?> addDiscEntered;
   final Value<String?> prefix;
   final Value<String?> suffix;
-  final Value<String?> voucherNumber;
   final Value<String?> vchType;
   final Value<int?> invNo;
   final Value<String?> godown;
   final Value<int?> tripId;
   final Value<int?> visitId;
-  final Value<int?> stockStatus;
-  final Value<int?> finId;
   final Value<String?> createdTime;
   final Value<String?> updatedTime;
   final Value<String?> deliveryDate;
-  final Value<int?> printCount;
   final Value<int> sync;
   final Value<String?> pinCode;
   final Value<int?> uploadedServerId;
   final Value<String?> mailingName;
   final Value<String> billingMode;
-  final Value<String?> discountType;
-  final Value<double?> discountAmount;
-  final Value<double?> amount;
-  final Value<double?> coupontdiscountamount;
   const SaleMasterTableCompanion({
     this.id = const Value.absent(),
     this.vchId = const Value.absent(),
@@ -20067,7 +18862,6 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
     this.mob = const Value.absent(),
     this.voucherDate = const Value.absent(),
     this.voucherAmount = const Value.absent(),
-    this.status = const Value.absent(),
     this.priceList = const Value.absent(),
     this.narration = const Value.absent(),
     this.lattitude = const Value.absent(),
@@ -20078,32 +18872,22 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
     this.itemCount = const Value.absent(),
     this.gstin = const Value.absent(),
     this.state = const Value.absent(),
-    this.partyParent = const Value.absent(),
-    this.addDiscType = const Value.absent(),
     this.addDiscEntered = const Value.absent(),
     this.prefix = const Value.absent(),
     this.suffix = const Value.absent(),
-    this.voucherNumber = const Value.absent(),
     this.vchType = const Value.absent(),
     this.invNo = const Value.absent(),
     this.godown = const Value.absent(),
     this.tripId = const Value.absent(),
     this.visitId = const Value.absent(),
-    this.stockStatus = const Value.absent(),
-    this.finId = const Value.absent(),
     this.createdTime = const Value.absent(),
     this.updatedTime = const Value.absent(),
     this.deliveryDate = const Value.absent(),
-    this.printCount = const Value.absent(),
     this.sync = const Value.absent(),
     this.pinCode = const Value.absent(),
     this.uploadedServerId = const Value.absent(),
     this.mailingName = const Value.absent(),
     this.billingMode = const Value.absent(),
-    this.discountType = const Value.absent(),
-    this.discountAmount = const Value.absent(),
-    this.amount = const Value.absent(),
-    this.coupontdiscountamount = const Value.absent(),
   });
   SaleMasterTableCompanion.insert({
     this.id = const Value.absent(),
@@ -20117,7 +18901,6 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
     this.mob = const Value.absent(),
     this.voucherDate = const Value.absent(),
     required double voucherAmount,
-    this.status = const Value.absent(),
     this.priceList = const Value.absent(),
     this.narration = const Value.absent(),
     this.lattitude = const Value.absent(),
@@ -20128,32 +18911,22 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
     this.itemCount = const Value.absent(),
     this.gstin = const Value.absent(),
     this.state = const Value.absent(),
-    this.partyParent = const Value.absent(),
-    this.addDiscType = const Value.absent(),
     this.addDiscEntered = const Value.absent(),
     this.prefix = const Value.absent(),
     this.suffix = const Value.absent(),
-    this.voucherNumber = const Value.absent(),
     this.vchType = const Value.absent(),
     this.invNo = const Value.absent(),
     this.godown = const Value.absent(),
     this.tripId = const Value.absent(),
     this.visitId = const Value.absent(),
-    this.stockStatus = const Value.absent(),
-    this.finId = const Value.absent(),
     this.createdTime = const Value.absent(),
     this.updatedTime = const Value.absent(),
     this.deliveryDate = const Value.absent(),
-    this.printCount = const Value.absent(),
     this.sync = const Value.absent(),
     this.pinCode = const Value.absent(),
     this.uploadedServerId = const Value.absent(),
     this.mailingName = const Value.absent(),
     this.billingMode = const Value.absent(),
-    this.discountType = const Value.absent(),
-    this.discountAmount = const Value.absent(),
-    this.amount = const Value.absent(),
-    this.coupontdiscountamount = const Value.absent(),
   }) : voucherAmount = Value(voucherAmount);
   static Insertable<SaleMasterTableData> custom({
     Expression<int>? id,
@@ -20167,7 +18940,6 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
     Expression<String>? mob,
     Expression<String>? voucherDate,
     Expression<double>? voucherAmount,
-    Expression<int>? status,
     Expression<String>? priceList,
     Expression<String>? narration,
     Expression<double>? lattitude,
@@ -20178,32 +18950,22 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
     Expression<int>? itemCount,
     Expression<String>? gstin,
     Expression<String>? state,
-    Expression<String>? partyParent,
-    Expression<String>? addDiscType,
     Expression<double>? addDiscEntered,
     Expression<String>? prefix,
     Expression<String>? suffix,
-    Expression<String>? voucherNumber,
     Expression<String>? vchType,
     Expression<int>? invNo,
     Expression<String>? godown,
     Expression<int>? tripId,
     Expression<int>? visitId,
-    Expression<int>? stockStatus,
-    Expression<int>? finId,
     Expression<String>? createdTime,
     Expression<String>? updatedTime,
     Expression<String>? deliveryDate,
-    Expression<int>? printCount,
     Expression<int>? sync,
     Expression<String>? pinCode,
     Expression<int>? uploadedServerId,
     Expression<String>? mailingName,
     Expression<String>? billingMode,
-    Expression<String>? discountType,
-    Expression<double>? discountAmount,
-    Expression<double>? amount,
-    Expression<double>? coupontdiscountamount,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -20217,7 +18979,6 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
       if (mob != null) 'mob': mob,
       if (voucherDate != null) 'voucher_date': voucherDate,
       if (voucherAmount != null) 'voucher_amount': voucherAmount,
-      if (status != null) 'status': status,
       if (priceList != null) 'price_list': priceList,
       if (narration != null) 'narration': narration,
       if (lattitude != null) 'lattitude': lattitude,
@@ -20228,33 +18989,22 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
       if (itemCount != null) 'item_count': itemCount,
       if (gstin != null) 'gstin': gstin,
       if (state != null) 'state': state,
-      if (partyParent != null) 'party_parent': partyParent,
-      if (addDiscType != null) 'add_disc_type': addDiscType,
       if (addDiscEntered != null) 'add_disc_entered': addDiscEntered,
       if (prefix != null) 'prefix': prefix,
       if (suffix != null) 'suffix': suffix,
-      if (voucherNumber != null) 'voucher_number': voucherNumber,
       if (vchType != null) 'vch_type': vchType,
       if (invNo != null) 'inv_no': invNo,
       if (godown != null) 'godown': godown,
       if (tripId != null) 'trip_id': tripId,
       if (visitId != null) 'visit_id': visitId,
-      if (stockStatus != null) 'stock_status': stockStatus,
-      if (finId != null) 'fin_id': finId,
       if (createdTime != null) 'created_time': createdTime,
       if (updatedTime != null) 'updated_time': updatedTime,
       if (deliveryDate != null) 'delivery_date': deliveryDate,
-      if (printCount != null) 'print_count': printCount,
       if (sync != null) 'sync': sync,
       if (pinCode != null) 'pin_code': pinCode,
       if (uploadedServerId != null) 'uploaded_server_id': uploadedServerId,
       if (mailingName != null) 'mailing_name': mailingName,
       if (billingMode != null) 'billing_mode': billingMode,
-      if (discountType != null) 'discount_type': discountType,
-      if (discountAmount != null) 'discount_amount': discountAmount,
-      if (amount != null) 'amount': amount,
-      if (coupontdiscountamount != null)
-        'coupontdiscountamount': coupontdiscountamount,
     });
   }
 
@@ -20270,7 +19020,6 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
     Value<String?>? mob,
     Value<String?>? voucherDate,
     Value<double>? voucherAmount,
-    Value<int?>? status,
     Value<String?>? priceList,
     Value<String?>? narration,
     Value<double?>? lattitude,
@@ -20281,32 +19030,22 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
     Value<int?>? itemCount,
     Value<String?>? gstin,
     Value<String?>? state,
-    Value<String?>? partyParent,
-    Value<String?>? addDiscType,
     Value<double?>? addDiscEntered,
     Value<String?>? prefix,
     Value<String?>? suffix,
-    Value<String?>? voucherNumber,
     Value<String?>? vchType,
     Value<int?>? invNo,
     Value<String?>? godown,
     Value<int?>? tripId,
     Value<int?>? visitId,
-    Value<int?>? stockStatus,
-    Value<int?>? finId,
     Value<String?>? createdTime,
     Value<String?>? updatedTime,
     Value<String?>? deliveryDate,
-    Value<int?>? printCount,
     Value<int>? sync,
     Value<String?>? pinCode,
     Value<int?>? uploadedServerId,
     Value<String?>? mailingName,
     Value<String>? billingMode,
-    Value<String?>? discountType,
-    Value<double?>? discountAmount,
-    Value<double?>? amount,
-    Value<double?>? coupontdiscountamount,
   }) {
     return SaleMasterTableCompanion(
       id: id ?? this.id,
@@ -20320,7 +19059,6 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
       mob: mob ?? this.mob,
       voucherDate: voucherDate ?? this.voucherDate,
       voucherAmount: voucherAmount ?? this.voucherAmount,
-      status: status ?? this.status,
       priceList: priceList ?? this.priceList,
       narration: narration ?? this.narration,
       lattitude: lattitude ?? this.lattitude,
@@ -20331,33 +19069,22 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
       itemCount: itemCount ?? this.itemCount,
       gstin: gstin ?? this.gstin,
       state: state ?? this.state,
-      partyParent: partyParent ?? this.partyParent,
-      addDiscType: addDiscType ?? this.addDiscType,
       addDiscEntered: addDiscEntered ?? this.addDiscEntered,
       prefix: prefix ?? this.prefix,
       suffix: suffix ?? this.suffix,
-      voucherNumber: voucherNumber ?? this.voucherNumber,
       vchType: vchType ?? this.vchType,
       invNo: invNo ?? this.invNo,
       godown: godown ?? this.godown,
       tripId: tripId ?? this.tripId,
       visitId: visitId ?? this.visitId,
-      stockStatus: stockStatus ?? this.stockStatus,
-      finId: finId ?? this.finId,
       createdTime: createdTime ?? this.createdTime,
       updatedTime: updatedTime ?? this.updatedTime,
       deliveryDate: deliveryDate ?? this.deliveryDate,
-      printCount: printCount ?? this.printCount,
       sync: sync ?? this.sync,
       pinCode: pinCode ?? this.pinCode,
       uploadedServerId: uploadedServerId ?? this.uploadedServerId,
       mailingName: mailingName ?? this.mailingName,
       billingMode: billingMode ?? this.billingMode,
-      discountType: discountType ?? this.discountType,
-      discountAmount: discountAmount ?? this.discountAmount,
-      amount: amount ?? this.amount,
-      coupontdiscountamount:
-          coupontdiscountamount ?? this.coupontdiscountamount,
     );
   }
 
@@ -20397,9 +19124,6 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
     if (voucherAmount.present) {
       map['voucher_amount'] = Variable<double>(voucherAmount.value);
     }
-    if (status.present) {
-      map['status'] = Variable<int>(status.value);
-    }
     if (priceList.present) {
       map['price_list'] = Variable<String>(priceList.value);
     }
@@ -20430,12 +19154,6 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
     if (state.present) {
       map['state'] = Variable<String>(state.value);
     }
-    if (partyParent.present) {
-      map['party_parent'] = Variable<String>(partyParent.value);
-    }
-    if (addDiscType.present) {
-      map['add_disc_type'] = Variable<String>(addDiscType.value);
-    }
     if (addDiscEntered.present) {
       map['add_disc_entered'] = Variable<double>(addDiscEntered.value);
     }
@@ -20444,9 +19162,6 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
     }
     if (suffix.present) {
       map['suffix'] = Variable<String>(suffix.value);
-    }
-    if (voucherNumber.present) {
-      map['voucher_number'] = Variable<String>(voucherNumber.value);
     }
     if (vchType.present) {
       map['vch_type'] = Variable<String>(vchType.value);
@@ -20463,12 +19178,6 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
     if (visitId.present) {
       map['visit_id'] = Variable<int>(visitId.value);
     }
-    if (stockStatus.present) {
-      map['stock_status'] = Variable<int>(stockStatus.value);
-    }
-    if (finId.present) {
-      map['fin_id'] = Variable<int>(finId.value);
-    }
     if (createdTime.present) {
       map['created_time'] = Variable<String>(createdTime.value);
     }
@@ -20477,9 +19186,6 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
     }
     if (deliveryDate.present) {
       map['delivery_date'] = Variable<String>(deliveryDate.value);
-    }
-    if (printCount.present) {
-      map['print_count'] = Variable<int>(printCount.value);
     }
     if (sync.present) {
       map['sync'] = Variable<int>(sync.value);
@@ -20495,20 +19201,6 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
     }
     if (billingMode.present) {
       map['billing_mode'] = Variable<String>(billingMode.value);
-    }
-    if (discountType.present) {
-      map['discount_type'] = Variable<String>(discountType.value);
-    }
-    if (discountAmount.present) {
-      map['discount_amount'] = Variable<double>(discountAmount.value);
-    }
-    if (amount.present) {
-      map['amount'] = Variable<double>(amount.value);
-    }
-    if (coupontdiscountamount.present) {
-      map['coupontdiscountamount'] = Variable<double>(
-        coupontdiscountamount.value,
-      );
     }
     return map;
   }
@@ -20527,7 +19219,6 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
           ..write('mob: $mob, ')
           ..write('voucherDate: $voucherDate, ')
           ..write('voucherAmount: $voucherAmount, ')
-          ..write('status: $status, ')
           ..write('priceList: $priceList, ')
           ..write('narration: $narration, ')
           ..write('lattitude: $lattitude, ')
@@ -20538,32 +19229,22 @@ class SaleMasterTableCompanion extends UpdateCompanion<SaleMasterTableData> {
           ..write('itemCount: $itemCount, ')
           ..write('gstin: $gstin, ')
           ..write('state: $state, ')
-          ..write('partyParent: $partyParent, ')
-          ..write('addDiscType: $addDiscType, ')
           ..write('addDiscEntered: $addDiscEntered, ')
           ..write('prefix: $prefix, ')
           ..write('suffix: $suffix, ')
-          ..write('voucherNumber: $voucherNumber, ')
           ..write('vchType: $vchType, ')
           ..write('invNo: $invNo, ')
           ..write('godown: $godown, ')
           ..write('tripId: $tripId, ')
           ..write('visitId: $visitId, ')
-          ..write('stockStatus: $stockStatus, ')
-          ..write('finId: $finId, ')
           ..write('createdTime: $createdTime, ')
           ..write('updatedTime: $updatedTime, ')
           ..write('deliveryDate: $deliveryDate, ')
-          ..write('printCount: $printCount, ')
           ..write('sync: $sync, ')
           ..write('pinCode: $pinCode, ')
           ..write('uploadedServerId: $uploadedServerId, ')
           ..write('mailingName: $mailingName, ')
-          ..write('billingMode: $billingMode, ')
-          ..write('discountType: $discountType, ')
-          ..write('discountAmount: $discountAmount, ')
-          ..write('amount: $amount, ')
-          ..write('coupontdiscountamount: $coupontdiscountamount')
+          ..write('billingMode: $billingMode')
           ..write(')'))
         .toString();
   }
@@ -20721,42 +19402,6 @@ class $SaleDetailsTableTable extends SaleDetailsTable
     requiredDuringInsert: false,
     defaultValue: const Constant(0),
   );
-  static const VerificationMeta _igstMeta = const VerificationMeta('igst');
-  @override
-  late final GeneratedColumn<double> igst = GeneratedColumn<double>(
-    'igst',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _cgstMeta = const VerificationMeta('cgst');
-  @override
-  late final GeneratedColumn<double> cgst = GeneratedColumn<double>(
-    'cgst',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _sgstMeta = const VerificationMeta('sgst');
-  @override
-  late final GeneratedColumn<double> sgst = GeneratedColumn<double>(
-    'sgst',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _cessMeta = const VerificationMeta('cess');
-  @override
-  late final GeneratedColumn<double> cess = GeneratedColumn<double>(
-    'cess',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
   static const VerificationMeta _hsnMeta = const VerificationMeta('hsn');
   @override
   late final GeneratedColumn<String> hsn = GeneratedColumn<String>(
@@ -20977,10 +19622,6 @@ class $SaleDetailsTableTable extends SaleDetailsTable
     ledger,
     companyId,
     sync,
-    igst,
-    cgst,
-    sgst,
-    cess,
     hsn,
     enteredRate,
     enteredDisc,
@@ -21098,30 +19739,6 @@ class $SaleDetailsTableTable extends SaleDetailsTable
       context.handle(
         _syncMeta,
         sync.isAcceptableOrUnknown(data['sync']!, _syncMeta),
-      );
-    }
-    if (data.containsKey('igst')) {
-      context.handle(
-        _igstMeta,
-        igst.isAcceptableOrUnknown(data['igst']!, _igstMeta),
-      );
-    }
-    if (data.containsKey('cgst')) {
-      context.handle(
-        _cgstMeta,
-        cgst.isAcceptableOrUnknown(data['cgst']!, _cgstMeta),
-      );
-    }
-    if (data.containsKey('sgst')) {
-      context.handle(
-        _sgstMeta,
-        sgst.isAcceptableOrUnknown(data['sgst']!, _sgstMeta),
-      );
-    }
-    if (data.containsKey('cess')) {
-      context.handle(
-        _cessMeta,
-        cess.isAcceptableOrUnknown(data['cess']!, _cessMeta),
       );
     }
     if (data.containsKey('hsn')) {
@@ -21328,22 +19945,6 @@ class $SaleDetailsTableTable extends SaleDetailsTable
         DriftSqlType.int,
         data['${effectivePrefix}sync'],
       )!,
-      igst: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}igst'],
-      ),
-      cgst: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}cgst'],
-      ),
-      sgst: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}sgst'],
-      ),
-      cess: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}cess'],
-      ),
       hsn: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}hsn'],
@@ -21446,10 +20047,6 @@ class SaleDetailsTableData extends DataClass
   final String? ledger;
   final int? companyId;
   final int sync;
-  final double? igst;
-  final double? cgst;
-  final double? sgst;
-  final double? cess;
   final String? hsn;
   final double? enteredRate;
   final double? enteredDisc;
@@ -21485,10 +20082,6 @@ class SaleDetailsTableData extends DataClass
     this.ledger,
     this.companyId,
     required this.sync,
-    this.igst,
-    this.cgst,
-    this.sgst,
-    this.cess,
     this.hsn,
     this.enteredRate,
     this.enteredDisc,
@@ -21553,18 +20146,6 @@ class SaleDetailsTableData extends DataClass
       map['company_id'] = Variable<int>(companyId);
     }
     map['sync'] = Variable<int>(sync);
-    if (!nullToAbsent || igst != null) {
-      map['igst'] = Variable<double>(igst);
-    }
-    if (!nullToAbsent || cgst != null) {
-      map['cgst'] = Variable<double>(cgst);
-    }
-    if (!nullToAbsent || sgst != null) {
-      map['sgst'] = Variable<double>(sgst);
-    }
-    if (!nullToAbsent || cess != null) {
-      map['cess'] = Variable<double>(cess);
-    }
     if (!nullToAbsent || hsn != null) {
       map['hsn'] = Variable<String>(hsn);
     }
@@ -21656,10 +20237,6 @@ class SaleDetailsTableData extends DataClass
           ? const Value.absent()
           : Value(companyId),
       sync: Value(sync),
-      igst: igst == null && nullToAbsent ? const Value.absent() : Value(igst),
-      cgst: cgst == null && nullToAbsent ? const Value.absent() : Value(cgst),
-      sgst: sgst == null && nullToAbsent ? const Value.absent() : Value(sgst),
-      cess: cess == null && nullToAbsent ? const Value.absent() : Value(cess),
       hsn: hsn == null && nullToAbsent ? const Value.absent() : Value(hsn),
       enteredRate: enteredRate == null && nullToAbsent
           ? const Value.absent()
@@ -21737,10 +20314,6 @@ class SaleDetailsTableData extends DataClass
       ledger: serializer.fromJson<String?>(json['ledger']),
       companyId: serializer.fromJson<int?>(json['companyId']),
       sync: serializer.fromJson<int>(json['sync']),
-      igst: serializer.fromJson<double?>(json['igst']),
-      cgst: serializer.fromJson<double?>(json['cgst']),
-      sgst: serializer.fromJson<double?>(json['sgst']),
-      cess: serializer.fromJson<double?>(json['cess']),
       hsn: serializer.fromJson<String?>(json['hsn']),
       enteredRate: serializer.fromJson<double?>(json['enteredRate']),
       enteredDisc: serializer.fromJson<double?>(json['enteredDisc']),
@@ -21781,10 +20354,6 @@ class SaleDetailsTableData extends DataClass
       'ledger': serializer.toJson<String?>(ledger),
       'companyId': serializer.toJson<int?>(companyId),
       'sync': serializer.toJson<int>(sync),
-      'igst': serializer.toJson<double?>(igst),
-      'cgst': serializer.toJson<double?>(cgst),
-      'sgst': serializer.toJson<double?>(sgst),
-      'cess': serializer.toJson<double?>(cess),
       'hsn': serializer.toJson<String?>(hsn),
       'enteredRate': serializer.toJson<double?>(enteredRate),
       'enteredDisc': serializer.toJson<double?>(enteredDisc),
@@ -21823,10 +20392,6 @@ class SaleDetailsTableData extends DataClass
     Value<String?> ledger = const Value.absent(),
     Value<int?> companyId = const Value.absent(),
     int? sync,
-    Value<double?> igst = const Value.absent(),
-    Value<double?> cgst = const Value.absent(),
-    Value<double?> sgst = const Value.absent(),
-    Value<double?> cess = const Value.absent(),
     Value<String?> hsn = const Value.absent(),
     Value<double?> enteredRate = const Value.absent(),
     Value<double?> enteredDisc = const Value.absent(),
@@ -21862,10 +20427,6 @@ class SaleDetailsTableData extends DataClass
     ledger: ledger.present ? ledger.value : this.ledger,
     companyId: companyId.present ? companyId.value : this.companyId,
     sync: sync ?? this.sync,
-    igst: igst.present ? igst.value : this.igst,
-    cgst: cgst.present ? cgst.value : this.cgst,
-    sgst: sgst.present ? sgst.value : this.sgst,
-    cess: cess.present ? cess.value : this.cess,
     hsn: hsn.present ? hsn.value : this.hsn,
     enteredRate: enteredRate.present ? enteredRate.value : this.enteredRate,
     enteredDisc: enteredDisc.present ? enteredDisc.value : this.enteredDisc,
@@ -21905,10 +20466,6 @@ class SaleDetailsTableData extends DataClass
       ledger: data.ledger.present ? data.ledger.value : this.ledger,
       companyId: data.companyId.present ? data.companyId.value : this.companyId,
       sync: data.sync.present ? data.sync.value : this.sync,
-      igst: data.igst.present ? data.igst.value : this.igst,
-      cgst: data.cgst.present ? data.cgst.value : this.cgst,
-      sgst: data.sgst.present ? data.sgst.value : this.sgst,
-      cess: data.cess.present ? data.cess.value : this.cess,
       hsn: data.hsn.present ? data.hsn.value : this.hsn,
       enteredRate: data.enteredRate.present
           ? data.enteredRate.value
@@ -21963,10 +20520,6 @@ class SaleDetailsTableData extends DataClass
           ..write('ledger: $ledger, ')
           ..write('companyId: $companyId, ')
           ..write('sync: $sync, ')
-          ..write('igst: $igst, ')
-          ..write('cgst: $cgst, ')
-          ..write('sgst: $sgst, ')
-          ..write('cess: $cess, ')
           ..write('hsn: $hsn, ')
           ..write('enteredRate: $enteredRate, ')
           ..write('enteredDisc: $enteredDisc, ')
@@ -22007,10 +20560,6 @@ class SaleDetailsTableData extends DataClass
     ledger,
     companyId,
     sync,
-    igst,
-    cgst,
-    sgst,
-    cess,
     hsn,
     enteredRate,
     enteredDisc,
@@ -22050,10 +20599,6 @@ class SaleDetailsTableData extends DataClass
           other.ledger == this.ledger &&
           other.companyId == this.companyId &&
           other.sync == this.sync &&
-          other.igst == this.igst &&
-          other.cgst == this.cgst &&
-          other.sgst == this.sgst &&
-          other.cess == this.cess &&
           other.hsn == this.hsn &&
           other.enteredRate == this.enteredRate &&
           other.enteredDisc == this.enteredDisc &&
@@ -22091,10 +20636,6 @@ class SaleDetailsTableCompanion extends UpdateCompanion<SaleDetailsTableData> {
   final Value<String?> ledger;
   final Value<int?> companyId;
   final Value<int> sync;
-  final Value<double?> igst;
-  final Value<double?> cgst;
-  final Value<double?> sgst;
-  final Value<double?> cess;
   final Value<String?> hsn;
   final Value<double?> enteredRate;
   final Value<double?> enteredDisc;
@@ -22130,10 +20671,6 @@ class SaleDetailsTableCompanion extends UpdateCompanion<SaleDetailsTableData> {
     this.ledger = const Value.absent(),
     this.companyId = const Value.absent(),
     this.sync = const Value.absent(),
-    this.igst = const Value.absent(),
-    this.cgst = const Value.absent(),
-    this.sgst = const Value.absent(),
-    this.cess = const Value.absent(),
     this.hsn = const Value.absent(),
     this.enteredRate = const Value.absent(),
     this.enteredDisc = const Value.absent(),
@@ -22170,10 +20707,6 @@ class SaleDetailsTableCompanion extends UpdateCompanion<SaleDetailsTableData> {
     this.ledger = const Value.absent(),
     this.companyId = const Value.absent(),
     this.sync = const Value.absent(),
-    this.igst = const Value.absent(),
-    this.cgst = const Value.absent(),
-    this.sgst = const Value.absent(),
-    this.cess = const Value.absent(),
     this.hsn = const Value.absent(),
     this.enteredRate = const Value.absent(),
     this.enteredDisc = const Value.absent(),
@@ -22210,10 +20743,6 @@ class SaleDetailsTableCompanion extends UpdateCompanion<SaleDetailsTableData> {
     Expression<String>? ledger,
     Expression<int>? companyId,
     Expression<int>? sync,
-    Expression<double>? igst,
-    Expression<double>? cgst,
-    Expression<double>? sgst,
-    Expression<double>? cess,
     Expression<String>? hsn,
     Expression<double>? enteredRate,
     Expression<double>? enteredDisc,
@@ -22250,10 +20779,6 @@ class SaleDetailsTableCompanion extends UpdateCompanion<SaleDetailsTableData> {
       if (ledger != null) 'ledger': ledger,
       if (companyId != null) 'company_id': companyId,
       if (sync != null) 'sync': sync,
-      if (igst != null) 'igst': igst,
-      if (cgst != null) 'cgst': cgst,
-      if (sgst != null) 'sgst': sgst,
-      if (cess != null) 'cess': cess,
       if (hsn != null) 'hsn': hsn,
       if (enteredRate != null) 'entered_rate': enteredRate,
       if (enteredDisc != null) 'entered_disc': enteredDisc,
@@ -22292,10 +20817,6 @@ class SaleDetailsTableCompanion extends UpdateCompanion<SaleDetailsTableData> {
     Value<String?>? ledger,
     Value<int?>? companyId,
     Value<int>? sync,
-    Value<double?>? igst,
-    Value<double?>? cgst,
-    Value<double?>? sgst,
-    Value<double?>? cess,
     Value<String?>? hsn,
     Value<double?>? enteredRate,
     Value<double?>? enteredDisc,
@@ -22332,10 +20853,6 @@ class SaleDetailsTableCompanion extends UpdateCompanion<SaleDetailsTableData> {
       ledger: ledger ?? this.ledger,
       companyId: companyId ?? this.companyId,
       sync: sync ?? this.sync,
-      igst: igst ?? this.igst,
-      cgst: cgst ?? this.cgst,
-      sgst: sgst ?? this.sgst,
-      cess: cess ?? this.cess,
       hsn: hsn ?? this.hsn,
       enteredRate: enteredRate ?? this.enteredRate,
       enteredDisc: enteredDisc ?? this.enteredDisc,
@@ -22405,18 +20922,6 @@ class SaleDetailsTableCompanion extends UpdateCompanion<SaleDetailsTableData> {
     }
     if (sync.present) {
       map['sync'] = Variable<int>(sync.value);
-    }
-    if (igst.present) {
-      map['igst'] = Variable<double>(igst.value);
-    }
-    if (cgst.present) {
-      map['cgst'] = Variable<double>(cgst.value);
-    }
-    if (sgst.present) {
-      map['sgst'] = Variable<double>(sgst.value);
-    }
-    if (cess.present) {
-      map['cess'] = Variable<double>(cess.value);
     }
     if (hsn.present) {
       map['hsn'] = Variable<String>(hsn.value);
@@ -22496,10 +21001,6 @@ class SaleDetailsTableCompanion extends UpdateCompanion<SaleDetailsTableData> {
           ..write('ledger: $ledger, ')
           ..write('companyId: $companyId, ')
           ..write('sync: $sync, ')
-          ..write('igst: $igst, ')
-          ..write('cgst: $cgst, ')
-          ..write('sgst: $sgst, ')
-          ..write('cess: $cess, ')
           ..write('hsn: $hsn, ')
           ..write('enteredRate: $enteredRate, ')
           ..write('enteredDisc: $enteredDisc, ')
@@ -22609,6 +21110,97 @@ class $SaleLedgerDetailsTableTable extends SaleLedgerDetailsTable
     type: DriftSqlType.int,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _voucherNameMeta = const VerificationMeta(
+    'voucherName',
+  );
+  @override
+  late final GeneratedColumn<String> voucherName = GeneratedColumn<String>(
+    'voucher_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _discountTypeMeta = const VerificationMeta(
+    'discountType',
+  );
+  @override
+  late final GeneratedColumn<String> discountType = GeneratedColumn<String>(
+    'discount_type',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _discountAmountMeta = const VerificationMeta(
+    'discountAmount',
+  );
+  @override
+  late final GeneratedColumn<double> discountAmount = GeneratedColumn<double>(
+    'discount_amount',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _saleAmountMeta = const VerificationMeta(
+    'saleAmount',
+  );
+  @override
+  late final GeneratedColumn<double> saleAmount = GeneratedColumn<double>(
+    'sale_amount',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _couponDiscountAmountMeta =
+      const VerificationMeta('couponDiscountAmount');
+  @override
+  late final GeneratedColumn<double> couponDiscountAmount =
+      GeneratedColumn<double>(
+        'coupon_discount_amount',
+        aliasedName,
+        true,
+        type: DriftSqlType.double,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _igstMeta = const VerificationMeta('igst');
+  @override
+  late final GeneratedColumn<double> igst = GeneratedColumn<double>(
+    'igst',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _cgstMeta = const VerificationMeta('cgst');
+  @override
+  late final GeneratedColumn<double> cgst = GeneratedColumn<double>(
+    'cgst',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _sgstMeta = const VerificationMeta('sgst');
+  @override
+  late final GeneratedColumn<double> sgst = GeneratedColumn<double>(
+    'sgst',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _cessMeta = const VerificationMeta('cess');
+  @override
+  late final GeneratedColumn<double> cess = GeneratedColumn<double>(
+    'cess',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -22619,6 +21211,15 @@ class $SaleLedgerDetailsTableTable extends SaleLedgerDetailsTable
     rate,
     amount,
     companyId,
+    voucherName,
+    discountType,
+    discountAmount,
+    saleAmount,
+    couponDiscountAmount,
+    igst,
+    cgst,
+    sgst,
+    cess,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -22677,6 +21278,72 @@ class $SaleLedgerDetailsTableTable extends SaleLedgerDetailsTable
         companyId.isAcceptableOrUnknown(data['company_id']!, _companyIdMeta),
       );
     }
+    if (data.containsKey('voucher_name')) {
+      context.handle(
+        _voucherNameMeta,
+        voucherName.isAcceptableOrUnknown(
+          data['voucher_name']!,
+          _voucherNameMeta,
+        ),
+      );
+    }
+    if (data.containsKey('discount_type')) {
+      context.handle(
+        _discountTypeMeta,
+        discountType.isAcceptableOrUnknown(
+          data['discount_type']!,
+          _discountTypeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('discount_amount')) {
+      context.handle(
+        _discountAmountMeta,
+        discountAmount.isAcceptableOrUnknown(
+          data['discount_amount']!,
+          _discountAmountMeta,
+        ),
+      );
+    }
+    if (data.containsKey('sale_amount')) {
+      context.handle(
+        _saleAmountMeta,
+        saleAmount.isAcceptableOrUnknown(data['sale_amount']!, _saleAmountMeta),
+      );
+    }
+    if (data.containsKey('coupon_discount_amount')) {
+      context.handle(
+        _couponDiscountAmountMeta,
+        couponDiscountAmount.isAcceptableOrUnknown(
+          data['coupon_discount_amount']!,
+          _couponDiscountAmountMeta,
+        ),
+      );
+    }
+    if (data.containsKey('igst')) {
+      context.handle(
+        _igstMeta,
+        igst.isAcceptableOrUnknown(data['igst']!, _igstMeta),
+      );
+    }
+    if (data.containsKey('cgst')) {
+      context.handle(
+        _cgstMeta,
+        cgst.isAcceptableOrUnknown(data['cgst']!, _cgstMeta),
+      );
+    }
+    if (data.containsKey('sgst')) {
+      context.handle(
+        _sgstMeta,
+        sgst.isAcceptableOrUnknown(data['sgst']!, _sgstMeta),
+      );
+    }
+    if (data.containsKey('cess')) {
+      context.handle(
+        _cessMeta,
+        cess.isAcceptableOrUnknown(data['cess']!, _cessMeta),
+      );
+    }
     return context;
   }
 
@@ -22721,6 +21388,42 @@ class $SaleLedgerDetailsTableTable extends SaleLedgerDetailsTable
         DriftSqlType.int,
         data['${effectivePrefix}company_id'],
       ),
+      voucherName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}voucher_name'],
+      ),
+      discountType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}discount_type'],
+      ),
+      discountAmount: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}discount_amount'],
+      ),
+      saleAmount: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}sale_amount'],
+      ),
+      couponDiscountAmount: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}coupon_discount_amount'],
+      ),
+      igst: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}igst'],
+      ),
+      cgst: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}cgst'],
+      ),
+      sgst: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}sgst'],
+      ),
+      cess: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}cess'],
+      ),
     );
   }
 
@@ -22740,6 +21443,15 @@ class SaleLedgerDetailsTableData extends DataClass
   final double? rate;
   final double? amount;
   final int? companyId;
+  final String? voucherName;
+  final String? discountType;
+  final double? discountAmount;
+  final double? saleAmount;
+  final double? couponDiscountAmount;
+  final double? igst;
+  final double? cgst;
+  final double? sgst;
+  final double? cess;
   const SaleLedgerDetailsTableData({
     required this.id,
     this.mid,
@@ -22749,6 +21461,15 @@ class SaleLedgerDetailsTableData extends DataClass
     this.rate,
     this.amount,
     this.companyId,
+    this.voucherName,
+    this.discountType,
+    this.discountAmount,
+    this.saleAmount,
+    this.couponDiscountAmount,
+    this.igst,
+    this.cgst,
+    this.sgst,
+    this.cess,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -22773,6 +21494,33 @@ class SaleLedgerDetailsTableData extends DataClass
     if (!nullToAbsent || companyId != null) {
       map['company_id'] = Variable<int>(companyId);
     }
+    if (!nullToAbsent || voucherName != null) {
+      map['voucher_name'] = Variable<String>(voucherName);
+    }
+    if (!nullToAbsent || discountType != null) {
+      map['discount_type'] = Variable<String>(discountType);
+    }
+    if (!nullToAbsent || discountAmount != null) {
+      map['discount_amount'] = Variable<double>(discountAmount);
+    }
+    if (!nullToAbsent || saleAmount != null) {
+      map['sale_amount'] = Variable<double>(saleAmount);
+    }
+    if (!nullToAbsent || couponDiscountAmount != null) {
+      map['coupon_discount_amount'] = Variable<double>(couponDiscountAmount);
+    }
+    if (!nullToAbsent || igst != null) {
+      map['igst'] = Variable<double>(igst);
+    }
+    if (!nullToAbsent || cgst != null) {
+      map['cgst'] = Variable<double>(cgst);
+    }
+    if (!nullToAbsent || sgst != null) {
+      map['sgst'] = Variable<double>(sgst);
+    }
+    if (!nullToAbsent || cess != null) {
+      map['cess'] = Variable<double>(cess);
+    }
     return map;
   }
 
@@ -22794,6 +21542,25 @@ class SaleLedgerDetailsTableData extends DataClass
       companyId: companyId == null && nullToAbsent
           ? const Value.absent()
           : Value(companyId),
+      voucherName: voucherName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(voucherName),
+      discountType: discountType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(discountType),
+      discountAmount: discountAmount == null && nullToAbsent
+          ? const Value.absent()
+          : Value(discountAmount),
+      saleAmount: saleAmount == null && nullToAbsent
+          ? const Value.absent()
+          : Value(saleAmount),
+      couponDiscountAmount: couponDiscountAmount == null && nullToAbsent
+          ? const Value.absent()
+          : Value(couponDiscountAmount),
+      igst: igst == null && nullToAbsent ? const Value.absent() : Value(igst),
+      cgst: cgst == null && nullToAbsent ? const Value.absent() : Value(cgst),
+      sgst: sgst == null && nullToAbsent ? const Value.absent() : Value(sgst),
+      cess: cess == null && nullToAbsent ? const Value.absent() : Value(cess),
     );
   }
 
@@ -22811,6 +21578,17 @@ class SaleLedgerDetailsTableData extends DataClass
       rate: serializer.fromJson<double?>(json['rate']),
       amount: serializer.fromJson<double?>(json['amount']),
       companyId: serializer.fromJson<int?>(json['companyId']),
+      voucherName: serializer.fromJson<String?>(json['voucherName']),
+      discountType: serializer.fromJson<String?>(json['discountType']),
+      discountAmount: serializer.fromJson<double?>(json['discountAmount']),
+      saleAmount: serializer.fromJson<double?>(json['saleAmount']),
+      couponDiscountAmount: serializer.fromJson<double?>(
+        json['couponDiscountAmount'],
+      ),
+      igst: serializer.fromJson<double?>(json['igst']),
+      cgst: serializer.fromJson<double?>(json['cgst']),
+      sgst: serializer.fromJson<double?>(json['sgst']),
+      cess: serializer.fromJson<double?>(json['cess']),
     );
   }
   @override
@@ -22825,6 +21603,15 @@ class SaleLedgerDetailsTableData extends DataClass
       'rate': serializer.toJson<double?>(rate),
       'amount': serializer.toJson<double?>(amount),
       'companyId': serializer.toJson<int?>(companyId),
+      'voucherName': serializer.toJson<String?>(voucherName),
+      'discountType': serializer.toJson<String?>(discountType),
+      'discountAmount': serializer.toJson<double?>(discountAmount),
+      'saleAmount': serializer.toJson<double?>(saleAmount),
+      'couponDiscountAmount': serializer.toJson<double?>(couponDiscountAmount),
+      'igst': serializer.toJson<double?>(igst),
+      'cgst': serializer.toJson<double?>(cgst),
+      'sgst': serializer.toJson<double?>(sgst),
+      'cess': serializer.toJson<double?>(cess),
     };
   }
 
@@ -22837,6 +21624,15 @@ class SaleLedgerDetailsTableData extends DataClass
     Value<double?> rate = const Value.absent(),
     Value<double?> amount = const Value.absent(),
     Value<int?> companyId = const Value.absent(),
+    Value<String?> voucherName = const Value.absent(),
+    Value<String?> discountType = const Value.absent(),
+    Value<double?> discountAmount = const Value.absent(),
+    Value<double?> saleAmount = const Value.absent(),
+    Value<double?> couponDiscountAmount = const Value.absent(),
+    Value<double?> igst = const Value.absent(),
+    Value<double?> cgst = const Value.absent(),
+    Value<double?> sgst = const Value.absent(),
+    Value<double?> cess = const Value.absent(),
   }) => SaleLedgerDetailsTableData(
     id: id ?? this.id,
     mid: mid.present ? mid.value : this.mid,
@@ -22846,6 +21642,19 @@ class SaleLedgerDetailsTableData extends DataClass
     rate: rate.present ? rate.value : this.rate,
     amount: amount.present ? amount.value : this.amount,
     companyId: companyId.present ? companyId.value : this.companyId,
+    voucherName: voucherName.present ? voucherName.value : this.voucherName,
+    discountType: discountType.present ? discountType.value : this.discountType,
+    discountAmount: discountAmount.present
+        ? discountAmount.value
+        : this.discountAmount,
+    saleAmount: saleAmount.present ? saleAmount.value : this.saleAmount,
+    couponDiscountAmount: couponDiscountAmount.present
+        ? couponDiscountAmount.value
+        : this.couponDiscountAmount,
+    igst: igst.present ? igst.value : this.igst,
+    cgst: cgst.present ? cgst.value : this.cgst,
+    sgst: sgst.present ? sgst.value : this.sgst,
+    cess: cess.present ? cess.value : this.cess,
   );
   SaleLedgerDetailsTableData copyWithCompanion(
     SaleLedgerDetailsTableCompanion data,
@@ -22859,6 +21668,25 @@ class SaleLedgerDetailsTableData extends DataClass
       rate: data.rate.present ? data.rate.value : this.rate,
       amount: data.amount.present ? data.amount.value : this.amount,
       companyId: data.companyId.present ? data.companyId.value : this.companyId,
+      voucherName: data.voucherName.present
+          ? data.voucherName.value
+          : this.voucherName,
+      discountType: data.discountType.present
+          ? data.discountType.value
+          : this.discountType,
+      discountAmount: data.discountAmount.present
+          ? data.discountAmount.value
+          : this.discountAmount,
+      saleAmount: data.saleAmount.present
+          ? data.saleAmount.value
+          : this.saleAmount,
+      couponDiscountAmount: data.couponDiscountAmount.present
+          ? data.couponDiscountAmount.value
+          : this.couponDiscountAmount,
+      igst: data.igst.present ? data.igst.value : this.igst,
+      cgst: data.cgst.present ? data.cgst.value : this.cgst,
+      sgst: data.sgst.present ? data.sgst.value : this.sgst,
+      cess: data.cess.present ? data.cess.value : this.cess,
     );
   }
 
@@ -22872,14 +21700,40 @@ class SaleLedgerDetailsTableData extends DataClass
           ..write('ledger: $ledger, ')
           ..write('rate: $rate, ')
           ..write('amount: $amount, ')
-          ..write('companyId: $companyId')
+          ..write('companyId: $companyId, ')
+          ..write('voucherName: $voucherName, ')
+          ..write('discountType: $discountType, ')
+          ..write('discountAmount: $discountAmount, ')
+          ..write('saleAmount: $saleAmount, ')
+          ..write('couponDiscountAmount: $couponDiscountAmount, ')
+          ..write('igst: $igst, ')
+          ..write('cgst: $cgst, ')
+          ..write('sgst: $sgst, ')
+          ..write('cess: $cess')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, mid, vchId, sync, ledger, rate, amount, companyId);
+  int get hashCode => Object.hash(
+    id,
+    mid,
+    vchId,
+    sync,
+    ledger,
+    rate,
+    amount,
+    companyId,
+    voucherName,
+    discountType,
+    discountAmount,
+    saleAmount,
+    couponDiscountAmount,
+    igst,
+    cgst,
+    sgst,
+    cess,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -22891,7 +21745,16 @@ class SaleLedgerDetailsTableData extends DataClass
           other.ledger == this.ledger &&
           other.rate == this.rate &&
           other.amount == this.amount &&
-          other.companyId == this.companyId);
+          other.companyId == this.companyId &&
+          other.voucherName == this.voucherName &&
+          other.discountType == this.discountType &&
+          other.discountAmount == this.discountAmount &&
+          other.saleAmount == this.saleAmount &&
+          other.couponDiscountAmount == this.couponDiscountAmount &&
+          other.igst == this.igst &&
+          other.cgst == this.cgst &&
+          other.sgst == this.sgst &&
+          other.cess == this.cess);
 }
 
 class SaleLedgerDetailsTableCompanion
@@ -22904,6 +21767,15 @@ class SaleLedgerDetailsTableCompanion
   final Value<double?> rate;
   final Value<double?> amount;
   final Value<int?> companyId;
+  final Value<String?> voucherName;
+  final Value<String?> discountType;
+  final Value<double?> discountAmount;
+  final Value<double?> saleAmount;
+  final Value<double?> couponDiscountAmount;
+  final Value<double?> igst;
+  final Value<double?> cgst;
+  final Value<double?> sgst;
+  final Value<double?> cess;
   const SaleLedgerDetailsTableCompanion({
     this.id = const Value.absent(),
     this.mid = const Value.absent(),
@@ -22913,6 +21785,15 @@ class SaleLedgerDetailsTableCompanion
     this.rate = const Value.absent(),
     this.amount = const Value.absent(),
     this.companyId = const Value.absent(),
+    this.voucherName = const Value.absent(),
+    this.discountType = const Value.absent(),
+    this.discountAmount = const Value.absent(),
+    this.saleAmount = const Value.absent(),
+    this.couponDiscountAmount = const Value.absent(),
+    this.igst = const Value.absent(),
+    this.cgst = const Value.absent(),
+    this.sgst = const Value.absent(),
+    this.cess = const Value.absent(),
   });
   SaleLedgerDetailsTableCompanion.insert({
     this.id = const Value.absent(),
@@ -22923,6 +21804,15 @@ class SaleLedgerDetailsTableCompanion
     this.rate = const Value.absent(),
     this.amount = const Value.absent(),
     this.companyId = const Value.absent(),
+    this.voucherName = const Value.absent(),
+    this.discountType = const Value.absent(),
+    this.discountAmount = const Value.absent(),
+    this.saleAmount = const Value.absent(),
+    this.couponDiscountAmount = const Value.absent(),
+    this.igst = const Value.absent(),
+    this.cgst = const Value.absent(),
+    this.sgst = const Value.absent(),
+    this.cess = const Value.absent(),
   });
   static Insertable<SaleLedgerDetailsTableData> custom({
     Expression<int>? id,
@@ -22933,6 +21823,15 @@ class SaleLedgerDetailsTableCompanion
     Expression<double>? rate,
     Expression<double>? amount,
     Expression<int>? companyId,
+    Expression<String>? voucherName,
+    Expression<String>? discountType,
+    Expression<double>? discountAmount,
+    Expression<double>? saleAmount,
+    Expression<double>? couponDiscountAmount,
+    Expression<double>? igst,
+    Expression<double>? cgst,
+    Expression<double>? sgst,
+    Expression<double>? cess,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -22943,6 +21842,16 @@ class SaleLedgerDetailsTableCompanion
       if (rate != null) 'rate': rate,
       if (amount != null) 'amount': amount,
       if (companyId != null) 'company_id': companyId,
+      if (voucherName != null) 'voucher_name': voucherName,
+      if (discountType != null) 'discount_type': discountType,
+      if (discountAmount != null) 'discount_amount': discountAmount,
+      if (saleAmount != null) 'sale_amount': saleAmount,
+      if (couponDiscountAmount != null)
+        'coupon_discount_amount': couponDiscountAmount,
+      if (igst != null) 'igst': igst,
+      if (cgst != null) 'cgst': cgst,
+      if (sgst != null) 'sgst': sgst,
+      if (cess != null) 'cess': cess,
     });
   }
 
@@ -22955,6 +21864,15 @@ class SaleLedgerDetailsTableCompanion
     Value<double?>? rate,
     Value<double?>? amount,
     Value<int?>? companyId,
+    Value<String?>? voucherName,
+    Value<String?>? discountType,
+    Value<double?>? discountAmount,
+    Value<double?>? saleAmount,
+    Value<double?>? couponDiscountAmount,
+    Value<double?>? igst,
+    Value<double?>? cgst,
+    Value<double?>? sgst,
+    Value<double?>? cess,
   }) {
     return SaleLedgerDetailsTableCompanion(
       id: id ?? this.id,
@@ -22965,6 +21883,15 @@ class SaleLedgerDetailsTableCompanion
       rate: rate ?? this.rate,
       amount: amount ?? this.amount,
       companyId: companyId ?? this.companyId,
+      voucherName: voucherName ?? this.voucherName,
+      discountType: discountType ?? this.discountType,
+      discountAmount: discountAmount ?? this.discountAmount,
+      saleAmount: saleAmount ?? this.saleAmount,
+      couponDiscountAmount: couponDiscountAmount ?? this.couponDiscountAmount,
+      igst: igst ?? this.igst,
+      cgst: cgst ?? this.cgst,
+      sgst: sgst ?? this.sgst,
+      cess: cess ?? this.cess,
     );
   }
 
@@ -22995,6 +21922,35 @@ class SaleLedgerDetailsTableCompanion
     if (companyId.present) {
       map['company_id'] = Variable<int>(companyId.value);
     }
+    if (voucherName.present) {
+      map['voucher_name'] = Variable<String>(voucherName.value);
+    }
+    if (discountType.present) {
+      map['discount_type'] = Variable<String>(discountType.value);
+    }
+    if (discountAmount.present) {
+      map['discount_amount'] = Variable<double>(discountAmount.value);
+    }
+    if (saleAmount.present) {
+      map['sale_amount'] = Variable<double>(saleAmount.value);
+    }
+    if (couponDiscountAmount.present) {
+      map['coupon_discount_amount'] = Variable<double>(
+        couponDiscountAmount.value,
+      );
+    }
+    if (igst.present) {
+      map['igst'] = Variable<double>(igst.value);
+    }
+    if (cgst.present) {
+      map['cgst'] = Variable<double>(cgst.value);
+    }
+    if (sgst.present) {
+      map['sgst'] = Variable<double>(sgst.value);
+    }
+    if (cess.present) {
+      map['cess'] = Variable<double>(cess.value);
+    }
     return map;
   }
 
@@ -23008,7 +21964,16 @@ class SaleLedgerDetailsTableCompanion
           ..write('ledger: $ledger, ')
           ..write('rate: $rate, ')
           ..write('amount: $amount, ')
-          ..write('companyId: $companyId')
+          ..write('companyId: $companyId, ')
+          ..write('voucherName: $voucherName, ')
+          ..write('discountType: $discountType, ')
+          ..write('discountAmount: $discountAmount, ')
+          ..write('saleAmount: $saleAmount, ')
+          ..write('couponDiscountAmount: $couponDiscountAmount, ')
+          ..write('igst: $igst, ')
+          ..write('cgst: $cgst, ')
+          ..write('sgst: $sgst, ')
+          ..write('cess: $cess')
           ..write(')'))
         .toString();
   }
@@ -23707,15 +22672,6 @@ class $SaleReturnMasterTableTable extends SaleReturnMasterTable
     type: DriftSqlType.double,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _statusMeta = const VerificationMeta('status');
-  @override
-  late final GeneratedColumn<int> status = GeneratedColumn<int>(
-    'status',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-  );
   static const VerificationMeta _priceListMeta = const VerificationMeta(
     'priceList',
   );
@@ -23820,28 +22776,6 @@ class $SaleReturnMasterTableTable extends SaleReturnMasterTable
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _partyParentMeta = const VerificationMeta(
-    'partyParent',
-  );
-  @override
-  late final GeneratedColumn<String> partyParent = GeneratedColumn<String>(
-    'party_parent',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _addDiscTypeMeta = const VerificationMeta(
-    'addDiscType',
-  );
-  @override
-  late final GeneratedColumn<String> addDiscType = GeneratedColumn<String>(
-    'add_disc_type',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
   static const VerificationMeta _addDiscEnteredMeta = const VerificationMeta(
     'addDiscEntered',
   );
@@ -23866,17 +22800,6 @@ class $SaleReturnMasterTableTable extends SaleReturnMasterTable
   @override
   late final GeneratedColumn<String> suffix = GeneratedColumn<String>(
     'suffix',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _voucherNumberMeta = const VerificationMeta(
-    'voucherNumber',
-  );
-  @override
-  late final GeneratedColumn<String> voucherNumber = GeneratedColumn<String>(
-    'voucher_number',
     aliasedName,
     true,
     type: DriftSqlType.string,
@@ -23931,26 +22854,6 @@ class $SaleReturnMasterTableTable extends SaleReturnMasterTable
     type: DriftSqlType.int,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _stockStatusMeta = const VerificationMeta(
-    'stockStatus',
-  );
-  @override
-  late final GeneratedColumn<int> stockStatus = GeneratedColumn<int>(
-    'stock_status',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _finIdMeta = const VerificationMeta('finId');
-  @override
-  late final GeneratedColumn<int> finId = GeneratedColumn<int>(
-    'fin_id',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-  );
   static const VerificationMeta _createdTimeMeta = const VerificationMeta(
     'createdTime',
   );
@@ -23982,17 +22885,6 @@ class $SaleReturnMasterTableTable extends SaleReturnMasterTable
     aliasedName,
     true,
     type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _printCountMeta = const VerificationMeta(
-    'printCount',
-  );
-  @override
-  late final GeneratedColumn<int> printCount = GeneratedColumn<int>(
-    'print_count',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
     requiredDuringInsert: false,
   );
   static const VerificationMeta _syncMeta = const VerificationMeta('sync');
@@ -24051,7 +22943,6 @@ class $SaleReturnMasterTableTable extends SaleReturnMasterTable
     mob,
     voucherDate,
     voucherAmount,
-    status,
     priceList,
     narration,
     lattitude,
@@ -24062,23 +22953,17 @@ class $SaleReturnMasterTableTable extends SaleReturnMasterTable
     itemCount,
     gstin,
     state,
-    partyParent,
-    addDiscType,
     addDiscEntered,
     prefix,
     suffix,
-    voucherNumber,
     vchType,
     invNo,
     godown,
     tripId,
     visitId,
-    stockStatus,
-    finId,
     createdTime,
     updatedTime,
     deliveryDate,
-    printCount,
     sync,
     pinCode,
     uploadedServerId,
@@ -24167,12 +23052,6 @@ class $SaleReturnMasterTableTable extends SaleReturnMasterTable
     } else if (isInserting) {
       context.missing(_voucherAmountMeta);
     }
-    if (data.containsKey('status')) {
-      context.handle(
-        _statusMeta,
-        status.isAcceptableOrUnknown(data['status']!, _statusMeta),
-      );
-    }
     if (data.containsKey('price_list')) {
       context.handle(
         _priceListMeta,
@@ -24233,24 +23112,6 @@ class $SaleReturnMasterTableTable extends SaleReturnMasterTable
         state.isAcceptableOrUnknown(data['state']!, _stateMeta),
       );
     }
-    if (data.containsKey('party_parent')) {
-      context.handle(
-        _partyParentMeta,
-        partyParent.isAcceptableOrUnknown(
-          data['party_parent']!,
-          _partyParentMeta,
-        ),
-      );
-    }
-    if (data.containsKey('add_disc_type')) {
-      context.handle(
-        _addDiscTypeMeta,
-        addDiscType.isAcceptableOrUnknown(
-          data['add_disc_type']!,
-          _addDiscTypeMeta,
-        ),
-      );
-    }
     if (data.containsKey('add_disc_entered')) {
       context.handle(
         _addDiscEnteredMeta,
@@ -24270,15 +23131,6 @@ class $SaleReturnMasterTableTable extends SaleReturnMasterTable
       context.handle(
         _suffixMeta,
         suffix.isAcceptableOrUnknown(data['suffix']!, _suffixMeta),
-      );
-    }
-    if (data.containsKey('voucher_number')) {
-      context.handle(
-        _voucherNumberMeta,
-        voucherNumber.isAcceptableOrUnknown(
-          data['voucher_number']!,
-          _voucherNumberMeta,
-        ),
       );
     }
     if (data.containsKey('vch_type')) {
@@ -24311,21 +23163,6 @@ class $SaleReturnMasterTableTable extends SaleReturnMasterTable
         visitId.isAcceptableOrUnknown(data['visit_id']!, _visitIdMeta),
       );
     }
-    if (data.containsKey('stock_status')) {
-      context.handle(
-        _stockStatusMeta,
-        stockStatus.isAcceptableOrUnknown(
-          data['stock_status']!,
-          _stockStatusMeta,
-        ),
-      );
-    }
-    if (data.containsKey('fin_id')) {
-      context.handle(
-        _finIdMeta,
-        finId.isAcceptableOrUnknown(data['fin_id']!, _finIdMeta),
-      );
-    }
     if (data.containsKey('created_time')) {
       context.handle(
         _createdTimeMeta,
@@ -24351,12 +23188,6 @@ class $SaleReturnMasterTableTable extends SaleReturnMasterTable
           data['delivery_date']!,
           _deliveryDateMeta,
         ),
-      );
-    }
-    if (data.containsKey('print_count')) {
-      context.handle(
-        _printCountMeta,
-        printCount.isAcceptableOrUnknown(data['print_count']!, _printCountMeta),
       );
     }
     if (data.containsKey('sync')) {
@@ -24445,10 +23276,6 @@ class $SaleReturnMasterTableTable extends SaleReturnMasterTable
         DriftSqlType.double,
         data['${effectivePrefix}voucher_amount'],
       )!,
-      status: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}status'],
-      ),
       priceList: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}price_list'],
@@ -24489,14 +23316,6 @@ class $SaleReturnMasterTableTable extends SaleReturnMasterTable
         DriftSqlType.string,
         data['${effectivePrefix}state'],
       ),
-      partyParent: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}party_parent'],
-      ),
-      addDiscType: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}add_disc_type'],
-      ),
       addDiscEntered: attachedDatabase.typeMapping.read(
         DriftSqlType.double,
         data['${effectivePrefix}add_disc_entered'],
@@ -24508,10 +23327,6 @@ class $SaleReturnMasterTableTable extends SaleReturnMasterTable
       suffix: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}suffix'],
-      ),
-      voucherNumber: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}voucher_number'],
       ),
       vchType: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
@@ -24533,14 +23348,6 @@ class $SaleReturnMasterTableTable extends SaleReturnMasterTable
         DriftSqlType.int,
         data['${effectivePrefix}visit_id'],
       ),
-      stockStatus: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}stock_status'],
-      ),
-      finId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}fin_id'],
-      ),
       createdTime: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}created_time'],
@@ -24552,10 +23359,6 @@ class $SaleReturnMasterTableTable extends SaleReturnMasterTable
       deliveryDate: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}delivery_date'],
-      ),
-      printCount: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}print_count'],
       ),
       sync: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
@@ -24595,7 +23398,6 @@ class SaleReturnMasterTableData extends DataClass
   final String? mob;
   final String? voucherDate;
   final double voucherAmount;
-  final int? status;
   final String? priceList;
   final String? narration;
   final double? lattitude;
@@ -24606,23 +23408,17 @@ class SaleReturnMasterTableData extends DataClass
   final int? itemCount;
   final String? gstin;
   final String? state;
-  final String? partyParent;
-  final String? addDiscType;
   final double? addDiscEntered;
   final String? prefix;
   final String? suffix;
-  final String? voucherNumber;
   final String? vchType;
   final int? invNo;
   final String? godown;
   final int? tripId;
   final int? visitId;
-  final int? stockStatus;
-  final int? finId;
   final DateTime? createdTime;
   final DateTime? updatedTime;
   final String? deliveryDate;
-  final int? printCount;
   final int sync;
   final String? pinCode;
   final int? uploadedServerId;
@@ -24639,7 +23435,6 @@ class SaleReturnMasterTableData extends DataClass
     this.mob,
     this.voucherDate,
     required this.voucherAmount,
-    this.status,
     this.priceList,
     this.narration,
     this.lattitude,
@@ -24650,23 +23445,17 @@ class SaleReturnMasterTableData extends DataClass
     this.itemCount,
     this.gstin,
     this.state,
-    this.partyParent,
-    this.addDiscType,
     this.addDiscEntered,
     this.prefix,
     this.suffix,
-    this.voucherNumber,
     this.vchType,
     this.invNo,
     this.godown,
     this.tripId,
     this.visitId,
-    this.stockStatus,
-    this.finId,
     this.createdTime,
     this.updatedTime,
     this.deliveryDate,
-    this.printCount,
     required this.sync,
     this.pinCode,
     this.uploadedServerId,
@@ -24704,9 +23493,6 @@ class SaleReturnMasterTableData extends DataClass
       map['voucher_date'] = Variable<String>(voucherDate);
     }
     map['voucher_amount'] = Variable<double>(voucherAmount);
-    if (!nullToAbsent || status != null) {
-      map['status'] = Variable<int>(status);
-    }
     if (!nullToAbsent || priceList != null) {
       map['price_list'] = Variable<String>(priceList);
     }
@@ -24737,12 +23523,6 @@ class SaleReturnMasterTableData extends DataClass
     if (!nullToAbsent || state != null) {
       map['state'] = Variable<String>(state);
     }
-    if (!nullToAbsent || partyParent != null) {
-      map['party_parent'] = Variable<String>(partyParent);
-    }
-    if (!nullToAbsent || addDiscType != null) {
-      map['add_disc_type'] = Variable<String>(addDiscType);
-    }
     if (!nullToAbsent || addDiscEntered != null) {
       map['add_disc_entered'] = Variable<double>(addDiscEntered);
     }
@@ -24751,9 +23531,6 @@ class SaleReturnMasterTableData extends DataClass
     }
     if (!nullToAbsent || suffix != null) {
       map['suffix'] = Variable<String>(suffix);
-    }
-    if (!nullToAbsent || voucherNumber != null) {
-      map['voucher_number'] = Variable<String>(voucherNumber);
     }
     if (!nullToAbsent || vchType != null) {
       map['vch_type'] = Variable<String>(vchType);
@@ -24770,12 +23547,6 @@ class SaleReturnMasterTableData extends DataClass
     if (!nullToAbsent || visitId != null) {
       map['visit_id'] = Variable<int>(visitId);
     }
-    if (!nullToAbsent || stockStatus != null) {
-      map['stock_status'] = Variable<int>(stockStatus);
-    }
-    if (!nullToAbsent || finId != null) {
-      map['fin_id'] = Variable<int>(finId);
-    }
     if (!nullToAbsent || createdTime != null) {
       map['created_time'] = Variable<DateTime>(createdTime);
     }
@@ -24784,9 +23555,6 @@ class SaleReturnMasterTableData extends DataClass
     }
     if (!nullToAbsent || deliveryDate != null) {
       map['delivery_date'] = Variable<String>(deliveryDate);
-    }
-    if (!nullToAbsent || printCount != null) {
-      map['print_count'] = Variable<int>(printCount);
     }
     map['sync'] = Variable<int>(sync);
     if (!nullToAbsent || pinCode != null) {
@@ -24830,9 +23598,6 @@ class SaleReturnMasterTableData extends DataClass
           ? const Value.absent()
           : Value(voucherDate),
       voucherAmount: Value(voucherAmount),
-      status: status == null && nullToAbsent
-          ? const Value.absent()
-          : Value(status),
       priceList: priceList == null && nullToAbsent
           ? const Value.absent()
           : Value(priceList),
@@ -24863,12 +23628,6 @@ class SaleReturnMasterTableData extends DataClass
       state: state == null && nullToAbsent
           ? const Value.absent()
           : Value(state),
-      partyParent: partyParent == null && nullToAbsent
-          ? const Value.absent()
-          : Value(partyParent),
-      addDiscType: addDiscType == null && nullToAbsent
-          ? const Value.absent()
-          : Value(addDiscType),
       addDiscEntered: addDiscEntered == null && nullToAbsent
           ? const Value.absent()
           : Value(addDiscEntered),
@@ -24878,9 +23637,6 @@ class SaleReturnMasterTableData extends DataClass
       suffix: suffix == null && nullToAbsent
           ? const Value.absent()
           : Value(suffix),
-      voucherNumber: voucherNumber == null && nullToAbsent
-          ? const Value.absent()
-          : Value(voucherNumber),
       vchType: vchType == null && nullToAbsent
           ? const Value.absent()
           : Value(vchType),
@@ -24896,12 +23652,6 @@ class SaleReturnMasterTableData extends DataClass
       visitId: visitId == null && nullToAbsent
           ? const Value.absent()
           : Value(visitId),
-      stockStatus: stockStatus == null && nullToAbsent
-          ? const Value.absent()
-          : Value(stockStatus),
-      finId: finId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(finId),
       createdTime: createdTime == null && nullToAbsent
           ? const Value.absent()
           : Value(createdTime),
@@ -24911,9 +23661,6 @@ class SaleReturnMasterTableData extends DataClass
       deliveryDate: deliveryDate == null && nullToAbsent
           ? const Value.absent()
           : Value(deliveryDate),
-      printCount: printCount == null && nullToAbsent
-          ? const Value.absent()
-          : Value(printCount),
       sync: Value(sync),
       pinCode: pinCode == null && nullToAbsent
           ? const Value.absent()
@@ -24944,7 +23691,6 @@ class SaleReturnMasterTableData extends DataClass
       mob: serializer.fromJson<String?>(json['mob']),
       voucherDate: serializer.fromJson<String?>(json['voucherDate']),
       voucherAmount: serializer.fromJson<double>(json['voucherAmount']),
-      status: serializer.fromJson<int?>(json['status']),
       priceList: serializer.fromJson<String?>(json['priceList']),
       narration: serializer.fromJson<String?>(json['narration']),
       lattitude: serializer.fromJson<double?>(json['lattitude']),
@@ -24955,23 +23701,17 @@ class SaleReturnMasterTableData extends DataClass
       itemCount: serializer.fromJson<int?>(json['itemCount']),
       gstin: serializer.fromJson<String?>(json['gstin']),
       state: serializer.fromJson<String?>(json['state']),
-      partyParent: serializer.fromJson<String?>(json['partyParent']),
-      addDiscType: serializer.fromJson<String?>(json['addDiscType']),
       addDiscEntered: serializer.fromJson<double?>(json['addDiscEntered']),
       prefix: serializer.fromJson<String?>(json['prefix']),
       suffix: serializer.fromJson<String?>(json['suffix']),
-      voucherNumber: serializer.fromJson<String?>(json['voucherNumber']),
       vchType: serializer.fromJson<String?>(json['vchType']),
       invNo: serializer.fromJson<int?>(json['invNo']),
       godown: serializer.fromJson<String?>(json['godown']),
       tripId: serializer.fromJson<int?>(json['tripId']),
       visitId: serializer.fromJson<int?>(json['visitId']),
-      stockStatus: serializer.fromJson<int?>(json['stockStatus']),
-      finId: serializer.fromJson<int?>(json['finId']),
       createdTime: serializer.fromJson<DateTime?>(json['createdTime']),
       updatedTime: serializer.fromJson<DateTime?>(json['updatedTime']),
       deliveryDate: serializer.fromJson<String?>(json['deliveryDate']),
-      printCount: serializer.fromJson<int?>(json['printCount']),
       sync: serializer.fromJson<int>(json['sync']),
       pinCode: serializer.fromJson<String?>(json['pinCode']),
       uploadedServerId: serializer.fromJson<int?>(json['uploadedServerId']),
@@ -24993,7 +23733,6 @@ class SaleReturnMasterTableData extends DataClass
       'mob': serializer.toJson<String?>(mob),
       'voucherDate': serializer.toJson<String?>(voucherDate),
       'voucherAmount': serializer.toJson<double>(voucherAmount),
-      'status': serializer.toJson<int?>(status),
       'priceList': serializer.toJson<String?>(priceList),
       'narration': serializer.toJson<String?>(narration),
       'lattitude': serializer.toJson<double?>(lattitude),
@@ -25004,23 +23743,17 @@ class SaleReturnMasterTableData extends DataClass
       'itemCount': serializer.toJson<int?>(itemCount),
       'gstin': serializer.toJson<String?>(gstin),
       'state': serializer.toJson<String?>(state),
-      'partyParent': serializer.toJson<String?>(partyParent),
-      'addDiscType': serializer.toJson<String?>(addDiscType),
       'addDiscEntered': serializer.toJson<double?>(addDiscEntered),
       'prefix': serializer.toJson<String?>(prefix),
       'suffix': serializer.toJson<String?>(suffix),
-      'voucherNumber': serializer.toJson<String?>(voucherNumber),
       'vchType': serializer.toJson<String?>(vchType),
       'invNo': serializer.toJson<int?>(invNo),
       'godown': serializer.toJson<String?>(godown),
       'tripId': serializer.toJson<int?>(tripId),
       'visitId': serializer.toJson<int?>(visitId),
-      'stockStatus': serializer.toJson<int?>(stockStatus),
-      'finId': serializer.toJson<int?>(finId),
       'createdTime': serializer.toJson<DateTime?>(createdTime),
       'updatedTime': serializer.toJson<DateTime?>(updatedTime),
       'deliveryDate': serializer.toJson<String?>(deliveryDate),
-      'printCount': serializer.toJson<int?>(printCount),
       'sync': serializer.toJson<int>(sync),
       'pinCode': serializer.toJson<String?>(pinCode),
       'uploadedServerId': serializer.toJson<int?>(uploadedServerId),
@@ -25040,7 +23773,6 @@ class SaleReturnMasterTableData extends DataClass
     Value<String?> mob = const Value.absent(),
     Value<String?> voucherDate = const Value.absent(),
     double? voucherAmount,
-    Value<int?> status = const Value.absent(),
     Value<String?> priceList = const Value.absent(),
     Value<String?> narration = const Value.absent(),
     Value<double?> lattitude = const Value.absent(),
@@ -25051,23 +23783,17 @@ class SaleReturnMasterTableData extends DataClass
     Value<int?> itemCount = const Value.absent(),
     Value<String?> gstin = const Value.absent(),
     Value<String?> state = const Value.absent(),
-    Value<String?> partyParent = const Value.absent(),
-    Value<String?> addDiscType = const Value.absent(),
     Value<double?> addDiscEntered = const Value.absent(),
     Value<String?> prefix = const Value.absent(),
     Value<String?> suffix = const Value.absent(),
-    Value<String?> voucherNumber = const Value.absent(),
     Value<String?> vchType = const Value.absent(),
     Value<int?> invNo = const Value.absent(),
     Value<String?> godown = const Value.absent(),
     Value<int?> tripId = const Value.absent(),
     Value<int?> visitId = const Value.absent(),
-    Value<int?> stockStatus = const Value.absent(),
-    Value<int?> finId = const Value.absent(),
     Value<DateTime?> createdTime = const Value.absent(),
     Value<DateTime?> updatedTime = const Value.absent(),
     Value<String?> deliveryDate = const Value.absent(),
-    Value<int?> printCount = const Value.absent(),
     int? sync,
     Value<String?> pinCode = const Value.absent(),
     Value<int?> uploadedServerId = const Value.absent(),
@@ -25084,7 +23810,6 @@ class SaleReturnMasterTableData extends DataClass
     mob: mob.present ? mob.value : this.mob,
     voucherDate: voucherDate.present ? voucherDate.value : this.voucherDate,
     voucherAmount: voucherAmount ?? this.voucherAmount,
-    status: status.present ? status.value : this.status,
     priceList: priceList.present ? priceList.value : this.priceList,
     narration: narration.present ? narration.value : this.narration,
     lattitude: lattitude.present ? lattitude.value : this.lattitude,
@@ -25095,27 +23820,19 @@ class SaleReturnMasterTableData extends DataClass
     itemCount: itemCount.present ? itemCount.value : this.itemCount,
     gstin: gstin.present ? gstin.value : this.gstin,
     state: state.present ? state.value : this.state,
-    partyParent: partyParent.present ? partyParent.value : this.partyParent,
-    addDiscType: addDiscType.present ? addDiscType.value : this.addDiscType,
     addDiscEntered: addDiscEntered.present
         ? addDiscEntered.value
         : this.addDiscEntered,
     prefix: prefix.present ? prefix.value : this.prefix,
     suffix: suffix.present ? suffix.value : this.suffix,
-    voucherNumber: voucherNumber.present
-        ? voucherNumber.value
-        : this.voucherNumber,
     vchType: vchType.present ? vchType.value : this.vchType,
     invNo: invNo.present ? invNo.value : this.invNo,
     godown: godown.present ? godown.value : this.godown,
     tripId: tripId.present ? tripId.value : this.tripId,
     visitId: visitId.present ? visitId.value : this.visitId,
-    stockStatus: stockStatus.present ? stockStatus.value : this.stockStatus,
-    finId: finId.present ? finId.value : this.finId,
     createdTime: createdTime.present ? createdTime.value : this.createdTime,
     updatedTime: updatedTime.present ? updatedTime.value : this.updatedTime,
     deliveryDate: deliveryDate.present ? deliveryDate.value : this.deliveryDate,
-    printCount: printCount.present ? printCount.value : this.printCount,
     sync: sync ?? this.sync,
     pinCode: pinCode.present ? pinCode.value : this.pinCode,
     uploadedServerId: uploadedServerId.present
@@ -25142,7 +23859,6 @@ class SaleReturnMasterTableData extends DataClass
       voucherAmount: data.voucherAmount.present
           ? data.voucherAmount.value
           : this.voucherAmount,
-      status: data.status.present ? data.status.value : this.status,
       priceList: data.priceList.present ? data.priceList.value : this.priceList,
       narration: data.narration.present ? data.narration.value : this.narration,
       lattitude: data.lattitude.present ? data.lattitude.value : this.lattitude,
@@ -25153,29 +23869,16 @@ class SaleReturnMasterTableData extends DataClass
       itemCount: data.itemCount.present ? data.itemCount.value : this.itemCount,
       gstin: data.gstin.present ? data.gstin.value : this.gstin,
       state: data.state.present ? data.state.value : this.state,
-      partyParent: data.partyParent.present
-          ? data.partyParent.value
-          : this.partyParent,
-      addDiscType: data.addDiscType.present
-          ? data.addDiscType.value
-          : this.addDiscType,
       addDiscEntered: data.addDiscEntered.present
           ? data.addDiscEntered.value
           : this.addDiscEntered,
       prefix: data.prefix.present ? data.prefix.value : this.prefix,
       suffix: data.suffix.present ? data.suffix.value : this.suffix,
-      voucherNumber: data.voucherNumber.present
-          ? data.voucherNumber.value
-          : this.voucherNumber,
       vchType: data.vchType.present ? data.vchType.value : this.vchType,
       invNo: data.invNo.present ? data.invNo.value : this.invNo,
       godown: data.godown.present ? data.godown.value : this.godown,
       tripId: data.tripId.present ? data.tripId.value : this.tripId,
       visitId: data.visitId.present ? data.visitId.value : this.visitId,
-      stockStatus: data.stockStatus.present
-          ? data.stockStatus.value
-          : this.stockStatus,
-      finId: data.finId.present ? data.finId.value : this.finId,
       createdTime: data.createdTime.present
           ? data.createdTime.value
           : this.createdTime,
@@ -25185,9 +23888,6 @@ class SaleReturnMasterTableData extends DataClass
       deliveryDate: data.deliveryDate.present
           ? data.deliveryDate.value
           : this.deliveryDate,
-      printCount: data.printCount.present
-          ? data.printCount.value
-          : this.printCount,
       sync: data.sync.present ? data.sync.value : this.sync,
       pinCode: data.pinCode.present ? data.pinCode.value : this.pinCode,
       uploadedServerId: data.uploadedServerId.present
@@ -25213,7 +23913,6 @@ class SaleReturnMasterTableData extends DataClass
           ..write('mob: $mob, ')
           ..write('voucherDate: $voucherDate, ')
           ..write('voucherAmount: $voucherAmount, ')
-          ..write('status: $status, ')
           ..write('priceList: $priceList, ')
           ..write('narration: $narration, ')
           ..write('lattitude: $lattitude, ')
@@ -25224,23 +23923,17 @@ class SaleReturnMasterTableData extends DataClass
           ..write('itemCount: $itemCount, ')
           ..write('gstin: $gstin, ')
           ..write('state: $state, ')
-          ..write('partyParent: $partyParent, ')
-          ..write('addDiscType: $addDiscType, ')
           ..write('addDiscEntered: $addDiscEntered, ')
           ..write('prefix: $prefix, ')
           ..write('suffix: $suffix, ')
-          ..write('voucherNumber: $voucherNumber, ')
           ..write('vchType: $vchType, ')
           ..write('invNo: $invNo, ')
           ..write('godown: $godown, ')
           ..write('tripId: $tripId, ')
           ..write('visitId: $visitId, ')
-          ..write('stockStatus: $stockStatus, ')
-          ..write('finId: $finId, ')
           ..write('createdTime: $createdTime, ')
           ..write('updatedTime: $updatedTime, ')
           ..write('deliveryDate: $deliveryDate, ')
-          ..write('printCount: $printCount, ')
           ..write('sync: $sync, ')
           ..write('pinCode: $pinCode, ')
           ..write('uploadedServerId: $uploadedServerId, ')
@@ -25262,7 +23955,6 @@ class SaleReturnMasterTableData extends DataClass
     mob,
     voucherDate,
     voucherAmount,
-    status,
     priceList,
     narration,
     lattitude,
@@ -25273,23 +23965,17 @@ class SaleReturnMasterTableData extends DataClass
     itemCount,
     gstin,
     state,
-    partyParent,
-    addDiscType,
     addDiscEntered,
     prefix,
     suffix,
-    voucherNumber,
     vchType,
     invNo,
     godown,
     tripId,
     visitId,
-    stockStatus,
-    finId,
     createdTime,
     updatedTime,
     deliveryDate,
-    printCount,
     sync,
     pinCode,
     uploadedServerId,
@@ -25310,7 +23996,6 @@ class SaleReturnMasterTableData extends DataClass
           other.mob == this.mob &&
           other.voucherDate == this.voucherDate &&
           other.voucherAmount == this.voucherAmount &&
-          other.status == this.status &&
           other.priceList == this.priceList &&
           other.narration == this.narration &&
           other.lattitude == this.lattitude &&
@@ -25321,23 +24006,17 @@ class SaleReturnMasterTableData extends DataClass
           other.itemCount == this.itemCount &&
           other.gstin == this.gstin &&
           other.state == this.state &&
-          other.partyParent == this.partyParent &&
-          other.addDiscType == this.addDiscType &&
           other.addDiscEntered == this.addDiscEntered &&
           other.prefix == this.prefix &&
           other.suffix == this.suffix &&
-          other.voucherNumber == this.voucherNumber &&
           other.vchType == this.vchType &&
           other.invNo == this.invNo &&
           other.godown == this.godown &&
           other.tripId == this.tripId &&
           other.visitId == this.visitId &&
-          other.stockStatus == this.stockStatus &&
-          other.finId == this.finId &&
           other.createdTime == this.createdTime &&
           other.updatedTime == this.updatedTime &&
           other.deliveryDate == this.deliveryDate &&
-          other.printCount == this.printCount &&
           other.sync == this.sync &&
           other.pinCode == this.pinCode &&
           other.uploadedServerId == this.uploadedServerId &&
@@ -25357,7 +24036,6 @@ class SaleReturnMasterTableCompanion
   final Value<String?> mob;
   final Value<String?> voucherDate;
   final Value<double> voucherAmount;
-  final Value<int?> status;
   final Value<String?> priceList;
   final Value<String?> narration;
   final Value<double?> lattitude;
@@ -25368,23 +24046,17 @@ class SaleReturnMasterTableCompanion
   final Value<int?> itemCount;
   final Value<String?> gstin;
   final Value<String?> state;
-  final Value<String?> partyParent;
-  final Value<String?> addDiscType;
   final Value<double?> addDiscEntered;
   final Value<String?> prefix;
   final Value<String?> suffix;
-  final Value<String?> voucherNumber;
   final Value<String?> vchType;
   final Value<int?> invNo;
   final Value<String?> godown;
   final Value<int?> tripId;
   final Value<int?> visitId;
-  final Value<int?> stockStatus;
-  final Value<int?> finId;
   final Value<DateTime?> createdTime;
   final Value<DateTime?> updatedTime;
   final Value<String?> deliveryDate;
-  final Value<int?> printCount;
   final Value<int> sync;
   final Value<String?> pinCode;
   final Value<int?> uploadedServerId;
@@ -25401,7 +24073,6 @@ class SaleReturnMasterTableCompanion
     this.mob = const Value.absent(),
     this.voucherDate = const Value.absent(),
     this.voucherAmount = const Value.absent(),
-    this.status = const Value.absent(),
     this.priceList = const Value.absent(),
     this.narration = const Value.absent(),
     this.lattitude = const Value.absent(),
@@ -25412,23 +24083,17 @@ class SaleReturnMasterTableCompanion
     this.itemCount = const Value.absent(),
     this.gstin = const Value.absent(),
     this.state = const Value.absent(),
-    this.partyParent = const Value.absent(),
-    this.addDiscType = const Value.absent(),
     this.addDiscEntered = const Value.absent(),
     this.prefix = const Value.absent(),
     this.suffix = const Value.absent(),
-    this.voucherNumber = const Value.absent(),
     this.vchType = const Value.absent(),
     this.invNo = const Value.absent(),
     this.godown = const Value.absent(),
     this.tripId = const Value.absent(),
     this.visitId = const Value.absent(),
-    this.stockStatus = const Value.absent(),
-    this.finId = const Value.absent(),
     this.createdTime = const Value.absent(),
     this.updatedTime = const Value.absent(),
     this.deliveryDate = const Value.absent(),
-    this.printCount = const Value.absent(),
     this.sync = const Value.absent(),
     this.pinCode = const Value.absent(),
     this.uploadedServerId = const Value.absent(),
@@ -25446,7 +24111,6 @@ class SaleReturnMasterTableCompanion
     this.mob = const Value.absent(),
     this.voucherDate = const Value.absent(),
     required double voucherAmount,
-    this.status = const Value.absent(),
     this.priceList = const Value.absent(),
     this.narration = const Value.absent(),
     this.lattitude = const Value.absent(),
@@ -25457,23 +24121,17 @@ class SaleReturnMasterTableCompanion
     this.itemCount = const Value.absent(),
     this.gstin = const Value.absent(),
     this.state = const Value.absent(),
-    this.partyParent = const Value.absent(),
-    this.addDiscType = const Value.absent(),
     this.addDiscEntered = const Value.absent(),
     this.prefix = const Value.absent(),
     this.suffix = const Value.absent(),
-    this.voucherNumber = const Value.absent(),
     this.vchType = const Value.absent(),
     this.invNo = const Value.absent(),
     this.godown = const Value.absent(),
     this.tripId = const Value.absent(),
     this.visitId = const Value.absent(),
-    this.stockStatus = const Value.absent(),
-    this.finId = const Value.absent(),
     this.createdTime = const Value.absent(),
     this.updatedTime = const Value.absent(),
     this.deliveryDate = const Value.absent(),
-    this.printCount = const Value.absent(),
     this.sync = const Value.absent(),
     this.pinCode = const Value.absent(),
     this.uploadedServerId = const Value.absent(),
@@ -25491,7 +24149,6 @@ class SaleReturnMasterTableCompanion
     Expression<String>? mob,
     Expression<String>? voucherDate,
     Expression<double>? voucherAmount,
-    Expression<int>? status,
     Expression<String>? priceList,
     Expression<String>? narration,
     Expression<double>? lattitude,
@@ -25502,23 +24159,17 @@ class SaleReturnMasterTableCompanion
     Expression<int>? itemCount,
     Expression<String>? gstin,
     Expression<String>? state,
-    Expression<String>? partyParent,
-    Expression<String>? addDiscType,
     Expression<double>? addDiscEntered,
     Expression<String>? prefix,
     Expression<String>? suffix,
-    Expression<String>? voucherNumber,
     Expression<String>? vchType,
     Expression<int>? invNo,
     Expression<String>? godown,
     Expression<int>? tripId,
     Expression<int>? visitId,
-    Expression<int>? stockStatus,
-    Expression<int>? finId,
     Expression<DateTime>? createdTime,
     Expression<DateTime>? updatedTime,
     Expression<String>? deliveryDate,
-    Expression<int>? printCount,
     Expression<int>? sync,
     Expression<String>? pinCode,
     Expression<int>? uploadedServerId,
@@ -25536,7 +24187,6 @@ class SaleReturnMasterTableCompanion
       if (mob != null) 'mob': mob,
       if (voucherDate != null) 'voucher_date': voucherDate,
       if (voucherAmount != null) 'voucher_amount': voucherAmount,
-      if (status != null) 'status': status,
       if (priceList != null) 'price_list': priceList,
       if (narration != null) 'narration': narration,
       if (lattitude != null) 'lattitude': lattitude,
@@ -25547,23 +24197,17 @@ class SaleReturnMasterTableCompanion
       if (itemCount != null) 'item_count': itemCount,
       if (gstin != null) 'gstin': gstin,
       if (state != null) 'state': state,
-      if (partyParent != null) 'party_parent': partyParent,
-      if (addDiscType != null) 'add_disc_type': addDiscType,
       if (addDiscEntered != null) 'add_disc_entered': addDiscEntered,
       if (prefix != null) 'prefix': prefix,
       if (suffix != null) 'suffix': suffix,
-      if (voucherNumber != null) 'voucher_number': voucherNumber,
       if (vchType != null) 'vch_type': vchType,
       if (invNo != null) 'inv_no': invNo,
       if (godown != null) 'godown': godown,
       if (tripId != null) 'trip_id': tripId,
       if (visitId != null) 'visit_id': visitId,
-      if (stockStatus != null) 'stock_status': stockStatus,
-      if (finId != null) 'fin_id': finId,
       if (createdTime != null) 'created_time': createdTime,
       if (updatedTime != null) 'updated_time': updatedTime,
       if (deliveryDate != null) 'delivery_date': deliveryDate,
-      if (printCount != null) 'print_count': printCount,
       if (sync != null) 'sync': sync,
       if (pinCode != null) 'pin_code': pinCode,
       if (uploadedServerId != null) 'uploaded_server_id': uploadedServerId,
@@ -25583,7 +24227,6 @@ class SaleReturnMasterTableCompanion
     Value<String?>? mob,
     Value<String?>? voucherDate,
     Value<double>? voucherAmount,
-    Value<int?>? status,
     Value<String?>? priceList,
     Value<String?>? narration,
     Value<double?>? lattitude,
@@ -25594,23 +24237,17 @@ class SaleReturnMasterTableCompanion
     Value<int?>? itemCount,
     Value<String?>? gstin,
     Value<String?>? state,
-    Value<String?>? partyParent,
-    Value<String?>? addDiscType,
     Value<double?>? addDiscEntered,
     Value<String?>? prefix,
     Value<String?>? suffix,
-    Value<String?>? voucherNumber,
     Value<String?>? vchType,
     Value<int?>? invNo,
     Value<String?>? godown,
     Value<int?>? tripId,
     Value<int?>? visitId,
-    Value<int?>? stockStatus,
-    Value<int?>? finId,
     Value<DateTime?>? createdTime,
     Value<DateTime?>? updatedTime,
     Value<String?>? deliveryDate,
-    Value<int?>? printCount,
     Value<int>? sync,
     Value<String?>? pinCode,
     Value<int?>? uploadedServerId,
@@ -25628,7 +24265,6 @@ class SaleReturnMasterTableCompanion
       mob: mob ?? this.mob,
       voucherDate: voucherDate ?? this.voucherDate,
       voucherAmount: voucherAmount ?? this.voucherAmount,
-      status: status ?? this.status,
       priceList: priceList ?? this.priceList,
       narration: narration ?? this.narration,
       lattitude: lattitude ?? this.lattitude,
@@ -25639,23 +24275,17 @@ class SaleReturnMasterTableCompanion
       itemCount: itemCount ?? this.itemCount,
       gstin: gstin ?? this.gstin,
       state: state ?? this.state,
-      partyParent: partyParent ?? this.partyParent,
-      addDiscType: addDiscType ?? this.addDiscType,
       addDiscEntered: addDiscEntered ?? this.addDiscEntered,
       prefix: prefix ?? this.prefix,
       suffix: suffix ?? this.suffix,
-      voucherNumber: voucherNumber ?? this.voucherNumber,
       vchType: vchType ?? this.vchType,
       invNo: invNo ?? this.invNo,
       godown: godown ?? this.godown,
       tripId: tripId ?? this.tripId,
       visitId: visitId ?? this.visitId,
-      stockStatus: stockStatus ?? this.stockStatus,
-      finId: finId ?? this.finId,
       createdTime: createdTime ?? this.createdTime,
       updatedTime: updatedTime ?? this.updatedTime,
       deliveryDate: deliveryDate ?? this.deliveryDate,
-      printCount: printCount ?? this.printCount,
       sync: sync ?? this.sync,
       pinCode: pinCode ?? this.pinCode,
       uploadedServerId: uploadedServerId ?? this.uploadedServerId,
@@ -25699,9 +24329,6 @@ class SaleReturnMasterTableCompanion
     if (voucherAmount.present) {
       map['voucher_amount'] = Variable<double>(voucherAmount.value);
     }
-    if (status.present) {
-      map['status'] = Variable<int>(status.value);
-    }
     if (priceList.present) {
       map['price_list'] = Variable<String>(priceList.value);
     }
@@ -25732,12 +24359,6 @@ class SaleReturnMasterTableCompanion
     if (state.present) {
       map['state'] = Variable<String>(state.value);
     }
-    if (partyParent.present) {
-      map['party_parent'] = Variable<String>(partyParent.value);
-    }
-    if (addDiscType.present) {
-      map['add_disc_type'] = Variable<String>(addDiscType.value);
-    }
     if (addDiscEntered.present) {
       map['add_disc_entered'] = Variable<double>(addDiscEntered.value);
     }
@@ -25746,9 +24367,6 @@ class SaleReturnMasterTableCompanion
     }
     if (suffix.present) {
       map['suffix'] = Variable<String>(suffix.value);
-    }
-    if (voucherNumber.present) {
-      map['voucher_number'] = Variable<String>(voucherNumber.value);
     }
     if (vchType.present) {
       map['vch_type'] = Variable<String>(vchType.value);
@@ -25765,12 +24383,6 @@ class SaleReturnMasterTableCompanion
     if (visitId.present) {
       map['visit_id'] = Variable<int>(visitId.value);
     }
-    if (stockStatus.present) {
-      map['stock_status'] = Variable<int>(stockStatus.value);
-    }
-    if (finId.present) {
-      map['fin_id'] = Variable<int>(finId.value);
-    }
     if (createdTime.present) {
       map['created_time'] = Variable<DateTime>(createdTime.value);
     }
@@ -25779,9 +24391,6 @@ class SaleReturnMasterTableCompanion
     }
     if (deliveryDate.present) {
       map['delivery_date'] = Variable<String>(deliveryDate.value);
-    }
-    if (printCount.present) {
-      map['print_count'] = Variable<int>(printCount.value);
     }
     if (sync.present) {
       map['sync'] = Variable<int>(sync.value);
@@ -25812,7 +24421,6 @@ class SaleReturnMasterTableCompanion
           ..write('mob: $mob, ')
           ..write('voucherDate: $voucherDate, ')
           ..write('voucherAmount: $voucherAmount, ')
-          ..write('status: $status, ')
           ..write('priceList: $priceList, ')
           ..write('narration: $narration, ')
           ..write('lattitude: $lattitude, ')
@@ -25823,23 +24431,17 @@ class SaleReturnMasterTableCompanion
           ..write('itemCount: $itemCount, ')
           ..write('gstin: $gstin, ')
           ..write('state: $state, ')
-          ..write('partyParent: $partyParent, ')
-          ..write('addDiscType: $addDiscType, ')
           ..write('addDiscEntered: $addDiscEntered, ')
           ..write('prefix: $prefix, ')
           ..write('suffix: $suffix, ')
-          ..write('voucherNumber: $voucherNumber, ')
           ..write('vchType: $vchType, ')
           ..write('invNo: $invNo, ')
           ..write('godown: $godown, ')
           ..write('tripId: $tripId, ')
           ..write('visitId: $visitId, ')
-          ..write('stockStatus: $stockStatus, ')
-          ..write('finId: $finId, ')
           ..write('createdTime: $createdTime, ')
           ..write('updatedTime: $updatedTime, ')
           ..write('deliveryDate: $deliveryDate, ')
-          ..write('printCount: $printCount, ')
           ..write('sync: $sync, ')
           ..write('pinCode: $pinCode, ')
           ..write('uploadedServerId: $uploadedServerId, ')
@@ -26000,42 +24602,6 @@ class $SaleReturnDetailsTableTable extends SaleReturnDetailsTable
     type: DriftSqlType.int,
     requiredDuringInsert: false,
     defaultValue: const Constant(0),
-  );
-  static const VerificationMeta _igstMeta = const VerificationMeta('igst');
-  @override
-  late final GeneratedColumn<double> igst = GeneratedColumn<double>(
-    'igst',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _cgstMeta = const VerificationMeta('cgst');
-  @override
-  late final GeneratedColumn<double> cgst = GeneratedColumn<double>(
-    'cgst',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _sgstMeta = const VerificationMeta('sgst');
-  @override
-  late final GeneratedColumn<double> sgst = GeneratedColumn<double>(
-    'sgst',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _cessMeta = const VerificationMeta('cess');
-  @override
-  late final GeneratedColumn<double> cess = GeneratedColumn<double>(
-    'cess',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
   );
   static const VerificationMeta _hsnMeta = const VerificationMeta('hsn');
   @override
@@ -26257,10 +24823,6 @@ class $SaleReturnDetailsTableTable extends SaleReturnDetailsTable
     ledger,
     companyId,
     sync,
-    igst,
-    cgst,
-    sgst,
-    cess,
     hsn,
     enteredRate,
     enteredDisc,
@@ -26378,30 +24940,6 @@ class $SaleReturnDetailsTableTable extends SaleReturnDetailsTable
       context.handle(
         _syncMeta,
         sync.isAcceptableOrUnknown(data['sync']!, _syncMeta),
-      );
-    }
-    if (data.containsKey('igst')) {
-      context.handle(
-        _igstMeta,
-        igst.isAcceptableOrUnknown(data['igst']!, _igstMeta),
-      );
-    }
-    if (data.containsKey('cgst')) {
-      context.handle(
-        _cgstMeta,
-        cgst.isAcceptableOrUnknown(data['cgst']!, _cgstMeta),
-      );
-    }
-    if (data.containsKey('sgst')) {
-      context.handle(
-        _sgstMeta,
-        sgst.isAcceptableOrUnknown(data['sgst']!, _sgstMeta),
-      );
-    }
-    if (data.containsKey('cess')) {
-      context.handle(
-        _cessMeta,
-        cess.isAcceptableOrUnknown(data['cess']!, _cessMeta),
       );
     }
     if (data.containsKey('hsn')) {
@@ -26611,22 +25149,6 @@ class $SaleReturnDetailsTableTable extends SaleReturnDetailsTable
         DriftSqlType.int,
         data['${effectivePrefix}sync'],
       )!,
-      igst: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}igst'],
-      ),
-      cgst: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}cgst'],
-      ),
-      sgst: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}sgst'],
-      ),
-      cess: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}cess'],
-      ),
       hsn: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}hsn'],
@@ -26729,10 +25251,6 @@ class SaleReturnDetailsTableData extends DataClass
   final String? ledger;
   final int? companyId;
   final int sync;
-  final double? igst;
-  final double? cgst;
-  final double? sgst;
-  final double? cess;
   final String? hsn;
   final double? enteredRate;
   final double? enteredDisc;
@@ -26768,10 +25286,6 @@ class SaleReturnDetailsTableData extends DataClass
     this.ledger,
     this.companyId,
     required this.sync,
-    this.igst,
-    this.cgst,
-    this.sgst,
-    this.cess,
     this.hsn,
     this.enteredRate,
     this.enteredDisc,
@@ -26836,18 +25350,6 @@ class SaleReturnDetailsTableData extends DataClass
       map['company_id'] = Variable<int>(companyId);
     }
     map['sync'] = Variable<int>(sync);
-    if (!nullToAbsent || igst != null) {
-      map['igst'] = Variable<double>(igst);
-    }
-    if (!nullToAbsent || cgst != null) {
-      map['cgst'] = Variable<double>(cgst);
-    }
-    if (!nullToAbsent || sgst != null) {
-      map['sgst'] = Variable<double>(sgst);
-    }
-    if (!nullToAbsent || cess != null) {
-      map['cess'] = Variable<double>(cess);
-    }
     if (!nullToAbsent || hsn != null) {
       map['hsn'] = Variable<String>(hsn);
     }
@@ -26939,10 +25441,6 @@ class SaleReturnDetailsTableData extends DataClass
           ? const Value.absent()
           : Value(companyId),
       sync: Value(sync),
-      igst: igst == null && nullToAbsent ? const Value.absent() : Value(igst),
-      cgst: cgst == null && nullToAbsent ? const Value.absent() : Value(cgst),
-      sgst: sgst == null && nullToAbsent ? const Value.absent() : Value(sgst),
-      cess: cess == null && nullToAbsent ? const Value.absent() : Value(cess),
       hsn: hsn == null && nullToAbsent ? const Value.absent() : Value(hsn),
       enteredRate: enteredRate == null && nullToAbsent
           ? const Value.absent()
@@ -27020,10 +25518,6 @@ class SaleReturnDetailsTableData extends DataClass
       ledger: serializer.fromJson<String?>(json['ledger']),
       companyId: serializer.fromJson<int?>(json['companyId']),
       sync: serializer.fromJson<int>(json['sync']),
-      igst: serializer.fromJson<double?>(json['igst']),
-      cgst: serializer.fromJson<double?>(json['cgst']),
-      sgst: serializer.fromJson<double?>(json['sgst']),
-      cess: serializer.fromJson<double?>(json['cess']),
       hsn: serializer.fromJson<String?>(json['hsn']),
       enteredRate: serializer.fromJson<double?>(json['enteredRate']),
       enteredDisc: serializer.fromJson<double?>(json['enteredDisc']),
@@ -27064,10 +25558,6 @@ class SaleReturnDetailsTableData extends DataClass
       'ledger': serializer.toJson<String?>(ledger),
       'companyId': serializer.toJson<int?>(companyId),
       'sync': serializer.toJson<int>(sync),
-      'igst': serializer.toJson<double?>(igst),
-      'cgst': serializer.toJson<double?>(cgst),
-      'sgst': serializer.toJson<double?>(sgst),
-      'cess': serializer.toJson<double?>(cess),
       'hsn': serializer.toJson<String?>(hsn),
       'enteredRate': serializer.toJson<double?>(enteredRate),
       'enteredDisc': serializer.toJson<double?>(enteredDisc),
@@ -27106,10 +25596,6 @@ class SaleReturnDetailsTableData extends DataClass
     Value<String?> ledger = const Value.absent(),
     Value<int?> companyId = const Value.absent(),
     int? sync,
-    Value<double?> igst = const Value.absent(),
-    Value<double?> cgst = const Value.absent(),
-    Value<double?> sgst = const Value.absent(),
-    Value<double?> cess = const Value.absent(),
     Value<String?> hsn = const Value.absent(),
     Value<double?> enteredRate = const Value.absent(),
     Value<double?> enteredDisc = const Value.absent(),
@@ -27145,10 +25631,6 @@ class SaleReturnDetailsTableData extends DataClass
     ledger: ledger.present ? ledger.value : this.ledger,
     companyId: companyId.present ? companyId.value : this.companyId,
     sync: sync ?? this.sync,
-    igst: igst.present ? igst.value : this.igst,
-    cgst: cgst.present ? cgst.value : this.cgst,
-    sgst: sgst.present ? sgst.value : this.sgst,
-    cess: cess.present ? cess.value : this.cess,
     hsn: hsn.present ? hsn.value : this.hsn,
     enteredRate: enteredRate.present ? enteredRate.value : this.enteredRate,
     enteredDisc: enteredDisc.present ? enteredDisc.value : this.enteredDisc,
@@ -27190,10 +25672,6 @@ class SaleReturnDetailsTableData extends DataClass
       ledger: data.ledger.present ? data.ledger.value : this.ledger,
       companyId: data.companyId.present ? data.companyId.value : this.companyId,
       sync: data.sync.present ? data.sync.value : this.sync,
-      igst: data.igst.present ? data.igst.value : this.igst,
-      cgst: data.cgst.present ? data.cgst.value : this.cgst,
-      sgst: data.sgst.present ? data.sgst.value : this.sgst,
-      cess: data.cess.present ? data.cess.value : this.cess,
       hsn: data.hsn.present ? data.hsn.value : this.hsn,
       enteredRate: data.enteredRate.present
           ? data.enteredRate.value
@@ -27248,10 +25726,6 @@ class SaleReturnDetailsTableData extends DataClass
           ..write('ledger: $ledger, ')
           ..write('companyId: $companyId, ')
           ..write('sync: $sync, ')
-          ..write('igst: $igst, ')
-          ..write('cgst: $cgst, ')
-          ..write('sgst: $sgst, ')
-          ..write('cess: $cess, ')
           ..write('hsn: $hsn, ')
           ..write('enteredRate: $enteredRate, ')
           ..write('enteredDisc: $enteredDisc, ')
@@ -27292,10 +25766,6 @@ class SaleReturnDetailsTableData extends DataClass
     ledger,
     companyId,
     sync,
-    igst,
-    cgst,
-    sgst,
-    cess,
     hsn,
     enteredRate,
     enteredDisc,
@@ -27335,10 +25805,6 @@ class SaleReturnDetailsTableData extends DataClass
           other.ledger == this.ledger &&
           other.companyId == this.companyId &&
           other.sync == this.sync &&
-          other.igst == this.igst &&
-          other.cgst == this.cgst &&
-          other.sgst == this.sgst &&
-          other.cess == this.cess &&
           other.hsn == this.hsn &&
           other.enteredRate == this.enteredRate &&
           other.enteredDisc == this.enteredDisc &&
@@ -27377,10 +25843,6 @@ class SaleReturnDetailsTableCompanion
   final Value<String?> ledger;
   final Value<int?> companyId;
   final Value<int> sync;
-  final Value<double?> igst;
-  final Value<double?> cgst;
-  final Value<double?> sgst;
-  final Value<double?> cess;
   final Value<String?> hsn;
   final Value<double?> enteredRate;
   final Value<double?> enteredDisc;
@@ -27416,10 +25878,6 @@ class SaleReturnDetailsTableCompanion
     this.ledger = const Value.absent(),
     this.companyId = const Value.absent(),
     this.sync = const Value.absent(),
-    this.igst = const Value.absent(),
-    this.cgst = const Value.absent(),
-    this.sgst = const Value.absent(),
-    this.cess = const Value.absent(),
     this.hsn = const Value.absent(),
     this.enteredRate = const Value.absent(),
     this.enteredDisc = const Value.absent(),
@@ -27456,10 +25914,6 @@ class SaleReturnDetailsTableCompanion
     this.ledger = const Value.absent(),
     this.companyId = const Value.absent(),
     this.sync = const Value.absent(),
-    this.igst = const Value.absent(),
-    this.cgst = const Value.absent(),
-    this.sgst = const Value.absent(),
-    this.cess = const Value.absent(),
     this.hsn = const Value.absent(),
     this.enteredRate = const Value.absent(),
     this.enteredDisc = const Value.absent(),
@@ -27496,10 +25950,6 @@ class SaleReturnDetailsTableCompanion
     Expression<String>? ledger,
     Expression<int>? companyId,
     Expression<int>? sync,
-    Expression<double>? igst,
-    Expression<double>? cgst,
-    Expression<double>? sgst,
-    Expression<double>? cess,
     Expression<String>? hsn,
     Expression<double>? enteredRate,
     Expression<double>? enteredDisc,
@@ -27536,10 +25986,6 @@ class SaleReturnDetailsTableCompanion
       if (ledger != null) 'ledger': ledger,
       if (companyId != null) 'company_id': companyId,
       if (sync != null) 'sync': sync,
-      if (igst != null) 'igst': igst,
-      if (cgst != null) 'cgst': cgst,
-      if (sgst != null) 'sgst': sgst,
-      if (cess != null) 'cess': cess,
       if (hsn != null) 'hsn': hsn,
       if (enteredRate != null) 'entered_rate': enteredRate,
       if (enteredDisc != null) 'entered_disc': enteredDisc,
@@ -27578,10 +26024,6 @@ class SaleReturnDetailsTableCompanion
     Value<String?>? ledger,
     Value<int?>? companyId,
     Value<int>? sync,
-    Value<double?>? igst,
-    Value<double?>? cgst,
-    Value<double?>? sgst,
-    Value<double?>? cess,
     Value<String?>? hsn,
     Value<double?>? enteredRate,
     Value<double?>? enteredDisc,
@@ -27618,10 +26060,6 @@ class SaleReturnDetailsTableCompanion
       ledger: ledger ?? this.ledger,
       companyId: companyId ?? this.companyId,
       sync: sync ?? this.sync,
-      igst: igst ?? this.igst,
-      cgst: cgst ?? this.cgst,
-      sgst: sgst ?? this.sgst,
-      cess: cess ?? this.cess,
       hsn: hsn ?? this.hsn,
       enteredRate: enteredRate ?? this.enteredRate,
       enteredDisc: enteredDisc ?? this.enteredDisc,
@@ -27691,18 +26129,6 @@ class SaleReturnDetailsTableCompanion
     }
     if (sync.present) {
       map['sync'] = Variable<int>(sync.value);
-    }
-    if (igst.present) {
-      map['igst'] = Variable<double>(igst.value);
-    }
-    if (cgst.present) {
-      map['cgst'] = Variable<double>(cgst.value);
-    }
-    if (sgst.present) {
-      map['sgst'] = Variable<double>(sgst.value);
-    }
-    if (cess.present) {
-      map['cess'] = Variable<double>(cess.value);
     }
     if (hsn.present) {
       map['hsn'] = Variable<String>(hsn.value);
@@ -27782,10 +26208,6 @@ class SaleReturnDetailsTableCompanion
           ..write('ledger: $ledger, ')
           ..write('companyId: $companyId, ')
           ..write('sync: $sync, ')
-          ..write('igst: $igst, ')
-          ..write('cgst: $cgst, ')
-          ..write('sgst: $sgst, ')
-          ..write('cess: $cess, ')
           ..write('hsn: $hsn, ')
           ..write('enteredRate: $enteredRate, ')
           ..write('enteredDisc: $enteredDisc, ')
@@ -27899,6 +26321,53 @@ class $SaleReturnLedgerDetailsTableTable extends SaleReturnLedgerDetailsTable
     type: DriftSqlType.int,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _voucherNameMeta = const VerificationMeta(
+    'voucherName',
+  );
+  @override
+  late final GeneratedColumn<String> voucherName = GeneratedColumn<String>(
+    'voucher_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _igstMeta = const VerificationMeta('igst');
+  @override
+  late final GeneratedColumn<double> igst = GeneratedColumn<double>(
+    'igst',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _cgstMeta = const VerificationMeta('cgst');
+  @override
+  late final GeneratedColumn<double> cgst = GeneratedColumn<double>(
+    'cgst',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _sgstMeta = const VerificationMeta('sgst');
+  @override
+  late final GeneratedColumn<double> sgst = GeneratedColumn<double>(
+    'sgst',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _cessMeta = const VerificationMeta('cess');
+  @override
+  late final GeneratedColumn<double> cess = GeneratedColumn<double>(
+    'cess',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -27909,6 +26378,11 @@ class $SaleReturnLedgerDetailsTableTable extends SaleReturnLedgerDetailsTable
     rate,
     amount,
     companyId,
+    voucherName,
+    igst,
+    cgst,
+    sgst,
+    cess,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -27967,6 +26441,39 @@ class $SaleReturnLedgerDetailsTableTable extends SaleReturnLedgerDetailsTable
         companyId.isAcceptableOrUnknown(data['company_id']!, _companyIdMeta),
       );
     }
+    if (data.containsKey('voucher_name')) {
+      context.handle(
+        _voucherNameMeta,
+        voucherName.isAcceptableOrUnknown(
+          data['voucher_name']!,
+          _voucherNameMeta,
+        ),
+      );
+    }
+    if (data.containsKey('igst')) {
+      context.handle(
+        _igstMeta,
+        igst.isAcceptableOrUnknown(data['igst']!, _igstMeta),
+      );
+    }
+    if (data.containsKey('cgst')) {
+      context.handle(
+        _cgstMeta,
+        cgst.isAcceptableOrUnknown(data['cgst']!, _cgstMeta),
+      );
+    }
+    if (data.containsKey('sgst')) {
+      context.handle(
+        _sgstMeta,
+        sgst.isAcceptableOrUnknown(data['sgst']!, _sgstMeta),
+      );
+    }
+    if (data.containsKey('cess')) {
+      context.handle(
+        _cessMeta,
+        cess.isAcceptableOrUnknown(data['cess']!, _cessMeta),
+      );
+    }
     return context;
   }
 
@@ -28011,6 +26518,26 @@ class $SaleReturnLedgerDetailsTableTable extends SaleReturnLedgerDetailsTable
         DriftSqlType.int,
         data['${effectivePrefix}company_id'],
       ),
+      voucherName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}voucher_name'],
+      ),
+      igst: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}igst'],
+      ),
+      cgst: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}cgst'],
+      ),
+      sgst: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}sgst'],
+      ),
+      cess: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}cess'],
+      ),
     );
   }
 
@@ -28030,6 +26557,11 @@ class SaleReturnLedgerDetailsTableData extends DataClass
   final double? rate;
   final double? amount;
   final int? companyId;
+  final String? voucherName;
+  final double? igst;
+  final double? cgst;
+  final double? sgst;
+  final double? cess;
   const SaleReturnLedgerDetailsTableData({
     required this.id,
     this.mid,
@@ -28039,6 +26571,11 @@ class SaleReturnLedgerDetailsTableData extends DataClass
     this.rate,
     this.amount,
     this.companyId,
+    this.voucherName,
+    this.igst,
+    this.cgst,
+    this.sgst,
+    this.cess,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -28063,6 +26600,21 @@ class SaleReturnLedgerDetailsTableData extends DataClass
     if (!nullToAbsent || companyId != null) {
       map['company_id'] = Variable<int>(companyId);
     }
+    if (!nullToAbsent || voucherName != null) {
+      map['voucher_name'] = Variable<String>(voucherName);
+    }
+    if (!nullToAbsent || igst != null) {
+      map['igst'] = Variable<double>(igst);
+    }
+    if (!nullToAbsent || cgst != null) {
+      map['cgst'] = Variable<double>(cgst);
+    }
+    if (!nullToAbsent || sgst != null) {
+      map['sgst'] = Variable<double>(sgst);
+    }
+    if (!nullToAbsent || cess != null) {
+      map['cess'] = Variable<double>(cess);
+    }
     return map;
   }
 
@@ -28084,6 +26636,13 @@ class SaleReturnLedgerDetailsTableData extends DataClass
       companyId: companyId == null && nullToAbsent
           ? const Value.absent()
           : Value(companyId),
+      voucherName: voucherName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(voucherName),
+      igst: igst == null && nullToAbsent ? const Value.absent() : Value(igst),
+      cgst: cgst == null && nullToAbsent ? const Value.absent() : Value(cgst),
+      sgst: sgst == null && nullToAbsent ? const Value.absent() : Value(sgst),
+      cess: cess == null && nullToAbsent ? const Value.absent() : Value(cess),
     );
   }
 
@@ -28101,6 +26660,11 @@ class SaleReturnLedgerDetailsTableData extends DataClass
       rate: serializer.fromJson<double?>(json['rate']),
       amount: serializer.fromJson<double?>(json['amount']),
       companyId: serializer.fromJson<int?>(json['companyId']),
+      voucherName: serializer.fromJson<String?>(json['voucherName']),
+      igst: serializer.fromJson<double?>(json['igst']),
+      cgst: serializer.fromJson<double?>(json['cgst']),
+      sgst: serializer.fromJson<double?>(json['sgst']),
+      cess: serializer.fromJson<double?>(json['cess']),
     );
   }
   @override
@@ -28115,6 +26679,11 @@ class SaleReturnLedgerDetailsTableData extends DataClass
       'rate': serializer.toJson<double?>(rate),
       'amount': serializer.toJson<double?>(amount),
       'companyId': serializer.toJson<int?>(companyId),
+      'voucherName': serializer.toJson<String?>(voucherName),
+      'igst': serializer.toJson<double?>(igst),
+      'cgst': serializer.toJson<double?>(cgst),
+      'sgst': serializer.toJson<double?>(sgst),
+      'cess': serializer.toJson<double?>(cess),
     };
   }
 
@@ -28127,6 +26696,11 @@ class SaleReturnLedgerDetailsTableData extends DataClass
     Value<double?> rate = const Value.absent(),
     Value<double?> amount = const Value.absent(),
     Value<int?> companyId = const Value.absent(),
+    Value<String?> voucherName = const Value.absent(),
+    Value<double?> igst = const Value.absent(),
+    Value<double?> cgst = const Value.absent(),
+    Value<double?> sgst = const Value.absent(),
+    Value<double?> cess = const Value.absent(),
   }) => SaleReturnLedgerDetailsTableData(
     id: id ?? this.id,
     mid: mid.present ? mid.value : this.mid,
@@ -28136,6 +26710,11 @@ class SaleReturnLedgerDetailsTableData extends DataClass
     rate: rate.present ? rate.value : this.rate,
     amount: amount.present ? amount.value : this.amount,
     companyId: companyId.present ? companyId.value : this.companyId,
+    voucherName: voucherName.present ? voucherName.value : this.voucherName,
+    igst: igst.present ? igst.value : this.igst,
+    cgst: cgst.present ? cgst.value : this.cgst,
+    sgst: sgst.present ? sgst.value : this.sgst,
+    cess: cess.present ? cess.value : this.cess,
   );
   SaleReturnLedgerDetailsTableData copyWithCompanion(
     SaleReturnLedgerDetailsTableCompanion data,
@@ -28149,6 +26728,13 @@ class SaleReturnLedgerDetailsTableData extends DataClass
       rate: data.rate.present ? data.rate.value : this.rate,
       amount: data.amount.present ? data.amount.value : this.amount,
       companyId: data.companyId.present ? data.companyId.value : this.companyId,
+      voucherName: data.voucherName.present
+          ? data.voucherName.value
+          : this.voucherName,
+      igst: data.igst.present ? data.igst.value : this.igst,
+      cgst: data.cgst.present ? data.cgst.value : this.cgst,
+      sgst: data.sgst.present ? data.sgst.value : this.sgst,
+      cess: data.cess.present ? data.cess.value : this.cess,
     );
   }
 
@@ -28162,14 +26748,32 @@ class SaleReturnLedgerDetailsTableData extends DataClass
           ..write('ledger: $ledger, ')
           ..write('rate: $rate, ')
           ..write('amount: $amount, ')
-          ..write('companyId: $companyId')
+          ..write('companyId: $companyId, ')
+          ..write('voucherName: $voucherName, ')
+          ..write('igst: $igst, ')
+          ..write('cgst: $cgst, ')
+          ..write('sgst: $sgst, ')
+          ..write('cess: $cess')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, mid, vchId, sync, ledger, rate, amount, companyId);
+  int get hashCode => Object.hash(
+    id,
+    mid,
+    vchId,
+    sync,
+    ledger,
+    rate,
+    amount,
+    companyId,
+    voucherName,
+    igst,
+    cgst,
+    sgst,
+    cess,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -28181,7 +26785,12 @@ class SaleReturnLedgerDetailsTableData extends DataClass
           other.ledger == this.ledger &&
           other.rate == this.rate &&
           other.amount == this.amount &&
-          other.companyId == this.companyId);
+          other.companyId == this.companyId &&
+          other.voucherName == this.voucherName &&
+          other.igst == this.igst &&
+          other.cgst == this.cgst &&
+          other.sgst == this.sgst &&
+          other.cess == this.cess);
 }
 
 class SaleReturnLedgerDetailsTableCompanion
@@ -28194,6 +26803,11 @@ class SaleReturnLedgerDetailsTableCompanion
   final Value<double?> rate;
   final Value<double?> amount;
   final Value<int?> companyId;
+  final Value<String?> voucherName;
+  final Value<double?> igst;
+  final Value<double?> cgst;
+  final Value<double?> sgst;
+  final Value<double?> cess;
   const SaleReturnLedgerDetailsTableCompanion({
     this.id = const Value.absent(),
     this.mid = const Value.absent(),
@@ -28203,6 +26817,11 @@ class SaleReturnLedgerDetailsTableCompanion
     this.rate = const Value.absent(),
     this.amount = const Value.absent(),
     this.companyId = const Value.absent(),
+    this.voucherName = const Value.absent(),
+    this.igst = const Value.absent(),
+    this.cgst = const Value.absent(),
+    this.sgst = const Value.absent(),
+    this.cess = const Value.absent(),
   });
   SaleReturnLedgerDetailsTableCompanion.insert({
     this.id = const Value.absent(),
@@ -28213,6 +26832,11 @@ class SaleReturnLedgerDetailsTableCompanion
     this.rate = const Value.absent(),
     this.amount = const Value.absent(),
     this.companyId = const Value.absent(),
+    this.voucherName = const Value.absent(),
+    this.igst = const Value.absent(),
+    this.cgst = const Value.absent(),
+    this.sgst = const Value.absent(),
+    this.cess = const Value.absent(),
   });
   static Insertable<SaleReturnLedgerDetailsTableData> custom({
     Expression<int>? id,
@@ -28223,6 +26847,11 @@ class SaleReturnLedgerDetailsTableCompanion
     Expression<double>? rate,
     Expression<double>? amount,
     Expression<int>? companyId,
+    Expression<String>? voucherName,
+    Expression<double>? igst,
+    Expression<double>? cgst,
+    Expression<double>? sgst,
+    Expression<double>? cess,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -28233,6 +26862,11 @@ class SaleReturnLedgerDetailsTableCompanion
       if (rate != null) 'rate': rate,
       if (amount != null) 'amount': amount,
       if (companyId != null) 'company_id': companyId,
+      if (voucherName != null) 'voucher_name': voucherName,
+      if (igst != null) 'igst': igst,
+      if (cgst != null) 'cgst': cgst,
+      if (sgst != null) 'sgst': sgst,
+      if (cess != null) 'cess': cess,
     });
   }
 
@@ -28245,6 +26879,11 @@ class SaleReturnLedgerDetailsTableCompanion
     Value<double?>? rate,
     Value<double?>? amount,
     Value<int?>? companyId,
+    Value<String?>? voucherName,
+    Value<double?>? igst,
+    Value<double?>? cgst,
+    Value<double?>? sgst,
+    Value<double?>? cess,
   }) {
     return SaleReturnLedgerDetailsTableCompanion(
       id: id ?? this.id,
@@ -28255,6 +26894,11 @@ class SaleReturnLedgerDetailsTableCompanion
       rate: rate ?? this.rate,
       amount: amount ?? this.amount,
       companyId: companyId ?? this.companyId,
+      voucherName: voucherName ?? this.voucherName,
+      igst: igst ?? this.igst,
+      cgst: cgst ?? this.cgst,
+      sgst: sgst ?? this.sgst,
+      cess: cess ?? this.cess,
     );
   }
 
@@ -28285,6 +26929,21 @@ class SaleReturnLedgerDetailsTableCompanion
     if (companyId.present) {
       map['company_id'] = Variable<int>(companyId.value);
     }
+    if (voucherName.present) {
+      map['voucher_name'] = Variable<String>(voucherName.value);
+    }
+    if (igst.present) {
+      map['igst'] = Variable<double>(igst.value);
+    }
+    if (cgst.present) {
+      map['cgst'] = Variable<double>(cgst.value);
+    }
+    if (sgst.present) {
+      map['sgst'] = Variable<double>(sgst.value);
+    }
+    if (cess.present) {
+      map['cess'] = Variable<double>(cess.value);
+    }
     return map;
   }
 
@@ -28298,7 +26957,12 @@ class SaleReturnLedgerDetailsTableCompanion
           ..write('ledger: $ledger, ')
           ..write('rate: $rate, ')
           ..write('amount: $amount, ')
-          ..write('companyId: $companyId')
+          ..write('companyId: $companyId, ')
+          ..write('voucherName: $voucherName, ')
+          ..write('igst: $igst, ')
+          ..write('cgst: $cgst, ')
+          ..write('sgst: $sgst, ')
+          ..write('cess: $cess')
           ..write(')'))
         .toString();
   }
@@ -36054,15 +34718,9 @@ typedef $$SaleOrderDetailsTableTableCreateCompanionBuilder =
       Value<double?> vat,
       Value<double?> vatAmt,
       Value<double?> total,
-      Value<double?> disc,
-      Value<double?> discVal,
       Value<String?> ledger,
       Value<int?> companyId,
       Value<int> sync,
-      Value<double?> igst,
-      Value<double?> cgst,
-      Value<double?> sgst,
-      Value<double?> cess,
       Value<String?> hsn,
       Value<double?> enteredRate,
       Value<double?> enteredDisc,
@@ -36070,8 +34728,6 @@ typedef $$SaleOrderDetailsTableTableCreateCompanionBuilder =
       Value<String?> enteredFQty,
       Value<double?> fQty,
       Value<double?> addDiscVal,
-      Value<double?> cessAmt,
-      Value<String?> stkNegPermission,
       Value<String?> discType,
       Value<String?> priceList,
       Value<double?> convQty,
@@ -36095,15 +34751,9 @@ typedef $$SaleOrderDetailsTableTableUpdateCompanionBuilder =
       Value<double?> vat,
       Value<double?> vatAmt,
       Value<double?> total,
-      Value<double?> disc,
-      Value<double?> discVal,
       Value<String?> ledger,
       Value<int?> companyId,
       Value<int> sync,
-      Value<double?> igst,
-      Value<double?> cgst,
-      Value<double?> sgst,
-      Value<double?> cess,
       Value<String?> hsn,
       Value<double?> enteredRate,
       Value<double?> enteredDisc,
@@ -36111,8 +34761,6 @@ typedef $$SaleOrderDetailsTableTableUpdateCompanionBuilder =
       Value<String?> enteredFQty,
       Value<double?> fQty,
       Value<double?> addDiscVal,
-      Value<double?> cessAmt,
-      Value<String?> stkNegPermission,
       Value<String?> discType,
       Value<String?> priceList,
       Value<double?> convQty,
@@ -36184,16 +34832,6 @@ class $$SaleOrderDetailsTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<double> get disc => $composableBuilder(
-    column: $table.disc,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get discVal => $composableBuilder(
-    column: $table.discVal,
-    builder: (column) => ColumnFilters(column),
-  );
-
   ColumnFilters<String> get ledger => $composableBuilder(
     column: $table.ledger,
     builder: (column) => ColumnFilters(column),
@@ -36206,26 +34844,6 @@ class $$SaleOrderDetailsTableTableFilterComposer
 
   ColumnFilters<int> get sync => $composableBuilder(
     column: $table.sync,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get igst => $composableBuilder(
-    column: $table.igst,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get cgst => $composableBuilder(
-    column: $table.cgst,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get sgst => $composableBuilder(
-    column: $table.sgst,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get cess => $composableBuilder(
-    column: $table.cess,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -36261,16 +34879,6 @@ class $$SaleOrderDetailsTableTableFilterComposer
 
   ColumnFilters<double> get addDiscVal => $composableBuilder(
     column: $table.addDiscVal,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get cessAmt => $composableBuilder(
-    column: $table.cessAmt,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get stkNegPermission => $composableBuilder(
-    column: $table.stkNegPermission,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -36384,16 +34992,6 @@ class $$SaleOrderDetailsTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<double> get disc => $composableBuilder(
-    column: $table.disc,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get discVal => $composableBuilder(
-    column: $table.discVal,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<String> get ledger => $composableBuilder(
     column: $table.ledger,
     builder: (column) => ColumnOrderings(column),
@@ -36406,26 +35004,6 @@ class $$SaleOrderDetailsTableTableOrderingComposer
 
   ColumnOrderings<int> get sync => $composableBuilder(
     column: $table.sync,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get igst => $composableBuilder(
-    column: $table.igst,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get cgst => $composableBuilder(
-    column: $table.cgst,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get sgst => $composableBuilder(
-    column: $table.sgst,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get cess => $composableBuilder(
-    column: $table.cess,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -36461,16 +35039,6 @@ class $$SaleOrderDetailsTableTableOrderingComposer
 
   ColumnOrderings<double> get addDiscVal => $composableBuilder(
     column: $table.addDiscVal,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get cessAmt => $composableBuilder(
-    column: $table.cessAmt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get stkNegPermission => $composableBuilder(
-    column: $table.stkNegPermission,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -36564,12 +35132,6 @@ class $$SaleOrderDetailsTableTableAnnotationComposer
   GeneratedColumn<double> get total =>
       $composableBuilder(column: $table.total, builder: (column) => column);
 
-  GeneratedColumn<double> get disc =>
-      $composableBuilder(column: $table.disc, builder: (column) => column);
-
-  GeneratedColumn<double> get discVal =>
-      $composableBuilder(column: $table.discVal, builder: (column) => column);
-
   GeneratedColumn<String> get ledger =>
       $composableBuilder(column: $table.ledger, builder: (column) => column);
 
@@ -36578,18 +35140,6 @@ class $$SaleOrderDetailsTableTableAnnotationComposer
 
   GeneratedColumn<int> get sync =>
       $composableBuilder(column: $table.sync, builder: (column) => column);
-
-  GeneratedColumn<double> get igst =>
-      $composableBuilder(column: $table.igst, builder: (column) => column);
-
-  GeneratedColumn<double> get cgst =>
-      $composableBuilder(column: $table.cgst, builder: (column) => column);
-
-  GeneratedColumn<double> get sgst =>
-      $composableBuilder(column: $table.sgst, builder: (column) => column);
-
-  GeneratedColumn<double> get cess =>
-      $composableBuilder(column: $table.cess, builder: (column) => column);
 
   GeneratedColumn<String> get hsn =>
       $composableBuilder(column: $table.hsn, builder: (column) => column);
@@ -36619,14 +35169,6 @@ class $$SaleOrderDetailsTableTableAnnotationComposer
 
   GeneratedColumn<double> get addDiscVal => $composableBuilder(
     column: $table.addDiscVal,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<double> get cessAmt =>
-      $composableBuilder(column: $table.cessAmt, builder: (column) => column);
-
-  GeneratedColumn<String> get stkNegPermission => $composableBuilder(
-    column: $table.stkNegPermission,
     builder: (column) => column,
   );
 
@@ -36719,15 +35261,9 @@ class $$SaleOrderDetailsTableTableTableManager
                 Value<double?> vat = const Value.absent(),
                 Value<double?> vatAmt = const Value.absent(),
                 Value<double?> total = const Value.absent(),
-                Value<double?> disc = const Value.absent(),
-                Value<double?> discVal = const Value.absent(),
                 Value<String?> ledger = const Value.absent(),
                 Value<int?> companyId = const Value.absent(),
                 Value<int> sync = const Value.absent(),
-                Value<double?> igst = const Value.absent(),
-                Value<double?> cgst = const Value.absent(),
-                Value<double?> sgst = const Value.absent(),
-                Value<double?> cess = const Value.absent(),
                 Value<String?> hsn = const Value.absent(),
                 Value<double?> enteredRate = const Value.absent(),
                 Value<double?> enteredDisc = const Value.absent(),
@@ -36735,8 +35271,6 @@ class $$SaleOrderDetailsTableTableTableManager
                 Value<String?> enteredFQty = const Value.absent(),
                 Value<double?> fQty = const Value.absent(),
                 Value<double?> addDiscVal = const Value.absent(),
-                Value<double?> cessAmt = const Value.absent(),
-                Value<String?> stkNegPermission = const Value.absent(),
                 Value<String?> discType = const Value.absent(),
                 Value<String?> priceList = const Value.absent(),
                 Value<double?> convQty = const Value.absent(),
@@ -36758,15 +35292,9 @@ class $$SaleOrderDetailsTableTableTableManager
                 vat: vat,
                 vatAmt: vatAmt,
                 total: total,
-                disc: disc,
-                discVal: discVal,
                 ledger: ledger,
                 companyId: companyId,
                 sync: sync,
-                igst: igst,
-                cgst: cgst,
-                sgst: sgst,
-                cess: cess,
                 hsn: hsn,
                 enteredRate: enteredRate,
                 enteredDisc: enteredDisc,
@@ -36774,8 +35302,6 @@ class $$SaleOrderDetailsTableTableTableManager
                 enteredFQty: enteredFQty,
                 fQty: fQty,
                 addDiscVal: addDiscVal,
-                cessAmt: cessAmt,
-                stkNegPermission: stkNegPermission,
                 discType: discType,
                 priceList: priceList,
                 convQty: convQty,
@@ -36799,15 +35325,9 @@ class $$SaleOrderDetailsTableTableTableManager
                 Value<double?> vat = const Value.absent(),
                 Value<double?> vatAmt = const Value.absent(),
                 Value<double?> total = const Value.absent(),
-                Value<double?> disc = const Value.absent(),
-                Value<double?> discVal = const Value.absent(),
                 Value<String?> ledger = const Value.absent(),
                 Value<int?> companyId = const Value.absent(),
                 Value<int> sync = const Value.absent(),
-                Value<double?> igst = const Value.absent(),
-                Value<double?> cgst = const Value.absent(),
-                Value<double?> sgst = const Value.absent(),
-                Value<double?> cess = const Value.absent(),
                 Value<String?> hsn = const Value.absent(),
                 Value<double?> enteredRate = const Value.absent(),
                 Value<double?> enteredDisc = const Value.absent(),
@@ -36815,8 +35335,6 @@ class $$SaleOrderDetailsTableTableTableManager
                 Value<String?> enteredFQty = const Value.absent(),
                 Value<double?> fQty = const Value.absent(),
                 Value<double?> addDiscVal = const Value.absent(),
-                Value<double?> cessAmt = const Value.absent(),
-                Value<String?> stkNegPermission = const Value.absent(),
                 Value<String?> discType = const Value.absent(),
                 Value<String?> priceList = const Value.absent(),
                 Value<double?> convQty = const Value.absent(),
@@ -36838,15 +35356,9 @@ class $$SaleOrderDetailsTableTableTableManager
                 vat: vat,
                 vatAmt: vatAmt,
                 total: total,
-                disc: disc,
-                discVal: discVal,
                 ledger: ledger,
                 companyId: companyId,
                 sync: sync,
-                igst: igst,
-                cgst: cgst,
-                sgst: sgst,
-                cess: cess,
                 hsn: hsn,
                 enteredRate: enteredRate,
                 enteredDisc: enteredDisc,
@@ -36854,8 +35366,6 @@ class $$SaleOrderDetailsTableTableTableManager
                 enteredFQty: enteredFQty,
                 fQty: fQty,
                 addDiscVal: addDiscVal,
-                cessAmt: cessAmt,
-                stkNegPermission: stkNegPermission,
                 discType: discType,
                 priceList: priceList,
                 convQty: convQty,
@@ -36902,10 +35412,10 @@ typedef $$SaleOrderLedgerDetailsTableTableCreateCompanionBuilder =
       Value<int?> mid,
       Value<int?> vchId,
       Value<int> sync,
-      Value<String?> ledger,
       Value<double?> rate,
       Value<double?> amount,
       Value<int?> companyId,
+      Value<String?> voucherName,
     });
 typedef $$SaleOrderLedgerDetailsTableTableUpdateCompanionBuilder =
     SaleOrderLedgerDetailsTableCompanion Function({
@@ -36913,10 +35423,10 @@ typedef $$SaleOrderLedgerDetailsTableTableUpdateCompanionBuilder =
       Value<int?> mid,
       Value<int?> vchId,
       Value<int> sync,
-      Value<String?> ledger,
       Value<double?> rate,
       Value<double?> amount,
       Value<int?> companyId,
+      Value<String?> voucherName,
     });
 
 class $$SaleOrderLedgerDetailsTableTableFilterComposer
@@ -36948,11 +35458,6 @@ class $$SaleOrderLedgerDetailsTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get ledger => $composableBuilder(
-    column: $table.ledger,
-    builder: (column) => ColumnFilters(column),
-  );
-
   ColumnFilters<double> get rate => $composableBuilder(
     column: $table.rate,
     builder: (column) => ColumnFilters(column),
@@ -36965,6 +35470,11 @@ class $$SaleOrderLedgerDetailsTableTableFilterComposer
 
   ColumnFilters<int> get companyId => $composableBuilder(
     column: $table.companyId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get voucherName => $composableBuilder(
+    column: $table.voucherName,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -36998,11 +35508,6 @@ class $$SaleOrderLedgerDetailsTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get ledger => $composableBuilder(
-    column: $table.ledger,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<double> get rate => $composableBuilder(
     column: $table.rate,
     builder: (column) => ColumnOrderings(column),
@@ -37015,6 +35520,11 @@ class $$SaleOrderLedgerDetailsTableTableOrderingComposer
 
   ColumnOrderings<int> get companyId => $composableBuilder(
     column: $table.companyId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get voucherName => $composableBuilder(
+    column: $table.voucherName,
     builder: (column) => ColumnOrderings(column),
   );
 }
@@ -37040,9 +35550,6 @@ class $$SaleOrderLedgerDetailsTableTableAnnotationComposer
   GeneratedColumn<int> get sync =>
       $composableBuilder(column: $table.sync, builder: (column) => column);
 
-  GeneratedColumn<String> get ledger =>
-      $composableBuilder(column: $table.ledger, builder: (column) => column);
-
   GeneratedColumn<double> get rate =>
       $composableBuilder(column: $table.rate, builder: (column) => column);
 
@@ -37051,6 +35558,11 @@ class $$SaleOrderLedgerDetailsTableTableAnnotationComposer
 
   GeneratedColumn<int> get companyId =>
       $composableBuilder(column: $table.companyId, builder: (column) => column);
+
+  GeneratedColumn<String> get voucherName => $composableBuilder(
+    column: $table.voucherName,
+    builder: (column) => column,
+  );
 }
 
 class $$SaleOrderLedgerDetailsTableTableTableManager
@@ -37103,19 +35615,19 @@ class $$SaleOrderLedgerDetailsTableTableTableManager
                 Value<int?> mid = const Value.absent(),
                 Value<int?> vchId = const Value.absent(),
                 Value<int> sync = const Value.absent(),
-                Value<String?> ledger = const Value.absent(),
                 Value<double?> rate = const Value.absent(),
                 Value<double?> amount = const Value.absent(),
                 Value<int?> companyId = const Value.absent(),
+                Value<String?> voucherName = const Value.absent(),
               }) => SaleOrderLedgerDetailsTableCompanion(
                 id: id,
                 mid: mid,
                 vchId: vchId,
                 sync: sync,
-                ledger: ledger,
                 rate: rate,
                 amount: amount,
                 companyId: companyId,
+                voucherName: voucherName,
               ),
           createCompanionCallback:
               ({
@@ -37123,19 +35635,19 @@ class $$SaleOrderLedgerDetailsTableTableTableManager
                 Value<int?> mid = const Value.absent(),
                 Value<int?> vchId = const Value.absent(),
                 Value<int> sync = const Value.absent(),
-                Value<String?> ledger = const Value.absent(),
                 Value<double?> rate = const Value.absent(),
                 Value<double?> amount = const Value.absent(),
                 Value<int?> companyId = const Value.absent(),
+                Value<String?> voucherName = const Value.absent(),
               }) => SaleOrderLedgerDetailsTableCompanion.insert(
                 id: id,
                 mid: mid,
                 vchId: vchId,
                 sync: sync,
-                ledger: ledger,
                 rate: rate,
                 amount: amount,
                 companyId: companyId,
+                voucherName: voucherName,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
@@ -37180,7 +35692,6 @@ typedef $$SaleOrderMasterTableTableCreateCompanionBuilder =
       Value<String?> mob,
       Value<String?> voucherDate,
       required double voucherAmount,
-      Value<int?> status,
       Value<String?> priceList,
       Value<String?> narration,
       Value<double?> lattitude,
@@ -37191,23 +35702,17 @@ typedef $$SaleOrderMasterTableTableCreateCompanionBuilder =
       Value<int?> itemCount,
       Value<String?> gstin,
       Value<String?> state,
-      Value<String?> partyParent,
-      Value<String?> addDiscType,
       Value<double?> addDiscEntered,
       Value<String?> prefix,
       Value<String?> suffix,
-      Value<String?> voucherNumber,
       Value<String?> vchType,
       Value<int?> invNo,
       Value<String?> godown,
       Value<int?> tripId,
       Value<int?> visitId,
-      Value<int?> stockStatus,
-      Value<int?> finId,
       Value<DateTime?> createdTime,
       Value<DateTime?> updatedTime,
       Value<String?> deliveryDate,
-      Value<int?> printCount,
       Value<int> sync,
       Value<String?> pinCode,
       Value<int?> uploadedServerId,
@@ -37227,7 +35732,6 @@ typedef $$SaleOrderMasterTableTableUpdateCompanionBuilder =
       Value<String?> mob,
       Value<String?> voucherDate,
       Value<double> voucherAmount,
-      Value<int?> status,
       Value<String?> priceList,
       Value<String?> narration,
       Value<double?> lattitude,
@@ -37238,23 +35742,17 @@ typedef $$SaleOrderMasterTableTableUpdateCompanionBuilder =
       Value<int?> itemCount,
       Value<String?> gstin,
       Value<String?> state,
-      Value<String?> partyParent,
-      Value<String?> addDiscType,
       Value<double?> addDiscEntered,
       Value<String?> prefix,
       Value<String?> suffix,
-      Value<String?> voucherNumber,
       Value<String?> vchType,
       Value<int?> invNo,
       Value<String?> godown,
       Value<int?> tripId,
       Value<int?> visitId,
-      Value<int?> stockStatus,
-      Value<int?> finId,
       Value<DateTime?> createdTime,
       Value<DateTime?> updatedTime,
       Value<String?> deliveryDate,
-      Value<int?> printCount,
       Value<int> sync,
       Value<String?> pinCode,
       Value<int?> uploadedServerId,
@@ -37330,11 +35828,6 @@ class $$SaleOrderMasterTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get status => $composableBuilder(
-    column: $table.status,
-    builder: (column) => ColumnFilters(column),
-  );
-
   ColumnFilters<String> get priceList => $composableBuilder(
     column: $table.priceList,
     builder: (column) => ColumnFilters(column),
@@ -37385,16 +35878,6 @@ class $$SaleOrderMasterTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get partyParent => $composableBuilder(
-    column: $table.partyParent,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get addDiscType => $composableBuilder(
-    column: $table.addDiscType,
-    builder: (column) => ColumnFilters(column),
-  );
-
   ColumnFilters<double> get addDiscEntered => $composableBuilder(
     column: $table.addDiscEntered,
     builder: (column) => ColumnFilters(column),
@@ -37407,11 +35890,6 @@ class $$SaleOrderMasterTableTableFilterComposer
 
   ColumnFilters<String> get suffix => $composableBuilder(
     column: $table.suffix,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get voucherNumber => $composableBuilder(
-    column: $table.voucherNumber,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -37440,16 +35918,6 @@ class $$SaleOrderMasterTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get stockStatus => $composableBuilder(
-    column: $table.stockStatus,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get finId => $composableBuilder(
-    column: $table.finId,
-    builder: (column) => ColumnFilters(column),
-  );
-
   ColumnFilters<DateTime> get createdTime => $composableBuilder(
     column: $table.createdTime,
     builder: (column) => ColumnFilters(column),
@@ -37462,11 +35930,6 @@ class $$SaleOrderMasterTableTableFilterComposer
 
   ColumnFilters<String> get deliveryDate => $composableBuilder(
     column: $table.deliveryDate,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get printCount => $composableBuilder(
-    column: $table.printCount,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -37560,11 +36023,6 @@ class $$SaleOrderMasterTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get status => $composableBuilder(
-    column: $table.status,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<String> get priceList => $composableBuilder(
     column: $table.priceList,
     builder: (column) => ColumnOrderings(column),
@@ -37615,16 +36073,6 @@ class $$SaleOrderMasterTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get partyParent => $composableBuilder(
-    column: $table.partyParent,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get addDiscType => $composableBuilder(
-    column: $table.addDiscType,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<double> get addDiscEntered => $composableBuilder(
     column: $table.addDiscEntered,
     builder: (column) => ColumnOrderings(column),
@@ -37637,11 +36085,6 @@ class $$SaleOrderMasterTableTableOrderingComposer
 
   ColumnOrderings<String> get suffix => $composableBuilder(
     column: $table.suffix,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get voucherNumber => $composableBuilder(
-    column: $table.voucherNumber,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -37670,16 +36113,6 @@ class $$SaleOrderMasterTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get stockStatus => $composableBuilder(
-    column: $table.stockStatus,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get finId => $composableBuilder(
-    column: $table.finId,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<DateTime> get createdTime => $composableBuilder(
     column: $table.createdTime,
     builder: (column) => ColumnOrderings(column),
@@ -37692,11 +36125,6 @@ class $$SaleOrderMasterTableTableOrderingComposer
 
   ColumnOrderings<String> get deliveryDate => $composableBuilder(
     column: $table.deliveryDate,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get printCount => $composableBuilder(
-    column: $table.printCount,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -37772,9 +36200,6 @@ class $$SaleOrderMasterTableTableAnnotationComposer
     builder: (column) => column,
   );
 
-  GeneratedColumn<int> get status =>
-      $composableBuilder(column: $table.status, builder: (column) => column);
-
   GeneratedColumn<String> get priceList =>
       $composableBuilder(column: $table.priceList, builder: (column) => column);
 
@@ -37805,16 +36230,6 @@ class $$SaleOrderMasterTableTableAnnotationComposer
   GeneratedColumn<String> get state =>
       $composableBuilder(column: $table.state, builder: (column) => column);
 
-  GeneratedColumn<String> get partyParent => $composableBuilder(
-    column: $table.partyParent,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get addDiscType => $composableBuilder(
-    column: $table.addDiscType,
-    builder: (column) => column,
-  );
-
   GeneratedColumn<double> get addDiscEntered => $composableBuilder(
     column: $table.addDiscEntered,
     builder: (column) => column,
@@ -37825,11 +36240,6 @@ class $$SaleOrderMasterTableTableAnnotationComposer
 
   GeneratedColumn<String> get suffix =>
       $composableBuilder(column: $table.suffix, builder: (column) => column);
-
-  GeneratedColumn<String> get voucherNumber => $composableBuilder(
-    column: $table.voucherNumber,
-    builder: (column) => column,
-  );
 
   GeneratedColumn<String> get vchType =>
       $composableBuilder(column: $table.vchType, builder: (column) => column);
@@ -37846,14 +36256,6 @@ class $$SaleOrderMasterTableTableAnnotationComposer
   GeneratedColumn<int> get visitId =>
       $composableBuilder(column: $table.visitId, builder: (column) => column);
 
-  GeneratedColumn<int> get stockStatus => $composableBuilder(
-    column: $table.stockStatus,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<int> get finId =>
-      $composableBuilder(column: $table.finId, builder: (column) => column);
-
   GeneratedColumn<DateTime> get createdTime => $composableBuilder(
     column: $table.createdTime,
     builder: (column) => column,
@@ -37866,11 +36268,6 @@ class $$SaleOrderMasterTableTableAnnotationComposer
 
   GeneratedColumn<String> get deliveryDate => $composableBuilder(
     column: $table.deliveryDate,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<int> get printCount => $composableBuilder(
-    column: $table.printCount,
     builder: (column) => column,
   );
 
@@ -37946,7 +36343,6 @@ class $$SaleOrderMasterTableTableTableManager
                 Value<String?> mob = const Value.absent(),
                 Value<String?> voucherDate = const Value.absent(),
                 Value<double> voucherAmount = const Value.absent(),
-                Value<int?> status = const Value.absent(),
                 Value<String?> priceList = const Value.absent(),
                 Value<String?> narration = const Value.absent(),
                 Value<double?> lattitude = const Value.absent(),
@@ -37957,23 +36353,17 @@ class $$SaleOrderMasterTableTableTableManager
                 Value<int?> itemCount = const Value.absent(),
                 Value<String?> gstin = const Value.absent(),
                 Value<String?> state = const Value.absent(),
-                Value<String?> partyParent = const Value.absent(),
-                Value<String?> addDiscType = const Value.absent(),
                 Value<double?> addDiscEntered = const Value.absent(),
                 Value<String?> prefix = const Value.absent(),
                 Value<String?> suffix = const Value.absent(),
-                Value<String?> voucherNumber = const Value.absent(),
                 Value<String?> vchType = const Value.absent(),
                 Value<int?> invNo = const Value.absent(),
                 Value<String?> godown = const Value.absent(),
                 Value<int?> tripId = const Value.absent(),
                 Value<int?> visitId = const Value.absent(),
-                Value<int?> stockStatus = const Value.absent(),
-                Value<int?> finId = const Value.absent(),
                 Value<DateTime?> createdTime = const Value.absent(),
                 Value<DateTime?> updatedTime = const Value.absent(),
                 Value<String?> deliveryDate = const Value.absent(),
-                Value<int?> printCount = const Value.absent(),
                 Value<int> sync = const Value.absent(),
                 Value<String?> pinCode = const Value.absent(),
                 Value<int?> uploadedServerId = const Value.absent(),
@@ -37991,7 +36381,6 @@ class $$SaleOrderMasterTableTableTableManager
                 mob: mob,
                 voucherDate: voucherDate,
                 voucherAmount: voucherAmount,
-                status: status,
                 priceList: priceList,
                 narration: narration,
                 lattitude: lattitude,
@@ -38002,23 +36391,17 @@ class $$SaleOrderMasterTableTableTableManager
                 itemCount: itemCount,
                 gstin: gstin,
                 state: state,
-                partyParent: partyParent,
-                addDiscType: addDiscType,
                 addDiscEntered: addDiscEntered,
                 prefix: prefix,
                 suffix: suffix,
-                voucherNumber: voucherNumber,
                 vchType: vchType,
                 invNo: invNo,
                 godown: godown,
                 tripId: tripId,
                 visitId: visitId,
-                stockStatus: stockStatus,
-                finId: finId,
                 createdTime: createdTime,
                 updatedTime: updatedTime,
                 deliveryDate: deliveryDate,
-                printCount: printCount,
                 sync: sync,
                 pinCode: pinCode,
                 uploadedServerId: uploadedServerId,
@@ -38038,7 +36421,6 @@ class $$SaleOrderMasterTableTableTableManager
                 Value<String?> mob = const Value.absent(),
                 Value<String?> voucherDate = const Value.absent(),
                 required double voucherAmount,
-                Value<int?> status = const Value.absent(),
                 Value<String?> priceList = const Value.absent(),
                 Value<String?> narration = const Value.absent(),
                 Value<double?> lattitude = const Value.absent(),
@@ -38049,23 +36431,17 @@ class $$SaleOrderMasterTableTableTableManager
                 Value<int?> itemCount = const Value.absent(),
                 Value<String?> gstin = const Value.absent(),
                 Value<String?> state = const Value.absent(),
-                Value<String?> partyParent = const Value.absent(),
-                Value<String?> addDiscType = const Value.absent(),
                 Value<double?> addDiscEntered = const Value.absent(),
                 Value<String?> prefix = const Value.absent(),
                 Value<String?> suffix = const Value.absent(),
-                Value<String?> voucherNumber = const Value.absent(),
                 Value<String?> vchType = const Value.absent(),
                 Value<int?> invNo = const Value.absent(),
                 Value<String?> godown = const Value.absent(),
                 Value<int?> tripId = const Value.absent(),
                 Value<int?> visitId = const Value.absent(),
-                Value<int?> stockStatus = const Value.absent(),
-                Value<int?> finId = const Value.absent(),
                 Value<DateTime?> createdTime = const Value.absent(),
                 Value<DateTime?> updatedTime = const Value.absent(),
                 Value<String?> deliveryDate = const Value.absent(),
-                Value<int?> printCount = const Value.absent(),
                 Value<int> sync = const Value.absent(),
                 Value<String?> pinCode = const Value.absent(),
                 Value<int?> uploadedServerId = const Value.absent(),
@@ -38083,7 +36459,6 @@ class $$SaleOrderMasterTableTableTableManager
                 mob: mob,
                 voucherDate: voucherDate,
                 voucherAmount: voucherAmount,
-                status: status,
                 priceList: priceList,
                 narration: narration,
                 lattitude: lattitude,
@@ -38094,23 +36469,17 @@ class $$SaleOrderMasterTableTableTableManager
                 itemCount: itemCount,
                 gstin: gstin,
                 state: state,
-                partyParent: partyParent,
-                addDiscType: addDiscType,
                 addDiscEntered: addDiscEntered,
                 prefix: prefix,
                 suffix: suffix,
-                voucherNumber: voucherNumber,
                 vchType: vchType,
                 invNo: invNo,
                 godown: godown,
                 tripId: tripId,
                 visitId: visitId,
-                stockStatus: stockStatus,
-                finId: finId,
                 createdTime: createdTime,
                 updatedTime: updatedTime,
                 deliveryDate: deliveryDate,
-                printCount: printCount,
                 sync: sync,
                 pinCode: pinCode,
                 uploadedServerId: uploadedServerId,
@@ -38158,7 +36527,6 @@ typedef $$SaleMasterTableTableCreateCompanionBuilder =
       Value<String?> mob,
       Value<String?> voucherDate,
       required double voucherAmount,
-      Value<int?> status,
       Value<String?> priceList,
       Value<String?> narration,
       Value<double?> lattitude,
@@ -38169,32 +36537,22 @@ typedef $$SaleMasterTableTableCreateCompanionBuilder =
       Value<int?> itemCount,
       Value<String?> gstin,
       Value<String?> state,
-      Value<String?> partyParent,
-      Value<String?> addDiscType,
       Value<double?> addDiscEntered,
       Value<String?> prefix,
       Value<String?> suffix,
-      Value<String?> voucherNumber,
       Value<String?> vchType,
       Value<int?> invNo,
       Value<String?> godown,
       Value<int?> tripId,
       Value<int?> visitId,
-      Value<int?> stockStatus,
-      Value<int?> finId,
       Value<String?> createdTime,
       Value<String?> updatedTime,
       Value<String?> deliveryDate,
-      Value<int?> printCount,
       Value<int> sync,
       Value<String?> pinCode,
       Value<int?> uploadedServerId,
       Value<String?> mailingName,
       Value<String> billingMode,
-      Value<String?> discountType,
-      Value<double?> discountAmount,
-      Value<double?> amount,
-      Value<double?> coupontdiscountamount,
     });
 typedef $$SaleMasterTableTableUpdateCompanionBuilder =
     SaleMasterTableCompanion Function({
@@ -38209,7 +36567,6 @@ typedef $$SaleMasterTableTableUpdateCompanionBuilder =
       Value<String?> mob,
       Value<String?> voucherDate,
       Value<double> voucherAmount,
-      Value<int?> status,
       Value<String?> priceList,
       Value<String?> narration,
       Value<double?> lattitude,
@@ -38220,32 +36577,22 @@ typedef $$SaleMasterTableTableUpdateCompanionBuilder =
       Value<int?> itemCount,
       Value<String?> gstin,
       Value<String?> state,
-      Value<String?> partyParent,
-      Value<String?> addDiscType,
       Value<double?> addDiscEntered,
       Value<String?> prefix,
       Value<String?> suffix,
-      Value<String?> voucherNumber,
       Value<String?> vchType,
       Value<int?> invNo,
       Value<String?> godown,
       Value<int?> tripId,
       Value<int?> visitId,
-      Value<int?> stockStatus,
-      Value<int?> finId,
       Value<String?> createdTime,
       Value<String?> updatedTime,
       Value<String?> deliveryDate,
-      Value<int?> printCount,
       Value<int> sync,
       Value<String?> pinCode,
       Value<int?> uploadedServerId,
       Value<String?> mailingName,
       Value<String> billingMode,
-      Value<String?> discountType,
-      Value<double?> discountAmount,
-      Value<double?> amount,
-      Value<double?> coupontdiscountamount,
     });
 
 class $$SaleMasterTableTableFilterComposer
@@ -38312,11 +36659,6 @@ class $$SaleMasterTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get status => $composableBuilder(
-    column: $table.status,
-    builder: (column) => ColumnFilters(column),
-  );
-
   ColumnFilters<String> get priceList => $composableBuilder(
     column: $table.priceList,
     builder: (column) => ColumnFilters(column),
@@ -38367,16 +36709,6 @@ class $$SaleMasterTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get partyParent => $composableBuilder(
-    column: $table.partyParent,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get addDiscType => $composableBuilder(
-    column: $table.addDiscType,
-    builder: (column) => ColumnFilters(column),
-  );
-
   ColumnFilters<double> get addDiscEntered => $composableBuilder(
     column: $table.addDiscEntered,
     builder: (column) => ColumnFilters(column),
@@ -38389,11 +36721,6 @@ class $$SaleMasterTableTableFilterComposer
 
   ColumnFilters<String> get suffix => $composableBuilder(
     column: $table.suffix,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get voucherNumber => $composableBuilder(
-    column: $table.voucherNumber,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -38422,16 +36749,6 @@ class $$SaleMasterTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get stockStatus => $composableBuilder(
-    column: $table.stockStatus,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get finId => $composableBuilder(
-    column: $table.finId,
-    builder: (column) => ColumnFilters(column),
-  );
-
   ColumnFilters<String> get createdTime => $composableBuilder(
     column: $table.createdTime,
     builder: (column) => ColumnFilters(column),
@@ -38444,11 +36761,6 @@ class $$SaleMasterTableTableFilterComposer
 
   ColumnFilters<String> get deliveryDate => $composableBuilder(
     column: $table.deliveryDate,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get printCount => $composableBuilder(
-    column: $table.printCount,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -38474,26 +36786,6 @@ class $$SaleMasterTableTableFilterComposer
 
   ColumnFilters<String> get billingMode => $composableBuilder(
     column: $table.billingMode,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get discountType => $composableBuilder(
-    column: $table.discountType,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get discountAmount => $composableBuilder(
-    column: $table.discountAmount,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get amount => $composableBuilder(
-    column: $table.amount,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get coupontdiscountamount => $composableBuilder(
-    column: $table.coupontdiscountamount,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -38562,11 +36854,6 @@ class $$SaleMasterTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get status => $composableBuilder(
-    column: $table.status,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<String> get priceList => $composableBuilder(
     column: $table.priceList,
     builder: (column) => ColumnOrderings(column),
@@ -38617,16 +36904,6 @@ class $$SaleMasterTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get partyParent => $composableBuilder(
-    column: $table.partyParent,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get addDiscType => $composableBuilder(
-    column: $table.addDiscType,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<double> get addDiscEntered => $composableBuilder(
     column: $table.addDiscEntered,
     builder: (column) => ColumnOrderings(column),
@@ -38639,11 +36916,6 @@ class $$SaleMasterTableTableOrderingComposer
 
   ColumnOrderings<String> get suffix => $composableBuilder(
     column: $table.suffix,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get voucherNumber => $composableBuilder(
-    column: $table.voucherNumber,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -38672,16 +36944,6 @@ class $$SaleMasterTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get stockStatus => $composableBuilder(
-    column: $table.stockStatus,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get finId => $composableBuilder(
-    column: $table.finId,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<String> get createdTime => $composableBuilder(
     column: $table.createdTime,
     builder: (column) => ColumnOrderings(column),
@@ -38694,11 +36956,6 @@ class $$SaleMasterTableTableOrderingComposer
 
   ColumnOrderings<String> get deliveryDate => $composableBuilder(
     column: $table.deliveryDate,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get printCount => $composableBuilder(
-    column: $table.printCount,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -38724,26 +36981,6 @@ class $$SaleMasterTableTableOrderingComposer
 
   ColumnOrderings<String> get billingMode => $composableBuilder(
     column: $table.billingMode,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get discountType => $composableBuilder(
-    column: $table.discountType,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get discountAmount => $composableBuilder(
-    column: $table.discountAmount,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get amount => $composableBuilder(
-    column: $table.amount,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get coupontdiscountamount => $composableBuilder(
-    column: $table.coupontdiscountamount,
     builder: (column) => ColumnOrderings(column),
   );
 }
@@ -38794,9 +37031,6 @@ class $$SaleMasterTableTableAnnotationComposer
     builder: (column) => column,
   );
 
-  GeneratedColumn<int> get status =>
-      $composableBuilder(column: $table.status, builder: (column) => column);
-
   GeneratedColumn<String> get priceList =>
       $composableBuilder(column: $table.priceList, builder: (column) => column);
 
@@ -38827,16 +37061,6 @@ class $$SaleMasterTableTableAnnotationComposer
   GeneratedColumn<String> get state =>
       $composableBuilder(column: $table.state, builder: (column) => column);
 
-  GeneratedColumn<String> get partyParent => $composableBuilder(
-    column: $table.partyParent,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get addDiscType => $composableBuilder(
-    column: $table.addDiscType,
-    builder: (column) => column,
-  );
-
   GeneratedColumn<double> get addDiscEntered => $composableBuilder(
     column: $table.addDiscEntered,
     builder: (column) => column,
@@ -38847,11 +37071,6 @@ class $$SaleMasterTableTableAnnotationComposer
 
   GeneratedColumn<String> get suffix =>
       $composableBuilder(column: $table.suffix, builder: (column) => column);
-
-  GeneratedColumn<String> get voucherNumber => $composableBuilder(
-    column: $table.voucherNumber,
-    builder: (column) => column,
-  );
 
   GeneratedColumn<String> get vchType =>
       $composableBuilder(column: $table.vchType, builder: (column) => column);
@@ -38868,14 +37087,6 @@ class $$SaleMasterTableTableAnnotationComposer
   GeneratedColumn<int> get visitId =>
       $composableBuilder(column: $table.visitId, builder: (column) => column);
 
-  GeneratedColumn<int> get stockStatus => $composableBuilder(
-    column: $table.stockStatus,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<int> get finId =>
-      $composableBuilder(column: $table.finId, builder: (column) => column);
-
   GeneratedColumn<String> get createdTime => $composableBuilder(
     column: $table.createdTime,
     builder: (column) => column,
@@ -38888,11 +37099,6 @@ class $$SaleMasterTableTableAnnotationComposer
 
   GeneratedColumn<String> get deliveryDate => $composableBuilder(
     column: $table.deliveryDate,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<int> get printCount => $composableBuilder(
-    column: $table.printCount,
     builder: (column) => column,
   );
 
@@ -38914,24 +37120,6 @@ class $$SaleMasterTableTableAnnotationComposer
 
   GeneratedColumn<String> get billingMode => $composableBuilder(
     column: $table.billingMode,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get discountType => $composableBuilder(
-    column: $table.discountType,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<double> get discountAmount => $composableBuilder(
-    column: $table.discountAmount,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<double> get amount =>
-      $composableBuilder(column: $table.amount, builder: (column) => column);
-
-  GeneratedColumn<double> get coupontdiscountamount => $composableBuilder(
-    column: $table.coupontdiscountamount,
     builder: (column) => column,
   );
 }
@@ -38978,7 +37166,6 @@ class $$SaleMasterTableTableTableManager
                 Value<String?> mob = const Value.absent(),
                 Value<String?> voucherDate = const Value.absent(),
                 Value<double> voucherAmount = const Value.absent(),
-                Value<int?> status = const Value.absent(),
                 Value<String?> priceList = const Value.absent(),
                 Value<String?> narration = const Value.absent(),
                 Value<double?> lattitude = const Value.absent(),
@@ -38989,32 +37176,22 @@ class $$SaleMasterTableTableTableManager
                 Value<int?> itemCount = const Value.absent(),
                 Value<String?> gstin = const Value.absent(),
                 Value<String?> state = const Value.absent(),
-                Value<String?> partyParent = const Value.absent(),
-                Value<String?> addDiscType = const Value.absent(),
                 Value<double?> addDiscEntered = const Value.absent(),
                 Value<String?> prefix = const Value.absent(),
                 Value<String?> suffix = const Value.absent(),
-                Value<String?> voucherNumber = const Value.absent(),
                 Value<String?> vchType = const Value.absent(),
                 Value<int?> invNo = const Value.absent(),
                 Value<String?> godown = const Value.absent(),
                 Value<int?> tripId = const Value.absent(),
                 Value<int?> visitId = const Value.absent(),
-                Value<int?> stockStatus = const Value.absent(),
-                Value<int?> finId = const Value.absent(),
                 Value<String?> createdTime = const Value.absent(),
                 Value<String?> updatedTime = const Value.absent(),
                 Value<String?> deliveryDate = const Value.absent(),
-                Value<int?> printCount = const Value.absent(),
                 Value<int> sync = const Value.absent(),
                 Value<String?> pinCode = const Value.absent(),
                 Value<int?> uploadedServerId = const Value.absent(),
                 Value<String?> mailingName = const Value.absent(),
                 Value<String> billingMode = const Value.absent(),
-                Value<String?> discountType = const Value.absent(),
-                Value<double?> discountAmount = const Value.absent(),
-                Value<double?> amount = const Value.absent(),
-                Value<double?> coupontdiscountamount = const Value.absent(),
               }) => SaleMasterTableCompanion(
                 id: id,
                 vchId: vchId,
@@ -39027,7 +37204,6 @@ class $$SaleMasterTableTableTableManager
                 mob: mob,
                 voucherDate: voucherDate,
                 voucherAmount: voucherAmount,
-                status: status,
                 priceList: priceList,
                 narration: narration,
                 lattitude: lattitude,
@@ -39038,32 +37214,22 @@ class $$SaleMasterTableTableTableManager
                 itemCount: itemCount,
                 gstin: gstin,
                 state: state,
-                partyParent: partyParent,
-                addDiscType: addDiscType,
                 addDiscEntered: addDiscEntered,
                 prefix: prefix,
                 suffix: suffix,
-                voucherNumber: voucherNumber,
                 vchType: vchType,
                 invNo: invNo,
                 godown: godown,
                 tripId: tripId,
                 visitId: visitId,
-                stockStatus: stockStatus,
-                finId: finId,
                 createdTime: createdTime,
                 updatedTime: updatedTime,
                 deliveryDate: deliveryDate,
-                printCount: printCount,
                 sync: sync,
                 pinCode: pinCode,
                 uploadedServerId: uploadedServerId,
                 mailingName: mailingName,
                 billingMode: billingMode,
-                discountType: discountType,
-                discountAmount: discountAmount,
-                amount: amount,
-                coupontdiscountamount: coupontdiscountamount,
               ),
           createCompanionCallback:
               ({
@@ -39078,7 +37244,6 @@ class $$SaleMasterTableTableTableManager
                 Value<String?> mob = const Value.absent(),
                 Value<String?> voucherDate = const Value.absent(),
                 required double voucherAmount,
-                Value<int?> status = const Value.absent(),
                 Value<String?> priceList = const Value.absent(),
                 Value<String?> narration = const Value.absent(),
                 Value<double?> lattitude = const Value.absent(),
@@ -39089,32 +37254,22 @@ class $$SaleMasterTableTableTableManager
                 Value<int?> itemCount = const Value.absent(),
                 Value<String?> gstin = const Value.absent(),
                 Value<String?> state = const Value.absent(),
-                Value<String?> partyParent = const Value.absent(),
-                Value<String?> addDiscType = const Value.absent(),
                 Value<double?> addDiscEntered = const Value.absent(),
                 Value<String?> prefix = const Value.absent(),
                 Value<String?> suffix = const Value.absent(),
-                Value<String?> voucherNumber = const Value.absent(),
                 Value<String?> vchType = const Value.absent(),
                 Value<int?> invNo = const Value.absent(),
                 Value<String?> godown = const Value.absent(),
                 Value<int?> tripId = const Value.absent(),
                 Value<int?> visitId = const Value.absent(),
-                Value<int?> stockStatus = const Value.absent(),
-                Value<int?> finId = const Value.absent(),
                 Value<String?> createdTime = const Value.absent(),
                 Value<String?> updatedTime = const Value.absent(),
                 Value<String?> deliveryDate = const Value.absent(),
-                Value<int?> printCount = const Value.absent(),
                 Value<int> sync = const Value.absent(),
                 Value<String?> pinCode = const Value.absent(),
                 Value<int?> uploadedServerId = const Value.absent(),
                 Value<String?> mailingName = const Value.absent(),
                 Value<String> billingMode = const Value.absent(),
-                Value<String?> discountType = const Value.absent(),
-                Value<double?> discountAmount = const Value.absent(),
-                Value<double?> amount = const Value.absent(),
-                Value<double?> coupontdiscountamount = const Value.absent(),
               }) => SaleMasterTableCompanion.insert(
                 id: id,
                 vchId: vchId,
@@ -39127,7 +37282,6 @@ class $$SaleMasterTableTableTableManager
                 mob: mob,
                 voucherDate: voucherDate,
                 voucherAmount: voucherAmount,
-                status: status,
                 priceList: priceList,
                 narration: narration,
                 lattitude: lattitude,
@@ -39138,32 +37292,22 @@ class $$SaleMasterTableTableTableManager
                 itemCount: itemCount,
                 gstin: gstin,
                 state: state,
-                partyParent: partyParent,
-                addDiscType: addDiscType,
                 addDiscEntered: addDiscEntered,
                 prefix: prefix,
                 suffix: suffix,
-                voucherNumber: voucherNumber,
                 vchType: vchType,
                 invNo: invNo,
                 godown: godown,
                 tripId: tripId,
                 visitId: visitId,
-                stockStatus: stockStatus,
-                finId: finId,
                 createdTime: createdTime,
                 updatedTime: updatedTime,
                 deliveryDate: deliveryDate,
-                printCount: printCount,
                 sync: sync,
                 pinCode: pinCode,
                 uploadedServerId: uploadedServerId,
                 mailingName: mailingName,
                 billingMode: billingMode,
-                discountType: discountType,
-                discountAmount: discountAmount,
-                amount: amount,
-                coupontdiscountamount: coupontdiscountamount,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
@@ -39207,10 +37351,6 @@ typedef $$SaleDetailsTableTableCreateCompanionBuilder =
       Value<String?> ledger,
       Value<int?> companyId,
       Value<int> sync,
-      Value<double?> igst,
-      Value<double?> cgst,
-      Value<double?> sgst,
-      Value<double?> cess,
       Value<String?> hsn,
       Value<double?> enteredRate,
       Value<double?> enteredDisc,
@@ -39248,10 +37388,6 @@ typedef $$SaleDetailsTableTableUpdateCompanionBuilder =
       Value<String?> ledger,
       Value<int?> companyId,
       Value<int> sync,
-      Value<double?> igst,
-      Value<double?> cgst,
-      Value<double?> sgst,
-      Value<double?> cess,
       Value<String?> hsn,
       Value<double?> enteredRate,
       Value<double?> enteredDisc,
@@ -39354,26 +37490,6 @@ class $$SaleDetailsTableTableFilterComposer
 
   ColumnFilters<int> get sync => $composableBuilder(
     column: $table.sync,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get igst => $composableBuilder(
-    column: $table.igst,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get cgst => $composableBuilder(
-    column: $table.cgst,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get sgst => $composableBuilder(
-    column: $table.sgst,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get cess => $composableBuilder(
-    column: $table.cess,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -39557,26 +37673,6 @@ class $$SaleDetailsTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<double> get igst => $composableBuilder(
-    column: $table.igst,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get cgst => $composableBuilder(
-    column: $table.cgst,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get sgst => $composableBuilder(
-    column: $table.sgst,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get cess => $composableBuilder(
-    column: $table.cess,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<String> get hsn => $composableBuilder(
     column: $table.hsn,
     builder: (column) => ColumnOrderings(column),
@@ -39727,18 +37823,6 @@ class $$SaleDetailsTableTableAnnotationComposer
   GeneratedColumn<int> get sync =>
       $composableBuilder(column: $table.sync, builder: (column) => column);
 
-  GeneratedColumn<double> get igst =>
-      $composableBuilder(column: $table.igst, builder: (column) => column);
-
-  GeneratedColumn<double> get cgst =>
-      $composableBuilder(column: $table.cgst, builder: (column) => column);
-
-  GeneratedColumn<double> get sgst =>
-      $composableBuilder(column: $table.sgst, builder: (column) => column);
-
-  GeneratedColumn<double> get cess =>
-      $composableBuilder(column: $table.cess, builder: (column) => column);
-
   GeneratedColumn<String> get hsn =>
       $composableBuilder(column: $table.hsn, builder: (column) => column);
 
@@ -39861,10 +37945,6 @@ class $$SaleDetailsTableTableTableManager
                 Value<String?> ledger = const Value.absent(),
                 Value<int?> companyId = const Value.absent(),
                 Value<int> sync = const Value.absent(),
-                Value<double?> igst = const Value.absent(),
-                Value<double?> cgst = const Value.absent(),
-                Value<double?> sgst = const Value.absent(),
-                Value<double?> cess = const Value.absent(),
                 Value<String?> hsn = const Value.absent(),
                 Value<double?> enteredRate = const Value.absent(),
                 Value<double?> enteredDisc = const Value.absent(),
@@ -39900,10 +37980,6 @@ class $$SaleDetailsTableTableTableManager
                 ledger: ledger,
                 companyId: companyId,
                 sync: sync,
-                igst: igst,
-                cgst: cgst,
-                sgst: sgst,
-                cess: cess,
                 hsn: hsn,
                 enteredRate: enteredRate,
                 enteredDisc: enteredDisc,
@@ -39941,10 +38017,6 @@ class $$SaleDetailsTableTableTableManager
                 Value<String?> ledger = const Value.absent(),
                 Value<int?> companyId = const Value.absent(),
                 Value<int> sync = const Value.absent(),
-                Value<double?> igst = const Value.absent(),
-                Value<double?> cgst = const Value.absent(),
-                Value<double?> sgst = const Value.absent(),
-                Value<double?> cess = const Value.absent(),
                 Value<String?> hsn = const Value.absent(),
                 Value<double?> enteredRate = const Value.absent(),
                 Value<double?> enteredDisc = const Value.absent(),
@@ -39980,10 +38052,6 @@ class $$SaleDetailsTableTableTableManager
                 ledger: ledger,
                 companyId: companyId,
                 sync: sync,
-                igst: igst,
-                cgst: cgst,
-                sgst: sgst,
-                cess: cess,
                 hsn: hsn,
                 enteredRate: enteredRate,
                 enteredDisc: enteredDisc,
@@ -40039,6 +38107,15 @@ typedef $$SaleLedgerDetailsTableTableCreateCompanionBuilder =
       Value<double?> rate,
       Value<double?> amount,
       Value<int?> companyId,
+      Value<String?> voucherName,
+      Value<String?> discountType,
+      Value<double?> discountAmount,
+      Value<double?> saleAmount,
+      Value<double?> couponDiscountAmount,
+      Value<double?> igst,
+      Value<double?> cgst,
+      Value<double?> sgst,
+      Value<double?> cess,
     });
 typedef $$SaleLedgerDetailsTableTableUpdateCompanionBuilder =
     SaleLedgerDetailsTableCompanion Function({
@@ -40050,6 +38127,15 @@ typedef $$SaleLedgerDetailsTableTableUpdateCompanionBuilder =
       Value<double?> rate,
       Value<double?> amount,
       Value<int?> companyId,
+      Value<String?> voucherName,
+      Value<String?> discountType,
+      Value<double?> discountAmount,
+      Value<double?> saleAmount,
+      Value<double?> couponDiscountAmount,
+      Value<double?> igst,
+      Value<double?> cgst,
+      Value<double?> sgst,
+      Value<double?> cess,
     });
 
 class $$SaleLedgerDetailsTableTableFilterComposer
@@ -40098,6 +38184,51 @@ class $$SaleLedgerDetailsTableTableFilterComposer
 
   ColumnFilters<int> get companyId => $composableBuilder(
     column: $table.companyId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get voucherName => $composableBuilder(
+    column: $table.voucherName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get discountType => $composableBuilder(
+    column: $table.discountType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get discountAmount => $composableBuilder(
+    column: $table.discountAmount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get saleAmount => $composableBuilder(
+    column: $table.saleAmount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get couponDiscountAmount => $composableBuilder(
+    column: $table.couponDiscountAmount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get igst => $composableBuilder(
+    column: $table.igst,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get cgst => $composableBuilder(
+    column: $table.cgst,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get sgst => $composableBuilder(
+    column: $table.sgst,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get cess => $composableBuilder(
+    column: $table.cess,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -40150,6 +38281,51 @@ class $$SaleLedgerDetailsTableTableOrderingComposer
     column: $table.companyId,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get voucherName => $composableBuilder(
+    column: $table.voucherName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get discountType => $composableBuilder(
+    column: $table.discountType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get discountAmount => $composableBuilder(
+    column: $table.discountAmount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get saleAmount => $composableBuilder(
+    column: $table.saleAmount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get couponDiscountAmount => $composableBuilder(
+    column: $table.couponDiscountAmount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get igst => $composableBuilder(
+    column: $table.igst,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get cgst => $composableBuilder(
+    column: $table.cgst,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get sgst => $composableBuilder(
+    column: $table.sgst,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get cess => $composableBuilder(
+    column: $table.cess,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$SaleLedgerDetailsTableTableAnnotationComposer
@@ -40184,6 +38360,43 @@ class $$SaleLedgerDetailsTableTableAnnotationComposer
 
   GeneratedColumn<int> get companyId =>
       $composableBuilder(column: $table.companyId, builder: (column) => column);
+
+  GeneratedColumn<String> get voucherName => $composableBuilder(
+    column: $table.voucherName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get discountType => $composableBuilder(
+    column: $table.discountType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get discountAmount => $composableBuilder(
+    column: $table.discountAmount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get saleAmount => $composableBuilder(
+    column: $table.saleAmount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get couponDiscountAmount => $composableBuilder(
+    column: $table.couponDiscountAmount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get igst =>
+      $composableBuilder(column: $table.igst, builder: (column) => column);
+
+  GeneratedColumn<double> get cgst =>
+      $composableBuilder(column: $table.cgst, builder: (column) => column);
+
+  GeneratedColumn<double> get sgst =>
+      $composableBuilder(column: $table.sgst, builder: (column) => column);
+
+  GeneratedColumn<double> get cess =>
+      $composableBuilder(column: $table.cess, builder: (column) => column);
 }
 
 class $$SaleLedgerDetailsTableTableTableManager
@@ -40240,6 +38453,15 @@ class $$SaleLedgerDetailsTableTableTableManager
                 Value<double?> rate = const Value.absent(),
                 Value<double?> amount = const Value.absent(),
                 Value<int?> companyId = const Value.absent(),
+                Value<String?> voucherName = const Value.absent(),
+                Value<String?> discountType = const Value.absent(),
+                Value<double?> discountAmount = const Value.absent(),
+                Value<double?> saleAmount = const Value.absent(),
+                Value<double?> couponDiscountAmount = const Value.absent(),
+                Value<double?> igst = const Value.absent(),
+                Value<double?> cgst = const Value.absent(),
+                Value<double?> sgst = const Value.absent(),
+                Value<double?> cess = const Value.absent(),
               }) => SaleLedgerDetailsTableCompanion(
                 id: id,
                 mid: mid,
@@ -40249,6 +38471,15 @@ class $$SaleLedgerDetailsTableTableTableManager
                 rate: rate,
                 amount: amount,
                 companyId: companyId,
+                voucherName: voucherName,
+                discountType: discountType,
+                discountAmount: discountAmount,
+                saleAmount: saleAmount,
+                couponDiscountAmount: couponDiscountAmount,
+                igst: igst,
+                cgst: cgst,
+                sgst: sgst,
+                cess: cess,
               ),
           createCompanionCallback:
               ({
@@ -40260,6 +38491,15 @@ class $$SaleLedgerDetailsTableTableTableManager
                 Value<double?> rate = const Value.absent(),
                 Value<double?> amount = const Value.absent(),
                 Value<int?> companyId = const Value.absent(),
+                Value<String?> voucherName = const Value.absent(),
+                Value<String?> discountType = const Value.absent(),
+                Value<double?> discountAmount = const Value.absent(),
+                Value<double?> saleAmount = const Value.absent(),
+                Value<double?> couponDiscountAmount = const Value.absent(),
+                Value<double?> igst = const Value.absent(),
+                Value<double?> cgst = const Value.absent(),
+                Value<double?> sgst = const Value.absent(),
+                Value<double?> cess = const Value.absent(),
               }) => SaleLedgerDetailsTableCompanion.insert(
                 id: id,
                 mid: mid,
@@ -40269,6 +38509,15 @@ class $$SaleLedgerDetailsTableTableTableManager
                 rate: rate,
                 amount: amount,
                 companyId: companyId,
+                voucherName: voucherName,
+                discountType: discountType,
+                discountAmount: discountAmount,
+                saleAmount: saleAmount,
+                couponDiscountAmount: couponDiscountAmount,
+                igst: igst,
+                cgst: cgst,
+                sgst: sgst,
+                cess: cess,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
@@ -40606,7 +38855,6 @@ typedef $$SaleReturnMasterTableTableCreateCompanionBuilder =
       Value<String?> mob,
       Value<String?> voucherDate,
       required double voucherAmount,
-      Value<int?> status,
       Value<String?> priceList,
       Value<String?> narration,
       Value<double?> lattitude,
@@ -40617,23 +38865,17 @@ typedef $$SaleReturnMasterTableTableCreateCompanionBuilder =
       Value<int?> itemCount,
       Value<String?> gstin,
       Value<String?> state,
-      Value<String?> partyParent,
-      Value<String?> addDiscType,
       Value<double?> addDiscEntered,
       Value<String?> prefix,
       Value<String?> suffix,
-      Value<String?> voucherNumber,
       Value<String?> vchType,
       Value<int?> invNo,
       Value<String?> godown,
       Value<int?> tripId,
       Value<int?> visitId,
-      Value<int?> stockStatus,
-      Value<int?> finId,
       Value<DateTime?> createdTime,
       Value<DateTime?> updatedTime,
       Value<String?> deliveryDate,
-      Value<int?> printCount,
       Value<int> sync,
       Value<String?> pinCode,
       Value<int?> uploadedServerId,
@@ -40652,7 +38894,6 @@ typedef $$SaleReturnMasterTableTableUpdateCompanionBuilder =
       Value<String?> mob,
       Value<String?> voucherDate,
       Value<double> voucherAmount,
-      Value<int?> status,
       Value<String?> priceList,
       Value<String?> narration,
       Value<double?> lattitude,
@@ -40663,23 +38904,17 @@ typedef $$SaleReturnMasterTableTableUpdateCompanionBuilder =
       Value<int?> itemCount,
       Value<String?> gstin,
       Value<String?> state,
-      Value<String?> partyParent,
-      Value<String?> addDiscType,
       Value<double?> addDiscEntered,
       Value<String?> prefix,
       Value<String?> suffix,
-      Value<String?> voucherNumber,
       Value<String?> vchType,
       Value<int?> invNo,
       Value<String?> godown,
       Value<int?> tripId,
       Value<int?> visitId,
-      Value<int?> stockStatus,
-      Value<int?> finId,
       Value<DateTime?> createdTime,
       Value<DateTime?> updatedTime,
       Value<String?> deliveryDate,
-      Value<int?> printCount,
       Value<int> sync,
       Value<String?> pinCode,
       Value<int?> uploadedServerId,
@@ -40750,11 +38985,6 @@ class $$SaleReturnMasterTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get status => $composableBuilder(
-    column: $table.status,
-    builder: (column) => ColumnFilters(column),
-  );
-
   ColumnFilters<String> get priceList => $composableBuilder(
     column: $table.priceList,
     builder: (column) => ColumnFilters(column),
@@ -40805,16 +39035,6 @@ class $$SaleReturnMasterTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get partyParent => $composableBuilder(
-    column: $table.partyParent,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get addDiscType => $composableBuilder(
-    column: $table.addDiscType,
-    builder: (column) => ColumnFilters(column),
-  );
-
   ColumnFilters<double> get addDiscEntered => $composableBuilder(
     column: $table.addDiscEntered,
     builder: (column) => ColumnFilters(column),
@@ -40827,11 +39047,6 @@ class $$SaleReturnMasterTableTableFilterComposer
 
   ColumnFilters<String> get suffix => $composableBuilder(
     column: $table.suffix,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get voucherNumber => $composableBuilder(
-    column: $table.voucherNumber,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -40860,16 +39075,6 @@ class $$SaleReturnMasterTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get stockStatus => $composableBuilder(
-    column: $table.stockStatus,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get finId => $composableBuilder(
-    column: $table.finId,
-    builder: (column) => ColumnFilters(column),
-  );
-
   ColumnFilters<DateTime> get createdTime => $composableBuilder(
     column: $table.createdTime,
     builder: (column) => ColumnFilters(column),
@@ -40882,11 +39087,6 @@ class $$SaleReturnMasterTableTableFilterComposer
 
   ColumnFilters<String> get deliveryDate => $composableBuilder(
     column: $table.deliveryDate,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get printCount => $composableBuilder(
-    column: $table.printCount,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -40975,11 +39175,6 @@ class $$SaleReturnMasterTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get status => $composableBuilder(
-    column: $table.status,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<String> get priceList => $composableBuilder(
     column: $table.priceList,
     builder: (column) => ColumnOrderings(column),
@@ -41030,16 +39225,6 @@ class $$SaleReturnMasterTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get partyParent => $composableBuilder(
-    column: $table.partyParent,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get addDiscType => $composableBuilder(
-    column: $table.addDiscType,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<double> get addDiscEntered => $composableBuilder(
     column: $table.addDiscEntered,
     builder: (column) => ColumnOrderings(column),
@@ -41052,11 +39237,6 @@ class $$SaleReturnMasterTableTableOrderingComposer
 
   ColumnOrderings<String> get suffix => $composableBuilder(
     column: $table.suffix,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get voucherNumber => $composableBuilder(
-    column: $table.voucherNumber,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -41085,16 +39265,6 @@ class $$SaleReturnMasterTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get stockStatus => $composableBuilder(
-    column: $table.stockStatus,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get finId => $composableBuilder(
-    column: $table.finId,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<DateTime> get createdTime => $composableBuilder(
     column: $table.createdTime,
     builder: (column) => ColumnOrderings(column),
@@ -41107,11 +39277,6 @@ class $$SaleReturnMasterTableTableOrderingComposer
 
   ColumnOrderings<String> get deliveryDate => $composableBuilder(
     column: $table.deliveryDate,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get printCount => $composableBuilder(
-    column: $table.printCount,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -41182,9 +39347,6 @@ class $$SaleReturnMasterTableTableAnnotationComposer
     builder: (column) => column,
   );
 
-  GeneratedColumn<int> get status =>
-      $composableBuilder(column: $table.status, builder: (column) => column);
-
   GeneratedColumn<String> get priceList =>
       $composableBuilder(column: $table.priceList, builder: (column) => column);
 
@@ -41215,16 +39377,6 @@ class $$SaleReturnMasterTableTableAnnotationComposer
   GeneratedColumn<String> get state =>
       $composableBuilder(column: $table.state, builder: (column) => column);
 
-  GeneratedColumn<String> get partyParent => $composableBuilder(
-    column: $table.partyParent,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get addDiscType => $composableBuilder(
-    column: $table.addDiscType,
-    builder: (column) => column,
-  );
-
   GeneratedColumn<double> get addDiscEntered => $composableBuilder(
     column: $table.addDiscEntered,
     builder: (column) => column,
@@ -41235,11 +39387,6 @@ class $$SaleReturnMasterTableTableAnnotationComposer
 
   GeneratedColumn<String> get suffix =>
       $composableBuilder(column: $table.suffix, builder: (column) => column);
-
-  GeneratedColumn<String> get voucherNumber => $composableBuilder(
-    column: $table.voucherNumber,
-    builder: (column) => column,
-  );
 
   GeneratedColumn<String> get vchType =>
       $composableBuilder(column: $table.vchType, builder: (column) => column);
@@ -41256,14 +39403,6 @@ class $$SaleReturnMasterTableTableAnnotationComposer
   GeneratedColumn<int> get visitId =>
       $composableBuilder(column: $table.visitId, builder: (column) => column);
 
-  GeneratedColumn<int> get stockStatus => $composableBuilder(
-    column: $table.stockStatus,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<int> get finId =>
-      $composableBuilder(column: $table.finId, builder: (column) => column);
-
   GeneratedColumn<DateTime> get createdTime => $composableBuilder(
     column: $table.createdTime,
     builder: (column) => column,
@@ -41276,11 +39415,6 @@ class $$SaleReturnMasterTableTableAnnotationComposer
 
   GeneratedColumn<String> get deliveryDate => $composableBuilder(
     column: $table.deliveryDate,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<int> get printCount => $composableBuilder(
-    column: $table.printCount,
     builder: (column) => column,
   );
 
@@ -41358,7 +39492,6 @@ class $$SaleReturnMasterTableTableTableManager
                 Value<String?> mob = const Value.absent(),
                 Value<String?> voucherDate = const Value.absent(),
                 Value<double> voucherAmount = const Value.absent(),
-                Value<int?> status = const Value.absent(),
                 Value<String?> priceList = const Value.absent(),
                 Value<String?> narration = const Value.absent(),
                 Value<double?> lattitude = const Value.absent(),
@@ -41369,23 +39502,17 @@ class $$SaleReturnMasterTableTableTableManager
                 Value<int?> itemCount = const Value.absent(),
                 Value<String?> gstin = const Value.absent(),
                 Value<String?> state = const Value.absent(),
-                Value<String?> partyParent = const Value.absent(),
-                Value<String?> addDiscType = const Value.absent(),
                 Value<double?> addDiscEntered = const Value.absent(),
                 Value<String?> prefix = const Value.absent(),
                 Value<String?> suffix = const Value.absent(),
-                Value<String?> voucherNumber = const Value.absent(),
                 Value<String?> vchType = const Value.absent(),
                 Value<int?> invNo = const Value.absent(),
                 Value<String?> godown = const Value.absent(),
                 Value<int?> tripId = const Value.absent(),
                 Value<int?> visitId = const Value.absent(),
-                Value<int?> stockStatus = const Value.absent(),
-                Value<int?> finId = const Value.absent(),
                 Value<DateTime?> createdTime = const Value.absent(),
                 Value<DateTime?> updatedTime = const Value.absent(),
                 Value<String?> deliveryDate = const Value.absent(),
-                Value<int?> printCount = const Value.absent(),
                 Value<int> sync = const Value.absent(),
                 Value<String?> pinCode = const Value.absent(),
                 Value<int?> uploadedServerId = const Value.absent(),
@@ -41402,7 +39529,6 @@ class $$SaleReturnMasterTableTableTableManager
                 mob: mob,
                 voucherDate: voucherDate,
                 voucherAmount: voucherAmount,
-                status: status,
                 priceList: priceList,
                 narration: narration,
                 lattitude: lattitude,
@@ -41413,23 +39539,17 @@ class $$SaleReturnMasterTableTableTableManager
                 itemCount: itemCount,
                 gstin: gstin,
                 state: state,
-                partyParent: partyParent,
-                addDiscType: addDiscType,
                 addDiscEntered: addDiscEntered,
                 prefix: prefix,
                 suffix: suffix,
-                voucherNumber: voucherNumber,
                 vchType: vchType,
                 invNo: invNo,
                 godown: godown,
                 tripId: tripId,
                 visitId: visitId,
-                stockStatus: stockStatus,
-                finId: finId,
                 createdTime: createdTime,
                 updatedTime: updatedTime,
                 deliveryDate: deliveryDate,
-                printCount: printCount,
                 sync: sync,
                 pinCode: pinCode,
                 uploadedServerId: uploadedServerId,
@@ -41448,7 +39568,6 @@ class $$SaleReturnMasterTableTableTableManager
                 Value<String?> mob = const Value.absent(),
                 Value<String?> voucherDate = const Value.absent(),
                 required double voucherAmount,
-                Value<int?> status = const Value.absent(),
                 Value<String?> priceList = const Value.absent(),
                 Value<String?> narration = const Value.absent(),
                 Value<double?> lattitude = const Value.absent(),
@@ -41459,23 +39578,17 @@ class $$SaleReturnMasterTableTableTableManager
                 Value<int?> itemCount = const Value.absent(),
                 Value<String?> gstin = const Value.absent(),
                 Value<String?> state = const Value.absent(),
-                Value<String?> partyParent = const Value.absent(),
-                Value<String?> addDiscType = const Value.absent(),
                 Value<double?> addDiscEntered = const Value.absent(),
                 Value<String?> prefix = const Value.absent(),
                 Value<String?> suffix = const Value.absent(),
-                Value<String?> voucherNumber = const Value.absent(),
                 Value<String?> vchType = const Value.absent(),
                 Value<int?> invNo = const Value.absent(),
                 Value<String?> godown = const Value.absent(),
                 Value<int?> tripId = const Value.absent(),
                 Value<int?> visitId = const Value.absent(),
-                Value<int?> stockStatus = const Value.absent(),
-                Value<int?> finId = const Value.absent(),
                 Value<DateTime?> createdTime = const Value.absent(),
                 Value<DateTime?> updatedTime = const Value.absent(),
                 Value<String?> deliveryDate = const Value.absent(),
-                Value<int?> printCount = const Value.absent(),
                 Value<int> sync = const Value.absent(),
                 Value<String?> pinCode = const Value.absent(),
                 Value<int?> uploadedServerId = const Value.absent(),
@@ -41492,7 +39605,6 @@ class $$SaleReturnMasterTableTableTableManager
                 mob: mob,
                 voucherDate: voucherDate,
                 voucherAmount: voucherAmount,
-                status: status,
                 priceList: priceList,
                 narration: narration,
                 lattitude: lattitude,
@@ -41503,23 +39615,17 @@ class $$SaleReturnMasterTableTableTableManager
                 itemCount: itemCount,
                 gstin: gstin,
                 state: state,
-                partyParent: partyParent,
-                addDiscType: addDiscType,
                 addDiscEntered: addDiscEntered,
                 prefix: prefix,
                 suffix: suffix,
-                voucherNumber: voucherNumber,
                 vchType: vchType,
                 invNo: invNo,
                 godown: godown,
                 tripId: tripId,
                 visitId: visitId,
-                stockStatus: stockStatus,
-                finId: finId,
                 createdTime: createdTime,
                 updatedTime: updatedTime,
                 deliveryDate: deliveryDate,
-                printCount: printCount,
                 sync: sync,
                 pinCode: pinCode,
                 uploadedServerId: uploadedServerId,
@@ -41571,10 +39677,6 @@ typedef $$SaleReturnDetailsTableTableCreateCompanionBuilder =
       Value<String?> ledger,
       Value<int?> companyId,
       Value<int> sync,
-      Value<double?> igst,
-      Value<double?> cgst,
-      Value<double?> sgst,
-      Value<double?> cess,
       Value<String?> hsn,
       Value<double?> enteredRate,
       Value<double?> enteredDisc,
@@ -41612,10 +39714,6 @@ typedef $$SaleReturnDetailsTableTableUpdateCompanionBuilder =
       Value<String?> ledger,
       Value<int?> companyId,
       Value<int> sync,
-      Value<double?> igst,
-      Value<double?> cgst,
-      Value<double?> sgst,
-      Value<double?> cess,
       Value<String?> hsn,
       Value<double?> enteredRate,
       Value<double?> enteredDisc,
@@ -41718,26 +39816,6 @@ class $$SaleReturnDetailsTableTableFilterComposer
 
   ColumnFilters<int> get sync => $composableBuilder(
     column: $table.sync,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get igst => $composableBuilder(
-    column: $table.igst,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get cgst => $composableBuilder(
-    column: $table.cgst,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get sgst => $composableBuilder(
-    column: $table.sgst,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get cess => $composableBuilder(
-    column: $table.cess,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -41921,26 +39999,6 @@ class $$SaleReturnDetailsTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<double> get igst => $composableBuilder(
-    column: $table.igst,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get cgst => $composableBuilder(
-    column: $table.cgst,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get sgst => $composableBuilder(
-    column: $table.sgst,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get cess => $composableBuilder(
-    column: $table.cess,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<String> get hsn => $composableBuilder(
     column: $table.hsn,
     builder: (column) => ColumnOrderings(column),
@@ -42091,18 +40149,6 @@ class $$SaleReturnDetailsTableTableAnnotationComposer
   GeneratedColumn<int> get sync =>
       $composableBuilder(column: $table.sync, builder: (column) => column);
 
-  GeneratedColumn<double> get igst =>
-      $composableBuilder(column: $table.igst, builder: (column) => column);
-
-  GeneratedColumn<double> get cgst =>
-      $composableBuilder(column: $table.cgst, builder: (column) => column);
-
-  GeneratedColumn<double> get sgst =>
-      $composableBuilder(column: $table.sgst, builder: (column) => column);
-
-  GeneratedColumn<double> get cess =>
-      $composableBuilder(column: $table.cess, builder: (column) => column);
-
   GeneratedColumn<String> get hsn =>
       $composableBuilder(column: $table.hsn, builder: (column) => column);
 
@@ -42236,10 +40282,6 @@ class $$SaleReturnDetailsTableTableTableManager
                 Value<String?> ledger = const Value.absent(),
                 Value<int?> companyId = const Value.absent(),
                 Value<int> sync = const Value.absent(),
-                Value<double?> igst = const Value.absent(),
-                Value<double?> cgst = const Value.absent(),
-                Value<double?> sgst = const Value.absent(),
-                Value<double?> cess = const Value.absent(),
                 Value<String?> hsn = const Value.absent(),
                 Value<double?> enteredRate = const Value.absent(),
                 Value<double?> enteredDisc = const Value.absent(),
@@ -42275,10 +40317,6 @@ class $$SaleReturnDetailsTableTableTableManager
                 ledger: ledger,
                 companyId: companyId,
                 sync: sync,
-                igst: igst,
-                cgst: cgst,
-                sgst: sgst,
-                cess: cess,
                 hsn: hsn,
                 enteredRate: enteredRate,
                 enteredDisc: enteredDisc,
@@ -42316,10 +40354,6 @@ class $$SaleReturnDetailsTableTableTableManager
                 Value<String?> ledger = const Value.absent(),
                 Value<int?> companyId = const Value.absent(),
                 Value<int> sync = const Value.absent(),
-                Value<double?> igst = const Value.absent(),
-                Value<double?> cgst = const Value.absent(),
-                Value<double?> sgst = const Value.absent(),
-                Value<double?> cess = const Value.absent(),
                 Value<String?> hsn = const Value.absent(),
                 Value<double?> enteredRate = const Value.absent(),
                 Value<double?> enteredDisc = const Value.absent(),
@@ -42355,10 +40389,6 @@ class $$SaleReturnDetailsTableTableTableManager
                 ledger: ledger,
                 companyId: companyId,
                 sync: sync,
-                igst: igst,
-                cgst: cgst,
-                sgst: sgst,
-                cess: cess,
                 hsn: hsn,
                 enteredRate: enteredRate,
                 enteredDisc: enteredDisc,
@@ -42418,6 +40448,11 @@ typedef $$SaleReturnLedgerDetailsTableTableCreateCompanionBuilder =
       Value<double?> rate,
       Value<double?> amount,
       Value<int?> companyId,
+      Value<String?> voucherName,
+      Value<double?> igst,
+      Value<double?> cgst,
+      Value<double?> sgst,
+      Value<double?> cess,
     });
 typedef $$SaleReturnLedgerDetailsTableTableUpdateCompanionBuilder =
     SaleReturnLedgerDetailsTableCompanion Function({
@@ -42429,6 +40464,11 @@ typedef $$SaleReturnLedgerDetailsTableTableUpdateCompanionBuilder =
       Value<double?> rate,
       Value<double?> amount,
       Value<int?> companyId,
+      Value<String?> voucherName,
+      Value<double?> igst,
+      Value<double?> cgst,
+      Value<double?> sgst,
+      Value<double?> cess,
     });
 
 class $$SaleReturnLedgerDetailsTableTableFilterComposer
@@ -42477,6 +40517,31 @@ class $$SaleReturnLedgerDetailsTableTableFilterComposer
 
   ColumnFilters<int> get companyId => $composableBuilder(
     column: $table.companyId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get voucherName => $composableBuilder(
+    column: $table.voucherName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get igst => $composableBuilder(
+    column: $table.igst,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get cgst => $composableBuilder(
+    column: $table.cgst,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get sgst => $composableBuilder(
+    column: $table.sgst,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get cess => $composableBuilder(
+    column: $table.cess,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -42529,6 +40594,31 @@ class $$SaleReturnLedgerDetailsTableTableOrderingComposer
     column: $table.companyId,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get voucherName => $composableBuilder(
+    column: $table.voucherName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get igst => $composableBuilder(
+    column: $table.igst,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get cgst => $composableBuilder(
+    column: $table.cgst,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get sgst => $composableBuilder(
+    column: $table.sgst,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get cess => $composableBuilder(
+    column: $table.cess,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$SaleReturnLedgerDetailsTableTableAnnotationComposer
@@ -42563,6 +40653,23 @@ class $$SaleReturnLedgerDetailsTableTableAnnotationComposer
 
   GeneratedColumn<int> get companyId =>
       $composableBuilder(column: $table.companyId, builder: (column) => column);
+
+  GeneratedColumn<String> get voucherName => $composableBuilder(
+    column: $table.voucherName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get igst =>
+      $composableBuilder(column: $table.igst, builder: (column) => column);
+
+  GeneratedColumn<double> get cgst =>
+      $composableBuilder(column: $table.cgst, builder: (column) => column);
+
+  GeneratedColumn<double> get sgst =>
+      $composableBuilder(column: $table.sgst, builder: (column) => column);
+
+  GeneratedColumn<double> get cess =>
+      $composableBuilder(column: $table.cess, builder: (column) => column);
 }
 
 class $$SaleReturnLedgerDetailsTableTableTableManager
@@ -42619,6 +40726,11 @@ class $$SaleReturnLedgerDetailsTableTableTableManager
                 Value<double?> rate = const Value.absent(),
                 Value<double?> amount = const Value.absent(),
                 Value<int?> companyId = const Value.absent(),
+                Value<String?> voucherName = const Value.absent(),
+                Value<double?> igst = const Value.absent(),
+                Value<double?> cgst = const Value.absent(),
+                Value<double?> sgst = const Value.absent(),
+                Value<double?> cess = const Value.absent(),
               }) => SaleReturnLedgerDetailsTableCompanion(
                 id: id,
                 mid: mid,
@@ -42628,6 +40740,11 @@ class $$SaleReturnLedgerDetailsTableTableTableManager
                 rate: rate,
                 amount: amount,
                 companyId: companyId,
+                voucherName: voucherName,
+                igst: igst,
+                cgst: cgst,
+                sgst: sgst,
+                cess: cess,
               ),
           createCompanionCallback:
               ({
@@ -42639,6 +40756,11 @@ class $$SaleReturnLedgerDetailsTableTableTableManager
                 Value<double?> rate = const Value.absent(),
                 Value<double?> amount = const Value.absent(),
                 Value<int?> companyId = const Value.absent(),
+                Value<String?> voucherName = const Value.absent(),
+                Value<double?> igst = const Value.absent(),
+                Value<double?> cgst = const Value.absent(),
+                Value<double?> sgst = const Value.absent(),
+                Value<double?> cess = const Value.absent(),
               }) => SaleReturnLedgerDetailsTableCompanion.insert(
                 id: id,
                 mid: mid,
@@ -42648,6 +40770,11 @@ class $$SaleReturnLedgerDetailsTableTableTableManager
                 rate: rate,
                 amount: amount,
                 companyId: companyId,
+                voucherName: voucherName,
+                igst: igst,
+                cgst: cgst,
+                sgst: sgst,
+                cess: cess,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))

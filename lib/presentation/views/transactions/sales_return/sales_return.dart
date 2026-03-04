@@ -1,6 +1,5 @@
 import 'package:drift/drift.dart' show Value;
 import 'package:intl/intl.dart';
-import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
@@ -406,7 +405,7 @@ Future<void> saveSaleReturn({
   required int priceLevelId,
   required String remark,
   required String voucherNo,
-    required String? mobileNumber,
+  required String? mobileNumber,
   required String address2,
   required String address,
   required String pinCode,
@@ -414,7 +413,6 @@ Future<void> saveSaleReturn({
   required double lattitude,
   required double longitude,
   required String mailingName,
-
 }) async {
   if (txn.selectedItemCount == 0) {
     print("No items selected for return");
@@ -437,7 +435,7 @@ Future<void> saveSaleReturn({
             itemCount: Value(txn.selectedItemCount),
             sync: const Value(0),
             voucherNo: Value(voucherNo),
-               address2: Value(address2),
+            address2: Value(address2),
             address: Value(address),
             createdTime: Value(DateTime.now()),
 
@@ -470,32 +468,35 @@ Future<void> saveSaleReturn({
               ledger: Value(ledgerName),
               companyId: Value(companyId),
               sync: const Value(0),
-              cgst: Value(txn.cgst),
-              sgst: Value(txn.sgst),
-              cess: Value(txn.cess),
+
               fQty: Value(qty),
             ),
           );
     }
-    double ledgerAmount = 0;
-
-    for (final item in txn.selectedOrderItems) {
-      ledgerAmount += item.amount;
-    }
 
     /// 3️⃣ INSERT LEDGER
-    await db
-        .into(db.saleReturnLedgerDetailsTable)
-        .insert(
-          SaleReturnLedgerDetailsTableCompanion.insert(
-            mid: Value(masterId),
-            ledger: Value(ledgerName),
-            amount: Value(txn.grandTotal),
-            companyId: Value(companyId),
-            sync: const Value(0),
-            rate: Value(ledgerAmount),
-          ),
-        );
+    final Map<String, double> taxLedgers = {
+      "CGST": txn.totalCgst,
+      "SGST": txn.totalSgst,
+      "CESS": txn.totalCess,
+    };
+
+    for (final entry in taxLedgers.entries) {
+      if (entry.value > 0) {
+        await db
+            .into(db.saleReturnLedgerDetailsTable)
+            .insert(
+              SaleReturnLedgerDetailsTableCompanion.insert(
+                mid: Value(masterId),
+                ledger: Value(ledgerName),
+                amount: Value(txn.grandTotal),
+                companyId: Value(companyId),
+
+                voucherName: Value(entry.key),
+              ),
+            );
+      }
+    }
   });
 
   await printSaleReturnSavedData(db);

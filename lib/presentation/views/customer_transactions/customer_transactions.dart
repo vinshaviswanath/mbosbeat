@@ -105,155 +105,168 @@ class _CustomerTransactionsState extends State<CustomerTransactions> {
           ),
           SizedBox(height: MediaQuery.of(context).size.height * 0.005),
           Expanded(
-            child: ListView.builder(
-              itemCount: filteredParties.length,
-
-              itemBuilder: (context, index) {
-                final party = filteredParties[index];
-                return GestureDetector(
-                  onTap: () {
-                    context.pushNamed(
-                      AppRouterConst.transactionDetailpage,
-                      extra: {"base": widget.data, "party": party},
-                    );
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Column(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: ColorResources.indigoBlue.withValues(
-                              alpha: 0.1,
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        party.ledgerName ?? "N/A",
-                                        maxLines: 2,
-                                        softWrap: true,
-                                        style: context
-                                            .textStyle
-                                            .s12
-                                            .w600
-                                            .indigoBlue
-                                            .roboto,
-                                      ),
-                                    ),
-                                    // Spacer(),
-                                    Text(
-                                      "Balance",
-                                      style: context
-                                          .textStyle
-                                          .s09
-                                          .dustyBlue
-                                          .roboto,
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: height * 0.002),
-
-                                //contact person
-                                Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.person,
-                                      color: ColorResources.bluishGray,
-                                      size: 13,
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        "Contact Person : ${party.contactPerson}",
-                                        style: context
-                                            .textStyle
-                                            .s08
-                                            .dustyBlue
-                                            .roboto,
-                                        softWrap: true,
-                                      ),
-                                    ),
-                                    //  Spacer(),
-                                    Text(
-                                      party.closingBalance.toString(),
-                                      style: context
-                                          .textStyle
-                                          .s12
-                                          .rosePink
-                                          .roboto
-                                          .w600,
-                                    ),
-                                  ],
-                                ),
-
-                                //mobile number
-                                Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.phone_android,
-                                      color: ColorResources.bluishGray,
-                                      size: 13,
-                                    ),
-                                    Text(
-                                      "Mobile : ${party.mobile}",
-                                      style: context
-                                          .textStyle
-                                          .s08
-                                          .dustyBlue
-                                          .roboto,
-                                    ),
-                                    Spacer(),
-                                    const CircleAvatar(
-                                      backgroundColor:
-                                          ColorResources.freshgreen,
-
-                                      radius: 10,
-                                      child: Icon(
-                                        Icons.call_rounded,
-                                        size: 12,
-                                        color: ColorResources.white,
-                                      ),
-                                    ),
-                                    SizedBox(width: width * 0.01),
-                                    const CircleAvatar(
-                                      backgroundColor: ColorResources.dustyBlue,
-                                      radius: 10,
-                                      child: Icon(
-                                        Icons.location_on_sharp,
-                                        size: 12,
-                                        color: ColorResources.white,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.005,
-                        ),
-                        const Divider(
-                          color: ColorResources.lightGray,
-                          height: 3,
-                          thickness: 1.4,
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.005,
-                        ),
-                      ],
+            child: isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : allParties.isEmpty
+                ? Center(
+                    child: Text(
+                      "No customers found, Please Sync first..",
+                      style: context.textStyle.s12.dustyBlue.roboto,
                     ),
+                  )
+                : ListView.builder(
+                    itemCount: filteredParties.length,
+
+                    itemBuilder: (context, index) {
+                      final party = filteredParties[index];
+                      return GestureDetector(
+                        onTap: () {
+                          context.pushNamed(
+                            AppRouterConst.transactionDetailpage,
+                            extra: {"base": widget.data, "party": party},
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: Column(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: ColorResources.indigoBlue.withValues(
+                                    alpha: 0.1,
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              party.ledgerName ?? "N/A",
+                                              maxLines: 2,
+                                              softWrap: true,
+                                              style: context
+                                                  .textStyle
+                                                  .s12
+                                                  .w600
+                                                  .indigoBlue
+                                                  .roboto,
+                                            ),
+                                          ),
+                                          // Spacer(),
+                                          Text(
+                                            "Balance",
+                                            style: context
+                                                .textStyle
+                                                .s09
+                                                .dustyBlue
+                                                .roboto,
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: height * 0.002),
+
+                                      //contact person
+                                      Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.person,
+                                            color: ColorResources.bluishGray,
+                                            size: 13,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              "Contact Person : ${party.contactPerson}",
+                                              style: context
+                                                  .textStyle
+                                                  .s08
+                                                  .dustyBlue
+                                                  .roboto,
+                                              softWrap: true,
+                                            ),
+                                          ),
+                                          //  Spacer(),
+                                          Text(
+                                            party.closingBalance.toString(),
+                                            style: context
+                                                .textStyle
+                                                .s12
+                                                .rosePink
+                                                .roboto
+                                                .w600,
+                                          ),
+                                        ],
+                                      ),
+
+                                      //mobile number
+                                      Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.phone_android,
+                                            color: ColorResources.bluishGray,
+                                            size: 13,
+                                          ),
+                                          Text(
+                                            "Mobile : ${party.mobile}",
+                                            style: context
+                                                .textStyle
+                                                .s08
+                                                .dustyBlue
+                                                .roboto,
+                                          ),
+                                          Spacer(),
+                                          const CircleAvatar(
+                                            backgroundColor:
+                                                ColorResources.freshgreen,
+
+                                            radius: 10,
+                                            child: Icon(
+                                              Icons.call_rounded,
+                                              size: 12,
+                                              color: ColorResources.white,
+                                            ),
+                                          ),
+                                          SizedBox(width: width * 0.01),
+                                          const CircleAvatar(
+                                            backgroundColor:
+                                                ColorResources.dustyBlue,
+                                            radius: 10,
+                                            child: Icon(
+                                              Icons.location_on_sharp,
+                                              size: 12,
+                                              color: ColorResources.white,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ), 
+                                ),
+                              ),
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.005,
+                              ),
+                              const Divider(
+                                color: ColorResources.lightGray,
+                                height: 3,
+                                thickness: 1.4,
+                              ),
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.005,
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
           ),
         ],
       ),

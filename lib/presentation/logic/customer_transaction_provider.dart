@@ -400,7 +400,18 @@ class CustomerTransactionProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ===================== INDEX SELECTION =====================
+ // ===================== TAX =====================
+  final double cgstRate = 9;
+  final double sgstRate = 9;
+  final double igstRate = 18;
+  final double cessRate = 0;
+
+  double get cgst => subTotal * cgstRate / 100;
+  double get sgst => subTotal * sgstRate / 100;
+  double get igst => subTotal * igstRate / 100;
+  double get cess => subTotal * cessRate / 100;
+
+ // ===================== INDEX SELECTION =====================
 
   bool isSelectedByIndex(int index) => _selectedIndex == index;
 
@@ -607,7 +618,7 @@ class CustomerTransactionProvider extends ChangeNotifier {
   void applyAllFilterFromCache() {
     if (_normalCache.isEmpty) return;
 
-    /// ⭐ reset filter state
+    /// ⭝ reset filter state
     _selectedGroup = 'All';
     _selectedCategory = 'All';
     _search = '';
