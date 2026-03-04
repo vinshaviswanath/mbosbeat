@@ -19,8 +19,8 @@ class SaleOrderDetailsTable extends Table {
 
   RealColumn get total => real().nullable()();
 
-  RealColumn get disc => real().nullable()();
-  RealColumn get discVal => real().nullable()();
+//  RealColumn get disc => real().nullable()();
+ // RealColumn get discVal => real().nullable()();
 
   TextColumn get ledger => text().nullable()();
 
@@ -28,10 +28,6 @@ class SaleOrderDetailsTable extends Table {
 
   IntColumn get sync => integer().withDefault(const Constant(0))();
 
-  RealColumn get igst => real().nullable()();
-  RealColumn get cgst => real().nullable()();
-  RealColumn get sgst => real().nullable()();
-  RealColumn get cess => real().nullable()();
 
   TextColumn get hsn => text().nullable()();
 
@@ -44,9 +40,9 @@ class SaleOrderDetailsTable extends Table {
   RealColumn get fQty => real().nullable()();
 
   RealColumn get addDiscVal => real().nullable()();
-  RealColumn get cessAmt => real().nullable()();
+//  RealColumn get cessAmt => real().nullable()();
 
-  TextColumn get stkNegPermission => text().nullable()();
+ // TextColumn get stkNegPermission => text().nullable()();
   TextColumn get discType => text().nullable()();
 
   TextColumn get priceList => text().nullable()();

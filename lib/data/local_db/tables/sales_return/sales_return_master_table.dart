@@ -19,7 +19,7 @@ class SaleReturnMasterTable extends Table {
 
   RealColumn get voucherAmount => real()();
 
-  IntColumn get status => integer().nullable()();
+  // IntColumn get status => integer().nullable()();
 
   TextColumn get priceList => text().nullable()();
   TextColumn get narration => text().nullable()();
@@ -35,14 +35,14 @@ class SaleReturnMasterTable extends Table {
 
   TextColumn get gstin => text().nullable()();
   TextColumn get state => text().nullable()();
-  TextColumn get partyParent => text().nullable()();
+  // TextColumn get partyParent => text().nullable()();
 
-  TextColumn get addDiscType => text().nullable()();
+  // TextColumn get addDiscType => text().nullable()();
   RealColumn get addDiscEntered => real().nullable()();
 
   TextColumn get prefix => text().nullable()();
   TextColumn get suffix => text().nullable()();
-  TextColumn get voucherNumber => text().nullable()();
+  //TextColumn get voucherNumber => text().nullable()();
 
   TextColumn get vchType => text().nullable()();
   IntColumn get invNo => integer().nullable()();
@@ -52,13 +52,13 @@ class SaleReturnMasterTable extends Table {
   IntColumn get tripId => integer().nullable()();
   IntColumn get visitId => integer().nullable()();
 
-  IntColumn get stockStatus => integer().nullable()();
-  IntColumn get finId => integer().nullable()();
+  // IntColumn get stockStatus => integer().nullable()();
+  // IntColumn get finId => integer().nullable()();
   DateTimeColumn get createdTime => dateTime().nullable()();
   DateTimeColumn get updatedTime => dateTime().nullable()();
   TextColumn get deliveryDate => text().nullable()();
 
-  IntColumn get printCount => integer().nullable()();
+  //  IntColumn get printCount => integer().nullable()();
   IntColumn get sync => integer().withDefault(const Constant(0))();
 
   TextColumn get pinCode => text().nullable()();

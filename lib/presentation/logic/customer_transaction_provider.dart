@@ -74,10 +74,12 @@ class CustomerTransactionProvider extends ChangeNotifier {
   // ===================== TAX =====================
   final double cgstRate = 9;
   final double sgstRate = 9;
+  final double igstRate = 18;
   final double cessRate = 0;
 
   double get cgst => subTotal * cgstRate / 100;
   double get sgst => subTotal * sgstRate / 100;
+  double get igst => subTotal * igstRate / 100;
   double get cess => subTotal * cessRate / 100;
 
   // ===================== INDEX SELECTION =====================

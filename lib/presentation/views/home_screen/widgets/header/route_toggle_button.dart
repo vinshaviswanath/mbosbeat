@@ -6,7 +6,11 @@ class RouteToggleButton extends StatelessWidget {
   final bool started;
   final int companyId;
 
-  const RouteToggleButton({super.key, required this.started, required this.companyId});
+  const RouteToggleButton({
+    super.key,
+    required this.started,
+    required this.companyId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,12 +19,7 @@ class RouteToggleButton extends StatelessWidget {
         if (!started) {
           showStartTripDialog(context, companyId: companyId);
         } else {
-          showEndTripDialog(
-            context,
-            onTap: () async {
-              // same logic as before
-            },
-          );
+          showEndTripDialog(context, onTap: () async {});
         }
       },
       child: Container(

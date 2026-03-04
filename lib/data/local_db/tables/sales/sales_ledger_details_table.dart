@@ -16,4 +16,14 @@ class SaleLedgerDetailsTable extends Table {
   RealColumn get amount => real().nullable()();
 
   IntColumn get companyId => integer().nullable()();
+  TextColumn get voucherName => text().nullable()();
+  TextColumn get discountType => text().nullable()();
+  RealColumn get discountAmount => real().nullable()();
+  RealColumn get saleAmount => real().nullable()();
+  RealColumn get couponDiscountAmount => real().nullable()();
+
+  RealColumn get igst => real().nullable()();
+  RealColumn get cgst => real().nullable()();
+  RealColumn get sgst => real().nullable()();
+  RealColumn get cess => real().nullable()();
 }

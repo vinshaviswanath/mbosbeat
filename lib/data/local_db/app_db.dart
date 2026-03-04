@@ -151,7 +151,7 @@ class AppDb extends _$AppDb {
   AppDb() : super(_openConnection());
 
   @override
-  int get schemaVersion => 30;
+  int get schemaVersion => 35;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -261,15 +261,7 @@ class AppDb extends _$AppDb {
         await m.createTable(saleReturnDetailsTable);
         await m.createTable(saleReturnLedgerDetailsTable);
       }
-      if (from < 26) {
-        await m.addColumn(saleMasterTable, saleMasterTable.discountType);
-        await m.addColumn(saleMasterTable, saleMasterTable.discountAmount);
-        await m.addColumn(saleMasterTable, saleMasterTable.amount);
-        await m.addColumn(
-          saleMasterTable,
-          saleMasterTable.coupontdiscountamount,
-        );
-      }
+
       if (from < 28) {
         await m.createTable(receiptEntryTable);
         await m.createTable(receiptEntryLedgerTable);
@@ -286,6 +278,100 @@ class AppDb extends _$AppDb {
         await m.addColumn(itemMaster, itemMaster.closingStock);
         await m.addColumn(itemMaster, itemMaster.cess);
         await m.addColumn(itemMaster, itemMaster.cost);
+      }
+
+      if (from < 32) {
+        await m.deleteTable(saleOrderLedgerDetailsTable.actualTableName);
+        await m.createTable(saleOrderLedgerDetailsTable);
+      }
+      if (from < 34) {
+        await m.addColumn(
+          saleLedgerDetailsTable,
+          saleLedgerDetailsTable.voucherName,
+        );
+        await m.addColumn(
+          saleLedgerDetailsTable,
+          saleLedgerDetailsTable.discountType,
+        );
+
+        await m.addColumn(
+          saleLedgerDetailsTable,
+          saleLedgerDetailsTable.discountAmount,
+        );
+
+        await m.addColumn(
+          saleLedgerDetailsTable,
+          saleLedgerDetailsTable.saleAmount,
+        );
+
+        await m.addColumn(
+          saleLedgerDetailsTable,
+          saleLedgerDetailsTable.couponDiscountAmount,
+        );
+
+        await m.addColumn(saleLedgerDetailsTable, saleLedgerDetailsTable.igst);
+
+        await m.addColumn(saleLedgerDetailsTable, saleLedgerDetailsTable.cgst);
+
+        await m.addColumn(saleLedgerDetailsTable, saleLedgerDetailsTable.sgst);
+
+        await m.addColumn(saleLedgerDetailsTable, saleLedgerDetailsTable.cess);
+
+        // ================= SALE RETURN LEDGER TABLE =================
+
+        await m.addColumn(
+          saleReturnLedgerDetailsTable,
+          saleReturnLedgerDetailsTable.igst,
+        );
+
+        await m.addColumn(
+          saleReturnLedgerDetailsTable,
+          saleReturnLedgerDetailsTable.cgst,
+        );
+
+        await m.addColumn(
+          saleReturnLedgerDetailsTable,
+          saleReturnLedgerDetailsTable.sgst,
+        );
+
+        await m.addColumn(
+          saleReturnLedgerDetailsTable,
+          saleReturnLedgerDetailsTable.cess,
+        );
+      }
+      if (from < 35) {
+        await m.addColumn(
+          saleLedgerDetailsTable,
+          saleLedgerDetailsTable.voucherName,
+        );
+
+        await m.addColumn(
+          saleLedgerDetailsTable,
+          saleLedgerDetailsTable.discountType,
+        );
+
+        await m.addColumn(
+          saleLedgerDetailsTable,
+          saleLedgerDetailsTable.discountAmount,
+        );
+
+        await m.addColumn(
+          saleLedgerDetailsTable,
+          saleLedgerDetailsTable.saleAmount,
+        );
+
+        await m.addColumn(
+          saleLedgerDetailsTable,
+          saleLedgerDetailsTable.couponDiscountAmount,
+        );
+
+        await m.addColumn(saleLedgerDetailsTable, saleLedgerDetailsTable.igst);
+
+        await m.addColumn(saleLedgerDetailsTable, saleLedgerDetailsTable.cgst);
+
+        await m.addColumn(saleLedgerDetailsTable, saleLedgerDetailsTable.sgst);
+
+        await m.addColumn(saleLedgerDetailsTable, saleLedgerDetailsTable.cess);
       }
     },
   );

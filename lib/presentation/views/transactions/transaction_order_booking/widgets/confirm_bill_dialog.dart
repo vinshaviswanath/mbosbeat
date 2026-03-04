@@ -1,7 +1,9 @@
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/presentation/logic/customer_transaction_provider.dart';
 
-void confirmBillDialog(context, {required VoidCallback onSave}) {
+void confirmBillDialog(context, {
+  required Future<void> Function() onSave,
+}) {
   showDialog(
     barrierDismissible: false,
     context: context,
@@ -34,11 +36,13 @@ void confirmBillDialog(context, {required VoidCallback onSave}) {
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () {
-                        onSave.call();
-                        provider.clearSelectedItems();
-                        Navigator.pop(context);
-                        Navigator.pop(context);
+                      onPressed: () async {
+                        Navigator.pop(context); // close dialog only
+
+                        await Future.delayed(Duration.zero);
+                        // ensures dialog is fully removed from tree
+
+                        await onSave();
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: ColorResources.indigoBlue,

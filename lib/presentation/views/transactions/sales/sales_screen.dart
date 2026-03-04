@@ -607,6 +607,7 @@ class _SalesScreenState extends State<SalesScreen> {
                                 longitude: widget.data.party.longitude ?? 0.0,
                                 mailingName:
                                     widget.data.party.mailingName ?? '',
+                                    
                               );
 
                               txn.clearSelectedItems();
@@ -703,15 +704,8 @@ Future<void> saveSale({
             sync: const Value(0),
             voucherDate: Value(DateFormat('yyyy-MM-dd').format(DateTime.now())),
             narration: Value(remark.isEmpty ? null : remark),
-            coupontdiscountamount: Value(couponAmount),
             voucherNo: Value(voucherNo),
-            discountType: discountData != null
-                ? Value(discountData.type)
-                : const Value.absent(),
 
-            discountAmount: discountData != null
-                ? Value(discountData.amount)
-                : const Value.absent(),
             address2: Value(address2),
             address: Value(address),
             pinCode: Value(pinCode),
@@ -736,10 +730,7 @@ Future<void> saveSale({
               qty: Value(item.qty),
               total: Value(txn.subTotal),
               companyId: Value(companyId),
-              sync: const Value(0),
-              cgst: Value(txn.cgst),
-              sgst: Value(txn.sgst),
-              cess: Value(txn.cess),
+
               disc: Value(item.discount),
               //  fQty: Value(item.freeQty),
               fUnit: Value(item.item.unitName),
@@ -749,40 +740,62 @@ Future<void> saveSale({
           );
     }
 
-    /// 3️⃣ INSERT LEDGER
-    await db
-        .into(db.saleLedgerDetailsTable)
-        .insert(
-          SaleLedgerDetailsTableCompanion.insert(
-            mid: Value(masterId),
-            ledger: Value(ledgerName),
-            amount: Value(txn.grandTotal),
-            companyId: Value(companyId),
-            sync: const Value(0),
-            rate: Value(rate),
-          ),
-        );
-    //insert autorecipt
-    if (paymentData != null) {
-      await db
-          .into(db.saleAutoReceiptTable)
-          .insert(
-            SaleAutoReceiptTableCompanion.insert(
-              mid: Value(masterId),
-              companyId: Value(companyId),
+   
+    ///   /// 3️⃣ INSERT LEDGER
+    final Map<String, double> taxLedgers = {
+      "CGST": txn.totalCgst,
+      "SGST": txn.totalSgst,
+      "CESS": txn.totalCess,
+    };
 
-              paymentMode: Value(paymentData.paymentMode),
-              amount: Value(paymentData.amount),
-              upiReference: Value(paymentData.upiReference),
-              chequeNumber: Value(paymentData.chequeNumber),
-              chequeDate: paymentData.chequeDate != null
-                  ? Value(
-                      DateFormat('yyyy-MM-dd').format(paymentData.chequeDate!),
-                    )
-                  : const Value.absent(),
-              sync: const Value(0),
-            ),
-          );
+    for (final entry in taxLedgers.entries) {
+      if (entry.value > 0) {
+        await db
+            .into(db.saleLedgerDetailsTable)
+            .insert(
+              SaleLedgerDetailsTableCompanion.insert(
+                mid: Value(masterId),
+                ledger: Value(ledgerName),
+                amount: Value(txn.grandTotal),
+                companyId: Value(companyId),
+                voucherName: Value(entry.key),
+
+                couponDiscountAmount: Value(couponAmount),
+
+                discountType: discountData != null
+                    ? Value(discountData.type)
+                    : const Value.absent(),
+
+                discountAmount: discountData != null
+                    ? Value(discountData.amount)
+                    : const Value.absent(),
+              ),
+            );
+        //insert autorecipt
+        if (paymentData != null) {
+          await db
+              .into(db.saleAutoReceiptTable)
+              .insert(
+                SaleAutoReceiptTableCompanion.insert(
+                  mid: Value(masterId),
+                  companyId: Value(companyId),
+
+                  paymentMode: Value(paymentData.paymentMode),
+                  amount: Value(paymentData.amount),
+                  upiReference: Value(paymentData.upiReference),
+                  chequeNumber: Value(paymentData.chequeNumber),
+                  chequeDate: paymentData.chequeDate != null
+                      ? Value(
+                          DateFormat(
+                            'yyyy-MM-dd',
+                          ).format(paymentData.chequeDate!),
+                        )
+                      : const Value.absent(),
+                  sync: const Value(0),
+                ),
+              );
+        }
+      }
     }
   });
 

@@ -28,11 +28,6 @@ class SaleReturnDetailsTable extends Table {
 
   IntColumn get sync => integer().withDefault(const Constant(0))();
 
-  RealColumn get igst => real().nullable()();
-  RealColumn get cgst => real().nullable()();
-  RealColumn get sgst => real().nullable()();
-  RealColumn get cess => real().nullable()();
-
   TextColumn get hsn => text().nullable()();
 
   RealColumn get enteredRate => real().nullable()();
