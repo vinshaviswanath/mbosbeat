@@ -84,7 +84,7 @@ class _UserCompanySelectionScreenState
         body: Column(
           children: [
             Padding(
-              padding: .only(top: 8, bottom: 4, left: 16, right: 16),
+              padding: EdgeInsets.only(top: 8, bottom: 4, left: 16, right: 16),
               child: CustomTextField(
                 suffixIcon: const Icon(
                   Icons.search,
@@ -123,7 +123,7 @@ class _UserCompanySelectionScreenState
 
                       if (!snapshot.hasData || snapshot.data!.isEmpty) {
                         return Column(
-                          mainAxisAlignment: .center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SvgPicture.asset(
                               AppAssets.noCompanies,
@@ -133,7 +133,7 @@ class _UserCompanySelectionScreenState
                             Text(
                               "No Company listing found!\nContact Administrator.",
                               style: context.textStyle.s11.w400.dustyBlue,
-                              textAlign: .center,
+                              textAlign: TextAlign.center,
                             ),
                           ],
                         );
@@ -153,8 +153,8 @@ class _UserCompanySelectionScreenState
 
                       if (filteredCompanies.isEmpty) {
                         return Column(
-                          mainAxisAlignment: .center,
-                          crossAxisAlignment: .center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Image.asset(
                               AppAssets.noData,
@@ -171,7 +171,7 @@ class _UserCompanySelectionScreenState
                       }
 
                       return ListView.separated(
-                        padding: .symmetric(horizontal: 16),
+                        padding: EdgeInsets.symmetric(horizontal: 16),
                         itemCount: filteredCompanies.length,
                         separatorBuilder: (_, __) => const SizedBox(height: 10),
                         itemBuilder: (context, index) {
@@ -194,7 +194,7 @@ class _UserCompanySelectionScreenState
                               );
                             },
                             child: Container(
-                              padding: .only(
+                              padding: EdgeInsets.only(
                                 left: 16,
                                 right: 16,
                                 bottom: 12,

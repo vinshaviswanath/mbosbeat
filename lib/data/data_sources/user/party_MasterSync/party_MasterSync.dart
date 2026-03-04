@@ -120,24 +120,25 @@ class PartyMasterSync {
     required int limit,
     required int offset,
   }) async {
+    Logger.logInfo(DateTime.now());
+    final (sql, args) = buildQuery(
+      limit: limit,
+      offset: offset,
+      companyId: companyId,
+      ledgerId: ledgerId,
+      selectedPriceLevelId: selectedPriceLevelId,
+      categoryName: categoryName,
+      groupName: groupName,
+      searchValue: searchValue,
+    ).build();
+    print(sql);
+    print(args);
     final rows = await appDb
-        .customSelect(
-          buildQuery(),
-          variables: [
-            Variable(selectedPriceLevelId),
-            Variable(companyId),
-            Variable(categoryName == 'All' ? null : categoryName),
-            Variable(groupName == 'All' ? null : groupName),
-            Variable(
-              searchValue == null || searchValue.isEmpty
-                  ? null
-                  : '%$searchValue%',
-            ),
-            Variable(limit),
-            Variable(offset),
-          ],
-        )
+        .customSelect(sql, variables: args.map((e) => Variable(e)).toList())
         .get();
+
+    print(rows.firstOrNull?.data);
+    Logger.logInfo(DateTime.now());
 
     return rows.map((r) => Product.fromJson(r.data)).toList();
   }
@@ -170,32 +171,69 @@ class PartyMasterSync {
         );
   }
 
-  String buildQuery({
-    bool hasGroupFilter = false,
-    bool hasCategoryFilter = false,
-    bool hasSearch = false,
+  QueryBuilder buildQuery({
+    required int companyId,
+    required int ledgerId,
+    required int selectedPriceLevelId,
+    String? groupName,
+    String? categoryName,
+    String? searchValue,
+    required int limit,
+    required int offset,
   }) {
-    final builder = SqlQueryBuilder();
+    final builder = QueryBuilder();
 
     builder
         .select(['*'])
         .from('item_master i')
         .join(
-          'LEFT JOIN item_price_details_tables ip'
-          ' ON ip.item_id = i.stock_item_id AND ip.price_list = ?',
+          'LEFT JOIN item_price_details_tables ip '
+          'ON ip.item_id = i.stock_item_id AND ip.price_list = ?',
+          [selectedPriceLevelId],
         )
-        .where(
-          'i.company_id = ?'
-          ' AND  (:category IS NULL OR i.category_name = :category) '
-          'AND (:group IS NULL OR i.group_name = :group) '
-          'AND (:search IS NULL OR LOWER(i.item_name) LIKE LOWER(:search)'
-          ' OR LOWER(i.alias_name) LIKE LOWER(:search)'
-          ' OR i.part_number LIKE :search) ',
-        );
+        .where('i.company_id = ?', [companyId]);
 
-    return '${builder.build()} '
-        'ORDER BY i.item_name COLLATE NOCASE '
-        'LIMIT ? OFFSET ?';
+    if (categoryName != null && categoryName != 'All') {
+      builder.where('i.category_name = ?', [categoryName]);
+    }
+
+    if (groupName != null && groupName != 'All') {
+      builder.where('i.group_name = ?', [groupName]);
+    }
+
+    if (searchValue != null && searchValue.isNotEmpty) {
+      builder.where(
+        '('
+        'i.item_name LIKE ? COLLATE NOCASE OR '
+        'i.alias_name LIKE ? COLLATE NOCASE OR '
+        'i.part_number LIKE ?'
+        ')',
+        ['%$searchValue%', '%$searchValue%', '%$searchValue%'],
+      );
+    }
+
+    builder.orderBy('i.item_name COLLATE NOCASE').limit(limit).offset(offset);
+
+    return builder;
+    // builder
+    //     .select(['*'])
+    //     .from('item_master i')
+    //     .join(
+    //       'LEFT JOIN item_price_details_tables ip'
+    //       ' ON ip.item_id = i.stock_item_id AND ip.price_list = ?',
+    //     )
+    //     .where(
+    //       'i.company_id = ?'
+    //       ' AND  (:category IS NULL OR i.category_name = :category) '
+    //       'AND (:group IS NULL OR i.group_name = :group) '
+    //       'AND (:search IS NULL OR i.item_name LIKE :search COLLATE NOCASE'
+    //       ' OR i.alias_name LIKE :search COLLATE NOCASE'
+    //       ' OR i.part_number LIKE :search) ',
+    //     );
+
+    // return '${builder.build()} '
+    //     'ORDER BY i.item_name COLLATE NOCASE '
+    //     'LIMIT ? OFFSET ?';
   }
 
   Future<PartyMasterDetails?> fetchParty(int companyId, int ledgerId) async {

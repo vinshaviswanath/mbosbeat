@@ -23,7 +23,7 @@ void clearItemsWarningDialog(context) {
           child: Column(
             children: [
               RichText(
-                textAlign: .center,
+                textAlign: TextAlign.center,
                 text: TextSpan(
                   style: context.textStyle.s14.roboto.bold.roseRed,
                   children: [

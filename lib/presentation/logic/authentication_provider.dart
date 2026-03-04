@@ -250,144 +250,92 @@ class AuthFormProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<LoginResponse?> submitOtp(
-    BuildContext context, {
-    required void Function(LoginResponse) onResponse,
-    required void Function(MainFailure) onError,
-  }) async {
-    _showOtpValidation = true;
-    otpAutovalidateMode = AutovalidateMode.always;
+Future<LoginResponse?> submitOtp(
+  BuildContext context, {
+  required void Function(LoginResponse) onResponse,
+  required void Function(MainFailure) onError,
+}) async {
+  otpAutovalidateMode = AutovalidateMode.always;
+  notifyListeners();
+
+  if (!_otp.isValid()) return null;
+
+  if (_remainingSeconds == 0) {
+    _otpError = "OTP has expired. Please request a new one.";
     notifyListeners();
-    if (!_otp.isValid()) {
-      return null;
-    }
 
-    if (_remainingSeconds == 0) {
-      _otpError = "OTP has expired. Please request a new one.";
-      notifyListeners();
-      // CustomAlertDialog.showCustomDialog(
-      //   title: _otpError!,
-      //   typeAlert: TypeAlert.error,
-      // );
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(_otpError!, textAlign: TextAlign.center),
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        ),
-      );
-      return null;
-    }
-
-    // context.pushNamed(AppRouterConst.loadingScreen);
-    Logger.logSuccess("Customer ID : $_cusomerId");
-    final result = await iAuthenticationFacad.otpValidation(
-      BaseParams(
-        data: OtpParams(id: _cusomerId, otp: _otp.getValue),
-      ),
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(_otpError!)),
     );
-
-    result.fold(
-      (failure) {
-        _otpError = failure.errorMsg;
-        Logger.logError(failure.errorMsg);
-        // _otpError = "Please enter valid OTP";
-        if (_otp.isValid()) {
-          // _alreadyNavigatedToInvalidOtp = true;
-          startOtpTimer();
-          // GoRouter.of(context).pushNamed(AppRouterConst.invalidOtp);
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(_otpError!, textAlign: TextAlign.center),
-              behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            ),
-          );
-        }
-
-        notifyListeners();
-      },
-      (response) async {
-        _loginResponse = response;
-
-        if (response.status == 0) {
-          _otpError = response.message;
-          Logger.logError(_otpError!);
-
-          notifyListeners();
-
-          // Close loading screen
-          // GoRouter.of(context).pop();
-
-          return; // stop flow – don’t go to success page
-        }
-        // ✔ VALID OTP (status == 1)
-        _otpError = null;
-
-        Logger.logSuccess("OTP verification success : ${response.toJson()}");
-
-        // _alreadyNavigatedToInvalidOtp = false;
-
-        // await UserStorage.updateUser(verifiedUser);
-
-        resetSignUpForm();
-        resetLoginForm();
-
-        notifyListeners();
-
-        onResponse.call(response);
-      },
-    );
-
-    return _loginResponse;
+    return null;
   }
+
+  final result = await iAuthenticationFacad.otpValidation(
+    BaseParams(
+      data: OtpParams(id: _cusomerId, otp: _otp.getValue),
+    ),
+  );
+
+  result.fold(
+    (failure) {
+      _otpError = failure.errorMsg;
+
+      // ❌ DO NOT restart timer here
+
+      notifyListeners();
+    },
+    (response) {
+      _loginResponse = response;
+
+      if (response.status == 0) {
+        _otpError = response.message;
+        notifyListeners();
+        return;
+      }
+
+      // ✅ SUCCESS
+      _otpError = null;
+      resetSignUpForm();
+      resetLoginForm();
+      notifyListeners();
+
+      onResponse.call(response);
+    },
+  );
+
+  return _loginResponse;
+}
 
   //============================================================================
   //                           RESEND OTP
   //============================================================================
 
-  Future<LoginResponse?> resendOtp(BuildContext context, {int? id}) async {
-    final result = await iAuthenticationFacad.resendOtp(
-      BaseParams(data: ResendOtpParams(userId: id ?? _cusomerId ?? 0)),
-    );
+Future<LoginResponse?> resendOtp(BuildContext context, {int? id}) async {
+  final result = await iAuthenticationFacad.resendOtp(
+    BaseParams(data: ResendOtpParams(userId: id ?? _cusomerId ?? 0)),
+  );
 
-    result.fold(
-      (failure) {
-        _errorMessage = failure.errorMsg.toString();
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
-        Logger.logError("Resend OTP failed : $_errorMessage");
-        // _setLoading(false);
-        resetOtpTimer();
-        notifyListeners();
-      },
-      (response) {
-        _loginResponse = response;
-        _otpValue = response.message;
-        _cusomerId = response.id;
-        Logger.logSuccess("Resend OTP success : ${response.toJson()}");
-        Logger.logSuccess("Resend OTP ID : $_cusomerId");
+  result.fold(
+    (failure) {
+      _errorMessage = failure.errorMsg.toString();
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(_errorMessage!)));
+      notifyListeners();
+    },
+    (response) {
+      _loginResponse = response;
+      _otpValue = response.message;
+      _cusomerId = response.id;
 
-        // Navigator.push(
-        //                 context,
-        //                 MaterialPageRoute(
-        //                   builder: (context) =>
-        //                       OtpAuthentication(user: existingUser),
-        //                 ),
-        //               );
-      },
-    );
+      clearOtpValidation();
+      startOtpTimer(); // ✅ Restart ONLY here
 
-    return _loginResponse;
-  }
+      notifyListeners();
+    },
+  );
+
+  return _loginResponse;
+}
 
   // void clearOtpValidation() {
   //   _otp = Otp("");
@@ -399,18 +347,19 @@ class AuthFormProvider with ChangeNotifier {
   // }
 
   /// Starts OTP countdown timer.
-  void startOtpTimer() {
-    _remainingSeconds = 60;
-    _timer?.cancel();
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (_remainingSeconds > 0) {
-        _remainingSeconds--;
-        notifyListeners();
-      } else {
-        _timer?.cancel();
-      }
-    });
-  }
+void startOtpTimer() {
+  _remainingSeconds = 60;
+  _timer?.cancel();
+
+  _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    if (_remainingSeconds > 0) {
+      _remainingSeconds--;
+      notifyListeners();
+    } else {
+      _timer?.cancel();
+    }
+  });
+}
 
   /// Resets OTP timer.
   void resetOtpTimer() {

@@ -32,8 +32,8 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
   Widget build(BuildContext context) {
     final pref = sl<SharedPreferences>();
     final token = pref.getString("token");
-   // Logger.logInfo(context.textStyle.s22.w700.white.fontFamily);
-   // Logger.logSuccess("TOKEN : $token");
+    // Logger.logInfo(context.textStyle.s22.w700.white.fontFamily);
+    // Logger.logSuccess("TOKEN : $token");
 
     final appLocalization = context.l10n;
     return PopScope(
@@ -246,7 +246,7 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
 
                           const Spacer(),
                           Row(
-                            mainAxisAlignment: .center,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               GestureDetector(
                                 onTap: () {
@@ -255,7 +255,7 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                                   context.pushNamed(AppRouterConst.login);
                                 },
                                 child: Container(
-                                  padding: .symmetric(
+                                  padding: EdgeInsets.symmetric(
                                     horizontal: 16,
                                     vertical: 8,
                                   ),

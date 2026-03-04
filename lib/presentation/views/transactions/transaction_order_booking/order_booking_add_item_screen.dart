@@ -23,32 +23,50 @@ class OrderBookingAddItemScreen extends StatefulWidget {
 class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
   Timer? _debounce;
   late TextEditingController _searchController;
+  late ScrollController _scrollController;
 
-  @override
-  void initState() {
-    super.initState();
+@override
+void initState() {
+  super.initState();
 
-    _searchController = TextEditingController();
+  _searchController = TextEditingController();
+  _scrollController = ScrollController();
 
-    /// ⭝ detect clear search automatically
-    _searchController.addListener(_handleSearchClear);
+  _searchController.addListener(_handleSearchClear);
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final transactionProvider = context.read<CustomerTransactionProvider>();
-      transactionProvider.selectGroup(
-        'All',
-        companyId: widget.data.data.company.id!,
-        priceListId: widget.data.party.priceList ?? 0,
-        ledgerId: widget.data.party.ledgerId,
-      );
-      //  transactionProvider.resetPagination();
-      transactionProvider.loadNextPage(
-        companyId: widget.data.data.company.id!,
-        priceListId: widget.data.party.priceList ?? 0,
-        ledgerId: widget.data.party.ledgerId,
-      );
-    });
+  _scrollController.addListener(_onScroll);
+
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    final provider = context.read<CustomerTransactionProvider>();
+
+    provider.loadNextPage(
+      companyId: widget.data.data.company.id!,
+      priceListId: widget.data.party.priceList ?? 0,
+      ledgerId: widget.data.party.ledgerId,
+    );
+  });
+}
+
+void _onScroll() {
+  if (!_scrollController.hasClients) return;
+
+  final provider = context.read<CustomerTransactionProvider>();
+
+  final maxScroll = _scrollController.position.maxScrollExtent;
+  final currentScroll = _scrollController.position.pixels.clamp(
+    0,
+    maxScroll,
+  );
+
+  /// 🔥 Load next page when 200px before bottom
+  if (currentScroll >= (maxScroll - 200)) {
+    provider.loadNextPage(
+      companyId: widget.data.data.company.id!,
+      priceListId: widget.data.party.priceList ?? 0,
+      ledgerId: widget.data.party.ledgerId,
+    );
   }
+}
 
   void _handleSearchClear() {
     final provider = context.read<CustomerTransactionProvider>();
@@ -63,12 +81,14 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
     }
   }
 
-  @override
-  void dispose() {
-    _searchController.removeListener(_handleSearchClear);
-    _searchController.dispose();
-    super.dispose();
-  }
+@override
+void dispose() {
+  _searchController.removeListener(_handleSearchClear);
+  _scrollController.removeListener(_onScroll);
+  _searchController.dispose();
+  _scrollController.dispose();
+  super.dispose();
+}
 
   @override
   Widget build(BuildContext context) {
@@ -81,290 +101,200 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
 
     final appLocalization = context.l10n;
 
-    void performSearch(String value) {
-      final transactionProvider = context.read<CustomerTransactionProvider>();
+    // void performSearch(String value) {
+    //   final transactionProvider = context.read<CustomerTransactionProvider>();
 
-      transactionProvider.updateSearch(value.trim());
-      transactionProvider.resetPagination();
+    //   transactionProvider.updateSearch(value.trim());
+    //   transactionProvider.resetPagination();
 
-      transactionProvider.loadNextPage(
-        companyId: widget.data.data.company.id!,
-        priceListId: widget.data.party.priceList ?? 0,
-        ledgerId: widget.data.party.ledgerId,
-      );
-    }
+    //   transactionProvider.loadNextPage(
+    //     companyId: widget.data.data.company.id!,
+    //     priceListId: widget.data.party.priceList ?? 0,
+    //     ledgerId: widget.data.party.ledgerId,
+    //   );
+    // }
 
-    return PopScope(
-      canPop: false,
-      onPopInvoked: (didPop) {
-        if (didPop) return;
-        Navigator.pop(context);
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.keyboard_arrow_left),
-            onPressed: () => Navigator.pop(context),
+    return Consumer<CustomerTransactionProvider>(
+      builder: (context, value, child) => PopScope(
+        canPop: false,
+        onPopInvoked: (didPop) {
+          if (didPop) return;
+          Navigator.pop(context);
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              icon: const Icon(Icons.keyboard_arrow_left),
+              onPressed: () => Navigator.pop(context),
+            ),
+            title: Column(
+              children: [
+                Text(
+                  widget.data.party.ledgerName ?? "",
+                  style: context.textStyle.s18.bold.indigoBlue.roboto,
+                ),
+                Text(
+                  "Order Value : ${transactionProvider.grandTotal.toStringAsFixed(2)}",
+                  style: context.textStyle.s12.dustyBlue.w500.roboto,
+                ),
+              ],
+            ),
+            centerTitle: true,
+            toolbarHeight: 65,
           ),
-          title: Column(
+          body: Stack(
             children: [
-              Text(
-                widget.data.party.ledgerName ?? "",
-                style: context.textStyle.s18.bold.indigoBlue.roboto,
-              ),
-              Text(
-                "Order Value : ${transactionProvider.grandTotal.toStringAsFixed(2)}",
-                style: context.textStyle.s12.dustyBlue.w500.roboto,
-              ),
-            ],
-          ),
-          centerTitle: true,
-          toolbarHeight: 65,
-        ),
-        body: Stack(
-          children: [
-            selectedPriceListId == null
-                ? const Center(child: Text("Please select a Price Level"))
-                : Column(
-                    children: [
-                      /// ===================== SEARCH FIELD (OUTSIDE ) =====================
-                      Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: CustomTextField(
-                          textInputAction: TextInputAction.search,
-                          controller: _searchController,
+              selectedPriceListId == null
+                  ? const Center(child: Text("Please select a Price Level"))
+                  : Column(
+                      children: [
+                        /// ===================== SEARCH FIELD (OUTSIDE ) =====================
+                        Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: CustomTextField(
+                            textInputAction: TextInputAction.search,
+                            controller: _searchController,
 
-                          onFieldSubmitted: (value) {
-                            final keyword = value.trim();
+                            onFieldSubmitted: (value) {
+                              final keyword = value.trim();
 
-                            if (keyword.isEmpty) {
-                              transactionProvider.clearSearchAndReload(
-                                companyId: widget.data.data.company.id!,
-                                ledgerId: widget.data.party.ledgerId,
-                                priceListId: widget.data.party.priceList ?? 0,
-                              );
-                            } else {
-                              transactionProvider.searchAndReload(
-                                keyword,
-                                companyId: widget.data.data.company.id!,
-                                ledgerId: widget.data.party.ledgerId,
-                                priceListId: widget.data.party.priceList ?? 0,
-                              );
-                            }
-                          },
-                          hint: appLocalization.manage_user_screen_search_user,
-                          suffixIcon: Padding(
-                            padding: const EdgeInsets.all(12),
-                            child: Icon(
-                              Icons.search,
-                              color: ColorResources.bluishGray,
-                              size: context.getSize.height * 0.024,
+                              if (keyword.isEmpty) {
+                                transactionProvider.clearSearchAndReload(
+                                  companyId: widget.data.data.company.id!,
+                                  ledgerId: widget.data.party.ledgerId,
+                                  priceListId: widget.data.party.priceList ?? 0,
+                                );
+                              } else {
+                                transactionProvider.searchAndReload(
+                                  keyword,
+                                  companyId: widget.data.data.company.id!,
+                                  ledgerId: widget.data.party.ledgerId,
+                                  priceListId: widget.data.party.priceList ?? 0,
+                                );
+                              }
+                            },
+                            hint:
+                                appLocalization.manage_user_screen_search_user,
+                            suffixIcon: Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: Icon(
+                                Icons.search,
+                                color: ColorResources.bluishGray,
+                                size: context.getSize.height * 0.024,
+                              ),
                             ),
+                            backgroundColor: ColorResources.lightGray,
+                            borderRadius: 12,
+                            hintColor: ColorResources.silverGray,
+                            borderColor: ColorResources.transparent,
                           ),
-                          backgroundColor: ColorResources.lightGray,
-                          borderRadius: 12,
-                          hintColor: ColorResources.silverGray,
-                          borderColor: ColorResources.transparent,
                         ),
-                      ),
 
-                      /// ===================== PRODUCT LIST =====================
-                      Expanded(
-                        child: Consumer<CustomerTransactionProvider>(
-                          builder: (_, provider, __) {
-                            final list = provider.sortedPagedItems;
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 8,
+                          ),
+                          child: Row(
+                            children: [
+                              /// GROUP
+                              Expanded(
+                                child: StreamBuilder<List<GroupModel>>(
+                                  stream: sl<ItemMasterSync>().groupNameList(
+                                    widget.data.data.company.id ?? 0,
+                                  ),
+                                  builder: (_, snapshot) {
+                                    final dbGroups =
+                                        snapshot.data
+                                            ?.map((e) => e.groupName)
+                                            .toList() ??
+                                        [];
+                                    final groups = ['All', ...dbGroups];
+                                    return CustomDropdown<String>(
+                                      value: value.selectedGroup,
+                                      items: groups,
+                                      hintText: appLocalization
+                                          .order_booking_add_item_select_group,
+                                      onChanged: (v) async {
+                                        await transactionProvider.selectGroup(
+                                          v ?? 'All',
+                                          companyId:
+                                              widget.data.data.company.id!,
+                                          priceListId:
+                                              widget.data.party.priceList ?? 0,
+                                          ledgerId: widget.data.party.ledgerId,
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
 
-                            if (list.isEmpty && provider.isLoadingPage) {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            }
+                              w8,
 
-                            if (list.isEmpty) {
-                              return const Center(
-                                child: Text("No items found"),
-                              );
-                            }
+                              /// CATEGORY
+                              Expanded(
+                                child: StreamBuilder<List<CategoryModel>>(
+                                  stream: sl<ItemMasterSync>().categoryList(
+                                    widget.data.data.company.id ?? 0,
+                                  ),
+                                  builder: (_, snapshot) {
+                                    final dbcategories =
+                                        snapshot.data
+                                            ?.map((e) => e.catgoryName)
+                                            .toList() ??
+                                        [];
+                                    final categories = ['All', ...dbcategories];
+                                    return CustomDropdown<String>(
+                                      value: value.selectedCategory,
+                                      items: categories,
+                                      hintText: appLocalization
+                                          .order_booking_add_item_select_category,
+                                      onChanged: (v) async {
+                                        await transactionProvider
+                                            .selectCategory(
+                                              v ?? 'All',
+                                              companyId:
+                                                  widget.data.data.company.id!,
+                                              priceListId:
+                                                  widget.data.party.priceList ??
+                                                  0,
+                                              ledgerId:
+                                                  widget.data.party.ledgerId,
+                                            );
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
 
-                            return NotificationListener<ScrollNotification>(
-                              onNotification: (scrollInfo) {
-                                if (!provider.isLoadingPage &&
-                                    provider.hasMore &&
-                                    scrollInfo.metrics.pixels ==
-                                        scrollInfo.metrics.maxScrollExtent) {
-                                  provider.loadNextPage(
-                                    companyId: widget.data.data.company.id!,
-                                    priceListId:
-                                        widget.data.party.priceList ?? 0,
-                                    ledgerId: widget.data.party.ledgerId,
-                                  );
-                                }
-                                return false;
-                              },
-                              child: CustomScrollView(
+                        /// ===================== PRODUCT LIST =====================
+                        Expanded(
+                          child: Consumer<CustomerTransactionProvider>(
+                            builder: (_, provider, __) {
+
+                              final list = provider.sortedPagedItems;
+
+                              if (list.isEmpty && provider.isLoadingPage) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+
+                              if (list.isEmpty) {
+                                return const Center(
+                                  child: Text("No items found"),
+                                );
+                              }
+
+                              return CustomScrollView(
                                 keyboardDismissBehavior:
                                     ScrollViewKeyboardDismissBehavior.onDrag,
+                                controller: _scrollController,
                                 slivers: [
-                                  /// ================= FILTERS =================
-                                  SliverToBoxAdapter(
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 16,
-                                        vertical: 8,
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          /// GROUP
-                                          Expanded(
-                                            child: StreamBuilder<List<GroupModel>>(
-                                              stream: sl<ItemMasterSync>()
-                                                  .groupNameList(
-                                                    widget
-                                                            .data
-                                                            .data
-                                                            .company
-                                                            .id ??
-                                                        0,
-                                                  ),
-                                              builder: (_, snapshot) {
-                                                final dbGroups =
-                                                    snapshot.data
-                                                        ?.map(
-                                                          (e) => e.groupName,
-                                                        )
-                                                        .toList() ??
-                                                    [];
-                                                final groups = [
-                                                  'All',
-                                                  ...dbGroups,
-                                                ];
-                                                return CustomDropdown<String>(
-                                                  items: groups,
-                                                  hintText: appLocalization
-                                                      .order_booking_add_item_select_group,
-                                                  onChanged: (v) async {
-                                                    await provider.selectGroup(
-                                                      v ?? 'All',
-                                                      companyId: widget
-                                                          .data
-                                                          .data
-                                                          .company
-                                                          .id!,
-                                                      priceListId:
-                                                          widget
-                                                              .data
-                                                              .party
-                                                              .priceList ??
-                                                          0,
-                                                      ledgerId: widget
-                                                          .data
-                                                          .party
-                                                          .ledgerId,
-                                                    );
-
-                                                    // provider.resetPagination();
-                                                    // provider.loadNextPage(
-                                                    //   companyId: widget
-                                                    //       .data
-                                                    //       .data
-                                                    //       .company
-                                                    //       .id!,
-                                                    //   priceListId:
-                                                    //       widget
-                                                    //           .data
-                                                    //           .party
-                                                    //           .priceList ??
-                                                    //       0,
-                                                    //   ledgerId: widget
-                                                    //       .data
-                                                    //       .party
-                                                    //       .ledgerId,
-                                                    // );
-                                                  },
-                                                );
-                                              },
-                                            ),
-                                          ),
-
-                                          w8,
-
-                                          /// CATEGORY
-                                          Expanded(
-                                            child: StreamBuilder<List<CategoryModel>>(
-                                              stream: sl<ItemMasterSync>()
-                                                  .categoryList(
-                                                    widget
-                                                            .data
-                                                            .data
-                                                            .company
-                                                            .id ??
-                                                        0,
-                                                  ),
-                                              builder: (_, snapshot) {
-                                                final dbcategories =
-                                                    snapshot.data
-                                                        ?.map(
-                                                          (e) => e.catgoryName,
-                                                        )
-                                                        .toList() ??
-                                                    [];
-                                                final categories = [
-                                                  'All',
-                                                  ...dbcategories,
-                                                ];
-                                                return CustomDropdown<String>(
-                                                  items: categories,
-                                                  hintText: appLocalization
-                                                      .order_booking_add_item_select_category,
-                                                  onChanged: (v) async {
-                                                    await provider
-                                                        .selectCategory(
-                                                          v ?? 'All',
-                                                          companyId: widget
-                                                              .data
-                                                              .data
-                                                              .company
-                                                              .id!,
-                                                          priceListId:
-                                                              widget
-                                                                  .data
-                                                                  .party
-                                                                  .priceList ??
-                                                              0,
-                                                          ledgerId: widget
-                                                              .data
-                                                              .party
-                                                              .ledgerId,
-                                                        );
-
-                                                    // provider.resetPagination();
-                                                    // provider.loadNextPage(
-                                                    //   companyId: widget
-                                                    //       .data
-                                                    //       .data
-                                                    //       .company
-                                                    //       .id!,
-                                                    //   priceListId:
-                                                    //       widget
-                                                    //           .data
-                                                    //           .party
-                                                    //           .priceList ??
-                                                    //       0,
-                                                    //   ledgerId: widget
-                                                    //       .data
-                                                    //       .party
-                                                    //       .ledgerId,
-                                                    // );
-                                                  },
-                                                );
-                                              },
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-
                                   /// ================= ITEMS =================
                                   SliverList(
                                     delegate: SliverChildBuilderDelegate(
@@ -435,69 +365,69 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
                                     child: SizedBox(height: 120),
                                   ),
                                 ],
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-
-            /// ===================== BOTTOM SUMMARY =====================
-            Positioned(
-              bottom: 0,
-              child: Container(
-                width: context.getSize.width,
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: ColorResources.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: ColorResources.black.withOpacity(0.1),
-                      blurRadius: 10,
-                      offset: const Offset(0, -4),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          appLocalization.grand_total,
-                          style: context.textStyle.indigoBlue.s12.w500.roboto,
-                        ),
-                        Text(
-                          transactionProvider.grandTotal.toStringAsFixed(2),
-                          style: context.textStyle.indigoBlue.s20.bold.roboto,
+                              );
+                            },
+                          ),
                         ),
                       ],
                     ),
-                    CustomButton(
-                      color: transactionProvider.selectedItemIds.isEmpty
-                          ? ColorResources.ashGray
-                          : null,
-                      buttonText: transactionProvider.selectedItemCount
-                          .toString(),
-                      isborderEnable: false,
-                      onTap: () {
-                        if (transactionProvider.selectedItemIds.isNotEmpty) {
-                          Navigator.of(context).pop();
-                        } else {}
-                      },
-                      width: context.getSize.width / 2.5,
-                      borderRadius: BorderRadius.circular(16),
-                      icon: Icons.shopping_cart,
-                      iconSize: 30,
-                      iconColor: ColorResources.white,
-                    ),
-                  ],
+
+              /// ===================== BOTTOM SUMMARY =====================
+              Positioned(
+                bottom: 0,
+                child: Container(
+                  width: context.getSize.width,
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: ColorResources.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: ColorResources.black.withOpacity(0.1),
+                        blurRadius: 10,
+                        offset: const Offset(0, -4),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            appLocalization.grand_total,
+                            style: context.textStyle.indigoBlue.s12.w500.roboto,
+                          ),
+                          Text(
+                            transactionProvider.grandTotal.toStringAsFixed(2),
+                            style: context.textStyle.indigoBlue.s20.bold.roboto,
+                          ),
+                        ],
+                      ),
+                      CustomButton(
+                        color: transactionProvider.selectedItemIds.isEmpty
+                            ? ColorResources.ashGray
+                            : null,
+                        buttonText: transactionProvider.selectedItemCount
+                            .toString(),
+                        isborderEnable: false,
+                        onTap: () {
+                          if (transactionProvider.selectedItemIds.isNotEmpty) {
+                            Navigator.of(context).pop();
+                          } else {}
+                        },
+                        width: context.getSize.width / 2.5,
+                        borderRadius: BorderRadius.circular(16),
+                        icon: Icons.shopping_cart,
+                        iconSize: 30,
+                        iconColor: ColorResources.white,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

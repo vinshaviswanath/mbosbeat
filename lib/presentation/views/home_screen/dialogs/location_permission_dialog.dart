@@ -11,7 +11,7 @@ Future<void> showLocationPermissionDialog(
     child: StatefulBuilder(
       builder: (context, setState) {
         return Column(
-          crossAxisAlignment: .center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(title, style: context.textStyle.s14.w500.indigoBlue),
             h16,

@@ -23,7 +23,7 @@ void confirmBillDialog(context, {required VoidCallback onSave}) {
           child: Column(
             children: [
               RichText(
-                textAlign: .center,
+                textAlign: TextAlign.center,
                 text: TextSpan(
                   style: context.textStyle.s14.roboto.bold.bluishGray,
                   children: [TextSpan(text: 'Do you want to save?')],

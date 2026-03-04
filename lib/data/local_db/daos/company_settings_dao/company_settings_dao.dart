@@ -143,4 +143,60 @@ class CompanySettingsDao extends DatabaseAccessor<AppDb>
       );
     }
   }
+
+  Future<bool> isItemwiseDiscountEnabled(int companyId) async {
+    final result =
+        await (select(companySettingsTable)
+              ..where(
+                (tbl) =>
+                    tbl.companyId.equals(companyId) &
+                    // tbl.settingsMenuName.equals("Itemwise Discount %"))
+                    tbl.id.equals(8),
+              )
+              ..limit(1))
+            .getSingleOrNull();
+
+    return result?.settingsValue.toLowerCase() == "true";
+  }
+
+  Stream<bool> watchItemwiseDiscountEnabled(int companyId) {
+    return (select(companySettingsTable)
+          ..where(
+            (tbl) =>
+                tbl.companyId.equals(companyId) &
+                // tbl.settingsMenuName.equals("Itemwise Discount %"))
+                tbl.id.equals(8),
+          )
+          ..limit(1))
+        .watchSingleOrNull()
+        .map((row) => row?.settingsValue.toLowerCase() == "true");
+  }
+
+    Future<bool> isFreeQuantityEnabled(int companyId) async {
+    final result =
+        await (select(companySettingsTable)
+              ..where(
+                (tbl) =>
+                    tbl.companyId.equals(companyId) &
+                    // tbl.settingsMenuName.equals("Itemwise Discount %"))
+                    tbl.id.equals(1),
+              )
+              ..limit(1))
+            .getSingleOrNull();
+
+    return result?.settingsValue.toLowerCase() == "true";
+  }
+
+  Stream<bool> watchFreeQuantitytEnabled({required int companyId}) {
+    return (select(companySettingsTable)
+          ..where(
+            (tbl) =>
+                tbl.companyId.equals(companyId) &
+                // tbl.settingsMenuName.equals("Itemwise Discount %"))
+                tbl.id.equals(1),
+          )
+          ..limit(1))
+        .watchSingleOrNull()
+        .map((row) => row?.settingsValue.toLowerCase() == "true");
+  }
 }

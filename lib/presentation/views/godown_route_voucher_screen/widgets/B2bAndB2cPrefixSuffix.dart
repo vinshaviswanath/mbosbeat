@@ -118,7 +118,7 @@ class _B2bAndB2cPrefixSuffixState extends State<B2bAndB2cPrefixSuffix> {
           children: [
             Row(
               mainAxisAlignment: widget.data.b2BPrefix == null
-                  ? .end
+                  ? MainAxisAlignment.end
                   : MainAxisAlignment.spaceBetween,
               children: [
                 if (widget.data.b2BPrefix == null ||
