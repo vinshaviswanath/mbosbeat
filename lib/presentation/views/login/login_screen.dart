@@ -23,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final provider = Provider.of<AuthFormProvider>(context, listen: false);
       provider.resetLoginForm();
+      provider.resetVisibility();
     });
     super.initState();
   }
@@ -31,8 +32,6 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final pref = sl<SharedPreferences>();
     final token = pref.getString("token");
-  //  Logger.logInfo(context.textStyle.s22.w700.white.fontFamily);
-    //Logger.logSuccess("TOKEN : $token");
 
     final appLocalization = context.l10n;
 
@@ -42,6 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (didPop) return;
 
         FocusScope.of(context).unfocus();
+        context.read<AuthFormProvider>().resetVisibility();
       },
       child: Scaffold(
         resizeToAvoidBottomInset: true,

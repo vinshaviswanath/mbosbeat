@@ -7,6 +7,7 @@ import 'package:mpos_beat/presentation/views/home_screen/transactions_container.
 import 'package:mpos_beat/presentation/views/home_screen/widgets/header/home_header.dart';
 import 'package:mpos_beat/presentation/views/home_screen/widgets/home_shimmer.dart';
 import 'package:mpos_beat/presentation/views/home_screen/widgets/trip_summary/trip_summary_section.dart';
+import 'package:mpos_beat/presentation/views/home_screen/widgets/tripstart_shimmer.dart';
 
 class HomeContent extends StatelessWidget {
   const HomeContent({super.key});
@@ -31,7 +32,7 @@ class HomeContent extends StatelessWidget {
               Consumer<UserProvider>(
                 builder: (context, provider, child) {
                   if (provider.isTripStarting || provider.isTripending) {
-                    return const HomeScreenShimmer();
+                    return const TripStartShimmer();
                   }
 
                   return child!;

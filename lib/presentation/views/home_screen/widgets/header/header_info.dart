@@ -5,6 +5,8 @@ import 'package:mpos_beat/presentation/views/home_screen/widgets/header/day_togg
 import 'package:mpos_beat/presentation/views/home_screen/widgets/header/header_state.dart';
 import 'package:mpos_beat/presentation/views/home_screen/widgets/header/route_toggle_button.dart';
 import 'package:mpos_beat/presentation/views/home_screen/widgets/home_shimmer.dart';
+import 'package:mpos_beat/presentation/views/home_screen/widgets/trip_start_appbar_shimmer.dart';
+import 'package:mpos_beat/presentation/views/home_screen/widgets/tripstart_shimmer.dart';
 
 class HeaderInfo extends StatelessWidget {
   final Company company;
@@ -32,8 +34,8 @@ class HeaderInfo extends StatelessWidget {
 
     return Consumer<UserProvider>(
       builder: (context, provider, child) {
-        if (provider.isTripStarting) {
-          return const HomeScreenShimmer();
+        if (provider.isTripStarting || provider.isTripending) {
+          return const AppbarShimmer();
         }
         return child!;
       },

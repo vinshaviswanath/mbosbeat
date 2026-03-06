@@ -11,6 +11,7 @@ import 'package:mpos_beat/core/network/network_provider.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/tabs/tab1_transactions.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/tabs/tab2_outstanding.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/tabs/tab3_visit_history.dart';
+import 'package:mpos_beat/presentation/views/home_screen/widgets/checkin_out_shimmer.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/transaction_detail_page/skip_dialog.dart';
 import 'package:mpos_beat/presentation/views/home_screen/transactions_container.dart';
 import 'package:mpos_beat/presentation/views/home_screen/widgets/home_shimmer.dart';
@@ -320,7 +321,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
         child: Consumer<UserProvider>(
           builder: (context, provider, child) {
             if (provider.isCheckinStarting || provider.isChecoutStarting) {
-              return const HomeScreenShimmer();
+              return CheckInOutShimmer();
             }
 
             return child!;
