@@ -203,12 +203,11 @@ class _StartTripFormState extends State<StartTripForm> {
     final userProvider = context.read<UserProvider>();
     final locationService = sl<LocationService>();
     final navigator = Navigator.of(context, rootNavigator: true);
-    final messenger = ScaffoldMessenger.of(navigator.context);
-
-    userProvider.setLoading(true);
+ navigator.pop();
+   userProvider.setTripStarting(true); 
 
     // ✅ POP IMMEDIATELY
-    navigator.pop();
+   
 
     final position = await locationService.getCurrentLocation();
     final address = await locationService.getNormalAddress(
@@ -219,7 +218,7 @@ class _StartTripFormState extends State<StartTripForm> {
     final now = DateTime.now();
     final startTime = now.toIso8601String().split('.').first;
 
-    final success = await userProvider.markTripStart(
+ await userProvider.markTripStart(
       date: now,
       startTime: startTime,
       routeID: selectedRoute!.id!,
@@ -230,7 +229,7 @@ class _StartTripFormState extends State<StartTripForm> {
       address: address,
     );
 
-    userProvider.setLoading(false);
+ userProvider.setTripStarting(false);
 
 
   }

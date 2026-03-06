@@ -41,7 +41,21 @@ class UserProvider extends ChangeNotifier {
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
+  //--------------for trip start------------------
+  bool _isTripStarting = false;
+  bool get isTripStarting => _isTripStarting;
 
+  //--------------for trip end------------------
+  bool _isTripending = false;
+  bool get isTripending => _isTripending;
+
+  //---------------for checkin-----------------
+  bool _isCheckinStarting = false;
+  bool get isCheckinStarting => _isCheckinStarting;
+
+  //---------------for checkout-----------------
+  bool _isCheckoutStarting = false;
+  bool get isChecoutStarting => _isCheckoutStarting;
   bool _isStartingTrip = false;
   bool _isEndingTrip = false;
   bool _isMarkingAttendance = false;
@@ -94,6 +108,29 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  //---------------trip start-------------------------
+  void setTripStarting(bool value) {
+    _isTripStarting = value;
+    notifyListeners();
+  }
+
+  //----------------trip end--------------------
+  void setTripEnding(bool value) {
+    _isTripending = value;
+    notifyListeners();
+  }
+
+  //================checkin-------------------
+  void setCheckinStarting(bool value) {
+    _isCheckinStarting = value;
+    notifyListeners();
+  }
+
+  //================checkin-------------------
+  void setCheckoutStarting(bool value) {
+    _isCheckoutStarting = value;
+    notifyListeners();
+  }
 
   /// ---------------- GENERAL ----------------
 
@@ -122,15 +159,13 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool _homeLoading = false;
+  bool get homeLoading => _homeLoading;
 
-bool _homeLoading = false;
-bool get homeLoading => _homeLoading;
-
-void setHomeLoading(bool value) {
-  _homeLoading = value;
-  notifyListeners();
-}
-
+  void setHomeLoading(bool value) {
+    _homeLoading = value;
+    notifyListeners();
+  }
 
   Future<void> loadRouteState() async {
     final prefs = await SharedPreferences.getInstance();
@@ -567,17 +602,19 @@ void setHomeLoading(bool value) {
   }) {
     if (_appDb == null) return const Stream.empty();
 
-    return _appDb!
-        .watchPriceLevelsForParty(partyPriceListId)
-        .map((dbList) {
-      final apiList = dbList.map((db) => PriceLevelDetails(
-            id: db.id,
-            companyId: db.companyId ?? 0,
-            priceLevel: db.priceLevel ?? "",
-            rateInclusive: db.rateInclusive,
-            isDefault: db.isDefault,
-            active: db.active,
-          )).toList();
+    return _appDb!.watchPriceLevelsForParty(partyPriceListId).map((dbList) {
+      final apiList = dbList
+          .map(
+            (db) => PriceLevelDetails(
+              id: db.id,
+              companyId: db.companyId ?? 0,
+              priceLevel: db.priceLevel ?? "",
+              rateInclusive: db.rateInclusive,
+              isDefault: db.isDefault,
+              active: db.active,
+            ),
+          )
+          .toList();
 
       _autoSelectIfSingle(apiList);
       return apiList;
@@ -598,29 +635,31 @@ void setHomeLoading(bool value) {
     notifyListeners();
   }
 
-void selectPriceLevelById(int? id, List<PriceLevelDetails> list) {
-  final level = list.where((e) => e.id == id).cast<PriceLevelDetails?>().firstOrNull;
-  if (level != null) {
-    setSelectedPriceLevel(level);
-  } else {
-    clearSelectedPriceLevel();
+  void selectPriceLevelById(int? id, List<PriceLevelDetails> list) {
+    final level = list
+        .where((e) => e.id == id)
+        .cast<PriceLevelDetails?>()
+        .firstOrNull;
+    if (level != null) {
+      setSelectedPriceLevel(level);
+    } else {
+      clearSelectedPriceLevel();
+    }
   }
-}
 
-void applyParty(PartyMasterDetails party) {
-  setParty(party);
+  void applyParty(PartyMasterDetails party) {
+    setParty(party);
 
-  if (party.priceList > 0 && party.priceLevels.isNotEmpty) {
-    final auto = party.priceLevels.firstWhere(
-      (e) => e.id == party.priceList,
-      orElse: () => party.priceLevels.first,
-    );
-    setSelectedPriceLevel(auto);
-  } else {
-    clearSelectedPriceLevel();
+    if (party.priceList > 0 && party.priceLevels.isNotEmpty) {
+      final auto = party.priceLevels.firstWhere(
+        (e) => e.id == party.priceList,
+        orElse: () => party.priceLevels.first,
+      );
+      setSelectedPriceLevel(auto);
+    } else {
+      clearSelectedPriceLevel();
+    }
   }
-}
-
 
   /// ---------------- PARTY CHANGE HANDLING ----------------
   void onPartyChanged() {
@@ -685,6 +724,4 @@ void applyParty(PartyMasterDetails party) {
           return PartyMasterDetails.fromJson(row.data);
         });
   }
-  
-
 }

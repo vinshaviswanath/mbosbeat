@@ -1,9 +1,11 @@
 import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
+import 'package:mpos_beat/presentation/logic/user_provider.dart';
 import 'package:mpos_beat/presentation/views/home_screen/home_screen.dart';
 import 'package:mpos_beat/presentation/views/home_screen/transactions_container.dart';
 import 'package:mpos_beat/presentation/views/home_screen/widgets/header/home_header.dart';
+import 'package:mpos_beat/presentation/views/home_screen/widgets/home_shimmer.dart';
 import 'package:mpos_beat/presentation/views/home_screen/widgets/trip_summary/trip_summary_section.dart';
 
 class HomeContent extends StatelessWidget {
@@ -26,9 +28,23 @@ class HomeContent extends StatelessWidget {
             children: [
               HeaderContainer(company: company, user: user),
               const SizedBox(height: 20),
-              const TripSummarySection(),
-              const SizedBox(height: 20),
-              TransactionsContainers(userDetails: user, company: company),
+              Consumer<UserProvider>(
+                builder: (context, provider, child) {
+                  if (provider.isTripStarting || provider.isTripending) {
+                    return const HomeScreenShimmer();
+                  }
+
+                  return child!;
+                },
+
+                child: Column(
+                  children: [
+                    const TripSummarySection(),
+                    const SizedBox(height: 20),
+                    TransactionsContainers(userDetails: user, company: company),
+                  ],
+                ),
+              ),
               const SizedBox(height: 40),
             ],
           ),

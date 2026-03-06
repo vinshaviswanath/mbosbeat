@@ -1,7 +1,7 @@
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
 
-class CompanySwitchTile extends StatelessWidget {
+class CompanySwitchTile extends StatelessWidget {   
   final Company company;
 
   const CompanySwitchTile({super.key, required this.company});

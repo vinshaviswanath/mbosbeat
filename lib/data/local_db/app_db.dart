@@ -151,7 +151,7 @@ class AppDb extends _$AppDb {
   AppDb() : super(_openConnection());
 
   @override
- int get schemaVersion => 35;
+  int get schemaVersion => 35;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -279,7 +279,7 @@ class AppDb extends _$AppDb {
         await m.addColumn(itemMaster, itemMaster.cess);
         await m.addColumn(itemMaster, itemMaster.cost);
       }
-    if (from < 31) {
+      if (from < 31) {
         await m.database.customStatement(
           'CREATE INDEX IF NOT EXISTS idx_item_company '
           'ON item_master(company_id)',
@@ -313,13 +313,6 @@ class AppDb extends _$AppDb {
         await m.database.customStatement(
           'CREATE INDEX IF NOT EXISTS idx_price_item '
           'ON item_price_details_tables(item_id, price_list)',
-        );
-      }
-
-      if (from < 35) {
-        await m.database.customStatement(
-          'CREATE INDEX IF NOT EXISTS idx_item_company_name '
-          'ON item_master(company_id, item_name COLLATE NOCASE)',
         );
       }
 
@@ -382,41 +375,14 @@ class AppDb extends _$AppDb {
           saleReturnLedgerDetailsTable.cess,
         );
       }
+
       if (from < 35) {
-        await m.addColumn(
-          saleLedgerDetailsTable,
-          saleLedgerDetailsTable.voucherName,
+        await m.database.customStatement(
+          'CREATE INDEX IF NOT EXISTS idx_item_company_name '
+          'ON item_master(company_id, item_name COLLATE NOCASE)',
         );
-
-        await m.addColumn(
-          saleLedgerDetailsTable,
-          saleLedgerDetailsTable.discountType,
-        );
-
-        await m.addColumn(
-          saleLedgerDetailsTable,
-          saleLedgerDetailsTable.discountAmount,
-        );
-
-        await m.addColumn(
-          saleLedgerDetailsTable,
-          saleLedgerDetailsTable.saleAmount,
-        );
-
-        await m.addColumn(
-          saleLedgerDetailsTable,
-          saleLedgerDetailsTable.couponDiscountAmount,
-        );
-
-        await m.addColumn(saleLedgerDetailsTable, saleLedgerDetailsTable.igst);
-
-        await m.addColumn(saleLedgerDetailsTable, saleLedgerDetailsTable.cgst);
-
-        await m.addColumn(saleLedgerDetailsTable, saleLedgerDetailsTable.sgst);
-
-        await m.addColumn(saleLedgerDetailsTable, saleLedgerDetailsTable.cess);
       }
-  },
+    },
   );
 }
 
