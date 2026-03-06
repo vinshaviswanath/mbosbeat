@@ -152,6 +152,7 @@ class CustomerTransactionProvider extends ChangeNotifier {
 
   /// Default CESS rate.
   final double cessRate = 0;
+  final double igstRate = 18;
 
   // =========================================================
   // ======================== GETTERS =========================
@@ -205,6 +206,8 @@ class CustomerTransactionProvider extends ChangeNotifier {
 
   /// CESS based on subtotal.
   double get cess => subTotal * cessRate / 100;
+
+  double get igst => subTotal * igstRate / 100;
 
   // =========================================================
   // ======================== TAX LOGIC =======================
@@ -400,18 +403,7 @@ class CustomerTransactionProvider extends ChangeNotifier {
     notifyListeners();
   }
 
- // ===================== TAX =====================
-  final double cgstRate = 9;
-  final double sgstRate = 9;
-  final double igstRate = 18;
-  final double cessRate = 0;
-
-  double get cgst => subTotal * cgstRate / 100;
-  double get sgst => subTotal * sgstRate / 100;
-  double get igst => subTotal * igstRate / 100;
-  double get cess => subTotal * cessRate / 100;
-
- // ===================== INDEX SELECTION =====================
+  // ===================== INDEX SELECTION =====================
 
   bool isSelectedByIndex(int index) => _selectedIndex == index;
 
@@ -784,12 +776,12 @@ class CustomerTransactionProvider extends ChangeNotifier {
   /// Loads next page from backend.
   /// Prevents duplicate loading & merges unique items.
 
-void resetPagination() {
-  _pagedItems.clear();
-  _page = 1;
-  _hasMore = true;
-  notifyListeners();
-}
+  void resetPagination() {
+    _pagedItems.clear();
+    _page = 1;
+    _hasMore = true;
+    notifyListeners();
+  }
 
   Future<void> loadNextPage({
     required int companyId,
@@ -801,16 +793,16 @@ void resetPagination() {
     _isLoadingPage = true;
     notifyListeners();
 
-final result = await sl<PartyMasterSync>().fetchProduct(
-  companyId,
-  priceListId,
-  ledgerId,
-  _selectedGroup,
-  _selectedCategory,
-  _search,
-  limit: _limit,
-  offset: (_page - 1) * _limit,
-);
+    final result = await sl<PartyMasterSync>().fetchProduct(
+      companyId,
+      priceListId,
+      ledgerId,
+      _selectedGroup,
+      _selectedCategory,
+      _search,
+      limit: _limit,
+      offset: (_page - 1) * _limit,
+    );
     Logger.logInfo("fetchProduct ${result.length}");
 
     final newItems = result

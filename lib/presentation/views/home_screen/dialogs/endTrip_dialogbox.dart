@@ -106,16 +106,13 @@ class EndTripDialog extends StatelessWidget {
     final tripId = prefs.getInt('current_trip_id');
     final routeID = prefs.getInt('last_route_id') ?? 0;
     final godownID = prefs.getInt('last_vehicle_id') ?? 0;
+    navigator.pop();
+    userProvider.setTripEnding(true);
 
     if (tripId == null) {
       messenger.showSnackBar(const SnackBar(content: Text("Trip ID missing")));
       return;
     }
-
-    userProvider.setLoading(true);
-
-    // ✅ Close the dialog immediately
-    navigator.pop();
 
     // Get location and address
     final position = await locationService.getCurrentLocation();
@@ -125,7 +122,7 @@ class EndTripDialog extends StatelessWidget {
     );
 
     // Call provider method (no BuildContext)
-    final success = await userProvider.markTripEnd(
+   await userProvider.markTripEnd(
       tripId: tripId,
       routeID: routeID,
       godownID: godownID,
@@ -135,12 +132,8 @@ class EndTripDialog extends StatelessWidget {
       address: address,
     );
 
-    userProvider.setLoading(false);
+    userProvider.setTripEnding(false);
 
-    // if (!success) {
-    //   messenger.showSnackBar(
-    //     const SnackBar(content: Text("Something went wrong")),
-    //   );
-    // }
+  
   }
 }
