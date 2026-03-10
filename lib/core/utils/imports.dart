@@ -4,7 +4,6 @@ export  'package:flutter/material.dart';
 export  'dart:async';
 export 'package:mpos_beat/core/theme/colors.dart';
 export 'package:mpos_beat/core/theme/diamentions.dart';
-export 'package:mpos_beat/route/app_route.dart';
 export 'package:mpos_beat/core/utils/app_assets.dart';
 export 'package:flutter_svg/flutter_svg.dart';
 export 'package:provider/provider.dart';
