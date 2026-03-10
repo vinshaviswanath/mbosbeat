@@ -250,92 +250,93 @@ class AuthFormProvider with ChangeNotifier {
     notifyListeners();
   }
 
-Future<LoginResponse?> submitOtp(
-  BuildContext context, {
-  required void Function(LoginResponse) onResponse,
-  required void Function(MainFailure) onError,
-}) async {
-  otpAutovalidateMode = AutovalidateMode.always;
-  notifyListeners();
-
-  if (!_otp.isValid()) return null;
-
-  if (_remainingSeconds == 0) {
-    _otpError = "OTP has expired. Please request a new one.";
+  Future<LoginResponse?> submitOtp(
+    BuildContext context, {
+    required void Function(LoginResponse) onResponse,
+    required void Function(MainFailure) onError,
+  }) async {
+    otpAutovalidateMode = AutovalidateMode.always;
     notifyListeners();
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(_otpError!)),
+    if (!_otp.isValid()) return null;
+
+    if (_remainingSeconds == 0) {
+      _otpError = "OTP has expired. Please request a new one.";
+      notifyListeners();
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(_otpError!)));
+      return null;
+    }
+
+    final result = await iAuthenticationFacad.otpValidation(
+      BaseParams(
+        data: OtpParams(id: _cusomerId, otp: _otp.getValue),
+      ),
     );
-    return null;
-  }
 
-  final result = await iAuthenticationFacad.otpValidation(
-    BaseParams(
-      data: OtpParams(id: _cusomerId, otp: _otp.getValue),
-    ),
-  );
+    result.fold(
+      (failure) {
+        _otpError = failure.errorMsg;
 
-  result.fold(
-    (failure) {
-      _otpError = failure.errorMsg;
+        // ❌ DO NOT restart timer here
 
-      // ❌ DO NOT restart timer here
-
-      notifyListeners();
-    },
-    (response) {
-      _loginResponse = response;
-
-      if (response.status == 0) {
-        _otpError = response.message;
         notifyListeners();
-        return;
-      }
+      },
+      (response) {
+        _loginResponse = response;
 
-      // ✅ SUCCESS
-      _otpError = null;
-      resetSignUpForm();
-      resetLoginForm();
-      notifyListeners();
+        if (response.status == 0) {
+          _otpError = response.message;
+          notifyListeners();
+          return;
+        }
 
-      onResponse.call(response);
-    },
-  );
+        // ✅ SUCCESS
+        _otpError = null;
+        resetSignUpForm();
+        resetLoginForm();
+        notifyListeners();
 
-  return _loginResponse;
-}
+        onResponse.call(response);
+      },
+    );
+
+    return _loginResponse;
+  }
 
   //============================================================================
   //                           RESEND OTP
   //============================================================================
 
-Future<LoginResponse?> resendOtp(BuildContext context, {int? id}) async {
-  final result = await iAuthenticationFacad.resendOtp(
-    BaseParams(data: ResendOtpParams(userId: id ?? _cusomerId ?? 0)),
-  );
+  Future<LoginResponse?> resendOtp(BuildContext context, {int? id}) async {
+    final result = await iAuthenticationFacad.resendOtp(
+      BaseParams(data: ResendOtpParams(userId: id ?? _cusomerId ?? 0)),
+    );
 
-  result.fold(
-    (failure) {
-      _errorMessage = failure.errorMsg.toString();
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(_errorMessage!)));
-      notifyListeners();
-    },
-    (response) {
-      _loginResponse = response;
-      _otpValue = response.message;
-      _cusomerId = response.id;
+    result.fold(
+      (failure) {
+        _errorMessage = failure.errorMsg.toString();
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(_errorMessage!)));
+        notifyListeners();
+      },
+      (response) {
+        _loginResponse = response;
+        _otpValue = response.message;
+        _cusomerId = response.id;
 
-      clearOtpValidation();
-      startOtpTimer(); // ✅ Restart ONLY here
+        clearOtpValidation();
+        startOtpTimer(); // ✅ Restart ONLY here
 
-      notifyListeners();
-    },
-  );
+        notifyListeners();
+      },
+    );
 
-  return _loginResponse;
-}
+    return _loginResponse;
+  }
 
   // void clearOtpValidation() {
   //   _otp = Otp("");
@@ -347,19 +348,19 @@ Future<LoginResponse?> resendOtp(BuildContext context, {int? id}) async {
   // }
 
   /// Starts OTP countdown timer.
-void startOtpTimer() {
-  _remainingSeconds = 60;
-  _timer?.cancel();
+  void startOtpTimer() {
+    _remainingSeconds = 60;
+    _timer?.cancel();
 
-  _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-    if (_remainingSeconds > 0) {
-      _remainingSeconds--;
-      notifyListeners();
-    } else {
-      _timer?.cancel();
-    }
-  });
-}
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_remainingSeconds > 0) {
+        _remainingSeconds--;
+        notifyListeners();
+      } else {
+        _timer?.cancel();
+      }
+    });
+  }
 
   /// Resets OTP timer.
   void resetOtpTimer() {
@@ -424,7 +425,6 @@ void startOtpTimer() {
       return null;
     }
 
-    // Start login
     final result = await iAuthenticationFacad.login(BaseParams(data: params));
 
     await result.fold(
@@ -453,7 +453,6 @@ void startOtpTimer() {
         _setLoading(false);
         notifyListeners();
 
-        //Stop immediately if invalid credentials or no login data
         if (response.status == 0 || response.loginData == null) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -465,17 +464,18 @@ void startOtpTimer() {
               behavior: SnackBarBehavior.floating,
             ),
           );
-          Logger.logError("Login failed: Invalid credentials or no data");
           return;
         }
 
-        //Save token
+        /// Save token
         final prefs = sl<SharedPreferences>();
         final newToken = response.loginData?.token ?? '';
         await prefs.setString("token", newToken);
         Logger.logInfo("Token saved after login: $newToken");
 
-        //Fetch company list using valid token
+        _cusomerId = response.loginData?.customerId;
+
+        /// -------- FETCH COMPANY DATA ----------
         final companyProvider = context.read<CompanyCreationProvider>();
         List<CompanyViewList> companyList = [];
         CompanyViewList? companyData;
@@ -483,14 +483,13 @@ void startOtpTimer() {
 
         try {
           await companyProvider.getAllCompanies(context);
+
           companyList = companyProvider.companiesList?.companyViewList ?? [];
           hasCompany = companyList.isNotEmpty;
           companyData = hasCompany ? companyList.first : null;
 
-          // regtype for vouchertype tab
           await companyProvider.fetchCountryList(context);
 
-          //Select country
           final selectedCountry = companyProvider.countries.firstWhere(
             (c) => c.id.toString() == companyData!.country.toString(),
             orElse: () => CountryListData(
@@ -511,13 +510,11 @@ void startOtpTimer() {
           );
 
           if (selectedCountry.id == 0) {
-            debugPrint("${companyData!.country}");
-            return;
+            debugPrint("Country not matched with company");
           }
 
           companyProvider.selectCountry(context, selectedCountry);
 
-          //get regtype
           await companyProvider.getRegistrationType(
             context,
             selectedCountry.id,
@@ -547,117 +544,131 @@ void startOtpTimer() {
           "hasCompany: $hasCompany, companyData: ${companyData?.companyName}",
         );
 
-        // Handle navigation or dialogs based on status
-        switch (response.status) {
-          case 1: //Login successful → Go to Admin Home
-            _cusomerId = response.loginData?.customerId;
+        /// -------- USER LOGIN ----------
+        if (!params.isAdmin) {
+          context.pushNamed(AppRouterConst.userCompanySelectionScreen);
+          return;
+        }
 
-            context.pushNamed(
-              response.loginData?.designation?.toLowerCase() == "admin"
-                  ? AppRouterConst.adminDashboard
-                  : AppRouterConst.userCompanySelectionScreen,
-            );
-            break;
+        /// -------- ADMIN STATUS HANDLING ----------
+        if (params.isAdmin) {
+          Logger.logInfo("Admin login detected. Status: ${response.status}");
 
-          case 10: //Pending registration approval
-            // RegistrationDialogs.pendingRegisteredDialog(
-            //   context,
-            //   response.loginData?.companyName ?? '',
-            //   id: response.loginData?.customerId,
-            // );
+          switch (response.status) {
+            case 1:
+              context.pushNamed(
+                response.loginData?.designation?.toLowerCase() == "admin"
+                    ? AppRouterConst.adminDashboard
+                    : AppRouterConst.userCompanySelectionScreen,
+              );
+              break;
 
-            RegistrationDialogs.customDialog(
-              margin: EdgeInsets.symmetric(horizontal: 70),
-              context: context,
-              heading: "OTP not Varified",
-              subTitle:
-                  "You have successfully completed Login. Kindly\nverify with OTP to continue.",
-              onTap: () async {
-                final customerId = response.loginData?.customerId;
-                await resendOtp(context, id: customerId);
-                context.pushNamed(AppRouterConst.otpAuth);
-              },
-              buttonText: "Varify OTP",
-            );
-
-          case 20: //Company creation pending
-            RegistrationDialogs.customDialog(
-              margin: EdgeInsets.symmetric(horizontal: 70),
-              context: context,
-              heading: "Registration Completed!",
-              subTitle:
-                  "You have successfully completed the\nregistration on last login. Kindly go to company\ncreation page to continue.",
-              onTap: () {
-                context.goNamed(
-                  AppRouterConst.companyCreationScreen,
-                  extra: {
-                    'tabIndex': 0,
-                    'companyData': companyData,
-                    'isPop': true,
+            case 10:
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                RegistrationDialogs.customDialog(
+                  margin: const EdgeInsets.symmetric(horizontal: 70),
+                  context: context,
+                  heading: "OTP not Varified",
+                  subTitle:
+                      "You have successfully completed Login. Kindly\nverify with OTP to continue.",
+                  onTap: () async {
+                    final customerId = response.loginData?.customerId;
+                    await resendOtp(context, id: customerId);
+                    context.pushNamed(AppRouterConst.otpAuth);
                   },
+                  buttonText: "Varify OTP",
                 );
-              },
-              buttonText: "Go to Company Creation",
-            );
-            break;
+              });
+              break;
 
-          case 40: //Integration settings pending
-            RegistrationDialogs.customDialog(
-              margin: EdgeInsets.symmetric(horizontal: 103),
-              context: context,
-              heading: "Company Creation Completed!",
-              subTitle:
-                  "You have successfully completed voucher type configuration on last login. Kindly start the integration settings to continue.",
-              onTap: () {
-                context.goNamed(
-                  AppRouterConst.companyCreationScreen,
-                  extra: {
-                    'tabIndex': 2,
-                    'companyData': companyData,
-                    'isPop': true,
+            case 20:
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                RegistrationDialogs.customDialog(
+                  margin: const EdgeInsets.symmetric(horizontal: 70),
+                  context: context,
+                  heading: "Registration Completed!",
+                  subTitle:
+                      "You have successfully completed the\nregistration on last login. Kindly go to company\ncreation page to continue.",
+                  onTap: () {
+                    context.goNamed(
+                      AppRouterConst.companyCreationScreen,
+                      extra: {
+                        'tabIndex': 0,
+                        'companyData': companyData,
+                        'isPop': true,
+                      },
+                    );
                   },
+                  buttonText: "Go to Company Creation",
                 );
-              },
-              buttonText: "Continue",
-            );
-            break;
+              });
+              break;
 
-          case 30: //Voucher type configuration pending
-            RegistrationDialogs.customDialog(
-              margin: EdgeInsets.symmetric(horizontal: 103),
-              context: context,
-              heading: "Company Creation Completed!",
-              subTitle:
-                  "You have successfully created company details on last login. Kindly start the voucher type configuration to continue.",
-              onTap: () {
-                context.goNamed(
-                  AppRouterConst.companyCreationScreen,
-                  extra: {
-                    'tabIndex': 1,
-                    'companyData': companyData,
-                    'isPop': true,
+            case 30:
+              Logger.logInfo("CASE 30 TRIGGERED");
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                RegistrationDialogs.customDialog(
+                  margin: const EdgeInsets.symmetric(horizontal: 103),
+                  context: context,
+                  heading: "Company Creation Completed!",
+                  subTitle:
+                      "You have successfully created company details on last login. Kindly start the voucher type configuration to continue.",
+                  onTap: () {
+                    context.goNamed(
+                      AppRouterConst.companyCreationScreen,
+                      extra: {
+                        'tabIndex': 1,
+                        'companyData': companyData,
+                        'isPop': true,
+                      },
+                    );
                   },
+                  buttonText: "Continue",
                 );
-              },
-              buttonText: "Continue",
-            );
-            break;
+              });
+              break;
 
-          default:
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  response.message ?? "Unknown error occurred",
-                  textAlign: TextAlign.center,
+            case 40:
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                RegistrationDialogs.customDialog(
+                  margin: const EdgeInsets.symmetric(horizontal: 103),
+                  context: context,
+                  heading: "Company Creation Completed!",
+                  subTitle:
+                      "You have successfully completed voucher type configuration on last login. Kindly start the integration settings to continue.",
+                  onTap: () {
+                    context.goNamed(
+                      AppRouterConst.companyCreationScreen,
+                      extra: {
+                        'tabIndex': 2,
+                        'companyData': companyData,
+                        'isPop': true,
+                      },
+                    );
+                  },
+                  buttonText: "Continue",
+                );
+              });
+              break;
+
+            default:
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    response.message ?? "Unknown error occurred",
+                    textAlign: TextAlign.center,
+                  ),
+                  behavior: SnackBarBehavior.floating,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
                 ),
-                behavior: SnackBarBehavior.floating,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              ),
-            );
-            break;
+              );
+          }
         }
       },
     );

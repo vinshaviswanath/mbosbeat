@@ -86,32 +86,6 @@ class AppRouter {
     navigatorKey: AppDetails.globalNavigatorKey,
     initialLocation: "/",
 
-    // refreshListenable: sl<NetworkProvider>(),
-
-    // redirect: (context, state) {
-    //   final network = sl<NetworkProvider>();
-
-    //   final isOffline = !network.isConnected;
-    //   final currentRoute = state.matchedLocation;
-    //   final isNoInternet = currentRoute == '/no-internet';
-
-    //   // Save last good route
-    //   if (!isOffline && !isNoInternet) {
-    //     network.saveLastRoute(currentRoute);
-    //   }
-
-    //   // Go offline
-    //   if (isOffline && !isNoInternet) {
-    //     return '/no-internet';
-    //   }
-
-    //   // Internet restored
-    //   if (!isOffline && isNoInternet) {
-    //     return network.lastRoute ?? '/';
-    //   }
-
-    //   return null;
-    // },
     routes: [
       GoRoute(
         path: "/",

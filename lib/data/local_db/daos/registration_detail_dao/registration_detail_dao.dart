@@ -7,10 +7,9 @@ import 'package:mpos_beat/data/models/data/login_data.dart';
 
 part 'registration_detail_dao.g.dart';
 
-@DriftAccessor(tables: [
-  RegistrationDetails
-])
-class RegistrationDetailDao extends DatabaseAccessor<AppDb> with _$RegistrationDetailDaoMixin {
+@DriftAccessor(tables: [RegistrationDetails])
+class RegistrationDetailDao extends DatabaseAccessor<AppDb>
+    with _$RegistrationDetailDaoMixin {
   RegistrationDetailDao(super.db);
 
   DateTime? _safeDate(dynamic v) {
@@ -21,22 +20,22 @@ class RegistrationDetailDao extends DatabaseAccessor<AppDb> with _$RegistrationD
 
   Future<void> printUsers() async {
     final list = await select(registrationDetails).get();
-    debugPrint("Registration details List Length :: ${list.length}");
-    debugPrint("===== USER TABLE JSON =====");
-    for (var u in list) {
-      debugPrint(
-        const JsonEncoder.withIndent("  ").convert({
-          "userId": u.userId,
-          "customerId": u.customerId,
-          "fullName": u.fullName,
-          "mobile": u.mobile,
-          "email": u.email,
-          "companyName": u.companyName,
-          "expiryDate": u.expiryDate?.toIso8601String(),
-        }),
-      );
-    }
-    debugPrint("================================");
+    //  debugPrint("Registration details List Length :: ${list.length}");
+    //   debugPrint("===== USER TABLE JSON =====");
+    // for (var u in list) {
+    //   debugPrint(
+    //     const JsonEncoder.withIndent("  ").convert({
+    //       "userId": u.userId,
+    //       "customerId": u.customerId,
+    //       "fullName": u.fullName,
+    //       "mobile": u.mobile,
+    //       "email": u.email,
+    //       "companyName": u.companyName,
+    //       "expiryDate": u.expiryDate?.toIso8601String(),
+    //     }),
+    //   );
+    // }
+    // debugPrint("================================");
   }
 
   Future<void> insertUser(LoginData data) async {
@@ -64,10 +63,11 @@ class RegistrationDetailDao extends DatabaseAccessor<AppDb> with _$RegistrationD
     await into(registrationDetails).insertOnConflictUpdate(comp);
   }
 
-  Future<List<RegistrationDetail>> getAllUsers() => select(registrationDetails).get();
+  Future<List<RegistrationDetail>> getAllUsers() =>
+      select(registrationDetails).get();
 
-  Stream<List<RegistrationDetail>> watchAllUsers() => select(registrationDetails).watch();
-
+  Stream<List<RegistrationDetail>> watchAllUsers() =>
+      select(registrationDetails).watch();
 
   Future<void> clearAll() => delete(registrationDetails).go();
 
@@ -76,15 +76,16 @@ class RegistrationDetailDao extends DatabaseAccessor<AppDb> with _$RegistrationD
   }
 
   Future<String?> getDesignation() async {
-  final user = await (select(registrationDetails)..limit(1))
-      .getSingleOrNull();
-  return user?.designation;
-}
+    final user = await (select(
+      registrationDetails,
+    )..limit(1)).getSingleOrNull();
+    return user?.designation;
+  }
 
-Future<int?> getLoggedInUserId() async {
-  final user = await (select(registrationDetails)..limit(1))
-      .getSingleOrNull();
-  return user?.userId;
-}
-
+  Future<int?> getLoggedInUserId() async {
+    final user = await (select(
+      registrationDetails,
+    )..limit(1)).getSingleOrNull();
+    return user?.userId;
+  }
 }

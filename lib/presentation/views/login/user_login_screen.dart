@@ -205,7 +205,6 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                                       context.textStyle.s16.white.bold.roboto,
                                   borderRadius: BorderRadius.circular(45),
                                   onTap: () async {
-                                    // Proceed with login
                                     await provider.submitLogin(
                                       context,
                                       params: LoginParams(

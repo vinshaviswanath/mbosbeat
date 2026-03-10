@@ -559,7 +559,7 @@ class CompanyCreationProvider extends ChangeNotifier {
         notifyListeners();
       },
       (response) {
-        Logger.logSuccess("Fetch Country List success : ${response.toJson()}");
+        // Logger.logSuccess("Fetch Country List success : ${response.toJson()}");
         Logger.logSuccess("Status : ${response.status}");
 
         _countryListDtos = response;
@@ -573,8 +573,6 @@ class CompanyCreationProvider extends ChangeNotifier {
     notifyListeners();
     return _countryListDtos;
   }
-
- 
 
   void selectCountry(BuildContext context, CountryListData? country) {
     _selectedCountry = country;
@@ -1416,9 +1414,9 @@ class CompanyCreationProvider extends ChangeNotifier {
         }
 
         _companyController.add(list);
-        Logger.logSuccess(
-          "Company List fetch successfull : ${response.toJson()}",
-        );
+        // Logger.logSuccess(
+        //   "Company List fetch successfull : ${response.toJson()}",
+        // );
         notifyListeners();
       },
     );
