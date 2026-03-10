@@ -122,6 +122,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
       _showSnack(context, "You are currently checked in with another party");
       return;
     }
+
     userProvider.setCheckinStarting(true);
     final visitSequence = await _getNextVisitSequence(widget.party.ledgerId);
 
@@ -134,7 +135,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
         position.latitude,
         position.longitude,
       );
-
+      print(provider.currentTripId);
       final now = DateTime.now();
       final response = await provider.checkIn(
         params: CheckinParams(
@@ -213,7 +214,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
         position.latitude,
         position.longitude,
       );
-
+      print(provider.currentTripId);
       final response = await provider.checkOut(
         context,
         params: CheckoutParams(
@@ -247,9 +248,10 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
         await prefs.remove('checkin_time');
 
         _showSnack(context, response?.message ?? "Check-out successful");
-      } else {
-        _showSnack(context, response?.message ?? "Check-out failed");
       }
+      //  else {
+      //   _showSnack(context, response?.message ?? "Check-out failed");
+      // }
     } catch (e) {
       debugPrint("Check-out error: $e");
     } finally {
@@ -295,6 +297,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.read<UserProvider>();
     final applocalization = context.l10n;
     return Scaffold(
       appBar: AppBar(
@@ -447,14 +450,18 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
                           children: [
                             GestureDetector(
                               onTap: () async {
-                                //  if (checkInTime == null) {
+                                if (provider.currentTripId == null) {
+                                  _showSnack(context, "Trip start first");
+                                  return;
+                                }
                                 await _handleCheckIn(context);
-                                //  }
                               },
                               child: Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(11),
-                                  color: ColorResources.rosePink,
+                                  color: provider.currentTripId == null
+                                      ? ColorResources.bluishGray
+                                      : ColorResources.rosePink,
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
