@@ -116,27 +116,7 @@ class _TransactionOrderBookingScreenState
             style: context.textStyle.s20.indigoBlue.bold.roboto,
           ),
           centerTitle: true,
-          // actions: [
-          //   SvgPicture.asset(
-          //     AppAssets.refresh,
-          //     height: context.getSize.height * 0.022,
-          //     colorFilter: const ColorFilter.mode(
-          //       ColorResources.indigoBlue,
-          //       BlendMode.srcIn,
-          //     ),
-          //   ),
-          //   w10,
-          //   SvgPicture.asset(
-          //     AppAssets.qr,
-          //     height: context.getSize.height * 0.022,
-          //     colorFilter: const ColorFilter.mode(
-          //       ColorResources.indigoBlue,
-          //       BlendMode.srcIn,
-          //     ),
-          //   ),
-
-          //   w10,
-          // ],
+     
         ),
         body: StreamBuilder<PartyMasterDetails?>(
           stream: context.read<UserProvider>().partyDetailsStream(
