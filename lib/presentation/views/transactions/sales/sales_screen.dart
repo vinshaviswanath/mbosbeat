@@ -60,7 +60,7 @@ class _SalesScreenState extends State<SalesScreen> {
       widget.data.party.ledgerId,
     );
 
-    if (!mounted) return; // ⭐ IMPORTANT
+    if (!mounted) return;
 
     if (party != null) {
       context.read<UserProvider>().setParty(party);
@@ -134,21 +134,6 @@ class _SalesScreenState extends State<SalesScreen> {
           style: context.textStyle.s20.indigoBlue.bold.roboto,
         ),
         centerTitle: true,
-        // actions: [
-        //   SvgPicture.asset(
-        //     AppAssets.refresh,
-        //     height: context.getSize.height * 0.022,
-        //     colorFilter: const ColorFilter.mode(
-        //       ColorResources.indigoBlue,
-        //       BlendMode.srcIn,
-        //     ),
-        //   ),
-        //   IconButton(
-        //     onPressed: () {},
-        //     icon: Icon(Icons.qr_code, size: context.getSize.height * 0.022),
-        //   ),
-        // ],
-        // toolbarHeight: 65,
       ),
       body: CustomScrollView(
         physics: const NeverScrollableScrollPhysics(),
@@ -162,9 +147,18 @@ class _SalesScreenState extends State<SalesScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        widget.data.party.ledgerName ?? "",
-                        style: context.textStyle.s12.w500.indigoBlue.roboto,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.data.party.ledgerName ?? "",
+                            style: context.textStyle.s12.w500.indigoBlue.roboto,
+                          ),
+                          Text(
+                            "${appLocalizations.order_booking_voucher_no} ${voucherNo ?? "..."}",
+                            style: context.textStyle.s09.w400.dustyBlue.roboto,
+                          ),
+                        ],
                       ),
                       GestureDetector(
                         onTap: () {
@@ -199,11 +193,12 @@ class _SalesScreenState extends State<SalesScreen> {
                   h4,
                   EndToEndTextWidget(
                     text1: widget.data.party.taxNumber ?? "",
-                    text2: widget.data.party.lastSyncOn?.toString() ?? "",
+                    text2: DateFormat('dd-MM-yyyy').format(
+                      DateTime.parse(widget.data.party.lastSyncOn.toString()),
+                    ),
                   ),
                   h4,
                   Row(
-                    // crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
@@ -607,7 +602,6 @@ class _SalesScreenState extends State<SalesScreen> {
                                 longitude: widget.data.party.longitude ?? 0.0,
                                 mailingName:
                                     widget.data.party.mailingName ?? '',
-                                    
                               );
 
                               txn.clearSelectedItems();
@@ -740,7 +734,6 @@ Future<void> saveSale({
           );
     }
 
-   
     ///   /// 3️⃣ INSERT LEDGER
     final Map<String, double> taxLedgers = {
       "CGST": txn.totalCgst,

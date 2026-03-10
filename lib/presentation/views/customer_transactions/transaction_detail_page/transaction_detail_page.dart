@@ -451,7 +451,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
                             GestureDetector(
                               onTap: () async {
                                 if (provider.currentTripId == null) {
-                                  _showSnack(context, "Trip start first");
+                                  _showSnack(context, "Start Trip first");
                                   return;
                                 }
                                 await _handleCheckIn(context);

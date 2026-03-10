@@ -92,9 +92,18 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        widget.data.party.ledgerName ?? "",
-                        style: context.textStyle.s12.w500.indigoBlue.roboto,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.data.party.ledgerName ?? "",
+                            style: context.textStyle.s12.w500.indigoBlue.roboto,
+                          ),
+                          Text(
+                            "${appLocalizations.order_booking_voucher_no} ${voucherNo ?? "..."}",
+                            style: context.textStyle.s09.w400.dustyBlue.roboto,
+                          ),
+                        ],
                       ),
                       GestureDetector(
                         onTap: () {
@@ -130,7 +139,9 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
                   h4,
                   EndToEndTextWidget(
                     text1: widget.data.party.taxNumber ?? "",
-                    text2: widget.data.party.lastSyncOn?.toString() ?? "",
+                    text2: DateFormat('dd-MM-yyyy').format(
+                      DateTime.parse(widget.data.party.lastSyncOn.toString()),
+                    ),
                   ),
                   h4,
                   Divider(
