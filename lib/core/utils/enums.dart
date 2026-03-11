@@ -102,3 +102,8 @@ enum NetworkQuality {
 
 enum DiscountType { percentage, amount,none }
 
+enum PrinterSize {
+  mm58,
+  mm80,
+  mm112,
+}

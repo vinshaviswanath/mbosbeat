@@ -21,89 +21,105 @@ class HomeAppBar extends StatefulWidget implements PreferredSizeWidget {
 
 class _HomeAppBarState extends State<HomeAppBar> {
   int? _userId;
+  bool isSyncing = false;
+
+  @override
+  void initState() {
+    super.initState();
+    bool isSyncing = false;
+  }
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      // 🚫 NO BACK BUTTON
       automaticallyImplyLeading: false,
-
       backgroundColor: ColorResources.cloudGray,
-
-      // ✅ CENTER TITLE
       centerTitle: true,
       title: Text("Home", style: context.textStyle.s20.indigoBlue.bold.roboto),
-
-      // ✅ LEFT ICON (menu/sort)
-      leading: IconButton(
-        icon: const Icon(Icons.sort_sharp, size: 22),
-        onPressed: () {},
-      ),
-
-      // ✅ ACTIONS VISIBLE
+      leading: !isSyncing
+          ? IconButton(
+              icon: const Icon(Icons.sort_sharp, size: 22),
+              onPressed: () {},
+            )
+          : SizedBox.shrink(),
       actions: [
-        IconButton(
-          icon: const Icon(Icons.sync),
-          onPressed: () async {
-            final userProvider = context.read<UserProvider>();
+        !isSyncing
+            ? IconButton(
+                icon: const Icon(Icons.sync),
+                onPressed: () async {
+                  setState(() {
+                    isSyncing = true;
+                  });
+                  final userProvider = context.read<UserProvider>();
 
-            userProvider.setHomeLoading(true);
+                  userProvider.setHomeLoading(true);
 
-            try {
-              final appDb = sl<AppDb>();
-              final companyProvider = context.read<CompanyCreationProvider>();
-              final userManagementProvider = context
-                  .read<UserManagementProvider>();
-              final userProvider = context.read<UserProvider>();
+                  try {
+                    final appDb = sl<AppDb>();
+                    final companyProvider = context
+                        .read<CompanyCreationProvider>();
+                    final userManagementProvider = context
+                        .read<UserManagementProvider>();
+                    final userProvider = context.read<UserProvider>();
 
-              _userId = await appDb.registrationDetailDao.getLoggedInUserId();
-              if (_userId == null) return;
+                    _userId = await appDb.registrationDetailDao
+                        .getLoggedInUserId();
+                    if (_userId == null) return;
 
-              final companyId = widget.company.id ?? 0;
+                    final companyId = widget.company.id ?? 0;
 
-              await Future.wait([
-                companyProvider.fetchVoucherTypes(context, companyId),
-                companyProvider.getCompanySettings(context, companyId),
-                companyProvider.getAllGodowns(
-                  context: context,
-                  companyId: companyId.toString(),
-                ),
-                companyProvider.getAllRoutess(
-                  context: context,
-                  companyId: companyId.toString(),
-                ),
-                userManagementProvider.getUsersSettingsList(
-                  context: context,
-                  userId: _userId.toString(),
-                ),
-              ]);
+                    await Future.wait([
+                      companyProvider.fetchVoucherTypes(context, companyId),
+                      companyProvider.getCompanySettings(context, companyId),
+                      companyProvider.getAllGodowns(
+                        context: context,
+                        companyId: companyId.toString(),
+                      ),
+                      companyProvider.getAllRoutess(
+                        context: context,
+                        companyId: companyId.toString(),
+                      ),
+                      userManagementProvider.getUsersSettingsList(
+                        context: context,
+                        userId: _userId.toString(),
+                      ),
+                    ]);
 
-              userProvider.setCompanyId(companyId);
-              await userProvider.partyMasterSync();
-              await userProvider.getItemMaster(
-                context,
-                params: ItemMasterQueryParams(
-                  companyId: companyId,
-                  pageNumber: 1,
-                  lastSyncDateTime: DateTime.now(),
-                ),
-              );
-              await userProvider.getPriceLevel(context, companyId: companyId);
-              await userProvider.getItemPriceDetails(
-                context,
-                companyId: companyId,
-              );
-              await userProvider.loadRouteState();
-              await userProvider.load();
-            } finally {
-              userProvider.setHomeLoading(false);
-            }
-          },
-        ),
-        IconButton(
-          icon: const Icon(Icons.power_settings_new_sharp),
-          onPressed: () => CommonLogoutDialog(context),
-        ),
+                    userProvider.setCompanyId(companyId);
+                    await userProvider.partyMasterSync();
+                    await userProvider.getItemMaster(
+                      context,
+                      params: ItemMasterQueryParams(
+                        companyId: companyId,
+                        pageNumber: 1,
+                        lastSyncDateTime: DateTime.now(),
+                      ),
+                    );
+                    await userProvider.getPriceLevel(
+                      context,
+                      companyId: companyId,
+                    );
+                    await userProvider.getItemPriceDetails(
+                      context,
+                      companyId: companyId,
+                    );
+                    await userProvider.loadRouteState();
+                    await userProvider.load();
+                  } finally {
+                    userProvider.setHomeLoading(false);
+                    setState(() {
+                      isSyncing = false;
+                    });
+                  }
+                },
+              )
+            : SizedBox.shrink(),
+        !isSyncing
+            ? IconButton(
+                icon: const Icon(Icons.power_settings_new_sharp),
+                onPressed: () => CommonLogoutDialog(context),
+              )
+            : SizedBox.shrink(),
       ],
     );
   }
