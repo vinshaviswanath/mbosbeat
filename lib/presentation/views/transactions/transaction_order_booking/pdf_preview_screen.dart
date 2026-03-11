@@ -12,23 +12,13 @@ class PdfPreviewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Invoice Preview"),
-      ),
+      appBar: AppBar(title: const Text("Invoice Preview")),
       body: PdfPreview(
         build: buildPdf,
-
-        /// enables share button
-        allowSharing: true,
-
-        /// enables print button
         allowPrinting: true,
-
-        /// page format
-        initialPageFormat: PdfPageFormat.a4,
-
-        /// prevents layout issues
+        allowSharing: true,
         canChangePageFormat: false,
+        initialPageFormat: PdfPageFormat.a4,
       ),
     );
   }

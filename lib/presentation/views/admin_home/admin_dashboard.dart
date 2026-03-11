@@ -675,7 +675,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                                   company:
                                                                       company,
                                                                 );
-
+                                                            Logger.logSuccess(
+                                                              "Company Id : ${selectedCompany?.id}",
+                                                            );
                                                             // Update country
                                                             final selectedCountry = provider.countries.firstWhere(
                                                               (c) =>

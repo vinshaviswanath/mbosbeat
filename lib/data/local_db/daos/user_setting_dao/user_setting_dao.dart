@@ -82,7 +82,7 @@ Stream<bool> watchEditDiscountEnabled(int userId) {
             tbl.menuName.equals("Edit Discount"))
         ..limit(1))
       .watchSingleOrNull()
-      .map((row) => row?.value?.toLowerCase() == "true");
+      .map((row) => row?.value?.toLowerCase() == "yes");
 }
 
 }

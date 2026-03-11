@@ -157,6 +157,7 @@ class AppDb extends _$AppDb {
   MigrationStrategy get migration => MigrationStrategy(
     onCreate: (m) async {
       await m.createAll();
+      await _createIndexes(m);
     },
     onUpgrade: (m, from, to) async {
       if (from < 4) {
@@ -399,4 +400,46 @@ LazyDatabase _openConnection() {
 
     return NativeDatabase.createInBackground(file);
   });
+}
+
+Future<void> _createIndexes(Migrator m) async {
+  await m.database.customStatement(
+    'CREATE INDEX IF NOT EXISTS idx_item_company '
+    'ON item_master(company_id)',
+  );
+
+  await m.database.customStatement(
+    'CREATE INDEX IF NOT EXISTS idx_item_category '
+    'ON item_master(category_name)',
+  );
+
+  await m.database.customStatement(
+    'CREATE INDEX IF NOT EXISTS idx_item_group '
+    'ON item_master(group_name)',
+  );
+
+  await m.database.customStatement(
+    'CREATE INDEX IF NOT EXISTS idx_item_name_nocase '
+    'ON item_master(item_name COLLATE NOCASE)',
+  );
+
+  await m.database.customStatement(
+    'CREATE INDEX IF NOT EXISTS idx_item_alias_nocase '
+    'ON item_master(alias_name COLLATE NOCASE)',
+  );
+
+  await m.database.customStatement(
+    'CREATE INDEX IF NOT EXISTS idx_item_part_number '
+    'ON item_master(part_number)',
+  );
+
+  await m.database.customStatement(
+    'CREATE INDEX IF NOT EXISTS idx_price_item '
+    'ON item_price_details_tables(item_id, price_list)',
+  );
+
+  await m.database.customStatement(
+    'CREATE INDEX IF NOT EXISTS idx_item_company_name '
+    'ON item_master(company_id, item_name COLLATE NOCASE)',
+  );
 }
