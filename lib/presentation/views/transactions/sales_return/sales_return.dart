@@ -65,23 +65,8 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
           style: context.textStyle.s20.indigoBlue.bold.roboto,
         ),
         centerTitle: true,
-        // actions: [
-        //   SvgPicture.asset(
-        //     AppAssets.refresh,
-        //     height: context.getSize.height * 0.022,
-        //     colorFilter: const ColorFilter.mode(
-        //       ColorResources.indigoBlue,
-        //       BlendMode.srcIn,
-        //     ),
-        //   ),
-        //   IconButton(
-        //     onPressed: () {},
-        //     icon: Icon(Icons.qr_code, size: context.getSize.height * 0.022),
-        //   ),
-        // ],
       ),
       body: CustomScrollView(
-        physics: const NeverScrollableScrollPhysics(),
         slivers: [
           const SliverToBoxAdapter(child: h16),
           SliverToBoxAdapter(
@@ -105,6 +90,18 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
                           ),
                         ],
                       ),
+                    ],
+                  ),
+                  h4,
+                  EndToEndTextWidget(
+                    text1: widget.data.party.taxNumber ?? "",
+                    text2: DateFormat('dd-MM-yyyy').format(
+                      DateTime.parse(widget.data.party.lastSyncOn.toString()),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
                       GestureDetector(
                         onTap: () {
                           context.pushNamed(
@@ -136,19 +133,12 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
                       ),
                     ],
                   ),
-                  h4,
-                  EndToEndTextWidget(
-                    text1: widget.data.party.taxNumber ?? "",
-                    text2: DateFormat('dd-MM-yyyy').format(
-                      DateTime.parse(widget.data.party.lastSyncOn.toString()),
-                    ),
-                  ),
+
                   h4,
                   Divider(
                     thickness: 1,
                     color: ColorResources.bluishGray.withValues(alpha: 0.2),
                   ),
-                  h16,
                 ],
               ),
             ),

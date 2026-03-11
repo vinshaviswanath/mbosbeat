@@ -116,7 +116,6 @@ class _TransactionOrderBookingScreenState
             style: context.textStyle.s20.indigoBlue.bold.roboto,
           ),
           centerTitle: true,
-     
         ),
         body: StreamBuilder<PartyMasterDetails?>(
           stream: context.read<UserProvider>().partyDetailsStream(
@@ -754,7 +753,7 @@ class _TransactionOrderBookingScreenState
 
                                               txn.clearSelectedItems();
                                               remarkController.clear();
-     },
+                                            },
                                           );
                                         } else {}
                                       },
@@ -1045,7 +1044,6 @@ Future<void> saveOrder({
                 voucherName: Value(entry.key),
                 amount: Value(entry.value),
                 companyId: Value(companyId),
-               
               ),
             );
       }
