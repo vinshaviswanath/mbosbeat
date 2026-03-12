@@ -127,8 +127,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
             selectedCompany?.address1,
             selectedCompany?.address2,
             selectedCompany?.address3,
-            // selectedCompany?.state,
-            // selectedCompany?.country,
+         
           ];
 
           // Remove null or empty values

@@ -136,7 +136,6 @@ class _SalesScreenState extends State<SalesScreen> {
         centerTitle: true,
       ),
       body: CustomScrollView(
-        physics: const NeverScrollableScrollPhysics(),
         slivers: [
           const SliverToBoxAdapter(child: h16),
           SliverToBoxAdapter(
@@ -160,6 +159,19 @@ class _SalesScreenState extends State<SalesScreen> {
                           ),
                         ],
                       ),
+                    ],
+                  ),
+                  h4,
+                  EndToEndTextWidget(
+                    text1: widget.data.party.taxNumber ?? "",
+                    text2: DateFormat('dd-MM-yyyy').format(
+                      DateTime.parse(widget.data.party.lastSyncOn.toString()),
+                    ),
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
                       GestureDetector(
                         onTap: () {
                           context.pushNamed(
@@ -180,23 +192,15 @@ class _SalesScreenState extends State<SalesScreen> {
                             borderRadius: BorderRadius.circular(12),
                             color: ColorResources.rosePink,
                           ),
-                          child: Center(
-                            child: Text(
-                              appLocalizations.add_item,
-                              style: context.textStyle.s10.white.w400,
-                            ),
+                          child: Text(
+                            appLocalizations.add_item,
+                            style: context.textStyle.s10.white.w400,
                           ),
                         ),
                       ),
                     ],
                   ),
-                  h4,
-                  EndToEndTextWidget(
-                    text1: widget.data.party.taxNumber ?? "",
-                    text2: DateFormat('dd-MM-yyyy').format(
-                      DateTime.parse(widget.data.party.lastSyncOn.toString()),
-                    ),
-                  ),
+
                   h4,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -615,7 +619,9 @@ class _SalesScreenState extends State<SalesScreen> {
                         ),
                         w10,
                         Expanded(
-                          child: CustomButton(
+                          child: CustomButton( onTap: () {
+                                        Navigator.pop(context);
+                                      },
                             buttonText: appLocalizations.cancel,
                             isborderEnable: false,
                             color: ColorResources.bluishGray,

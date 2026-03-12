@@ -170,7 +170,7 @@ class _TransactionOrderBookingScreenState
             style: context.textStyle.s20.indigoBlue.bold.roboto,
           ),
           centerTitle: true,
-          actions: [
+  actions: [
             provider.selectedItemIds.isNotEmpty
                 ? IconButton(
                     icon: const Icon(Icons.print),
@@ -323,7 +323,7 @@ class _TransactionOrderBookingScreenState
           //   w10,
           // ],
      
-        ),
+  ),
         body: StreamBuilder<PartyMasterDetails?>(
           stream: context.read<UserProvider>().partyDetailsStream(
             companyId,
@@ -971,6 +971,9 @@ class _TransactionOrderBookingScreenState
                                   w10,
                                   Expanded(
                                     child: CustomButton(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
                                       buttonText: appLocalizations.cancel,
                                       isborderEnable: false,
                                       color: ColorResources.bluishGray,

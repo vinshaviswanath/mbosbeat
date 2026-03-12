@@ -101,18 +101,6 @@ void dispose() {
 
     final appLocalization = context.l10n;
 
-    // void performSearch(String value) {
-    //   final transactionProvider = context.read<CustomerTransactionProvider>();
-
-    //   transactionProvider.updateSearch(value.trim());
-    //   transactionProvider.resetPagination();
-
-    //   transactionProvider.loadNextPage(
-    //     companyId: widget.data.data.company.id!,
-    //     priceListId: widget.data.party.priceList ?? 0,
-    //     ledgerId: widget.data.party.ledgerId,
-    //   );
-    // }
 
     return Consumer<CustomerTransactionProvider>(
       builder: (context, value, child) => PopScope(

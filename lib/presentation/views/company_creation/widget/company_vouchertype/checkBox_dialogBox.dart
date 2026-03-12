@@ -93,14 +93,9 @@ class _CheckBoxDialogBoxState extends State<CheckBoxDialogBox> {
                           ),
                         );
                     if (response != null && response.status == 1) {
-                      // CommonSnackBar.show(context,
-                      //     message:
-                      //         createcompanyvoucherProvider.serverMessage ?? "");
+               
                      provider.fetchVoucherTypes(context,widget.companyId ?? 0);
-                      // provider.fetchVoucherTypes(
-                      //   context,
-                      //   // companyId ?? 0
-                      // );
+                      
                      context.pop(true);
                     }
                   },

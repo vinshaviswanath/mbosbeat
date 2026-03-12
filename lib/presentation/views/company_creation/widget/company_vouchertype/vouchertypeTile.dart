@@ -55,14 +55,12 @@ class _VoucherTypeTileState extends State<VoucherTypeTile> {
 
                 value: isCheckOnInt == 1,
                 onChanged: (value) async {
-                  // Check if any of the prefixes or suffixes are non-empty
                   final hasAnyValue =
                       voucher.b2BPrefix.isNotEmpty ||
                       voucher.b2BSuffix.isNotEmpty ||
                       voucher.b2CPrefix.isNotEmpty ||
                       voucher.b2CSuffix.isNotEmpty;
                   if (value == false && hasAnyValue) {
-                    // Show the dialog box if any prefix or suffix has a value
                     final result = await showDialog(
                       context: context,
                       builder: (BuildContext context) {

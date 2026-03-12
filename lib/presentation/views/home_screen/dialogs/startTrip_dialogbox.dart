@@ -203,11 +203,10 @@ class _StartTripFormState extends State<StartTripForm> {
     final userProvider = context.read<UserProvider>();
     final locationService = sl<LocationService>();
     final navigator = Navigator.of(context, rootNavigator: true);
- navigator.pop();
-   userProvider.setTripStarting(true); 
+    navigator.pop();
+    userProvider.setTripStarting(true);
 
     // ✅ POP IMMEDIATELY
-   
 
     final position = await locationService.getCurrentLocation();
     final address = await locationService.getNormalAddress(
@@ -218,7 +217,7 @@ class _StartTripFormState extends State<StartTripForm> {
     final now = DateTime.now();
     final startTime = now.toIso8601String().split('.').first;
 
- await userProvider.markTripStart(
+    await userProvider.markTripStart(
       date: now,
       startTime: startTime,
       routeID: selectedRoute!.id!,
@@ -229,9 +228,7 @@ class _StartTripFormState extends State<StartTripForm> {
       address: address,
     );
 
- userProvider.setTripStarting(false);
-
-
+    userProvider.setTripStarting(false);
   }
 }
 
