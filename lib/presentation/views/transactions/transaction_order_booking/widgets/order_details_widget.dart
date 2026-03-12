@@ -344,9 +344,24 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                             currentDiscountType,
                           ),
                           onChanged: (value) {
+                            double discount = double.tryParse(value) ?? 0;
+
+                            if (currentDiscountType ==
+                                    DiscountType.percentage &&
+                                discount > 100) {
+                              discount = 100;
+
+                              _discountController.value = TextEditingValue(
+                                text: '100',
+                                selection: const TextSelection.collapsed(
+                                  offset: 3,
+                                ),
+                              );
+                            }
+
                             provider.updateDiscount(
                               widget.itemId,
-                              double.tryParse(value) ?? 0,
+                              discount,
                               inclRate,
                             );
                           },

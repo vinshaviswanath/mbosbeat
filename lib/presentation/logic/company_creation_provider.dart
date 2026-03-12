@@ -96,7 +96,6 @@ class CompanyCreationProvider extends ChangeNotifier {
 
   void setLoading(bool val) {
     _isLoading = val;
-    notifyListeners();
   }
 
   final _companyController =

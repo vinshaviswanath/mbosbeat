@@ -72,8 +72,7 @@ class AppAssets {
   static const logout2 = "$baseDir/logout2.svg";
   static const switchIcon = "$baseDir/switch.svg";
   static const qr = "$baseDir/qr.svg";
-
-
+  static const delete = "$baseDir/delete.svg";
 
   //Animations
   static const forgot_password = "$baseAnimDir/forgot.json";
@@ -81,5 +80,4 @@ class AppAssets {
   static const loading_anim = "$baseAnimDir/loading_anim.json";
   static const registred = "$baseAnimDir/registred.json";
   static const syncAnim = "$baseAnimDir/sync.json";
-
 }

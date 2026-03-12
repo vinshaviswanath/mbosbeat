@@ -82,7 +82,6 @@ class UserManagementProvider with ChangeNotifier {
   CompanyInfoDtos? _companyCreationDtos;
   CompanyInfoDtos? get companyCreationDtos => _companyCreationDtos;
 
-
   AutovalidateMode userCreateAutovalidateMode = AutovalidateMode.disabled;
   AutovalidateMode designationAutovalidateMode = AutovalidateMode.disabled;
 
@@ -630,21 +629,18 @@ class UserManagementProvider with ChangeNotifier {
         ).showSnackBar(SnackBar(content: Text(failure.errorMsg)));
       },
       (response) async {
-        if (response.status == 0) {
-          // ❗CLEAR ONLY ON SUCCESS
-          resetUserCreateForm();
-        }
-
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(content: Text(response.message ?? '')));
 
-        if (response.status != 0) {
-          context.pop();
-        }
+        if (response.status == 1) {
+          // ✅ Clear only on success
+          resetUserCreateForm();
+          getAllUsersList(context);
 
-        getAllUsersList(context);
-        notifyListeners();
+          context.pop();
+          notifyListeners();
+        }
       },
     );
 
@@ -1160,6 +1156,4 @@ class UserManagementProvider with ChangeNotifier {
     setLoading(false);
     return _companyCreationDtos;
   }
-
-
 }

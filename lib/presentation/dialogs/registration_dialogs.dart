@@ -127,11 +127,8 @@ class RegistrationDialogs {
             builder: (context, provider, _) {
               return CustomButton(
                 onTap: () {
-                  provider.resetSignUpForm();
-                  //  context.pop();
-                  Navigator.of(
-                    context,
-                  ).pushReplacementNamed(AppRouterConst.login);
+                  context.pop();
+                  context.pop();
                 },
 
                 buttonText: appLocalization.login,

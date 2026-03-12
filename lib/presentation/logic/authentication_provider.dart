@@ -747,13 +747,7 @@ class AuthFormProvider with ChangeNotifier {
           RegistrationDialogs.completedRegisteredDialog(
             context,
             companyName.getValue ?? '',
-          ).then((_) {
-            resetSignUpForm();
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              //   context.go(AppRouterConst.login);
-            //  context.pushReplacementNamed(AppRouterConst.login);
-            });
-          });
+          );
         }
 
         _setLoading(false);

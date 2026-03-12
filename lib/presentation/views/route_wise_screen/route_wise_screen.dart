@@ -327,7 +327,9 @@ class _RouteWiseScreenState extends State<RouteWiseScreen> {
                                               selectedIndex: optionIndex,
                                               title: appLocalization
                                                   .route_wise_screen_voucher_type_settings,
-                                              // icon: Icons.pan_tool,
+                                              icon: AppAssets.delete,
+                                              iconColor:
+                                                  ColorResources.transparent,
                                               onTap: (i) {
                                                 context.pushNamed(
                                                   AppRouterConst

@@ -7,6 +7,7 @@ class OptionItem extends StatelessWidget {
   final String? icon;
   final TextStyle? style;
   final Function(int) onTap;
+  final Color? iconColor;
 
   const OptionItem({
     super.key,
@@ -16,6 +17,7 @@ class OptionItem extends StatelessWidget {
     this.icon,
     required this.onTap,
     this.style,
+     this.iconColor,
   });
 
   @override
@@ -39,9 +41,10 @@ class OptionItem extends StatelessWidget {
             SvgPicture.asset(
               icon ?? '',
               colorFilter: ColorFilter.mode(
-                isSelected
-                    ? ColorResources.indigoBlue
-                    : ColorResources.bluishGray,
+                iconColor ?? ColorResources.bluishGray,
+                // isSelected
+                //     ? ColorResources.indigoBlue
+                //     : ColorResources.bluishGray,
                 BlendMode.srcIn,
               ),
 

@@ -218,6 +218,7 @@ class _AddRouteState extends State<AddRoute> {
                               });
                             });
                       }
+                      FocusScope.of(context).unfocus();
                     },
 
                     borderRadius: BorderRadius.circular(16),

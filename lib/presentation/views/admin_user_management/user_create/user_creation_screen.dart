@@ -83,15 +83,22 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
     userController.text = user.name ?? '';
     phoneController.text = user.mobile ?? '';
     whatsappController.text = user.whatsappNo ?? '';
+    passwordController.text = user.passwordHash ?? '';
     emailController.text = user.email ?? '';
   }
 
   void _submitForm() async {
-    setState(() => _submitted = true);
+    final pref = sl<SharedPreferences>();
+    final customerId = pref.getInt('customerId') ?? 0;
 
     final provider = context.read<UserManagementProvider>();
+
+    setState(() => _submitted = true);
+
+    // Form validation
     if (!_formKey.currentState!.validate()) return;
 
+    // Custom validations
     if (provider.selectedDesignation == null ||
         provider.selectedReportingTo == null ||
         !provider.user.isValid() ||
@@ -100,49 +107,24 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
       return;
     }
 
-    final pref = sl<SharedPreferences>();
-    final customerId = pref.getInt('customerId') ?? 0;
-
-    if (widget.isUpdate && widget.user != null) {
-      await provider.createUser(
-        context: context,
-        id: widget.user?.id ?? 0,
-        customerId: customerId,
-        fullName: userController.text,
-        mobile: phoneController.text,
-        whatsappNo: whatsappController.text,
-        email: emailController.text,
-        designationId: provider.selectedDesignation!.id!,
-        paretId: provider.selectedReportingTo!.id!,
-        userName: userController.text,
-        password: passwordController.text,
-        active: 1,
-      );
-
-      provider.updateUser('');
-      provider.updatePassword('');
-      _clearFields();
-      return;
-    }
-
+    // API Call
     await provider.createUser(
       context: context,
-      id: 0,
+      id: widget.isUpdate ? widget.user?.id ?? 0 : 0,
       customerId: customerId,
-      fullName: userController.text,
-      mobile: phoneController.text,
-      whatsappNo: whatsappController.text,
-      email: emailController.text,
+      fullName: userController.text.trim(),
+      mobile: phoneController.text.trim(),
+      whatsappNo: whatsappController.text.trim(),
+      email: emailController.text.trim(),
       designationId: provider.selectedDesignation!.id!,
       paretId: provider.selectedReportingTo!.id!,
-      userName: userController.text,
-      password: passwordController.text,
+      userName: emailController.text.trim(),
+      password: passwordController.text.trim(),
       active: 1,
     );
 
-    provider.updateUser('');
-    provider.updatePassword('');
-    _clearFields();
+    // ❗ Do not clear fields here
+    // Provider handles success case
   }
 
   void _clearFields() {
@@ -150,25 +132,33 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
     _formKey.currentState?.reset();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      userController.clear();
-      phoneController.clear();
-      emailController.clear();
-      passwordController.clear();
-      whatsappController.clear();
+      // userController.clear();
+      // phoneController.clear();
+      // emailController.clear();
+      // passwordController.clear();
+      // whatsappController.clear();
 
       setState(() {
         _submitted = false;
         _nameFieldTouched = false;
       });
 
-      provider.updateSelectedDesignation(null);
-      provider.updateSelectedReportingTo(null);
+      // provider.updateSelectedDesignation(null);
+      // provider.updateSelectedReportingTo(null);
 
       provider.userCreateAutovalidateMode = AutovalidateMode.disabled;
       provider.resetUserCreateForm();
       provider.resetVisibilityPassword();
     });
   }
+
+  final FocusNode field1 = FocusNode();
+  final FocusNode field2 = FocusNode();
+  final FocusNode field3 = FocusNode();
+  final FocusNode field4 = FocusNode();
+  final FocusNode field5 = FocusNode();
+  final FocusNode field6 = FocusNode();
+  final FocusNode field7 = FocusNode();
 
   @override
   void dispose() {
@@ -217,6 +207,13 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
             _submitted &&
             (passwordController.text.trim().isEmpty ||
                 passwordController.text.trim().length < 3);
+
+        final bool isEmailInvalid =
+            _submitted &&
+            (emailController.text.trim().isEmpty ||
+                !RegExp(
+                  r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$',
+                ).hasMatch(emailController.text.trim()));
 
         return PopScope(
           canPop: true,
@@ -280,7 +277,10 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                         ),
                         h4,
                         TextFormField(
+                          focusNode: field1,
                           controller: userController,
+                          onFieldSubmitted: (value) =>
+                              FocusScope.of(context).requestFocus(field2),
                           decoration: InputDecoration(
                             hintText: appLocalizations
                                 .user_creation_screen_enter_name,
@@ -349,8 +349,11 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                         ),
                         h4,
                         CustomTextField(
+                          focusNode: field2,
                           hint: appLocalizations.enter_mobile_number,
                           maxLength: 10,
+                          onFieldSubmitted: (value) =>
+                              FocusScope.of(context).requestFocus(field3),
                           controller: phoneController,
                           autovalidateMode: provider.userCreateAutovalidateMode,
                           failure: provider.phone.getFailure,
@@ -362,69 +365,67 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                           borderColor: ColorResources.transparent,
                         ),
                         h16,
-                        if (widget.isUpdate == false) ...[
-                          Text(
-                            appLocalizations.password,
-                            style: context.textStyle.s12.bluishGray.w400.roboto,
-                          ),
-                          h4,
-                          CustomTextField(
-                            hint: appLocalizations.enter_password,
-                            controller: passwordController,
-                            autovalidateMode:
-                                provider.userCreateAutovalidateMode,
-                            onChange: provider.updatePassword,
-                            suffixIcon: InkWell(
-                              onTap: () => provider.toggleVisibilityPassword(),
-                              child: Padding(
-                                padding: const EdgeInsets.all(12),
-                                child: SvgPicture.asset(
-                                  provider.isVisiblePassword
-                                      ? AppAssets.featherEyeOn
-                                      : AppAssets.featherEyeOff,
-                                  height: context.getSize.height * 0.02,
-                                ),
+                        // if (widget.isUpdate == false) ...[
+                        Text(
+                          appLocalizations.password,
+                          style: context.textStyle.s12.bluishGray.w400.roboto,
+                        ),
+                        h4,
+                        CustomTextField(
+                          hint: appLocalizations.enter_password,
+                          controller: passwordController,
+                          focusNode: field3,
+                          onFieldSubmitted: (value) =>
+                              FocusScope.of(context).requestFocus(field4),
+                          autovalidateMode: provider.userCreateAutovalidateMode,
+                          onChange: provider.updatePassword,
+                          suffixIcon: InkWell(
+                            onTap: () => provider.toggleVisibilityPassword(),
+                            child: Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: SvgPicture.asset(
+                                provider.isVisiblePassword
+                                    ? AppAssets.featherEyeOn
+                                    : AppAssets.featherEyeOff,
+                                height: context.getSize.height * 0.02,
                               ),
                             ),
-                            obscureText: !provider.isVisiblePassword,
-                            backgroundColor: ColorResources.lightGray,
-                            inputType: TextInputType.visiblePassword,
-                            borderRadius: 12,
-                            hintColor: ColorResources.silverGray,
-
-                            /// 🔴 border validation like Name field
-                            borderColor: isPasswordInvalid
-                                ? ColorResources.roseRed
-                                : ColorResources.transparent,
                           ),
-                          h4,
-                          if (isPasswordInvalid) ...[
-                            const SizedBox(height: 4),
-                            Row(
-                              children: [
-                                SvgPicture.asset(
-                                  AppAssets.alertError,
-                                  height: 16,
-                                ),
-                                const SizedBox(width: 4),
-                                Text(
-                                  passwordController.text.trim().isEmpty
-                                      ? appLocalizations.enter_password
-                                      : appLocalizations
-                                            .password_must_be_at_least_3_characters,
-                                  style: context
-                                      .textStyle
-                                      .s10
-                                      .w300
-                                      .roseRed
-                                      .raleway,
-                                ),
-                              ],
-                            ),
-                          ],
+                          obscureText: !provider.isVisiblePassword,
+                          backgroundColor: ColorResources.lightGray,
+                          inputType: TextInputType.visiblePassword,
+                          borderRadius: 12,
+                          hintColor: ColorResources.silverGray,
 
-                          h16,
+                          /// 🔴 border validation like Name field
+                          borderColor: isPasswordInvalid
+                              ? ColorResources.roseRed
+                              : ColorResources.transparent,
+                        ),
+                        h4,
+                        if (isPasswordInvalid) ...[
+                          const SizedBox(height: 4),
+                          Row(
+                            children: [
+                              SvgPicture.asset(
+                                AppAssets.alertError,
+                                height: 16,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                passwordController.text.trim().isEmpty
+                                    ? appLocalizations.enter_password
+                                    : appLocalizations
+                                          .password_must_be_at_least_3_characters,
+                                style:
+                                    context.textStyle.s10.w300.roseRed.raleway,
+                              ),
+                            ],
+                          ),
                         ],
+
+                        h16,
+                        // ],
                         Text(
                           appLocalizations.user_creation_screen_whatsapp_number,
                           style: context.textStyle.s12.bluishGray.w400.roboto,
@@ -434,6 +435,9 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                           hint: appLocalizations
                               .user_creation_screen_enter_whatsapp_number,
                           maxLength: 10,
+                          focusNode: field4,
+                          onFieldSubmitted: (value) =>
+                              FocusScope.of(context).requestFocus(field5),
                           controller: whatsappController,
                           autovalidateMode: provider.userCreateAutovalidateMode,
                           failure: provider.whatsAppNumber.getFailure,
@@ -449,8 +453,7 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: appLocalizations
-                                    .user_creation_screen_reporting_to,
+                                text: appLocalizations.email_ID,
                                 style: context
                                     .textStyle
                                     .s12
@@ -471,6 +474,9 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                         CustomTextField(
                           hint: appLocalizations.enter_email,
                           controller: emailController,
+                          focusNode: field5,
+                          onFieldSubmitted: (value) =>
+                              FocusScope.of(context).requestFocus(field6),
                           autovalidateMode: provider.userCreateAutovalidateMode,
                           failure: provider.email.getFailure,
                           onChange: provider.updateEmail,
@@ -478,13 +484,34 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                           inputType: TextInputType.emailAddress,
                           borderRadius: 12,
                           hintColor: ColorResources.silverGray,
-                          borderColor: ColorResources.transparent,
+                          borderColor: isEmailInvalid
+                              ? ColorResources.roseRed
+                              : ColorResources.transparent,
                         ),
-                        h16,
+                        h4,
                         // Text(
                         //   appLocalizations.user_creation_screen_designation,
                         //   style: context.textStyle.s12.bluishGray.w400.roboto,
                         // ),
+                        if (isEmailInvalid) ...[
+                          Row(
+                            children: [
+                              SvgPicture.asset(
+                                AppAssets.alertError,
+                                height: 16,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                emailController.text.trim().isEmpty
+                                    ? appLocalizations.enter_email
+                                    : "Enter a valid email id",
+                                style:
+                                    context.textStyle.s10.w300.roseRed.raleway,
+                              ),
+                            ],
+                          ),
+                        ],
+                        h16,
                         RichText(
                           text: TextSpan(
                             children: [
@@ -517,6 +544,10 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                                   DropdownButtonFormField<UserDesignationList>(
                                     dropdownColor: ColorResources.white,
                                     borderRadius: BorderRadius.circular(10),
+                                    focusNode: field6,
+                                    onSaved: (value) => FocusScope.of(
+                                      context,
+                                    ).requestFocus(field7),
                                     decoration: InputDecoration(
                                       filled: true,
                                       fillColor: ColorResources.lightGray,
@@ -653,6 +684,7 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                         DropdownButtonFormField<UserMasterList>(
                           dropdownColor: ColorResources.white,
                           borderRadius: BorderRadius.circular(10),
+                          focusNode: field7,
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: ColorResources.lightGray,
@@ -682,7 +714,19 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                               ),
                             ),
                           ),
-                          initialValue: provider.selectedReportingTo,
+                          initialValue:
+                              usersList
+                                  .where(
+                                    (e) =>
+                                        e.id ==
+                                        provider.selectedReportingTo?.id,
+                                  )
+                                  .isNotEmpty
+                              ? usersList.firstWhere(
+                                  (e) =>
+                                      e.id == provider.selectedReportingTo?.id,
+                                )
+                              : null,
                           hint: Text(
                             appLocalizations
                                 .user_creation_screen_choose_reporting_person,

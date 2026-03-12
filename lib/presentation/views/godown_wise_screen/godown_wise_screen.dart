@@ -33,7 +33,7 @@ class _GodownWiseScreenState extends State<GodownWiseScreen> {
         companyId: provider.selectedCompany?.id.toString() ?? '',
       );
     });
-     super.initState();
+    super.initState();
   }
 
   @override
@@ -322,6 +322,9 @@ class _GodownWiseScreenState extends State<GodownWiseScreen> {
                                               index: 3,
                                               selectedIndex: optionIndex,
                                               title: "Voucher Type Settings",
+                                              icon: AppAssets.delete,
+                                              iconColor:
+                                                  ColorResources.transparent,
                                               onTap: (i) {
                                                 context.pushNamed(
                                                   AppRouterConst
