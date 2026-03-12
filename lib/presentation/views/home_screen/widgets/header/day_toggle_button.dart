@@ -35,6 +35,7 @@ class DayToggleButton extends StatelessWidget {
         longitude: position.longitude,
         accuracy: position.accuracy,
         address: address,
+        context: context,
       );
     } on AppLocationServiceDisabledException {
       await showLocationPermissionDialog(

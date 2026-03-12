@@ -249,7 +249,7 @@ class _UserDesignationScreenState extends State<UserDesignationScreen> {
                                                 selectedIndex: optionIndex,
                                                 title: appLocalization
                                                     .user_designation_screen_delete,
-                                                icon: AppAssets.refresh,
+                                                icon: AppAssets.delete,
                                                 onTap: (i) {
                                                   setStateDialog(
                                                     () => optionIndex = i,

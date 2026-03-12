@@ -122,7 +122,7 @@ class EndTripDialog extends StatelessWidget {
     );
 
     // Call provider method (no BuildContext)
-   await userProvider.markTripEnd(
+    await userProvider.markTripEnd(
       tripId: tripId,
       routeID: routeID,
       godownID: godownID,
@@ -133,7 +133,5 @@ class EndTripDialog extends StatelessWidget {
     );
 
     userProvider.setTripEnding(false);
-
-  
   }
 }

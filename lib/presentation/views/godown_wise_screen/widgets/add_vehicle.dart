@@ -214,6 +214,7 @@ class _AddVehicleState extends State<AddVehicle> {
                               });
                             });
                       }
+                      FocusScope.of(context).unfocus();
                     },
 
                     borderRadius: BorderRadius.circular(16),

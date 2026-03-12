@@ -96,7 +96,6 @@ class CompanyCreationProvider extends ChangeNotifier {
 
   void setLoading(bool val) {
     _isLoading = val;
-    notifyListeners();
   }
 
   final _companyController =
@@ -573,8 +572,6 @@ class CompanyCreationProvider extends ChangeNotifier {
     notifyListeners();
     return _countryListDtos;
   }
-
- 
 
   void selectCountry(BuildContext context, CountryListData? country) {
     _selectedCountry = country;

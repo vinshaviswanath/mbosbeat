@@ -221,6 +221,7 @@ class UserProvider extends ChangeNotifier {
     required double accuracy,
     required String address,
     required AttendanceMark attendanceType,
+    required BuildContext context,
   }) async {
     if (_isMarkingAttendance) return false;
 
@@ -245,6 +246,13 @@ class UserProvider extends ChangeNotifier {
     result.fold(
       (failure) {
         success = false;
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Unable to mark attendance. Please try again."),
+            ),
+          );
+        }
       },
       (response) {
         _response = response;
@@ -254,6 +262,17 @@ class UserProvider extends ChangeNotifier {
           _isAttendanceMarked,
         );
         success = true;
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                attendanceType == AttendanceMark.start
+                    ? "Day started successfully"
+                    : "Day ended successfully",
+              ),
+            ),
+          );
+        }
       },
     );
 
