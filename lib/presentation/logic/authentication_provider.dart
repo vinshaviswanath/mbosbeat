@@ -681,8 +681,6 @@ class AuthFormProvider with ChangeNotifier {
   ) async {
     final isValid = validateSignUpForm();
 
-    // CompanyRegistrationResponse? companyRegResponse;
-
     if (!isValid) {
       registerAutovalidateMode = AutovalidateMode.always;
 
@@ -752,7 +750,8 @@ class AuthFormProvider with ChangeNotifier {
           ).then((_) {
             resetSignUpForm();
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              context.pushNamed(AppRouterConst.login);
+              //   context.go(AppRouterConst.login);
+            //  context.pushReplacementNamed(AppRouterConst.login);
             });
           });
         }

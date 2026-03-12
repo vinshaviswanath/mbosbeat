@@ -30,9 +30,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final pref = sl<SharedPreferences>();
-    final token = pref.getString("token");
-
     final appLocalization = context.l10n;
 
     return PopScope(
@@ -210,7 +207,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                       context.textStyle.s16.white.bold.roboto,
                                   borderRadius: BorderRadius.circular(45),
                                   onTap: () async {
-                                 
                                     await provider.submitLogin(
                                       context,
                                       params: LoginParams(

@@ -7,8 +7,6 @@ void showAttendanceConfirmationDialog(
   BuildContext context, {
   required VoidCallback onConfirm,
 }) {
- 
-
   CustomDialog.showBottomCustomDialog(
     child: StatefulBuilder(
       builder: (dialogContext, setState) {
@@ -20,7 +18,7 @@ void showAttendanceConfirmationDialog(
               Text("Attendance", style: context.textStyle.s14.w500.indigoBlue),
               h16,
               Text(
-                "Are you sure you want to start the trip?",
+                "Are you sure you want to start Day?",
                 textAlign: TextAlign.center,
                 style: context.textStyle.s12.w500.dustyBlue,
               ),

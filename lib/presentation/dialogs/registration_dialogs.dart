@@ -58,12 +58,12 @@ class RegistrationDialogs {
                   return CustomButton(
                     onTap: () async {
                       await provider.resendOtp(context, id: id);
-                      Navigator.pop(context);
+
                       provider.resetSignUpForm();
-                      context.push(AppRouterConst.otpAuth);
-                      // WidgetsBinding.instance.addPostFrameCallback((_) {
-                      //   context.push(AppRouterConst.otpAuth);
-                      // });
+
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        context.push(AppRouterConst.otpAuth);
+                      });
                     },
                     buttonText:
                         appLocalization.registration_dialogs_verify_number,
@@ -128,8 +128,10 @@ class RegistrationDialogs {
               return CustomButton(
                 onTap: () {
                   provider.resetSignUpForm();
-                  context.pop();
-                  // context.go(AppRouterConst.login);
+                  //  context.pop();
+                  Navigator.of(
+                    context,
+                  ).pushReplacementNamed(AppRouterConst.login);
                 },
 
                 buttonText: appLocalization.login,

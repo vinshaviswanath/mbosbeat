@@ -764,6 +764,9 @@ class _TransactionOrderBookingScreenState
                                   w10,
                                   Expanded(
                                     child: CustomButton(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
                                       buttonText: appLocalizations.cancel,
                                       isborderEnable: false,
                                       color: ColorResources.bluishGray,

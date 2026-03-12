@@ -377,6 +377,9 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
                         w10,
                         Expanded(
                           child: CustomButton(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
                             buttonText: appLocalizations.cancel,
                             isborderEnable: false,
                             color: ColorResources.bluishGray,
