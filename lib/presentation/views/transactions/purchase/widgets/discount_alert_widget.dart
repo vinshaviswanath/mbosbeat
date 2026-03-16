@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:mpos_beat/core/utils/imports.dart';
 
 class DiscountAlertWidget extends StatefulWidget {
@@ -12,6 +10,12 @@ class DiscountAlertWidget extends StatefulWidget {
 class _DiscountAlertWidgetState extends State<DiscountAlertWidget> {
   String? selectedType;
   final TextEditingController discountController = TextEditingController();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    selectedType = "Percentage";
+  }
 
   @override
   Widget build(BuildContext context) {

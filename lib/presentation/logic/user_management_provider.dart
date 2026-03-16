@@ -1138,10 +1138,7 @@ class UserManagementProvider with ChangeNotifier {
         );
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(
-              response.message ?? "Success",
-              textAlign: TextAlign.center,
-            ),
+            content: Text(response.message, textAlign: TextAlign.center),
             behavior: SnackBarBehavior.floating,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),

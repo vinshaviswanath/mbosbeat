@@ -1,5 +1,8 @@
 import 'package:mpos_beat/core/utils/imports.dart';
+import 'package:mpos_beat/data/models/create_company_voucher_model.dart';
 import 'package:mpos_beat/data/models/data/company_voucher_data.dart';
+import 'package:mpos_beat/domain/request/create_company_voucher_request.dart';
+import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 import 'package:mpos_beat/presentation/views/company_creation/widget/company_vouchertype/checkBox_dialogBox.dart';
 import 'package:mpos_beat/presentation/views/company_creation/widget/company_vouchertype/voucherDialogBox.dart';
 
@@ -52,32 +55,60 @@ class _VoucherTypeTileState extends State<VoucherTypeTile> {
                 side: BorderSide(color: ColorResources.bluishGray, width: 1),
                 checkColor: ColorResources.white,
                 activeColor: ColorResources.indigoBlue,
-
                 value: isCheckOnInt == 1,
                 onChanged: (value) async {
-                  final hasAnyValue =
-                      voucher.b2BPrefix.isNotEmpty ||
-                      voucher.b2BSuffix.isNotEmpty ||
-                      voucher.b2CPrefix.isNotEmpty ||
-                      voucher.b2CSuffix.isNotEmpty;
-                  if (value == false && hasAnyValue) {
-                    final result = await showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return CheckBoxDialogBox(
-                          companyId: widget.companyId,
-                          isCheckOn: isCheckOnInt,
-                          id: voucher.id,
-                        );
-                      },
-                    );
-                    if (result == true) {
-                      widget.onChanged(0); // Uncheck the checkbox
-                    } else {
-                      widget.onChanged(1); // Keep the checkbox checked
+                  final provider = context.read<CompanyCreationProvider>();
+
+                  if (value == false) {
+                    final hasAnyValue =
+                        voucher.b2BPrefix.isNotEmpty ||
+                        voucher.b2BSuffix.isNotEmpty ||
+                        voucher.b2CPrefix.isNotEmpty ||
+                        voucher.b2CSuffix.isNotEmpty;
+
+                    if (hasAnyValue) {
+                      final result = await showDialog(
+                        context: context,
+                        builder: (context) {
+                          return CheckBoxDialogBox(
+                            companyId: widget.companyId,
+                            isCheckOn: isCheckOnInt,
+                            id: voucher.id,
+                          );
+                        },
+                      );
+
+                      if (result != true) {
+                        widget.onChanged(1);
+                        return;
+                      }
                     }
-                  } else {
-                    widget.onChanged(value == true ? 1 : 0);
+                  }
+
+                  int isEnabled = value == true ? 1 : 0;
+
+                  CreateCompanyvochertypeDtos? response = await provider
+                      .createCompanyVoucherTypes(
+                        context,
+                        request: CreateCompanyVocherParams(
+                          id: voucher.id,
+                          companyid: widget.companyId,
+                          hasB2B: 0,
+                          b2Bprefix: "",
+                          b2Bsuffix: "",
+                          b2Bwidth: 0,
+                          b2Bdeclaration: "",
+                          b2Cprefix: "",
+                          b2Csuffix: "",
+                          b2Cwidth: 0,
+                          b2Cdeclaration: "",
+                          isenabled: isEnabled,
+                        ),
+                      );
+
+                  if (response != null && response.status == 1) {
+                    widget.onChanged(isEnabled);
+                    provider.fetchVoucherTypes(context, widget.companyId);
                   }
                 },
               ),

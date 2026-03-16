@@ -43,7 +43,6 @@ void clearItemsWarningDialog(context) {
                       onPressed: () {
                         provider.clearSelectedItems();
                         Navigator.pop(context);
-                        Navigator.pop(context);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: ColorResources.indigoBlue,

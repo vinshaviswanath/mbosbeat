@@ -1,6 +1,5 @@
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/models/data/company_voucher_data.dart';
-import 'package:mpos_beat/domain/request/create_company_voucher_request.dart';
 import 'package:mpos_beat/presentation/logic/company_creation_provider.dart';
 
 class B2bContainer extends StatefulWidget {
@@ -30,7 +29,6 @@ class _B2bContainerState extends State<B2bContainer> {
   TextEditingController b2bdeclarationcontroller = TextEditingController();
   bool _isInputValid = true;
   bool _isPrefixValid = true;
-  bool _isSuffixValid = true;
   String _errorText = "";
 
   @override
@@ -72,7 +70,6 @@ class _B2bContainerState extends State<B2bContainer> {
     }
     setState(() {
       _isPrefixValid = true;
-      _isSuffixValid = true;
       _errorText = "";
     });
 
@@ -142,11 +139,6 @@ class _B2bContainerState extends State<B2bContainer> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<CompanyCreationProvider>(
-      context,
-      listen: false,
-    );
-
     return Padding(
       padding: const EdgeInsets.only(left: 15),
       child: SingleChildScrollView(
@@ -370,58 +362,6 @@ class _B2bContainerState extends State<B2bContainer> {
               ),
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.006),
-
-            //B2B elevated button
-            // Center(
-            //   child: ElevatedButton(
-            //     style: ElevatedButton.styleFrom(
-            //       backgroundColor: ColorResources.indigoBlue,
-            //       shape: RoundedRectangleBorder(
-            //         borderRadius: BorderRadius.circular(12),
-            //       ),
-            //       minimumSize: Size(
-            //         MediaQuery.of(context).size.width * 0.400,
-            //         MediaQuery.of(context).size.height * 0.060,
-            //       ),
-            //     ),
-              //   onPressed: () async {
-              //     if (_formKey.currentState!.validate()) {
-              //       _validateInput();
-              //       if (_isInputValid && _isPrefixValid && _isSuffixValid) {
-              //         await provider.createCompanyVoucherTypes(
-              //           onSuccess: widget.onTap,
-              //           context,
-              //           request: CreateCompanyVocherParams(
-              //             id: widget.companydata!.id,
-              //             companyid: widget.companyId,
-              //             hasB2B: widget.isToggleOn,
-              //             b2Bprefix: b2bprefixcontroller.text,
-              //             b2Bsuffix: b2bsuffixcontroller.text,
-              //             b2Bwidth: int.tryParse(b2bwidthcontroller.text) ?? 0,
-              //             b2Bdeclaration: b2bdeclarationcontroller.text,
-              //             b2Cprefix: widget.companydata!.b2CPrefix,
-              //             b2Csuffix: widget.companydata!.b2CSuffix,
-              //             b2Cwidth: widget.companydata!.b2CWidth,
-              //             b2Cdeclaration: widget.companydata!.b2CDeclaration,
-              //             isenabled: widget.isCheckOn == 1 ? 1 : 0,
-              //           ),
-              //         );
-
-              //         await provider.fetchVoucherTypes(
-              //           context,
-              //           widget.companyId,
-              //         );
-              //         context.pop();
-              //       }
-              //       dataCollecting();
-              //     }
-              //   },
-              //   child: Text(
-              //     "Save",
-              //     style: TextStyle(fontSize: 14, color: ColorResources.white),
-              //   ),
-              // ),
-            // ),
           ],
         ),
       ),
