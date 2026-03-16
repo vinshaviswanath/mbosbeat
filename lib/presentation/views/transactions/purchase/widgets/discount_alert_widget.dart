@@ -148,6 +148,18 @@ class _DiscountAlertWidgetState extends State<DiscountAlertWidget> {
                     child: TextField(
                       keyboardType: TextInputType.number,
                       controller: discountController,
+                      onChanged: (value) {
+                        if (selectedType == "Percentage") {
+                          final numeric = double.tryParse(value);
+                          if (numeric != null && numeric > 100) {
+                            discountController.text = "100";
+                            discountController.selection =
+                                TextSelection.collapsed(
+                                  offset: discountController.text.length,
+                                );
+                          }
+                        }
+                      },
                       style: context.textStyle.s10.w500.indigoBlue.roboto,
                       decoration: InputDecoration(
                         isCollapsed: true,
@@ -180,10 +192,15 @@ class _DiscountAlertWidgetState extends State<DiscountAlertWidget> {
                     Expanded(
                       child: CustomButton(
                         onTap: () {
+                          var amount =
+                              double.tryParse(discountController.text) ?? 0.0;
+                          if (selectedType == "Percentage" && amount > 100) {
+                            amount = 100;
+                          }
+
                           final discountData = DiscountData(
                             type: selectedType,
-                            amount:
-                                double.tryParse(discountController.text) ?? 0.0,
+                            amount: amount,
                           );
                           Navigator.pop(context, discountData);
                           print("discount data ${discountData.amount}");
