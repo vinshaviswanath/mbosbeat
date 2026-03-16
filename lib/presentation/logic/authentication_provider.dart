@@ -144,7 +144,7 @@ class AuthFormProvider with ChangeNotifier {
 
   /// Returns a masked version of the phone number, keeping only the last 4 digits.
   String get maskedPhone {
-    final value = _phone.getValue;
+    final value = _phone.getValue ?? _loginResponse?.loginData?.mobile;
     if (value == null || value.isEmpty) return "";
     if (value.length < 4) return value;
 
@@ -564,6 +564,10 @@ class AuthFormProvider with ChangeNotifier {
               break;
 
             case 10:
+              // Ensure maskedPhone uses the mobile number (preferred) when coming from login.
+              // Fallback to username if mobile isn’t available.
+              updatePhone(response.loginData?.mobile ?? '');
+
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 RegistrationDialogs.customDialog(
                   margin: const EdgeInsets.symmetric(horizontal: 70),

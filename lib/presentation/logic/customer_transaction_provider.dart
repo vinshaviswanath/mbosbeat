@@ -186,12 +186,23 @@ class CustomerTransactionProvider extends ChangeNotifier {
   /// Returns subtotal of selected items (after discount).
   double get subTotal => _itemTotal.values.fold(0.0, (sum, v) => sum + v);
 
+
   /// Grand total currently equals subtotal.
   /// (Tax added separately in billTotal)
-double get grandTotal => billSubTotal + totalCgst + totalSgst + totalCess;
 
   /// Total bill including tax.
   double get billTotal => subTotal + totalCgst + totalSgst;
+  /// Grand total including taxes.
+  double get grandTotal => billSubTotal + totalCgst + totalSgst + totalCess;
+
+  /// Round off to nearest rupee.
+  double get roundOff {
+    final total = grandTotal;
+    return total.round() - total;
+  }
+
+  /// Final grand total after round off.
+  double get finalGrandTotal => grandTotal + roundOff;
 
   /// Number of selected items.
   int get selectedItemCount => _selectedItems.length;

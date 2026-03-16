@@ -39,10 +39,10 @@ class _OtpAuthenticationState extends State<OtpAuthentication> {
     return Consumer<AuthFormProvider>(
       builder: (context, provider, _) {
         return PopScope(
-          canPop: false,
+          canPop: true,
           onPopInvokedWithResult: (didPop, result) {
             if (didPop) return;
-            provider.resetSignUpForm();
+            // provider.resetSignUpForm();
           },
           child: BaseScaffold(
             widget: SizedBox(

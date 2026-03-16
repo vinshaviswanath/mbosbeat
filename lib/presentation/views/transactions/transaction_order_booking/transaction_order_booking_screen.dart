@@ -75,6 +75,7 @@ class _TransactionOrderBookingScreenState
     if (party != null) {
       context.read<UserProvider>().setParty(party);
     }
+    
   }
 
   @override
@@ -123,6 +124,41 @@ class _TransactionOrderBookingScreenState
             provider.selectedItemIds.isNotEmpty
                 ? IconButton(
                     icon: const Icon(Icons.print),
+                    // onPressed: () async {
+                    //   final txn = context.read<CustomerTransactionProvider>();
+
+                    //   final items = txn.selectedOrderItems.map((e) {
+                    //     return InvoiceItem(
+                    //       name: e.item.itemName,
+                    //       hsn: e.item.hsnCode,
+                    //       unit: e.item.unitName,
+                    //       qty: e.qty,
+                    //       rate: e.rate,
+                    //       discount: e.discount,
+                    //       amount: e.amount,
+                    //     );
+                    //   }).toList();
+
+                    //   Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //       builder: (_) => Scaffold(
+                    //         body: ThermalReceipt(
+                    //           items: items,
+                    //           invoiceNo: "sb2c/521/sb2c",
+                    //           customer: "Aami",
+                    //           date: "09-03-2026",
+                    //           time: "09:46",
+                    //           subTotal: txn.billSubTotal,
+                    //           sgst: txn.totalSgst,
+                    //           cgst: txn.totalCgst,
+                    //           roundOff: txn.roundOff,
+                    //           grandTotal: txn.finalGrandTotal,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   );
+                    // },
 
                     onPressed: () async {
                       final txn = context.read<CustomerTransactionProvider>();
@@ -153,8 +189,8 @@ class _TransactionOrderBookingScreenState
                             subTotal: txn.billSubTotal,
                             sgst: txn.totalSgst,
                             cgst: txn.totalCgst,
-                            roundOff: 0,
-                            grandTotal: txn.grandTotal,
+                            roundOff: txn.roundOff,
+                            grandTotal: txn.finalGrandTotal,
                           ),
                         ),
                       );
@@ -204,9 +240,8 @@ class _TransactionOrderBookingScreenState
                                 subTotal: txn.billSubTotal,
                                 sgst: txn.totalSgst,
                                 cgst: txn.totalCgst,
-                                // roundOff: txn.roundOff ?? 0,
-                                roundOff: 0,
-                                grandTotal: txn.grandTotal,
+                                roundOff: txn.roundOff,
+                                grandTotal: txn.finalGrandTotal,
                               );
                             },
                           ),
@@ -741,6 +776,34 @@ class _TransactionOrderBookingScreenState
 
                               h8,
 
+                              /// ⭝ ROUND OFF
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    "Round Off",
+                                    style: context
+                                        .textStyle
+                                        .s10
+                                        .w400
+                                        .dustyBlue
+                                        .roboto,
+                                  ),
+                                  w60,
+                                  Text(
+                                    txn.roundOff.toStringAsFixed(2),
+                                    style: context
+                                        .textStyle
+                                        .s10
+                                        .w400
+                                        .dustyBlue
+                                        .roboto,
+                                  ),
+                                ],
+                              ),
+
+                              h8,
+
                               /// ⭝ GRAND TOTAL
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
@@ -756,7 +819,7 @@ class _TransactionOrderBookingScreenState
                                   ),
                                   w60,
                                   Text(
-                                    txn.grandTotal.toStringAsFixed(2),
+                                    txn.finalGrandTotal.toStringAsFixed(2),
                                     style: context
                                         .textStyle
                                         .s12
@@ -1110,7 +1173,7 @@ Future<void> saveOrder({
 
             partyId: Value(ledgerId),
             party: Value(ledgerName),
-            voucherAmount: txn.grandTotal,
+            voucherAmount: txn.finalGrandTotal,
             vchId: Value(nextVchId),
             voucherNo: Value(voucherNo),
             companyId: Value(companyId),
