@@ -74,6 +74,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
 
   @override
   void dispose() {
+    ScaffoldMessenger.of(context).clearSnackBars();
     _tabController.dispose();
     super.dispose();
   }
@@ -101,6 +102,15 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
           ),
         ),
       );
+  }
+
+  void _clearSnackBars() {
+    ScaffoldMessenger.of(context).clearSnackBars();
+  }
+
+  void _clearSnackBarsAndPop() {
+    _clearSnackBars();
+    context.pop();
   }
 
   Future<int> _getNextVisitSequence(int ledgerId) async {
@@ -308,9 +318,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
         ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, size: 18),
-          onPressed: () {
-            context.pop();
-          },
+          onPressed: _clearSnackBarsAndPop,
         ),
         // actions: [
         //   IconButton(
@@ -451,7 +459,10 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
                             GestureDetector(
                               onTap: () async {
                                 if (provider.currentTripId == null) {
-                                  _showSnack(context, "Start day and trip first");
+                                  _showSnack(
+                                    context,
+                                    "Start day and trip first",
+                                  );
                                   return;
                                 }
                                 await _handleCheckIn(context);

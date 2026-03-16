@@ -2,8 +2,6 @@ import 'package:drift/drift.dart' show Value;
 import 'package:intl/intl.dart';
 import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/service/invoice_pdf_service.dart';
-import 'package:mpos_beat/core/service/pos_printing.dart';
-import 'package:mpos_beat/core/service/printer_service.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/data_sources/user/party_MasterSync/party_MasterSync.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
@@ -18,8 +16,6 @@ import 'package:mpos_beat/presentation/views/transactions/transaction_order_book
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/widgets/confirm_bill_dialog.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/widgets/end_to_end_text_widget.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/widgets/receipt_preview.dart';
-import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/widgets/thermal_receipt.dart';
-import 'package:printing/printing.dart';
 
 class TransactionOrderBookingRouteArgs {
   final PartyMasterData party;
@@ -90,53 +86,6 @@ class _TransactionOrderBookingScreenState
     }
   }
 
-  // Future<void> shareInvoicePdf(
-  //   BuildContext context,
-  //   CustomerTransactionProvider txn,
-  //   TransactionOrderBookingRouteArgs data,
-  //   String voucherNo,
-  // ) async {
-  //   final pdfBytes = await InvoicePdfService.generateInvoice(
-  //     companyName: widget.data.party.mailingName ?? "",
-  //     address: widget.data.party.address1 ?? "",
-  //     gst: widget.data.party.taxNumber ?? "",
-  //     invoiceNo: voucherNo,
-  //     date: DateFormat('dd-MM-yyyy').format(DateTime.now()),
-  //     buyerName: widget.data.party.ledgerName ?? "",
-  //     items: txn.selectedOrderItems,
-  //     subTotal: txn.billSubTotal,
-  //     cgst: txn.totalCgst,
-  //     sgst: txn.totalSgst,
-  //     grandTotal: txn.grandTotal,
-  //   );
-  // }
-
-  // Future<void> previewInvoicePdf(
-  //   CustomerTransactionProvider txn,
-  //   TransactionOrderBookingRouteArgs data,
-  //   String voucherNo,
-  // ) async {
-  //   await Printing.layoutPdf(
-  //     onLayout: (format) async {
-  //       return InvoicePdfService.generateInvoice(
-  //         companyName: widget.data.party.mailingName ?? "",
-  //         address: widget.data.party.address1 ?? "",
-  //         gst: widget.data.party.taxNumber ?? "",
-  //         invoiceNo: voucherNo,
-  //         date: DateFormat('dd-MM-yyyy').format(DateTime.now()),
-  //         buyerName: data.party.ledgerName ?? "",
-  //         items: txn.selectedOrderItems,
-  //         subTotal: txn.billSubTotal,
-  //         cgst: txn.totalCgst,
-  //         sgst: txn.totalSgst,
-  //         grandTotal: txn.grandTotal,
-  //       );
-  //     },
-  //   );
-  // }
-
-  // ThermalReceipt? receipt;
-
   final TextEditingController remarkController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -170,45 +119,11 @@ class _TransactionOrderBookingScreenState
             style: context.textStyle.s20.indigoBlue.bold.roboto,
           ),
           centerTitle: true,
-  actions: [
+          actions: [
             provider.selectedItemIds.isNotEmpty
                 ? IconButton(
                     icon: const Icon(Icons.print),
-                    // onPressed: () async {
-                    //   final txn = context.read<CustomerTransactionProvider>();
 
-                    //   final items = txn.selectedOrderItems.map((e) {
-                    //     return InvoiceItem(
-                    //       name: e.item.itemName,
-                    //       hsn: e.item.hsnCode,
-                    //       unit: e.item.unitName,
-                    //       qty: e.qty,
-                    //       rate: e.rate,
-                    //       discount: e.discount,
-                    //       amount: e.amount,
-                    //     );
-                    //   }).toList();
-
-                    //   Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //       builder: (_) => Scaffold(
-                    //         body: ThermalReceipt(
-                    //           items: items,
-                    //           invoiceNo: "sb2c/521/sb2c",
-                    //           customer: "Aami",
-                    //           date: "09-03-2026",
-                    //           time: "09:46",
-                    //           subTotal: txn.billSubTotal,
-                    //           sgst: txn.totalSgst,
-                    //           cgst: txn.totalCgst,
-                    //           roundOff: 0,
-                    //           grandTotal: txn.grandTotal,
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   );
-                    // },
                     onPressed: () async {
                       final txn = context.read<CustomerTransactionProvider>();
 
@@ -250,6 +165,7 @@ class _TransactionOrderBookingScreenState
                 ? IconButton(
                     onPressed: () async {
                       final txn = context.read<CustomerTransactionProvider>();
+
                       /// Convert selected items to InvoiceItem model
                       final items = txn.selectedOrderItems.map((e) {
                         return InvoiceItem(
@@ -301,6 +217,7 @@ class _TransactionOrderBookingScreenState
                   )
                 : SizedBox.shrink(),
           ],
+
           // actions: [
           //   SvgPicture.asset(
           //     AppAssets.refresh,
@@ -322,8 +239,7 @@ class _TransactionOrderBookingScreenState
 
           //   w10,
           // ],
-     
-  ),
+        ),
         body: StreamBuilder<PartyMasterDetails?>(
           stream: context.read<UserProvider>().partyDetailsStream(
             companyId,

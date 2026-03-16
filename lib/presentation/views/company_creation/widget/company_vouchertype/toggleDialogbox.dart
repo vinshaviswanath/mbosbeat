@@ -66,8 +66,6 @@ class _ToggleDialogBoxState extends State<ToggleDialogBox> {
                   onPressed: () async {
                     provider.clearB2C();
 
-                    context.pop(true);
-
                     CreateCompanyvochertypeDtos? response = await provider
                         .createCompanyVoucherTypes(
                           onSuccess: widget.onTap,

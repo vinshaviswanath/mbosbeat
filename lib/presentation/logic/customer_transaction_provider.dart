@@ -3,6 +3,7 @@ import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/data_sources/user/party_MasterSync/party_MasterSync.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/models/product.dart';
+import 'package:mpos_beat/presentation/views/transactions/purchase/widgets/discount_alert_widget.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/transaction_order_booking_screen.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -187,7 +188,7 @@ class CustomerTransactionProvider extends ChangeNotifier {
 
   /// Grand total currently equals subtotal.
   /// (Tax added separately in billTotal)
-  double get grandTotal => subTotal;
+double get grandTotal => billSubTotal + totalCgst + totalSgst + totalCess;
 
   /// Total bill including tax.
   double get billTotal => subTotal + totalCgst + totalSgst;
@@ -930,4 +931,27 @@ class CustomerTransactionProvider extends ChangeNotifier {
       (userEnabled, companyEnabled) => userEnabled && companyEnabled,
     );
   }
+
+  //apply coupen discount
+  void applyDiscountToAllItems(DiscountData discountData) {
+    for (final itemId in _selectedItems) {
+      _itemDiscount[itemId] = discountData.amount ?? 0;
+
+      if (discountData.type == "Percentage") {
+        _discountType[itemId] = DiscountType.percentage;
+      } else if (discountData.type == "Amount") {
+        _discountType[itemId] = DiscountType.amount;
+      }
+    }
+
+    notifyListeners();
+  }
+
+  //to clear discount
+ void clearDiscount() {
+  _itemDiscount.clear();
+  _discountType.clear();
+
+  notifyListeners();
+}
 }
