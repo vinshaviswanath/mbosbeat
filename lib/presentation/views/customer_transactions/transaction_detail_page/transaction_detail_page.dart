@@ -6,6 +6,7 @@ import 'package:mpos_beat/data/data_sources/user/party_MasterSync/party_MasterSy
 import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/domain/request/checkin_params.dart';
 import 'package:mpos_beat/domain/request/checkout_params.dart';
+import 'package:mpos_beat/presentation/logic/customer_transaction_provider.dart';
 import 'package:mpos_beat/presentation/logic/user_provider.dart';
 import 'package:mpos_beat/core/network/network_provider.dart';
 import 'package:mpos_beat/presentation/views/customer_transactions/tabs/tab1_transactions.dart';
@@ -52,10 +53,17 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
   }
 
   Future<void> load() async {
-    final party = await sl<PartyMasterSync>().fetchParty(
-      widget.data.company.id!,
-      widget.party.ledgerId,
-    );
+    final provider = context.read<CustomerTransactionProvider>();
+
+    final party = await sl<PartyMasterSync>()
+        .fetchParty(widget.data.company.id!, widget.party.ledgerId)
+        .then((value) {
+          provider.loadNextPage(
+            companyId: widget.data.company.id!,
+            priceListId: widget.party.priceList ?? 0,
+            ledgerId: widget.party.ledgerId,
+          );
+        });
 
     if (party != null) {
       context.read<UserProvider>().applyParty(party);
@@ -451,7 +459,10 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
                             GestureDetector(
                               onTap: () async {
                                 if (provider.currentTripId == null) {
-                                  _showSnack(context, "Start day and trip first");
+                                  _showSnack(
+                                    context,
+                                    "Start day and trip first",
+                                  );
                                   return;
                                 }
                                 await _handleCheckIn(context);

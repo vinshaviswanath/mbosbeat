@@ -79,6 +79,7 @@ class _TransactionOrderBookingScreenState
     if (party != null) {
       context.read<UserProvider>().setParty(party);
     }
+    
   }
 
   @override
@@ -89,53 +90,6 @@ class _TransactionOrderBookingScreenState
       context.read<UserProvider>().clearSelectedPriceLevel();
     }
   }
-
-  // Future<void> shareInvoicePdf(
-  //   BuildContext context,
-  //   CustomerTransactionProvider txn,
-  //   TransactionOrderBookingRouteArgs data,
-  //   String voucherNo,
-  // ) async {
-  //   final pdfBytes = await InvoicePdfService.generateInvoice(
-  //     companyName: widget.data.party.mailingName ?? "",
-  //     address: widget.data.party.address1 ?? "",
-  //     gst: widget.data.party.taxNumber ?? "",
-  //     invoiceNo: voucherNo,
-  //     date: DateFormat('dd-MM-yyyy').format(DateTime.now()),
-  //     buyerName: widget.data.party.ledgerName ?? "",
-  //     items: txn.selectedOrderItems,
-  //     subTotal: txn.billSubTotal,
-  //     cgst: txn.totalCgst,
-  //     sgst: txn.totalSgst,
-  //     grandTotal: txn.grandTotal,
-  //   );
-  // }
-
-  // Future<void> previewInvoicePdf(
-  //   CustomerTransactionProvider txn,
-  //   TransactionOrderBookingRouteArgs data,
-  //   String voucherNo,
-  // ) async {
-  //   await Printing.layoutPdf(
-  //     onLayout: (format) async {
-  //       return InvoicePdfService.generateInvoice(
-  //         companyName: widget.data.party.mailingName ?? "",
-  //         address: widget.data.party.address1 ?? "",
-  //         gst: widget.data.party.taxNumber ?? "",
-  //         invoiceNo: voucherNo,
-  //         date: DateFormat('dd-MM-yyyy').format(DateTime.now()),
-  //         buyerName: data.party.ledgerName ?? "",
-  //         items: txn.selectedOrderItems,
-  //         subTotal: txn.billSubTotal,
-  //         cgst: txn.totalCgst,
-  //         sgst: txn.totalSgst,
-  //         grandTotal: txn.grandTotal,
-  //       );
-  //     },
-  //   );
-  // }
-
-  // ThermalReceipt? receipt;
 
   final TextEditingController remarkController = TextEditingController();
   @override
@@ -170,7 +124,7 @@ class _TransactionOrderBookingScreenState
             style: context.textStyle.s20.indigoBlue.bold.roboto,
           ),
           centerTitle: true,
-  actions: [
+          actions: [
             provider.selectedItemIds.isNotEmpty
                 ? IconButton(
                     icon: const Icon(Icons.print),
@@ -202,8 +156,8 @@ class _TransactionOrderBookingScreenState
                     //           subTotal: txn.billSubTotal,
                     //           sgst: txn.totalSgst,
                     //           cgst: txn.totalCgst,
-                    //           roundOff: 0,
-                    //           grandTotal: txn.grandTotal,
+                    //           roundOff: txn.roundOff,
+                    //           grandTotal: txn.finalGrandTotal,
                     //         ),
                     //       ),
                     //     ),
@@ -238,8 +192,8 @@ class _TransactionOrderBookingScreenState
                             subTotal: txn.billSubTotal,
                             sgst: txn.totalSgst,
                             cgst: txn.totalCgst,
-                            roundOff: 0,
-                            grandTotal: txn.grandTotal,
+                            roundOff: txn.roundOff,
+                            grandTotal: txn.finalGrandTotal,
                           ),
                         ),
                       );
@@ -250,6 +204,7 @@ class _TransactionOrderBookingScreenState
                 ? IconButton(
                     onPressed: () async {
                       final txn = context.read<CustomerTransactionProvider>();
+
                       /// Convert selected items to InvoiceItem model
                       final items = txn.selectedOrderItems.map((e) {
                         return InvoiceItem(
@@ -288,9 +243,8 @@ class _TransactionOrderBookingScreenState
                                 subTotal: txn.billSubTotal,
                                 sgst: txn.totalSgst,
                                 cgst: txn.totalCgst,
-                                // roundOff: txn.roundOff ?? 0,
-                                roundOff: 0,
-                                grandTotal: txn.grandTotal,
+                                roundOff: txn.roundOff,
+                                grandTotal: txn.finalGrandTotal,
                               );
                             },
                           ),
@@ -301,6 +255,7 @@ class _TransactionOrderBookingScreenState
                   )
                 : SizedBox.shrink(),
           ],
+
           // actions: [
           //   SvgPicture.asset(
           //     AppAssets.refresh,
@@ -322,8 +277,7 @@ class _TransactionOrderBookingScreenState
 
           //   w10,
           // ],
-     
-  ),
+        ),
         body: StreamBuilder<PartyMasterDetails?>(
           stream: context.read<UserProvider>().partyDetailsStream(
             companyId,
@@ -825,6 +779,34 @@ class _TransactionOrderBookingScreenState
 
                               h8,
 
+                              /// ⭝ ROUND OFF
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    "Round Off",
+                                    style: context
+                                        .textStyle
+                                        .s10
+                                        .w400
+                                        .dustyBlue
+                                        .roboto,
+                                  ),
+                                  w60,
+                                  Text(
+                                    txn.roundOff.toStringAsFixed(2),
+                                    style: context
+                                        .textStyle
+                                        .s10
+                                        .w400
+                                        .dustyBlue
+                                        .roboto,
+                                  ),
+                                ],
+                              ),
+
+                              h8,
+
                               /// ⭝ GRAND TOTAL
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
@@ -840,7 +822,7 @@ class _TransactionOrderBookingScreenState
                                   ),
                                   w60,
                                   Text(
-                                    txn.grandTotal.toStringAsFixed(2),
+                                    txn.finalGrandTotal.toStringAsFixed(2),
                                     style: context
                                         .textStyle
                                         .s12
@@ -1194,7 +1176,7 @@ Future<void> saveOrder({
 
             partyId: Value(ledgerId),
             party: Value(ledgerName),
-            voucherAmount: txn.grandTotal,
+            voucherAmount: txn.finalGrandTotal,
             vchId: Value(nextVchId),
             voucherNo: Value(voucherNo),
             companyId: Value(companyId),

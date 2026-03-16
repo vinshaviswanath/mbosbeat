@@ -99,9 +99,11 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
             discountValue,
             discountType,
           );
+          _discountController.text = _formatDiscount(
+            discountValue,
+            discountType,
+          );
         }
-        provider.setInitialDiscount(widget.itemId, discountValue, discountType);
-        _discountController.text = _formatDiscount(discountValue, discountType);
       });
     }
 

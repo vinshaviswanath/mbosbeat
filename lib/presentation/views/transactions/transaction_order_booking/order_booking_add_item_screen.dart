@@ -25,48 +25,65 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
   late TextEditingController _searchController;
   late ScrollController _scrollController;
 
-@override
-void initState() {
-  super.initState();
+  @override
+  void initState() {
+    super.initState();
 
-  _searchController = TextEditingController();
-  _scrollController = ScrollController();
+    _searchController = TextEditingController();
+    _scrollController = ScrollController();
 
-  _searchController.addListener(_handleSearchClear);
+    _searchController.addListener(_handleSearchClear);
 
-  _scrollController.addListener(_onScroll);
+    _scrollController.addListener(_onScroll);
 
-  WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final provider = context.read<CustomerTransactionProvider>();
+
+      provider.clearSearch(
+        companyId: widget.data.data.company.id!,
+        priceListId: widget.data.party.priceList ?? 0,
+        ledgerId: widget.data.party.ledgerId,
+      );
+
+      await provider.selectGroup(
+        'All',
+        companyId: widget.data.data.company.id!,
+        priceListId: widget.data.party.priceList ?? 0,
+        ledgerId: widget.data.party.ledgerId,
+      );
+
+      await provider.selectCategory(
+        'All',
+        companyId: widget.data.data.company.id!,
+        priceListId: widget.data.party.priceList ?? 0,
+        ledgerId: widget.data.party.ledgerId,
+      );
+
+      provider.loadNextPage(
+        companyId: widget.data.data.company.id!,
+        priceListId: widget.data.party.priceList ?? 0,
+        ledgerId: widget.data.party.ledgerId,
+      );
+    });
+  }
+
+  void _onScroll() {
+    if (!_scrollController.hasClients) return;
+
     final provider = context.read<CustomerTransactionProvider>();
 
-    provider.loadNextPage(
-      companyId: widget.data.data.company.id!,
-      priceListId: widget.data.party.priceList ?? 0,
-      ledgerId: widget.data.party.ledgerId,
-    );
-  });
-}
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.position.pixels.clamp(0, maxScroll);
 
-void _onScroll() {
-  if (!_scrollController.hasClients) return;
-
-  final provider = context.read<CustomerTransactionProvider>();
-
-  final maxScroll = _scrollController.position.maxScrollExtent;
-  final currentScroll = _scrollController.position.pixels.clamp(
-    0,
-    maxScroll,
-  );
-
-  /// 🔥 Load next page when 200px before bottom
-  if (currentScroll >= (maxScroll - 200)) {
-    provider.loadNextPage(
-      companyId: widget.data.data.company.id!,
-      priceListId: widget.data.party.priceList ?? 0,
-      ledgerId: widget.data.party.ledgerId,
-    );
+    /// 🔥 Load next page when 200px before bottom
+    if (currentScroll >= (maxScroll - 200)) {
+      provider.loadNextPage(
+        companyId: widget.data.data.company.id!,
+        priceListId: widget.data.party.priceList ?? 0,
+        ledgerId: widget.data.party.ledgerId,
+      );
+    }
   }
-}
 
   void _handleSearchClear() {
     final provider = context.read<CustomerTransactionProvider>();
@@ -81,14 +98,14 @@ void _onScroll() {
     }
   }
 
-@override
-void dispose() {
-  _searchController.removeListener(_handleSearchClear);
-  _scrollController.removeListener(_onScroll);
-  _searchController.dispose();
-  _scrollController.dispose();
-  super.dispose();
-}
+  @override
+  void dispose() {
+    _searchController.removeListener(_handleSearchClear);
+    _scrollController.removeListener(_onScroll);
+    _searchController.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,12 +118,11 @@ void dispose() {
 
     final appLocalization = context.l10n;
 
-
     return Consumer<CustomerTransactionProvider>(
       builder: (context, value, child) => PopScope(
-        canPop: false,
-        onPopInvoked: (didPop) {
+        onPopInvokedWithResult: (didPop, result) {
           if (didPop) return;
+          _searchController.clear();
           Navigator.pop(context);
         },
         child: Scaffold(
@@ -136,13 +152,29 @@ void dispose() {
                   ? const Center(child: Text("Please select a Price Level"))
                   : Column(
                       children: [
-                        /// ===================== SEARCH FIELD (OUTSIDE ) =====================
                         Padding(
                           padding: const EdgeInsets.all(16),
                           child: CustomTextField(
                             textInputAction: TextInputAction.search,
                             controller: _searchController,
+                            onChange: (value) {
+                              final keyword = value.trim();
 
+                              if (keyword.isEmpty) {
+                                transactionProvider.clearSearchAndReload(
+                                  companyId: widget.data.data.company.id!,
+                                  ledgerId: widget.data.party.ledgerId,
+                                  priceListId: widget.data.party.priceList ?? 0,
+                                );
+                              } else {
+                                transactionProvider.searchAndReload(
+                                  keyword,
+                                  companyId: widget.data.data.company.id!,
+                                  ledgerId: widget.data.party.ledgerId,
+                                  priceListId: widget.data.party.priceList ?? 0,
+                                );
+                              }
+                            },
                             onFieldSubmitted: (value) {
                               final keyword = value.trim();
 
@@ -193,13 +225,18 @@ void dispose() {
                                   ),
                                   builder: (_, snapshot) {
                                     final dbGroups =
-                                        snapshot.data
-                                            ?.map((e) => e.groupName)
-                                            .toList() ??
-                                        [];
+                                        (snapshot.data
+                                                    ?.map((e) => e.groupName)
+                                                    .toList() ??
+                                                [])
+                                            .toSet()
+                                            .toList();
                                     final groups = ['All', ...dbGroups];
                                     return CustomDropdown<String>(
-                                      value: value.selectedGroup,
+                                      value:
+                                          groups.contains(value.selectedGroup)
+                                          ? value.selectedGroup
+                                          : 'All',
                                       items: groups,
                                       hintText: appLocalization
                                           .order_booking_add_item_select_group,
@@ -228,13 +265,20 @@ void dispose() {
                                   ),
                                   builder: (_, snapshot) {
                                     final dbcategories =
-                                        snapshot.data
-                                            ?.map((e) => e.catgoryName)
-                                            .toList() ??
-                                        [];
+                                        (snapshot.data
+                                                    ?.map((e) => e.catgoryName)
+                                                    .toList() ??
+                                                [])
+                                            .toSet()
+                                            .toList();
                                     final categories = ['All', ...dbcategories];
                                     return CustomDropdown<String>(
-                                      value: value.selectedCategory,
+                                      value:
+                                          categories.contains(
+                                            value.selectedCategory,
+                                          )
+                                          ? value.selectedCategory
+                                          : 'All',
                                       items: categories,
                                       hintText: appLocalization
                                           .order_booking_add_item_select_category,
@@ -263,7 +307,6 @@ void dispose() {
                         Expanded(
                           child: Consumer<CustomerTransactionProvider>(
                             builder: (_, provider, __) {
-
                               final list = provider.sortedPagedItems;
 
                               if (list.isEmpty && provider.isLoadingPage) {
