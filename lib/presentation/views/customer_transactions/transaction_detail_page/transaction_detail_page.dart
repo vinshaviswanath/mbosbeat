@@ -66,6 +66,7 @@ class _TransactionDetailpageState extends State<TransactionDetailpage>
         });
 
     if (party != null) {
+      context.read<UserProvider>().setParty(party);
       context.read<UserProvider>().applyParty(party);
     }
   }

@@ -35,6 +35,9 @@ class _SalesScreenState extends State<SalesScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ScaffoldMessenger.of(context).clearSnackBars();
+    });
     load();
     _selectedMode = hasTaxNumber ? "B2B" : "B2C";
     generateVoucher();
@@ -195,6 +198,7 @@ class _SalesScreenState extends State<SalesScreen> {
                       children: [
                         GestureDetector(
                           onTap: () {
+                            //  ScaffoldMessenger.of(context).clearSnackBars();
                             context.pushNamed(
                               AppRouterConst.orderBookingAddItemScreen,
                               extra: TransactionOrderBookingRouteArgs(
