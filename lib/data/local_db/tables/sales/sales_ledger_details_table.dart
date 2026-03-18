@@ -1,29 +1,40 @@
 import 'package:drift/drift.dart';
 
 class SaleLedgerDetailsTable extends Table {
-  // Local primary key
   IntColumn get id => integer().autoIncrement()();
 
-  // Master reference
-  IntColumn get mid => integer().nullable()();
-
   IntColumn get vchId => integer().nullable()();
-  IntColumn get sync => integer().withDefault(const Constant(0))();
 
-  TextColumn get ledger => text().nullable()();
+  IntColumn get ledgerId => integer().nullable()();
+  TextColumn get ledgerName => text().nullable()();
 
   RealColumn get rate => real().nullable()();
   RealColumn get amount => real().nullable()();
-
-  IntColumn get companyId => integer().nullable()();
-  TextColumn get voucherName => text().nullable()();
-  TextColumn get discountType => text().nullable()();
-  RealColumn get discountAmount => real().nullable()();
-  RealColumn get saleAmount => real().nullable()();
-  RealColumn get couponDiscountAmount => real().nullable()();
-
-  RealColumn get igst => real().nullable()();
-  RealColumn get cgst => real().nullable()();
-  RealColumn get sgst => real().nullable()();
-  RealColumn get cess => real().nullable()();
 }
+// class SaleLedgerDetailsTable extends Table {
+//   // Local primary key
+//   IntColumn get id => integer().autoIncrement()();
+
+//   // Master reference
+//   IntColumn get mid => integer().nullable()();
+
+//   IntColumn get vchId => integer().nullable()();
+//   IntColumn get sync => integer().withDefault(const Constant(0))();
+
+//   TextColumn get ledger => text().nullable()();
+
+//   RealColumn get rate => real().nullable()();
+//   RealColumn get amount => real().nullable()();
+
+//   IntColumn get companyId => integer().nullable()();
+//   TextColumn get voucherName => text().nullable()();
+//   TextColumn get discountType => text().nullable()();
+//   RealColumn get discountAmount => real().nullable()();
+//   RealColumn get saleAmount => real().nullable()();
+//   RealColumn get couponDiscountAmount => real().nullable()();
+
+//   RealColumn get igst => real().nullable()();
+//   RealColumn get cgst => real().nullable()();
+//   RealColumn get sgst => real().nullable()();
+//   RealColumn get cess => real().nullable()();
+// }

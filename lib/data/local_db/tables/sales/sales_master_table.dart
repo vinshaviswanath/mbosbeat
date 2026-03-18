@@ -1,65 +1,126 @@
 import 'package:drift/drift.dart';
 
 class SaleMasterTable extends Table {
-  // Auto increment & nullable by default in Drift
   IntColumn get id => integer().autoIncrement()();
 
-  IntColumn get vchId => integer().nullable()();
-  TextColumn get voucherNo => text().nullable()();
-  IntColumn get partyId => integer().nullable()();
-  TextColumn get party => text().nullable()();
-
-  TextColumn get address => text().nullable()();
-  TextColumn get address2 => text().nullable()();
-  TextColumn get email => text().nullable()();
-  TextColumn get mob => text().nullable()();
-
-  TextColumn get voucherDate => text().nullable()();
-  RealColumn get voucherAmount => real()();
-
-  TextColumn get priceList => text().nullable()();
-  TextColumn get narration => text().nullable()();
-
-  RealColumn get lattitude => real().nullable()();
-  RealColumn get longitude => real().nullable()();
-  RealColumn get accuracy => real().nullable()();
-
-  IntColumn get userId => integer().nullable()();
+  IntColumn get custid => integer().nullable()(); 
   IntColumn get companyId => integer().nullable()();
 
-  IntColumn get itemCount => integer().nullable()();
+  IntColumn get tripId => integer().nullable()();
+  IntColumn get checkinId => integer().nullable()(); 
+  TextColumn get gr => text().nullable()(); 
+  IntColumn get godownId => integer().nullable()(); 
+  IntColumn get routeId => integer().nullable()(); 
+  IntColumn get userId => integer().nullable()();
+  IntColumn get androidId => integer().nullable()(); 
+  IntColumn get pricelistId => integer().nullable()(); 
+  IntColumn get vchseriesId => integer().nullable()(); 
+  IntColumn get vchno => integer().nullable()(); 
 
-  TextColumn get gstin => text().nullable()();
-  TextColumn get state => text().nullable()();
-  RealColumn get addDiscEntered => real().nullable()();
-
-  TextColumn get prefix => text().nullable()();
-  TextColumn get suffix => text().nullable()();
+  TextColumn get vchnumber => text().nullable()();
+  DateTimeColumn get vchdate => dateTime().nullable()();
 
   TextColumn get vchType => text().nullable()();
-  IntColumn get invNo => integer().nullable()();
 
-  TextColumn get godown => text().nullable()();
+  TextColumn get vchtype => text().withDefault(const Constant("B2C"))();
 
-  IntColumn get tripId => integer().nullable()();
-  IntColumn get visitId => integer().nullable()();
-  TextColumn get createdTime => text().nullable()();
-  TextColumn get updatedTime => text().nullable()();
-  TextColumn get deliveryDate => text().nullable()();
-  IntColumn get sync => integer().withDefault(const Constant(0))();
+  TextColumn get vchmode => text().nullable()(); 
+  TextColumn get referenceno => text().nullable()(); 
+  DateTimeColumn get referencedate => dateTime().nullable()(); 
+  TextColumn get narration => text().nullable()();
 
-  TextColumn get pinCode => text().nullable()();
+  RealColumn get grossAmount => real()(); 
+  RealColumn get discountAmount => real()(); 
+  RealColumn get taxableAmount => real()(); 
+  RealColumn get cgst => real()(); 
+  RealColumn get sgst => real()(); 
+  RealColumn get igst => real()(); 
+  RealColumn get vataAmount => real()(); 
+  RealColumn get cessAmount => real()(); 
+  RealColumn get additionalcessAmount => real()(); 
+  RealColumn get roundoff => real()(); 
+  RealColumn get netAmount => real()(); 
+  IntColumn get itemcount => integer().nullable()(); 
+  IntColumn get autoreceipt => integer().nullable()(); 
 
-  IntColumn get uploadedServerId => integer().nullable()();
+  IntColumn get partyId => integer().nullable()();
 
-  TextColumn get mailingName => text().nullable()();
-  TextColumn get billingMode => text().withDefault(const Constant("B2C"))();
-  // discount
-  //TextColumn get discountType => text().nullable()();
-  //RealColumn get discountAmount => real().nullable()();
+  TextColumn get partyname => text().nullable()();
 
- // RealColumn get amount => real().nullable()();
-  //coupon discount
+  TextColumn get statecode => text().nullable()(); 
 
- // RealColumn get coupontdiscountamount => real().nullable()();
+  TextColumn get gstno => text().nullable()(); 
+  RealColumn get distance => real()();
+  RealColumn get latitude => real()();
+  RealColumn get longitude => real()(); 
+  RealColumn get accuracy => real()(); 
+
+  TextColumn get mobilecreatedon => text().nullable()(); 
+
+  TextColumn get createdon => text().nullable()();
+
+  IntColumn get status => integer().nullable()(); 
+
+  IntColumn get importstatus => integer().nullable()(); 
+    IntColumn get sync => integer().withDefault(const Constant(0))();
+
+
+  
 }
+
+// class SaleMasterTable extends Table {
+//   // Auto increment & nullable by default in Drift
+//   IntColumn get id => integer().autoIncrement()();
+
+//   IntColumn get vchId => integer().nullable()();
+//   TextColumn get voucherNo => text().nullable()();
+//   IntColumn get partyId => integer().nullable()();
+//   TextColumn get party => text().nullable()();
+
+//   TextColumn get address => text().nullable()();
+//   TextColumn get address2 => text().nullable()();
+//   TextColumn get email => text().nullable()();
+//   TextColumn get mob => text().nullable()();
+
+//   TextColumn get voucherDate => text().nullable()();
+//   RealColumn get voucherAmount => real()();
+
+//   TextColumn get priceList => text().nullable()();
+//   TextColumn get narration => text().nullable()();
+
+//   RealColumn get lattitude => real().nullable()();
+//   RealColumn get longitude => real().nullable()();
+//   RealColumn get accuracy => real().nullable()();
+
+//   IntColumn get userId => integer().nullable()();
+//   IntColumn get companyId => integer().nullable()();
+
+//   IntColumn get itemCount => integer().nullable()();
+
+//   TextColumn get gstin => text().nullable()();
+//   TextColumn get state => text().nullable()();
+//   RealColumn get addDiscEntered => real().nullable()();
+
+//   TextColumn get prefix => text().nullable()();
+//   TextColumn get suffix => text().nullable()();
+
+//   TextColumn get vchType => text().nullable()();
+//   IntColumn get invNo => integer().nullable()();
+
+//   TextColumn get godown => text().nullable()();
+
+//   IntColumn get tripId => integer().nullable()();
+//   IntColumn get visitId => integer().nullable()();
+//   TextColumn get createdTime => text().nullable()();
+//   TextColumn get updatedTime => text().nullable()();
+//   TextColumn get deliveryDate => text().nullable()();
+//   IntColumn get sync => integer().withDefault(const Constant(0))();
+
+//   TextColumn get pinCode => text().nullable()();
+
+//   IntColumn get uploadedServerId => integer().nullable()();
+
+//   TextColumn get mailingName => text().nullable()();
+//   TextColumn get billingMode => text().withDefault(const Constant("B2C"))();
+
+// }

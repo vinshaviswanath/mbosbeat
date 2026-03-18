@@ -173,7 +173,7 @@ class AppDb extends _$AppDb {
         await m.createTable(voucherTypes);
       }
 
-      // ✅ ADD THIS
+      
       if (from < 7) {
         await m.createTable(godownVoucherTypes);
         await m.createTable(routeVoucherTypes);
