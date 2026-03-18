@@ -66,11 +66,12 @@ import 'package:mpos_beat/data/local_db/tables/item_master_sync_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/item_price_details_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/partymaster_sync_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/price_level_tables.dart';
-import 'package:mpos_beat/data/local_db/tables/receipt/receipt_entry_ledger_table.dart';
-import 'package:mpos_beat/data/local_db/tables/receipt/receipt_entry_table.dart';
+import 'package:mpos_beat/data/local_db/tables/receipt/receipt_details_table.dart';
+import 'package:mpos_beat/data/local_db/tables/receipt/receipt_master_table.dart';
 import 'package:mpos_beat/data/local_db/tables/route_voucher_types_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/routes_table.dart';
 import 'package:mpos_beat/data/local_db/tables/sales/sale_auto_receipt_table.dart';
+import 'package:mpos_beat/data/local_db/tables/sales/sales_address_table.dart';
 import 'package:mpos_beat/data/local_db/tables/sales/sales_details_table.dart';
 import 'package:mpos_beat/data/local_db/tables/sales/sales_ledger_details_table.dart';
 import 'package:mpos_beat/data/local_db/tables/sales/sales_master_table.dart';
@@ -125,9 +126,10 @@ part 'app_db.g.dart';
     SaleReturnMasterTable,
     SaleReturnDetailsTable,
     SaleReturnLedgerDetailsTable,
-    ReceiptEntryTable,
+    ReceiptMasterTable,
     ReceiptEntryLedgerTable,
     VoucherControlTable,
+    SaleAddressTable,
   ],
   daos: [
     CompanyDao,
@@ -151,7 +153,7 @@ class AppDb extends _$AppDb {
   AppDb() : super(_openConnection());
 
   @override
-  int get schemaVersion => 35;
+  int get schemaVersion => 36;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -173,7 +175,6 @@ class AppDb extends _$AppDb {
         await m.createTable(voucherTypes);
       }
 
-      
       if (from < 7) {
         await m.createTable(godownVoucherTypes);
         await m.createTable(routeVoucherTypes);
@@ -192,7 +193,7 @@ class AppDb extends _$AppDb {
       }
 
       if (from < 11) {
-        await m.createTable(godownRoutes);
+        // await m.createTable(godownRoutes);
 
         // OPTIONAL but recommended
         await m.database.customStatement('DROP TABLE IF EXISTS routes');
@@ -270,10 +271,10 @@ class AppDb extends _$AppDb {
       if (from < 29) {
         await m.createTable(voucherControlTable);
 
-        await m.addColumn(
-          saleOrderMasterTable,
-          saleOrderMasterTable.isCancelled,
-        );
+        // await m.addColumn(
+        //   saleOrderMasterTable,
+        //   saleOrderMasterTable.isCancelled,
+        // );
       }
       if (from < 30) {
         await m.addColumn(itemMaster, itemMaster.closingStock);
@@ -317,71 +318,95 @@ class AppDb extends _$AppDb {
         );
       }
 
-      if (from < 32) {
-        await m.deleteTable(saleOrderLedgerDetailsTable.actualTableName);
-        await m.createTable(saleOrderLedgerDetailsTable);
-      }
-      if (from < 34) {
-        await m.addColumn(
-          saleLedgerDetailsTable,
-          saleLedgerDetailsTable.voucherName,
-        );
-        await m.addColumn(
-          saleLedgerDetailsTable,
-          saleLedgerDetailsTable.discountType,
-        );
+      // if (from < 32) {
+      //   await m.deleteTable(saleOrderLedgerDetailsTable.actualTableName);
+      //   await m.createTable(saleOrderLedgerDetailsTable);
+      // }
+      // if (from < 34) {
+      //   await m.addColumn(
+      //     saleLedgerDetailsTable,
+      //     saleLedgerDetailsTable.voucherName,
+      //   );
+      //   await m.addColumn(
+      //     saleLedgerDetailsTable,
+      //     saleLedgerDetailsTable.discountType,
+      //   );
 
-        await m.addColumn(
-          saleLedgerDetailsTable,
-          saleLedgerDetailsTable.discountAmount,
-        );
+      //   await m.addColumn(
+      //     saleLedgerDetailsTable,
+      //     saleLedgerDetailsTable.discountAmount,
+      //   );
 
-        await m.addColumn(
-          saleLedgerDetailsTable,
-          saleLedgerDetailsTable.saleAmount,
-        );
+      //   await m.addColumn(
+      //     saleLedgerDetailsTable,
+      //     saleLedgerDetailsTable.saleAmount,
+      //   );
 
-        await m.addColumn(
-          saleLedgerDetailsTable,
-          saleLedgerDetailsTable.couponDiscountAmount,
-        );
+      //   await m.addColumn(
+      //     saleLedgerDetailsTable,
+      //     saleLedgerDetailsTable.couponDiscountAmount,
+      //   );
 
-        await m.addColumn(saleLedgerDetailsTable, saleLedgerDetailsTable.igst);
+      //   await m.addColumn(saleLedgerDetailsTable, saleLedgerDetailsTable.igst);
 
-        await m.addColumn(saleLedgerDetailsTable, saleLedgerDetailsTable.cgst);
+      //   await m.addColumn(saleLedgerDetailsTable, saleLedgerDetailsTable.cgst);
 
-        await m.addColumn(saleLedgerDetailsTable, saleLedgerDetailsTable.sgst);
+      //   await m.addColumn(saleLedgerDetailsTable, saleLedgerDetailsTable.sgst);
 
-        await m.addColumn(saleLedgerDetailsTable, saleLedgerDetailsTable.cess);
+      //   await m.addColumn(saleLedgerDetailsTable, saleLedgerDetailsTable.cess);
 
-        // ================= SALE RETURN LEDGER TABLE =================
+      //   // ================= SALE RETURN LEDGER TABLE =================
 
-        await m.addColumn(
-          saleReturnLedgerDetailsTable,
-          saleReturnLedgerDetailsTable.igst,
-        );
+      //   await m.addColumn(
+      //     saleReturnLedgerDetailsTable,
+      //     saleReturnLedgerDetailsTable.igst,
+      //   );
 
-        await m.addColumn(
-          saleReturnLedgerDetailsTable,
-          saleReturnLedgerDetailsTable.cgst,
-        );
+      //   await m.addColumn(
+      //     saleReturnLedgerDetailsTable,
+      //     saleReturnLedgerDetailsTable.cgst,
+      //   );
 
-        await m.addColumn(
-          saleReturnLedgerDetailsTable,
-          saleReturnLedgerDetailsTable.sgst,
-        );
+      //   await m.addColumn(
+      //     saleReturnLedgerDetailsTable,
+      //     saleReturnLedgerDetailsTable.sgst,
+      //   );
 
-        await m.addColumn(
-          saleReturnLedgerDetailsTable,
-          saleReturnLedgerDetailsTable.cess,
-        );
-      }
+      //   await m.addColumn(
+      //     saleReturnLedgerDetailsTable,
+      //     saleReturnLedgerDetailsTable.cess,
+      //   );
+      // }
 
       if (from < 35) {
         await m.database.customStatement(
           'CREATE INDEX IF NOT EXISTS idx_item_company_name '
           'ON item_master(company_id, item_name COLLATE NOCASE)',
         );
+      }
+      if (from < 36) {
+        // 🔥 DROP OLD SALE TABLES
+        await m.deleteTable(saleMasterTable.actualTableName);
+        await m.deleteTable(saleDetailsTable.actualTableName);
+        await m.deleteTable(saleLedgerDetailsTable.actualTableName);
+        await m.deleteTable(saleAutoReceiptTable.actualTableName);
+
+        // 🔥 DROP OLD SALE ORDER TABLES (YOU MISSED THIS)
+        await m.deleteTable(saleOrderMasterTable.actualTableName);
+        await m.deleteTable(saleOrderDetailsTable.actualTableName);
+        await m.deleteTable(saleOrderLedgerDetailsTable.actualTableName);
+
+        // ✅ RECREATE ALL
+        await m.createTable(saleMasterTable);
+        await m.createTable(saleDetailsTable);
+        await m.createTable(saleLedgerDetailsTable);
+        await m.createTable(saleAutoReceiptTable);
+
+        await m.createTable(saleOrderMasterTable);
+        await m.createTable(saleOrderDetailsTable);
+        await m.createTable(saleOrderLedgerDetailsTable);
+
+        await m.createTable(saleAddressTable);
       }
     },
   );

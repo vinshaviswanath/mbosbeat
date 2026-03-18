@@ -756,53 +756,89 @@ Future<void> saveSale({
   }
   await db.transaction(() async {
     /// 1️⃣ INSERT MASTER
-    ///
+    final now = DateTime.now();
+    final formattedDate = DateFormat('yyyy-MM-dd').format(now);
     final masterId = await db
         .into(db.saleMasterTable)
         .insert(
           SaleMasterTableCompanion.insert(
             partyId: Value(ledgerId),
-            party: Value(ledgerName),
-            voucherAmount: txn.grandTotal,
-            companyId: Value(companyId),
-            itemCount: Value(txn.selectedItemCount),
-            gstin: Value(gstNumber),
-            billingMode: Value(billingMode),
-            sync: const Value(0),
-            voucherDate: Value(DateFormat('yyyy-MM-dd').format(DateTime.now())),
-            narration: Value(remark.isEmpty ? null : remark),
-            voucherNo: Value(voucherNo),
+            partyname: Value(ledgerName),
 
-            address2: Value(address2),
-            address: Value(address),
-            pinCode: Value(pinCode),
-            lattitude: Value(lattitude),
-            longitude: Value(longitude),
-            mailingName: Value(mailingName),
-            mob: Value(mobileNumber),
+            companyId: Value(companyId),
+
+            netAmount: finalAmount,
+            grossAmount: txn.subTotal,
+            discountAmount: discountData?.amount ?? 0,
+            taxableAmount: 0,
+            vataAmount: 0,
+            distance: 0,
+            cgst: txn.totalCgst,
+            sgst: txn.totalSgst,
+            igst: txn.totalIgst,
+            cessAmount: txn.totalCess,
+            additionalcessAmount: 0,
+
+            roundoff: 0,
+
+            itemcount: Value(txn.selectedItemCount),
+
+            gstno: Value(gstNumber),
+            statecode: const Value(null),
+
+            vchdate: Value(formattedDate),
+
+            vchtype: Value(billingMode),
+
+            narration: Value(remark.isEmpty ? null : remark),
+
+            latitude: lattitude,
+            longitude: longitude,
+            accuracy: 0,
+
+            mobilecreatedon: Value(formattedDate),
+            createdon: Value(formattedDate),
+
+            sync: const Value(0),
           ),
         );
-
     print("Inserted Master ID: $masterId");
 
     /// 2️⃣ INSERT DETAILS
 
     for (final item in txn.selectedOrderItems) {
+      final qty = item.qty;
+      final rate = item.rate;
+
+      final base = qty * rate;
+
+      // Discount
+      final discount = item.discount;
+      final discounted = base - discount;
+
+      // Tax %
+      final taxPercent = item.item.taxPercent;
+
+      // Tax split
+      final cgst = discounted * (taxPercent / 2) / 100;
+      final sgst = discounted * (taxPercent / 2) / 100;
+      final igst = discounted * taxPercent / 100;
       await db
           .into(db.saleDetailsTable)
           .insert(
             SaleDetailsTableCompanion.insert(
-              mid: Value(masterId),
+              vchId: masterId,
               itemId: Value(item.item.id),
-              qty: Value(item.qty),
-              total: Value(txn.subTotal),
-              companyId: Value(companyId),
-
-              disc: Value(item.discount),
-              //  fQty: Value(item.freeQty),
-              fUnit: Value(item.item.unitName),
               itemName: Value(item.item.itemName),
-              rate: Value(item.rate),
+
+              enteredQtyFirst: Value(qty),
+              rate: Value(rate),
+              amount: Value(discounted),
+              taxableAmount: Value(discounted),
+              cgstVal: Value(cgst),
+              sgstVal: Value(sgst),
+              igstVal: Value(igst),
+              discountAmt: Value(item.discount),
             ),
           );
     }
@@ -820,21 +856,12 @@ Future<void> saveSale({
             .into(db.saleLedgerDetailsTable)
             .insert(
               SaleLedgerDetailsTableCompanion.insert(
-                mid: Value(masterId),
-                ledger: Value(ledgerName),
-                amount: Value(txn.grandTotal),
-                companyId: Value(companyId),
-                voucherName: Value(entry.key),
+                vchId: Value(masterId),
+                ledgerId: Value(ledgerId),
+                ledgerName: Value(entry.key),
 
-                couponDiscountAmount: Value(couponAmount),
-
-                discountType: discountData != null
-                    ? Value(discountData.type)
-                    : const Value.absent(),
-
-                discountAmount: discountData != null
-                    ? Value(discountData.amount)
-                    : const Value.absent(),
+                amount: Value(entry.value),
+                rate: const Value(0),
               ),
             );
         //insert autorecipt
@@ -843,21 +870,11 @@ Future<void> saveSale({
               .into(db.saleAutoReceiptTable)
               .insert(
                 SaleAutoReceiptTableCompanion.insert(
-                  mid: Value(masterId),
-                  companyId: Value(companyId),
-
-                  paymentMode: Value(paymentData.paymentMode),
-                  amount: Value(paymentData.amount),
-                  upiReference: Value(paymentData.upiReference),
-                  chequeNumber: Value(paymentData.chequeNumber),
-                  chequeDate: paymentData.chequeDate != null
-                      ? Value(
-                          DateFormat(
-                            'yyyy-MM-dd',
-                          ).format(paymentData.chequeDate!),
-                        )
-                      : const Value.absent(),
-                  sync: const Value(0),
+                  vchid: Value(masterId),
+                  transactiontype: Value(paymentData.paymentMode),
+                  recamount: Value(paymentData.amount),
+                  recnumber: Value(paymentData.upiReference),
+                  chequeDate: Value(paymentData.chequeDate?.toString()),
                 ),
               );
         }

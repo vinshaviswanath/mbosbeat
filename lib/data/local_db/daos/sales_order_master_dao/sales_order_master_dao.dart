@@ -46,7 +46,7 @@ class SaleOrderMasterDao extends DatabaseAccessor<AppDb>
 
     final row = await query.getSingleOrNull();
 
-    return row?.voucherNo.toString();
+    return row?.vchno.toString();
   }
 
   Future<int?> getLastVchId(int companyId) async {
@@ -68,7 +68,7 @@ Future<int> getNextVchId(int companyId) async {
     final list = await getAll();
 
     for (final row in list) {
-      print("MASTER → ID:${row.id} Voucher:${row.voucherNo}");
+      print("MASTER → ID:${row.id} Voucher:${row.vchno}");
     }
   }
 

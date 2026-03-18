@@ -186,12 +186,12 @@ class CustomerTransactionProvider extends ChangeNotifier {
   /// Returns subtotal of selected items (after discount).
   double get subTotal => _itemTotal.values.fold(0.0, (sum, v) => sum + v);
 
-
   /// Grand total currently equals subtotal.
   /// (Tax added separately in billTotal)
 
   /// Total bill including tax.
   double get billTotal => subTotal + totalCgst + totalSgst;
+
   /// Grand total including taxes.
   double get grandTotal => billSubTotal + totalCgst + totalSgst + totalCess;
 
@@ -283,6 +283,21 @@ class CustomerTransactionProvider extends ChangeNotifier {
     }
 
     return sgst;
+  }
+
+  double get totalIgst {
+    double igst = 0;
+
+    for (final itemId in _selectedItems) {
+      final product = _selectedItemObjects[itemId];
+      if (product == null) continue;
+
+      double base = _calculateDiscountedBase(product, itemId);
+
+      igst += base * (product.taxPercent) / 100;
+    }
+
+    return igst;
   }
 
   /// Calculates total CESS across all selected items.
@@ -959,10 +974,10 @@ class CustomerTransactionProvider extends ChangeNotifier {
   }
 
   //to clear discount
- void clearDiscount() {
-  _itemDiscount.clear();
-  _discountType.clear();
+  void clearDiscount() {
+    _itemDiscount.clear();
+    _discountType.clear();
 
-  notifyListeners();
-}
+    notifyListeners();
+  }
 }

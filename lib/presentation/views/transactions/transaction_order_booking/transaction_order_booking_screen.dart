@@ -75,7 +75,6 @@ class _TransactionOrderBookingScreenState
     if (party != null) {
       context.read<UserProvider>().setParty(party);
     }
-    
   }
 
   @override
@@ -124,6 +123,7 @@ class _TransactionOrderBookingScreenState
             provider.selectedItemIds.isNotEmpty
                 ? IconButton(
                     icon: const Icon(Icons.print),
+
                     // onPressed: () async {
                     //   final txn = context.read<CustomerTransactionProvider>();
 
@@ -159,7 +159,6 @@ class _TransactionOrderBookingScreenState
                     //     ),
                     //   );
                     // },
-
                     onPressed: () async {
                       final txn = context.read<CustomerTransactionProvider>();
 
@@ -935,6 +934,8 @@ class _TransactionOrderBookingScreenState
                                                         .party
                                                         .mailingName ??
                                                     '',
+                                                gstNumber:
+                                                    widget.data.party.taxNumber,
                                               );
 
                                               txn.clearSelectedItems();
@@ -1135,6 +1136,7 @@ Future<void> saveOrder({
   required int companyId,
   required String ledgerName,
   required int ledgerId,
+  required String? gstNumber,
   required int priceLevelId,
   required String remark,
   required String voucherNo,
@@ -1151,38 +1153,49 @@ Future<void> saveOrder({
     print("No items selected");
     return;
   }
-
-  // final vchNo = int.parse(voucherNo);
+  double finalAmount = txn.grandTotal;
+  final now = DateTime.now();
+  final formattedDate = DateFormat('yyyy-MM-dd').format(now);
   await db.transaction(() async {
     //  INSERT MASTER
-    final nextVchId = await db.saleOrderMasterDao.getNextVchId(companyId);
+
     final masterId = await db
         .into(db.saleOrderMasterTable)
         .insert(
           SaleOrderMasterTableCompanion.insert(
-            address2: Value(address2),
-            address: Value(address),
-            createdTime: Value(DateTime.now()),
-
-            pinCode: Value(pinCode),
-            itemCount: Value(txn.selectedItemCount),
-
-            lattitude: Value(lattitude),
-            longitude: Value(longitude),
-            mailingName: Value(mailingName),
-
             partyId: Value(ledgerId),
-            party: Value(ledgerName),
-            voucherAmount: txn.finalGrandTotal,
-            vchId: Value(nextVchId),
-            voucherNo: Value(voucherNo),
+            partyname: Value(ledgerName),
+
             companyId: Value(companyId),
-            sync: const Value(0),
-            priceList: Value(priceLevelId.toString()),
-            voucherDate: Value(DateFormat('yyyy-MM-dd').format(DateTime.now())),
+
+            netAmount: finalAmount,
+            grossAmount: txn.subTotal,
+            discountAmount: 0,
+            taxableAmount: 0,
+            vataAmount: 0,
+            distance: 0,
+            cgst: txn.totalCgst,
+            sgst: txn.totalSgst,
+            igst: txn.totalIgst,
+            cessAmount: txn.totalCess,
+            additionalcessAmount: 0,
+
+            roundoff: 0,
+
+            itemcount: Value(txn.selectedItemCount),
+
+            gstno: Value(gstNumber),
+            statecode: const Value(null),
+
+            vchdate: Value(formattedDate),
+
             narration: Value(remark.isEmpty ? null : remark),
 
-            mob: Value(mobileNumber),
+            latitude: lattitude,
+            longitude: longitude,
+            accuracy: 0,
+            mobilecreatedon: Value(formattedDate),
+            createdon: Value(formattedDate),
           ),
         );
 
@@ -1190,26 +1203,39 @@ Future<void> saveOrder({
 
     //  INSERT DETAILS
     for (final item in txn.selectedOrderItems) {
-      final gross = item.rate * item.qty;
-      final discountValue = gross * (item.discount / 100);
+      final qty = item.qty;
+      final rate = item.rate;
+
+      final base = qty * rate;
+
+      // Discount
+      final discount = item.discount;
+      final discounted = base - discount;
+
+      // Tax %
+      final taxPercent = item.item.taxPercent;
+
+      // Tax split
+      final cgst = discounted * (taxPercent / 2) / 100;
+      final sgst = discounted * (taxPercent / 2) / 100;
+      final igst = discounted * taxPercent / 100;
 
       await db
           .into(db.saleOrderDetailsTable)
           .insert(
             SaleOrderDetailsTableCompanion.insert(
-              mid: Value(masterId),
+              vchId: masterId,
               itemId: Value(item.item.id),
-              qty: Value(item.qty),
-              total: Value(item.inclRate),
-              companyId: Value(companyId),
-              sync: const Value(0),
-
-              //  disc: Value(item.discount),
-              // fQty: Value(item.freeQty),
-              fUnit: Value(item.item.unitName),
               itemName: Value(item.item.itemName),
-              rate: Value(item.amount),
-              //  discVal: Value(discountValue),
+
+              enteredQtyFirst: Value(qty),
+              rate: Value(rate),
+              amount: Value(discounted),
+              taxableAmount: Value(discounted),
+              cgstVal: Value(cgst),
+              sgstVal: Value(sgst),
+              igstVal: Value(igst),
+              discountAmt: Value(item.discount),
             ),
           );
     }
@@ -1229,10 +1255,12 @@ Future<void> saveOrder({
             .into(db.saleOrderLedgerDetailsTable)
             .insert(
               SaleOrderLedgerDetailsTableCompanion.insert(
-                mid: Value(masterId),
-                voucherName: Value(entry.key),
-                amount: Value(entry.value),
-                companyId: Value(companyId),
+                vchId:Value( masterId),
+                ledgerId: Value(ledgerId),
+                ledgerName: Value(entry.key),
+
+               amount: Value(entry.value),       
+        rate: const Value(0),  
               ),
             );
       }

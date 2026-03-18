@@ -1,11 +1,10 @@
 import 'package:drift/drift.dart';
 
-class ReceiptEntryTable extends Table {
+class ReceiptMasterTable extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   IntColumn get mid => integer().nullable()();
   IntColumn get companyId => integer().nullable()();
-  
 
   IntColumn get receiptNo => integer().nullable()();
   RealColumn get amount => real().nullable()();
