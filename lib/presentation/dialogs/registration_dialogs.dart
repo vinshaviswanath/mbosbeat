@@ -7,7 +7,6 @@ import 'package:mpos_beat/core/utils/custom_dialogs.dart';
 import 'package:mpos_beat/core/utils/extentions.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_button.dart';
 import 'package:mpos_beat/presentation/logic/authentication_provider.dart';
-import 'package:mpos_beat/presentation/views/login/login_screen.dart';
 import 'package:mpos_beat/route/app_router_const.dart';
 import 'package:provider/provider.dart';
 
