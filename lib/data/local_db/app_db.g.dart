@@ -23918,167 +23918,10 @@ class $SaleReturnMasterTableTable extends SaleReturnMasterTable
       'PRIMARY KEY AUTOINCREMENT',
     ),
   );
-  static const VerificationMeta _vchIdMeta = const VerificationMeta('vchId');
+  static const VerificationMeta _custidMeta = const VerificationMeta('custid');
   @override
-  late final GeneratedColumn<int> vchId = GeneratedColumn<int>(
-    'vch_id',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _voucherNoMeta = const VerificationMeta(
-    'voucherNo',
-  );
-  @override
-  late final GeneratedColumn<String> voucherNo = GeneratedColumn<String>(
-    'voucher_no',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _partyIdMeta = const VerificationMeta(
-    'partyId',
-  );
-  @override
-  late final GeneratedColumn<int> partyId = GeneratedColumn<int>(
-    'party_id',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _partyMeta = const VerificationMeta('party');
-  @override
-  late final GeneratedColumn<String> party = GeneratedColumn<String>(
-    'party',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _addressMeta = const VerificationMeta(
-    'address',
-  );
-  @override
-  late final GeneratedColumn<String> address = GeneratedColumn<String>(
-    'address',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _address2Meta = const VerificationMeta(
-    'address2',
-  );
-  @override
-  late final GeneratedColumn<String> address2 = GeneratedColumn<String>(
-    'address2',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _emailMeta = const VerificationMeta('email');
-  @override
-  late final GeneratedColumn<String> email = GeneratedColumn<String>(
-    'email',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _mobMeta = const VerificationMeta('mob');
-  @override
-  late final GeneratedColumn<String> mob = GeneratedColumn<String>(
-    'mob',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _voucherDateMeta = const VerificationMeta(
-    'voucherDate',
-  );
-  @override
-  late final GeneratedColumn<String> voucherDate = GeneratedColumn<String>(
-    'voucher_date',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _voucherAmountMeta = const VerificationMeta(
-    'voucherAmount',
-  );
-  @override
-  late final GeneratedColumn<double> voucherAmount = GeneratedColumn<double>(
-    'voucher_amount',
-    aliasedName,
-    false,
-    type: DriftSqlType.double,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _priceListMeta = const VerificationMeta(
-    'priceList',
-  );
-  @override
-  late final GeneratedColumn<String> priceList = GeneratedColumn<String>(
-    'price_list',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _narrationMeta = const VerificationMeta(
-    'narration',
-  );
-  @override
-  late final GeneratedColumn<String> narration = GeneratedColumn<String>(
-    'narration',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _lattitudeMeta = const VerificationMeta(
-    'lattitude',
-  );
-  @override
-  late final GeneratedColumn<double> lattitude = GeneratedColumn<double>(
-    'lattitude',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _longitudeMeta = const VerificationMeta(
-    'longitude',
-  );
-  @override
-  late final GeneratedColumn<double> longitude = GeneratedColumn<double>(
-    'longitude',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _accuracyMeta = const VerificationMeta(
-    'accuracy',
-  );
-  @override
-  late final GeneratedColumn<double> accuracy = GeneratedColumn<double>(
-    'accuracy',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
-  @override
-  late final GeneratedColumn<int> userId = GeneratedColumn<int>(
-    'user_id',
+  late final GeneratedColumn<int> custid = GeneratedColumn<int>(
+    'custid',
     aliasedName,
     true,
     type: DriftSqlType.int,
@@ -24095,59 +23938,125 @@ class $SaleReturnMasterTableTable extends SaleReturnMasterTable
     type: DriftSqlType.int,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _itemCountMeta = const VerificationMeta(
-    'itemCount',
-  );
+  static const VerificationMeta _tripIdMeta = const VerificationMeta('tripId');
   @override
-  late final GeneratedColumn<int> itemCount = GeneratedColumn<int>(
-    'item_count',
+  late final GeneratedColumn<int> tripId = GeneratedColumn<int>(
+    'trip_id',
     aliasedName,
     true,
     type: DriftSqlType.int,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _gstinMeta = const VerificationMeta('gstin');
+  static const VerificationMeta _checkinIdMeta = const VerificationMeta(
+    'checkinId',
+  );
   @override
-  late final GeneratedColumn<String> gstin = GeneratedColumn<String>(
-    'gstin',
+  late final GeneratedColumn<int> checkinId = GeneratedColumn<int>(
+    'checkin_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _grMeta = const VerificationMeta('gr');
+  @override
+  late final GeneratedColumn<String> gr = GeneratedColumn<String>(
+    'gr',
     aliasedName,
     true,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _stateMeta = const VerificationMeta('state');
+  static const VerificationMeta _godownIdMeta = const VerificationMeta(
+    'godownId',
+  );
   @override
-  late final GeneratedColumn<String> state = GeneratedColumn<String>(
-    'state',
+  late final GeneratedColumn<int> godownId = GeneratedColumn<int>(
+    'godown_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _routeIdMeta = const VerificationMeta(
+    'routeId',
+  );
+  @override
+  late final GeneratedColumn<int> routeId = GeneratedColumn<int>(
+    'route_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<int> userId = GeneratedColumn<int>(
+    'user_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _androidIdMeta = const VerificationMeta(
+    'androidId',
+  );
+  @override
+  late final GeneratedColumn<int> androidId = GeneratedColumn<int>(
+    'android_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _pricelistIdMeta = const VerificationMeta(
+    'pricelistId',
+  );
+  @override
+  late final GeneratedColumn<int> pricelistId = GeneratedColumn<int>(
+    'pricelist_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _vchseriesIdMeta = const VerificationMeta(
+    'vchseriesId',
+  );
+  @override
+  late final GeneratedColumn<int> vchseriesId = GeneratedColumn<int>(
+    'vchseries_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _vchnoMeta = const VerificationMeta('vchno');
+  @override
+  late final GeneratedColumn<int> vchno = GeneratedColumn<int>(
+    'vchno',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _vchnumberMeta = const VerificationMeta(
+    'vchnumber',
+  );
+  @override
+  late final GeneratedColumn<String> vchnumber = GeneratedColumn<String>(
+    'vchnumber',
     aliasedName,
     true,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _addDiscEnteredMeta = const VerificationMeta(
-    'addDiscEntered',
+  static const VerificationMeta _vchdateMeta = const VerificationMeta(
+    'vchdate',
   );
   @override
-  late final GeneratedColumn<double> addDiscEntered = GeneratedColumn<double>(
-    'add_disc_entered',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _prefixMeta = const VerificationMeta('prefix');
-  @override
-  late final GeneratedColumn<String> prefix = GeneratedColumn<String>(
-    'prefix',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _suffixMeta = const VerificationMeta('suffix');
-  @override
-  late final GeneratedColumn<String> suffix = GeneratedColumn<String>(
-    'suffix',
+  late final GeneratedColumn<String> vchdate = GeneratedColumn<String>(
+    'vchdate',
     aliasedName,
     true,
     type: DriftSqlType.string,
@@ -24164,75 +24073,314 @@ class $SaleReturnMasterTableTable extends SaleReturnMasterTable
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _invNoMeta = const VerificationMeta('invNo');
-  @override
-  late final GeneratedColumn<int> invNo = GeneratedColumn<int>(
-    'inv_no',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
+  static const VerificationMeta _vchmodeMeta = const VerificationMeta(
+    'vchmode',
   );
-  static const VerificationMeta _godownMeta = const VerificationMeta('godown');
   @override
-  late final GeneratedColumn<String> godown = GeneratedColumn<String>(
-    'godown',
+  late final GeneratedColumn<String> vchmode = GeneratedColumn<String>(
+    'vchmode',
     aliasedName,
     true,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _tripIdMeta = const VerificationMeta('tripId');
-  @override
-  late final GeneratedColumn<int> tripId = GeneratedColumn<int>(
-    'trip_id',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _visitIdMeta = const VerificationMeta(
-    'visitId',
+  static const VerificationMeta _referencenoMeta = const VerificationMeta(
+    'referenceno',
   );
   @override
-  late final GeneratedColumn<int> visitId = GeneratedColumn<int>(
-    'visit_id',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _createdTimeMeta = const VerificationMeta(
-    'createdTime',
-  );
-  @override
-  late final GeneratedColumn<DateTime> createdTime = GeneratedColumn<DateTime>(
-    'created_time',
-    aliasedName,
-    true,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _updatedTimeMeta = const VerificationMeta(
-    'updatedTime',
-  );
-  @override
-  late final GeneratedColumn<DateTime> updatedTime = GeneratedColumn<DateTime>(
-    'updated_time',
-    aliasedName,
-    true,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _deliveryDateMeta = const VerificationMeta(
-    'deliveryDate',
-  );
-  @override
-  late final GeneratedColumn<String> deliveryDate = GeneratedColumn<String>(
-    'delivery_date',
+  late final GeneratedColumn<String> referenceno = GeneratedColumn<String>(
+    'referenceno',
     aliasedName,
     true,
     type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _referencedateMeta = const VerificationMeta(
+    'referencedate',
+  );
+  @override
+  late final GeneratedColumn<DateTime> referencedate =
+      GeneratedColumn<DateTime>(
+        'referencedate',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _narrationMeta = const VerificationMeta(
+    'narration',
+  );
+  @override
+  late final GeneratedColumn<String> narration = GeneratedColumn<String>(
+    'narration',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _grossAmountMeta = const VerificationMeta(
+    'grossAmount',
+  );
+  @override
+  late final GeneratedColumn<double> grossAmount = GeneratedColumn<double>(
+    'gross_amount',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _discountAmountMeta = const VerificationMeta(
+    'discountAmount',
+  );
+  @override
+  late final GeneratedColumn<double> discountAmount = GeneratedColumn<double>(
+    'discount_amount',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _taxableAmountMeta = const VerificationMeta(
+    'taxableAmount',
+  );
+  @override
+  late final GeneratedColumn<double> taxableAmount = GeneratedColumn<double>(
+    'taxable_amount',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _cgstMeta = const VerificationMeta('cgst');
+  @override
+  late final GeneratedColumn<double> cgst = GeneratedColumn<double>(
+    'cgst',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _sgstMeta = const VerificationMeta('sgst');
+  @override
+  late final GeneratedColumn<double> sgst = GeneratedColumn<double>(
+    'sgst',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _igstMeta = const VerificationMeta('igst');
+  @override
+  late final GeneratedColumn<double> igst = GeneratedColumn<double>(
+    'igst',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _vataAmountMeta = const VerificationMeta(
+    'vataAmount',
+  );
+  @override
+  late final GeneratedColumn<double> vataAmount = GeneratedColumn<double>(
+    'vata_amount',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _cessAmountMeta = const VerificationMeta(
+    'cessAmount',
+  );
+  @override
+  late final GeneratedColumn<double> cessAmount = GeneratedColumn<double>(
+    'cess_amount',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _additionalcessAmountMeta =
+      const VerificationMeta('additionalcessAmount');
+  @override
+  late final GeneratedColumn<double> additionalcessAmount =
+      GeneratedColumn<double>(
+        'additionalcess_amount',
+        aliasedName,
+        false,
+        type: DriftSqlType.double,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _roundoffMeta = const VerificationMeta(
+    'roundoff',
+  );
+  @override
+  late final GeneratedColumn<double> roundoff = GeneratedColumn<double>(
+    'roundoff',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _netAmountMeta = const VerificationMeta(
+    'netAmount',
+  );
+  @override
+  late final GeneratedColumn<double> netAmount = GeneratedColumn<double>(
+    'net_amount',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _itemcountMeta = const VerificationMeta(
+    'itemcount',
+  );
+  @override
+  late final GeneratedColumn<int> itemcount = GeneratedColumn<int>(
+    'itemcount',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _autoreceiptMeta = const VerificationMeta(
+    'autoreceipt',
+  );
+  @override
+  late final GeneratedColumn<int> autoreceipt = GeneratedColumn<int>(
+    'autoreceipt',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _partyIdMeta = const VerificationMeta(
+    'partyId',
+  );
+  @override
+  late final GeneratedColumn<int> partyId = GeneratedColumn<int>(
+    'party_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _partynameMeta = const VerificationMeta(
+    'partyname',
+  );
+  @override
+  late final GeneratedColumn<String> partyname = GeneratedColumn<String>(
+    'partyname',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _statecodeMeta = const VerificationMeta(
+    'statecode',
+  );
+  @override
+  late final GeneratedColumn<String> statecode = GeneratedColumn<String>(
+    'statecode',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _gstnoMeta = const VerificationMeta('gstno');
+  @override
+  late final GeneratedColumn<String> gstno = GeneratedColumn<String>(
+    'gstno',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _distanceMeta = const VerificationMeta(
+    'distance',
+  );
+  @override
+  late final GeneratedColumn<double> distance = GeneratedColumn<double>(
+    'distance',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _latitudeMeta = const VerificationMeta(
+    'latitude',
+  );
+  @override
+  late final GeneratedColumn<double> latitude = GeneratedColumn<double>(
+    'latitude',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _longitudeMeta = const VerificationMeta(
+    'longitude',
+  );
+  @override
+  late final GeneratedColumn<double> longitude = GeneratedColumn<double>(
+    'longitude',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _accuracyMeta = const VerificationMeta(
+    'accuracy',
+  );
+  @override
+  late final GeneratedColumn<double> accuracy = GeneratedColumn<double>(
+    'accuracy',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _mobilecreatedonMeta = const VerificationMeta(
+    'mobilecreatedon',
+  );
+  @override
+  late final GeneratedColumn<String> mobilecreatedon = GeneratedColumn<String>(
+    'mobilecreatedon',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdonMeta = const VerificationMeta(
+    'createdon',
+  );
+  @override
+  late final GeneratedColumn<String> createdon = GeneratedColumn<String>(
+    'createdon',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _statusMeta = const VerificationMeta('status');
+  @override
+  late final GeneratedColumn<int> status = GeneratedColumn<int>(
+    'status',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _importstatusMeta = const VerificationMeta(
+    'importstatus',
+  );
+  @override
+  late final GeneratedColumn<int> importstatus = GeneratedColumn<int>(
+    'importstatus',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
     requiredDuringInsert: false,
   );
   static const VerificationMeta _syncMeta = const VerificationMeta('sync');
@@ -24245,77 +24393,54 @@ class $SaleReturnMasterTableTable extends SaleReturnMasterTable
     requiredDuringInsert: false,
     defaultValue: const Constant(0),
   );
-  static const VerificationMeta _pinCodeMeta = const VerificationMeta(
-    'pinCode',
-  );
-  @override
-  late final GeneratedColumn<String> pinCode = GeneratedColumn<String>(
-    'pin_code',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _uploadedServerIdMeta = const VerificationMeta(
-    'uploadedServerId',
-  );
-  @override
-  late final GeneratedColumn<int> uploadedServerId = GeneratedColumn<int>(
-    'uploaded_server_id',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _mailingNameMeta = const VerificationMeta(
-    'mailingName',
-  );
-  @override
-  late final GeneratedColumn<String> mailingName = GeneratedColumn<String>(
-    'mailing_name',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
-    vchId,
-    voucherNo,
-    partyId,
-    party,
-    address,
-    address2,
-    email,
-    mob,
-    voucherDate,
-    voucherAmount,
-    priceList,
+    custid,
+    companyId,
+    tripId,
+    checkinId,
+    gr,
+    godownId,
+    routeId,
+    userId,
+    androidId,
+    pricelistId,
+    vchseriesId,
+    vchno,
+    vchnumber,
+    vchdate,
+    vchType,
+    vchmode,
+    referenceno,
+    referencedate,
     narration,
-    lattitude,
+    grossAmount,
+    discountAmount,
+    taxableAmount,
+    cgst,
+    sgst,
+    igst,
+    vataAmount,
+    cessAmount,
+    additionalcessAmount,
+    roundoff,
+    netAmount,
+    itemcount,
+    autoreceipt,
+    partyId,
+    partyname,
+    statecode,
+    gstno,
+    distance,
+    latitude,
     longitude,
     accuracy,
-    userId,
-    companyId,
-    itemCount,
-    gstin,
-    state,
-    addDiscEntered,
-    prefix,
-    suffix,
-    vchType,
-    invNo,
-    godown,
-    tripId,
-    visitId,
-    createdTime,
-    updatedTime,
-    deliveryDate,
+    mobilecreatedon,
+    createdon,
+    status,
+    importstatus,
     sync,
-    pinCode,
-    uploadedServerId,
-    mailingName,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -24332,108 +24457,10 @@ class $SaleReturnMasterTableTable extends SaleReturnMasterTable
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('vch_id')) {
+    if (data.containsKey('custid')) {
       context.handle(
-        _vchIdMeta,
-        vchId.isAcceptableOrUnknown(data['vch_id']!, _vchIdMeta),
-      );
-    }
-    if (data.containsKey('voucher_no')) {
-      context.handle(
-        _voucherNoMeta,
-        voucherNo.isAcceptableOrUnknown(data['voucher_no']!, _voucherNoMeta),
-      );
-    }
-    if (data.containsKey('party_id')) {
-      context.handle(
-        _partyIdMeta,
-        partyId.isAcceptableOrUnknown(data['party_id']!, _partyIdMeta),
-      );
-    }
-    if (data.containsKey('party')) {
-      context.handle(
-        _partyMeta,
-        party.isAcceptableOrUnknown(data['party']!, _partyMeta),
-      );
-    }
-    if (data.containsKey('address')) {
-      context.handle(
-        _addressMeta,
-        address.isAcceptableOrUnknown(data['address']!, _addressMeta),
-      );
-    }
-    if (data.containsKey('address2')) {
-      context.handle(
-        _address2Meta,
-        address2.isAcceptableOrUnknown(data['address2']!, _address2Meta),
-      );
-    }
-    if (data.containsKey('email')) {
-      context.handle(
-        _emailMeta,
-        email.isAcceptableOrUnknown(data['email']!, _emailMeta),
-      );
-    }
-    if (data.containsKey('mob')) {
-      context.handle(
-        _mobMeta,
-        mob.isAcceptableOrUnknown(data['mob']!, _mobMeta),
-      );
-    }
-    if (data.containsKey('voucher_date')) {
-      context.handle(
-        _voucherDateMeta,
-        voucherDate.isAcceptableOrUnknown(
-          data['voucher_date']!,
-          _voucherDateMeta,
-        ),
-      );
-    }
-    if (data.containsKey('voucher_amount')) {
-      context.handle(
-        _voucherAmountMeta,
-        voucherAmount.isAcceptableOrUnknown(
-          data['voucher_amount']!,
-          _voucherAmountMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_voucherAmountMeta);
-    }
-    if (data.containsKey('price_list')) {
-      context.handle(
-        _priceListMeta,
-        priceList.isAcceptableOrUnknown(data['price_list']!, _priceListMeta),
-      );
-    }
-    if (data.containsKey('narration')) {
-      context.handle(
-        _narrationMeta,
-        narration.isAcceptableOrUnknown(data['narration']!, _narrationMeta),
-      );
-    }
-    if (data.containsKey('lattitude')) {
-      context.handle(
-        _lattitudeMeta,
-        lattitude.isAcceptableOrUnknown(data['lattitude']!, _lattitudeMeta),
-      );
-    }
-    if (data.containsKey('longitude')) {
-      context.handle(
-        _longitudeMeta,
-        longitude.isAcceptableOrUnknown(data['longitude']!, _longitudeMeta),
-      );
-    }
-    if (data.containsKey('accuracy')) {
-      context.handle(
-        _accuracyMeta,
-        accuracy.isAcceptableOrUnknown(data['accuracy']!, _accuracyMeta),
-      );
-    }
-    if (data.containsKey('user_id')) {
-      context.handle(
-        _userIdMeta,
-        userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta),
+        _custidMeta,
+        custid.isAcceptableOrUnknown(data['custid']!, _custidMeta),
       );
     }
     if (data.containsKey('company_id')) {
@@ -24442,43 +24469,79 @@ class $SaleReturnMasterTableTable extends SaleReturnMasterTable
         companyId.isAcceptableOrUnknown(data['company_id']!, _companyIdMeta),
       );
     }
-    if (data.containsKey('item_count')) {
+    if (data.containsKey('trip_id')) {
       context.handle(
-        _itemCountMeta,
-        itemCount.isAcceptableOrUnknown(data['item_count']!, _itemCountMeta),
+        _tripIdMeta,
+        tripId.isAcceptableOrUnknown(data['trip_id']!, _tripIdMeta),
       );
     }
-    if (data.containsKey('gstin')) {
+    if (data.containsKey('checkin_id')) {
       context.handle(
-        _gstinMeta,
-        gstin.isAcceptableOrUnknown(data['gstin']!, _gstinMeta),
+        _checkinIdMeta,
+        checkinId.isAcceptableOrUnknown(data['checkin_id']!, _checkinIdMeta),
       );
     }
-    if (data.containsKey('state')) {
+    if (data.containsKey('gr')) {
+      context.handle(_grMeta, gr.isAcceptableOrUnknown(data['gr']!, _grMeta));
+    }
+    if (data.containsKey('godown_id')) {
       context.handle(
-        _stateMeta,
-        state.isAcceptableOrUnknown(data['state']!, _stateMeta),
+        _godownIdMeta,
+        godownId.isAcceptableOrUnknown(data['godown_id']!, _godownIdMeta),
       );
     }
-    if (data.containsKey('add_disc_entered')) {
+    if (data.containsKey('route_id')) {
       context.handle(
-        _addDiscEnteredMeta,
-        addDiscEntered.isAcceptableOrUnknown(
-          data['add_disc_entered']!,
-          _addDiscEnteredMeta,
+        _routeIdMeta,
+        routeId.isAcceptableOrUnknown(data['route_id']!, _routeIdMeta),
+      );
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(
+        _userIdMeta,
+        userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta),
+      );
+    }
+    if (data.containsKey('android_id')) {
+      context.handle(
+        _androidIdMeta,
+        androidId.isAcceptableOrUnknown(data['android_id']!, _androidIdMeta),
+      );
+    }
+    if (data.containsKey('pricelist_id')) {
+      context.handle(
+        _pricelistIdMeta,
+        pricelistId.isAcceptableOrUnknown(
+          data['pricelist_id']!,
+          _pricelistIdMeta,
         ),
       );
     }
-    if (data.containsKey('prefix')) {
+    if (data.containsKey('vchseries_id')) {
       context.handle(
-        _prefixMeta,
-        prefix.isAcceptableOrUnknown(data['prefix']!, _prefixMeta),
+        _vchseriesIdMeta,
+        vchseriesId.isAcceptableOrUnknown(
+          data['vchseries_id']!,
+          _vchseriesIdMeta,
+        ),
       );
     }
-    if (data.containsKey('suffix')) {
+    if (data.containsKey('vchno')) {
       context.handle(
-        _suffixMeta,
-        suffix.isAcceptableOrUnknown(data['suffix']!, _suffixMeta),
+        _vchnoMeta,
+        vchno.isAcceptableOrUnknown(data['vchno']!, _vchnoMeta),
+      );
+    }
+    if (data.containsKey('vchnumber')) {
+      context.handle(
+        _vchnumberMeta,
+        vchnumber.isAcceptableOrUnknown(data['vchnumber']!, _vchnumberMeta),
+      );
+    }
+    if (data.containsKey('vchdate')) {
+      context.handle(
+        _vchdateMeta,
+        vchdate.isAcceptableOrUnknown(data['vchdate']!, _vchdateMeta),
       );
     }
     if (data.containsKey('vch_type')) {
@@ -24487,54 +24550,234 @@ class $SaleReturnMasterTableTable extends SaleReturnMasterTable
         vchType.isAcceptableOrUnknown(data['vch_type']!, _vchTypeMeta),
       );
     }
-    if (data.containsKey('inv_no')) {
+    if (data.containsKey('vchmode')) {
       context.handle(
-        _invNoMeta,
-        invNo.isAcceptableOrUnknown(data['inv_no']!, _invNoMeta),
+        _vchmodeMeta,
+        vchmode.isAcceptableOrUnknown(data['vchmode']!, _vchmodeMeta),
       );
     }
-    if (data.containsKey('godown')) {
+    if (data.containsKey('referenceno')) {
       context.handle(
-        _godownMeta,
-        godown.isAcceptableOrUnknown(data['godown']!, _godownMeta),
-      );
-    }
-    if (data.containsKey('trip_id')) {
-      context.handle(
-        _tripIdMeta,
-        tripId.isAcceptableOrUnknown(data['trip_id']!, _tripIdMeta),
-      );
-    }
-    if (data.containsKey('visit_id')) {
-      context.handle(
-        _visitIdMeta,
-        visitId.isAcceptableOrUnknown(data['visit_id']!, _visitIdMeta),
-      );
-    }
-    if (data.containsKey('created_time')) {
-      context.handle(
-        _createdTimeMeta,
-        createdTime.isAcceptableOrUnknown(
-          data['created_time']!,
-          _createdTimeMeta,
+        _referencenoMeta,
+        referenceno.isAcceptableOrUnknown(
+          data['referenceno']!,
+          _referencenoMeta,
         ),
       );
     }
-    if (data.containsKey('updated_time')) {
+    if (data.containsKey('referencedate')) {
       context.handle(
-        _updatedTimeMeta,
-        updatedTime.isAcceptableOrUnknown(
-          data['updated_time']!,
-          _updatedTimeMeta,
+        _referencedateMeta,
+        referencedate.isAcceptableOrUnknown(
+          data['referencedate']!,
+          _referencedateMeta,
         ),
       );
     }
-    if (data.containsKey('delivery_date')) {
+    if (data.containsKey('narration')) {
       context.handle(
-        _deliveryDateMeta,
-        deliveryDate.isAcceptableOrUnknown(
-          data['delivery_date']!,
-          _deliveryDateMeta,
+        _narrationMeta,
+        narration.isAcceptableOrUnknown(data['narration']!, _narrationMeta),
+      );
+    }
+    if (data.containsKey('gross_amount')) {
+      context.handle(
+        _grossAmountMeta,
+        grossAmount.isAcceptableOrUnknown(
+          data['gross_amount']!,
+          _grossAmountMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_grossAmountMeta);
+    }
+    if (data.containsKey('discount_amount')) {
+      context.handle(
+        _discountAmountMeta,
+        discountAmount.isAcceptableOrUnknown(
+          data['discount_amount']!,
+          _discountAmountMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_discountAmountMeta);
+    }
+    if (data.containsKey('taxable_amount')) {
+      context.handle(
+        _taxableAmountMeta,
+        taxableAmount.isAcceptableOrUnknown(
+          data['taxable_amount']!,
+          _taxableAmountMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_taxableAmountMeta);
+    }
+    if (data.containsKey('cgst')) {
+      context.handle(
+        _cgstMeta,
+        cgst.isAcceptableOrUnknown(data['cgst']!, _cgstMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_cgstMeta);
+    }
+    if (data.containsKey('sgst')) {
+      context.handle(
+        _sgstMeta,
+        sgst.isAcceptableOrUnknown(data['sgst']!, _sgstMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_sgstMeta);
+    }
+    if (data.containsKey('igst')) {
+      context.handle(
+        _igstMeta,
+        igst.isAcceptableOrUnknown(data['igst']!, _igstMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_igstMeta);
+    }
+    if (data.containsKey('vata_amount')) {
+      context.handle(
+        _vataAmountMeta,
+        vataAmount.isAcceptableOrUnknown(data['vata_amount']!, _vataAmountMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_vataAmountMeta);
+    }
+    if (data.containsKey('cess_amount')) {
+      context.handle(
+        _cessAmountMeta,
+        cessAmount.isAcceptableOrUnknown(data['cess_amount']!, _cessAmountMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_cessAmountMeta);
+    }
+    if (data.containsKey('additionalcess_amount')) {
+      context.handle(
+        _additionalcessAmountMeta,
+        additionalcessAmount.isAcceptableOrUnknown(
+          data['additionalcess_amount']!,
+          _additionalcessAmountMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_additionalcessAmountMeta);
+    }
+    if (data.containsKey('roundoff')) {
+      context.handle(
+        _roundoffMeta,
+        roundoff.isAcceptableOrUnknown(data['roundoff']!, _roundoffMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_roundoffMeta);
+    }
+    if (data.containsKey('net_amount')) {
+      context.handle(
+        _netAmountMeta,
+        netAmount.isAcceptableOrUnknown(data['net_amount']!, _netAmountMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_netAmountMeta);
+    }
+    if (data.containsKey('itemcount')) {
+      context.handle(
+        _itemcountMeta,
+        itemcount.isAcceptableOrUnknown(data['itemcount']!, _itemcountMeta),
+      );
+    }
+    if (data.containsKey('autoreceipt')) {
+      context.handle(
+        _autoreceiptMeta,
+        autoreceipt.isAcceptableOrUnknown(
+          data['autoreceipt']!,
+          _autoreceiptMeta,
+        ),
+      );
+    }
+    if (data.containsKey('party_id')) {
+      context.handle(
+        _partyIdMeta,
+        partyId.isAcceptableOrUnknown(data['party_id']!, _partyIdMeta),
+      );
+    }
+    if (data.containsKey('partyname')) {
+      context.handle(
+        _partynameMeta,
+        partyname.isAcceptableOrUnknown(data['partyname']!, _partynameMeta),
+      );
+    }
+    if (data.containsKey('statecode')) {
+      context.handle(
+        _statecodeMeta,
+        statecode.isAcceptableOrUnknown(data['statecode']!, _statecodeMeta),
+      );
+    }
+    if (data.containsKey('gstno')) {
+      context.handle(
+        _gstnoMeta,
+        gstno.isAcceptableOrUnknown(data['gstno']!, _gstnoMeta),
+      );
+    }
+    if (data.containsKey('distance')) {
+      context.handle(
+        _distanceMeta,
+        distance.isAcceptableOrUnknown(data['distance']!, _distanceMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_distanceMeta);
+    }
+    if (data.containsKey('latitude')) {
+      context.handle(
+        _latitudeMeta,
+        latitude.isAcceptableOrUnknown(data['latitude']!, _latitudeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_latitudeMeta);
+    }
+    if (data.containsKey('longitude')) {
+      context.handle(
+        _longitudeMeta,
+        longitude.isAcceptableOrUnknown(data['longitude']!, _longitudeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_longitudeMeta);
+    }
+    if (data.containsKey('accuracy')) {
+      context.handle(
+        _accuracyMeta,
+        accuracy.isAcceptableOrUnknown(data['accuracy']!, _accuracyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_accuracyMeta);
+    }
+    if (data.containsKey('mobilecreatedon')) {
+      context.handle(
+        _mobilecreatedonMeta,
+        mobilecreatedon.isAcceptableOrUnknown(
+          data['mobilecreatedon']!,
+          _mobilecreatedonMeta,
+        ),
+      );
+    }
+    if (data.containsKey('createdon')) {
+      context.handle(
+        _createdonMeta,
+        createdon.isAcceptableOrUnknown(data['createdon']!, _createdonMeta),
+      );
+    }
+    if (data.containsKey('status')) {
+      context.handle(
+        _statusMeta,
+        status.isAcceptableOrUnknown(data['status']!, _statusMeta),
+      );
+    }
+    if (data.containsKey('importstatus')) {
+      context.handle(
+        _importstatusMeta,
+        importstatus.isAcceptableOrUnknown(
+          data['importstatus']!,
+          _importstatusMeta,
         ),
       );
     }
@@ -24542,30 +24785,6 @@ class $SaleReturnMasterTableTable extends SaleReturnMasterTable
       context.handle(
         _syncMeta,
         sync.isAcceptableOrUnknown(data['sync']!, _syncMeta),
-      );
-    }
-    if (data.containsKey('pin_code')) {
-      context.handle(
-        _pinCodeMeta,
-        pinCode.isAcceptableOrUnknown(data['pin_code']!, _pinCodeMeta),
-      );
-    }
-    if (data.containsKey('uploaded_server_id')) {
-      context.handle(
-        _uploadedServerIdMeta,
-        uploadedServerId.isAcceptableOrUnknown(
-          data['uploaded_server_id']!,
-          _uploadedServerIdMeta,
-        ),
-      );
-    }
-    if (data.containsKey('mailing_name')) {
-      context.handle(
-        _mailingNameMeta,
-        mailingName.isAcceptableOrUnknown(
-          data['mailing_name']!,
-          _mailingNameMeta,
-        ),
       );
     }
     return context;
@@ -24584,146 +24803,186 @@ class $SaleReturnMasterTableTable extends SaleReturnMasterTable
         DriftSqlType.int,
         data['${effectivePrefix}id'],
       )!,
-      vchId: attachedDatabase.typeMapping.read(
+      custid: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
-        data['${effectivePrefix}vch_id'],
-      ),
-      voucherNo: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}voucher_no'],
-      ),
-      partyId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}party_id'],
-      ),
-      party: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}party'],
-      ),
-      address: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}address'],
-      ),
-      address2: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}address2'],
-      ),
-      email: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}email'],
-      ),
-      mob: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}mob'],
-      ),
-      voucherDate: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}voucher_date'],
-      ),
-      voucherAmount: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}voucher_amount'],
-      )!,
-      priceList: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}price_list'],
-      ),
-      narration: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}narration'],
-      ),
-      lattitude: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}lattitude'],
-      ),
-      longitude: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}longitude'],
-      ),
-      accuracy: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}accuracy'],
-      ),
-      userId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}user_id'],
+        data['${effectivePrefix}custid'],
       ),
       companyId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}company_id'],
       ),
-      itemCount: attachedDatabase.typeMapping.read(
+      tripId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
-        data['${effectivePrefix}item_count'],
+        data['${effectivePrefix}trip_id'],
       ),
-      gstin: attachedDatabase.typeMapping.read(
+      checkinId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}checkin_id'],
+      ),
+      gr: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}gstin'],
+        data['${effectivePrefix}gr'],
       ),
-      state: attachedDatabase.typeMapping.read(
+      godownId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}godown_id'],
+      ),
+      routeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}route_id'],
+      ),
+      userId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}user_id'],
+      ),
+      androidId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}android_id'],
+      ),
+      pricelistId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}pricelist_id'],
+      ),
+      vchseriesId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}vchseries_id'],
+      ),
+      vchno: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}vchno'],
+      ),
+      vchnumber: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}state'],
+        data['${effectivePrefix}vchnumber'],
       ),
-      addDiscEntered: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}add_disc_entered'],
-      ),
-      prefix: attachedDatabase.typeMapping.read(
+      vchdate: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}prefix'],
-      ),
-      suffix: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}suffix'],
+        data['${effectivePrefix}vchdate'],
       ),
       vchType: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}vch_type'],
       ),
-      invNo: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}inv_no'],
-      ),
-      godown: attachedDatabase.typeMapping.read(
+      vchmode: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}godown'],
+        data['${effectivePrefix}vchmode'],
       ),
-      tripId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}trip_id'],
-      ),
-      visitId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}visit_id'],
-      ),
-      createdTime: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}created_time'],
-      ),
-      updatedTime: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}updated_time'],
-      ),
-      deliveryDate: attachedDatabase.typeMapping.read(
+      referenceno: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}delivery_date'],
+        data['${effectivePrefix}referenceno'],
+      ),
+      referencedate: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}referencedate'],
+      ),
+      narration: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}narration'],
+      ),
+      grossAmount: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}gross_amount'],
+      )!,
+      discountAmount: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}discount_amount'],
+      )!,
+      taxableAmount: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}taxable_amount'],
+      )!,
+      cgst: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}cgst'],
+      )!,
+      sgst: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}sgst'],
+      )!,
+      igst: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}igst'],
+      )!,
+      vataAmount: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}vata_amount'],
+      )!,
+      cessAmount: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}cess_amount'],
+      )!,
+      additionalcessAmount: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}additionalcess_amount'],
+      )!,
+      roundoff: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}roundoff'],
+      )!,
+      netAmount: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}net_amount'],
+      )!,
+      itemcount: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}itemcount'],
+      ),
+      autoreceipt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}autoreceipt'],
+      ),
+      partyId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}party_id'],
+      ),
+      partyname: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}partyname'],
+      ),
+      statecode: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}statecode'],
+      ),
+      gstno: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}gstno'],
+      ),
+      distance: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}distance'],
+      )!,
+      latitude: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}latitude'],
+      )!,
+      longitude: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}longitude'],
+      )!,
+      accuracy: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}accuracy'],
+      )!,
+      mobilecreatedon: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}mobilecreatedon'],
+      ),
+      createdon: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}createdon'],
+      ),
+      status: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}status'],
+      ),
+      importstatus: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}importstatus'],
       ),
       sync: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}sync'],
       )!,
-      pinCode: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}pin_code'],
-      ),
-      uploadedServerId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}uploaded_server_id'],
-      ),
-      mailingName: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}mailing_name'],
-      ),
     );
   }
 
@@ -24736,289 +24995,313 @@ class $SaleReturnMasterTableTable extends SaleReturnMasterTable
 class SaleReturnMasterTableData extends DataClass
     implements Insertable<SaleReturnMasterTableData> {
   final int id;
-  final int? vchId;
-  final String? voucherNo;
-  final int? partyId;
-  final String? party;
-  final String? address;
-  final String? address2;
-  final String? email;
-  final String? mob;
-  final String? voucherDate;
-  final double voucherAmount;
-  final String? priceList;
-  final String? narration;
-  final double? lattitude;
-  final double? longitude;
-  final double? accuracy;
-  final int? userId;
+  final int? custid;
   final int? companyId;
-  final int? itemCount;
-  final String? gstin;
-  final String? state;
-  final double? addDiscEntered;
-  final String? prefix;
-  final String? suffix;
-  final String? vchType;
-  final int? invNo;
-  final String? godown;
   final int? tripId;
-  final int? visitId;
-  final DateTime? createdTime;
-  final DateTime? updatedTime;
-  final String? deliveryDate;
+  final int? checkinId;
+  final String? gr;
+  final int? godownId;
+  final int? routeId;
+  final int? userId;
+  final int? androidId;
+  final int? pricelistId;
+  final int? vchseriesId;
+  final int? vchno;
+  final String? vchnumber;
+  final String? vchdate;
+  final String? vchType;
+  final String? vchmode;
+  final String? referenceno;
+  final DateTime? referencedate;
+  final String? narration;
+  final double grossAmount;
+  final double discountAmount;
+  final double taxableAmount;
+  final double cgst;
+  final double sgst;
+  final double igst;
+  final double vataAmount;
+  final double cessAmount;
+  final double additionalcessAmount;
+  final double roundoff;
+  final double netAmount;
+  final int? itemcount;
+  final int? autoreceipt;
+  final int? partyId;
+  final String? partyname;
+  final String? statecode;
+  final String? gstno;
+  final double distance;
+  final double latitude;
+  final double longitude;
+  final double accuracy;
+  final String? mobilecreatedon;
+  final String? createdon;
+  final int? status;
+  final int? importstatus;
   final int sync;
-  final String? pinCode;
-  final int? uploadedServerId;
-  final String? mailingName;
   const SaleReturnMasterTableData({
     required this.id,
-    this.vchId,
-    this.voucherNo,
-    this.partyId,
-    this.party,
-    this.address,
-    this.address2,
-    this.email,
-    this.mob,
-    this.voucherDate,
-    required this.voucherAmount,
-    this.priceList,
-    this.narration,
-    this.lattitude,
-    this.longitude,
-    this.accuracy,
-    this.userId,
+    this.custid,
     this.companyId,
-    this.itemCount,
-    this.gstin,
-    this.state,
-    this.addDiscEntered,
-    this.prefix,
-    this.suffix,
-    this.vchType,
-    this.invNo,
-    this.godown,
     this.tripId,
-    this.visitId,
-    this.createdTime,
-    this.updatedTime,
-    this.deliveryDate,
+    this.checkinId,
+    this.gr,
+    this.godownId,
+    this.routeId,
+    this.userId,
+    this.androidId,
+    this.pricelistId,
+    this.vchseriesId,
+    this.vchno,
+    this.vchnumber,
+    this.vchdate,
+    this.vchType,
+    this.vchmode,
+    this.referenceno,
+    this.referencedate,
+    this.narration,
+    required this.grossAmount,
+    required this.discountAmount,
+    required this.taxableAmount,
+    required this.cgst,
+    required this.sgst,
+    required this.igst,
+    required this.vataAmount,
+    required this.cessAmount,
+    required this.additionalcessAmount,
+    required this.roundoff,
+    required this.netAmount,
+    this.itemcount,
+    this.autoreceipt,
+    this.partyId,
+    this.partyname,
+    this.statecode,
+    this.gstno,
+    required this.distance,
+    required this.latitude,
+    required this.longitude,
+    required this.accuracy,
+    this.mobilecreatedon,
+    this.createdon,
+    this.status,
+    this.importstatus,
     required this.sync,
-    this.pinCode,
-    this.uploadedServerId,
-    this.mailingName,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    if (!nullToAbsent || vchId != null) {
-      map['vch_id'] = Variable<int>(vchId);
-    }
-    if (!nullToAbsent || voucherNo != null) {
-      map['voucher_no'] = Variable<String>(voucherNo);
-    }
-    if (!nullToAbsent || partyId != null) {
-      map['party_id'] = Variable<int>(partyId);
-    }
-    if (!nullToAbsent || party != null) {
-      map['party'] = Variable<String>(party);
-    }
-    if (!nullToAbsent || address != null) {
-      map['address'] = Variable<String>(address);
-    }
-    if (!nullToAbsent || address2 != null) {
-      map['address2'] = Variable<String>(address2);
-    }
-    if (!nullToAbsent || email != null) {
-      map['email'] = Variable<String>(email);
-    }
-    if (!nullToAbsent || mob != null) {
-      map['mob'] = Variable<String>(mob);
-    }
-    if (!nullToAbsent || voucherDate != null) {
-      map['voucher_date'] = Variable<String>(voucherDate);
-    }
-    map['voucher_amount'] = Variable<double>(voucherAmount);
-    if (!nullToAbsent || priceList != null) {
-      map['price_list'] = Variable<String>(priceList);
-    }
-    if (!nullToAbsent || narration != null) {
-      map['narration'] = Variable<String>(narration);
-    }
-    if (!nullToAbsent || lattitude != null) {
-      map['lattitude'] = Variable<double>(lattitude);
-    }
-    if (!nullToAbsent || longitude != null) {
-      map['longitude'] = Variable<double>(longitude);
-    }
-    if (!nullToAbsent || accuracy != null) {
-      map['accuracy'] = Variable<double>(accuracy);
-    }
-    if (!nullToAbsent || userId != null) {
-      map['user_id'] = Variable<int>(userId);
+    if (!nullToAbsent || custid != null) {
+      map['custid'] = Variable<int>(custid);
     }
     if (!nullToAbsent || companyId != null) {
       map['company_id'] = Variable<int>(companyId);
     }
-    if (!nullToAbsent || itemCount != null) {
-      map['item_count'] = Variable<int>(itemCount);
+    if (!nullToAbsent || tripId != null) {
+      map['trip_id'] = Variable<int>(tripId);
     }
-    if (!nullToAbsent || gstin != null) {
-      map['gstin'] = Variable<String>(gstin);
+    if (!nullToAbsent || checkinId != null) {
+      map['checkin_id'] = Variable<int>(checkinId);
     }
-    if (!nullToAbsent || state != null) {
-      map['state'] = Variable<String>(state);
+    if (!nullToAbsent || gr != null) {
+      map['gr'] = Variable<String>(gr);
     }
-    if (!nullToAbsent || addDiscEntered != null) {
-      map['add_disc_entered'] = Variable<double>(addDiscEntered);
+    if (!nullToAbsent || godownId != null) {
+      map['godown_id'] = Variable<int>(godownId);
     }
-    if (!nullToAbsent || prefix != null) {
-      map['prefix'] = Variable<String>(prefix);
+    if (!nullToAbsent || routeId != null) {
+      map['route_id'] = Variable<int>(routeId);
     }
-    if (!nullToAbsent || suffix != null) {
-      map['suffix'] = Variable<String>(suffix);
+    if (!nullToAbsent || userId != null) {
+      map['user_id'] = Variable<int>(userId);
+    }
+    if (!nullToAbsent || androidId != null) {
+      map['android_id'] = Variable<int>(androidId);
+    }
+    if (!nullToAbsent || pricelistId != null) {
+      map['pricelist_id'] = Variable<int>(pricelistId);
+    }
+    if (!nullToAbsent || vchseriesId != null) {
+      map['vchseries_id'] = Variable<int>(vchseriesId);
+    }
+    if (!nullToAbsent || vchno != null) {
+      map['vchno'] = Variable<int>(vchno);
+    }
+    if (!nullToAbsent || vchnumber != null) {
+      map['vchnumber'] = Variable<String>(vchnumber);
+    }
+    if (!nullToAbsent || vchdate != null) {
+      map['vchdate'] = Variable<String>(vchdate);
     }
     if (!nullToAbsent || vchType != null) {
       map['vch_type'] = Variable<String>(vchType);
     }
-    if (!nullToAbsent || invNo != null) {
-      map['inv_no'] = Variable<int>(invNo);
+    if (!nullToAbsent || vchmode != null) {
+      map['vchmode'] = Variable<String>(vchmode);
     }
-    if (!nullToAbsent || godown != null) {
-      map['godown'] = Variable<String>(godown);
+    if (!nullToAbsent || referenceno != null) {
+      map['referenceno'] = Variable<String>(referenceno);
     }
-    if (!nullToAbsent || tripId != null) {
-      map['trip_id'] = Variable<int>(tripId);
+    if (!nullToAbsent || referencedate != null) {
+      map['referencedate'] = Variable<DateTime>(referencedate);
     }
-    if (!nullToAbsent || visitId != null) {
-      map['visit_id'] = Variable<int>(visitId);
+    if (!nullToAbsent || narration != null) {
+      map['narration'] = Variable<String>(narration);
     }
-    if (!nullToAbsent || createdTime != null) {
-      map['created_time'] = Variable<DateTime>(createdTime);
+    map['gross_amount'] = Variable<double>(grossAmount);
+    map['discount_amount'] = Variable<double>(discountAmount);
+    map['taxable_amount'] = Variable<double>(taxableAmount);
+    map['cgst'] = Variable<double>(cgst);
+    map['sgst'] = Variable<double>(sgst);
+    map['igst'] = Variable<double>(igst);
+    map['vata_amount'] = Variable<double>(vataAmount);
+    map['cess_amount'] = Variable<double>(cessAmount);
+    map['additionalcess_amount'] = Variable<double>(additionalcessAmount);
+    map['roundoff'] = Variable<double>(roundoff);
+    map['net_amount'] = Variable<double>(netAmount);
+    if (!nullToAbsent || itemcount != null) {
+      map['itemcount'] = Variable<int>(itemcount);
     }
-    if (!nullToAbsent || updatedTime != null) {
-      map['updated_time'] = Variable<DateTime>(updatedTime);
+    if (!nullToAbsent || autoreceipt != null) {
+      map['autoreceipt'] = Variable<int>(autoreceipt);
     }
-    if (!nullToAbsent || deliveryDate != null) {
-      map['delivery_date'] = Variable<String>(deliveryDate);
+    if (!nullToAbsent || partyId != null) {
+      map['party_id'] = Variable<int>(partyId);
+    }
+    if (!nullToAbsent || partyname != null) {
+      map['partyname'] = Variable<String>(partyname);
+    }
+    if (!nullToAbsent || statecode != null) {
+      map['statecode'] = Variable<String>(statecode);
+    }
+    if (!nullToAbsent || gstno != null) {
+      map['gstno'] = Variable<String>(gstno);
+    }
+    map['distance'] = Variable<double>(distance);
+    map['latitude'] = Variable<double>(latitude);
+    map['longitude'] = Variable<double>(longitude);
+    map['accuracy'] = Variable<double>(accuracy);
+    if (!nullToAbsent || mobilecreatedon != null) {
+      map['mobilecreatedon'] = Variable<String>(mobilecreatedon);
+    }
+    if (!nullToAbsent || createdon != null) {
+      map['createdon'] = Variable<String>(createdon);
+    }
+    if (!nullToAbsent || status != null) {
+      map['status'] = Variable<int>(status);
+    }
+    if (!nullToAbsent || importstatus != null) {
+      map['importstatus'] = Variable<int>(importstatus);
     }
     map['sync'] = Variable<int>(sync);
-    if (!nullToAbsent || pinCode != null) {
-      map['pin_code'] = Variable<String>(pinCode);
-    }
-    if (!nullToAbsent || uploadedServerId != null) {
-      map['uploaded_server_id'] = Variable<int>(uploadedServerId);
-    }
-    if (!nullToAbsent || mailingName != null) {
-      map['mailing_name'] = Variable<String>(mailingName);
-    }
     return map;
   }
 
   SaleReturnMasterTableCompanion toCompanion(bool nullToAbsent) {
     return SaleReturnMasterTableCompanion(
       id: Value(id),
-      vchId: vchId == null && nullToAbsent
+      custid: custid == null && nullToAbsent
           ? const Value.absent()
-          : Value(vchId),
-      voucherNo: voucherNo == null && nullToAbsent
-          ? const Value.absent()
-          : Value(voucherNo),
-      partyId: partyId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(partyId),
-      party: party == null && nullToAbsent
-          ? const Value.absent()
-          : Value(party),
-      address: address == null && nullToAbsent
-          ? const Value.absent()
-          : Value(address),
-      address2: address2 == null && nullToAbsent
-          ? const Value.absent()
-          : Value(address2),
-      email: email == null && nullToAbsent
-          ? const Value.absent()
-          : Value(email),
-      mob: mob == null && nullToAbsent ? const Value.absent() : Value(mob),
-      voucherDate: voucherDate == null && nullToAbsent
-          ? const Value.absent()
-          : Value(voucherDate),
-      voucherAmount: Value(voucherAmount),
-      priceList: priceList == null && nullToAbsent
-          ? const Value.absent()
-          : Value(priceList),
-      narration: narration == null && nullToAbsent
-          ? const Value.absent()
-          : Value(narration),
-      lattitude: lattitude == null && nullToAbsent
-          ? const Value.absent()
-          : Value(lattitude),
-      longitude: longitude == null && nullToAbsent
-          ? const Value.absent()
-          : Value(longitude),
-      accuracy: accuracy == null && nullToAbsent
-          ? const Value.absent()
-          : Value(accuracy),
-      userId: userId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(userId),
+          : Value(custid),
       companyId: companyId == null && nullToAbsent
           ? const Value.absent()
           : Value(companyId),
-      itemCount: itemCount == null && nullToAbsent
-          ? const Value.absent()
-          : Value(itemCount),
-      gstin: gstin == null && nullToAbsent
-          ? const Value.absent()
-          : Value(gstin),
-      state: state == null && nullToAbsent
-          ? const Value.absent()
-          : Value(state),
-      addDiscEntered: addDiscEntered == null && nullToAbsent
-          ? const Value.absent()
-          : Value(addDiscEntered),
-      prefix: prefix == null && nullToAbsent
-          ? const Value.absent()
-          : Value(prefix),
-      suffix: suffix == null && nullToAbsent
-          ? const Value.absent()
-          : Value(suffix),
-      vchType: vchType == null && nullToAbsent
-          ? const Value.absent()
-          : Value(vchType),
-      invNo: invNo == null && nullToAbsent
-          ? const Value.absent()
-          : Value(invNo),
-      godown: godown == null && nullToAbsent
-          ? const Value.absent()
-          : Value(godown),
       tripId: tripId == null && nullToAbsent
           ? const Value.absent()
           : Value(tripId),
-      visitId: visitId == null && nullToAbsent
+      checkinId: checkinId == null && nullToAbsent
           ? const Value.absent()
-          : Value(visitId),
-      createdTime: createdTime == null && nullToAbsent
+          : Value(checkinId),
+      gr: gr == null && nullToAbsent ? const Value.absent() : Value(gr),
+      godownId: godownId == null && nullToAbsent
           ? const Value.absent()
-          : Value(createdTime),
-      updatedTime: updatedTime == null && nullToAbsent
+          : Value(godownId),
+      routeId: routeId == null && nullToAbsent
           ? const Value.absent()
-          : Value(updatedTime),
-      deliveryDate: deliveryDate == null && nullToAbsent
+          : Value(routeId),
+      userId: userId == null && nullToAbsent
           ? const Value.absent()
-          : Value(deliveryDate),
+          : Value(userId),
+      androidId: androidId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(androidId),
+      pricelistId: pricelistId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(pricelistId),
+      vchseriesId: vchseriesId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(vchseriesId),
+      vchno: vchno == null && nullToAbsent
+          ? const Value.absent()
+          : Value(vchno),
+      vchnumber: vchnumber == null && nullToAbsent
+          ? const Value.absent()
+          : Value(vchnumber),
+      vchdate: vchdate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(vchdate),
+      vchType: vchType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(vchType),
+      vchmode: vchmode == null && nullToAbsent
+          ? const Value.absent()
+          : Value(vchmode),
+      referenceno: referenceno == null && nullToAbsent
+          ? const Value.absent()
+          : Value(referenceno),
+      referencedate: referencedate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(referencedate),
+      narration: narration == null && nullToAbsent
+          ? const Value.absent()
+          : Value(narration),
+      grossAmount: Value(grossAmount),
+      discountAmount: Value(discountAmount),
+      taxableAmount: Value(taxableAmount),
+      cgst: Value(cgst),
+      sgst: Value(sgst),
+      igst: Value(igst),
+      vataAmount: Value(vataAmount),
+      cessAmount: Value(cessAmount),
+      additionalcessAmount: Value(additionalcessAmount),
+      roundoff: Value(roundoff),
+      netAmount: Value(netAmount),
+      itemcount: itemcount == null && nullToAbsent
+          ? const Value.absent()
+          : Value(itemcount),
+      autoreceipt: autoreceipt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(autoreceipt),
+      partyId: partyId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(partyId),
+      partyname: partyname == null && nullToAbsent
+          ? const Value.absent()
+          : Value(partyname),
+      statecode: statecode == null && nullToAbsent
+          ? const Value.absent()
+          : Value(statecode),
+      gstno: gstno == null && nullToAbsent
+          ? const Value.absent()
+          : Value(gstno),
+      distance: Value(distance),
+      latitude: Value(latitude),
+      longitude: Value(longitude),
+      accuracy: Value(accuracy),
+      mobilecreatedon: mobilecreatedon == null && nullToAbsent
+          ? const Value.absent()
+          : Value(mobilecreatedon),
+      createdon: createdon == null && nullToAbsent
+          ? const Value.absent()
+          : Value(createdon),
+      status: status == null && nullToAbsent
+          ? const Value.absent()
+          : Value(status),
+      importstatus: importstatus == null && nullToAbsent
+          ? const Value.absent()
+          : Value(importstatus),
       sync: Value(sync),
-      pinCode: pinCode == null && nullToAbsent
-          ? const Value.absent()
-          : Value(pinCode),
-      uploadedServerId: uploadedServerId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(uploadedServerId),
-      mailingName: mailingName == null && nullToAbsent
-          ? const Value.absent()
-          : Value(mailingName),
     );
   }
 
@@ -25029,41 +25312,53 @@ class SaleReturnMasterTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return SaleReturnMasterTableData(
       id: serializer.fromJson<int>(json['id']),
-      vchId: serializer.fromJson<int?>(json['vchId']),
-      voucherNo: serializer.fromJson<String?>(json['voucherNo']),
-      partyId: serializer.fromJson<int?>(json['partyId']),
-      party: serializer.fromJson<String?>(json['party']),
-      address: serializer.fromJson<String?>(json['address']),
-      address2: serializer.fromJson<String?>(json['address2']),
-      email: serializer.fromJson<String?>(json['email']),
-      mob: serializer.fromJson<String?>(json['mob']),
-      voucherDate: serializer.fromJson<String?>(json['voucherDate']),
-      voucherAmount: serializer.fromJson<double>(json['voucherAmount']),
-      priceList: serializer.fromJson<String?>(json['priceList']),
-      narration: serializer.fromJson<String?>(json['narration']),
-      lattitude: serializer.fromJson<double?>(json['lattitude']),
-      longitude: serializer.fromJson<double?>(json['longitude']),
-      accuracy: serializer.fromJson<double?>(json['accuracy']),
-      userId: serializer.fromJson<int?>(json['userId']),
+      custid: serializer.fromJson<int?>(json['custid']),
       companyId: serializer.fromJson<int?>(json['companyId']),
-      itemCount: serializer.fromJson<int?>(json['itemCount']),
-      gstin: serializer.fromJson<String?>(json['gstin']),
-      state: serializer.fromJson<String?>(json['state']),
-      addDiscEntered: serializer.fromJson<double?>(json['addDiscEntered']),
-      prefix: serializer.fromJson<String?>(json['prefix']),
-      suffix: serializer.fromJson<String?>(json['suffix']),
-      vchType: serializer.fromJson<String?>(json['vchType']),
-      invNo: serializer.fromJson<int?>(json['invNo']),
-      godown: serializer.fromJson<String?>(json['godown']),
       tripId: serializer.fromJson<int?>(json['tripId']),
-      visitId: serializer.fromJson<int?>(json['visitId']),
-      createdTime: serializer.fromJson<DateTime?>(json['createdTime']),
-      updatedTime: serializer.fromJson<DateTime?>(json['updatedTime']),
-      deliveryDate: serializer.fromJson<String?>(json['deliveryDate']),
+      checkinId: serializer.fromJson<int?>(json['checkinId']),
+      gr: serializer.fromJson<String?>(json['gr']),
+      godownId: serializer.fromJson<int?>(json['godownId']),
+      routeId: serializer.fromJson<int?>(json['routeId']),
+      userId: serializer.fromJson<int?>(json['userId']),
+      androidId: serializer.fromJson<int?>(json['androidId']),
+      pricelistId: serializer.fromJson<int?>(json['pricelistId']),
+      vchseriesId: serializer.fromJson<int?>(json['vchseriesId']),
+      vchno: serializer.fromJson<int?>(json['vchno']),
+      vchnumber: serializer.fromJson<String?>(json['vchnumber']),
+      vchdate: serializer.fromJson<String?>(json['vchdate']),
+      vchType: serializer.fromJson<String?>(json['vchType']),
+      vchmode: serializer.fromJson<String?>(json['vchmode']),
+      referenceno: serializer.fromJson<String?>(json['referenceno']),
+      referencedate: serializer.fromJson<DateTime?>(json['referencedate']),
+      narration: serializer.fromJson<String?>(json['narration']),
+      grossAmount: serializer.fromJson<double>(json['grossAmount']),
+      discountAmount: serializer.fromJson<double>(json['discountAmount']),
+      taxableAmount: serializer.fromJson<double>(json['taxableAmount']),
+      cgst: serializer.fromJson<double>(json['cgst']),
+      sgst: serializer.fromJson<double>(json['sgst']),
+      igst: serializer.fromJson<double>(json['igst']),
+      vataAmount: serializer.fromJson<double>(json['vataAmount']),
+      cessAmount: serializer.fromJson<double>(json['cessAmount']),
+      additionalcessAmount: serializer.fromJson<double>(
+        json['additionalcessAmount'],
+      ),
+      roundoff: serializer.fromJson<double>(json['roundoff']),
+      netAmount: serializer.fromJson<double>(json['netAmount']),
+      itemcount: serializer.fromJson<int?>(json['itemcount']),
+      autoreceipt: serializer.fromJson<int?>(json['autoreceipt']),
+      partyId: serializer.fromJson<int?>(json['partyId']),
+      partyname: serializer.fromJson<String?>(json['partyname']),
+      statecode: serializer.fromJson<String?>(json['statecode']),
+      gstno: serializer.fromJson<String?>(json['gstno']),
+      distance: serializer.fromJson<double>(json['distance']),
+      latitude: serializer.fromJson<double>(json['latitude']),
+      longitude: serializer.fromJson<double>(json['longitude']),
+      accuracy: serializer.fromJson<double>(json['accuracy']),
+      mobilecreatedon: serializer.fromJson<String?>(json['mobilecreatedon']),
+      createdon: serializer.fromJson<String?>(json['createdon']),
+      status: serializer.fromJson<int?>(json['status']),
+      importstatus: serializer.fromJson<int?>(json['importstatus']),
       sync: serializer.fromJson<int>(json['sync']),
-      pinCode: serializer.fromJson<String?>(json['pinCode']),
-      uploadedServerId: serializer.fromJson<int?>(json['uploadedServerId']),
-      mailingName: serializer.fromJson<String?>(json['mailingName']),
     );
   }
   @override
@@ -25071,179 +25366,229 @@ class SaleReturnMasterTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'vchId': serializer.toJson<int?>(vchId),
-      'voucherNo': serializer.toJson<String?>(voucherNo),
-      'partyId': serializer.toJson<int?>(partyId),
-      'party': serializer.toJson<String?>(party),
-      'address': serializer.toJson<String?>(address),
-      'address2': serializer.toJson<String?>(address2),
-      'email': serializer.toJson<String?>(email),
-      'mob': serializer.toJson<String?>(mob),
-      'voucherDate': serializer.toJson<String?>(voucherDate),
-      'voucherAmount': serializer.toJson<double>(voucherAmount),
-      'priceList': serializer.toJson<String?>(priceList),
-      'narration': serializer.toJson<String?>(narration),
-      'lattitude': serializer.toJson<double?>(lattitude),
-      'longitude': serializer.toJson<double?>(longitude),
-      'accuracy': serializer.toJson<double?>(accuracy),
-      'userId': serializer.toJson<int?>(userId),
+      'custid': serializer.toJson<int?>(custid),
       'companyId': serializer.toJson<int?>(companyId),
-      'itemCount': serializer.toJson<int?>(itemCount),
-      'gstin': serializer.toJson<String?>(gstin),
-      'state': serializer.toJson<String?>(state),
-      'addDiscEntered': serializer.toJson<double?>(addDiscEntered),
-      'prefix': serializer.toJson<String?>(prefix),
-      'suffix': serializer.toJson<String?>(suffix),
-      'vchType': serializer.toJson<String?>(vchType),
-      'invNo': serializer.toJson<int?>(invNo),
-      'godown': serializer.toJson<String?>(godown),
       'tripId': serializer.toJson<int?>(tripId),
-      'visitId': serializer.toJson<int?>(visitId),
-      'createdTime': serializer.toJson<DateTime?>(createdTime),
-      'updatedTime': serializer.toJson<DateTime?>(updatedTime),
-      'deliveryDate': serializer.toJson<String?>(deliveryDate),
+      'checkinId': serializer.toJson<int?>(checkinId),
+      'gr': serializer.toJson<String?>(gr),
+      'godownId': serializer.toJson<int?>(godownId),
+      'routeId': serializer.toJson<int?>(routeId),
+      'userId': serializer.toJson<int?>(userId),
+      'androidId': serializer.toJson<int?>(androidId),
+      'pricelistId': serializer.toJson<int?>(pricelistId),
+      'vchseriesId': serializer.toJson<int?>(vchseriesId),
+      'vchno': serializer.toJson<int?>(vchno),
+      'vchnumber': serializer.toJson<String?>(vchnumber),
+      'vchdate': serializer.toJson<String?>(vchdate),
+      'vchType': serializer.toJson<String?>(vchType),
+      'vchmode': serializer.toJson<String?>(vchmode),
+      'referenceno': serializer.toJson<String?>(referenceno),
+      'referencedate': serializer.toJson<DateTime?>(referencedate),
+      'narration': serializer.toJson<String?>(narration),
+      'grossAmount': serializer.toJson<double>(grossAmount),
+      'discountAmount': serializer.toJson<double>(discountAmount),
+      'taxableAmount': serializer.toJson<double>(taxableAmount),
+      'cgst': serializer.toJson<double>(cgst),
+      'sgst': serializer.toJson<double>(sgst),
+      'igst': serializer.toJson<double>(igst),
+      'vataAmount': serializer.toJson<double>(vataAmount),
+      'cessAmount': serializer.toJson<double>(cessAmount),
+      'additionalcessAmount': serializer.toJson<double>(additionalcessAmount),
+      'roundoff': serializer.toJson<double>(roundoff),
+      'netAmount': serializer.toJson<double>(netAmount),
+      'itemcount': serializer.toJson<int?>(itemcount),
+      'autoreceipt': serializer.toJson<int?>(autoreceipt),
+      'partyId': serializer.toJson<int?>(partyId),
+      'partyname': serializer.toJson<String?>(partyname),
+      'statecode': serializer.toJson<String?>(statecode),
+      'gstno': serializer.toJson<String?>(gstno),
+      'distance': serializer.toJson<double>(distance),
+      'latitude': serializer.toJson<double>(latitude),
+      'longitude': serializer.toJson<double>(longitude),
+      'accuracy': serializer.toJson<double>(accuracy),
+      'mobilecreatedon': serializer.toJson<String?>(mobilecreatedon),
+      'createdon': serializer.toJson<String?>(createdon),
+      'status': serializer.toJson<int?>(status),
+      'importstatus': serializer.toJson<int?>(importstatus),
       'sync': serializer.toJson<int>(sync),
-      'pinCode': serializer.toJson<String?>(pinCode),
-      'uploadedServerId': serializer.toJson<int?>(uploadedServerId),
-      'mailingName': serializer.toJson<String?>(mailingName),
     };
   }
 
   SaleReturnMasterTableData copyWith({
     int? id,
-    Value<int?> vchId = const Value.absent(),
-    Value<String?> voucherNo = const Value.absent(),
-    Value<int?> partyId = const Value.absent(),
-    Value<String?> party = const Value.absent(),
-    Value<String?> address = const Value.absent(),
-    Value<String?> address2 = const Value.absent(),
-    Value<String?> email = const Value.absent(),
-    Value<String?> mob = const Value.absent(),
-    Value<String?> voucherDate = const Value.absent(),
-    double? voucherAmount,
-    Value<String?> priceList = const Value.absent(),
-    Value<String?> narration = const Value.absent(),
-    Value<double?> lattitude = const Value.absent(),
-    Value<double?> longitude = const Value.absent(),
-    Value<double?> accuracy = const Value.absent(),
-    Value<int?> userId = const Value.absent(),
+    Value<int?> custid = const Value.absent(),
     Value<int?> companyId = const Value.absent(),
-    Value<int?> itemCount = const Value.absent(),
-    Value<String?> gstin = const Value.absent(),
-    Value<String?> state = const Value.absent(),
-    Value<double?> addDiscEntered = const Value.absent(),
-    Value<String?> prefix = const Value.absent(),
-    Value<String?> suffix = const Value.absent(),
-    Value<String?> vchType = const Value.absent(),
-    Value<int?> invNo = const Value.absent(),
-    Value<String?> godown = const Value.absent(),
     Value<int?> tripId = const Value.absent(),
-    Value<int?> visitId = const Value.absent(),
-    Value<DateTime?> createdTime = const Value.absent(),
-    Value<DateTime?> updatedTime = const Value.absent(),
-    Value<String?> deliveryDate = const Value.absent(),
+    Value<int?> checkinId = const Value.absent(),
+    Value<String?> gr = const Value.absent(),
+    Value<int?> godownId = const Value.absent(),
+    Value<int?> routeId = const Value.absent(),
+    Value<int?> userId = const Value.absent(),
+    Value<int?> androidId = const Value.absent(),
+    Value<int?> pricelistId = const Value.absent(),
+    Value<int?> vchseriesId = const Value.absent(),
+    Value<int?> vchno = const Value.absent(),
+    Value<String?> vchnumber = const Value.absent(),
+    Value<String?> vchdate = const Value.absent(),
+    Value<String?> vchType = const Value.absent(),
+    Value<String?> vchmode = const Value.absent(),
+    Value<String?> referenceno = const Value.absent(),
+    Value<DateTime?> referencedate = const Value.absent(),
+    Value<String?> narration = const Value.absent(),
+    double? grossAmount,
+    double? discountAmount,
+    double? taxableAmount,
+    double? cgst,
+    double? sgst,
+    double? igst,
+    double? vataAmount,
+    double? cessAmount,
+    double? additionalcessAmount,
+    double? roundoff,
+    double? netAmount,
+    Value<int?> itemcount = const Value.absent(),
+    Value<int?> autoreceipt = const Value.absent(),
+    Value<int?> partyId = const Value.absent(),
+    Value<String?> partyname = const Value.absent(),
+    Value<String?> statecode = const Value.absent(),
+    Value<String?> gstno = const Value.absent(),
+    double? distance,
+    double? latitude,
+    double? longitude,
+    double? accuracy,
+    Value<String?> mobilecreatedon = const Value.absent(),
+    Value<String?> createdon = const Value.absent(),
+    Value<int?> status = const Value.absent(),
+    Value<int?> importstatus = const Value.absent(),
     int? sync,
-    Value<String?> pinCode = const Value.absent(),
-    Value<int?> uploadedServerId = const Value.absent(),
-    Value<String?> mailingName = const Value.absent(),
   }) => SaleReturnMasterTableData(
     id: id ?? this.id,
-    vchId: vchId.present ? vchId.value : this.vchId,
-    voucherNo: voucherNo.present ? voucherNo.value : this.voucherNo,
-    partyId: partyId.present ? partyId.value : this.partyId,
-    party: party.present ? party.value : this.party,
-    address: address.present ? address.value : this.address,
-    address2: address2.present ? address2.value : this.address2,
-    email: email.present ? email.value : this.email,
-    mob: mob.present ? mob.value : this.mob,
-    voucherDate: voucherDate.present ? voucherDate.value : this.voucherDate,
-    voucherAmount: voucherAmount ?? this.voucherAmount,
-    priceList: priceList.present ? priceList.value : this.priceList,
-    narration: narration.present ? narration.value : this.narration,
-    lattitude: lattitude.present ? lattitude.value : this.lattitude,
-    longitude: longitude.present ? longitude.value : this.longitude,
-    accuracy: accuracy.present ? accuracy.value : this.accuracy,
-    userId: userId.present ? userId.value : this.userId,
+    custid: custid.present ? custid.value : this.custid,
     companyId: companyId.present ? companyId.value : this.companyId,
-    itemCount: itemCount.present ? itemCount.value : this.itemCount,
-    gstin: gstin.present ? gstin.value : this.gstin,
-    state: state.present ? state.value : this.state,
-    addDiscEntered: addDiscEntered.present
-        ? addDiscEntered.value
-        : this.addDiscEntered,
-    prefix: prefix.present ? prefix.value : this.prefix,
-    suffix: suffix.present ? suffix.value : this.suffix,
-    vchType: vchType.present ? vchType.value : this.vchType,
-    invNo: invNo.present ? invNo.value : this.invNo,
-    godown: godown.present ? godown.value : this.godown,
     tripId: tripId.present ? tripId.value : this.tripId,
-    visitId: visitId.present ? visitId.value : this.visitId,
-    createdTime: createdTime.present ? createdTime.value : this.createdTime,
-    updatedTime: updatedTime.present ? updatedTime.value : this.updatedTime,
-    deliveryDate: deliveryDate.present ? deliveryDate.value : this.deliveryDate,
+    checkinId: checkinId.present ? checkinId.value : this.checkinId,
+    gr: gr.present ? gr.value : this.gr,
+    godownId: godownId.present ? godownId.value : this.godownId,
+    routeId: routeId.present ? routeId.value : this.routeId,
+    userId: userId.present ? userId.value : this.userId,
+    androidId: androidId.present ? androidId.value : this.androidId,
+    pricelistId: pricelistId.present ? pricelistId.value : this.pricelistId,
+    vchseriesId: vchseriesId.present ? vchseriesId.value : this.vchseriesId,
+    vchno: vchno.present ? vchno.value : this.vchno,
+    vchnumber: vchnumber.present ? vchnumber.value : this.vchnumber,
+    vchdate: vchdate.present ? vchdate.value : this.vchdate,
+    vchType: vchType.present ? vchType.value : this.vchType,
+    vchmode: vchmode.present ? vchmode.value : this.vchmode,
+    referenceno: referenceno.present ? referenceno.value : this.referenceno,
+    referencedate: referencedate.present
+        ? referencedate.value
+        : this.referencedate,
+    narration: narration.present ? narration.value : this.narration,
+    grossAmount: grossAmount ?? this.grossAmount,
+    discountAmount: discountAmount ?? this.discountAmount,
+    taxableAmount: taxableAmount ?? this.taxableAmount,
+    cgst: cgst ?? this.cgst,
+    sgst: sgst ?? this.sgst,
+    igst: igst ?? this.igst,
+    vataAmount: vataAmount ?? this.vataAmount,
+    cessAmount: cessAmount ?? this.cessAmount,
+    additionalcessAmount: additionalcessAmount ?? this.additionalcessAmount,
+    roundoff: roundoff ?? this.roundoff,
+    netAmount: netAmount ?? this.netAmount,
+    itemcount: itemcount.present ? itemcount.value : this.itemcount,
+    autoreceipt: autoreceipt.present ? autoreceipt.value : this.autoreceipt,
+    partyId: partyId.present ? partyId.value : this.partyId,
+    partyname: partyname.present ? partyname.value : this.partyname,
+    statecode: statecode.present ? statecode.value : this.statecode,
+    gstno: gstno.present ? gstno.value : this.gstno,
+    distance: distance ?? this.distance,
+    latitude: latitude ?? this.latitude,
+    longitude: longitude ?? this.longitude,
+    accuracy: accuracy ?? this.accuracy,
+    mobilecreatedon: mobilecreatedon.present
+        ? mobilecreatedon.value
+        : this.mobilecreatedon,
+    createdon: createdon.present ? createdon.value : this.createdon,
+    status: status.present ? status.value : this.status,
+    importstatus: importstatus.present ? importstatus.value : this.importstatus,
     sync: sync ?? this.sync,
-    pinCode: pinCode.present ? pinCode.value : this.pinCode,
-    uploadedServerId: uploadedServerId.present
-        ? uploadedServerId.value
-        : this.uploadedServerId,
-    mailingName: mailingName.present ? mailingName.value : this.mailingName,
   );
   SaleReturnMasterTableData copyWithCompanion(
     SaleReturnMasterTableCompanion data,
   ) {
     return SaleReturnMasterTableData(
       id: data.id.present ? data.id.value : this.id,
-      vchId: data.vchId.present ? data.vchId.value : this.vchId,
-      voucherNo: data.voucherNo.present ? data.voucherNo.value : this.voucherNo,
-      partyId: data.partyId.present ? data.partyId.value : this.partyId,
-      party: data.party.present ? data.party.value : this.party,
-      address: data.address.present ? data.address.value : this.address,
-      address2: data.address2.present ? data.address2.value : this.address2,
-      email: data.email.present ? data.email.value : this.email,
-      mob: data.mob.present ? data.mob.value : this.mob,
-      voucherDate: data.voucherDate.present
-          ? data.voucherDate.value
-          : this.voucherDate,
-      voucherAmount: data.voucherAmount.present
-          ? data.voucherAmount.value
-          : this.voucherAmount,
-      priceList: data.priceList.present ? data.priceList.value : this.priceList,
+      custid: data.custid.present ? data.custid.value : this.custid,
+      companyId: data.companyId.present ? data.companyId.value : this.companyId,
+      tripId: data.tripId.present ? data.tripId.value : this.tripId,
+      checkinId: data.checkinId.present ? data.checkinId.value : this.checkinId,
+      gr: data.gr.present ? data.gr.value : this.gr,
+      godownId: data.godownId.present ? data.godownId.value : this.godownId,
+      routeId: data.routeId.present ? data.routeId.value : this.routeId,
+      userId: data.userId.present ? data.userId.value : this.userId,
+      androidId: data.androidId.present ? data.androidId.value : this.androidId,
+      pricelistId: data.pricelistId.present
+          ? data.pricelistId.value
+          : this.pricelistId,
+      vchseriesId: data.vchseriesId.present
+          ? data.vchseriesId.value
+          : this.vchseriesId,
+      vchno: data.vchno.present ? data.vchno.value : this.vchno,
+      vchnumber: data.vchnumber.present ? data.vchnumber.value : this.vchnumber,
+      vchdate: data.vchdate.present ? data.vchdate.value : this.vchdate,
+      vchType: data.vchType.present ? data.vchType.value : this.vchType,
+      vchmode: data.vchmode.present ? data.vchmode.value : this.vchmode,
+      referenceno: data.referenceno.present
+          ? data.referenceno.value
+          : this.referenceno,
+      referencedate: data.referencedate.present
+          ? data.referencedate.value
+          : this.referencedate,
       narration: data.narration.present ? data.narration.value : this.narration,
-      lattitude: data.lattitude.present ? data.lattitude.value : this.lattitude,
+      grossAmount: data.grossAmount.present
+          ? data.grossAmount.value
+          : this.grossAmount,
+      discountAmount: data.discountAmount.present
+          ? data.discountAmount.value
+          : this.discountAmount,
+      taxableAmount: data.taxableAmount.present
+          ? data.taxableAmount.value
+          : this.taxableAmount,
+      cgst: data.cgst.present ? data.cgst.value : this.cgst,
+      sgst: data.sgst.present ? data.sgst.value : this.sgst,
+      igst: data.igst.present ? data.igst.value : this.igst,
+      vataAmount: data.vataAmount.present
+          ? data.vataAmount.value
+          : this.vataAmount,
+      cessAmount: data.cessAmount.present
+          ? data.cessAmount.value
+          : this.cessAmount,
+      additionalcessAmount: data.additionalcessAmount.present
+          ? data.additionalcessAmount.value
+          : this.additionalcessAmount,
+      roundoff: data.roundoff.present ? data.roundoff.value : this.roundoff,
+      netAmount: data.netAmount.present ? data.netAmount.value : this.netAmount,
+      itemcount: data.itemcount.present ? data.itemcount.value : this.itemcount,
+      autoreceipt: data.autoreceipt.present
+          ? data.autoreceipt.value
+          : this.autoreceipt,
+      partyId: data.partyId.present ? data.partyId.value : this.partyId,
+      partyname: data.partyname.present ? data.partyname.value : this.partyname,
+      statecode: data.statecode.present ? data.statecode.value : this.statecode,
+      gstno: data.gstno.present ? data.gstno.value : this.gstno,
+      distance: data.distance.present ? data.distance.value : this.distance,
+      latitude: data.latitude.present ? data.latitude.value : this.latitude,
       longitude: data.longitude.present ? data.longitude.value : this.longitude,
       accuracy: data.accuracy.present ? data.accuracy.value : this.accuracy,
-      userId: data.userId.present ? data.userId.value : this.userId,
-      companyId: data.companyId.present ? data.companyId.value : this.companyId,
-      itemCount: data.itemCount.present ? data.itemCount.value : this.itemCount,
-      gstin: data.gstin.present ? data.gstin.value : this.gstin,
-      state: data.state.present ? data.state.value : this.state,
-      addDiscEntered: data.addDiscEntered.present
-          ? data.addDiscEntered.value
-          : this.addDiscEntered,
-      prefix: data.prefix.present ? data.prefix.value : this.prefix,
-      suffix: data.suffix.present ? data.suffix.value : this.suffix,
-      vchType: data.vchType.present ? data.vchType.value : this.vchType,
-      invNo: data.invNo.present ? data.invNo.value : this.invNo,
-      godown: data.godown.present ? data.godown.value : this.godown,
-      tripId: data.tripId.present ? data.tripId.value : this.tripId,
-      visitId: data.visitId.present ? data.visitId.value : this.visitId,
-      createdTime: data.createdTime.present
-          ? data.createdTime.value
-          : this.createdTime,
-      updatedTime: data.updatedTime.present
-          ? data.updatedTime.value
-          : this.updatedTime,
-      deliveryDate: data.deliveryDate.present
-          ? data.deliveryDate.value
-          : this.deliveryDate,
+      mobilecreatedon: data.mobilecreatedon.present
+          ? data.mobilecreatedon.value
+          : this.mobilecreatedon,
+      createdon: data.createdon.present ? data.createdon.value : this.createdon,
+      status: data.status.present ? data.status.value : this.status,
+      importstatus: data.importstatus.present
+          ? data.importstatus.value
+          : this.importstatus,
       sync: data.sync.present ? data.sync.value : this.sync,
-      pinCode: data.pinCode.present ? data.pinCode.value : this.pinCode,
-      uploadedServerId: data.uploadedServerId.present
-          ? data.uploadedServerId.value
-          : this.uploadedServerId,
-      mailingName: data.mailingName.present
-          ? data.mailingName.value
-          : this.mailingName,
     );
   }
 
@@ -25251,41 +25596,51 @@ class SaleReturnMasterTableData extends DataClass
   String toString() {
     return (StringBuffer('SaleReturnMasterTableData(')
           ..write('id: $id, ')
-          ..write('vchId: $vchId, ')
-          ..write('voucherNo: $voucherNo, ')
-          ..write('partyId: $partyId, ')
-          ..write('party: $party, ')
-          ..write('address: $address, ')
-          ..write('address2: $address2, ')
-          ..write('email: $email, ')
-          ..write('mob: $mob, ')
-          ..write('voucherDate: $voucherDate, ')
-          ..write('voucherAmount: $voucherAmount, ')
-          ..write('priceList: $priceList, ')
+          ..write('custid: $custid, ')
+          ..write('companyId: $companyId, ')
+          ..write('tripId: $tripId, ')
+          ..write('checkinId: $checkinId, ')
+          ..write('gr: $gr, ')
+          ..write('godownId: $godownId, ')
+          ..write('routeId: $routeId, ')
+          ..write('userId: $userId, ')
+          ..write('androidId: $androidId, ')
+          ..write('pricelistId: $pricelistId, ')
+          ..write('vchseriesId: $vchseriesId, ')
+          ..write('vchno: $vchno, ')
+          ..write('vchnumber: $vchnumber, ')
+          ..write('vchdate: $vchdate, ')
+          ..write('vchType: $vchType, ')
+          ..write('vchmode: $vchmode, ')
+          ..write('referenceno: $referenceno, ')
+          ..write('referencedate: $referencedate, ')
           ..write('narration: $narration, ')
-          ..write('lattitude: $lattitude, ')
+          ..write('grossAmount: $grossAmount, ')
+          ..write('discountAmount: $discountAmount, ')
+          ..write('taxableAmount: $taxableAmount, ')
+          ..write('cgst: $cgst, ')
+          ..write('sgst: $sgst, ')
+          ..write('igst: $igst, ')
+          ..write('vataAmount: $vataAmount, ')
+          ..write('cessAmount: $cessAmount, ')
+          ..write('additionalcessAmount: $additionalcessAmount, ')
+          ..write('roundoff: $roundoff, ')
+          ..write('netAmount: $netAmount, ')
+          ..write('itemcount: $itemcount, ')
+          ..write('autoreceipt: $autoreceipt, ')
+          ..write('partyId: $partyId, ')
+          ..write('partyname: $partyname, ')
+          ..write('statecode: $statecode, ')
+          ..write('gstno: $gstno, ')
+          ..write('distance: $distance, ')
+          ..write('latitude: $latitude, ')
           ..write('longitude: $longitude, ')
           ..write('accuracy: $accuracy, ')
-          ..write('userId: $userId, ')
-          ..write('companyId: $companyId, ')
-          ..write('itemCount: $itemCount, ')
-          ..write('gstin: $gstin, ')
-          ..write('state: $state, ')
-          ..write('addDiscEntered: $addDiscEntered, ')
-          ..write('prefix: $prefix, ')
-          ..write('suffix: $suffix, ')
-          ..write('vchType: $vchType, ')
-          ..write('invNo: $invNo, ')
-          ..write('godown: $godown, ')
-          ..write('tripId: $tripId, ')
-          ..write('visitId: $visitId, ')
-          ..write('createdTime: $createdTime, ')
-          ..write('updatedTime: $updatedTime, ')
-          ..write('deliveryDate: $deliveryDate, ')
-          ..write('sync: $sync, ')
-          ..write('pinCode: $pinCode, ')
-          ..write('uploadedServerId: $uploadedServerId, ')
-          ..write('mailingName: $mailingName')
+          ..write('mobilecreatedon: $mobilecreatedon, ')
+          ..write('createdon: $createdon, ')
+          ..write('status: $status, ')
+          ..write('importstatus: $importstatus, ')
+          ..write('sync: $sync')
           ..write(')'))
         .toString();
   }
@@ -25293,351 +25648,456 @@ class SaleReturnMasterTableData extends DataClass
   @override
   int get hashCode => Object.hashAll([
     id,
-    vchId,
-    voucherNo,
-    partyId,
-    party,
-    address,
-    address2,
-    email,
-    mob,
-    voucherDate,
-    voucherAmount,
-    priceList,
+    custid,
+    companyId,
+    tripId,
+    checkinId,
+    gr,
+    godownId,
+    routeId,
+    userId,
+    androidId,
+    pricelistId,
+    vchseriesId,
+    vchno,
+    vchnumber,
+    vchdate,
+    vchType,
+    vchmode,
+    referenceno,
+    referencedate,
     narration,
-    lattitude,
+    grossAmount,
+    discountAmount,
+    taxableAmount,
+    cgst,
+    sgst,
+    igst,
+    vataAmount,
+    cessAmount,
+    additionalcessAmount,
+    roundoff,
+    netAmount,
+    itemcount,
+    autoreceipt,
+    partyId,
+    partyname,
+    statecode,
+    gstno,
+    distance,
+    latitude,
     longitude,
     accuracy,
-    userId,
-    companyId,
-    itemCount,
-    gstin,
-    state,
-    addDiscEntered,
-    prefix,
-    suffix,
-    vchType,
-    invNo,
-    godown,
-    tripId,
-    visitId,
-    createdTime,
-    updatedTime,
-    deliveryDate,
+    mobilecreatedon,
+    createdon,
+    status,
+    importstatus,
     sync,
-    pinCode,
-    uploadedServerId,
-    mailingName,
   ]);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is SaleReturnMasterTableData &&
           other.id == this.id &&
-          other.vchId == this.vchId &&
-          other.voucherNo == this.voucherNo &&
-          other.partyId == this.partyId &&
-          other.party == this.party &&
-          other.address == this.address &&
-          other.address2 == this.address2 &&
-          other.email == this.email &&
-          other.mob == this.mob &&
-          other.voucherDate == this.voucherDate &&
-          other.voucherAmount == this.voucherAmount &&
-          other.priceList == this.priceList &&
+          other.custid == this.custid &&
+          other.companyId == this.companyId &&
+          other.tripId == this.tripId &&
+          other.checkinId == this.checkinId &&
+          other.gr == this.gr &&
+          other.godownId == this.godownId &&
+          other.routeId == this.routeId &&
+          other.userId == this.userId &&
+          other.androidId == this.androidId &&
+          other.pricelistId == this.pricelistId &&
+          other.vchseriesId == this.vchseriesId &&
+          other.vchno == this.vchno &&
+          other.vchnumber == this.vchnumber &&
+          other.vchdate == this.vchdate &&
+          other.vchType == this.vchType &&
+          other.vchmode == this.vchmode &&
+          other.referenceno == this.referenceno &&
+          other.referencedate == this.referencedate &&
           other.narration == this.narration &&
-          other.lattitude == this.lattitude &&
+          other.grossAmount == this.grossAmount &&
+          other.discountAmount == this.discountAmount &&
+          other.taxableAmount == this.taxableAmount &&
+          other.cgst == this.cgst &&
+          other.sgst == this.sgst &&
+          other.igst == this.igst &&
+          other.vataAmount == this.vataAmount &&
+          other.cessAmount == this.cessAmount &&
+          other.additionalcessAmount == this.additionalcessAmount &&
+          other.roundoff == this.roundoff &&
+          other.netAmount == this.netAmount &&
+          other.itemcount == this.itemcount &&
+          other.autoreceipt == this.autoreceipt &&
+          other.partyId == this.partyId &&
+          other.partyname == this.partyname &&
+          other.statecode == this.statecode &&
+          other.gstno == this.gstno &&
+          other.distance == this.distance &&
+          other.latitude == this.latitude &&
           other.longitude == this.longitude &&
           other.accuracy == this.accuracy &&
-          other.userId == this.userId &&
-          other.companyId == this.companyId &&
-          other.itemCount == this.itemCount &&
-          other.gstin == this.gstin &&
-          other.state == this.state &&
-          other.addDiscEntered == this.addDiscEntered &&
-          other.prefix == this.prefix &&
-          other.suffix == this.suffix &&
-          other.vchType == this.vchType &&
-          other.invNo == this.invNo &&
-          other.godown == this.godown &&
-          other.tripId == this.tripId &&
-          other.visitId == this.visitId &&
-          other.createdTime == this.createdTime &&
-          other.updatedTime == this.updatedTime &&
-          other.deliveryDate == this.deliveryDate &&
-          other.sync == this.sync &&
-          other.pinCode == this.pinCode &&
-          other.uploadedServerId == this.uploadedServerId &&
-          other.mailingName == this.mailingName);
+          other.mobilecreatedon == this.mobilecreatedon &&
+          other.createdon == this.createdon &&
+          other.status == this.status &&
+          other.importstatus == this.importstatus &&
+          other.sync == this.sync);
 }
 
 class SaleReturnMasterTableCompanion
     extends UpdateCompanion<SaleReturnMasterTableData> {
   final Value<int> id;
-  final Value<int?> vchId;
-  final Value<String?> voucherNo;
-  final Value<int?> partyId;
-  final Value<String?> party;
-  final Value<String?> address;
-  final Value<String?> address2;
-  final Value<String?> email;
-  final Value<String?> mob;
-  final Value<String?> voucherDate;
-  final Value<double> voucherAmount;
-  final Value<String?> priceList;
-  final Value<String?> narration;
-  final Value<double?> lattitude;
-  final Value<double?> longitude;
-  final Value<double?> accuracy;
-  final Value<int?> userId;
+  final Value<int?> custid;
   final Value<int?> companyId;
-  final Value<int?> itemCount;
-  final Value<String?> gstin;
-  final Value<String?> state;
-  final Value<double?> addDiscEntered;
-  final Value<String?> prefix;
-  final Value<String?> suffix;
-  final Value<String?> vchType;
-  final Value<int?> invNo;
-  final Value<String?> godown;
   final Value<int?> tripId;
-  final Value<int?> visitId;
-  final Value<DateTime?> createdTime;
-  final Value<DateTime?> updatedTime;
-  final Value<String?> deliveryDate;
+  final Value<int?> checkinId;
+  final Value<String?> gr;
+  final Value<int?> godownId;
+  final Value<int?> routeId;
+  final Value<int?> userId;
+  final Value<int?> androidId;
+  final Value<int?> pricelistId;
+  final Value<int?> vchseriesId;
+  final Value<int?> vchno;
+  final Value<String?> vchnumber;
+  final Value<String?> vchdate;
+  final Value<String?> vchType;
+  final Value<String?> vchmode;
+  final Value<String?> referenceno;
+  final Value<DateTime?> referencedate;
+  final Value<String?> narration;
+  final Value<double> grossAmount;
+  final Value<double> discountAmount;
+  final Value<double> taxableAmount;
+  final Value<double> cgst;
+  final Value<double> sgst;
+  final Value<double> igst;
+  final Value<double> vataAmount;
+  final Value<double> cessAmount;
+  final Value<double> additionalcessAmount;
+  final Value<double> roundoff;
+  final Value<double> netAmount;
+  final Value<int?> itemcount;
+  final Value<int?> autoreceipt;
+  final Value<int?> partyId;
+  final Value<String?> partyname;
+  final Value<String?> statecode;
+  final Value<String?> gstno;
+  final Value<double> distance;
+  final Value<double> latitude;
+  final Value<double> longitude;
+  final Value<double> accuracy;
+  final Value<String?> mobilecreatedon;
+  final Value<String?> createdon;
+  final Value<int?> status;
+  final Value<int?> importstatus;
   final Value<int> sync;
-  final Value<String?> pinCode;
-  final Value<int?> uploadedServerId;
-  final Value<String?> mailingName;
   const SaleReturnMasterTableCompanion({
     this.id = const Value.absent(),
-    this.vchId = const Value.absent(),
-    this.voucherNo = const Value.absent(),
-    this.partyId = const Value.absent(),
-    this.party = const Value.absent(),
-    this.address = const Value.absent(),
-    this.address2 = const Value.absent(),
-    this.email = const Value.absent(),
-    this.mob = const Value.absent(),
-    this.voucherDate = const Value.absent(),
-    this.voucherAmount = const Value.absent(),
-    this.priceList = const Value.absent(),
+    this.custid = const Value.absent(),
+    this.companyId = const Value.absent(),
+    this.tripId = const Value.absent(),
+    this.checkinId = const Value.absent(),
+    this.gr = const Value.absent(),
+    this.godownId = const Value.absent(),
+    this.routeId = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.androidId = const Value.absent(),
+    this.pricelistId = const Value.absent(),
+    this.vchseriesId = const Value.absent(),
+    this.vchno = const Value.absent(),
+    this.vchnumber = const Value.absent(),
+    this.vchdate = const Value.absent(),
+    this.vchType = const Value.absent(),
+    this.vchmode = const Value.absent(),
+    this.referenceno = const Value.absent(),
+    this.referencedate = const Value.absent(),
     this.narration = const Value.absent(),
-    this.lattitude = const Value.absent(),
+    this.grossAmount = const Value.absent(),
+    this.discountAmount = const Value.absent(),
+    this.taxableAmount = const Value.absent(),
+    this.cgst = const Value.absent(),
+    this.sgst = const Value.absent(),
+    this.igst = const Value.absent(),
+    this.vataAmount = const Value.absent(),
+    this.cessAmount = const Value.absent(),
+    this.additionalcessAmount = const Value.absent(),
+    this.roundoff = const Value.absent(),
+    this.netAmount = const Value.absent(),
+    this.itemcount = const Value.absent(),
+    this.autoreceipt = const Value.absent(),
+    this.partyId = const Value.absent(),
+    this.partyname = const Value.absent(),
+    this.statecode = const Value.absent(),
+    this.gstno = const Value.absent(),
+    this.distance = const Value.absent(),
+    this.latitude = const Value.absent(),
     this.longitude = const Value.absent(),
     this.accuracy = const Value.absent(),
-    this.userId = const Value.absent(),
-    this.companyId = const Value.absent(),
-    this.itemCount = const Value.absent(),
-    this.gstin = const Value.absent(),
-    this.state = const Value.absent(),
-    this.addDiscEntered = const Value.absent(),
-    this.prefix = const Value.absent(),
-    this.suffix = const Value.absent(),
-    this.vchType = const Value.absent(),
-    this.invNo = const Value.absent(),
-    this.godown = const Value.absent(),
-    this.tripId = const Value.absent(),
-    this.visitId = const Value.absent(),
-    this.createdTime = const Value.absent(),
-    this.updatedTime = const Value.absent(),
-    this.deliveryDate = const Value.absent(),
+    this.mobilecreatedon = const Value.absent(),
+    this.createdon = const Value.absent(),
+    this.status = const Value.absent(),
+    this.importstatus = const Value.absent(),
     this.sync = const Value.absent(),
-    this.pinCode = const Value.absent(),
-    this.uploadedServerId = const Value.absent(),
-    this.mailingName = const Value.absent(),
   });
   SaleReturnMasterTableCompanion.insert({
     this.id = const Value.absent(),
-    this.vchId = const Value.absent(),
-    this.voucherNo = const Value.absent(),
-    this.partyId = const Value.absent(),
-    this.party = const Value.absent(),
-    this.address = const Value.absent(),
-    this.address2 = const Value.absent(),
-    this.email = const Value.absent(),
-    this.mob = const Value.absent(),
-    this.voucherDate = const Value.absent(),
-    required double voucherAmount,
-    this.priceList = const Value.absent(),
-    this.narration = const Value.absent(),
-    this.lattitude = const Value.absent(),
-    this.longitude = const Value.absent(),
-    this.accuracy = const Value.absent(),
-    this.userId = const Value.absent(),
+    this.custid = const Value.absent(),
     this.companyId = const Value.absent(),
-    this.itemCount = const Value.absent(),
-    this.gstin = const Value.absent(),
-    this.state = const Value.absent(),
-    this.addDiscEntered = const Value.absent(),
-    this.prefix = const Value.absent(),
-    this.suffix = const Value.absent(),
-    this.vchType = const Value.absent(),
-    this.invNo = const Value.absent(),
-    this.godown = const Value.absent(),
     this.tripId = const Value.absent(),
-    this.visitId = const Value.absent(),
-    this.createdTime = const Value.absent(),
-    this.updatedTime = const Value.absent(),
-    this.deliveryDate = const Value.absent(),
+    this.checkinId = const Value.absent(),
+    this.gr = const Value.absent(),
+    this.godownId = const Value.absent(),
+    this.routeId = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.androidId = const Value.absent(),
+    this.pricelistId = const Value.absent(),
+    this.vchseriesId = const Value.absent(),
+    this.vchno = const Value.absent(),
+    this.vchnumber = const Value.absent(),
+    this.vchdate = const Value.absent(),
+    this.vchType = const Value.absent(),
+    this.vchmode = const Value.absent(),
+    this.referenceno = const Value.absent(),
+    this.referencedate = const Value.absent(),
+    this.narration = const Value.absent(),
+    required double grossAmount,
+    required double discountAmount,
+    required double taxableAmount,
+    required double cgst,
+    required double sgst,
+    required double igst,
+    required double vataAmount,
+    required double cessAmount,
+    required double additionalcessAmount,
+    required double roundoff,
+    required double netAmount,
+    this.itemcount = const Value.absent(),
+    this.autoreceipt = const Value.absent(),
+    this.partyId = const Value.absent(),
+    this.partyname = const Value.absent(),
+    this.statecode = const Value.absent(),
+    this.gstno = const Value.absent(),
+    required double distance,
+    required double latitude,
+    required double longitude,
+    required double accuracy,
+    this.mobilecreatedon = const Value.absent(),
+    this.createdon = const Value.absent(),
+    this.status = const Value.absent(),
+    this.importstatus = const Value.absent(),
     this.sync = const Value.absent(),
-    this.pinCode = const Value.absent(),
-    this.uploadedServerId = const Value.absent(),
-    this.mailingName = const Value.absent(),
-  }) : voucherAmount = Value(voucherAmount);
+  }) : grossAmount = Value(grossAmount),
+       discountAmount = Value(discountAmount),
+       taxableAmount = Value(taxableAmount),
+       cgst = Value(cgst),
+       sgst = Value(sgst),
+       igst = Value(igst),
+       vataAmount = Value(vataAmount),
+       cessAmount = Value(cessAmount),
+       additionalcessAmount = Value(additionalcessAmount),
+       roundoff = Value(roundoff),
+       netAmount = Value(netAmount),
+       distance = Value(distance),
+       latitude = Value(latitude),
+       longitude = Value(longitude),
+       accuracy = Value(accuracy);
   static Insertable<SaleReturnMasterTableData> custom({
     Expression<int>? id,
-    Expression<int>? vchId,
-    Expression<String>? voucherNo,
-    Expression<int>? partyId,
-    Expression<String>? party,
-    Expression<String>? address,
-    Expression<String>? address2,
-    Expression<String>? email,
-    Expression<String>? mob,
-    Expression<String>? voucherDate,
-    Expression<double>? voucherAmount,
-    Expression<String>? priceList,
+    Expression<int>? custid,
+    Expression<int>? companyId,
+    Expression<int>? tripId,
+    Expression<int>? checkinId,
+    Expression<String>? gr,
+    Expression<int>? godownId,
+    Expression<int>? routeId,
+    Expression<int>? userId,
+    Expression<int>? androidId,
+    Expression<int>? pricelistId,
+    Expression<int>? vchseriesId,
+    Expression<int>? vchno,
+    Expression<String>? vchnumber,
+    Expression<String>? vchdate,
+    Expression<String>? vchType,
+    Expression<String>? vchmode,
+    Expression<String>? referenceno,
+    Expression<DateTime>? referencedate,
     Expression<String>? narration,
-    Expression<double>? lattitude,
+    Expression<double>? grossAmount,
+    Expression<double>? discountAmount,
+    Expression<double>? taxableAmount,
+    Expression<double>? cgst,
+    Expression<double>? sgst,
+    Expression<double>? igst,
+    Expression<double>? vataAmount,
+    Expression<double>? cessAmount,
+    Expression<double>? additionalcessAmount,
+    Expression<double>? roundoff,
+    Expression<double>? netAmount,
+    Expression<int>? itemcount,
+    Expression<int>? autoreceipt,
+    Expression<int>? partyId,
+    Expression<String>? partyname,
+    Expression<String>? statecode,
+    Expression<String>? gstno,
+    Expression<double>? distance,
+    Expression<double>? latitude,
     Expression<double>? longitude,
     Expression<double>? accuracy,
-    Expression<int>? userId,
-    Expression<int>? companyId,
-    Expression<int>? itemCount,
-    Expression<String>? gstin,
-    Expression<String>? state,
-    Expression<double>? addDiscEntered,
-    Expression<String>? prefix,
-    Expression<String>? suffix,
-    Expression<String>? vchType,
-    Expression<int>? invNo,
-    Expression<String>? godown,
-    Expression<int>? tripId,
-    Expression<int>? visitId,
-    Expression<DateTime>? createdTime,
-    Expression<DateTime>? updatedTime,
-    Expression<String>? deliveryDate,
+    Expression<String>? mobilecreatedon,
+    Expression<String>? createdon,
+    Expression<int>? status,
+    Expression<int>? importstatus,
     Expression<int>? sync,
-    Expression<String>? pinCode,
-    Expression<int>? uploadedServerId,
-    Expression<String>? mailingName,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (vchId != null) 'vch_id': vchId,
-      if (voucherNo != null) 'voucher_no': voucherNo,
-      if (partyId != null) 'party_id': partyId,
-      if (party != null) 'party': party,
-      if (address != null) 'address': address,
-      if (address2 != null) 'address2': address2,
-      if (email != null) 'email': email,
-      if (mob != null) 'mob': mob,
-      if (voucherDate != null) 'voucher_date': voucherDate,
-      if (voucherAmount != null) 'voucher_amount': voucherAmount,
-      if (priceList != null) 'price_list': priceList,
+      if (custid != null) 'custid': custid,
+      if (companyId != null) 'company_id': companyId,
+      if (tripId != null) 'trip_id': tripId,
+      if (checkinId != null) 'checkin_id': checkinId,
+      if (gr != null) 'gr': gr,
+      if (godownId != null) 'godown_id': godownId,
+      if (routeId != null) 'route_id': routeId,
+      if (userId != null) 'user_id': userId,
+      if (androidId != null) 'android_id': androidId,
+      if (pricelistId != null) 'pricelist_id': pricelistId,
+      if (vchseriesId != null) 'vchseries_id': vchseriesId,
+      if (vchno != null) 'vchno': vchno,
+      if (vchnumber != null) 'vchnumber': vchnumber,
+      if (vchdate != null) 'vchdate': vchdate,
+      if (vchType != null) 'vch_type': vchType,
+      if (vchmode != null) 'vchmode': vchmode,
+      if (referenceno != null) 'referenceno': referenceno,
+      if (referencedate != null) 'referencedate': referencedate,
       if (narration != null) 'narration': narration,
-      if (lattitude != null) 'lattitude': lattitude,
+      if (grossAmount != null) 'gross_amount': grossAmount,
+      if (discountAmount != null) 'discount_amount': discountAmount,
+      if (taxableAmount != null) 'taxable_amount': taxableAmount,
+      if (cgst != null) 'cgst': cgst,
+      if (sgst != null) 'sgst': sgst,
+      if (igst != null) 'igst': igst,
+      if (vataAmount != null) 'vata_amount': vataAmount,
+      if (cessAmount != null) 'cess_amount': cessAmount,
+      if (additionalcessAmount != null)
+        'additionalcess_amount': additionalcessAmount,
+      if (roundoff != null) 'roundoff': roundoff,
+      if (netAmount != null) 'net_amount': netAmount,
+      if (itemcount != null) 'itemcount': itemcount,
+      if (autoreceipt != null) 'autoreceipt': autoreceipt,
+      if (partyId != null) 'party_id': partyId,
+      if (partyname != null) 'partyname': partyname,
+      if (statecode != null) 'statecode': statecode,
+      if (gstno != null) 'gstno': gstno,
+      if (distance != null) 'distance': distance,
+      if (latitude != null) 'latitude': latitude,
       if (longitude != null) 'longitude': longitude,
       if (accuracy != null) 'accuracy': accuracy,
-      if (userId != null) 'user_id': userId,
-      if (companyId != null) 'company_id': companyId,
-      if (itemCount != null) 'item_count': itemCount,
-      if (gstin != null) 'gstin': gstin,
-      if (state != null) 'state': state,
-      if (addDiscEntered != null) 'add_disc_entered': addDiscEntered,
-      if (prefix != null) 'prefix': prefix,
-      if (suffix != null) 'suffix': suffix,
-      if (vchType != null) 'vch_type': vchType,
-      if (invNo != null) 'inv_no': invNo,
-      if (godown != null) 'godown': godown,
-      if (tripId != null) 'trip_id': tripId,
-      if (visitId != null) 'visit_id': visitId,
-      if (createdTime != null) 'created_time': createdTime,
-      if (updatedTime != null) 'updated_time': updatedTime,
-      if (deliveryDate != null) 'delivery_date': deliveryDate,
+      if (mobilecreatedon != null) 'mobilecreatedon': mobilecreatedon,
+      if (createdon != null) 'createdon': createdon,
+      if (status != null) 'status': status,
+      if (importstatus != null) 'importstatus': importstatus,
       if (sync != null) 'sync': sync,
-      if (pinCode != null) 'pin_code': pinCode,
-      if (uploadedServerId != null) 'uploaded_server_id': uploadedServerId,
-      if (mailingName != null) 'mailing_name': mailingName,
     });
   }
 
   SaleReturnMasterTableCompanion copyWith({
     Value<int>? id,
-    Value<int?>? vchId,
-    Value<String?>? voucherNo,
-    Value<int?>? partyId,
-    Value<String?>? party,
-    Value<String?>? address,
-    Value<String?>? address2,
-    Value<String?>? email,
-    Value<String?>? mob,
-    Value<String?>? voucherDate,
-    Value<double>? voucherAmount,
-    Value<String?>? priceList,
-    Value<String?>? narration,
-    Value<double?>? lattitude,
-    Value<double?>? longitude,
-    Value<double?>? accuracy,
-    Value<int?>? userId,
+    Value<int?>? custid,
     Value<int?>? companyId,
-    Value<int?>? itemCount,
-    Value<String?>? gstin,
-    Value<String?>? state,
-    Value<double?>? addDiscEntered,
-    Value<String?>? prefix,
-    Value<String?>? suffix,
-    Value<String?>? vchType,
-    Value<int?>? invNo,
-    Value<String?>? godown,
     Value<int?>? tripId,
-    Value<int?>? visitId,
-    Value<DateTime?>? createdTime,
-    Value<DateTime?>? updatedTime,
-    Value<String?>? deliveryDate,
+    Value<int?>? checkinId,
+    Value<String?>? gr,
+    Value<int?>? godownId,
+    Value<int?>? routeId,
+    Value<int?>? userId,
+    Value<int?>? androidId,
+    Value<int?>? pricelistId,
+    Value<int?>? vchseriesId,
+    Value<int?>? vchno,
+    Value<String?>? vchnumber,
+    Value<String?>? vchdate,
+    Value<String?>? vchType,
+    Value<String?>? vchmode,
+    Value<String?>? referenceno,
+    Value<DateTime?>? referencedate,
+    Value<String?>? narration,
+    Value<double>? grossAmount,
+    Value<double>? discountAmount,
+    Value<double>? taxableAmount,
+    Value<double>? cgst,
+    Value<double>? sgst,
+    Value<double>? igst,
+    Value<double>? vataAmount,
+    Value<double>? cessAmount,
+    Value<double>? additionalcessAmount,
+    Value<double>? roundoff,
+    Value<double>? netAmount,
+    Value<int?>? itemcount,
+    Value<int?>? autoreceipt,
+    Value<int?>? partyId,
+    Value<String?>? partyname,
+    Value<String?>? statecode,
+    Value<String?>? gstno,
+    Value<double>? distance,
+    Value<double>? latitude,
+    Value<double>? longitude,
+    Value<double>? accuracy,
+    Value<String?>? mobilecreatedon,
+    Value<String?>? createdon,
+    Value<int?>? status,
+    Value<int?>? importstatus,
     Value<int>? sync,
-    Value<String?>? pinCode,
-    Value<int?>? uploadedServerId,
-    Value<String?>? mailingName,
   }) {
     return SaleReturnMasterTableCompanion(
       id: id ?? this.id,
-      vchId: vchId ?? this.vchId,
-      voucherNo: voucherNo ?? this.voucherNo,
-      partyId: partyId ?? this.partyId,
-      party: party ?? this.party,
-      address: address ?? this.address,
-      address2: address2 ?? this.address2,
-      email: email ?? this.email,
-      mob: mob ?? this.mob,
-      voucherDate: voucherDate ?? this.voucherDate,
-      voucherAmount: voucherAmount ?? this.voucherAmount,
-      priceList: priceList ?? this.priceList,
+      custid: custid ?? this.custid,
+      companyId: companyId ?? this.companyId,
+      tripId: tripId ?? this.tripId,
+      checkinId: checkinId ?? this.checkinId,
+      gr: gr ?? this.gr,
+      godownId: godownId ?? this.godownId,
+      routeId: routeId ?? this.routeId,
+      userId: userId ?? this.userId,
+      androidId: androidId ?? this.androidId,
+      pricelistId: pricelistId ?? this.pricelistId,
+      vchseriesId: vchseriesId ?? this.vchseriesId,
+      vchno: vchno ?? this.vchno,
+      vchnumber: vchnumber ?? this.vchnumber,
+      vchdate: vchdate ?? this.vchdate,
+      vchType: vchType ?? this.vchType,
+      vchmode: vchmode ?? this.vchmode,
+      referenceno: referenceno ?? this.referenceno,
+      referencedate: referencedate ?? this.referencedate,
       narration: narration ?? this.narration,
-      lattitude: lattitude ?? this.lattitude,
+      grossAmount: grossAmount ?? this.grossAmount,
+      discountAmount: discountAmount ?? this.discountAmount,
+      taxableAmount: taxableAmount ?? this.taxableAmount,
+      cgst: cgst ?? this.cgst,
+      sgst: sgst ?? this.sgst,
+      igst: igst ?? this.igst,
+      vataAmount: vataAmount ?? this.vataAmount,
+      cessAmount: cessAmount ?? this.cessAmount,
+      additionalcessAmount: additionalcessAmount ?? this.additionalcessAmount,
+      roundoff: roundoff ?? this.roundoff,
+      netAmount: netAmount ?? this.netAmount,
+      itemcount: itemcount ?? this.itemcount,
+      autoreceipt: autoreceipt ?? this.autoreceipt,
+      partyId: partyId ?? this.partyId,
+      partyname: partyname ?? this.partyname,
+      statecode: statecode ?? this.statecode,
+      gstno: gstno ?? this.gstno,
+      distance: distance ?? this.distance,
+      latitude: latitude ?? this.latitude,
       longitude: longitude ?? this.longitude,
       accuracy: accuracy ?? this.accuracy,
-      userId: userId ?? this.userId,
-      companyId: companyId ?? this.companyId,
-      itemCount: itemCount ?? this.itemCount,
-      gstin: gstin ?? this.gstin,
-      state: state ?? this.state,
-      addDiscEntered: addDiscEntered ?? this.addDiscEntered,
-      prefix: prefix ?? this.prefix,
-      suffix: suffix ?? this.suffix,
-      vchType: vchType ?? this.vchType,
-      invNo: invNo ?? this.invNo,
-      godown: godown ?? this.godown,
-      tripId: tripId ?? this.tripId,
-      visitId: visitId ?? this.visitId,
-      createdTime: createdTime ?? this.createdTime,
-      updatedTime: updatedTime ?? this.updatedTime,
-      deliveryDate: deliveryDate ?? this.deliveryDate,
+      mobilecreatedon: mobilecreatedon ?? this.mobilecreatedon,
+      createdon: createdon ?? this.createdon,
+      status: status ?? this.status,
+      importstatus: importstatus ?? this.importstatus,
       sync: sync ?? this.sync,
-      pinCode: pinCode ?? this.pinCode,
-      uploadedServerId: uploadedServerId ?? this.uploadedServerId,
-      mailingName: mailingName ?? this.mailingName,
     );
   }
 
@@ -25647,44 +26107,121 @@ class SaleReturnMasterTableCompanion
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
-    if (vchId.present) {
-      map['vch_id'] = Variable<int>(vchId.value);
+    if (custid.present) {
+      map['custid'] = Variable<int>(custid.value);
     }
-    if (voucherNo.present) {
-      map['voucher_no'] = Variable<String>(voucherNo.value);
+    if (companyId.present) {
+      map['company_id'] = Variable<int>(companyId.value);
     }
-    if (partyId.present) {
-      map['party_id'] = Variable<int>(partyId.value);
+    if (tripId.present) {
+      map['trip_id'] = Variable<int>(tripId.value);
     }
-    if (party.present) {
-      map['party'] = Variable<String>(party.value);
+    if (checkinId.present) {
+      map['checkin_id'] = Variable<int>(checkinId.value);
     }
-    if (address.present) {
-      map['address'] = Variable<String>(address.value);
+    if (gr.present) {
+      map['gr'] = Variable<String>(gr.value);
     }
-    if (address2.present) {
-      map['address2'] = Variable<String>(address2.value);
+    if (godownId.present) {
+      map['godown_id'] = Variable<int>(godownId.value);
     }
-    if (email.present) {
-      map['email'] = Variable<String>(email.value);
+    if (routeId.present) {
+      map['route_id'] = Variable<int>(routeId.value);
     }
-    if (mob.present) {
-      map['mob'] = Variable<String>(mob.value);
+    if (userId.present) {
+      map['user_id'] = Variable<int>(userId.value);
     }
-    if (voucherDate.present) {
-      map['voucher_date'] = Variable<String>(voucherDate.value);
+    if (androidId.present) {
+      map['android_id'] = Variable<int>(androidId.value);
     }
-    if (voucherAmount.present) {
-      map['voucher_amount'] = Variable<double>(voucherAmount.value);
+    if (pricelistId.present) {
+      map['pricelist_id'] = Variable<int>(pricelistId.value);
     }
-    if (priceList.present) {
-      map['price_list'] = Variable<String>(priceList.value);
+    if (vchseriesId.present) {
+      map['vchseries_id'] = Variable<int>(vchseriesId.value);
+    }
+    if (vchno.present) {
+      map['vchno'] = Variable<int>(vchno.value);
+    }
+    if (vchnumber.present) {
+      map['vchnumber'] = Variable<String>(vchnumber.value);
+    }
+    if (vchdate.present) {
+      map['vchdate'] = Variable<String>(vchdate.value);
+    }
+    if (vchType.present) {
+      map['vch_type'] = Variable<String>(vchType.value);
+    }
+    if (vchmode.present) {
+      map['vchmode'] = Variable<String>(vchmode.value);
+    }
+    if (referenceno.present) {
+      map['referenceno'] = Variable<String>(referenceno.value);
+    }
+    if (referencedate.present) {
+      map['referencedate'] = Variable<DateTime>(referencedate.value);
     }
     if (narration.present) {
       map['narration'] = Variable<String>(narration.value);
     }
-    if (lattitude.present) {
-      map['lattitude'] = Variable<double>(lattitude.value);
+    if (grossAmount.present) {
+      map['gross_amount'] = Variable<double>(grossAmount.value);
+    }
+    if (discountAmount.present) {
+      map['discount_amount'] = Variable<double>(discountAmount.value);
+    }
+    if (taxableAmount.present) {
+      map['taxable_amount'] = Variable<double>(taxableAmount.value);
+    }
+    if (cgst.present) {
+      map['cgst'] = Variable<double>(cgst.value);
+    }
+    if (sgst.present) {
+      map['sgst'] = Variable<double>(sgst.value);
+    }
+    if (igst.present) {
+      map['igst'] = Variable<double>(igst.value);
+    }
+    if (vataAmount.present) {
+      map['vata_amount'] = Variable<double>(vataAmount.value);
+    }
+    if (cessAmount.present) {
+      map['cess_amount'] = Variable<double>(cessAmount.value);
+    }
+    if (additionalcessAmount.present) {
+      map['additionalcess_amount'] = Variable<double>(
+        additionalcessAmount.value,
+      );
+    }
+    if (roundoff.present) {
+      map['roundoff'] = Variable<double>(roundoff.value);
+    }
+    if (netAmount.present) {
+      map['net_amount'] = Variable<double>(netAmount.value);
+    }
+    if (itemcount.present) {
+      map['itemcount'] = Variable<int>(itemcount.value);
+    }
+    if (autoreceipt.present) {
+      map['autoreceipt'] = Variable<int>(autoreceipt.value);
+    }
+    if (partyId.present) {
+      map['party_id'] = Variable<int>(partyId.value);
+    }
+    if (partyname.present) {
+      map['partyname'] = Variable<String>(partyname.value);
+    }
+    if (statecode.present) {
+      map['statecode'] = Variable<String>(statecode.value);
+    }
+    if (gstno.present) {
+      map['gstno'] = Variable<String>(gstno.value);
+    }
+    if (distance.present) {
+      map['distance'] = Variable<double>(distance.value);
+    }
+    if (latitude.present) {
+      map['latitude'] = Variable<double>(latitude.value);
     }
     if (longitude.present) {
       map['longitude'] = Variable<double>(longitude.value);
@@ -25692,65 +26229,20 @@ class SaleReturnMasterTableCompanion
     if (accuracy.present) {
       map['accuracy'] = Variable<double>(accuracy.value);
     }
-    if (userId.present) {
-      map['user_id'] = Variable<int>(userId.value);
+    if (mobilecreatedon.present) {
+      map['mobilecreatedon'] = Variable<String>(mobilecreatedon.value);
     }
-    if (companyId.present) {
-      map['company_id'] = Variable<int>(companyId.value);
+    if (createdon.present) {
+      map['createdon'] = Variable<String>(createdon.value);
     }
-    if (itemCount.present) {
-      map['item_count'] = Variable<int>(itemCount.value);
+    if (status.present) {
+      map['status'] = Variable<int>(status.value);
     }
-    if (gstin.present) {
-      map['gstin'] = Variable<String>(gstin.value);
-    }
-    if (state.present) {
-      map['state'] = Variable<String>(state.value);
-    }
-    if (addDiscEntered.present) {
-      map['add_disc_entered'] = Variable<double>(addDiscEntered.value);
-    }
-    if (prefix.present) {
-      map['prefix'] = Variable<String>(prefix.value);
-    }
-    if (suffix.present) {
-      map['suffix'] = Variable<String>(suffix.value);
-    }
-    if (vchType.present) {
-      map['vch_type'] = Variable<String>(vchType.value);
-    }
-    if (invNo.present) {
-      map['inv_no'] = Variable<int>(invNo.value);
-    }
-    if (godown.present) {
-      map['godown'] = Variable<String>(godown.value);
-    }
-    if (tripId.present) {
-      map['trip_id'] = Variable<int>(tripId.value);
-    }
-    if (visitId.present) {
-      map['visit_id'] = Variable<int>(visitId.value);
-    }
-    if (createdTime.present) {
-      map['created_time'] = Variable<DateTime>(createdTime.value);
-    }
-    if (updatedTime.present) {
-      map['updated_time'] = Variable<DateTime>(updatedTime.value);
-    }
-    if (deliveryDate.present) {
-      map['delivery_date'] = Variable<String>(deliveryDate.value);
+    if (importstatus.present) {
+      map['importstatus'] = Variable<int>(importstatus.value);
     }
     if (sync.present) {
       map['sync'] = Variable<int>(sync.value);
-    }
-    if (pinCode.present) {
-      map['pin_code'] = Variable<String>(pinCode.value);
-    }
-    if (uploadedServerId.present) {
-      map['uploaded_server_id'] = Variable<int>(uploadedServerId.value);
-    }
-    if (mailingName.present) {
-      map['mailing_name'] = Variable<String>(mailingName.value);
     }
     return map;
   }
@@ -25759,41 +26251,51 @@ class SaleReturnMasterTableCompanion
   String toString() {
     return (StringBuffer('SaleReturnMasterTableCompanion(')
           ..write('id: $id, ')
-          ..write('vchId: $vchId, ')
-          ..write('voucherNo: $voucherNo, ')
-          ..write('partyId: $partyId, ')
-          ..write('party: $party, ')
-          ..write('address: $address, ')
-          ..write('address2: $address2, ')
-          ..write('email: $email, ')
-          ..write('mob: $mob, ')
-          ..write('voucherDate: $voucherDate, ')
-          ..write('voucherAmount: $voucherAmount, ')
-          ..write('priceList: $priceList, ')
+          ..write('custid: $custid, ')
+          ..write('companyId: $companyId, ')
+          ..write('tripId: $tripId, ')
+          ..write('checkinId: $checkinId, ')
+          ..write('gr: $gr, ')
+          ..write('godownId: $godownId, ')
+          ..write('routeId: $routeId, ')
+          ..write('userId: $userId, ')
+          ..write('androidId: $androidId, ')
+          ..write('pricelistId: $pricelistId, ')
+          ..write('vchseriesId: $vchseriesId, ')
+          ..write('vchno: $vchno, ')
+          ..write('vchnumber: $vchnumber, ')
+          ..write('vchdate: $vchdate, ')
+          ..write('vchType: $vchType, ')
+          ..write('vchmode: $vchmode, ')
+          ..write('referenceno: $referenceno, ')
+          ..write('referencedate: $referencedate, ')
           ..write('narration: $narration, ')
-          ..write('lattitude: $lattitude, ')
+          ..write('grossAmount: $grossAmount, ')
+          ..write('discountAmount: $discountAmount, ')
+          ..write('taxableAmount: $taxableAmount, ')
+          ..write('cgst: $cgst, ')
+          ..write('sgst: $sgst, ')
+          ..write('igst: $igst, ')
+          ..write('vataAmount: $vataAmount, ')
+          ..write('cessAmount: $cessAmount, ')
+          ..write('additionalcessAmount: $additionalcessAmount, ')
+          ..write('roundoff: $roundoff, ')
+          ..write('netAmount: $netAmount, ')
+          ..write('itemcount: $itemcount, ')
+          ..write('autoreceipt: $autoreceipt, ')
+          ..write('partyId: $partyId, ')
+          ..write('partyname: $partyname, ')
+          ..write('statecode: $statecode, ')
+          ..write('gstno: $gstno, ')
+          ..write('distance: $distance, ')
+          ..write('latitude: $latitude, ')
           ..write('longitude: $longitude, ')
           ..write('accuracy: $accuracy, ')
-          ..write('userId: $userId, ')
-          ..write('companyId: $companyId, ')
-          ..write('itemCount: $itemCount, ')
-          ..write('gstin: $gstin, ')
-          ..write('state: $state, ')
-          ..write('addDiscEntered: $addDiscEntered, ')
-          ..write('prefix: $prefix, ')
-          ..write('suffix: $suffix, ')
-          ..write('vchType: $vchType, ')
-          ..write('invNo: $invNo, ')
-          ..write('godown: $godown, ')
-          ..write('tripId: $tripId, ')
-          ..write('visitId: $visitId, ')
-          ..write('createdTime: $createdTime, ')
-          ..write('updatedTime: $updatedTime, ')
-          ..write('deliveryDate: $deliveryDate, ')
-          ..write('sync: $sync, ')
-          ..write('pinCode: $pinCode, ')
-          ..write('uploadedServerId: $uploadedServerId, ')
-          ..write('mailingName: $mailingName')
+          ..write('mobilecreatedon: $mobilecreatedon, ')
+          ..write('createdon: $createdon, ')
+          ..write('status: $status, ')
+          ..write('importstatus: $importstatus, ')
+          ..write('sync: $sync')
           ..write(')'))
         .toString();
   }
@@ -25818,10 +26320,19 @@ class $SaleReturnDetailsTableTable extends SaleReturnDetailsTable
       'PRIMARY KEY AUTOINCREMENT',
     ),
   );
-  static const VerificationMeta _midMeta = const VerificationMeta('mid');
+  static const VerificationMeta _vchIdMeta = const VerificationMeta('vchId');
   @override
-  late final GeneratedColumn<int> mid = GeneratedColumn<int>(
-    'mid',
+  late final GeneratedColumn<int> vchId = GeneratedColumn<int>(
+    'vch_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _lineNoMeta = const VerificationMeta('lineNo');
+  @override
+  late final GeneratedColumn<int> lineNo = GeneratedColumn<int>(
+    'line_no',
     aliasedName,
     true,
     type: DriftSqlType.int,
@@ -25847,301 +26358,256 @@ class $SaleReturnDetailsTableTable extends SaleReturnDetailsTable
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _qtyMeta = const VerificationMeta('qty');
-  @override
-  late final GeneratedColumn<double> qty = GeneratedColumn<double>(
-    'qty',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
+  static const VerificationMeta _itemDescMeta = const VerificationMeta(
+    'itemDesc',
   );
-  static const VerificationMeta _unitMeta = const VerificationMeta('unit');
   @override
-  late final GeneratedColumn<String> unit = GeneratedColumn<String>(
-    'unit',
+  late final GeneratedColumn<String> itemDesc = GeneratedColumn<String>(
+    'item_desc',
     aliasedName,
     true,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
+  );
+  static const VerificationMeta _stkQtyFirstMeta = const VerificationMeta(
+    'stkQtyFirst',
+  );
+  @override
+  late final GeneratedColumn<double> stkQtyFirst = GeneratedColumn<double>(
+    'stk_qty_first',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _stkQtySecondMeta = const VerificationMeta(
+    'stkQtySecond',
+  );
+  @override
+  late final GeneratedColumn<double> stkQtySecond = GeneratedColumn<double>(
+    'stk_qty_second',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _enteredQtyFirstMeta = const VerificationMeta(
+    'enteredQtyFirst',
+  );
+  @override
+  late final GeneratedColumn<double> enteredQtyFirst = GeneratedColumn<double>(
+    'entered_qty_first',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _enteredQtySecondMeta = const VerificationMeta(
+    'enteredQtySecond',
+  );
+  @override
+  late final GeneratedColumn<double> enteredQtySecond = GeneratedColumn<double>(
+    'entered_qty_second',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _enteredActualQtyFirstMeta =
+      const VerificationMeta('enteredActualQtyFirst');
+  @override
+  late final GeneratedColumn<double> enteredActualQtyFirst =
+      GeneratedColumn<double>(
+        'entered_actual_qty_first',
+        aliasedName,
+        false,
+        type: DriftSqlType.double,
+        requiredDuringInsert: false,
+        defaultValue: const Constant(0),
+      );
+  static const VerificationMeta _enteredActualQtySecondMeta =
+      const VerificationMeta('enteredActualQtySecond');
+  @override
+  late final GeneratedColumn<double> enteredActualQtySecond =
+      GeneratedColumn<double>(
+        'entered_actual_qty_second',
+        aliasedName,
+        false,
+        type: DriftSqlType.double,
+        requiredDuringInsert: false,
+        defaultValue: const Constant(0),
+      );
+  static const VerificationMeta _enteredUnitMeta = const VerificationMeta(
+    'enteredUnit',
+  );
+  @override
+  late final GeneratedColumn<String> enteredUnit = GeneratedColumn<String>(
+    'entered_unit',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _qtyFirstMeta = const VerificationMeta(
+    'qtyFirst',
+  );
+  @override
+  late final GeneratedColumn<double> qtyFirst = GeneratedColumn<double>(
+    'qty_first',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _qtySecondMeta = const VerificationMeta(
+    'qtySecond',
+  );
+  @override
+  late final GeneratedColumn<double> qtySecond = GeneratedColumn<double>(
+    'qty_second',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _qtyActualFirstMeta = const VerificationMeta(
+    'qtyActualFirst',
+  );
+  @override
+  late final GeneratedColumn<double> qtyActualFirst = GeneratedColumn<double>(
+    'qty_actual_first',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _qtyActualSecondMeta = const VerificationMeta(
+    'qtyActualSecond',
+  );
+  @override
+  late final GeneratedColumn<double> qtyActualSecond = GeneratedColumn<double>(
+    'qty_actual_second',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _altQtyFirstMeta = const VerificationMeta(
+    'altQtyFirst',
+  );
+  @override
+  late final GeneratedColumn<double> altQtyFirst = GeneratedColumn<double>(
+    'alt_qty_first',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _altQtySecondMeta = const VerificationMeta(
+    'altQtySecond',
+  );
+  @override
+  late final GeneratedColumn<double> altQtySecond = GeneratedColumn<double>(
+    'alt_qty_second',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _altQtyActualFirstMeta = const VerificationMeta(
+    'altQtyActualFirst',
+  );
+  @override
+  late final GeneratedColumn<double> altQtyActualFirst =
+      GeneratedColumn<double>(
+        'alt_qty_actual_first',
+        aliasedName,
+        false,
+        type: DriftSqlType.double,
+        requiredDuringInsert: false,
+        defaultValue: const Constant(0),
+      );
+  static const VerificationMeta _altQtyActualSecondMeta =
+      const VerificationMeta('altQtyActualSecond');
+  @override
+  late final GeneratedColumn<double> altQtyActualSecond =
+      GeneratedColumn<double>(
+        'alt_qty_actual_second',
+        aliasedName,
+        false,
+        type: DriftSqlType.double,
+        requiredDuringInsert: false,
+        defaultValue: const Constant(0),
+      );
+  static const VerificationMeta _qtyStrMeta = const VerificationMeta('qtyStr');
+  @override
+  late final GeneratedColumn<String> qtyStr = GeneratedColumn<String>(
+    'qty_str',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _actualQtyStrMeta = const VerificationMeta(
+    'actualQtyStr',
+  );
+  @override
+  late final GeneratedColumn<String> actualQtyStr = GeneratedColumn<String>(
+    'actual_qty_str',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _qty1Meta = const VerificationMeta('qty1');
+  @override
+  late final GeneratedColumn<double> qty1 = GeneratedColumn<double>(
+    'qty1',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _qty2Meta = const VerificationMeta('qty2');
+  @override
+  late final GeneratedColumn<double> qty2 = GeneratedColumn<double>(
+    'qty2',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _qty3Meta = const VerificationMeta('qty3');
+  @override
+  late final GeneratedColumn<double> qty3 = GeneratedColumn<double>(
+    'qty3',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
   );
   static const VerificationMeta _rateMeta = const VerificationMeta('rate');
   @override
   late final GeneratedColumn<double> rate = GeneratedColumn<double>(
     'rate',
     aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _vatMeta = const VerificationMeta('vat');
-  @override
-  late final GeneratedColumn<double> vat = GeneratedColumn<double>(
-    'vat',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _vatAmtMeta = const VerificationMeta('vatAmt');
-  @override
-  late final GeneratedColumn<double> vatAmt = GeneratedColumn<double>(
-    'vat_amt',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _totalMeta = const VerificationMeta('total');
-  @override
-  late final GeneratedColumn<double> total = GeneratedColumn<double>(
-    'total',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _discMeta = const VerificationMeta('disc');
-  @override
-  late final GeneratedColumn<double> disc = GeneratedColumn<double>(
-    'disc',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _discValMeta = const VerificationMeta(
-    'discVal',
-  );
-  @override
-  late final GeneratedColumn<double> discVal = GeneratedColumn<double>(
-    'disc_val',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _ledgerMeta = const VerificationMeta('ledger');
-  @override
-  late final GeneratedColumn<String> ledger = GeneratedColumn<String>(
-    'ledger',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _companyIdMeta = const VerificationMeta(
-    'companyId',
-  );
-  @override
-  late final GeneratedColumn<int> companyId = GeneratedColumn<int>(
-    'company_id',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _syncMeta = const VerificationMeta('sync');
-  @override
-  late final GeneratedColumn<int> sync = GeneratedColumn<int>(
-    'sync',
-    aliasedName,
     false,
-    type: DriftSqlType.int,
+    type: DriftSqlType.double,
     requiredDuringInsert: false,
     defaultValue: const Constant(0),
-  );
-  static const VerificationMeta _hsnMeta = const VerificationMeta('hsn');
-  @override
-  late final GeneratedColumn<String> hsn = GeneratedColumn<String>(
-    'hsn',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _enteredRateMeta = const VerificationMeta(
-    'enteredRate',
-  );
-  @override
-  late final GeneratedColumn<double> enteredRate = GeneratedColumn<double>(
-    'entered_rate',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _enteredDiscMeta = const VerificationMeta(
-    'enteredDisc',
-  );
-  @override
-  late final GeneratedColumn<double> enteredDisc = GeneratedColumn<double>(
-    'entered_disc',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _eneteredQtyMeta = const VerificationMeta(
-    'eneteredQty',
-  );
-  @override
-  late final GeneratedColumn<String> eneteredQty = GeneratedColumn<String>(
-    'enetered_qty',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _enteredFQtyMeta = const VerificationMeta(
-    'enteredFQty',
-  );
-  @override
-  late final GeneratedColumn<String> enteredFQty = GeneratedColumn<String>(
-    'entered_f_qty',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _fQtyMeta = const VerificationMeta('fQty');
-  @override
-  late final GeneratedColumn<double> fQty = GeneratedColumn<double>(
-    'f_qty',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _addDiscValMeta = const VerificationMeta(
-    'addDiscVal',
-  );
-  @override
-  late final GeneratedColumn<double> addDiscVal = GeneratedColumn<double>(
-    'add_disc_val',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _cessAmtMeta = const VerificationMeta(
-    'cessAmt',
-  );
-  @override
-  late final GeneratedColumn<double> cessAmt = GeneratedColumn<double>(
-    'cess_amt',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _stkNegPermissionMeta = const VerificationMeta(
-    'stkNegPermission',
-  );
-  @override
-  late final GeneratedColumn<String> stkNegPermission = GeneratedColumn<String>(
-    'stk_neg_permission',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _discTypeMeta = const VerificationMeta(
-    'discType',
-  );
-  @override
-  late final GeneratedColumn<String> discType = GeneratedColumn<String>(
-    'disc_type',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _priceListMeta = const VerificationMeta(
-    'priceList',
-  );
-  @override
-  late final GeneratedColumn<String> priceList = GeneratedColumn<String>(
-    'price_list',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _convQtyMeta = const VerificationMeta(
-    'convQty',
-  );
-  @override
-  late final GeneratedColumn<double> convQty = GeneratedColumn<double>(
-    'conv_qty',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _fConvQtyMeta = const VerificationMeta(
-    'fConvQty',
-  );
-  @override
-  late final GeneratedColumn<double> fConvQty = GeneratedColumn<double>(
-    'f_conv_qty',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _qtyStringMeta = const VerificationMeta(
-    'qtyString',
-  );
-  @override
-  late final GeneratedColumn<String> qtyString = GeneratedColumn<String>(
-    'qty_string',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _fQtyStringMeta = const VerificationMeta(
-    'fQtyString',
-  );
-  @override
-  late final GeneratedColumn<String> fQtyString = GeneratedColumn<String>(
-    'f_qty_string',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _fUnitMeta = const VerificationMeta('fUnit');
-  @override
-  late final GeneratedColumn<String> fUnit = GeneratedColumn<String>(
-    'f_unit',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _aConvQtyMeta = const VerificationMeta(
-    'aConvQty',
-  );
-  @override
-  late final GeneratedColumn<double> aConvQty = GeneratedColumn<double>(
-    'a_conv_qty',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _aFConvQtyMeta = const VerificationMeta(
-    'aFConvQty',
-  );
-  @override
-  late final GeneratedColumn<double> aFConvQty = GeneratedColumn<double>(
-    'a_f_conv_qty',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
   );
   static const VerificationMeta _rateUnitMeta = const VerificationMeta(
     'rateUnit',
@@ -26154,42 +26620,229 @@ class $SaleReturnDetailsTableTable extends SaleReturnDetailsTable
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _taxPercMeta = const VerificationMeta(
+    'taxPerc',
+  );
+  @override
+  late final GeneratedColumn<double> taxPerc = GeneratedColumn<double>(
+    'tax_perc',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _cessPerMeta = const VerificationMeta(
+    'cessPer',
+  );
+  @override
+  late final GeneratedColumn<double> cessPer = GeneratedColumn<double>(
+    'cess_per',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _addCessPerMeta = const VerificationMeta(
+    'addCessPer',
+  );
+  @override
+  late final GeneratedColumn<double> addCessPer = GeneratedColumn<double>(
+    'add_cess_per',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _igstValMeta = const VerificationMeta(
+    'igstVal',
+  );
+  @override
+  late final GeneratedColumn<double> igstVal = GeneratedColumn<double>(
+    'igst_val',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _cgstValMeta = const VerificationMeta(
+    'cgstVal',
+  );
+  @override
+  late final GeneratedColumn<double> cgstVal = GeneratedColumn<double>(
+    'cgst_val',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _sgstValMeta = const VerificationMeta(
+    'sgstVal',
+  );
+  @override
+  late final GeneratedColumn<double> sgstVal = GeneratedColumn<double>(
+    'sgst_val',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _cessValMeta = const VerificationMeta(
+    'cessVal',
+  );
+  @override
+  late final GeneratedColumn<double> cessVal = GeneratedColumn<double>(
+    'cess_val',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _addCessValMeta = const VerificationMeta(
+    'addCessVal',
+  );
+  @override
+  late final GeneratedColumn<double> addCessVal = GeneratedColumn<double>(
+    'add_cess_val',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _otherValMeta = const VerificationMeta(
+    'otherVal',
+  );
+  @override
+  late final GeneratedColumn<double> otherVal = GeneratedColumn<double>(
+    'other_val',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _discountPerMeta = const VerificationMeta(
+    'discountPer',
+  );
+  @override
+  late final GeneratedColumn<double> discountPer = GeneratedColumn<double>(
+    'discount_per',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _discountAmtMeta = const VerificationMeta(
+    'discountAmt',
+  );
+  @override
+  late final GeneratedColumn<double> discountAmt = GeneratedColumn<double>(
+    'discount_amt',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _taxableAmountMeta = const VerificationMeta(
+    'taxableAmount',
+  );
+  @override
+  late final GeneratedColumn<double> taxableAmount = GeneratedColumn<double>(
+    'taxable_amount',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _amountMeta = const VerificationMeta('amount');
+  @override
+  late final GeneratedColumn<double> amount = GeneratedColumn<double>(
+    'amount',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _rateIncMeta = const VerificationMeta(
+    'rateInc',
+  );
+  @override
+  late final GeneratedColumn<double> rateInc = GeneratedColumn<double>(
+    'rate_inc',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _amountIncMeta = const VerificationMeta(
+    'amountInc',
+  );
+  @override
+  late final GeneratedColumn<double> amountInc = GeneratedColumn<double>(
+    'amount_inc',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
-    mid,
+    vchId,
+    lineNo,
     itemId,
     itemName,
-    qty,
-    unit,
+    itemDesc,
+    stkQtyFirst,
+    stkQtySecond,
+    enteredQtyFirst,
+    enteredQtySecond,
+    enteredActualQtyFirst,
+    enteredActualQtySecond,
+    enteredUnit,
+    qtyFirst,
+    qtySecond,
+    qtyActualFirst,
+    qtyActualSecond,
+    altQtyFirst,
+    altQtySecond,
+    altQtyActualFirst,
+    altQtyActualSecond,
+    qtyStr,
+    actualQtyStr,
+    qty1,
+    qty2,
+    qty3,
     rate,
-    vat,
-    vatAmt,
-    total,
-    disc,
-    discVal,
-    ledger,
-    companyId,
-    sync,
-    hsn,
-    enteredRate,
-    enteredDisc,
-    eneteredQty,
-    enteredFQty,
-    fQty,
-    addDiscVal,
-    cessAmt,
-    stkNegPermission,
-    discType,
-    priceList,
-    convQty,
-    fConvQty,
-    qtyString,
-    fQtyString,
-    fUnit,
-    aConvQty,
-    aFConvQty,
     rateUnit,
+    taxPerc,
+    cessPer,
+    addCessPer,
+    igstVal,
+    cgstVal,
+    sgstVal,
+    cessVal,
+    addCessVal,
+    otherVal,
+    discountPer,
+    discountAmt,
+    taxableAmount,
+    amount,
+    rateInc,
+    amountInc,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -26206,10 +26859,18 @@ class $SaleReturnDetailsTableTable extends SaleReturnDetailsTable
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('mid')) {
+    if (data.containsKey('vch_id')) {
       context.handle(
-        _midMeta,
-        mid.isAcceptableOrUnknown(data['mid']!, _midMeta),
+        _vchIdMeta,
+        vchId.isAcceptableOrUnknown(data['vch_id']!, _vchIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_vchIdMeta);
+    }
+    if (data.containsKey('line_no')) {
+      context.handle(
+        _lineNoMeta,
+        lineNo.isAcceptableOrUnknown(data['line_no']!, _lineNoMeta),
       );
     }
     if (data.containsKey('item_id')) {
@@ -26224,16 +26885,172 @@ class $SaleReturnDetailsTableTable extends SaleReturnDetailsTable
         itemName.isAcceptableOrUnknown(data['item_name']!, _itemNameMeta),
       );
     }
-    if (data.containsKey('qty')) {
+    if (data.containsKey('item_desc')) {
       context.handle(
-        _qtyMeta,
-        qty.isAcceptableOrUnknown(data['qty']!, _qtyMeta),
+        _itemDescMeta,
+        itemDesc.isAcceptableOrUnknown(data['item_desc']!, _itemDescMeta),
       );
     }
-    if (data.containsKey('unit')) {
+    if (data.containsKey('stk_qty_first')) {
       context.handle(
-        _unitMeta,
-        unit.isAcceptableOrUnknown(data['unit']!, _unitMeta),
+        _stkQtyFirstMeta,
+        stkQtyFirst.isAcceptableOrUnknown(
+          data['stk_qty_first']!,
+          _stkQtyFirstMeta,
+        ),
+      );
+    }
+    if (data.containsKey('stk_qty_second')) {
+      context.handle(
+        _stkQtySecondMeta,
+        stkQtySecond.isAcceptableOrUnknown(
+          data['stk_qty_second']!,
+          _stkQtySecondMeta,
+        ),
+      );
+    }
+    if (data.containsKey('entered_qty_first')) {
+      context.handle(
+        _enteredQtyFirstMeta,
+        enteredQtyFirst.isAcceptableOrUnknown(
+          data['entered_qty_first']!,
+          _enteredQtyFirstMeta,
+        ),
+      );
+    }
+    if (data.containsKey('entered_qty_second')) {
+      context.handle(
+        _enteredQtySecondMeta,
+        enteredQtySecond.isAcceptableOrUnknown(
+          data['entered_qty_second']!,
+          _enteredQtySecondMeta,
+        ),
+      );
+    }
+    if (data.containsKey('entered_actual_qty_first')) {
+      context.handle(
+        _enteredActualQtyFirstMeta,
+        enteredActualQtyFirst.isAcceptableOrUnknown(
+          data['entered_actual_qty_first']!,
+          _enteredActualQtyFirstMeta,
+        ),
+      );
+    }
+    if (data.containsKey('entered_actual_qty_second')) {
+      context.handle(
+        _enteredActualQtySecondMeta,
+        enteredActualQtySecond.isAcceptableOrUnknown(
+          data['entered_actual_qty_second']!,
+          _enteredActualQtySecondMeta,
+        ),
+      );
+    }
+    if (data.containsKey('entered_unit')) {
+      context.handle(
+        _enteredUnitMeta,
+        enteredUnit.isAcceptableOrUnknown(
+          data['entered_unit']!,
+          _enteredUnitMeta,
+        ),
+      );
+    }
+    if (data.containsKey('qty_first')) {
+      context.handle(
+        _qtyFirstMeta,
+        qtyFirst.isAcceptableOrUnknown(data['qty_first']!, _qtyFirstMeta),
+      );
+    }
+    if (data.containsKey('qty_second')) {
+      context.handle(
+        _qtySecondMeta,
+        qtySecond.isAcceptableOrUnknown(data['qty_second']!, _qtySecondMeta),
+      );
+    }
+    if (data.containsKey('qty_actual_first')) {
+      context.handle(
+        _qtyActualFirstMeta,
+        qtyActualFirst.isAcceptableOrUnknown(
+          data['qty_actual_first']!,
+          _qtyActualFirstMeta,
+        ),
+      );
+    }
+    if (data.containsKey('qty_actual_second')) {
+      context.handle(
+        _qtyActualSecondMeta,
+        qtyActualSecond.isAcceptableOrUnknown(
+          data['qty_actual_second']!,
+          _qtyActualSecondMeta,
+        ),
+      );
+    }
+    if (data.containsKey('alt_qty_first')) {
+      context.handle(
+        _altQtyFirstMeta,
+        altQtyFirst.isAcceptableOrUnknown(
+          data['alt_qty_first']!,
+          _altQtyFirstMeta,
+        ),
+      );
+    }
+    if (data.containsKey('alt_qty_second')) {
+      context.handle(
+        _altQtySecondMeta,
+        altQtySecond.isAcceptableOrUnknown(
+          data['alt_qty_second']!,
+          _altQtySecondMeta,
+        ),
+      );
+    }
+    if (data.containsKey('alt_qty_actual_first')) {
+      context.handle(
+        _altQtyActualFirstMeta,
+        altQtyActualFirst.isAcceptableOrUnknown(
+          data['alt_qty_actual_first']!,
+          _altQtyActualFirstMeta,
+        ),
+      );
+    }
+    if (data.containsKey('alt_qty_actual_second')) {
+      context.handle(
+        _altQtyActualSecondMeta,
+        altQtyActualSecond.isAcceptableOrUnknown(
+          data['alt_qty_actual_second']!,
+          _altQtyActualSecondMeta,
+        ),
+      );
+    }
+    if (data.containsKey('qty_str')) {
+      context.handle(
+        _qtyStrMeta,
+        qtyStr.isAcceptableOrUnknown(data['qty_str']!, _qtyStrMeta),
+      );
+    }
+    if (data.containsKey('actual_qty_str')) {
+      context.handle(
+        _actualQtyStrMeta,
+        actualQtyStr.isAcceptableOrUnknown(
+          data['actual_qty_str']!,
+          _actualQtyStrMeta,
+        ),
+      );
+    }
+    if (data.containsKey('qty1')) {
+      context.handle(
+        _qty1Meta,
+        qty1.isAcceptableOrUnknown(data['qty1']!, _qty1Meta),
+      );
+    }
+    if (data.containsKey('qty2')) {
+      context.handle(
+        _qty2Meta,
+        qty2.isAcceptableOrUnknown(data['qty2']!, _qty2Meta),
+      );
+    }
+    if (data.containsKey('qty3')) {
+      context.handle(
+        _qty3Meta,
+        qty3.isAcceptableOrUnknown(data['qty3']!, _qty3Meta),
       );
     }
     if (data.containsKey('rate')) {
@@ -26242,187 +27059,115 @@ class $SaleReturnDetailsTableTable extends SaleReturnDetailsTable
         rate.isAcceptableOrUnknown(data['rate']!, _rateMeta),
       );
     }
-    if (data.containsKey('vat')) {
-      context.handle(
-        _vatMeta,
-        vat.isAcceptableOrUnknown(data['vat']!, _vatMeta),
-      );
-    }
-    if (data.containsKey('vat_amt')) {
-      context.handle(
-        _vatAmtMeta,
-        vatAmt.isAcceptableOrUnknown(data['vat_amt']!, _vatAmtMeta),
-      );
-    }
-    if (data.containsKey('total')) {
-      context.handle(
-        _totalMeta,
-        total.isAcceptableOrUnknown(data['total']!, _totalMeta),
-      );
-    }
-    if (data.containsKey('disc')) {
-      context.handle(
-        _discMeta,
-        disc.isAcceptableOrUnknown(data['disc']!, _discMeta),
-      );
-    }
-    if (data.containsKey('disc_val')) {
-      context.handle(
-        _discValMeta,
-        discVal.isAcceptableOrUnknown(data['disc_val']!, _discValMeta),
-      );
-    }
-    if (data.containsKey('ledger')) {
-      context.handle(
-        _ledgerMeta,
-        ledger.isAcceptableOrUnknown(data['ledger']!, _ledgerMeta),
-      );
-    }
-    if (data.containsKey('company_id')) {
-      context.handle(
-        _companyIdMeta,
-        companyId.isAcceptableOrUnknown(data['company_id']!, _companyIdMeta),
-      );
-    }
-    if (data.containsKey('sync')) {
-      context.handle(
-        _syncMeta,
-        sync.isAcceptableOrUnknown(data['sync']!, _syncMeta),
-      );
-    }
-    if (data.containsKey('hsn')) {
-      context.handle(
-        _hsnMeta,
-        hsn.isAcceptableOrUnknown(data['hsn']!, _hsnMeta),
-      );
-    }
-    if (data.containsKey('entered_rate')) {
-      context.handle(
-        _enteredRateMeta,
-        enteredRate.isAcceptableOrUnknown(
-          data['entered_rate']!,
-          _enteredRateMeta,
-        ),
-      );
-    }
-    if (data.containsKey('entered_disc')) {
-      context.handle(
-        _enteredDiscMeta,
-        enteredDisc.isAcceptableOrUnknown(
-          data['entered_disc']!,
-          _enteredDiscMeta,
-        ),
-      );
-    }
-    if (data.containsKey('enetered_qty')) {
-      context.handle(
-        _eneteredQtyMeta,
-        eneteredQty.isAcceptableOrUnknown(
-          data['enetered_qty']!,
-          _eneteredQtyMeta,
-        ),
-      );
-    }
-    if (data.containsKey('entered_f_qty')) {
-      context.handle(
-        _enteredFQtyMeta,
-        enteredFQty.isAcceptableOrUnknown(
-          data['entered_f_qty']!,
-          _enteredFQtyMeta,
-        ),
-      );
-    }
-    if (data.containsKey('f_qty')) {
-      context.handle(
-        _fQtyMeta,
-        fQty.isAcceptableOrUnknown(data['f_qty']!, _fQtyMeta),
-      );
-    }
-    if (data.containsKey('add_disc_val')) {
-      context.handle(
-        _addDiscValMeta,
-        addDiscVal.isAcceptableOrUnknown(
-          data['add_disc_val']!,
-          _addDiscValMeta,
-        ),
-      );
-    }
-    if (data.containsKey('cess_amt')) {
-      context.handle(
-        _cessAmtMeta,
-        cessAmt.isAcceptableOrUnknown(data['cess_amt']!, _cessAmtMeta),
-      );
-    }
-    if (data.containsKey('stk_neg_permission')) {
-      context.handle(
-        _stkNegPermissionMeta,
-        stkNegPermission.isAcceptableOrUnknown(
-          data['stk_neg_permission']!,
-          _stkNegPermissionMeta,
-        ),
-      );
-    }
-    if (data.containsKey('disc_type')) {
-      context.handle(
-        _discTypeMeta,
-        discType.isAcceptableOrUnknown(data['disc_type']!, _discTypeMeta),
-      );
-    }
-    if (data.containsKey('price_list')) {
-      context.handle(
-        _priceListMeta,
-        priceList.isAcceptableOrUnknown(data['price_list']!, _priceListMeta),
-      );
-    }
-    if (data.containsKey('conv_qty')) {
-      context.handle(
-        _convQtyMeta,
-        convQty.isAcceptableOrUnknown(data['conv_qty']!, _convQtyMeta),
-      );
-    }
-    if (data.containsKey('f_conv_qty')) {
-      context.handle(
-        _fConvQtyMeta,
-        fConvQty.isAcceptableOrUnknown(data['f_conv_qty']!, _fConvQtyMeta),
-      );
-    }
-    if (data.containsKey('qty_string')) {
-      context.handle(
-        _qtyStringMeta,
-        qtyString.isAcceptableOrUnknown(data['qty_string']!, _qtyStringMeta),
-      );
-    }
-    if (data.containsKey('f_qty_string')) {
-      context.handle(
-        _fQtyStringMeta,
-        fQtyString.isAcceptableOrUnknown(
-          data['f_qty_string']!,
-          _fQtyStringMeta,
-        ),
-      );
-    }
-    if (data.containsKey('f_unit')) {
-      context.handle(
-        _fUnitMeta,
-        fUnit.isAcceptableOrUnknown(data['f_unit']!, _fUnitMeta),
-      );
-    }
-    if (data.containsKey('a_conv_qty')) {
-      context.handle(
-        _aConvQtyMeta,
-        aConvQty.isAcceptableOrUnknown(data['a_conv_qty']!, _aConvQtyMeta),
-      );
-    }
-    if (data.containsKey('a_f_conv_qty')) {
-      context.handle(
-        _aFConvQtyMeta,
-        aFConvQty.isAcceptableOrUnknown(data['a_f_conv_qty']!, _aFConvQtyMeta),
-      );
-    }
     if (data.containsKey('rate_unit')) {
       context.handle(
         _rateUnitMeta,
         rateUnit.isAcceptableOrUnknown(data['rate_unit']!, _rateUnitMeta),
+      );
+    }
+    if (data.containsKey('tax_perc')) {
+      context.handle(
+        _taxPercMeta,
+        taxPerc.isAcceptableOrUnknown(data['tax_perc']!, _taxPercMeta),
+      );
+    }
+    if (data.containsKey('cess_per')) {
+      context.handle(
+        _cessPerMeta,
+        cessPer.isAcceptableOrUnknown(data['cess_per']!, _cessPerMeta),
+      );
+    }
+    if (data.containsKey('add_cess_per')) {
+      context.handle(
+        _addCessPerMeta,
+        addCessPer.isAcceptableOrUnknown(
+          data['add_cess_per']!,
+          _addCessPerMeta,
+        ),
+      );
+    }
+    if (data.containsKey('igst_val')) {
+      context.handle(
+        _igstValMeta,
+        igstVal.isAcceptableOrUnknown(data['igst_val']!, _igstValMeta),
+      );
+    }
+    if (data.containsKey('cgst_val')) {
+      context.handle(
+        _cgstValMeta,
+        cgstVal.isAcceptableOrUnknown(data['cgst_val']!, _cgstValMeta),
+      );
+    }
+    if (data.containsKey('sgst_val')) {
+      context.handle(
+        _sgstValMeta,
+        sgstVal.isAcceptableOrUnknown(data['sgst_val']!, _sgstValMeta),
+      );
+    }
+    if (data.containsKey('cess_val')) {
+      context.handle(
+        _cessValMeta,
+        cessVal.isAcceptableOrUnknown(data['cess_val']!, _cessValMeta),
+      );
+    }
+    if (data.containsKey('add_cess_val')) {
+      context.handle(
+        _addCessValMeta,
+        addCessVal.isAcceptableOrUnknown(
+          data['add_cess_val']!,
+          _addCessValMeta,
+        ),
+      );
+    }
+    if (data.containsKey('other_val')) {
+      context.handle(
+        _otherValMeta,
+        otherVal.isAcceptableOrUnknown(data['other_val']!, _otherValMeta),
+      );
+    }
+    if (data.containsKey('discount_per')) {
+      context.handle(
+        _discountPerMeta,
+        discountPer.isAcceptableOrUnknown(
+          data['discount_per']!,
+          _discountPerMeta,
+        ),
+      );
+    }
+    if (data.containsKey('discount_amt')) {
+      context.handle(
+        _discountAmtMeta,
+        discountAmt.isAcceptableOrUnknown(
+          data['discount_amt']!,
+          _discountAmtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('taxable_amount')) {
+      context.handle(
+        _taxableAmountMeta,
+        taxableAmount.isAcceptableOrUnknown(
+          data['taxable_amount']!,
+          _taxableAmountMeta,
+        ),
+      );
+    }
+    if (data.containsKey('amount')) {
+      context.handle(
+        _amountMeta,
+        amount.isAcceptableOrUnknown(data['amount']!, _amountMeta),
+      );
+    }
+    if (data.containsKey('rate_inc')) {
+      context.handle(
+        _rateIncMeta,
+        rateInc.isAcceptableOrUnknown(data['rate_inc']!, _rateIncMeta),
+      );
+    }
+    if (data.containsKey('amount_inc')) {
+      context.handle(
+        _amountIncMeta,
+        amountInc.isAcceptableOrUnknown(data['amount_inc']!, _amountIncMeta),
       );
     }
     return context;
@@ -26441,9 +27186,13 @@ class $SaleReturnDetailsTableTable extends SaleReturnDetailsTable
         DriftSqlType.int,
         data['${effectivePrefix}id'],
       )!,
-      mid: attachedDatabase.typeMapping.read(
+      vchId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
-        data['${effectivePrefix}mid'],
+        data['${effectivePrefix}vch_id'],
+      )!,
+      lineNo: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}line_no'],
       ),
       itemId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
@@ -26453,126 +27202,158 @@ class $SaleReturnDetailsTableTable extends SaleReturnDetailsTable
         DriftSqlType.string,
         data['${effectivePrefix}item_name'],
       ),
-      qty: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}qty'],
-      ),
-      unit: attachedDatabase.typeMapping.read(
+      itemDesc: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}unit'],
+        data['${effectivePrefix}item_desc'],
       ),
+      stkQtyFirst: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}stk_qty_first'],
+      )!,
+      stkQtySecond: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}stk_qty_second'],
+      )!,
+      enteredQtyFirst: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}entered_qty_first'],
+      )!,
+      enteredQtySecond: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}entered_qty_second'],
+      )!,
+      enteredActualQtyFirst: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}entered_actual_qty_first'],
+      )!,
+      enteredActualQtySecond: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}entered_actual_qty_second'],
+      )!,
+      enteredUnit: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}entered_unit'],
+      ),
+      qtyFirst: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}qty_first'],
+      )!,
+      qtySecond: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}qty_second'],
+      )!,
+      qtyActualFirst: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}qty_actual_first'],
+      )!,
+      qtyActualSecond: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}qty_actual_second'],
+      )!,
+      altQtyFirst: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}alt_qty_first'],
+      )!,
+      altQtySecond: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}alt_qty_second'],
+      )!,
+      altQtyActualFirst: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}alt_qty_actual_first'],
+      )!,
+      altQtyActualSecond: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}alt_qty_actual_second'],
+      )!,
+      qtyStr: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}qty_str'],
+      ),
+      actualQtyStr: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}actual_qty_str'],
+      ),
+      qty1: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}qty1'],
+      )!,
+      qty2: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}qty2'],
+      )!,
+      qty3: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}qty3'],
+      )!,
       rate: attachedDatabase.typeMapping.read(
         DriftSqlType.double,
         data['${effectivePrefix}rate'],
-      ),
-      vat: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}vat'],
-      ),
-      vatAmt: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}vat_amt'],
-      ),
-      total: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}total'],
-      ),
-      disc: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}disc'],
-      ),
-      discVal: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}disc_val'],
-      ),
-      ledger: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}ledger'],
-      ),
-      companyId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}company_id'],
-      ),
-      sync: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}sync'],
       )!,
-      hsn: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}hsn'],
-      ),
-      enteredRate: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}entered_rate'],
-      ),
-      enteredDisc: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}entered_disc'],
-      ),
-      eneteredQty: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}enetered_qty'],
-      ),
-      enteredFQty: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}entered_f_qty'],
-      ),
-      fQty: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}f_qty'],
-      ),
-      addDiscVal: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}add_disc_val'],
-      ),
-      cessAmt: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}cess_amt'],
-      ),
-      stkNegPermission: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}stk_neg_permission'],
-      ),
-      discType: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}disc_type'],
-      ),
-      priceList: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}price_list'],
-      ),
-      convQty: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}conv_qty'],
-      ),
-      fConvQty: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}f_conv_qty'],
-      ),
-      qtyString: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}qty_string'],
-      ),
-      fQtyString: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}f_qty_string'],
-      ),
-      fUnit: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}f_unit'],
-      ),
-      aConvQty: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}a_conv_qty'],
-      ),
-      aFConvQty: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}a_f_conv_qty'],
-      ),
       rateUnit: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}rate_unit'],
       ),
+      taxPerc: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}tax_perc'],
+      )!,
+      cessPer: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}cess_per'],
+      )!,
+      addCessPer: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}add_cess_per'],
+      )!,
+      igstVal: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}igst_val'],
+      )!,
+      cgstVal: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}cgst_val'],
+      )!,
+      sgstVal: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}sgst_val'],
+      )!,
+      cessVal: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}cess_val'],
+      )!,
+      addCessVal: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}add_cess_val'],
+      )!,
+      otherVal: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}other_val'],
+      )!,
+      discountPer: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}discount_per'],
+      )!,
+      discountAmt: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}discount_amt'],
+      )!,
+      taxableAmount: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}taxable_amount'],
+      )!,
+      amount: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}amount'],
+      )!,
+      rateInc: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}rate_inc'],
+      )!,
+      amountInc: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}amount_inc'],
+      )!,
     );
   }
 
@@ -26585,81 +27366,100 @@ class $SaleReturnDetailsTableTable extends SaleReturnDetailsTable
 class SaleReturnDetailsTableData extends DataClass
     implements Insertable<SaleReturnDetailsTableData> {
   final int id;
-  final int? mid;
+  final int vchId;
+  final int? lineNo;
   final int? itemId;
   final String? itemName;
-  final double? qty;
-  final String? unit;
-  final double? rate;
-  final double? vat;
-  final double? vatAmt;
-  final double? total;
-  final double? disc;
-  final double? discVal;
-  final String? ledger;
-  final int? companyId;
-  final int sync;
-  final String? hsn;
-  final double? enteredRate;
-  final double? enteredDisc;
-  final String? eneteredQty;
-  final String? enteredFQty;
-  final double? fQty;
-  final double? addDiscVal;
-  final double? cessAmt;
-  final String? stkNegPermission;
-  final String? discType;
-  final String? priceList;
-  final double? convQty;
-  final double? fConvQty;
-  final String? qtyString;
-  final String? fQtyString;
-  final String? fUnit;
-  final double? aConvQty;
-  final double? aFConvQty;
+  final String? itemDesc;
+  final double stkQtyFirst;
+  final double stkQtySecond;
+  final double enteredQtyFirst;
+  final double enteredQtySecond;
+  final double enteredActualQtyFirst;
+  final double enteredActualQtySecond;
+  final String? enteredUnit;
+  final double qtyFirst;
+  final double qtySecond;
+  final double qtyActualFirst;
+  final double qtyActualSecond;
+  final double altQtyFirst;
+  final double altQtySecond;
+  final double altQtyActualFirst;
+  final double altQtyActualSecond;
+  final String? qtyStr;
+  final String? actualQtyStr;
+  final double qty1;
+  final double qty2;
+  final double qty3;
+  final double rate;
   final String? rateUnit;
+  final double taxPerc;
+  final double cessPer;
+  final double addCessPer;
+  final double igstVal;
+  final double cgstVal;
+  final double sgstVal;
+  final double cessVal;
+  final double addCessVal;
+  final double otherVal;
+  final double discountPer;
+  final double discountAmt;
+  final double taxableAmount;
+  final double amount;
+  final double rateInc;
+  final double amountInc;
   const SaleReturnDetailsTableData({
     required this.id,
-    this.mid,
+    required this.vchId,
+    this.lineNo,
     this.itemId,
     this.itemName,
-    this.qty,
-    this.unit,
-    this.rate,
-    this.vat,
-    this.vatAmt,
-    this.total,
-    this.disc,
-    this.discVal,
-    this.ledger,
-    this.companyId,
-    required this.sync,
-    this.hsn,
-    this.enteredRate,
-    this.enteredDisc,
-    this.eneteredQty,
-    this.enteredFQty,
-    this.fQty,
-    this.addDiscVal,
-    this.cessAmt,
-    this.stkNegPermission,
-    this.discType,
-    this.priceList,
-    this.convQty,
-    this.fConvQty,
-    this.qtyString,
-    this.fQtyString,
-    this.fUnit,
-    this.aConvQty,
-    this.aFConvQty,
+    this.itemDesc,
+    required this.stkQtyFirst,
+    required this.stkQtySecond,
+    required this.enteredQtyFirst,
+    required this.enteredQtySecond,
+    required this.enteredActualQtyFirst,
+    required this.enteredActualQtySecond,
+    this.enteredUnit,
+    required this.qtyFirst,
+    required this.qtySecond,
+    required this.qtyActualFirst,
+    required this.qtyActualSecond,
+    required this.altQtyFirst,
+    required this.altQtySecond,
+    required this.altQtyActualFirst,
+    required this.altQtyActualSecond,
+    this.qtyStr,
+    this.actualQtyStr,
+    required this.qty1,
+    required this.qty2,
+    required this.qty3,
+    required this.rate,
     this.rateUnit,
+    required this.taxPerc,
+    required this.cessPer,
+    required this.addCessPer,
+    required this.igstVal,
+    required this.cgstVal,
+    required this.sgstVal,
+    required this.cessVal,
+    required this.addCessVal,
+    required this.otherVal,
+    required this.discountPer,
+    required this.discountAmt,
+    required this.taxableAmount,
+    required this.amount,
+    required this.rateInc,
+    required this.amountInc,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    if (!nullToAbsent || mid != null) {
-      map['mid'] = Variable<int>(mid);
+    map['vch_id'] = Variable<int>(vchId);
+    if (!nullToAbsent || lineNo != null) {
+      map['line_no'] = Variable<int>(lineNo);
     }
     if (!nullToAbsent || itemId != null) {
       map['item_id'] = Variable<int>(itemId);
@@ -26667,181 +27467,118 @@ class SaleReturnDetailsTableData extends DataClass
     if (!nullToAbsent || itemName != null) {
       map['item_name'] = Variable<String>(itemName);
     }
-    if (!nullToAbsent || qty != null) {
-      map['qty'] = Variable<double>(qty);
+    if (!nullToAbsent || itemDesc != null) {
+      map['item_desc'] = Variable<String>(itemDesc);
     }
-    if (!nullToAbsent || unit != null) {
-      map['unit'] = Variable<String>(unit);
+    map['stk_qty_first'] = Variable<double>(stkQtyFirst);
+    map['stk_qty_second'] = Variable<double>(stkQtySecond);
+    map['entered_qty_first'] = Variable<double>(enteredQtyFirst);
+    map['entered_qty_second'] = Variable<double>(enteredQtySecond);
+    map['entered_actual_qty_first'] = Variable<double>(enteredActualQtyFirst);
+    map['entered_actual_qty_second'] = Variable<double>(enteredActualQtySecond);
+    if (!nullToAbsent || enteredUnit != null) {
+      map['entered_unit'] = Variable<String>(enteredUnit);
     }
-    if (!nullToAbsent || rate != null) {
-      map['rate'] = Variable<double>(rate);
+    map['qty_first'] = Variable<double>(qtyFirst);
+    map['qty_second'] = Variable<double>(qtySecond);
+    map['qty_actual_first'] = Variable<double>(qtyActualFirst);
+    map['qty_actual_second'] = Variable<double>(qtyActualSecond);
+    map['alt_qty_first'] = Variable<double>(altQtyFirst);
+    map['alt_qty_second'] = Variable<double>(altQtySecond);
+    map['alt_qty_actual_first'] = Variable<double>(altQtyActualFirst);
+    map['alt_qty_actual_second'] = Variable<double>(altQtyActualSecond);
+    if (!nullToAbsent || qtyStr != null) {
+      map['qty_str'] = Variable<String>(qtyStr);
     }
-    if (!nullToAbsent || vat != null) {
-      map['vat'] = Variable<double>(vat);
+    if (!nullToAbsent || actualQtyStr != null) {
+      map['actual_qty_str'] = Variable<String>(actualQtyStr);
     }
-    if (!nullToAbsent || vatAmt != null) {
-      map['vat_amt'] = Variable<double>(vatAmt);
-    }
-    if (!nullToAbsent || total != null) {
-      map['total'] = Variable<double>(total);
-    }
-    if (!nullToAbsent || disc != null) {
-      map['disc'] = Variable<double>(disc);
-    }
-    if (!nullToAbsent || discVal != null) {
-      map['disc_val'] = Variable<double>(discVal);
-    }
-    if (!nullToAbsent || ledger != null) {
-      map['ledger'] = Variable<String>(ledger);
-    }
-    if (!nullToAbsent || companyId != null) {
-      map['company_id'] = Variable<int>(companyId);
-    }
-    map['sync'] = Variable<int>(sync);
-    if (!nullToAbsent || hsn != null) {
-      map['hsn'] = Variable<String>(hsn);
-    }
-    if (!nullToAbsent || enteredRate != null) {
-      map['entered_rate'] = Variable<double>(enteredRate);
-    }
-    if (!nullToAbsent || enteredDisc != null) {
-      map['entered_disc'] = Variable<double>(enteredDisc);
-    }
-    if (!nullToAbsent || eneteredQty != null) {
-      map['enetered_qty'] = Variable<String>(eneteredQty);
-    }
-    if (!nullToAbsent || enteredFQty != null) {
-      map['entered_f_qty'] = Variable<String>(enteredFQty);
-    }
-    if (!nullToAbsent || fQty != null) {
-      map['f_qty'] = Variable<double>(fQty);
-    }
-    if (!nullToAbsent || addDiscVal != null) {
-      map['add_disc_val'] = Variable<double>(addDiscVal);
-    }
-    if (!nullToAbsent || cessAmt != null) {
-      map['cess_amt'] = Variable<double>(cessAmt);
-    }
-    if (!nullToAbsent || stkNegPermission != null) {
-      map['stk_neg_permission'] = Variable<String>(stkNegPermission);
-    }
-    if (!nullToAbsent || discType != null) {
-      map['disc_type'] = Variable<String>(discType);
-    }
-    if (!nullToAbsent || priceList != null) {
-      map['price_list'] = Variable<String>(priceList);
-    }
-    if (!nullToAbsent || convQty != null) {
-      map['conv_qty'] = Variable<double>(convQty);
-    }
-    if (!nullToAbsent || fConvQty != null) {
-      map['f_conv_qty'] = Variable<double>(fConvQty);
-    }
-    if (!nullToAbsent || qtyString != null) {
-      map['qty_string'] = Variable<String>(qtyString);
-    }
-    if (!nullToAbsent || fQtyString != null) {
-      map['f_qty_string'] = Variable<String>(fQtyString);
-    }
-    if (!nullToAbsent || fUnit != null) {
-      map['f_unit'] = Variable<String>(fUnit);
-    }
-    if (!nullToAbsent || aConvQty != null) {
-      map['a_conv_qty'] = Variable<double>(aConvQty);
-    }
-    if (!nullToAbsent || aFConvQty != null) {
-      map['a_f_conv_qty'] = Variable<double>(aFConvQty);
-    }
+    map['qty1'] = Variable<double>(qty1);
+    map['qty2'] = Variable<double>(qty2);
+    map['qty3'] = Variable<double>(qty3);
+    map['rate'] = Variable<double>(rate);
     if (!nullToAbsent || rateUnit != null) {
       map['rate_unit'] = Variable<String>(rateUnit);
     }
+    map['tax_perc'] = Variable<double>(taxPerc);
+    map['cess_per'] = Variable<double>(cessPer);
+    map['add_cess_per'] = Variable<double>(addCessPer);
+    map['igst_val'] = Variable<double>(igstVal);
+    map['cgst_val'] = Variable<double>(cgstVal);
+    map['sgst_val'] = Variable<double>(sgstVal);
+    map['cess_val'] = Variable<double>(cessVal);
+    map['add_cess_val'] = Variable<double>(addCessVal);
+    map['other_val'] = Variable<double>(otherVal);
+    map['discount_per'] = Variable<double>(discountPer);
+    map['discount_amt'] = Variable<double>(discountAmt);
+    map['taxable_amount'] = Variable<double>(taxableAmount);
+    map['amount'] = Variable<double>(amount);
+    map['rate_inc'] = Variable<double>(rateInc);
+    map['amount_inc'] = Variable<double>(amountInc);
     return map;
   }
 
   SaleReturnDetailsTableCompanion toCompanion(bool nullToAbsent) {
     return SaleReturnDetailsTableCompanion(
       id: Value(id),
-      mid: mid == null && nullToAbsent ? const Value.absent() : Value(mid),
+      vchId: Value(vchId),
+      lineNo: lineNo == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lineNo),
       itemId: itemId == null && nullToAbsent
           ? const Value.absent()
           : Value(itemId),
       itemName: itemName == null && nullToAbsent
           ? const Value.absent()
           : Value(itemName),
-      qty: qty == null && nullToAbsent ? const Value.absent() : Value(qty),
-      unit: unit == null && nullToAbsent ? const Value.absent() : Value(unit),
-      rate: rate == null && nullToAbsent ? const Value.absent() : Value(rate),
-      vat: vat == null && nullToAbsent ? const Value.absent() : Value(vat),
-      vatAmt: vatAmt == null && nullToAbsent
+      itemDesc: itemDesc == null && nullToAbsent
           ? const Value.absent()
-          : Value(vatAmt),
-      total: total == null && nullToAbsent
+          : Value(itemDesc),
+      stkQtyFirst: Value(stkQtyFirst),
+      stkQtySecond: Value(stkQtySecond),
+      enteredQtyFirst: Value(enteredQtyFirst),
+      enteredQtySecond: Value(enteredQtySecond),
+      enteredActualQtyFirst: Value(enteredActualQtyFirst),
+      enteredActualQtySecond: Value(enteredActualQtySecond),
+      enteredUnit: enteredUnit == null && nullToAbsent
           ? const Value.absent()
-          : Value(total),
-      disc: disc == null && nullToAbsent ? const Value.absent() : Value(disc),
-      discVal: discVal == null && nullToAbsent
+          : Value(enteredUnit),
+      qtyFirst: Value(qtyFirst),
+      qtySecond: Value(qtySecond),
+      qtyActualFirst: Value(qtyActualFirst),
+      qtyActualSecond: Value(qtyActualSecond),
+      altQtyFirst: Value(altQtyFirst),
+      altQtySecond: Value(altQtySecond),
+      altQtyActualFirst: Value(altQtyActualFirst),
+      altQtyActualSecond: Value(altQtyActualSecond),
+      qtyStr: qtyStr == null && nullToAbsent
           ? const Value.absent()
-          : Value(discVal),
-      ledger: ledger == null && nullToAbsent
+          : Value(qtyStr),
+      actualQtyStr: actualQtyStr == null && nullToAbsent
           ? const Value.absent()
-          : Value(ledger),
-      companyId: companyId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(companyId),
-      sync: Value(sync),
-      hsn: hsn == null && nullToAbsent ? const Value.absent() : Value(hsn),
-      enteredRate: enteredRate == null && nullToAbsent
-          ? const Value.absent()
-          : Value(enteredRate),
-      enteredDisc: enteredDisc == null && nullToAbsent
-          ? const Value.absent()
-          : Value(enteredDisc),
-      eneteredQty: eneteredQty == null && nullToAbsent
-          ? const Value.absent()
-          : Value(eneteredQty),
-      enteredFQty: enteredFQty == null && nullToAbsent
-          ? const Value.absent()
-          : Value(enteredFQty),
-      fQty: fQty == null && nullToAbsent ? const Value.absent() : Value(fQty),
-      addDiscVal: addDiscVal == null && nullToAbsent
-          ? const Value.absent()
-          : Value(addDiscVal),
-      cessAmt: cessAmt == null && nullToAbsent
-          ? const Value.absent()
-          : Value(cessAmt),
-      stkNegPermission: stkNegPermission == null && nullToAbsent
-          ? const Value.absent()
-          : Value(stkNegPermission),
-      discType: discType == null && nullToAbsent
-          ? const Value.absent()
-          : Value(discType),
-      priceList: priceList == null && nullToAbsent
-          ? const Value.absent()
-          : Value(priceList),
-      convQty: convQty == null && nullToAbsent
-          ? const Value.absent()
-          : Value(convQty),
-      fConvQty: fConvQty == null && nullToAbsent
-          ? const Value.absent()
-          : Value(fConvQty),
-      qtyString: qtyString == null && nullToAbsent
-          ? const Value.absent()
-          : Value(qtyString),
-      fQtyString: fQtyString == null && nullToAbsent
-          ? const Value.absent()
-          : Value(fQtyString),
-      fUnit: fUnit == null && nullToAbsent
-          ? const Value.absent()
-          : Value(fUnit),
-      aConvQty: aConvQty == null && nullToAbsent
-          ? const Value.absent()
-          : Value(aConvQty),
-      aFConvQty: aFConvQty == null && nullToAbsent
-          ? const Value.absent()
-          : Value(aFConvQty),
+          : Value(actualQtyStr),
+      qty1: Value(qty1),
+      qty2: Value(qty2),
+      qty3: Value(qty3),
+      rate: Value(rate),
       rateUnit: rateUnit == null && nullToAbsent
           ? const Value.absent()
           : Value(rateUnit),
+      taxPerc: Value(taxPerc),
+      cessPer: Value(cessPer),
+      addCessPer: Value(addCessPer),
+      igstVal: Value(igstVal),
+      cgstVal: Value(cgstVal),
+      sgstVal: Value(sgstVal),
+      cessVal: Value(cessVal),
+      addCessVal: Value(addCessVal),
+      otherVal: Value(otherVal),
+      discountPer: Value(discountPer),
+      discountAmt: Value(discountAmt),
+      taxableAmount: Value(taxableAmount),
+      amount: Value(amount),
+      rateInc: Value(rateInc),
+      amountInc: Value(amountInc),
     );
   }
 
@@ -26852,39 +27589,54 @@ class SaleReturnDetailsTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return SaleReturnDetailsTableData(
       id: serializer.fromJson<int>(json['id']),
-      mid: serializer.fromJson<int?>(json['mid']),
+      vchId: serializer.fromJson<int>(json['vchId']),
+      lineNo: serializer.fromJson<int?>(json['lineNo']),
       itemId: serializer.fromJson<int?>(json['itemId']),
       itemName: serializer.fromJson<String?>(json['itemName']),
-      qty: serializer.fromJson<double?>(json['qty']),
-      unit: serializer.fromJson<String?>(json['unit']),
-      rate: serializer.fromJson<double?>(json['rate']),
-      vat: serializer.fromJson<double?>(json['vat']),
-      vatAmt: serializer.fromJson<double?>(json['vatAmt']),
-      total: serializer.fromJson<double?>(json['total']),
-      disc: serializer.fromJson<double?>(json['disc']),
-      discVal: serializer.fromJson<double?>(json['discVal']),
-      ledger: serializer.fromJson<String?>(json['ledger']),
-      companyId: serializer.fromJson<int?>(json['companyId']),
-      sync: serializer.fromJson<int>(json['sync']),
-      hsn: serializer.fromJson<String?>(json['hsn']),
-      enteredRate: serializer.fromJson<double?>(json['enteredRate']),
-      enteredDisc: serializer.fromJson<double?>(json['enteredDisc']),
-      eneteredQty: serializer.fromJson<String?>(json['eneteredQty']),
-      enteredFQty: serializer.fromJson<String?>(json['enteredFQty']),
-      fQty: serializer.fromJson<double?>(json['fQty']),
-      addDiscVal: serializer.fromJson<double?>(json['addDiscVal']),
-      cessAmt: serializer.fromJson<double?>(json['cessAmt']),
-      stkNegPermission: serializer.fromJson<String?>(json['stkNegPermission']),
-      discType: serializer.fromJson<String?>(json['discType']),
-      priceList: serializer.fromJson<String?>(json['priceList']),
-      convQty: serializer.fromJson<double?>(json['convQty']),
-      fConvQty: serializer.fromJson<double?>(json['fConvQty']),
-      qtyString: serializer.fromJson<String?>(json['qtyString']),
-      fQtyString: serializer.fromJson<String?>(json['fQtyString']),
-      fUnit: serializer.fromJson<String?>(json['fUnit']),
-      aConvQty: serializer.fromJson<double?>(json['aConvQty']),
-      aFConvQty: serializer.fromJson<double?>(json['aFConvQty']),
+      itemDesc: serializer.fromJson<String?>(json['itemDesc']),
+      stkQtyFirst: serializer.fromJson<double>(json['stkQtyFirst']),
+      stkQtySecond: serializer.fromJson<double>(json['stkQtySecond']),
+      enteredQtyFirst: serializer.fromJson<double>(json['enteredQtyFirst']),
+      enteredQtySecond: serializer.fromJson<double>(json['enteredQtySecond']),
+      enteredActualQtyFirst: serializer.fromJson<double>(
+        json['enteredActualQtyFirst'],
+      ),
+      enteredActualQtySecond: serializer.fromJson<double>(
+        json['enteredActualQtySecond'],
+      ),
+      enteredUnit: serializer.fromJson<String?>(json['enteredUnit']),
+      qtyFirst: serializer.fromJson<double>(json['qtyFirst']),
+      qtySecond: serializer.fromJson<double>(json['qtySecond']),
+      qtyActualFirst: serializer.fromJson<double>(json['qtyActualFirst']),
+      qtyActualSecond: serializer.fromJson<double>(json['qtyActualSecond']),
+      altQtyFirst: serializer.fromJson<double>(json['altQtyFirst']),
+      altQtySecond: serializer.fromJson<double>(json['altQtySecond']),
+      altQtyActualFirst: serializer.fromJson<double>(json['altQtyActualFirst']),
+      altQtyActualSecond: serializer.fromJson<double>(
+        json['altQtyActualSecond'],
+      ),
+      qtyStr: serializer.fromJson<String?>(json['qtyStr']),
+      actualQtyStr: serializer.fromJson<String?>(json['actualQtyStr']),
+      qty1: serializer.fromJson<double>(json['qty1']),
+      qty2: serializer.fromJson<double>(json['qty2']),
+      qty3: serializer.fromJson<double>(json['qty3']),
+      rate: serializer.fromJson<double>(json['rate']),
       rateUnit: serializer.fromJson<String?>(json['rateUnit']),
+      taxPerc: serializer.fromJson<double>(json['taxPerc']),
+      cessPer: serializer.fromJson<double>(json['cessPer']),
+      addCessPer: serializer.fromJson<double>(json['addCessPer']),
+      igstVal: serializer.fromJson<double>(json['igstVal']),
+      cgstVal: serializer.fromJson<double>(json['cgstVal']),
+      sgstVal: serializer.fromJson<double>(json['sgstVal']),
+      cessVal: serializer.fromJson<double>(json['cessVal']),
+      addCessVal: serializer.fromJson<double>(json['addCessVal']),
+      otherVal: serializer.fromJson<double>(json['otherVal']),
+      discountPer: serializer.fromJson<double>(json['discountPer']),
+      discountAmt: serializer.fromJson<double>(json['discountAmt']),
+      taxableAmount: serializer.fromJson<double>(json['taxableAmount']),
+      amount: serializer.fromJson<double>(json['amount']),
+      rateInc: serializer.fromJson<double>(json['rateInc']),
+      amountInc: serializer.fromJson<double>(json['amountInc']),
     );
   }
   @override
@@ -26892,167 +27644,228 @@ class SaleReturnDetailsTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'mid': serializer.toJson<int?>(mid),
+      'vchId': serializer.toJson<int>(vchId),
+      'lineNo': serializer.toJson<int?>(lineNo),
       'itemId': serializer.toJson<int?>(itemId),
       'itemName': serializer.toJson<String?>(itemName),
-      'qty': serializer.toJson<double?>(qty),
-      'unit': serializer.toJson<String?>(unit),
-      'rate': serializer.toJson<double?>(rate),
-      'vat': serializer.toJson<double?>(vat),
-      'vatAmt': serializer.toJson<double?>(vatAmt),
-      'total': serializer.toJson<double?>(total),
-      'disc': serializer.toJson<double?>(disc),
-      'discVal': serializer.toJson<double?>(discVal),
-      'ledger': serializer.toJson<String?>(ledger),
-      'companyId': serializer.toJson<int?>(companyId),
-      'sync': serializer.toJson<int>(sync),
-      'hsn': serializer.toJson<String?>(hsn),
-      'enteredRate': serializer.toJson<double?>(enteredRate),
-      'enteredDisc': serializer.toJson<double?>(enteredDisc),
-      'eneteredQty': serializer.toJson<String?>(eneteredQty),
-      'enteredFQty': serializer.toJson<String?>(enteredFQty),
-      'fQty': serializer.toJson<double?>(fQty),
-      'addDiscVal': serializer.toJson<double?>(addDiscVal),
-      'cessAmt': serializer.toJson<double?>(cessAmt),
-      'stkNegPermission': serializer.toJson<String?>(stkNegPermission),
-      'discType': serializer.toJson<String?>(discType),
-      'priceList': serializer.toJson<String?>(priceList),
-      'convQty': serializer.toJson<double?>(convQty),
-      'fConvQty': serializer.toJson<double?>(fConvQty),
-      'qtyString': serializer.toJson<String?>(qtyString),
-      'fQtyString': serializer.toJson<String?>(fQtyString),
-      'fUnit': serializer.toJson<String?>(fUnit),
-      'aConvQty': serializer.toJson<double?>(aConvQty),
-      'aFConvQty': serializer.toJson<double?>(aFConvQty),
+      'itemDesc': serializer.toJson<String?>(itemDesc),
+      'stkQtyFirst': serializer.toJson<double>(stkQtyFirst),
+      'stkQtySecond': serializer.toJson<double>(stkQtySecond),
+      'enteredQtyFirst': serializer.toJson<double>(enteredQtyFirst),
+      'enteredQtySecond': serializer.toJson<double>(enteredQtySecond),
+      'enteredActualQtyFirst': serializer.toJson<double>(enteredActualQtyFirst),
+      'enteredActualQtySecond': serializer.toJson<double>(
+        enteredActualQtySecond,
+      ),
+      'enteredUnit': serializer.toJson<String?>(enteredUnit),
+      'qtyFirst': serializer.toJson<double>(qtyFirst),
+      'qtySecond': serializer.toJson<double>(qtySecond),
+      'qtyActualFirst': serializer.toJson<double>(qtyActualFirst),
+      'qtyActualSecond': serializer.toJson<double>(qtyActualSecond),
+      'altQtyFirst': serializer.toJson<double>(altQtyFirst),
+      'altQtySecond': serializer.toJson<double>(altQtySecond),
+      'altQtyActualFirst': serializer.toJson<double>(altQtyActualFirst),
+      'altQtyActualSecond': serializer.toJson<double>(altQtyActualSecond),
+      'qtyStr': serializer.toJson<String?>(qtyStr),
+      'actualQtyStr': serializer.toJson<String?>(actualQtyStr),
+      'qty1': serializer.toJson<double>(qty1),
+      'qty2': serializer.toJson<double>(qty2),
+      'qty3': serializer.toJson<double>(qty3),
+      'rate': serializer.toJson<double>(rate),
       'rateUnit': serializer.toJson<String?>(rateUnit),
+      'taxPerc': serializer.toJson<double>(taxPerc),
+      'cessPer': serializer.toJson<double>(cessPer),
+      'addCessPer': serializer.toJson<double>(addCessPer),
+      'igstVal': serializer.toJson<double>(igstVal),
+      'cgstVal': serializer.toJson<double>(cgstVal),
+      'sgstVal': serializer.toJson<double>(sgstVal),
+      'cessVal': serializer.toJson<double>(cessVal),
+      'addCessVal': serializer.toJson<double>(addCessVal),
+      'otherVal': serializer.toJson<double>(otherVal),
+      'discountPer': serializer.toJson<double>(discountPer),
+      'discountAmt': serializer.toJson<double>(discountAmt),
+      'taxableAmount': serializer.toJson<double>(taxableAmount),
+      'amount': serializer.toJson<double>(amount),
+      'rateInc': serializer.toJson<double>(rateInc),
+      'amountInc': serializer.toJson<double>(amountInc),
     };
   }
 
   SaleReturnDetailsTableData copyWith({
     int? id,
-    Value<int?> mid = const Value.absent(),
+    int? vchId,
+    Value<int?> lineNo = const Value.absent(),
     Value<int?> itemId = const Value.absent(),
     Value<String?> itemName = const Value.absent(),
-    Value<double?> qty = const Value.absent(),
-    Value<String?> unit = const Value.absent(),
-    Value<double?> rate = const Value.absent(),
-    Value<double?> vat = const Value.absent(),
-    Value<double?> vatAmt = const Value.absent(),
-    Value<double?> total = const Value.absent(),
-    Value<double?> disc = const Value.absent(),
-    Value<double?> discVal = const Value.absent(),
-    Value<String?> ledger = const Value.absent(),
-    Value<int?> companyId = const Value.absent(),
-    int? sync,
-    Value<String?> hsn = const Value.absent(),
-    Value<double?> enteredRate = const Value.absent(),
-    Value<double?> enteredDisc = const Value.absent(),
-    Value<String?> eneteredQty = const Value.absent(),
-    Value<String?> enteredFQty = const Value.absent(),
-    Value<double?> fQty = const Value.absent(),
-    Value<double?> addDiscVal = const Value.absent(),
-    Value<double?> cessAmt = const Value.absent(),
-    Value<String?> stkNegPermission = const Value.absent(),
-    Value<String?> discType = const Value.absent(),
-    Value<String?> priceList = const Value.absent(),
-    Value<double?> convQty = const Value.absent(),
-    Value<double?> fConvQty = const Value.absent(),
-    Value<String?> qtyString = const Value.absent(),
-    Value<String?> fQtyString = const Value.absent(),
-    Value<String?> fUnit = const Value.absent(),
-    Value<double?> aConvQty = const Value.absent(),
-    Value<double?> aFConvQty = const Value.absent(),
+    Value<String?> itemDesc = const Value.absent(),
+    double? stkQtyFirst,
+    double? stkQtySecond,
+    double? enteredQtyFirst,
+    double? enteredQtySecond,
+    double? enteredActualQtyFirst,
+    double? enteredActualQtySecond,
+    Value<String?> enteredUnit = const Value.absent(),
+    double? qtyFirst,
+    double? qtySecond,
+    double? qtyActualFirst,
+    double? qtyActualSecond,
+    double? altQtyFirst,
+    double? altQtySecond,
+    double? altQtyActualFirst,
+    double? altQtyActualSecond,
+    Value<String?> qtyStr = const Value.absent(),
+    Value<String?> actualQtyStr = const Value.absent(),
+    double? qty1,
+    double? qty2,
+    double? qty3,
+    double? rate,
     Value<String?> rateUnit = const Value.absent(),
+    double? taxPerc,
+    double? cessPer,
+    double? addCessPer,
+    double? igstVal,
+    double? cgstVal,
+    double? sgstVal,
+    double? cessVal,
+    double? addCessVal,
+    double? otherVal,
+    double? discountPer,
+    double? discountAmt,
+    double? taxableAmount,
+    double? amount,
+    double? rateInc,
+    double? amountInc,
   }) => SaleReturnDetailsTableData(
     id: id ?? this.id,
-    mid: mid.present ? mid.value : this.mid,
+    vchId: vchId ?? this.vchId,
+    lineNo: lineNo.present ? lineNo.value : this.lineNo,
     itemId: itemId.present ? itemId.value : this.itemId,
     itemName: itemName.present ? itemName.value : this.itemName,
-    qty: qty.present ? qty.value : this.qty,
-    unit: unit.present ? unit.value : this.unit,
-    rate: rate.present ? rate.value : this.rate,
-    vat: vat.present ? vat.value : this.vat,
-    vatAmt: vatAmt.present ? vatAmt.value : this.vatAmt,
-    total: total.present ? total.value : this.total,
-    disc: disc.present ? disc.value : this.disc,
-    discVal: discVal.present ? discVal.value : this.discVal,
-    ledger: ledger.present ? ledger.value : this.ledger,
-    companyId: companyId.present ? companyId.value : this.companyId,
-    sync: sync ?? this.sync,
-    hsn: hsn.present ? hsn.value : this.hsn,
-    enteredRate: enteredRate.present ? enteredRate.value : this.enteredRate,
-    enteredDisc: enteredDisc.present ? enteredDisc.value : this.enteredDisc,
-    eneteredQty: eneteredQty.present ? eneteredQty.value : this.eneteredQty,
-    enteredFQty: enteredFQty.present ? enteredFQty.value : this.enteredFQty,
-    fQty: fQty.present ? fQty.value : this.fQty,
-    addDiscVal: addDiscVal.present ? addDiscVal.value : this.addDiscVal,
-    cessAmt: cessAmt.present ? cessAmt.value : this.cessAmt,
-    stkNegPermission: stkNegPermission.present
-        ? stkNegPermission.value
-        : this.stkNegPermission,
-    discType: discType.present ? discType.value : this.discType,
-    priceList: priceList.present ? priceList.value : this.priceList,
-    convQty: convQty.present ? convQty.value : this.convQty,
-    fConvQty: fConvQty.present ? fConvQty.value : this.fConvQty,
-    qtyString: qtyString.present ? qtyString.value : this.qtyString,
-    fQtyString: fQtyString.present ? fQtyString.value : this.fQtyString,
-    fUnit: fUnit.present ? fUnit.value : this.fUnit,
-    aConvQty: aConvQty.present ? aConvQty.value : this.aConvQty,
-    aFConvQty: aFConvQty.present ? aFConvQty.value : this.aFConvQty,
+    itemDesc: itemDesc.present ? itemDesc.value : this.itemDesc,
+    stkQtyFirst: stkQtyFirst ?? this.stkQtyFirst,
+    stkQtySecond: stkQtySecond ?? this.stkQtySecond,
+    enteredQtyFirst: enteredQtyFirst ?? this.enteredQtyFirst,
+    enteredQtySecond: enteredQtySecond ?? this.enteredQtySecond,
+    enteredActualQtyFirst: enteredActualQtyFirst ?? this.enteredActualQtyFirst,
+    enteredActualQtySecond:
+        enteredActualQtySecond ?? this.enteredActualQtySecond,
+    enteredUnit: enteredUnit.present ? enteredUnit.value : this.enteredUnit,
+    qtyFirst: qtyFirst ?? this.qtyFirst,
+    qtySecond: qtySecond ?? this.qtySecond,
+    qtyActualFirst: qtyActualFirst ?? this.qtyActualFirst,
+    qtyActualSecond: qtyActualSecond ?? this.qtyActualSecond,
+    altQtyFirst: altQtyFirst ?? this.altQtyFirst,
+    altQtySecond: altQtySecond ?? this.altQtySecond,
+    altQtyActualFirst: altQtyActualFirst ?? this.altQtyActualFirst,
+    altQtyActualSecond: altQtyActualSecond ?? this.altQtyActualSecond,
+    qtyStr: qtyStr.present ? qtyStr.value : this.qtyStr,
+    actualQtyStr: actualQtyStr.present ? actualQtyStr.value : this.actualQtyStr,
+    qty1: qty1 ?? this.qty1,
+    qty2: qty2 ?? this.qty2,
+    qty3: qty3 ?? this.qty3,
+    rate: rate ?? this.rate,
     rateUnit: rateUnit.present ? rateUnit.value : this.rateUnit,
+    taxPerc: taxPerc ?? this.taxPerc,
+    cessPer: cessPer ?? this.cessPer,
+    addCessPer: addCessPer ?? this.addCessPer,
+    igstVal: igstVal ?? this.igstVal,
+    cgstVal: cgstVal ?? this.cgstVal,
+    sgstVal: sgstVal ?? this.sgstVal,
+    cessVal: cessVal ?? this.cessVal,
+    addCessVal: addCessVal ?? this.addCessVal,
+    otherVal: otherVal ?? this.otherVal,
+    discountPer: discountPer ?? this.discountPer,
+    discountAmt: discountAmt ?? this.discountAmt,
+    taxableAmount: taxableAmount ?? this.taxableAmount,
+    amount: amount ?? this.amount,
+    rateInc: rateInc ?? this.rateInc,
+    amountInc: amountInc ?? this.amountInc,
   );
   SaleReturnDetailsTableData copyWithCompanion(
     SaleReturnDetailsTableCompanion data,
   ) {
     return SaleReturnDetailsTableData(
       id: data.id.present ? data.id.value : this.id,
-      mid: data.mid.present ? data.mid.value : this.mid,
+      vchId: data.vchId.present ? data.vchId.value : this.vchId,
+      lineNo: data.lineNo.present ? data.lineNo.value : this.lineNo,
       itemId: data.itemId.present ? data.itemId.value : this.itemId,
       itemName: data.itemName.present ? data.itemName.value : this.itemName,
-      qty: data.qty.present ? data.qty.value : this.qty,
-      unit: data.unit.present ? data.unit.value : this.unit,
+      itemDesc: data.itemDesc.present ? data.itemDesc.value : this.itemDesc,
+      stkQtyFirst: data.stkQtyFirst.present
+          ? data.stkQtyFirst.value
+          : this.stkQtyFirst,
+      stkQtySecond: data.stkQtySecond.present
+          ? data.stkQtySecond.value
+          : this.stkQtySecond,
+      enteredQtyFirst: data.enteredQtyFirst.present
+          ? data.enteredQtyFirst.value
+          : this.enteredQtyFirst,
+      enteredQtySecond: data.enteredQtySecond.present
+          ? data.enteredQtySecond.value
+          : this.enteredQtySecond,
+      enteredActualQtyFirst: data.enteredActualQtyFirst.present
+          ? data.enteredActualQtyFirst.value
+          : this.enteredActualQtyFirst,
+      enteredActualQtySecond: data.enteredActualQtySecond.present
+          ? data.enteredActualQtySecond.value
+          : this.enteredActualQtySecond,
+      enteredUnit: data.enteredUnit.present
+          ? data.enteredUnit.value
+          : this.enteredUnit,
+      qtyFirst: data.qtyFirst.present ? data.qtyFirst.value : this.qtyFirst,
+      qtySecond: data.qtySecond.present ? data.qtySecond.value : this.qtySecond,
+      qtyActualFirst: data.qtyActualFirst.present
+          ? data.qtyActualFirst.value
+          : this.qtyActualFirst,
+      qtyActualSecond: data.qtyActualSecond.present
+          ? data.qtyActualSecond.value
+          : this.qtyActualSecond,
+      altQtyFirst: data.altQtyFirst.present
+          ? data.altQtyFirst.value
+          : this.altQtyFirst,
+      altQtySecond: data.altQtySecond.present
+          ? data.altQtySecond.value
+          : this.altQtySecond,
+      altQtyActualFirst: data.altQtyActualFirst.present
+          ? data.altQtyActualFirst.value
+          : this.altQtyActualFirst,
+      altQtyActualSecond: data.altQtyActualSecond.present
+          ? data.altQtyActualSecond.value
+          : this.altQtyActualSecond,
+      qtyStr: data.qtyStr.present ? data.qtyStr.value : this.qtyStr,
+      actualQtyStr: data.actualQtyStr.present
+          ? data.actualQtyStr.value
+          : this.actualQtyStr,
+      qty1: data.qty1.present ? data.qty1.value : this.qty1,
+      qty2: data.qty2.present ? data.qty2.value : this.qty2,
+      qty3: data.qty3.present ? data.qty3.value : this.qty3,
       rate: data.rate.present ? data.rate.value : this.rate,
-      vat: data.vat.present ? data.vat.value : this.vat,
-      vatAmt: data.vatAmt.present ? data.vatAmt.value : this.vatAmt,
-      total: data.total.present ? data.total.value : this.total,
-      disc: data.disc.present ? data.disc.value : this.disc,
-      discVal: data.discVal.present ? data.discVal.value : this.discVal,
-      ledger: data.ledger.present ? data.ledger.value : this.ledger,
-      companyId: data.companyId.present ? data.companyId.value : this.companyId,
-      sync: data.sync.present ? data.sync.value : this.sync,
-      hsn: data.hsn.present ? data.hsn.value : this.hsn,
-      enteredRate: data.enteredRate.present
-          ? data.enteredRate.value
-          : this.enteredRate,
-      enteredDisc: data.enteredDisc.present
-          ? data.enteredDisc.value
-          : this.enteredDisc,
-      eneteredQty: data.eneteredQty.present
-          ? data.eneteredQty.value
-          : this.eneteredQty,
-      enteredFQty: data.enteredFQty.present
-          ? data.enteredFQty.value
-          : this.enteredFQty,
-      fQty: data.fQty.present ? data.fQty.value : this.fQty,
-      addDiscVal: data.addDiscVal.present
-          ? data.addDiscVal.value
-          : this.addDiscVal,
-      cessAmt: data.cessAmt.present ? data.cessAmt.value : this.cessAmt,
-      stkNegPermission: data.stkNegPermission.present
-          ? data.stkNegPermission.value
-          : this.stkNegPermission,
-      discType: data.discType.present ? data.discType.value : this.discType,
-      priceList: data.priceList.present ? data.priceList.value : this.priceList,
-      convQty: data.convQty.present ? data.convQty.value : this.convQty,
-      fConvQty: data.fConvQty.present ? data.fConvQty.value : this.fConvQty,
-      qtyString: data.qtyString.present ? data.qtyString.value : this.qtyString,
-      fQtyString: data.fQtyString.present
-          ? data.fQtyString.value
-          : this.fQtyString,
-      fUnit: data.fUnit.present ? data.fUnit.value : this.fUnit,
-      aConvQty: data.aConvQty.present ? data.aConvQty.value : this.aConvQty,
-      aFConvQty: data.aFConvQty.present ? data.aFConvQty.value : this.aFConvQty,
       rateUnit: data.rateUnit.present ? data.rateUnit.value : this.rateUnit,
+      taxPerc: data.taxPerc.present ? data.taxPerc.value : this.taxPerc,
+      cessPer: data.cessPer.present ? data.cessPer.value : this.cessPer,
+      addCessPer: data.addCessPer.present
+          ? data.addCessPer.value
+          : this.addCessPer,
+      igstVal: data.igstVal.present ? data.igstVal.value : this.igstVal,
+      cgstVal: data.cgstVal.present ? data.cgstVal.value : this.cgstVal,
+      sgstVal: data.sgstVal.present ? data.sgstVal.value : this.sgstVal,
+      cessVal: data.cessVal.present ? data.cessVal.value : this.cessVal,
+      addCessVal: data.addCessVal.present
+          ? data.addCessVal.value
+          : this.addCessVal,
+      otherVal: data.otherVal.present ? data.otherVal.value : this.otherVal,
+      discountPer: data.discountPer.present
+          ? data.discountPer.value
+          : this.discountPer,
+      discountAmt: data.discountAmt.present
+          ? data.discountAmt.value
+          : this.discountAmt,
+      taxableAmount: data.taxableAmount.present
+          ? data.taxableAmount.value
+          : this.taxableAmount,
+      amount: data.amount.present ? data.amount.value : this.amount,
+      rateInc: data.rateInc.present ? data.rateInc.value : this.rateInc,
+      amountInc: data.amountInc.present ? data.amountInc.value : this.amountInc,
     );
   }
 
@@ -27060,39 +27873,48 @@ class SaleReturnDetailsTableData extends DataClass
   String toString() {
     return (StringBuffer('SaleReturnDetailsTableData(')
           ..write('id: $id, ')
-          ..write('mid: $mid, ')
+          ..write('vchId: $vchId, ')
+          ..write('lineNo: $lineNo, ')
           ..write('itemId: $itemId, ')
           ..write('itemName: $itemName, ')
-          ..write('qty: $qty, ')
-          ..write('unit: $unit, ')
+          ..write('itemDesc: $itemDesc, ')
+          ..write('stkQtyFirst: $stkQtyFirst, ')
+          ..write('stkQtySecond: $stkQtySecond, ')
+          ..write('enteredQtyFirst: $enteredQtyFirst, ')
+          ..write('enteredQtySecond: $enteredQtySecond, ')
+          ..write('enteredActualQtyFirst: $enteredActualQtyFirst, ')
+          ..write('enteredActualQtySecond: $enteredActualQtySecond, ')
+          ..write('enteredUnit: $enteredUnit, ')
+          ..write('qtyFirst: $qtyFirst, ')
+          ..write('qtySecond: $qtySecond, ')
+          ..write('qtyActualFirst: $qtyActualFirst, ')
+          ..write('qtyActualSecond: $qtyActualSecond, ')
+          ..write('altQtyFirst: $altQtyFirst, ')
+          ..write('altQtySecond: $altQtySecond, ')
+          ..write('altQtyActualFirst: $altQtyActualFirst, ')
+          ..write('altQtyActualSecond: $altQtyActualSecond, ')
+          ..write('qtyStr: $qtyStr, ')
+          ..write('actualQtyStr: $actualQtyStr, ')
+          ..write('qty1: $qty1, ')
+          ..write('qty2: $qty2, ')
+          ..write('qty3: $qty3, ')
           ..write('rate: $rate, ')
-          ..write('vat: $vat, ')
-          ..write('vatAmt: $vatAmt, ')
-          ..write('total: $total, ')
-          ..write('disc: $disc, ')
-          ..write('discVal: $discVal, ')
-          ..write('ledger: $ledger, ')
-          ..write('companyId: $companyId, ')
-          ..write('sync: $sync, ')
-          ..write('hsn: $hsn, ')
-          ..write('enteredRate: $enteredRate, ')
-          ..write('enteredDisc: $enteredDisc, ')
-          ..write('eneteredQty: $eneteredQty, ')
-          ..write('enteredFQty: $enteredFQty, ')
-          ..write('fQty: $fQty, ')
-          ..write('addDiscVal: $addDiscVal, ')
-          ..write('cessAmt: $cessAmt, ')
-          ..write('stkNegPermission: $stkNegPermission, ')
-          ..write('discType: $discType, ')
-          ..write('priceList: $priceList, ')
-          ..write('convQty: $convQty, ')
-          ..write('fConvQty: $fConvQty, ')
-          ..write('qtyString: $qtyString, ')
-          ..write('fQtyString: $fQtyString, ')
-          ..write('fUnit: $fUnit, ')
-          ..write('aConvQty: $aConvQty, ')
-          ..write('aFConvQty: $aFConvQty, ')
-          ..write('rateUnit: $rateUnit')
+          ..write('rateUnit: $rateUnit, ')
+          ..write('taxPerc: $taxPerc, ')
+          ..write('cessPer: $cessPer, ')
+          ..write('addCessPer: $addCessPer, ')
+          ..write('igstVal: $igstVal, ')
+          ..write('cgstVal: $cgstVal, ')
+          ..write('sgstVal: $sgstVal, ')
+          ..write('cessVal: $cessVal, ')
+          ..write('addCessVal: $addCessVal, ')
+          ..write('otherVal: $otherVal, ')
+          ..write('discountPer: $discountPer, ')
+          ..write('discountAmt: $discountAmt, ')
+          ..write('taxableAmount: $taxableAmount, ')
+          ..write('amount: $amount, ')
+          ..write('rateInc: $rateInc, ')
+          ..write('amountInc: $amountInc')
           ..write(')'))
         .toString();
   }
@@ -27100,333 +27922,419 @@ class SaleReturnDetailsTableData extends DataClass
   @override
   int get hashCode => Object.hashAll([
     id,
-    mid,
+    vchId,
+    lineNo,
     itemId,
     itemName,
-    qty,
-    unit,
+    itemDesc,
+    stkQtyFirst,
+    stkQtySecond,
+    enteredQtyFirst,
+    enteredQtySecond,
+    enteredActualQtyFirst,
+    enteredActualQtySecond,
+    enteredUnit,
+    qtyFirst,
+    qtySecond,
+    qtyActualFirst,
+    qtyActualSecond,
+    altQtyFirst,
+    altQtySecond,
+    altQtyActualFirst,
+    altQtyActualSecond,
+    qtyStr,
+    actualQtyStr,
+    qty1,
+    qty2,
+    qty3,
     rate,
-    vat,
-    vatAmt,
-    total,
-    disc,
-    discVal,
-    ledger,
-    companyId,
-    sync,
-    hsn,
-    enteredRate,
-    enteredDisc,
-    eneteredQty,
-    enteredFQty,
-    fQty,
-    addDiscVal,
-    cessAmt,
-    stkNegPermission,
-    discType,
-    priceList,
-    convQty,
-    fConvQty,
-    qtyString,
-    fQtyString,
-    fUnit,
-    aConvQty,
-    aFConvQty,
     rateUnit,
+    taxPerc,
+    cessPer,
+    addCessPer,
+    igstVal,
+    cgstVal,
+    sgstVal,
+    cessVal,
+    addCessVal,
+    otherVal,
+    discountPer,
+    discountAmt,
+    taxableAmount,
+    amount,
+    rateInc,
+    amountInc,
   ]);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is SaleReturnDetailsTableData &&
           other.id == this.id &&
-          other.mid == this.mid &&
+          other.vchId == this.vchId &&
+          other.lineNo == this.lineNo &&
           other.itemId == this.itemId &&
           other.itemName == this.itemName &&
-          other.qty == this.qty &&
-          other.unit == this.unit &&
+          other.itemDesc == this.itemDesc &&
+          other.stkQtyFirst == this.stkQtyFirst &&
+          other.stkQtySecond == this.stkQtySecond &&
+          other.enteredQtyFirst == this.enteredQtyFirst &&
+          other.enteredQtySecond == this.enteredQtySecond &&
+          other.enteredActualQtyFirst == this.enteredActualQtyFirst &&
+          other.enteredActualQtySecond == this.enteredActualQtySecond &&
+          other.enteredUnit == this.enteredUnit &&
+          other.qtyFirst == this.qtyFirst &&
+          other.qtySecond == this.qtySecond &&
+          other.qtyActualFirst == this.qtyActualFirst &&
+          other.qtyActualSecond == this.qtyActualSecond &&
+          other.altQtyFirst == this.altQtyFirst &&
+          other.altQtySecond == this.altQtySecond &&
+          other.altQtyActualFirst == this.altQtyActualFirst &&
+          other.altQtyActualSecond == this.altQtyActualSecond &&
+          other.qtyStr == this.qtyStr &&
+          other.actualQtyStr == this.actualQtyStr &&
+          other.qty1 == this.qty1 &&
+          other.qty2 == this.qty2 &&
+          other.qty3 == this.qty3 &&
           other.rate == this.rate &&
-          other.vat == this.vat &&
-          other.vatAmt == this.vatAmt &&
-          other.total == this.total &&
-          other.disc == this.disc &&
-          other.discVal == this.discVal &&
-          other.ledger == this.ledger &&
-          other.companyId == this.companyId &&
-          other.sync == this.sync &&
-          other.hsn == this.hsn &&
-          other.enteredRate == this.enteredRate &&
-          other.enteredDisc == this.enteredDisc &&
-          other.eneteredQty == this.eneteredQty &&
-          other.enteredFQty == this.enteredFQty &&
-          other.fQty == this.fQty &&
-          other.addDiscVal == this.addDiscVal &&
-          other.cessAmt == this.cessAmt &&
-          other.stkNegPermission == this.stkNegPermission &&
-          other.discType == this.discType &&
-          other.priceList == this.priceList &&
-          other.convQty == this.convQty &&
-          other.fConvQty == this.fConvQty &&
-          other.qtyString == this.qtyString &&
-          other.fQtyString == this.fQtyString &&
-          other.fUnit == this.fUnit &&
-          other.aConvQty == this.aConvQty &&
-          other.aFConvQty == this.aFConvQty &&
-          other.rateUnit == this.rateUnit);
+          other.rateUnit == this.rateUnit &&
+          other.taxPerc == this.taxPerc &&
+          other.cessPer == this.cessPer &&
+          other.addCessPer == this.addCessPer &&
+          other.igstVal == this.igstVal &&
+          other.cgstVal == this.cgstVal &&
+          other.sgstVal == this.sgstVal &&
+          other.cessVal == this.cessVal &&
+          other.addCessVal == this.addCessVal &&
+          other.otherVal == this.otherVal &&
+          other.discountPer == this.discountPer &&
+          other.discountAmt == this.discountAmt &&
+          other.taxableAmount == this.taxableAmount &&
+          other.amount == this.amount &&
+          other.rateInc == this.rateInc &&
+          other.amountInc == this.amountInc);
 }
 
 class SaleReturnDetailsTableCompanion
     extends UpdateCompanion<SaleReturnDetailsTableData> {
   final Value<int> id;
-  final Value<int?> mid;
+  final Value<int> vchId;
+  final Value<int?> lineNo;
   final Value<int?> itemId;
   final Value<String?> itemName;
-  final Value<double?> qty;
-  final Value<String?> unit;
-  final Value<double?> rate;
-  final Value<double?> vat;
-  final Value<double?> vatAmt;
-  final Value<double?> total;
-  final Value<double?> disc;
-  final Value<double?> discVal;
-  final Value<String?> ledger;
-  final Value<int?> companyId;
-  final Value<int> sync;
-  final Value<String?> hsn;
-  final Value<double?> enteredRate;
-  final Value<double?> enteredDisc;
-  final Value<String?> eneteredQty;
-  final Value<String?> enteredFQty;
-  final Value<double?> fQty;
-  final Value<double?> addDiscVal;
-  final Value<double?> cessAmt;
-  final Value<String?> stkNegPermission;
-  final Value<String?> discType;
-  final Value<String?> priceList;
-  final Value<double?> convQty;
-  final Value<double?> fConvQty;
-  final Value<String?> qtyString;
-  final Value<String?> fQtyString;
-  final Value<String?> fUnit;
-  final Value<double?> aConvQty;
-  final Value<double?> aFConvQty;
+  final Value<String?> itemDesc;
+  final Value<double> stkQtyFirst;
+  final Value<double> stkQtySecond;
+  final Value<double> enteredQtyFirst;
+  final Value<double> enteredQtySecond;
+  final Value<double> enteredActualQtyFirst;
+  final Value<double> enteredActualQtySecond;
+  final Value<String?> enteredUnit;
+  final Value<double> qtyFirst;
+  final Value<double> qtySecond;
+  final Value<double> qtyActualFirst;
+  final Value<double> qtyActualSecond;
+  final Value<double> altQtyFirst;
+  final Value<double> altQtySecond;
+  final Value<double> altQtyActualFirst;
+  final Value<double> altQtyActualSecond;
+  final Value<String?> qtyStr;
+  final Value<String?> actualQtyStr;
+  final Value<double> qty1;
+  final Value<double> qty2;
+  final Value<double> qty3;
+  final Value<double> rate;
   final Value<String?> rateUnit;
+  final Value<double> taxPerc;
+  final Value<double> cessPer;
+  final Value<double> addCessPer;
+  final Value<double> igstVal;
+  final Value<double> cgstVal;
+  final Value<double> sgstVal;
+  final Value<double> cessVal;
+  final Value<double> addCessVal;
+  final Value<double> otherVal;
+  final Value<double> discountPer;
+  final Value<double> discountAmt;
+  final Value<double> taxableAmount;
+  final Value<double> amount;
+  final Value<double> rateInc;
+  final Value<double> amountInc;
   const SaleReturnDetailsTableCompanion({
     this.id = const Value.absent(),
-    this.mid = const Value.absent(),
+    this.vchId = const Value.absent(),
+    this.lineNo = const Value.absent(),
     this.itemId = const Value.absent(),
     this.itemName = const Value.absent(),
-    this.qty = const Value.absent(),
-    this.unit = const Value.absent(),
+    this.itemDesc = const Value.absent(),
+    this.stkQtyFirst = const Value.absent(),
+    this.stkQtySecond = const Value.absent(),
+    this.enteredQtyFirst = const Value.absent(),
+    this.enteredQtySecond = const Value.absent(),
+    this.enteredActualQtyFirst = const Value.absent(),
+    this.enteredActualQtySecond = const Value.absent(),
+    this.enteredUnit = const Value.absent(),
+    this.qtyFirst = const Value.absent(),
+    this.qtySecond = const Value.absent(),
+    this.qtyActualFirst = const Value.absent(),
+    this.qtyActualSecond = const Value.absent(),
+    this.altQtyFirst = const Value.absent(),
+    this.altQtySecond = const Value.absent(),
+    this.altQtyActualFirst = const Value.absent(),
+    this.altQtyActualSecond = const Value.absent(),
+    this.qtyStr = const Value.absent(),
+    this.actualQtyStr = const Value.absent(),
+    this.qty1 = const Value.absent(),
+    this.qty2 = const Value.absent(),
+    this.qty3 = const Value.absent(),
     this.rate = const Value.absent(),
-    this.vat = const Value.absent(),
-    this.vatAmt = const Value.absent(),
-    this.total = const Value.absent(),
-    this.disc = const Value.absent(),
-    this.discVal = const Value.absent(),
-    this.ledger = const Value.absent(),
-    this.companyId = const Value.absent(),
-    this.sync = const Value.absent(),
-    this.hsn = const Value.absent(),
-    this.enteredRate = const Value.absent(),
-    this.enteredDisc = const Value.absent(),
-    this.eneteredQty = const Value.absent(),
-    this.enteredFQty = const Value.absent(),
-    this.fQty = const Value.absent(),
-    this.addDiscVal = const Value.absent(),
-    this.cessAmt = const Value.absent(),
-    this.stkNegPermission = const Value.absent(),
-    this.discType = const Value.absent(),
-    this.priceList = const Value.absent(),
-    this.convQty = const Value.absent(),
-    this.fConvQty = const Value.absent(),
-    this.qtyString = const Value.absent(),
-    this.fQtyString = const Value.absent(),
-    this.fUnit = const Value.absent(),
-    this.aConvQty = const Value.absent(),
-    this.aFConvQty = const Value.absent(),
     this.rateUnit = const Value.absent(),
+    this.taxPerc = const Value.absent(),
+    this.cessPer = const Value.absent(),
+    this.addCessPer = const Value.absent(),
+    this.igstVal = const Value.absent(),
+    this.cgstVal = const Value.absent(),
+    this.sgstVal = const Value.absent(),
+    this.cessVal = const Value.absent(),
+    this.addCessVal = const Value.absent(),
+    this.otherVal = const Value.absent(),
+    this.discountPer = const Value.absent(),
+    this.discountAmt = const Value.absent(),
+    this.taxableAmount = const Value.absent(),
+    this.amount = const Value.absent(),
+    this.rateInc = const Value.absent(),
+    this.amountInc = const Value.absent(),
   });
   SaleReturnDetailsTableCompanion.insert({
     this.id = const Value.absent(),
-    this.mid = const Value.absent(),
+    required int vchId,
+    this.lineNo = const Value.absent(),
     this.itemId = const Value.absent(),
     this.itemName = const Value.absent(),
-    this.qty = const Value.absent(),
-    this.unit = const Value.absent(),
+    this.itemDesc = const Value.absent(),
+    this.stkQtyFirst = const Value.absent(),
+    this.stkQtySecond = const Value.absent(),
+    this.enteredQtyFirst = const Value.absent(),
+    this.enteredQtySecond = const Value.absent(),
+    this.enteredActualQtyFirst = const Value.absent(),
+    this.enteredActualQtySecond = const Value.absent(),
+    this.enteredUnit = const Value.absent(),
+    this.qtyFirst = const Value.absent(),
+    this.qtySecond = const Value.absent(),
+    this.qtyActualFirst = const Value.absent(),
+    this.qtyActualSecond = const Value.absent(),
+    this.altQtyFirst = const Value.absent(),
+    this.altQtySecond = const Value.absent(),
+    this.altQtyActualFirst = const Value.absent(),
+    this.altQtyActualSecond = const Value.absent(),
+    this.qtyStr = const Value.absent(),
+    this.actualQtyStr = const Value.absent(),
+    this.qty1 = const Value.absent(),
+    this.qty2 = const Value.absent(),
+    this.qty3 = const Value.absent(),
     this.rate = const Value.absent(),
-    this.vat = const Value.absent(),
-    this.vatAmt = const Value.absent(),
-    this.total = const Value.absent(),
-    this.disc = const Value.absent(),
-    this.discVal = const Value.absent(),
-    this.ledger = const Value.absent(),
-    this.companyId = const Value.absent(),
-    this.sync = const Value.absent(),
-    this.hsn = const Value.absent(),
-    this.enteredRate = const Value.absent(),
-    this.enteredDisc = const Value.absent(),
-    this.eneteredQty = const Value.absent(),
-    this.enteredFQty = const Value.absent(),
-    this.fQty = const Value.absent(),
-    this.addDiscVal = const Value.absent(),
-    this.cessAmt = const Value.absent(),
-    this.stkNegPermission = const Value.absent(),
-    this.discType = const Value.absent(),
-    this.priceList = const Value.absent(),
-    this.convQty = const Value.absent(),
-    this.fConvQty = const Value.absent(),
-    this.qtyString = const Value.absent(),
-    this.fQtyString = const Value.absent(),
-    this.fUnit = const Value.absent(),
-    this.aConvQty = const Value.absent(),
-    this.aFConvQty = const Value.absent(),
     this.rateUnit = const Value.absent(),
-  });
+    this.taxPerc = const Value.absent(),
+    this.cessPer = const Value.absent(),
+    this.addCessPer = const Value.absent(),
+    this.igstVal = const Value.absent(),
+    this.cgstVal = const Value.absent(),
+    this.sgstVal = const Value.absent(),
+    this.cessVal = const Value.absent(),
+    this.addCessVal = const Value.absent(),
+    this.otherVal = const Value.absent(),
+    this.discountPer = const Value.absent(),
+    this.discountAmt = const Value.absent(),
+    this.taxableAmount = const Value.absent(),
+    this.amount = const Value.absent(),
+    this.rateInc = const Value.absent(),
+    this.amountInc = const Value.absent(),
+  }) : vchId = Value(vchId);
   static Insertable<SaleReturnDetailsTableData> custom({
     Expression<int>? id,
-    Expression<int>? mid,
+    Expression<int>? vchId,
+    Expression<int>? lineNo,
     Expression<int>? itemId,
     Expression<String>? itemName,
-    Expression<double>? qty,
-    Expression<String>? unit,
+    Expression<String>? itemDesc,
+    Expression<double>? stkQtyFirst,
+    Expression<double>? stkQtySecond,
+    Expression<double>? enteredQtyFirst,
+    Expression<double>? enteredQtySecond,
+    Expression<double>? enteredActualQtyFirst,
+    Expression<double>? enteredActualQtySecond,
+    Expression<String>? enteredUnit,
+    Expression<double>? qtyFirst,
+    Expression<double>? qtySecond,
+    Expression<double>? qtyActualFirst,
+    Expression<double>? qtyActualSecond,
+    Expression<double>? altQtyFirst,
+    Expression<double>? altQtySecond,
+    Expression<double>? altQtyActualFirst,
+    Expression<double>? altQtyActualSecond,
+    Expression<String>? qtyStr,
+    Expression<String>? actualQtyStr,
+    Expression<double>? qty1,
+    Expression<double>? qty2,
+    Expression<double>? qty3,
     Expression<double>? rate,
-    Expression<double>? vat,
-    Expression<double>? vatAmt,
-    Expression<double>? total,
-    Expression<double>? disc,
-    Expression<double>? discVal,
-    Expression<String>? ledger,
-    Expression<int>? companyId,
-    Expression<int>? sync,
-    Expression<String>? hsn,
-    Expression<double>? enteredRate,
-    Expression<double>? enteredDisc,
-    Expression<String>? eneteredQty,
-    Expression<String>? enteredFQty,
-    Expression<double>? fQty,
-    Expression<double>? addDiscVal,
-    Expression<double>? cessAmt,
-    Expression<String>? stkNegPermission,
-    Expression<String>? discType,
-    Expression<String>? priceList,
-    Expression<double>? convQty,
-    Expression<double>? fConvQty,
-    Expression<String>? qtyString,
-    Expression<String>? fQtyString,
-    Expression<String>? fUnit,
-    Expression<double>? aConvQty,
-    Expression<double>? aFConvQty,
     Expression<String>? rateUnit,
+    Expression<double>? taxPerc,
+    Expression<double>? cessPer,
+    Expression<double>? addCessPer,
+    Expression<double>? igstVal,
+    Expression<double>? cgstVal,
+    Expression<double>? sgstVal,
+    Expression<double>? cessVal,
+    Expression<double>? addCessVal,
+    Expression<double>? otherVal,
+    Expression<double>? discountPer,
+    Expression<double>? discountAmt,
+    Expression<double>? taxableAmount,
+    Expression<double>? amount,
+    Expression<double>? rateInc,
+    Expression<double>? amountInc,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (mid != null) 'mid': mid,
+      if (vchId != null) 'vch_id': vchId,
+      if (lineNo != null) 'line_no': lineNo,
       if (itemId != null) 'item_id': itemId,
       if (itemName != null) 'item_name': itemName,
-      if (qty != null) 'qty': qty,
-      if (unit != null) 'unit': unit,
+      if (itemDesc != null) 'item_desc': itemDesc,
+      if (stkQtyFirst != null) 'stk_qty_first': stkQtyFirst,
+      if (stkQtySecond != null) 'stk_qty_second': stkQtySecond,
+      if (enteredQtyFirst != null) 'entered_qty_first': enteredQtyFirst,
+      if (enteredQtySecond != null) 'entered_qty_second': enteredQtySecond,
+      if (enteredActualQtyFirst != null)
+        'entered_actual_qty_first': enteredActualQtyFirst,
+      if (enteredActualQtySecond != null)
+        'entered_actual_qty_second': enteredActualQtySecond,
+      if (enteredUnit != null) 'entered_unit': enteredUnit,
+      if (qtyFirst != null) 'qty_first': qtyFirst,
+      if (qtySecond != null) 'qty_second': qtySecond,
+      if (qtyActualFirst != null) 'qty_actual_first': qtyActualFirst,
+      if (qtyActualSecond != null) 'qty_actual_second': qtyActualSecond,
+      if (altQtyFirst != null) 'alt_qty_first': altQtyFirst,
+      if (altQtySecond != null) 'alt_qty_second': altQtySecond,
+      if (altQtyActualFirst != null) 'alt_qty_actual_first': altQtyActualFirst,
+      if (altQtyActualSecond != null)
+        'alt_qty_actual_second': altQtyActualSecond,
+      if (qtyStr != null) 'qty_str': qtyStr,
+      if (actualQtyStr != null) 'actual_qty_str': actualQtyStr,
+      if (qty1 != null) 'qty1': qty1,
+      if (qty2 != null) 'qty2': qty2,
+      if (qty3 != null) 'qty3': qty3,
       if (rate != null) 'rate': rate,
-      if (vat != null) 'vat': vat,
-      if (vatAmt != null) 'vat_amt': vatAmt,
-      if (total != null) 'total': total,
-      if (disc != null) 'disc': disc,
-      if (discVal != null) 'disc_val': discVal,
-      if (ledger != null) 'ledger': ledger,
-      if (companyId != null) 'company_id': companyId,
-      if (sync != null) 'sync': sync,
-      if (hsn != null) 'hsn': hsn,
-      if (enteredRate != null) 'entered_rate': enteredRate,
-      if (enteredDisc != null) 'entered_disc': enteredDisc,
-      if (eneteredQty != null) 'enetered_qty': eneteredQty,
-      if (enteredFQty != null) 'entered_f_qty': enteredFQty,
-      if (fQty != null) 'f_qty': fQty,
-      if (addDiscVal != null) 'add_disc_val': addDiscVal,
-      if (cessAmt != null) 'cess_amt': cessAmt,
-      if (stkNegPermission != null) 'stk_neg_permission': stkNegPermission,
-      if (discType != null) 'disc_type': discType,
-      if (priceList != null) 'price_list': priceList,
-      if (convQty != null) 'conv_qty': convQty,
-      if (fConvQty != null) 'f_conv_qty': fConvQty,
-      if (qtyString != null) 'qty_string': qtyString,
-      if (fQtyString != null) 'f_qty_string': fQtyString,
-      if (fUnit != null) 'f_unit': fUnit,
-      if (aConvQty != null) 'a_conv_qty': aConvQty,
-      if (aFConvQty != null) 'a_f_conv_qty': aFConvQty,
       if (rateUnit != null) 'rate_unit': rateUnit,
+      if (taxPerc != null) 'tax_perc': taxPerc,
+      if (cessPer != null) 'cess_per': cessPer,
+      if (addCessPer != null) 'add_cess_per': addCessPer,
+      if (igstVal != null) 'igst_val': igstVal,
+      if (cgstVal != null) 'cgst_val': cgstVal,
+      if (sgstVal != null) 'sgst_val': sgstVal,
+      if (cessVal != null) 'cess_val': cessVal,
+      if (addCessVal != null) 'add_cess_val': addCessVal,
+      if (otherVal != null) 'other_val': otherVal,
+      if (discountPer != null) 'discount_per': discountPer,
+      if (discountAmt != null) 'discount_amt': discountAmt,
+      if (taxableAmount != null) 'taxable_amount': taxableAmount,
+      if (amount != null) 'amount': amount,
+      if (rateInc != null) 'rate_inc': rateInc,
+      if (amountInc != null) 'amount_inc': amountInc,
     });
   }
 
   SaleReturnDetailsTableCompanion copyWith({
     Value<int>? id,
-    Value<int?>? mid,
+    Value<int>? vchId,
+    Value<int?>? lineNo,
     Value<int?>? itemId,
     Value<String?>? itemName,
-    Value<double?>? qty,
-    Value<String?>? unit,
-    Value<double?>? rate,
-    Value<double?>? vat,
-    Value<double?>? vatAmt,
-    Value<double?>? total,
-    Value<double?>? disc,
-    Value<double?>? discVal,
-    Value<String?>? ledger,
-    Value<int?>? companyId,
-    Value<int>? sync,
-    Value<String?>? hsn,
-    Value<double?>? enteredRate,
-    Value<double?>? enteredDisc,
-    Value<String?>? eneteredQty,
-    Value<String?>? enteredFQty,
-    Value<double?>? fQty,
-    Value<double?>? addDiscVal,
-    Value<double?>? cessAmt,
-    Value<String?>? stkNegPermission,
-    Value<String?>? discType,
-    Value<String?>? priceList,
-    Value<double?>? convQty,
-    Value<double?>? fConvQty,
-    Value<String?>? qtyString,
-    Value<String?>? fQtyString,
-    Value<String?>? fUnit,
-    Value<double?>? aConvQty,
-    Value<double?>? aFConvQty,
+    Value<String?>? itemDesc,
+    Value<double>? stkQtyFirst,
+    Value<double>? stkQtySecond,
+    Value<double>? enteredQtyFirst,
+    Value<double>? enteredQtySecond,
+    Value<double>? enteredActualQtyFirst,
+    Value<double>? enteredActualQtySecond,
+    Value<String?>? enteredUnit,
+    Value<double>? qtyFirst,
+    Value<double>? qtySecond,
+    Value<double>? qtyActualFirst,
+    Value<double>? qtyActualSecond,
+    Value<double>? altQtyFirst,
+    Value<double>? altQtySecond,
+    Value<double>? altQtyActualFirst,
+    Value<double>? altQtyActualSecond,
+    Value<String?>? qtyStr,
+    Value<String?>? actualQtyStr,
+    Value<double>? qty1,
+    Value<double>? qty2,
+    Value<double>? qty3,
+    Value<double>? rate,
     Value<String?>? rateUnit,
+    Value<double>? taxPerc,
+    Value<double>? cessPer,
+    Value<double>? addCessPer,
+    Value<double>? igstVal,
+    Value<double>? cgstVal,
+    Value<double>? sgstVal,
+    Value<double>? cessVal,
+    Value<double>? addCessVal,
+    Value<double>? otherVal,
+    Value<double>? discountPer,
+    Value<double>? discountAmt,
+    Value<double>? taxableAmount,
+    Value<double>? amount,
+    Value<double>? rateInc,
+    Value<double>? amountInc,
   }) {
     return SaleReturnDetailsTableCompanion(
       id: id ?? this.id,
-      mid: mid ?? this.mid,
+      vchId: vchId ?? this.vchId,
+      lineNo: lineNo ?? this.lineNo,
       itemId: itemId ?? this.itemId,
       itemName: itemName ?? this.itemName,
-      qty: qty ?? this.qty,
-      unit: unit ?? this.unit,
+      itemDesc: itemDesc ?? this.itemDesc,
+      stkQtyFirst: stkQtyFirst ?? this.stkQtyFirst,
+      stkQtySecond: stkQtySecond ?? this.stkQtySecond,
+      enteredQtyFirst: enteredQtyFirst ?? this.enteredQtyFirst,
+      enteredQtySecond: enteredQtySecond ?? this.enteredQtySecond,
+      enteredActualQtyFirst:
+          enteredActualQtyFirst ?? this.enteredActualQtyFirst,
+      enteredActualQtySecond:
+          enteredActualQtySecond ?? this.enteredActualQtySecond,
+      enteredUnit: enteredUnit ?? this.enteredUnit,
+      qtyFirst: qtyFirst ?? this.qtyFirst,
+      qtySecond: qtySecond ?? this.qtySecond,
+      qtyActualFirst: qtyActualFirst ?? this.qtyActualFirst,
+      qtyActualSecond: qtyActualSecond ?? this.qtyActualSecond,
+      altQtyFirst: altQtyFirst ?? this.altQtyFirst,
+      altQtySecond: altQtySecond ?? this.altQtySecond,
+      altQtyActualFirst: altQtyActualFirst ?? this.altQtyActualFirst,
+      altQtyActualSecond: altQtyActualSecond ?? this.altQtyActualSecond,
+      qtyStr: qtyStr ?? this.qtyStr,
+      actualQtyStr: actualQtyStr ?? this.actualQtyStr,
+      qty1: qty1 ?? this.qty1,
+      qty2: qty2 ?? this.qty2,
+      qty3: qty3 ?? this.qty3,
       rate: rate ?? this.rate,
-      vat: vat ?? this.vat,
-      vatAmt: vatAmt ?? this.vatAmt,
-      total: total ?? this.total,
-      disc: disc ?? this.disc,
-      discVal: discVal ?? this.discVal,
-      ledger: ledger ?? this.ledger,
-      companyId: companyId ?? this.companyId,
-      sync: sync ?? this.sync,
-      hsn: hsn ?? this.hsn,
-      enteredRate: enteredRate ?? this.enteredRate,
-      enteredDisc: enteredDisc ?? this.enteredDisc,
-      eneteredQty: eneteredQty ?? this.eneteredQty,
-      enteredFQty: enteredFQty ?? this.enteredFQty,
-      fQty: fQty ?? this.fQty,
-      addDiscVal: addDiscVal ?? this.addDiscVal,
-      cessAmt: cessAmt ?? this.cessAmt,
-      stkNegPermission: stkNegPermission ?? this.stkNegPermission,
-      discType: discType ?? this.discType,
-      priceList: priceList ?? this.priceList,
-      convQty: convQty ?? this.convQty,
-      fConvQty: fConvQty ?? this.fConvQty,
-      qtyString: qtyString ?? this.qtyString,
-      fQtyString: fQtyString ?? this.fQtyString,
-      fUnit: fUnit ?? this.fUnit,
-      aConvQty: aConvQty ?? this.aConvQty,
-      aFConvQty: aFConvQty ?? this.aFConvQty,
       rateUnit: rateUnit ?? this.rateUnit,
+      taxPerc: taxPerc ?? this.taxPerc,
+      cessPer: cessPer ?? this.cessPer,
+      addCessPer: addCessPer ?? this.addCessPer,
+      igstVal: igstVal ?? this.igstVal,
+      cgstVal: cgstVal ?? this.cgstVal,
+      sgstVal: sgstVal ?? this.sgstVal,
+      cessVal: cessVal ?? this.cessVal,
+      addCessVal: addCessVal ?? this.addCessVal,
+      otherVal: otherVal ?? this.otherVal,
+      discountPer: discountPer ?? this.discountPer,
+      discountAmt: discountAmt ?? this.discountAmt,
+      taxableAmount: taxableAmount ?? this.taxableAmount,
+      amount: amount ?? this.amount,
+      rateInc: rateInc ?? this.rateInc,
+      amountInc: amountInc ?? this.amountInc,
     );
   }
 
@@ -27436,8 +28344,11 @@ class SaleReturnDetailsTableCompanion
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
-    if (mid.present) {
-      map['mid'] = Variable<int>(mid.value);
+    if (vchId.present) {
+      map['vch_id'] = Variable<int>(vchId.value);
+    }
+    if (lineNo.present) {
+      map['line_no'] = Variable<int>(lineNo.value);
     }
     if (itemId.present) {
       map['item_id'] = Variable<int>(itemId.value);
@@ -27445,95 +28356,123 @@ class SaleReturnDetailsTableCompanion
     if (itemName.present) {
       map['item_name'] = Variable<String>(itemName.value);
     }
-    if (qty.present) {
-      map['qty'] = Variable<double>(qty.value);
+    if (itemDesc.present) {
+      map['item_desc'] = Variable<String>(itemDesc.value);
     }
-    if (unit.present) {
-      map['unit'] = Variable<String>(unit.value);
+    if (stkQtyFirst.present) {
+      map['stk_qty_first'] = Variable<double>(stkQtyFirst.value);
+    }
+    if (stkQtySecond.present) {
+      map['stk_qty_second'] = Variable<double>(stkQtySecond.value);
+    }
+    if (enteredQtyFirst.present) {
+      map['entered_qty_first'] = Variable<double>(enteredQtyFirst.value);
+    }
+    if (enteredQtySecond.present) {
+      map['entered_qty_second'] = Variable<double>(enteredQtySecond.value);
+    }
+    if (enteredActualQtyFirst.present) {
+      map['entered_actual_qty_first'] = Variable<double>(
+        enteredActualQtyFirst.value,
+      );
+    }
+    if (enteredActualQtySecond.present) {
+      map['entered_actual_qty_second'] = Variable<double>(
+        enteredActualQtySecond.value,
+      );
+    }
+    if (enteredUnit.present) {
+      map['entered_unit'] = Variable<String>(enteredUnit.value);
+    }
+    if (qtyFirst.present) {
+      map['qty_first'] = Variable<double>(qtyFirst.value);
+    }
+    if (qtySecond.present) {
+      map['qty_second'] = Variable<double>(qtySecond.value);
+    }
+    if (qtyActualFirst.present) {
+      map['qty_actual_first'] = Variable<double>(qtyActualFirst.value);
+    }
+    if (qtyActualSecond.present) {
+      map['qty_actual_second'] = Variable<double>(qtyActualSecond.value);
+    }
+    if (altQtyFirst.present) {
+      map['alt_qty_first'] = Variable<double>(altQtyFirst.value);
+    }
+    if (altQtySecond.present) {
+      map['alt_qty_second'] = Variable<double>(altQtySecond.value);
+    }
+    if (altQtyActualFirst.present) {
+      map['alt_qty_actual_first'] = Variable<double>(altQtyActualFirst.value);
+    }
+    if (altQtyActualSecond.present) {
+      map['alt_qty_actual_second'] = Variable<double>(altQtyActualSecond.value);
+    }
+    if (qtyStr.present) {
+      map['qty_str'] = Variable<String>(qtyStr.value);
+    }
+    if (actualQtyStr.present) {
+      map['actual_qty_str'] = Variable<String>(actualQtyStr.value);
+    }
+    if (qty1.present) {
+      map['qty1'] = Variable<double>(qty1.value);
+    }
+    if (qty2.present) {
+      map['qty2'] = Variable<double>(qty2.value);
+    }
+    if (qty3.present) {
+      map['qty3'] = Variable<double>(qty3.value);
     }
     if (rate.present) {
       map['rate'] = Variable<double>(rate.value);
     }
-    if (vat.present) {
-      map['vat'] = Variable<double>(vat.value);
-    }
-    if (vatAmt.present) {
-      map['vat_amt'] = Variable<double>(vatAmt.value);
-    }
-    if (total.present) {
-      map['total'] = Variable<double>(total.value);
-    }
-    if (disc.present) {
-      map['disc'] = Variable<double>(disc.value);
-    }
-    if (discVal.present) {
-      map['disc_val'] = Variable<double>(discVal.value);
-    }
-    if (ledger.present) {
-      map['ledger'] = Variable<String>(ledger.value);
-    }
-    if (companyId.present) {
-      map['company_id'] = Variable<int>(companyId.value);
-    }
-    if (sync.present) {
-      map['sync'] = Variable<int>(sync.value);
-    }
-    if (hsn.present) {
-      map['hsn'] = Variable<String>(hsn.value);
-    }
-    if (enteredRate.present) {
-      map['entered_rate'] = Variable<double>(enteredRate.value);
-    }
-    if (enteredDisc.present) {
-      map['entered_disc'] = Variable<double>(enteredDisc.value);
-    }
-    if (eneteredQty.present) {
-      map['enetered_qty'] = Variable<String>(eneteredQty.value);
-    }
-    if (enteredFQty.present) {
-      map['entered_f_qty'] = Variable<String>(enteredFQty.value);
-    }
-    if (fQty.present) {
-      map['f_qty'] = Variable<double>(fQty.value);
-    }
-    if (addDiscVal.present) {
-      map['add_disc_val'] = Variable<double>(addDiscVal.value);
-    }
-    if (cessAmt.present) {
-      map['cess_amt'] = Variable<double>(cessAmt.value);
-    }
-    if (stkNegPermission.present) {
-      map['stk_neg_permission'] = Variable<String>(stkNegPermission.value);
-    }
-    if (discType.present) {
-      map['disc_type'] = Variable<String>(discType.value);
-    }
-    if (priceList.present) {
-      map['price_list'] = Variable<String>(priceList.value);
-    }
-    if (convQty.present) {
-      map['conv_qty'] = Variable<double>(convQty.value);
-    }
-    if (fConvQty.present) {
-      map['f_conv_qty'] = Variable<double>(fConvQty.value);
-    }
-    if (qtyString.present) {
-      map['qty_string'] = Variable<String>(qtyString.value);
-    }
-    if (fQtyString.present) {
-      map['f_qty_string'] = Variable<String>(fQtyString.value);
-    }
-    if (fUnit.present) {
-      map['f_unit'] = Variable<String>(fUnit.value);
-    }
-    if (aConvQty.present) {
-      map['a_conv_qty'] = Variable<double>(aConvQty.value);
-    }
-    if (aFConvQty.present) {
-      map['a_f_conv_qty'] = Variable<double>(aFConvQty.value);
-    }
     if (rateUnit.present) {
       map['rate_unit'] = Variable<String>(rateUnit.value);
+    }
+    if (taxPerc.present) {
+      map['tax_perc'] = Variable<double>(taxPerc.value);
+    }
+    if (cessPer.present) {
+      map['cess_per'] = Variable<double>(cessPer.value);
+    }
+    if (addCessPer.present) {
+      map['add_cess_per'] = Variable<double>(addCessPer.value);
+    }
+    if (igstVal.present) {
+      map['igst_val'] = Variable<double>(igstVal.value);
+    }
+    if (cgstVal.present) {
+      map['cgst_val'] = Variable<double>(cgstVal.value);
+    }
+    if (sgstVal.present) {
+      map['sgst_val'] = Variable<double>(sgstVal.value);
+    }
+    if (cessVal.present) {
+      map['cess_val'] = Variable<double>(cessVal.value);
+    }
+    if (addCessVal.present) {
+      map['add_cess_val'] = Variable<double>(addCessVal.value);
+    }
+    if (otherVal.present) {
+      map['other_val'] = Variable<double>(otherVal.value);
+    }
+    if (discountPer.present) {
+      map['discount_per'] = Variable<double>(discountPer.value);
+    }
+    if (discountAmt.present) {
+      map['discount_amt'] = Variable<double>(discountAmt.value);
+    }
+    if (taxableAmount.present) {
+      map['taxable_amount'] = Variable<double>(taxableAmount.value);
+    }
+    if (amount.present) {
+      map['amount'] = Variable<double>(amount.value);
+    }
+    if (rateInc.present) {
+      map['rate_inc'] = Variable<double>(rateInc.value);
+    }
+    if (amountInc.present) {
+      map['amount_inc'] = Variable<double>(amountInc.value);
     }
     return map;
   }
@@ -27542,39 +28481,48 @@ class SaleReturnDetailsTableCompanion
   String toString() {
     return (StringBuffer('SaleReturnDetailsTableCompanion(')
           ..write('id: $id, ')
-          ..write('mid: $mid, ')
+          ..write('vchId: $vchId, ')
+          ..write('lineNo: $lineNo, ')
           ..write('itemId: $itemId, ')
           ..write('itemName: $itemName, ')
-          ..write('qty: $qty, ')
-          ..write('unit: $unit, ')
+          ..write('itemDesc: $itemDesc, ')
+          ..write('stkQtyFirst: $stkQtyFirst, ')
+          ..write('stkQtySecond: $stkQtySecond, ')
+          ..write('enteredQtyFirst: $enteredQtyFirst, ')
+          ..write('enteredQtySecond: $enteredQtySecond, ')
+          ..write('enteredActualQtyFirst: $enteredActualQtyFirst, ')
+          ..write('enteredActualQtySecond: $enteredActualQtySecond, ')
+          ..write('enteredUnit: $enteredUnit, ')
+          ..write('qtyFirst: $qtyFirst, ')
+          ..write('qtySecond: $qtySecond, ')
+          ..write('qtyActualFirst: $qtyActualFirst, ')
+          ..write('qtyActualSecond: $qtyActualSecond, ')
+          ..write('altQtyFirst: $altQtyFirst, ')
+          ..write('altQtySecond: $altQtySecond, ')
+          ..write('altQtyActualFirst: $altQtyActualFirst, ')
+          ..write('altQtyActualSecond: $altQtyActualSecond, ')
+          ..write('qtyStr: $qtyStr, ')
+          ..write('actualQtyStr: $actualQtyStr, ')
+          ..write('qty1: $qty1, ')
+          ..write('qty2: $qty2, ')
+          ..write('qty3: $qty3, ')
           ..write('rate: $rate, ')
-          ..write('vat: $vat, ')
-          ..write('vatAmt: $vatAmt, ')
-          ..write('total: $total, ')
-          ..write('disc: $disc, ')
-          ..write('discVal: $discVal, ')
-          ..write('ledger: $ledger, ')
-          ..write('companyId: $companyId, ')
-          ..write('sync: $sync, ')
-          ..write('hsn: $hsn, ')
-          ..write('enteredRate: $enteredRate, ')
-          ..write('enteredDisc: $enteredDisc, ')
-          ..write('eneteredQty: $eneteredQty, ')
-          ..write('enteredFQty: $enteredFQty, ')
-          ..write('fQty: $fQty, ')
-          ..write('addDiscVal: $addDiscVal, ')
-          ..write('cessAmt: $cessAmt, ')
-          ..write('stkNegPermission: $stkNegPermission, ')
-          ..write('discType: $discType, ')
-          ..write('priceList: $priceList, ')
-          ..write('convQty: $convQty, ')
-          ..write('fConvQty: $fConvQty, ')
-          ..write('qtyString: $qtyString, ')
-          ..write('fQtyString: $fQtyString, ')
-          ..write('fUnit: $fUnit, ')
-          ..write('aConvQty: $aConvQty, ')
-          ..write('aFConvQty: $aFConvQty, ')
-          ..write('rateUnit: $rateUnit')
+          ..write('rateUnit: $rateUnit, ')
+          ..write('taxPerc: $taxPerc, ')
+          ..write('cessPer: $cessPer, ')
+          ..write('addCessPer: $addCessPer, ')
+          ..write('igstVal: $igstVal, ')
+          ..write('cgstVal: $cgstVal, ')
+          ..write('sgstVal: $sgstVal, ')
+          ..write('cessVal: $cessVal, ')
+          ..write('addCessVal: $addCessVal, ')
+          ..write('otherVal: $otherVal, ')
+          ..write('discountPer: $discountPer, ')
+          ..write('discountAmt: $discountAmt, ')
+          ..write('taxableAmount: $taxableAmount, ')
+          ..write('amount: $amount, ')
+          ..write('rateInc: $rateInc, ')
+          ..write('amountInc: $amountInc')
           ..write(')'))
         .toString();
   }
@@ -27603,15 +28551,6 @@ class $SaleReturnLedgerDetailsTableTable extends SaleReturnLedgerDetailsTable
       'PRIMARY KEY AUTOINCREMENT',
     ),
   );
-  static const VerificationMeta _midMeta = const VerificationMeta('mid');
-  @override
-  late final GeneratedColumn<int> mid = GeneratedColumn<int>(
-    'mid',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-  );
   static const VerificationMeta _vchIdMeta = const VerificationMeta('vchId');
   @override
   late final GeneratedColumn<int> vchId = GeneratedColumn<int>(
@@ -27621,20 +28560,23 @@ class $SaleReturnLedgerDetailsTableTable extends SaleReturnLedgerDetailsTable
     type: DriftSqlType.int,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _syncMeta = const VerificationMeta('sync');
+  static const VerificationMeta _ledgerIdMeta = const VerificationMeta(
+    'ledgerId',
+  );
   @override
-  late final GeneratedColumn<int> sync = GeneratedColumn<int>(
-    'sync',
+  late final GeneratedColumn<int> ledgerId = GeneratedColumn<int>(
+    'ledger_id',
     aliasedName,
-    false,
+    true,
     type: DriftSqlType.int,
     requiredDuringInsert: false,
-    defaultValue: const Constant(0),
   );
-  static const VerificationMeta _ledgerMeta = const VerificationMeta('ledger');
+  static const VerificationMeta _ledgerNameMeta = const VerificationMeta(
+    'ledgerName',
+  );
   @override
-  late final GeneratedColumn<String> ledger = GeneratedColumn<String>(
-    'ledger',
+  late final GeneratedColumn<String> ledgerName = GeneratedColumn<String>(
+    'ledger_name',
     aliasedName,
     true,
     type: DriftSqlType.string,
@@ -27658,79 +28600,14 @@ class $SaleReturnLedgerDetailsTableTable extends SaleReturnLedgerDetailsTable
     type: DriftSqlType.double,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _companyIdMeta = const VerificationMeta(
-    'companyId',
-  );
-  @override
-  late final GeneratedColumn<int> companyId = GeneratedColumn<int>(
-    'company_id',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _voucherNameMeta = const VerificationMeta(
-    'voucherName',
-  );
-  @override
-  late final GeneratedColumn<String> voucherName = GeneratedColumn<String>(
-    'voucher_name',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _igstMeta = const VerificationMeta('igst');
-  @override
-  late final GeneratedColumn<double> igst = GeneratedColumn<double>(
-    'igst',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _cgstMeta = const VerificationMeta('cgst');
-  @override
-  late final GeneratedColumn<double> cgst = GeneratedColumn<double>(
-    'cgst',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _sgstMeta = const VerificationMeta('sgst');
-  @override
-  late final GeneratedColumn<double> sgst = GeneratedColumn<double>(
-    'sgst',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _cessMeta = const VerificationMeta('cess');
-  @override
-  late final GeneratedColumn<double> cess = GeneratedColumn<double>(
-    'cess',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
-    mid,
     vchId,
-    sync,
-    ledger,
+    ledgerId,
+    ledgerName,
     rate,
     amount,
-    companyId,
-    voucherName,
-    igst,
-    cgst,
-    sgst,
-    cess,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -27747,28 +28624,22 @@ class $SaleReturnLedgerDetailsTableTable extends SaleReturnLedgerDetailsTable
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('mid')) {
-      context.handle(
-        _midMeta,
-        mid.isAcceptableOrUnknown(data['mid']!, _midMeta),
-      );
-    }
     if (data.containsKey('vch_id')) {
       context.handle(
         _vchIdMeta,
         vchId.isAcceptableOrUnknown(data['vch_id']!, _vchIdMeta),
       );
     }
-    if (data.containsKey('sync')) {
+    if (data.containsKey('ledger_id')) {
       context.handle(
-        _syncMeta,
-        sync.isAcceptableOrUnknown(data['sync']!, _syncMeta),
+        _ledgerIdMeta,
+        ledgerId.isAcceptableOrUnknown(data['ledger_id']!, _ledgerIdMeta),
       );
     }
-    if (data.containsKey('ledger')) {
+    if (data.containsKey('ledger_name')) {
       context.handle(
-        _ledgerMeta,
-        ledger.isAcceptableOrUnknown(data['ledger']!, _ledgerMeta),
+        _ledgerNameMeta,
+        ledgerName.isAcceptableOrUnknown(data['ledger_name']!, _ledgerNameMeta),
       );
     }
     if (data.containsKey('rate')) {
@@ -27781,45 +28652,6 @@ class $SaleReturnLedgerDetailsTableTable extends SaleReturnLedgerDetailsTable
       context.handle(
         _amountMeta,
         amount.isAcceptableOrUnknown(data['amount']!, _amountMeta),
-      );
-    }
-    if (data.containsKey('company_id')) {
-      context.handle(
-        _companyIdMeta,
-        companyId.isAcceptableOrUnknown(data['company_id']!, _companyIdMeta),
-      );
-    }
-    if (data.containsKey('voucher_name')) {
-      context.handle(
-        _voucherNameMeta,
-        voucherName.isAcceptableOrUnknown(
-          data['voucher_name']!,
-          _voucherNameMeta,
-        ),
-      );
-    }
-    if (data.containsKey('igst')) {
-      context.handle(
-        _igstMeta,
-        igst.isAcceptableOrUnknown(data['igst']!, _igstMeta),
-      );
-    }
-    if (data.containsKey('cgst')) {
-      context.handle(
-        _cgstMeta,
-        cgst.isAcceptableOrUnknown(data['cgst']!, _cgstMeta),
-      );
-    }
-    if (data.containsKey('sgst')) {
-      context.handle(
-        _sgstMeta,
-        sgst.isAcceptableOrUnknown(data['sgst']!, _sgstMeta),
-      );
-    }
-    if (data.containsKey('cess')) {
-      context.handle(
-        _cessMeta,
-        cess.isAcceptableOrUnknown(data['cess']!, _cessMeta),
       );
     }
     return context;
@@ -27838,21 +28670,17 @@ class $SaleReturnLedgerDetailsTableTable extends SaleReturnLedgerDetailsTable
         DriftSqlType.int,
         data['${effectivePrefix}id'],
       )!,
-      mid: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}mid'],
-      ),
       vchId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}vch_id'],
       ),
-      sync: attachedDatabase.typeMapping.read(
+      ledgerId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
-        data['${effectivePrefix}sync'],
-      )!,
-      ledger: attachedDatabase.typeMapping.read(
+        data['${effectivePrefix}ledger_id'],
+      ),
+      ledgerName: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}ledger'],
+        data['${effectivePrefix}ledger_name'],
       ),
       rate: attachedDatabase.typeMapping.read(
         DriftSqlType.double,
@@ -27861,30 +28689,6 @@ class $SaleReturnLedgerDetailsTableTable extends SaleReturnLedgerDetailsTable
       amount: attachedDatabase.typeMapping.read(
         DriftSqlType.double,
         data['${effectivePrefix}amount'],
-      ),
-      companyId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}company_id'],
-      ),
-      voucherName: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}voucher_name'],
-      ),
-      igst: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}igst'],
-      ),
-      cgst: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}cgst'],
-      ),
-      sgst: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}sgst'],
-      ),
-      cess: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}cess'],
       ),
     );
   }
@@ -27898,46 +28702,31 @@ class $SaleReturnLedgerDetailsTableTable extends SaleReturnLedgerDetailsTable
 class SaleReturnLedgerDetailsTableData extends DataClass
     implements Insertable<SaleReturnLedgerDetailsTableData> {
   final int id;
-  final int? mid;
   final int? vchId;
-  final int sync;
-  final String? ledger;
+  final int? ledgerId;
+  final String? ledgerName;
   final double? rate;
   final double? amount;
-  final int? companyId;
-  final String? voucherName;
-  final double? igst;
-  final double? cgst;
-  final double? sgst;
-  final double? cess;
   const SaleReturnLedgerDetailsTableData({
     required this.id,
-    this.mid,
     this.vchId,
-    required this.sync,
-    this.ledger,
+    this.ledgerId,
+    this.ledgerName,
     this.rate,
     this.amount,
-    this.companyId,
-    this.voucherName,
-    this.igst,
-    this.cgst,
-    this.sgst,
-    this.cess,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    if (!nullToAbsent || mid != null) {
-      map['mid'] = Variable<int>(mid);
-    }
     if (!nullToAbsent || vchId != null) {
       map['vch_id'] = Variable<int>(vchId);
     }
-    map['sync'] = Variable<int>(sync);
-    if (!nullToAbsent || ledger != null) {
-      map['ledger'] = Variable<String>(ledger);
+    if (!nullToAbsent || ledgerId != null) {
+      map['ledger_id'] = Variable<int>(ledgerId);
+    }
+    if (!nullToAbsent || ledgerName != null) {
+      map['ledger_name'] = Variable<String>(ledgerName);
     }
     if (!nullToAbsent || rate != null) {
       map['rate'] = Variable<double>(rate);
@@ -27945,52 +28734,25 @@ class SaleReturnLedgerDetailsTableData extends DataClass
     if (!nullToAbsent || amount != null) {
       map['amount'] = Variable<double>(amount);
     }
-    if (!nullToAbsent || companyId != null) {
-      map['company_id'] = Variable<int>(companyId);
-    }
-    if (!nullToAbsent || voucherName != null) {
-      map['voucher_name'] = Variable<String>(voucherName);
-    }
-    if (!nullToAbsent || igst != null) {
-      map['igst'] = Variable<double>(igst);
-    }
-    if (!nullToAbsent || cgst != null) {
-      map['cgst'] = Variable<double>(cgst);
-    }
-    if (!nullToAbsent || sgst != null) {
-      map['sgst'] = Variable<double>(sgst);
-    }
-    if (!nullToAbsent || cess != null) {
-      map['cess'] = Variable<double>(cess);
-    }
     return map;
   }
 
   SaleReturnLedgerDetailsTableCompanion toCompanion(bool nullToAbsent) {
     return SaleReturnLedgerDetailsTableCompanion(
       id: Value(id),
-      mid: mid == null && nullToAbsent ? const Value.absent() : Value(mid),
       vchId: vchId == null && nullToAbsent
           ? const Value.absent()
           : Value(vchId),
-      sync: Value(sync),
-      ledger: ledger == null && nullToAbsent
+      ledgerId: ledgerId == null && nullToAbsent
           ? const Value.absent()
-          : Value(ledger),
+          : Value(ledgerId),
+      ledgerName: ledgerName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(ledgerName),
       rate: rate == null && nullToAbsent ? const Value.absent() : Value(rate),
       amount: amount == null && nullToAbsent
           ? const Value.absent()
           : Value(amount),
-      companyId: companyId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(companyId),
-      voucherName: voucherName == null && nullToAbsent
-          ? const Value.absent()
-          : Value(voucherName),
-      igst: igst == null && nullToAbsent ? const Value.absent() : Value(igst),
-      cgst: cgst == null && nullToAbsent ? const Value.absent() : Value(cgst),
-      sgst: sgst == null && nullToAbsent ? const Value.absent() : Value(sgst),
-      cess: cess == null && nullToAbsent ? const Value.absent() : Value(cess),
     );
   }
 
@@ -28001,18 +28763,11 @@ class SaleReturnLedgerDetailsTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return SaleReturnLedgerDetailsTableData(
       id: serializer.fromJson<int>(json['id']),
-      mid: serializer.fromJson<int?>(json['mid']),
       vchId: serializer.fromJson<int?>(json['vchId']),
-      sync: serializer.fromJson<int>(json['sync']),
-      ledger: serializer.fromJson<String?>(json['ledger']),
+      ledgerId: serializer.fromJson<int?>(json['ledgerId']),
+      ledgerName: serializer.fromJson<String?>(json['ledgerName']),
       rate: serializer.fromJson<double?>(json['rate']),
       amount: serializer.fromJson<double?>(json['amount']),
-      companyId: serializer.fromJson<int?>(json['companyId']),
-      voucherName: serializer.fromJson<String?>(json['voucherName']),
-      igst: serializer.fromJson<double?>(json['igst']),
-      cgst: serializer.fromJson<double?>(json['cgst']),
-      sgst: serializer.fromJson<double?>(json['sgst']),
-      cess: serializer.fromJson<double?>(json['cess']),
     );
   }
   @override
@@ -28020,69 +28775,41 @@ class SaleReturnLedgerDetailsTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'mid': serializer.toJson<int?>(mid),
       'vchId': serializer.toJson<int?>(vchId),
-      'sync': serializer.toJson<int>(sync),
-      'ledger': serializer.toJson<String?>(ledger),
+      'ledgerId': serializer.toJson<int?>(ledgerId),
+      'ledgerName': serializer.toJson<String?>(ledgerName),
       'rate': serializer.toJson<double?>(rate),
       'amount': serializer.toJson<double?>(amount),
-      'companyId': serializer.toJson<int?>(companyId),
-      'voucherName': serializer.toJson<String?>(voucherName),
-      'igst': serializer.toJson<double?>(igst),
-      'cgst': serializer.toJson<double?>(cgst),
-      'sgst': serializer.toJson<double?>(sgst),
-      'cess': serializer.toJson<double?>(cess),
     };
   }
 
   SaleReturnLedgerDetailsTableData copyWith({
     int? id,
-    Value<int?> mid = const Value.absent(),
     Value<int?> vchId = const Value.absent(),
-    int? sync,
-    Value<String?> ledger = const Value.absent(),
+    Value<int?> ledgerId = const Value.absent(),
+    Value<String?> ledgerName = const Value.absent(),
     Value<double?> rate = const Value.absent(),
     Value<double?> amount = const Value.absent(),
-    Value<int?> companyId = const Value.absent(),
-    Value<String?> voucherName = const Value.absent(),
-    Value<double?> igst = const Value.absent(),
-    Value<double?> cgst = const Value.absent(),
-    Value<double?> sgst = const Value.absent(),
-    Value<double?> cess = const Value.absent(),
   }) => SaleReturnLedgerDetailsTableData(
     id: id ?? this.id,
-    mid: mid.present ? mid.value : this.mid,
     vchId: vchId.present ? vchId.value : this.vchId,
-    sync: sync ?? this.sync,
-    ledger: ledger.present ? ledger.value : this.ledger,
+    ledgerId: ledgerId.present ? ledgerId.value : this.ledgerId,
+    ledgerName: ledgerName.present ? ledgerName.value : this.ledgerName,
     rate: rate.present ? rate.value : this.rate,
     amount: amount.present ? amount.value : this.amount,
-    companyId: companyId.present ? companyId.value : this.companyId,
-    voucherName: voucherName.present ? voucherName.value : this.voucherName,
-    igst: igst.present ? igst.value : this.igst,
-    cgst: cgst.present ? cgst.value : this.cgst,
-    sgst: sgst.present ? sgst.value : this.sgst,
-    cess: cess.present ? cess.value : this.cess,
   );
   SaleReturnLedgerDetailsTableData copyWithCompanion(
     SaleReturnLedgerDetailsTableCompanion data,
   ) {
     return SaleReturnLedgerDetailsTableData(
       id: data.id.present ? data.id.value : this.id,
-      mid: data.mid.present ? data.mid.value : this.mid,
       vchId: data.vchId.present ? data.vchId.value : this.vchId,
-      sync: data.sync.present ? data.sync.value : this.sync,
-      ledger: data.ledger.present ? data.ledger.value : this.ledger,
+      ledgerId: data.ledgerId.present ? data.ledgerId.value : this.ledgerId,
+      ledgerName: data.ledgerName.present
+          ? data.ledgerName.value
+          : this.ledgerName,
       rate: data.rate.present ? data.rate.value : this.rate,
       amount: data.amount.present ? data.amount.value : this.amount,
-      companyId: data.companyId.present ? data.companyId.value : this.companyId,
-      voucherName: data.voucherName.present
-          ? data.voucherName.value
-          : this.voucherName,
-      igst: data.igst.present ? data.igst.value : this.igst,
-      cgst: data.cgst.present ? data.cgst.value : this.cgst,
-      sgst: data.sgst.present ? data.sgst.value : this.sgst,
-      cess: data.cess.present ? data.cess.value : this.cess,
     );
   }
 
@@ -28090,163 +28817,87 @@ class SaleReturnLedgerDetailsTableData extends DataClass
   String toString() {
     return (StringBuffer('SaleReturnLedgerDetailsTableData(')
           ..write('id: $id, ')
-          ..write('mid: $mid, ')
           ..write('vchId: $vchId, ')
-          ..write('sync: $sync, ')
-          ..write('ledger: $ledger, ')
+          ..write('ledgerId: $ledgerId, ')
+          ..write('ledgerName: $ledgerName, ')
           ..write('rate: $rate, ')
-          ..write('amount: $amount, ')
-          ..write('companyId: $companyId, ')
-          ..write('voucherName: $voucherName, ')
-          ..write('igst: $igst, ')
-          ..write('cgst: $cgst, ')
-          ..write('sgst: $sgst, ')
-          ..write('cess: $cess')
+          ..write('amount: $amount')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(
-    id,
-    mid,
-    vchId,
-    sync,
-    ledger,
-    rate,
-    amount,
-    companyId,
-    voucherName,
-    igst,
-    cgst,
-    sgst,
-    cess,
-  );
+  int get hashCode =>
+      Object.hash(id, vchId, ledgerId, ledgerName, rate, amount);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is SaleReturnLedgerDetailsTableData &&
           other.id == this.id &&
-          other.mid == this.mid &&
           other.vchId == this.vchId &&
-          other.sync == this.sync &&
-          other.ledger == this.ledger &&
+          other.ledgerId == this.ledgerId &&
+          other.ledgerName == this.ledgerName &&
           other.rate == this.rate &&
-          other.amount == this.amount &&
-          other.companyId == this.companyId &&
-          other.voucherName == this.voucherName &&
-          other.igst == this.igst &&
-          other.cgst == this.cgst &&
-          other.sgst == this.sgst &&
-          other.cess == this.cess);
+          other.amount == this.amount);
 }
 
 class SaleReturnLedgerDetailsTableCompanion
     extends UpdateCompanion<SaleReturnLedgerDetailsTableData> {
   final Value<int> id;
-  final Value<int?> mid;
   final Value<int?> vchId;
-  final Value<int> sync;
-  final Value<String?> ledger;
+  final Value<int?> ledgerId;
+  final Value<String?> ledgerName;
   final Value<double?> rate;
   final Value<double?> amount;
-  final Value<int?> companyId;
-  final Value<String?> voucherName;
-  final Value<double?> igst;
-  final Value<double?> cgst;
-  final Value<double?> sgst;
-  final Value<double?> cess;
   const SaleReturnLedgerDetailsTableCompanion({
     this.id = const Value.absent(),
-    this.mid = const Value.absent(),
     this.vchId = const Value.absent(),
-    this.sync = const Value.absent(),
-    this.ledger = const Value.absent(),
+    this.ledgerId = const Value.absent(),
+    this.ledgerName = const Value.absent(),
     this.rate = const Value.absent(),
     this.amount = const Value.absent(),
-    this.companyId = const Value.absent(),
-    this.voucherName = const Value.absent(),
-    this.igst = const Value.absent(),
-    this.cgst = const Value.absent(),
-    this.sgst = const Value.absent(),
-    this.cess = const Value.absent(),
   });
   SaleReturnLedgerDetailsTableCompanion.insert({
     this.id = const Value.absent(),
-    this.mid = const Value.absent(),
     this.vchId = const Value.absent(),
-    this.sync = const Value.absent(),
-    this.ledger = const Value.absent(),
+    this.ledgerId = const Value.absent(),
+    this.ledgerName = const Value.absent(),
     this.rate = const Value.absent(),
     this.amount = const Value.absent(),
-    this.companyId = const Value.absent(),
-    this.voucherName = const Value.absent(),
-    this.igst = const Value.absent(),
-    this.cgst = const Value.absent(),
-    this.sgst = const Value.absent(),
-    this.cess = const Value.absent(),
   });
   static Insertable<SaleReturnLedgerDetailsTableData> custom({
     Expression<int>? id,
-    Expression<int>? mid,
     Expression<int>? vchId,
-    Expression<int>? sync,
-    Expression<String>? ledger,
+    Expression<int>? ledgerId,
+    Expression<String>? ledgerName,
     Expression<double>? rate,
     Expression<double>? amount,
-    Expression<int>? companyId,
-    Expression<String>? voucherName,
-    Expression<double>? igst,
-    Expression<double>? cgst,
-    Expression<double>? sgst,
-    Expression<double>? cess,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (mid != null) 'mid': mid,
       if (vchId != null) 'vch_id': vchId,
-      if (sync != null) 'sync': sync,
-      if (ledger != null) 'ledger': ledger,
+      if (ledgerId != null) 'ledger_id': ledgerId,
+      if (ledgerName != null) 'ledger_name': ledgerName,
       if (rate != null) 'rate': rate,
       if (amount != null) 'amount': amount,
-      if (companyId != null) 'company_id': companyId,
-      if (voucherName != null) 'voucher_name': voucherName,
-      if (igst != null) 'igst': igst,
-      if (cgst != null) 'cgst': cgst,
-      if (sgst != null) 'sgst': sgst,
-      if (cess != null) 'cess': cess,
     });
   }
 
   SaleReturnLedgerDetailsTableCompanion copyWith({
     Value<int>? id,
-    Value<int?>? mid,
     Value<int?>? vchId,
-    Value<int>? sync,
-    Value<String?>? ledger,
+    Value<int?>? ledgerId,
+    Value<String?>? ledgerName,
     Value<double?>? rate,
     Value<double?>? amount,
-    Value<int?>? companyId,
-    Value<String?>? voucherName,
-    Value<double?>? igst,
-    Value<double?>? cgst,
-    Value<double?>? sgst,
-    Value<double?>? cess,
   }) {
     return SaleReturnLedgerDetailsTableCompanion(
       id: id ?? this.id,
-      mid: mid ?? this.mid,
       vchId: vchId ?? this.vchId,
-      sync: sync ?? this.sync,
-      ledger: ledger ?? this.ledger,
+      ledgerId: ledgerId ?? this.ledgerId,
+      ledgerName: ledgerName ?? this.ledgerName,
       rate: rate ?? this.rate,
       amount: amount ?? this.amount,
-      companyId: companyId ?? this.companyId,
-      voucherName: voucherName ?? this.voucherName,
-      igst: igst ?? this.igst,
-      cgst: cgst ?? this.cgst,
-      sgst: sgst ?? this.sgst,
-      cess: cess ?? this.cess,
     );
   }
 
@@ -28256,41 +28907,20 @@ class SaleReturnLedgerDetailsTableCompanion
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
-    if (mid.present) {
-      map['mid'] = Variable<int>(mid.value);
-    }
     if (vchId.present) {
       map['vch_id'] = Variable<int>(vchId.value);
     }
-    if (sync.present) {
-      map['sync'] = Variable<int>(sync.value);
+    if (ledgerId.present) {
+      map['ledger_id'] = Variable<int>(ledgerId.value);
     }
-    if (ledger.present) {
-      map['ledger'] = Variable<String>(ledger.value);
+    if (ledgerName.present) {
+      map['ledger_name'] = Variable<String>(ledgerName.value);
     }
     if (rate.present) {
       map['rate'] = Variable<double>(rate.value);
     }
     if (amount.present) {
       map['amount'] = Variable<double>(amount.value);
-    }
-    if (companyId.present) {
-      map['company_id'] = Variable<int>(companyId.value);
-    }
-    if (voucherName.present) {
-      map['voucher_name'] = Variable<String>(voucherName.value);
-    }
-    if (igst.present) {
-      map['igst'] = Variable<double>(igst.value);
-    }
-    if (cgst.present) {
-      map['cgst'] = Variable<double>(cgst.value);
-    }
-    if (sgst.present) {
-      map['sgst'] = Variable<double>(sgst.value);
-    }
-    if (cess.present) {
-      map['cess'] = Variable<double>(cess.value);
     }
     return map;
   }
@@ -28299,18 +28929,11 @@ class SaleReturnLedgerDetailsTableCompanion
   String toString() {
     return (StringBuffer('SaleReturnLedgerDetailsTableCompanion(')
           ..write('id: $id, ')
-          ..write('mid: $mid, ')
           ..write('vchId: $vchId, ')
-          ..write('sync: $sync, ')
-          ..write('ledger: $ledger, ')
+          ..write('ledgerId: $ledgerId, ')
+          ..write('ledgerName: $ledgerName, ')
           ..write('rate: $rate, ')
-          ..write('amount: $amount, ')
-          ..write('companyId: $companyId, ')
-          ..write('voucherName: $voucherName, ')
-          ..write('igst: $igst, ')
-          ..write('cgst: $cgst, ')
-          ..write('sgst: $sgst, ')
-          ..write('cess: $cess')
+          ..write('amount: $amount')
           ..write(')'))
         .toString();
   }
@@ -42521,80 +43144,100 @@ typedef $$SaleAutoReceiptTableTableProcessedTableManager =
 typedef $$SaleReturnMasterTableTableCreateCompanionBuilder =
     SaleReturnMasterTableCompanion Function({
       Value<int> id,
-      Value<int?> vchId,
-      Value<String?> voucherNo,
-      Value<int?> partyId,
-      Value<String?> party,
-      Value<String?> address,
-      Value<String?> address2,
-      Value<String?> email,
-      Value<String?> mob,
-      Value<String?> voucherDate,
-      required double voucherAmount,
-      Value<String?> priceList,
-      Value<String?> narration,
-      Value<double?> lattitude,
-      Value<double?> longitude,
-      Value<double?> accuracy,
-      Value<int?> userId,
+      Value<int?> custid,
       Value<int?> companyId,
-      Value<int?> itemCount,
-      Value<String?> gstin,
-      Value<String?> state,
-      Value<double?> addDiscEntered,
-      Value<String?> prefix,
-      Value<String?> suffix,
-      Value<String?> vchType,
-      Value<int?> invNo,
-      Value<String?> godown,
       Value<int?> tripId,
-      Value<int?> visitId,
-      Value<DateTime?> createdTime,
-      Value<DateTime?> updatedTime,
-      Value<String?> deliveryDate,
+      Value<int?> checkinId,
+      Value<String?> gr,
+      Value<int?> godownId,
+      Value<int?> routeId,
+      Value<int?> userId,
+      Value<int?> androidId,
+      Value<int?> pricelistId,
+      Value<int?> vchseriesId,
+      Value<int?> vchno,
+      Value<String?> vchnumber,
+      Value<String?> vchdate,
+      Value<String?> vchType,
+      Value<String?> vchmode,
+      Value<String?> referenceno,
+      Value<DateTime?> referencedate,
+      Value<String?> narration,
+      required double grossAmount,
+      required double discountAmount,
+      required double taxableAmount,
+      required double cgst,
+      required double sgst,
+      required double igst,
+      required double vataAmount,
+      required double cessAmount,
+      required double additionalcessAmount,
+      required double roundoff,
+      required double netAmount,
+      Value<int?> itemcount,
+      Value<int?> autoreceipt,
+      Value<int?> partyId,
+      Value<String?> partyname,
+      Value<String?> statecode,
+      Value<String?> gstno,
+      required double distance,
+      required double latitude,
+      required double longitude,
+      required double accuracy,
+      Value<String?> mobilecreatedon,
+      Value<String?> createdon,
+      Value<int?> status,
+      Value<int?> importstatus,
       Value<int> sync,
-      Value<String?> pinCode,
-      Value<int?> uploadedServerId,
-      Value<String?> mailingName,
     });
 typedef $$SaleReturnMasterTableTableUpdateCompanionBuilder =
     SaleReturnMasterTableCompanion Function({
       Value<int> id,
-      Value<int?> vchId,
-      Value<String?> voucherNo,
-      Value<int?> partyId,
-      Value<String?> party,
-      Value<String?> address,
-      Value<String?> address2,
-      Value<String?> email,
-      Value<String?> mob,
-      Value<String?> voucherDate,
-      Value<double> voucherAmount,
-      Value<String?> priceList,
-      Value<String?> narration,
-      Value<double?> lattitude,
-      Value<double?> longitude,
-      Value<double?> accuracy,
-      Value<int?> userId,
+      Value<int?> custid,
       Value<int?> companyId,
-      Value<int?> itemCount,
-      Value<String?> gstin,
-      Value<String?> state,
-      Value<double?> addDiscEntered,
-      Value<String?> prefix,
-      Value<String?> suffix,
-      Value<String?> vchType,
-      Value<int?> invNo,
-      Value<String?> godown,
       Value<int?> tripId,
-      Value<int?> visitId,
-      Value<DateTime?> createdTime,
-      Value<DateTime?> updatedTime,
-      Value<String?> deliveryDate,
+      Value<int?> checkinId,
+      Value<String?> gr,
+      Value<int?> godownId,
+      Value<int?> routeId,
+      Value<int?> userId,
+      Value<int?> androidId,
+      Value<int?> pricelistId,
+      Value<int?> vchseriesId,
+      Value<int?> vchno,
+      Value<String?> vchnumber,
+      Value<String?> vchdate,
+      Value<String?> vchType,
+      Value<String?> vchmode,
+      Value<String?> referenceno,
+      Value<DateTime?> referencedate,
+      Value<String?> narration,
+      Value<double> grossAmount,
+      Value<double> discountAmount,
+      Value<double> taxableAmount,
+      Value<double> cgst,
+      Value<double> sgst,
+      Value<double> igst,
+      Value<double> vataAmount,
+      Value<double> cessAmount,
+      Value<double> additionalcessAmount,
+      Value<double> roundoff,
+      Value<double> netAmount,
+      Value<int?> itemcount,
+      Value<int?> autoreceipt,
+      Value<int?> partyId,
+      Value<String?> partyname,
+      Value<String?> statecode,
+      Value<String?> gstno,
+      Value<double> distance,
+      Value<double> latitude,
+      Value<double> longitude,
+      Value<double> accuracy,
+      Value<String?> mobilecreatedon,
+      Value<String?> createdon,
+      Value<int?> status,
+      Value<int?> importstatus,
       Value<int> sync,
-      Value<String?> pinCode,
-      Value<int?> uploadedServerId,
-      Value<String?> mailingName,
     });
 
 class $$SaleReturnMasterTableTableFilterComposer
@@ -42611,58 +43254,93 @@ class $$SaleReturnMasterTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get vchId => $composableBuilder(
-    column: $table.vchId,
+  ColumnFilters<int> get custid => $composableBuilder(
+    column: $table.custid,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get voucherNo => $composableBuilder(
-    column: $table.voucherNo,
+  ColumnFilters<int> get companyId => $composableBuilder(
+    column: $table.companyId,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get partyId => $composableBuilder(
-    column: $table.partyId,
+  ColumnFilters<int> get tripId => $composableBuilder(
+    column: $table.tripId,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get party => $composableBuilder(
-    column: $table.party,
+  ColumnFilters<int> get checkinId => $composableBuilder(
+    column: $table.checkinId,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get address => $composableBuilder(
-    column: $table.address,
+  ColumnFilters<String> get gr => $composableBuilder(
+    column: $table.gr,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get address2 => $composableBuilder(
-    column: $table.address2,
+  ColumnFilters<int> get godownId => $composableBuilder(
+    column: $table.godownId,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get email => $composableBuilder(
-    column: $table.email,
+  ColumnFilters<int> get routeId => $composableBuilder(
+    column: $table.routeId,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get mob => $composableBuilder(
-    column: $table.mob,
+  ColumnFilters<int> get userId => $composableBuilder(
+    column: $table.userId,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get voucherDate => $composableBuilder(
-    column: $table.voucherDate,
+  ColumnFilters<int> get androidId => $composableBuilder(
+    column: $table.androidId,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<double> get voucherAmount => $composableBuilder(
-    column: $table.voucherAmount,
+  ColumnFilters<int> get pricelistId => $composableBuilder(
+    column: $table.pricelistId,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get priceList => $composableBuilder(
-    column: $table.priceList,
+  ColumnFilters<int> get vchseriesId => $composableBuilder(
+    column: $table.vchseriesId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get vchno => $composableBuilder(
+    column: $table.vchno,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get vchnumber => $composableBuilder(
+    column: $table.vchnumber,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get vchdate => $composableBuilder(
+    column: $table.vchdate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get vchType => $composableBuilder(
+    column: $table.vchType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get vchmode => $composableBuilder(
+    column: $table.vchmode,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get referenceno => $composableBuilder(
+    column: $table.referenceno,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get referencedate => $composableBuilder(
+    column: $table.referencedate,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -42671,8 +43349,98 @@ class $$SaleReturnMasterTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<double> get lattitude => $composableBuilder(
-    column: $table.lattitude,
+  ColumnFilters<double> get grossAmount => $composableBuilder(
+    column: $table.grossAmount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get discountAmount => $composableBuilder(
+    column: $table.discountAmount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get taxableAmount => $composableBuilder(
+    column: $table.taxableAmount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get cgst => $composableBuilder(
+    column: $table.cgst,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get sgst => $composableBuilder(
+    column: $table.sgst,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get igst => $composableBuilder(
+    column: $table.igst,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get vataAmount => $composableBuilder(
+    column: $table.vataAmount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get cessAmount => $composableBuilder(
+    column: $table.cessAmount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get additionalcessAmount => $composableBuilder(
+    column: $table.additionalcessAmount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get roundoff => $composableBuilder(
+    column: $table.roundoff,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get netAmount => $composableBuilder(
+    column: $table.netAmount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get itemcount => $composableBuilder(
+    column: $table.itemcount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get autoreceipt => $composableBuilder(
+    column: $table.autoreceipt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get partyId => $composableBuilder(
+    column: $table.partyId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get partyname => $composableBuilder(
+    column: $table.partyname,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statecode => $composableBuilder(
+    column: $table.statecode,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get gstno => $composableBuilder(
+    column: $table.gstno,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get distance => $composableBuilder(
+    column: $table.distance,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get latitude => $composableBuilder(
+    column: $table.latitude,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -42686,103 +43454,28 @@ class $$SaleReturnMasterTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get userId => $composableBuilder(
-    column: $table.userId,
+  ColumnFilters<String> get mobilecreatedon => $composableBuilder(
+    column: $table.mobilecreatedon,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get companyId => $composableBuilder(
-    column: $table.companyId,
+  ColumnFilters<String> get createdon => $composableBuilder(
+    column: $table.createdon,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get itemCount => $composableBuilder(
-    column: $table.itemCount,
+  ColumnFilters<int> get status => $composableBuilder(
+    column: $table.status,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get gstin => $composableBuilder(
-    column: $table.gstin,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get state => $composableBuilder(
-    column: $table.state,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get addDiscEntered => $composableBuilder(
-    column: $table.addDiscEntered,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get prefix => $composableBuilder(
-    column: $table.prefix,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get suffix => $composableBuilder(
-    column: $table.suffix,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get vchType => $composableBuilder(
-    column: $table.vchType,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get invNo => $composableBuilder(
-    column: $table.invNo,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get godown => $composableBuilder(
-    column: $table.godown,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get tripId => $composableBuilder(
-    column: $table.tripId,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get visitId => $composableBuilder(
-    column: $table.visitId,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get createdTime => $composableBuilder(
-    column: $table.createdTime,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get updatedTime => $composableBuilder(
-    column: $table.updatedTime,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get deliveryDate => $composableBuilder(
-    column: $table.deliveryDate,
+  ColumnFilters<int> get importstatus => $composableBuilder(
+    column: $table.importstatus,
     builder: (column) => ColumnFilters(column),
   );
 
   ColumnFilters<int> get sync => $composableBuilder(
     column: $table.sync,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get pinCode => $composableBuilder(
-    column: $table.pinCode,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get uploadedServerId => $composableBuilder(
-    column: $table.uploadedServerId,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get mailingName => $composableBuilder(
-    column: $table.mailingName,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -42801,58 +43494,93 @@ class $$SaleReturnMasterTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get vchId => $composableBuilder(
-    column: $table.vchId,
+  ColumnOrderings<int> get custid => $composableBuilder(
+    column: $table.custid,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get voucherNo => $composableBuilder(
-    column: $table.voucherNo,
+  ColumnOrderings<int> get companyId => $composableBuilder(
+    column: $table.companyId,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get partyId => $composableBuilder(
-    column: $table.partyId,
+  ColumnOrderings<int> get tripId => $composableBuilder(
+    column: $table.tripId,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get party => $composableBuilder(
-    column: $table.party,
+  ColumnOrderings<int> get checkinId => $composableBuilder(
+    column: $table.checkinId,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get address => $composableBuilder(
-    column: $table.address,
+  ColumnOrderings<String> get gr => $composableBuilder(
+    column: $table.gr,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get address2 => $composableBuilder(
-    column: $table.address2,
+  ColumnOrderings<int> get godownId => $composableBuilder(
+    column: $table.godownId,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get email => $composableBuilder(
-    column: $table.email,
+  ColumnOrderings<int> get routeId => $composableBuilder(
+    column: $table.routeId,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get mob => $composableBuilder(
-    column: $table.mob,
+  ColumnOrderings<int> get userId => $composableBuilder(
+    column: $table.userId,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get voucherDate => $composableBuilder(
-    column: $table.voucherDate,
+  ColumnOrderings<int> get androidId => $composableBuilder(
+    column: $table.androidId,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<double> get voucherAmount => $composableBuilder(
-    column: $table.voucherAmount,
+  ColumnOrderings<int> get pricelistId => $composableBuilder(
+    column: $table.pricelistId,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get priceList => $composableBuilder(
-    column: $table.priceList,
+  ColumnOrderings<int> get vchseriesId => $composableBuilder(
+    column: $table.vchseriesId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get vchno => $composableBuilder(
+    column: $table.vchno,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get vchnumber => $composableBuilder(
+    column: $table.vchnumber,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get vchdate => $composableBuilder(
+    column: $table.vchdate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get vchType => $composableBuilder(
+    column: $table.vchType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get vchmode => $composableBuilder(
+    column: $table.vchmode,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get referenceno => $composableBuilder(
+    column: $table.referenceno,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get referencedate => $composableBuilder(
+    column: $table.referencedate,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -42861,8 +43589,98 @@ class $$SaleReturnMasterTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<double> get lattitude => $composableBuilder(
-    column: $table.lattitude,
+  ColumnOrderings<double> get grossAmount => $composableBuilder(
+    column: $table.grossAmount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get discountAmount => $composableBuilder(
+    column: $table.discountAmount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get taxableAmount => $composableBuilder(
+    column: $table.taxableAmount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get cgst => $composableBuilder(
+    column: $table.cgst,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get sgst => $composableBuilder(
+    column: $table.sgst,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get igst => $composableBuilder(
+    column: $table.igst,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get vataAmount => $composableBuilder(
+    column: $table.vataAmount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get cessAmount => $composableBuilder(
+    column: $table.cessAmount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get additionalcessAmount => $composableBuilder(
+    column: $table.additionalcessAmount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get roundoff => $composableBuilder(
+    column: $table.roundoff,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get netAmount => $composableBuilder(
+    column: $table.netAmount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get itemcount => $composableBuilder(
+    column: $table.itemcount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get autoreceipt => $composableBuilder(
+    column: $table.autoreceipt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get partyId => $composableBuilder(
+    column: $table.partyId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get partyname => $composableBuilder(
+    column: $table.partyname,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statecode => $composableBuilder(
+    column: $table.statecode,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get gstno => $composableBuilder(
+    column: $table.gstno,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get distance => $composableBuilder(
+    column: $table.distance,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get latitude => $composableBuilder(
+    column: $table.latitude,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -42876,103 +43694,28 @@ class $$SaleReturnMasterTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get userId => $composableBuilder(
-    column: $table.userId,
+  ColumnOrderings<String> get mobilecreatedon => $composableBuilder(
+    column: $table.mobilecreatedon,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get companyId => $composableBuilder(
-    column: $table.companyId,
+  ColumnOrderings<String> get createdon => $composableBuilder(
+    column: $table.createdon,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get itemCount => $composableBuilder(
-    column: $table.itemCount,
+  ColumnOrderings<int> get status => $composableBuilder(
+    column: $table.status,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get gstin => $composableBuilder(
-    column: $table.gstin,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get state => $composableBuilder(
-    column: $table.state,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get addDiscEntered => $composableBuilder(
-    column: $table.addDiscEntered,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get prefix => $composableBuilder(
-    column: $table.prefix,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get suffix => $composableBuilder(
-    column: $table.suffix,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get vchType => $composableBuilder(
-    column: $table.vchType,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get invNo => $composableBuilder(
-    column: $table.invNo,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get godown => $composableBuilder(
-    column: $table.godown,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get tripId => $composableBuilder(
-    column: $table.tripId,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get visitId => $composableBuilder(
-    column: $table.visitId,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get createdTime => $composableBuilder(
-    column: $table.createdTime,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get updatedTime => $composableBuilder(
-    column: $table.updatedTime,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get deliveryDate => $composableBuilder(
-    column: $table.deliveryDate,
+  ColumnOrderings<int> get importstatus => $composableBuilder(
+    column: $table.importstatus,
     builder: (column) => ColumnOrderings(column),
   );
 
   ColumnOrderings<int> get sync => $composableBuilder(
     column: $table.sync,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get pinCode => $composableBuilder(
-    column: $table.pinCode,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get uploadedServerId => $composableBuilder(
-    column: $table.uploadedServerId,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get mailingName => $composableBuilder(
-    column: $table.mailingName,
     builder: (column) => ColumnOrderings(column),
   );
 }
@@ -42989,48 +43732,141 @@ class $$SaleReturnMasterTableTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<int> get vchId =>
-      $composableBuilder(column: $table.vchId, builder: (column) => column);
+  GeneratedColumn<int> get custid =>
+      $composableBuilder(column: $table.custid, builder: (column) => column);
 
-  GeneratedColumn<String> get voucherNo =>
-      $composableBuilder(column: $table.voucherNo, builder: (column) => column);
+  GeneratedColumn<int> get companyId =>
+      $composableBuilder(column: $table.companyId, builder: (column) => column);
 
-  GeneratedColumn<int> get partyId =>
-      $composableBuilder(column: $table.partyId, builder: (column) => column);
+  GeneratedColumn<int> get tripId =>
+      $composableBuilder(column: $table.tripId, builder: (column) => column);
 
-  GeneratedColumn<String> get party =>
-      $composableBuilder(column: $table.party, builder: (column) => column);
+  GeneratedColumn<int> get checkinId =>
+      $composableBuilder(column: $table.checkinId, builder: (column) => column);
 
-  GeneratedColumn<String> get address =>
-      $composableBuilder(column: $table.address, builder: (column) => column);
+  GeneratedColumn<String> get gr =>
+      $composableBuilder(column: $table.gr, builder: (column) => column);
 
-  GeneratedColumn<String> get address2 =>
-      $composableBuilder(column: $table.address2, builder: (column) => column);
+  GeneratedColumn<int> get godownId =>
+      $composableBuilder(column: $table.godownId, builder: (column) => column);
 
-  GeneratedColumn<String> get email =>
-      $composableBuilder(column: $table.email, builder: (column) => column);
+  GeneratedColumn<int> get routeId =>
+      $composableBuilder(column: $table.routeId, builder: (column) => column);
 
-  GeneratedColumn<String> get mob =>
-      $composableBuilder(column: $table.mob, builder: (column) => column);
+  GeneratedColumn<int> get userId =>
+      $composableBuilder(column: $table.userId, builder: (column) => column);
 
-  GeneratedColumn<String> get voucherDate => $composableBuilder(
-    column: $table.voucherDate,
+  GeneratedColumn<int> get androidId =>
+      $composableBuilder(column: $table.androidId, builder: (column) => column);
+
+  GeneratedColumn<int> get pricelistId => $composableBuilder(
+    column: $table.pricelistId,
     builder: (column) => column,
   );
 
-  GeneratedColumn<double> get voucherAmount => $composableBuilder(
-    column: $table.voucherAmount,
+  GeneratedColumn<int> get vchseriesId => $composableBuilder(
+    column: $table.vchseriesId,
     builder: (column) => column,
   );
 
-  GeneratedColumn<String> get priceList =>
-      $composableBuilder(column: $table.priceList, builder: (column) => column);
+  GeneratedColumn<int> get vchno =>
+      $composableBuilder(column: $table.vchno, builder: (column) => column);
+
+  GeneratedColumn<String> get vchnumber =>
+      $composableBuilder(column: $table.vchnumber, builder: (column) => column);
+
+  GeneratedColumn<String> get vchdate =>
+      $composableBuilder(column: $table.vchdate, builder: (column) => column);
+
+  GeneratedColumn<String> get vchType =>
+      $composableBuilder(column: $table.vchType, builder: (column) => column);
+
+  GeneratedColumn<String> get vchmode =>
+      $composableBuilder(column: $table.vchmode, builder: (column) => column);
+
+  GeneratedColumn<String> get referenceno => $composableBuilder(
+    column: $table.referenceno,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get referencedate => $composableBuilder(
+    column: $table.referencedate,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<String> get narration =>
       $composableBuilder(column: $table.narration, builder: (column) => column);
 
-  GeneratedColumn<double> get lattitude =>
-      $composableBuilder(column: $table.lattitude, builder: (column) => column);
+  GeneratedColumn<double> get grossAmount => $composableBuilder(
+    column: $table.grossAmount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get discountAmount => $composableBuilder(
+    column: $table.discountAmount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get taxableAmount => $composableBuilder(
+    column: $table.taxableAmount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get cgst =>
+      $composableBuilder(column: $table.cgst, builder: (column) => column);
+
+  GeneratedColumn<double> get sgst =>
+      $composableBuilder(column: $table.sgst, builder: (column) => column);
+
+  GeneratedColumn<double> get igst =>
+      $composableBuilder(column: $table.igst, builder: (column) => column);
+
+  GeneratedColumn<double> get vataAmount => $composableBuilder(
+    column: $table.vataAmount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get cessAmount => $composableBuilder(
+    column: $table.cessAmount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get additionalcessAmount => $composableBuilder(
+    column: $table.additionalcessAmount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get roundoff =>
+      $composableBuilder(column: $table.roundoff, builder: (column) => column);
+
+  GeneratedColumn<double> get netAmount =>
+      $composableBuilder(column: $table.netAmount, builder: (column) => column);
+
+  GeneratedColumn<int> get itemcount =>
+      $composableBuilder(column: $table.itemcount, builder: (column) => column);
+
+  GeneratedColumn<int> get autoreceipt => $composableBuilder(
+    column: $table.autoreceipt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get partyId =>
+      $composableBuilder(column: $table.partyId, builder: (column) => column);
+
+  GeneratedColumn<String> get partyname =>
+      $composableBuilder(column: $table.partyname, builder: (column) => column);
+
+  GeneratedColumn<String> get statecode =>
+      $composableBuilder(column: $table.statecode, builder: (column) => column);
+
+  GeneratedColumn<String> get gstno =>
+      $composableBuilder(column: $table.gstno, builder: (column) => column);
+
+  GeneratedColumn<double> get distance =>
+      $composableBuilder(column: $table.distance, builder: (column) => column);
+
+  GeneratedColumn<double> get latitude =>
+      $composableBuilder(column: $table.latitude, builder: (column) => column);
 
   GeneratedColumn<double> get longitude =>
       $composableBuilder(column: $table.longitude, builder: (column) => column);
@@ -43038,77 +43874,24 @@ class $$SaleReturnMasterTableTableAnnotationComposer
   GeneratedColumn<double> get accuracy =>
       $composableBuilder(column: $table.accuracy, builder: (column) => column);
 
-  GeneratedColumn<int> get userId =>
-      $composableBuilder(column: $table.userId, builder: (column) => column);
-
-  GeneratedColumn<int> get companyId =>
-      $composableBuilder(column: $table.companyId, builder: (column) => column);
-
-  GeneratedColumn<int> get itemCount =>
-      $composableBuilder(column: $table.itemCount, builder: (column) => column);
-
-  GeneratedColumn<String> get gstin =>
-      $composableBuilder(column: $table.gstin, builder: (column) => column);
-
-  GeneratedColumn<String> get state =>
-      $composableBuilder(column: $table.state, builder: (column) => column);
-
-  GeneratedColumn<double> get addDiscEntered => $composableBuilder(
-    column: $table.addDiscEntered,
+  GeneratedColumn<String> get mobilecreatedon => $composableBuilder(
+    column: $table.mobilecreatedon,
     builder: (column) => column,
   );
 
-  GeneratedColumn<String> get prefix =>
-      $composableBuilder(column: $table.prefix, builder: (column) => column);
+  GeneratedColumn<String> get createdon =>
+      $composableBuilder(column: $table.createdon, builder: (column) => column);
 
-  GeneratedColumn<String> get suffix =>
-      $composableBuilder(column: $table.suffix, builder: (column) => column);
+  GeneratedColumn<int> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
 
-  GeneratedColumn<String> get vchType =>
-      $composableBuilder(column: $table.vchType, builder: (column) => column);
-
-  GeneratedColumn<int> get invNo =>
-      $composableBuilder(column: $table.invNo, builder: (column) => column);
-
-  GeneratedColumn<String> get godown =>
-      $composableBuilder(column: $table.godown, builder: (column) => column);
-
-  GeneratedColumn<int> get tripId =>
-      $composableBuilder(column: $table.tripId, builder: (column) => column);
-
-  GeneratedColumn<int> get visitId =>
-      $composableBuilder(column: $table.visitId, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get createdTime => $composableBuilder(
-    column: $table.createdTime,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<DateTime> get updatedTime => $composableBuilder(
-    column: $table.updatedTime,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get deliveryDate => $composableBuilder(
-    column: $table.deliveryDate,
+  GeneratedColumn<int> get importstatus => $composableBuilder(
+    column: $table.importstatus,
     builder: (column) => column,
   );
 
   GeneratedColumn<int> get sync =>
       $composableBuilder(column: $table.sync, builder: (column) => column);
-
-  GeneratedColumn<String> get pinCode =>
-      $composableBuilder(column: $table.pinCode, builder: (column) => column);
-
-  GeneratedColumn<int> get uploadedServerId => $composableBuilder(
-    column: $table.uploadedServerId,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get mailingName => $composableBuilder(
-    column: $table.mailingName,
-    builder: (column) => column,
-  );
 }
 
 class $$SaleReturnMasterTableTableTableManager
@@ -43158,154 +43941,194 @@ class $$SaleReturnMasterTableTableTableManager
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                Value<int?> vchId = const Value.absent(),
-                Value<String?> voucherNo = const Value.absent(),
-                Value<int?> partyId = const Value.absent(),
-                Value<String?> party = const Value.absent(),
-                Value<String?> address = const Value.absent(),
-                Value<String?> address2 = const Value.absent(),
-                Value<String?> email = const Value.absent(),
-                Value<String?> mob = const Value.absent(),
-                Value<String?> voucherDate = const Value.absent(),
-                Value<double> voucherAmount = const Value.absent(),
-                Value<String?> priceList = const Value.absent(),
-                Value<String?> narration = const Value.absent(),
-                Value<double?> lattitude = const Value.absent(),
-                Value<double?> longitude = const Value.absent(),
-                Value<double?> accuracy = const Value.absent(),
-                Value<int?> userId = const Value.absent(),
+                Value<int?> custid = const Value.absent(),
                 Value<int?> companyId = const Value.absent(),
-                Value<int?> itemCount = const Value.absent(),
-                Value<String?> gstin = const Value.absent(),
-                Value<String?> state = const Value.absent(),
-                Value<double?> addDiscEntered = const Value.absent(),
-                Value<String?> prefix = const Value.absent(),
-                Value<String?> suffix = const Value.absent(),
-                Value<String?> vchType = const Value.absent(),
-                Value<int?> invNo = const Value.absent(),
-                Value<String?> godown = const Value.absent(),
                 Value<int?> tripId = const Value.absent(),
-                Value<int?> visitId = const Value.absent(),
-                Value<DateTime?> createdTime = const Value.absent(),
-                Value<DateTime?> updatedTime = const Value.absent(),
-                Value<String?> deliveryDate = const Value.absent(),
+                Value<int?> checkinId = const Value.absent(),
+                Value<String?> gr = const Value.absent(),
+                Value<int?> godownId = const Value.absent(),
+                Value<int?> routeId = const Value.absent(),
+                Value<int?> userId = const Value.absent(),
+                Value<int?> androidId = const Value.absent(),
+                Value<int?> pricelistId = const Value.absent(),
+                Value<int?> vchseriesId = const Value.absent(),
+                Value<int?> vchno = const Value.absent(),
+                Value<String?> vchnumber = const Value.absent(),
+                Value<String?> vchdate = const Value.absent(),
+                Value<String?> vchType = const Value.absent(),
+                Value<String?> vchmode = const Value.absent(),
+                Value<String?> referenceno = const Value.absent(),
+                Value<DateTime?> referencedate = const Value.absent(),
+                Value<String?> narration = const Value.absent(),
+                Value<double> grossAmount = const Value.absent(),
+                Value<double> discountAmount = const Value.absent(),
+                Value<double> taxableAmount = const Value.absent(),
+                Value<double> cgst = const Value.absent(),
+                Value<double> sgst = const Value.absent(),
+                Value<double> igst = const Value.absent(),
+                Value<double> vataAmount = const Value.absent(),
+                Value<double> cessAmount = const Value.absent(),
+                Value<double> additionalcessAmount = const Value.absent(),
+                Value<double> roundoff = const Value.absent(),
+                Value<double> netAmount = const Value.absent(),
+                Value<int?> itemcount = const Value.absent(),
+                Value<int?> autoreceipt = const Value.absent(),
+                Value<int?> partyId = const Value.absent(),
+                Value<String?> partyname = const Value.absent(),
+                Value<String?> statecode = const Value.absent(),
+                Value<String?> gstno = const Value.absent(),
+                Value<double> distance = const Value.absent(),
+                Value<double> latitude = const Value.absent(),
+                Value<double> longitude = const Value.absent(),
+                Value<double> accuracy = const Value.absent(),
+                Value<String?> mobilecreatedon = const Value.absent(),
+                Value<String?> createdon = const Value.absent(),
+                Value<int?> status = const Value.absent(),
+                Value<int?> importstatus = const Value.absent(),
                 Value<int> sync = const Value.absent(),
-                Value<String?> pinCode = const Value.absent(),
-                Value<int?> uploadedServerId = const Value.absent(),
-                Value<String?> mailingName = const Value.absent(),
               }) => SaleReturnMasterTableCompanion(
                 id: id,
-                vchId: vchId,
-                voucherNo: voucherNo,
-                partyId: partyId,
-                party: party,
-                address: address,
-                address2: address2,
-                email: email,
-                mob: mob,
-                voucherDate: voucherDate,
-                voucherAmount: voucherAmount,
-                priceList: priceList,
+                custid: custid,
+                companyId: companyId,
+                tripId: tripId,
+                checkinId: checkinId,
+                gr: gr,
+                godownId: godownId,
+                routeId: routeId,
+                userId: userId,
+                androidId: androidId,
+                pricelistId: pricelistId,
+                vchseriesId: vchseriesId,
+                vchno: vchno,
+                vchnumber: vchnumber,
+                vchdate: vchdate,
+                vchType: vchType,
+                vchmode: vchmode,
+                referenceno: referenceno,
+                referencedate: referencedate,
                 narration: narration,
-                lattitude: lattitude,
+                grossAmount: grossAmount,
+                discountAmount: discountAmount,
+                taxableAmount: taxableAmount,
+                cgst: cgst,
+                sgst: sgst,
+                igst: igst,
+                vataAmount: vataAmount,
+                cessAmount: cessAmount,
+                additionalcessAmount: additionalcessAmount,
+                roundoff: roundoff,
+                netAmount: netAmount,
+                itemcount: itemcount,
+                autoreceipt: autoreceipt,
+                partyId: partyId,
+                partyname: partyname,
+                statecode: statecode,
+                gstno: gstno,
+                distance: distance,
+                latitude: latitude,
                 longitude: longitude,
                 accuracy: accuracy,
-                userId: userId,
-                companyId: companyId,
-                itemCount: itemCount,
-                gstin: gstin,
-                state: state,
-                addDiscEntered: addDiscEntered,
-                prefix: prefix,
-                suffix: suffix,
-                vchType: vchType,
-                invNo: invNo,
-                godown: godown,
-                tripId: tripId,
-                visitId: visitId,
-                createdTime: createdTime,
-                updatedTime: updatedTime,
-                deliveryDate: deliveryDate,
+                mobilecreatedon: mobilecreatedon,
+                createdon: createdon,
+                status: status,
+                importstatus: importstatus,
                 sync: sync,
-                pinCode: pinCode,
-                uploadedServerId: uploadedServerId,
-                mailingName: mailingName,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                Value<int?> vchId = const Value.absent(),
-                Value<String?> voucherNo = const Value.absent(),
-                Value<int?> partyId = const Value.absent(),
-                Value<String?> party = const Value.absent(),
-                Value<String?> address = const Value.absent(),
-                Value<String?> address2 = const Value.absent(),
-                Value<String?> email = const Value.absent(),
-                Value<String?> mob = const Value.absent(),
-                Value<String?> voucherDate = const Value.absent(),
-                required double voucherAmount,
-                Value<String?> priceList = const Value.absent(),
-                Value<String?> narration = const Value.absent(),
-                Value<double?> lattitude = const Value.absent(),
-                Value<double?> longitude = const Value.absent(),
-                Value<double?> accuracy = const Value.absent(),
-                Value<int?> userId = const Value.absent(),
+                Value<int?> custid = const Value.absent(),
                 Value<int?> companyId = const Value.absent(),
-                Value<int?> itemCount = const Value.absent(),
-                Value<String?> gstin = const Value.absent(),
-                Value<String?> state = const Value.absent(),
-                Value<double?> addDiscEntered = const Value.absent(),
-                Value<String?> prefix = const Value.absent(),
-                Value<String?> suffix = const Value.absent(),
-                Value<String?> vchType = const Value.absent(),
-                Value<int?> invNo = const Value.absent(),
-                Value<String?> godown = const Value.absent(),
                 Value<int?> tripId = const Value.absent(),
-                Value<int?> visitId = const Value.absent(),
-                Value<DateTime?> createdTime = const Value.absent(),
-                Value<DateTime?> updatedTime = const Value.absent(),
-                Value<String?> deliveryDate = const Value.absent(),
+                Value<int?> checkinId = const Value.absent(),
+                Value<String?> gr = const Value.absent(),
+                Value<int?> godownId = const Value.absent(),
+                Value<int?> routeId = const Value.absent(),
+                Value<int?> userId = const Value.absent(),
+                Value<int?> androidId = const Value.absent(),
+                Value<int?> pricelistId = const Value.absent(),
+                Value<int?> vchseriesId = const Value.absent(),
+                Value<int?> vchno = const Value.absent(),
+                Value<String?> vchnumber = const Value.absent(),
+                Value<String?> vchdate = const Value.absent(),
+                Value<String?> vchType = const Value.absent(),
+                Value<String?> vchmode = const Value.absent(),
+                Value<String?> referenceno = const Value.absent(),
+                Value<DateTime?> referencedate = const Value.absent(),
+                Value<String?> narration = const Value.absent(),
+                required double grossAmount,
+                required double discountAmount,
+                required double taxableAmount,
+                required double cgst,
+                required double sgst,
+                required double igst,
+                required double vataAmount,
+                required double cessAmount,
+                required double additionalcessAmount,
+                required double roundoff,
+                required double netAmount,
+                Value<int?> itemcount = const Value.absent(),
+                Value<int?> autoreceipt = const Value.absent(),
+                Value<int?> partyId = const Value.absent(),
+                Value<String?> partyname = const Value.absent(),
+                Value<String?> statecode = const Value.absent(),
+                Value<String?> gstno = const Value.absent(),
+                required double distance,
+                required double latitude,
+                required double longitude,
+                required double accuracy,
+                Value<String?> mobilecreatedon = const Value.absent(),
+                Value<String?> createdon = const Value.absent(),
+                Value<int?> status = const Value.absent(),
+                Value<int?> importstatus = const Value.absent(),
                 Value<int> sync = const Value.absent(),
-                Value<String?> pinCode = const Value.absent(),
-                Value<int?> uploadedServerId = const Value.absent(),
-                Value<String?> mailingName = const Value.absent(),
               }) => SaleReturnMasterTableCompanion.insert(
                 id: id,
-                vchId: vchId,
-                voucherNo: voucherNo,
-                partyId: partyId,
-                party: party,
-                address: address,
-                address2: address2,
-                email: email,
-                mob: mob,
-                voucherDate: voucherDate,
-                voucherAmount: voucherAmount,
-                priceList: priceList,
+                custid: custid,
+                companyId: companyId,
+                tripId: tripId,
+                checkinId: checkinId,
+                gr: gr,
+                godownId: godownId,
+                routeId: routeId,
+                userId: userId,
+                androidId: androidId,
+                pricelistId: pricelistId,
+                vchseriesId: vchseriesId,
+                vchno: vchno,
+                vchnumber: vchnumber,
+                vchdate: vchdate,
+                vchType: vchType,
+                vchmode: vchmode,
+                referenceno: referenceno,
+                referencedate: referencedate,
                 narration: narration,
-                lattitude: lattitude,
+                grossAmount: grossAmount,
+                discountAmount: discountAmount,
+                taxableAmount: taxableAmount,
+                cgst: cgst,
+                sgst: sgst,
+                igst: igst,
+                vataAmount: vataAmount,
+                cessAmount: cessAmount,
+                additionalcessAmount: additionalcessAmount,
+                roundoff: roundoff,
+                netAmount: netAmount,
+                itemcount: itemcount,
+                autoreceipt: autoreceipt,
+                partyId: partyId,
+                partyname: partyname,
+                statecode: statecode,
+                gstno: gstno,
+                distance: distance,
+                latitude: latitude,
                 longitude: longitude,
                 accuracy: accuracy,
-                userId: userId,
-                companyId: companyId,
-                itemCount: itemCount,
-                gstin: gstin,
-                state: state,
-                addDiscEntered: addDiscEntered,
-                prefix: prefix,
-                suffix: suffix,
-                vchType: vchType,
-                invNo: invNo,
-                godown: godown,
-                tripId: tripId,
-                visitId: visitId,
-                createdTime: createdTime,
-                updatedTime: updatedTime,
-                deliveryDate: deliveryDate,
+                mobilecreatedon: mobilecreatedon,
+                createdon: createdon,
+                status: status,
+                importstatus: importstatus,
                 sync: sync,
-                pinCode: pinCode,
-                uploadedServerId: uploadedServerId,
-                mailingName: mailingName,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
@@ -43339,76 +44162,94 @@ typedef $$SaleReturnMasterTableTableProcessedTableManager =
 typedef $$SaleReturnDetailsTableTableCreateCompanionBuilder =
     SaleReturnDetailsTableCompanion Function({
       Value<int> id,
-      Value<int?> mid,
+      required int vchId,
+      Value<int?> lineNo,
       Value<int?> itemId,
       Value<String?> itemName,
-      Value<double?> qty,
-      Value<String?> unit,
-      Value<double?> rate,
-      Value<double?> vat,
-      Value<double?> vatAmt,
-      Value<double?> total,
-      Value<double?> disc,
-      Value<double?> discVal,
-      Value<String?> ledger,
-      Value<int?> companyId,
-      Value<int> sync,
-      Value<String?> hsn,
-      Value<double?> enteredRate,
-      Value<double?> enteredDisc,
-      Value<String?> eneteredQty,
-      Value<String?> enteredFQty,
-      Value<double?> fQty,
-      Value<double?> addDiscVal,
-      Value<double?> cessAmt,
-      Value<String?> stkNegPermission,
-      Value<String?> discType,
-      Value<String?> priceList,
-      Value<double?> convQty,
-      Value<double?> fConvQty,
-      Value<String?> qtyString,
-      Value<String?> fQtyString,
-      Value<String?> fUnit,
-      Value<double?> aConvQty,
-      Value<double?> aFConvQty,
+      Value<String?> itemDesc,
+      Value<double> stkQtyFirst,
+      Value<double> stkQtySecond,
+      Value<double> enteredQtyFirst,
+      Value<double> enteredQtySecond,
+      Value<double> enteredActualQtyFirst,
+      Value<double> enteredActualQtySecond,
+      Value<String?> enteredUnit,
+      Value<double> qtyFirst,
+      Value<double> qtySecond,
+      Value<double> qtyActualFirst,
+      Value<double> qtyActualSecond,
+      Value<double> altQtyFirst,
+      Value<double> altQtySecond,
+      Value<double> altQtyActualFirst,
+      Value<double> altQtyActualSecond,
+      Value<String?> qtyStr,
+      Value<String?> actualQtyStr,
+      Value<double> qty1,
+      Value<double> qty2,
+      Value<double> qty3,
+      Value<double> rate,
       Value<String?> rateUnit,
+      Value<double> taxPerc,
+      Value<double> cessPer,
+      Value<double> addCessPer,
+      Value<double> igstVal,
+      Value<double> cgstVal,
+      Value<double> sgstVal,
+      Value<double> cessVal,
+      Value<double> addCessVal,
+      Value<double> otherVal,
+      Value<double> discountPer,
+      Value<double> discountAmt,
+      Value<double> taxableAmount,
+      Value<double> amount,
+      Value<double> rateInc,
+      Value<double> amountInc,
     });
 typedef $$SaleReturnDetailsTableTableUpdateCompanionBuilder =
     SaleReturnDetailsTableCompanion Function({
       Value<int> id,
-      Value<int?> mid,
+      Value<int> vchId,
+      Value<int?> lineNo,
       Value<int?> itemId,
       Value<String?> itemName,
-      Value<double?> qty,
-      Value<String?> unit,
-      Value<double?> rate,
-      Value<double?> vat,
-      Value<double?> vatAmt,
-      Value<double?> total,
-      Value<double?> disc,
-      Value<double?> discVal,
-      Value<String?> ledger,
-      Value<int?> companyId,
-      Value<int> sync,
-      Value<String?> hsn,
-      Value<double?> enteredRate,
-      Value<double?> enteredDisc,
-      Value<String?> eneteredQty,
-      Value<String?> enteredFQty,
-      Value<double?> fQty,
-      Value<double?> addDiscVal,
-      Value<double?> cessAmt,
-      Value<String?> stkNegPermission,
-      Value<String?> discType,
-      Value<String?> priceList,
-      Value<double?> convQty,
-      Value<double?> fConvQty,
-      Value<String?> qtyString,
-      Value<String?> fQtyString,
-      Value<String?> fUnit,
-      Value<double?> aConvQty,
-      Value<double?> aFConvQty,
+      Value<String?> itemDesc,
+      Value<double> stkQtyFirst,
+      Value<double> stkQtySecond,
+      Value<double> enteredQtyFirst,
+      Value<double> enteredQtySecond,
+      Value<double> enteredActualQtyFirst,
+      Value<double> enteredActualQtySecond,
+      Value<String?> enteredUnit,
+      Value<double> qtyFirst,
+      Value<double> qtySecond,
+      Value<double> qtyActualFirst,
+      Value<double> qtyActualSecond,
+      Value<double> altQtyFirst,
+      Value<double> altQtySecond,
+      Value<double> altQtyActualFirst,
+      Value<double> altQtyActualSecond,
+      Value<String?> qtyStr,
+      Value<String?> actualQtyStr,
+      Value<double> qty1,
+      Value<double> qty2,
+      Value<double> qty3,
+      Value<double> rate,
       Value<String?> rateUnit,
+      Value<double> taxPerc,
+      Value<double> cessPer,
+      Value<double> addCessPer,
+      Value<double> igstVal,
+      Value<double> cgstVal,
+      Value<double> sgstVal,
+      Value<double> cessVal,
+      Value<double> addCessVal,
+      Value<double> otherVal,
+      Value<double> discountPer,
+      Value<double> discountAmt,
+      Value<double> taxableAmount,
+      Value<double> amount,
+      Value<double> rateInc,
+      Value<double> amountInc,
     });
 
 class $$SaleReturnDetailsTableTableFilterComposer
@@ -43425,8 +44266,13 @@ class $$SaleReturnDetailsTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get mid => $composableBuilder(
-    column: $table.mid,
+  ColumnFilters<int> get vchId => $composableBuilder(
+    column: $table.vchId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get lineNo => $composableBuilder(
+    column: $table.lineNo,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -43440,13 +44286,108 @@ class $$SaleReturnDetailsTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<double> get qty => $composableBuilder(
-    column: $table.qty,
+  ColumnFilters<String> get itemDesc => $composableBuilder(
+    column: $table.itemDesc,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get unit => $composableBuilder(
-    column: $table.unit,
+  ColumnFilters<double> get stkQtyFirst => $composableBuilder(
+    column: $table.stkQtyFirst,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get stkQtySecond => $composableBuilder(
+    column: $table.stkQtySecond,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get enteredQtyFirst => $composableBuilder(
+    column: $table.enteredQtyFirst,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get enteredQtySecond => $composableBuilder(
+    column: $table.enteredQtySecond,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get enteredActualQtyFirst => $composableBuilder(
+    column: $table.enteredActualQtyFirst,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get enteredActualQtySecond => $composableBuilder(
+    column: $table.enteredActualQtySecond,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get enteredUnit => $composableBuilder(
+    column: $table.enteredUnit,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get qtyFirst => $composableBuilder(
+    column: $table.qtyFirst,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get qtySecond => $composableBuilder(
+    column: $table.qtySecond,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get qtyActualFirst => $composableBuilder(
+    column: $table.qtyActualFirst,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get qtyActualSecond => $composableBuilder(
+    column: $table.qtyActualSecond,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get altQtyFirst => $composableBuilder(
+    column: $table.altQtyFirst,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get altQtySecond => $composableBuilder(
+    column: $table.altQtySecond,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get altQtyActualFirst => $composableBuilder(
+    column: $table.altQtyActualFirst,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get altQtyActualSecond => $composableBuilder(
+    column: $table.altQtyActualSecond,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get qtyStr => $composableBuilder(
+    column: $table.qtyStr,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get actualQtyStr => $composableBuilder(
+    column: $table.actualQtyStr,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get qty1 => $composableBuilder(
+    column: $table.qty1,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get qty2 => $composableBuilder(
+    column: $table.qty2,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get qty3 => $composableBuilder(
+    column: $table.qty3,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -43455,138 +44396,83 @@ class $$SaleReturnDetailsTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<double> get vat => $composableBuilder(
-    column: $table.vat,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get vatAmt => $composableBuilder(
-    column: $table.vatAmt,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get total => $composableBuilder(
-    column: $table.total,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get disc => $composableBuilder(
-    column: $table.disc,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get discVal => $composableBuilder(
-    column: $table.discVal,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get ledger => $composableBuilder(
-    column: $table.ledger,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get companyId => $composableBuilder(
-    column: $table.companyId,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get sync => $composableBuilder(
-    column: $table.sync,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get hsn => $composableBuilder(
-    column: $table.hsn,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get enteredRate => $composableBuilder(
-    column: $table.enteredRate,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get enteredDisc => $composableBuilder(
-    column: $table.enteredDisc,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get eneteredQty => $composableBuilder(
-    column: $table.eneteredQty,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get enteredFQty => $composableBuilder(
-    column: $table.enteredFQty,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get fQty => $composableBuilder(
-    column: $table.fQty,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get addDiscVal => $composableBuilder(
-    column: $table.addDiscVal,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get cessAmt => $composableBuilder(
-    column: $table.cessAmt,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get stkNegPermission => $composableBuilder(
-    column: $table.stkNegPermission,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get discType => $composableBuilder(
-    column: $table.discType,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get priceList => $composableBuilder(
-    column: $table.priceList,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get convQty => $composableBuilder(
-    column: $table.convQty,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get fConvQty => $composableBuilder(
-    column: $table.fConvQty,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get qtyString => $composableBuilder(
-    column: $table.qtyString,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get fQtyString => $composableBuilder(
-    column: $table.fQtyString,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get fUnit => $composableBuilder(
-    column: $table.fUnit,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get aConvQty => $composableBuilder(
-    column: $table.aConvQty,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get aFConvQty => $composableBuilder(
-    column: $table.aFConvQty,
-    builder: (column) => ColumnFilters(column),
-  );
-
   ColumnFilters<String> get rateUnit => $composableBuilder(
     column: $table.rateUnit,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get taxPerc => $composableBuilder(
+    column: $table.taxPerc,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get cessPer => $composableBuilder(
+    column: $table.cessPer,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get addCessPer => $composableBuilder(
+    column: $table.addCessPer,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get igstVal => $composableBuilder(
+    column: $table.igstVal,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get cgstVal => $composableBuilder(
+    column: $table.cgstVal,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get sgstVal => $composableBuilder(
+    column: $table.sgstVal,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get cessVal => $composableBuilder(
+    column: $table.cessVal,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get addCessVal => $composableBuilder(
+    column: $table.addCessVal,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get otherVal => $composableBuilder(
+    column: $table.otherVal,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get discountPer => $composableBuilder(
+    column: $table.discountPer,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get discountAmt => $composableBuilder(
+    column: $table.discountAmt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get taxableAmount => $composableBuilder(
+    column: $table.taxableAmount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get amount => $composableBuilder(
+    column: $table.amount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get rateInc => $composableBuilder(
+    column: $table.rateInc,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get amountInc => $composableBuilder(
+    column: $table.amountInc,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -43605,8 +44491,13 @@ class $$SaleReturnDetailsTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get mid => $composableBuilder(
-    column: $table.mid,
+  ColumnOrderings<int> get vchId => $composableBuilder(
+    column: $table.vchId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get lineNo => $composableBuilder(
+    column: $table.lineNo,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -43620,13 +44511,108 @@ class $$SaleReturnDetailsTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<double> get qty => $composableBuilder(
-    column: $table.qty,
+  ColumnOrderings<String> get itemDesc => $composableBuilder(
+    column: $table.itemDesc,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get unit => $composableBuilder(
-    column: $table.unit,
+  ColumnOrderings<double> get stkQtyFirst => $composableBuilder(
+    column: $table.stkQtyFirst,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get stkQtySecond => $composableBuilder(
+    column: $table.stkQtySecond,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get enteredQtyFirst => $composableBuilder(
+    column: $table.enteredQtyFirst,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get enteredQtySecond => $composableBuilder(
+    column: $table.enteredQtySecond,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get enteredActualQtyFirst => $composableBuilder(
+    column: $table.enteredActualQtyFirst,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get enteredActualQtySecond => $composableBuilder(
+    column: $table.enteredActualQtySecond,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get enteredUnit => $composableBuilder(
+    column: $table.enteredUnit,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get qtyFirst => $composableBuilder(
+    column: $table.qtyFirst,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get qtySecond => $composableBuilder(
+    column: $table.qtySecond,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get qtyActualFirst => $composableBuilder(
+    column: $table.qtyActualFirst,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get qtyActualSecond => $composableBuilder(
+    column: $table.qtyActualSecond,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get altQtyFirst => $composableBuilder(
+    column: $table.altQtyFirst,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get altQtySecond => $composableBuilder(
+    column: $table.altQtySecond,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get altQtyActualFirst => $composableBuilder(
+    column: $table.altQtyActualFirst,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get altQtyActualSecond => $composableBuilder(
+    column: $table.altQtyActualSecond,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get qtyStr => $composableBuilder(
+    column: $table.qtyStr,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get actualQtyStr => $composableBuilder(
+    column: $table.actualQtyStr,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get qty1 => $composableBuilder(
+    column: $table.qty1,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get qty2 => $composableBuilder(
+    column: $table.qty2,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get qty3 => $composableBuilder(
+    column: $table.qty3,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -43635,138 +44621,83 @@ class $$SaleReturnDetailsTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<double> get vat => $composableBuilder(
-    column: $table.vat,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get vatAmt => $composableBuilder(
-    column: $table.vatAmt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get total => $composableBuilder(
-    column: $table.total,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get disc => $composableBuilder(
-    column: $table.disc,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get discVal => $composableBuilder(
-    column: $table.discVal,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get ledger => $composableBuilder(
-    column: $table.ledger,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get companyId => $composableBuilder(
-    column: $table.companyId,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get sync => $composableBuilder(
-    column: $table.sync,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get hsn => $composableBuilder(
-    column: $table.hsn,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get enteredRate => $composableBuilder(
-    column: $table.enteredRate,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get enteredDisc => $composableBuilder(
-    column: $table.enteredDisc,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get eneteredQty => $composableBuilder(
-    column: $table.eneteredQty,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get enteredFQty => $composableBuilder(
-    column: $table.enteredFQty,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get fQty => $composableBuilder(
-    column: $table.fQty,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get addDiscVal => $composableBuilder(
-    column: $table.addDiscVal,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get cessAmt => $composableBuilder(
-    column: $table.cessAmt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get stkNegPermission => $composableBuilder(
-    column: $table.stkNegPermission,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get discType => $composableBuilder(
-    column: $table.discType,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get priceList => $composableBuilder(
-    column: $table.priceList,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get convQty => $composableBuilder(
-    column: $table.convQty,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get fConvQty => $composableBuilder(
-    column: $table.fConvQty,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get qtyString => $composableBuilder(
-    column: $table.qtyString,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get fQtyString => $composableBuilder(
-    column: $table.fQtyString,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get fUnit => $composableBuilder(
-    column: $table.fUnit,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get aConvQty => $composableBuilder(
-    column: $table.aConvQty,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get aFConvQty => $composableBuilder(
-    column: $table.aFConvQty,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<String> get rateUnit => $composableBuilder(
     column: $table.rateUnit,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get taxPerc => $composableBuilder(
+    column: $table.taxPerc,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get cessPer => $composableBuilder(
+    column: $table.cessPer,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get addCessPer => $composableBuilder(
+    column: $table.addCessPer,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get igstVal => $composableBuilder(
+    column: $table.igstVal,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get cgstVal => $composableBuilder(
+    column: $table.cgstVal,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get sgstVal => $composableBuilder(
+    column: $table.sgstVal,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get cessVal => $composableBuilder(
+    column: $table.cessVal,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get addCessVal => $composableBuilder(
+    column: $table.addCessVal,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get otherVal => $composableBuilder(
+    column: $table.otherVal,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get discountPer => $composableBuilder(
+    column: $table.discountPer,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get discountAmt => $composableBuilder(
+    column: $table.discountAmt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get taxableAmount => $composableBuilder(
+    column: $table.taxableAmount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get amount => $composableBuilder(
+    column: $table.amount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get rateInc => $composableBuilder(
+    column: $table.rateInc,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get amountInc => $composableBuilder(
+    column: $table.amountInc,
     builder: (column) => ColumnOrderings(column),
   );
 }
@@ -43783,8 +44714,11 @@ class $$SaleReturnDetailsTableTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<int> get mid =>
-      $composableBuilder(column: $table.mid, builder: (column) => column);
+  GeneratedColumn<int> get vchId =>
+      $composableBuilder(column: $table.vchId, builder: (column) => column);
+
+  GeneratedColumn<int> get lineNo =>
+      $composableBuilder(column: $table.lineNo, builder: (column) => column);
 
   GeneratedColumn<int> get itemId =>
       $composableBuilder(column: $table.itemId, builder: (column) => column);
@@ -43792,109 +44726,157 @@ class $$SaleReturnDetailsTableTableAnnotationComposer
   GeneratedColumn<String> get itemName =>
       $composableBuilder(column: $table.itemName, builder: (column) => column);
 
-  GeneratedColumn<double> get qty =>
-      $composableBuilder(column: $table.qty, builder: (column) => column);
+  GeneratedColumn<String> get itemDesc =>
+      $composableBuilder(column: $table.itemDesc, builder: (column) => column);
 
-  GeneratedColumn<String> get unit =>
-      $composableBuilder(column: $table.unit, builder: (column) => column);
+  GeneratedColumn<double> get stkQtyFirst => $composableBuilder(
+    column: $table.stkQtyFirst,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get stkQtySecond => $composableBuilder(
+    column: $table.stkQtySecond,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get enteredQtyFirst => $composableBuilder(
+    column: $table.enteredQtyFirst,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get enteredQtySecond => $composableBuilder(
+    column: $table.enteredQtySecond,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get enteredActualQtyFirst => $composableBuilder(
+    column: $table.enteredActualQtyFirst,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get enteredActualQtySecond => $composableBuilder(
+    column: $table.enteredActualQtySecond,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get enteredUnit => $composableBuilder(
+    column: $table.enteredUnit,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get qtyFirst =>
+      $composableBuilder(column: $table.qtyFirst, builder: (column) => column);
+
+  GeneratedColumn<double> get qtySecond =>
+      $composableBuilder(column: $table.qtySecond, builder: (column) => column);
+
+  GeneratedColumn<double> get qtyActualFirst => $composableBuilder(
+    column: $table.qtyActualFirst,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get qtyActualSecond => $composableBuilder(
+    column: $table.qtyActualSecond,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get altQtyFirst => $composableBuilder(
+    column: $table.altQtyFirst,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get altQtySecond => $composableBuilder(
+    column: $table.altQtySecond,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get altQtyActualFirst => $composableBuilder(
+    column: $table.altQtyActualFirst,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get altQtyActualSecond => $composableBuilder(
+    column: $table.altQtyActualSecond,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get qtyStr =>
+      $composableBuilder(column: $table.qtyStr, builder: (column) => column);
+
+  GeneratedColumn<String> get actualQtyStr => $composableBuilder(
+    column: $table.actualQtyStr,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get qty1 =>
+      $composableBuilder(column: $table.qty1, builder: (column) => column);
+
+  GeneratedColumn<double> get qty2 =>
+      $composableBuilder(column: $table.qty2, builder: (column) => column);
+
+  GeneratedColumn<double> get qty3 =>
+      $composableBuilder(column: $table.qty3, builder: (column) => column);
 
   GeneratedColumn<double> get rate =>
       $composableBuilder(column: $table.rate, builder: (column) => column);
 
-  GeneratedColumn<double> get vat =>
-      $composableBuilder(column: $table.vat, builder: (column) => column);
-
-  GeneratedColumn<double> get vatAmt =>
-      $composableBuilder(column: $table.vatAmt, builder: (column) => column);
-
-  GeneratedColumn<double> get total =>
-      $composableBuilder(column: $table.total, builder: (column) => column);
-
-  GeneratedColumn<double> get disc =>
-      $composableBuilder(column: $table.disc, builder: (column) => column);
-
-  GeneratedColumn<double> get discVal =>
-      $composableBuilder(column: $table.discVal, builder: (column) => column);
-
-  GeneratedColumn<String> get ledger =>
-      $composableBuilder(column: $table.ledger, builder: (column) => column);
-
-  GeneratedColumn<int> get companyId =>
-      $composableBuilder(column: $table.companyId, builder: (column) => column);
-
-  GeneratedColumn<int> get sync =>
-      $composableBuilder(column: $table.sync, builder: (column) => column);
-
-  GeneratedColumn<String> get hsn =>
-      $composableBuilder(column: $table.hsn, builder: (column) => column);
-
-  GeneratedColumn<double> get enteredRate => $composableBuilder(
-    column: $table.enteredRate,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<double> get enteredDisc => $composableBuilder(
-    column: $table.enteredDisc,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get eneteredQty => $composableBuilder(
-    column: $table.eneteredQty,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get enteredFQty => $composableBuilder(
-    column: $table.enteredFQty,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<double> get fQty =>
-      $composableBuilder(column: $table.fQty, builder: (column) => column);
-
-  GeneratedColumn<double> get addDiscVal => $composableBuilder(
-    column: $table.addDiscVal,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<double> get cessAmt =>
-      $composableBuilder(column: $table.cessAmt, builder: (column) => column);
-
-  GeneratedColumn<String> get stkNegPermission => $composableBuilder(
-    column: $table.stkNegPermission,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get discType =>
-      $composableBuilder(column: $table.discType, builder: (column) => column);
-
-  GeneratedColumn<String> get priceList =>
-      $composableBuilder(column: $table.priceList, builder: (column) => column);
-
-  GeneratedColumn<double> get convQty =>
-      $composableBuilder(column: $table.convQty, builder: (column) => column);
-
-  GeneratedColumn<double> get fConvQty =>
-      $composableBuilder(column: $table.fConvQty, builder: (column) => column);
-
-  GeneratedColumn<String> get qtyString =>
-      $composableBuilder(column: $table.qtyString, builder: (column) => column);
-
-  GeneratedColumn<String> get fQtyString => $composableBuilder(
-    column: $table.fQtyString,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get fUnit =>
-      $composableBuilder(column: $table.fUnit, builder: (column) => column);
-
-  GeneratedColumn<double> get aConvQty =>
-      $composableBuilder(column: $table.aConvQty, builder: (column) => column);
-
-  GeneratedColumn<double> get aFConvQty =>
-      $composableBuilder(column: $table.aFConvQty, builder: (column) => column);
-
   GeneratedColumn<String> get rateUnit =>
       $composableBuilder(column: $table.rateUnit, builder: (column) => column);
+
+  GeneratedColumn<double> get taxPerc =>
+      $composableBuilder(column: $table.taxPerc, builder: (column) => column);
+
+  GeneratedColumn<double> get cessPer =>
+      $composableBuilder(column: $table.cessPer, builder: (column) => column);
+
+  GeneratedColumn<double> get addCessPer => $composableBuilder(
+    column: $table.addCessPer,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get igstVal =>
+      $composableBuilder(column: $table.igstVal, builder: (column) => column);
+
+  GeneratedColumn<double> get cgstVal =>
+      $composableBuilder(column: $table.cgstVal, builder: (column) => column);
+
+  GeneratedColumn<double> get sgstVal =>
+      $composableBuilder(column: $table.sgstVal, builder: (column) => column);
+
+  GeneratedColumn<double> get cessVal =>
+      $composableBuilder(column: $table.cessVal, builder: (column) => column);
+
+  GeneratedColumn<double> get addCessVal => $composableBuilder(
+    column: $table.addCessVal,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get otherVal =>
+      $composableBuilder(column: $table.otherVal, builder: (column) => column);
+
+  GeneratedColumn<double> get discountPer => $composableBuilder(
+    column: $table.discountPer,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get discountAmt => $composableBuilder(
+    column: $table.discountAmt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get taxableAmount => $composableBuilder(
+    column: $table.taxableAmount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get amount =>
+      $composableBuilder(column: $table.amount, builder: (column) => column);
+
+  GeneratedColumn<double> get rateInc =>
+      $composableBuilder(column: $table.rateInc, builder: (column) => column);
+
+  GeneratedColumn<double> get amountInc =>
+      $composableBuilder(column: $table.amountInc, builder: (column) => column);
 }
 
 class $$SaleReturnDetailsTableTableTableManager
@@ -43944,146 +44926,182 @@ class $$SaleReturnDetailsTableTableTableManager
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                Value<int?> mid = const Value.absent(),
+                Value<int> vchId = const Value.absent(),
+                Value<int?> lineNo = const Value.absent(),
                 Value<int?> itemId = const Value.absent(),
                 Value<String?> itemName = const Value.absent(),
-                Value<double?> qty = const Value.absent(),
-                Value<String?> unit = const Value.absent(),
-                Value<double?> rate = const Value.absent(),
-                Value<double?> vat = const Value.absent(),
-                Value<double?> vatAmt = const Value.absent(),
-                Value<double?> total = const Value.absent(),
-                Value<double?> disc = const Value.absent(),
-                Value<double?> discVal = const Value.absent(),
-                Value<String?> ledger = const Value.absent(),
-                Value<int?> companyId = const Value.absent(),
-                Value<int> sync = const Value.absent(),
-                Value<String?> hsn = const Value.absent(),
-                Value<double?> enteredRate = const Value.absent(),
-                Value<double?> enteredDisc = const Value.absent(),
-                Value<String?> eneteredQty = const Value.absent(),
-                Value<String?> enteredFQty = const Value.absent(),
-                Value<double?> fQty = const Value.absent(),
-                Value<double?> addDiscVal = const Value.absent(),
-                Value<double?> cessAmt = const Value.absent(),
-                Value<String?> stkNegPermission = const Value.absent(),
-                Value<String?> discType = const Value.absent(),
-                Value<String?> priceList = const Value.absent(),
-                Value<double?> convQty = const Value.absent(),
-                Value<double?> fConvQty = const Value.absent(),
-                Value<String?> qtyString = const Value.absent(),
-                Value<String?> fQtyString = const Value.absent(),
-                Value<String?> fUnit = const Value.absent(),
-                Value<double?> aConvQty = const Value.absent(),
-                Value<double?> aFConvQty = const Value.absent(),
+                Value<String?> itemDesc = const Value.absent(),
+                Value<double> stkQtyFirst = const Value.absent(),
+                Value<double> stkQtySecond = const Value.absent(),
+                Value<double> enteredQtyFirst = const Value.absent(),
+                Value<double> enteredQtySecond = const Value.absent(),
+                Value<double> enteredActualQtyFirst = const Value.absent(),
+                Value<double> enteredActualQtySecond = const Value.absent(),
+                Value<String?> enteredUnit = const Value.absent(),
+                Value<double> qtyFirst = const Value.absent(),
+                Value<double> qtySecond = const Value.absent(),
+                Value<double> qtyActualFirst = const Value.absent(),
+                Value<double> qtyActualSecond = const Value.absent(),
+                Value<double> altQtyFirst = const Value.absent(),
+                Value<double> altQtySecond = const Value.absent(),
+                Value<double> altQtyActualFirst = const Value.absent(),
+                Value<double> altQtyActualSecond = const Value.absent(),
+                Value<String?> qtyStr = const Value.absent(),
+                Value<String?> actualQtyStr = const Value.absent(),
+                Value<double> qty1 = const Value.absent(),
+                Value<double> qty2 = const Value.absent(),
+                Value<double> qty3 = const Value.absent(),
+                Value<double> rate = const Value.absent(),
                 Value<String?> rateUnit = const Value.absent(),
+                Value<double> taxPerc = const Value.absent(),
+                Value<double> cessPer = const Value.absent(),
+                Value<double> addCessPer = const Value.absent(),
+                Value<double> igstVal = const Value.absent(),
+                Value<double> cgstVal = const Value.absent(),
+                Value<double> sgstVal = const Value.absent(),
+                Value<double> cessVal = const Value.absent(),
+                Value<double> addCessVal = const Value.absent(),
+                Value<double> otherVal = const Value.absent(),
+                Value<double> discountPer = const Value.absent(),
+                Value<double> discountAmt = const Value.absent(),
+                Value<double> taxableAmount = const Value.absent(),
+                Value<double> amount = const Value.absent(),
+                Value<double> rateInc = const Value.absent(),
+                Value<double> amountInc = const Value.absent(),
               }) => SaleReturnDetailsTableCompanion(
                 id: id,
-                mid: mid,
+                vchId: vchId,
+                lineNo: lineNo,
                 itemId: itemId,
                 itemName: itemName,
-                qty: qty,
-                unit: unit,
+                itemDesc: itemDesc,
+                stkQtyFirst: stkQtyFirst,
+                stkQtySecond: stkQtySecond,
+                enteredQtyFirst: enteredQtyFirst,
+                enteredQtySecond: enteredQtySecond,
+                enteredActualQtyFirst: enteredActualQtyFirst,
+                enteredActualQtySecond: enteredActualQtySecond,
+                enteredUnit: enteredUnit,
+                qtyFirst: qtyFirst,
+                qtySecond: qtySecond,
+                qtyActualFirst: qtyActualFirst,
+                qtyActualSecond: qtyActualSecond,
+                altQtyFirst: altQtyFirst,
+                altQtySecond: altQtySecond,
+                altQtyActualFirst: altQtyActualFirst,
+                altQtyActualSecond: altQtyActualSecond,
+                qtyStr: qtyStr,
+                actualQtyStr: actualQtyStr,
+                qty1: qty1,
+                qty2: qty2,
+                qty3: qty3,
                 rate: rate,
-                vat: vat,
-                vatAmt: vatAmt,
-                total: total,
-                disc: disc,
-                discVal: discVal,
-                ledger: ledger,
-                companyId: companyId,
-                sync: sync,
-                hsn: hsn,
-                enteredRate: enteredRate,
-                enteredDisc: enteredDisc,
-                eneteredQty: eneteredQty,
-                enteredFQty: enteredFQty,
-                fQty: fQty,
-                addDiscVal: addDiscVal,
-                cessAmt: cessAmt,
-                stkNegPermission: stkNegPermission,
-                discType: discType,
-                priceList: priceList,
-                convQty: convQty,
-                fConvQty: fConvQty,
-                qtyString: qtyString,
-                fQtyString: fQtyString,
-                fUnit: fUnit,
-                aConvQty: aConvQty,
-                aFConvQty: aFConvQty,
                 rateUnit: rateUnit,
+                taxPerc: taxPerc,
+                cessPer: cessPer,
+                addCessPer: addCessPer,
+                igstVal: igstVal,
+                cgstVal: cgstVal,
+                sgstVal: sgstVal,
+                cessVal: cessVal,
+                addCessVal: addCessVal,
+                otherVal: otherVal,
+                discountPer: discountPer,
+                discountAmt: discountAmt,
+                taxableAmount: taxableAmount,
+                amount: amount,
+                rateInc: rateInc,
+                amountInc: amountInc,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                Value<int?> mid = const Value.absent(),
+                required int vchId,
+                Value<int?> lineNo = const Value.absent(),
                 Value<int?> itemId = const Value.absent(),
                 Value<String?> itemName = const Value.absent(),
-                Value<double?> qty = const Value.absent(),
-                Value<String?> unit = const Value.absent(),
-                Value<double?> rate = const Value.absent(),
-                Value<double?> vat = const Value.absent(),
-                Value<double?> vatAmt = const Value.absent(),
-                Value<double?> total = const Value.absent(),
-                Value<double?> disc = const Value.absent(),
-                Value<double?> discVal = const Value.absent(),
-                Value<String?> ledger = const Value.absent(),
-                Value<int?> companyId = const Value.absent(),
-                Value<int> sync = const Value.absent(),
-                Value<String?> hsn = const Value.absent(),
-                Value<double?> enteredRate = const Value.absent(),
-                Value<double?> enteredDisc = const Value.absent(),
-                Value<String?> eneteredQty = const Value.absent(),
-                Value<String?> enteredFQty = const Value.absent(),
-                Value<double?> fQty = const Value.absent(),
-                Value<double?> addDiscVal = const Value.absent(),
-                Value<double?> cessAmt = const Value.absent(),
-                Value<String?> stkNegPermission = const Value.absent(),
-                Value<String?> discType = const Value.absent(),
-                Value<String?> priceList = const Value.absent(),
-                Value<double?> convQty = const Value.absent(),
-                Value<double?> fConvQty = const Value.absent(),
-                Value<String?> qtyString = const Value.absent(),
-                Value<String?> fQtyString = const Value.absent(),
-                Value<String?> fUnit = const Value.absent(),
-                Value<double?> aConvQty = const Value.absent(),
-                Value<double?> aFConvQty = const Value.absent(),
+                Value<String?> itemDesc = const Value.absent(),
+                Value<double> stkQtyFirst = const Value.absent(),
+                Value<double> stkQtySecond = const Value.absent(),
+                Value<double> enteredQtyFirst = const Value.absent(),
+                Value<double> enteredQtySecond = const Value.absent(),
+                Value<double> enteredActualQtyFirst = const Value.absent(),
+                Value<double> enteredActualQtySecond = const Value.absent(),
+                Value<String?> enteredUnit = const Value.absent(),
+                Value<double> qtyFirst = const Value.absent(),
+                Value<double> qtySecond = const Value.absent(),
+                Value<double> qtyActualFirst = const Value.absent(),
+                Value<double> qtyActualSecond = const Value.absent(),
+                Value<double> altQtyFirst = const Value.absent(),
+                Value<double> altQtySecond = const Value.absent(),
+                Value<double> altQtyActualFirst = const Value.absent(),
+                Value<double> altQtyActualSecond = const Value.absent(),
+                Value<String?> qtyStr = const Value.absent(),
+                Value<String?> actualQtyStr = const Value.absent(),
+                Value<double> qty1 = const Value.absent(),
+                Value<double> qty2 = const Value.absent(),
+                Value<double> qty3 = const Value.absent(),
+                Value<double> rate = const Value.absent(),
                 Value<String?> rateUnit = const Value.absent(),
+                Value<double> taxPerc = const Value.absent(),
+                Value<double> cessPer = const Value.absent(),
+                Value<double> addCessPer = const Value.absent(),
+                Value<double> igstVal = const Value.absent(),
+                Value<double> cgstVal = const Value.absent(),
+                Value<double> sgstVal = const Value.absent(),
+                Value<double> cessVal = const Value.absent(),
+                Value<double> addCessVal = const Value.absent(),
+                Value<double> otherVal = const Value.absent(),
+                Value<double> discountPer = const Value.absent(),
+                Value<double> discountAmt = const Value.absent(),
+                Value<double> taxableAmount = const Value.absent(),
+                Value<double> amount = const Value.absent(),
+                Value<double> rateInc = const Value.absent(),
+                Value<double> amountInc = const Value.absent(),
               }) => SaleReturnDetailsTableCompanion.insert(
                 id: id,
-                mid: mid,
+                vchId: vchId,
+                lineNo: lineNo,
                 itemId: itemId,
                 itemName: itemName,
-                qty: qty,
-                unit: unit,
+                itemDesc: itemDesc,
+                stkQtyFirst: stkQtyFirst,
+                stkQtySecond: stkQtySecond,
+                enteredQtyFirst: enteredQtyFirst,
+                enteredQtySecond: enteredQtySecond,
+                enteredActualQtyFirst: enteredActualQtyFirst,
+                enteredActualQtySecond: enteredActualQtySecond,
+                enteredUnit: enteredUnit,
+                qtyFirst: qtyFirst,
+                qtySecond: qtySecond,
+                qtyActualFirst: qtyActualFirst,
+                qtyActualSecond: qtyActualSecond,
+                altQtyFirst: altQtyFirst,
+                altQtySecond: altQtySecond,
+                altQtyActualFirst: altQtyActualFirst,
+                altQtyActualSecond: altQtyActualSecond,
+                qtyStr: qtyStr,
+                actualQtyStr: actualQtyStr,
+                qty1: qty1,
+                qty2: qty2,
+                qty3: qty3,
                 rate: rate,
-                vat: vat,
-                vatAmt: vatAmt,
-                total: total,
-                disc: disc,
-                discVal: discVal,
-                ledger: ledger,
-                companyId: companyId,
-                sync: sync,
-                hsn: hsn,
-                enteredRate: enteredRate,
-                enteredDisc: enteredDisc,
-                eneteredQty: eneteredQty,
-                enteredFQty: enteredFQty,
-                fQty: fQty,
-                addDiscVal: addDiscVal,
-                cessAmt: cessAmt,
-                stkNegPermission: stkNegPermission,
-                discType: discType,
-                priceList: priceList,
-                convQty: convQty,
-                fConvQty: fConvQty,
-                qtyString: qtyString,
-                fQtyString: fQtyString,
-                fUnit: fUnit,
-                aConvQty: aConvQty,
-                aFConvQty: aFConvQty,
                 rateUnit: rateUnit,
+                taxPerc: taxPerc,
+                cessPer: cessPer,
+                addCessPer: addCessPer,
+                igstVal: igstVal,
+                cgstVal: cgstVal,
+                sgstVal: sgstVal,
+                cessVal: cessVal,
+                addCessVal: addCessVal,
+                otherVal: otherVal,
+                discountPer: discountPer,
+                discountAmt: discountAmt,
+                taxableAmount: taxableAmount,
+                amount: amount,
+                rateInc: rateInc,
+                amountInc: amountInc,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
@@ -44117,34 +45135,20 @@ typedef $$SaleReturnDetailsTableTableProcessedTableManager =
 typedef $$SaleReturnLedgerDetailsTableTableCreateCompanionBuilder =
     SaleReturnLedgerDetailsTableCompanion Function({
       Value<int> id,
-      Value<int?> mid,
       Value<int?> vchId,
-      Value<int> sync,
-      Value<String?> ledger,
+      Value<int?> ledgerId,
+      Value<String?> ledgerName,
       Value<double?> rate,
       Value<double?> amount,
-      Value<int?> companyId,
-      Value<String?> voucherName,
-      Value<double?> igst,
-      Value<double?> cgst,
-      Value<double?> sgst,
-      Value<double?> cess,
     });
 typedef $$SaleReturnLedgerDetailsTableTableUpdateCompanionBuilder =
     SaleReturnLedgerDetailsTableCompanion Function({
       Value<int> id,
-      Value<int?> mid,
       Value<int?> vchId,
-      Value<int> sync,
-      Value<String?> ledger,
+      Value<int?> ledgerId,
+      Value<String?> ledgerName,
       Value<double?> rate,
       Value<double?> amount,
-      Value<int?> companyId,
-      Value<String?> voucherName,
-      Value<double?> igst,
-      Value<double?> cgst,
-      Value<double?> sgst,
-      Value<double?> cess,
     });
 
 class $$SaleReturnLedgerDetailsTableTableFilterComposer
@@ -44161,23 +45165,18 @@ class $$SaleReturnLedgerDetailsTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get mid => $composableBuilder(
-    column: $table.mid,
-    builder: (column) => ColumnFilters(column),
-  );
-
   ColumnFilters<int> get vchId => $composableBuilder(
     column: $table.vchId,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get sync => $composableBuilder(
-    column: $table.sync,
+  ColumnFilters<int> get ledgerId => $composableBuilder(
+    column: $table.ledgerId,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get ledger => $composableBuilder(
-    column: $table.ledger,
+  ColumnFilters<String> get ledgerName => $composableBuilder(
+    column: $table.ledgerName,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -44188,36 +45187,6 @@ class $$SaleReturnLedgerDetailsTableTableFilterComposer
 
   ColumnFilters<double> get amount => $composableBuilder(
     column: $table.amount,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get companyId => $composableBuilder(
-    column: $table.companyId,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get voucherName => $composableBuilder(
-    column: $table.voucherName,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get igst => $composableBuilder(
-    column: $table.igst,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get cgst => $composableBuilder(
-    column: $table.cgst,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get sgst => $composableBuilder(
-    column: $table.sgst,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get cess => $composableBuilder(
-    column: $table.cess,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -44236,23 +45205,18 @@ class $$SaleReturnLedgerDetailsTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get mid => $composableBuilder(
-    column: $table.mid,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<int> get vchId => $composableBuilder(
     column: $table.vchId,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get sync => $composableBuilder(
-    column: $table.sync,
+  ColumnOrderings<int> get ledgerId => $composableBuilder(
+    column: $table.ledgerId,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get ledger => $composableBuilder(
-    column: $table.ledger,
+  ColumnOrderings<String> get ledgerName => $composableBuilder(
+    column: $table.ledgerName,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -44263,36 +45227,6 @@ class $$SaleReturnLedgerDetailsTableTableOrderingComposer
 
   ColumnOrderings<double> get amount => $composableBuilder(
     column: $table.amount,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get companyId => $composableBuilder(
-    column: $table.companyId,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get voucherName => $composableBuilder(
-    column: $table.voucherName,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get igst => $composableBuilder(
-    column: $table.igst,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get cgst => $composableBuilder(
-    column: $table.cgst,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get sgst => $composableBuilder(
-    column: $table.sgst,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get cess => $composableBuilder(
-    column: $table.cess,
     builder: (column) => ColumnOrderings(column),
   );
 }
@@ -44309,43 +45243,22 @@ class $$SaleReturnLedgerDetailsTableTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<int> get mid =>
-      $composableBuilder(column: $table.mid, builder: (column) => column);
-
   GeneratedColumn<int> get vchId =>
       $composableBuilder(column: $table.vchId, builder: (column) => column);
 
-  GeneratedColumn<int> get sync =>
-      $composableBuilder(column: $table.sync, builder: (column) => column);
+  GeneratedColumn<int> get ledgerId =>
+      $composableBuilder(column: $table.ledgerId, builder: (column) => column);
 
-  GeneratedColumn<String> get ledger =>
-      $composableBuilder(column: $table.ledger, builder: (column) => column);
+  GeneratedColumn<String> get ledgerName => $composableBuilder(
+    column: $table.ledgerName,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<double> get rate =>
       $composableBuilder(column: $table.rate, builder: (column) => column);
 
   GeneratedColumn<double> get amount =>
       $composableBuilder(column: $table.amount, builder: (column) => column);
-
-  GeneratedColumn<int> get companyId =>
-      $composableBuilder(column: $table.companyId, builder: (column) => column);
-
-  GeneratedColumn<String> get voucherName => $composableBuilder(
-    column: $table.voucherName,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<double> get igst =>
-      $composableBuilder(column: $table.igst, builder: (column) => column);
-
-  GeneratedColumn<double> get cgst =>
-      $composableBuilder(column: $table.cgst, builder: (column) => column);
-
-  GeneratedColumn<double> get sgst =>
-      $composableBuilder(column: $table.sgst, builder: (column) => column);
-
-  GeneratedColumn<double> get cess =>
-      $composableBuilder(column: $table.cess, builder: (column) => column);
 }
 
 class $$SaleReturnLedgerDetailsTableTableTableManager
@@ -44395,62 +45308,34 @@ class $$SaleReturnLedgerDetailsTableTableTableManager
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                Value<int?> mid = const Value.absent(),
                 Value<int?> vchId = const Value.absent(),
-                Value<int> sync = const Value.absent(),
-                Value<String?> ledger = const Value.absent(),
+                Value<int?> ledgerId = const Value.absent(),
+                Value<String?> ledgerName = const Value.absent(),
                 Value<double?> rate = const Value.absent(),
                 Value<double?> amount = const Value.absent(),
-                Value<int?> companyId = const Value.absent(),
-                Value<String?> voucherName = const Value.absent(),
-                Value<double?> igst = const Value.absent(),
-                Value<double?> cgst = const Value.absent(),
-                Value<double?> sgst = const Value.absent(),
-                Value<double?> cess = const Value.absent(),
               }) => SaleReturnLedgerDetailsTableCompanion(
                 id: id,
-                mid: mid,
                 vchId: vchId,
-                sync: sync,
-                ledger: ledger,
+                ledgerId: ledgerId,
+                ledgerName: ledgerName,
                 rate: rate,
                 amount: amount,
-                companyId: companyId,
-                voucherName: voucherName,
-                igst: igst,
-                cgst: cgst,
-                sgst: sgst,
-                cess: cess,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                Value<int?> mid = const Value.absent(),
                 Value<int?> vchId = const Value.absent(),
-                Value<int> sync = const Value.absent(),
-                Value<String?> ledger = const Value.absent(),
+                Value<int?> ledgerId = const Value.absent(),
+                Value<String?> ledgerName = const Value.absent(),
                 Value<double?> rate = const Value.absent(),
                 Value<double?> amount = const Value.absent(),
-                Value<int?> companyId = const Value.absent(),
-                Value<String?> voucherName = const Value.absent(),
-                Value<double?> igst = const Value.absent(),
-                Value<double?> cgst = const Value.absent(),
-                Value<double?> sgst = const Value.absent(),
-                Value<double?> cess = const Value.absent(),
               }) => SaleReturnLedgerDetailsTableCompanion.insert(
                 id: id,
-                mid: mid,
                 vchId: vchId,
-                sync: sync,
-                ledger: ledger,
+                ledgerId: ledgerId,
+                ledgerName: ledgerName,
                 rate: rate,
                 amount: amount,
-                companyId: companyId,
-                voucherName: voucherName,
-                igst: igst,
-                cgst: cgst,
-                sgst: sgst,
-                cess: cess,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))

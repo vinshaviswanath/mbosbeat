@@ -94,9 +94,9 @@ class _TransactionOrderBookingScreenState
     final appLocalizations = context.l10n;
     final provider = context.read<CustomerTransactionProvider>();
     return PopScope(
-      canPop: provider.selectedItemIds.isNotEmpty ? false : true,
+      canPop: provider.selectedOrderItems.isNotEmpty ? false : true,
       onPopInvokedWithResult: (_, __) {
-        provider.selectedItemIds.isNotEmpty
+        provider.selectedOrderItems.isNotEmpty
             ? clearItemsWarningDialog(context)
             : null;
       },
@@ -104,7 +104,7 @@ class _TransactionOrderBookingScreenState
         appBar: AppBar(
           leading: IconButton(
             onPressed: () {
-              provider.selectedItemIds.isNotEmpty
+              provider.selectedOrderItems.isNotEmpty
                   ? clearItemsWarningDialog(context)
                   : Navigator.pop(context);
             },
@@ -120,7 +120,7 @@ class _TransactionOrderBookingScreenState
           ),
           centerTitle: true,
           actions: [
-            provider.selectedItemIds.isNotEmpty
+            provider.selectedOrderItems.isNotEmpty
                 ? IconButton(
                     icon: const Icon(Icons.print),
 
@@ -196,7 +196,7 @@ class _TransactionOrderBookingScreenState
                     },
                   )
                 : SizedBox.shrink(),
-            provider.selectedItemIds.isNotEmpty
+            provider.selectedOrderItems.isNotEmpty
                 ? IconButton(
                     onPressed: () async {
                       final txn = context.read<CustomerTransactionProvider>();
@@ -852,13 +852,13 @@ class _TransactionOrderBookingScreenState
                                 children: [
                                   Expanded(
                                     child: CustomButton(
-                                      color: provider.selectedItemIds.isEmpty
+                                      color: provider.selectedOrderItems.isEmpty
                                           ? ColorResources.ashGray
                                           : null,
                                       buttonText: appLocalizations.save,
                                       onTap: () async {
                                         if (provider
-                                            .selectedItemIds
+                                            .selectedOrderItems
                                             .isNotEmpty) {
                                           confirmBillDialog(
                                             context,

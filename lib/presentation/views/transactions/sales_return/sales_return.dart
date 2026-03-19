@@ -2,6 +2,7 @@ import 'package:drift/drift.dart' show Value;
 import 'package:intl/intl.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
+import 'package:mpos_beat/data/models/product.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 import 'package:mpos_beat/presentation/logic/customer_transaction_provider.dart';
 import 'package:mpos_beat/presentation/logic/user_provider.dart';
@@ -49,9 +50,9 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
     final appLocalizations = context.l10n;
     final provider = context.read<CustomerTransactionProvider>();
     return PopScope(
-      canPop: provider.selectedItemIds.isNotEmpty ? false : true,
+      canPop: provider.selectedReturnItems.isNotEmpty ? false : true,
       onPopInvokedWithResult: (_, __) {
-        provider.selectedItemIds.isNotEmpty
+        provider.selectedReturnItems.isNotEmpty
             ? clearItemsWarningDialog(context)
             : null;
       },
@@ -59,7 +60,7 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
         appBar: AppBar(
           leading: IconButton(
             onPressed: () {
-              provider.selectedItemIds.isNotEmpty
+              provider.selectedReturnItems.isNotEmpty
                   ? clearItemsWarningDialog(context)
                   : Navigator.pop(context);
             },
@@ -346,12 +347,12 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
                         children: [
                           Expanded(
                             child: CustomButton(
-                              color: provider.selectedItemIds.isEmpty
+                              color: provider.selectedReturnItems.isEmpty
                                   ? ColorResources.ashGray
                                   : null,
                               buttonText: appLocalizations.save,
                               onTap: () async {
-                                if (provider.selectedItemIds.isNotEmpty) {
+                                if (provider.selectedReturnItems.isNotEmpty) {
                                   confirmBillDialog(
                                     context,
                                     onSave: () async {
@@ -389,6 +390,7 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
                                             widget.data.party.longitude ?? 0.0,
                                         mailingName:
                                             widget.data.party.mailingName ?? '',
+                                        gstNumber: widget.data.party.taxNumber,
                                       );
                                       txn.clearSelectedItems();
                                       remarkController.clear();
@@ -428,6 +430,24 @@ class _SalesReturnScreenState extends State<SalesReturnScreen> {
   }
 }
 
+class SelectedReturnItem {
+  final Product item;
+  final double qty;
+  final double rate;
+  final double discount;
+  final double taxable;
+  final double total;
+
+  SelectedReturnItem({
+    required this.item,
+    required this.qty,
+    required this.rate,
+    required this.discount,
+    required this.taxable,
+    required this.total,
+  });
+}
+
 Future<void> saveSaleReturn({
   required AppDb db,
   required CustomerTransactionProvider txn,
@@ -445,12 +465,15 @@ Future<void> saveSaleReturn({
   required double lattitude,
   required double longitude,
   required String mailingName,
+  required String? gstNumber,
 }) async {
   if (txn.selectedItemCount == 0) {
     print("No items selected for return");
     return;
   }
-
+  double finalAmount = txn.grandTotal;
+  final now = DateTime.now();
+  final formattedDate = DateFormat('yyyy-MM-dd').format(now);
   await db.transaction(() async {
     /// 1️⃣ INSERT MASTER
     final masterId = await db
@@ -458,53 +481,75 @@ Future<void> saveSaleReturn({
         .insert(
           SaleReturnMasterTableCompanion.insert(
             partyId: Value(ledgerId),
-            party: Value(ledgerName),
-            voucherAmount: txn.grandTotal,
+            partyname: Value(ledgerName),
+
             companyId: Value(companyId),
-            priceList: Value(priceLevelId.toString()),
-            voucherDate: Value(DateFormat('yyyy-MM-dd').format(DateTime.now())),
+
+            netAmount: finalAmount,
+            grossAmount: txn.subTotal,
+            discountAmount: 0,
+            taxableAmount: 0,
+            vataAmount: 0,
+            distance: 0,
+            cgst: txn.totalCgst,
+            sgst: txn.totalSgst,
+            igst: txn.totalIgst,
+            cessAmount: txn.totalCess,
+            additionalcessAmount: 0,
+
+            roundoff: 0,
+
+            itemcount: Value(txn.selectedItemCount),
+
+            gstno: Value(gstNumber),
+            statecode: const Value(null),
+
+            vchdate: Value(formattedDate),
+
             narration: Value(remark.isEmpty ? null : remark),
-            itemCount: Value(txn.selectedItemCount),
+
+            latitude: lattitude,
+            longitude: longitude,
+            accuracy: 0,
+
+            mobilecreatedon: Value(formattedDate),
+            createdon: Value(formattedDate),
+
             sync: const Value(0),
-            voucherNo: Value(voucherNo),
-            address2: Value(address2),
-            address: Value(address),
-            createdTime: Value(DateTime.now()),
-
-            pinCode: Value(pinCode),
-
-            lattitude: Value(lattitude),
-            longitude: Value(longitude),
-            mailingName: Value(mailingName),
           ),
         );
 
     print("Inserted Sale Return Master ID: $masterId");
 
     /// 2️⃣ INSERT DETAILS
-    for (final itemId in txn.selectedItemIds) {
-      final qty = txn.getQty(itemId);
-      final discount = txn.getDiscount(itemId);
+    for (final item in txn.selectedReturnItems) {
+  final qty = item.qty;
+  final rate = item.rate;
 
-      final total = txn.subTotal;
+  final discounted = item.taxable;
 
-      await db
-          .into(db.saleReturnDetailsTable)
-          .insert(
-            SaleReturnDetailsTableCompanion.insert(
-              mid: Value(masterId),
-              itemId: Value(itemId),
-              qty: Value(qty),
-              total: Value(total),
-              disc: Value(discount),
-              ledger: Value(ledgerName),
-              companyId: Value(companyId),
-              sync: const Value(0),
+  final taxPercent = item.item.taxPercent;
 
-              fQty: Value(qty),
-            ),
-          );
-    }
+  final cgst = discounted * (taxPercent / 2) / 100;
+  final sgst = discounted * (taxPercent / 2) / 100;
+  final igst = discounted * taxPercent / 100;
+
+  await db.into(db.saleReturnDetailsTable).insert(
+    SaleReturnDetailsTableCompanion.insert(
+      vchId: masterId,
+      itemId: Value(item.item.id),
+      itemName: Value(item.item.itemName),
+      enteredQtyFirst: Value(qty),
+      rate: Value(rate),
+      amount: Value(discounted),
+      taxableAmount: Value(discounted),
+      cgstVal: Value(cgst),
+      sgstVal: Value(sgst),
+      igstVal: Value(igst),
+      discountAmt: Value(item.discount),
+    ),
+  );
+}
 
     /// 3️⃣ INSERT LEDGER
     final Map<String, double> taxLedgers = {
@@ -519,12 +564,12 @@ Future<void> saveSaleReturn({
             .into(db.saleReturnLedgerDetailsTable)
             .insert(
               SaleReturnLedgerDetailsTableCompanion.insert(
-                mid: Value(masterId),
-                ledger: Value(ledgerName),
-                amount: Value(txn.grandTotal),
-                companyId: Value(companyId),
+                vchId: Value(masterId),
+                ledgerId: Value(ledgerId),
+                ledgerName: Value(entry.key),
 
-                voucherName: Value(entry.key),
+                amount: Value(entry.value),
+                rate: const Value(0),
               ),
             );
       }

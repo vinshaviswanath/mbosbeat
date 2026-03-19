@@ -84,7 +84,6 @@ import 'package:mpos_beat/data/local_db/tables/sales_return/sales_return_ledger_
 import 'package:mpos_beat/data/local_db/tables/sales_return/sales_return_master_table.dart';
 import 'package:mpos_beat/data/local_db/tables/user_settings_tables.dart';
 import 'package:mpos_beat/data/local_db/tables/voucher_types_tables.dart';
-import 'package:mpos_beat/presentation/views/transactions/sales_return/sales_return.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:sqlite3/sqlite3.dart';
@@ -153,7 +152,7 @@ class AppDb extends _$AppDb {
   AppDb() : super(_openConnection());
 
   @override
-  int get schemaVersion => 37;
+  int get schemaVersion => 38;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -195,7 +194,6 @@ class AppDb extends _$AppDb {
       if (from < 11) {
         // await m.createTable(godownRoutes);
 
-        // OPTIONAL but recommended
         await m.database.customStatement('DROP TABLE IF EXISTS routes');
       }
       if (from < 12) {
@@ -264,17 +262,8 @@ class AppDb extends _$AppDb {
         await m.createTable(saleReturnLedgerDetailsTable);
       }
 
-      // if (from < 28) {
-      //   await m.createTable(receiptEntryTable);
-      //   await m.createTable(receiptEntryLedgerTable);
-      // }
       if (from < 29) {
         await m.createTable(voucherControlTable);
-
-        // await m.addColumn(
-        //   saleOrderMasterTable,
-        //   saleOrderMasterTable.isCancelled,
-        // );
       }
       if (from < 30) {
         await m.addColumn(itemMaster, itemMaster.closingStock);
@@ -318,66 +307,6 @@ class AppDb extends _$AppDb {
         );
       }
 
-      // if (from < 32) {
-      //   await m.deleteTable(saleOrderLedgerDetailsTable.actualTableName);
-      //   await m.createTable(saleOrderLedgerDetailsTable);
-      // }
-      // if (from < 34) {
-      //   await m.addColumn(
-      //     saleLedgerDetailsTable,
-      //     saleLedgerDetailsTable.voucherName,
-      //   );
-      //   await m.addColumn(
-      //     saleLedgerDetailsTable,
-      //     saleLedgerDetailsTable.discountType,
-      //   );
-
-      //   await m.addColumn(
-      //     saleLedgerDetailsTable,
-      //     saleLedgerDetailsTable.discountAmount,
-      //   );
-
-      //   await m.addColumn(
-      //     saleLedgerDetailsTable,
-      //     saleLedgerDetailsTable.saleAmount,
-      //   );
-
-      //   await m.addColumn(
-      //     saleLedgerDetailsTable,
-      //     saleLedgerDetailsTable.couponDiscountAmount,
-      //   );
-
-      //   await m.addColumn(saleLedgerDetailsTable, saleLedgerDetailsTable.igst);
-
-      //   await m.addColumn(saleLedgerDetailsTable, saleLedgerDetailsTable.cgst);
-
-      //   await m.addColumn(saleLedgerDetailsTable, saleLedgerDetailsTable.sgst);
-
-      //   await m.addColumn(saleLedgerDetailsTable, saleLedgerDetailsTable.cess);
-
-      //   // ================= SALE RETURN LEDGER TABLE =================
-
-      //   await m.addColumn(
-      //     saleReturnLedgerDetailsTable,
-      //     saleReturnLedgerDetailsTable.igst,
-      //   );
-
-      //   await m.addColumn(
-      //     saleReturnLedgerDetailsTable,
-      //     saleReturnLedgerDetailsTable.cgst,
-      //   );
-
-      //   await m.addColumn(
-      //     saleReturnLedgerDetailsTable,
-      //     saleReturnLedgerDetailsTable.sgst,
-      //   );
-
-      //   await m.addColumn(
-      //     saleReturnLedgerDetailsTable,
-      //     saleReturnLedgerDetailsTable.cess,
-      //   );
-      // }
-
       if (from < 35) {
         await m.database.customStatement(
           'CREATE INDEX IF NOT EXISTS idx_item_company_name '
@@ -411,6 +340,15 @@ class AppDb extends _$AppDb {
       if (from < 37) {
         await m.createTable(receiptMasterTable);
         await m.createTable(receiptDetailsTable);
+      }
+      if (from < 38) {
+        await m.deleteTable(saleReturnMasterTable.actualTableName);
+        await m.deleteTable(saleReturnDetailsTable.actualTableName);
+        await m.deleteTable(saleReturnLedgerDetailsTable.actualTableName);
+
+        await m.createTable(saleReturnMasterTable);
+        await m.createTable(saleReturnDetailsTable);
+        await m.createTable(saleReturnLedgerDetailsTable);
       }
     },
   );

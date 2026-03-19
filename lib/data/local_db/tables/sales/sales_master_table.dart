@@ -18,7 +18,7 @@ class SaleMasterTable extends Table {
   IntColumn get vchno => integer().nullable()();
 
   TextColumn get vchnumber => text().nullable()();
- TextColumn get vchdate => text().nullable()();
+  TextColumn get vchdate => text().nullable()();
   TextColumn get vchType => text().nullable()();
 
   TextColumn get vchtype => text().withDefault(const Constant("B2C"))();

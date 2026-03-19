@@ -4,6 +4,7 @@ import 'package:mpos_beat/core/di/injection.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
 import 'package:mpos_beat/data/data_sources/user/party_MasterSync/party_MasterSync.dart';
 import 'package:mpos_beat/data/local_db/app_db.dart';
+import 'package:mpos_beat/data/models/product.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_switch.dart';
 import 'package:mpos_beat/presentation/common/widgets/custom_text_field.dart';
 import 'package:mpos_beat/presentation/logic/customer_transaction_provider.dart';
@@ -130,9 +131,9 @@ class _SalesScreenState extends State<SalesScreen> {
     final appLocalizations = context.l10n;
     final provider = context.read<CustomerTransactionProvider>();
     return PopScope(
-      canPop: provider.selectedItemIds.isNotEmpty ? false : true,
+      canPop: provider.selectedSalesItems.isNotEmpty ? false : true,
       onPopInvokedWithResult: (_, __) {
-        provider.selectedItemIds.isNotEmpty
+        provider.selectedSalesItems.isNotEmpty
             ? clearItemsWarningDialog(context)
             : null;
       },
@@ -141,7 +142,7 @@ class _SalesScreenState extends State<SalesScreen> {
         appBar: AppBar(
           leading: IconButton(
             onPressed: () {
-              provider.selectedItemIds.isNotEmpty
+              provider.selectedSalesItems.isNotEmpty
                   ? clearItemsWarningDialog(context)
                   : Navigator.pop(context);
             },
@@ -625,12 +626,12 @@ class _SalesScreenState extends State<SalesScreen> {
                         children: [
                           Expanded(
                             child: CustomButton(
-                              color: provider.selectedItemIds.isEmpty
+                              color: provider.selectedSalesItems.isEmpty
                                   ? ColorResources.ashGray
                                   : null,
                               buttonText: appLocalizations.save,
                               onTap: () async {
-                                if (provider.selectedItemIds.isNotEmpty) {
+                                if (provider.selectedSalesItems.isNotEmpty) {
                                   confirmBillDialog(
                                     context,
                                     onSave: () async {
@@ -707,6 +708,24 @@ class _SalesScreenState extends State<SalesScreen> {
       ),
     );
   }
+}
+
+class SelectedTxnItem {
+  final Product item;
+  final double qty;
+  final double rate;
+  final double discount;
+  final double taxable;
+  final double total;
+
+  SelectedTxnItem({
+    required this.item,
+    required this.qty,
+    required this.rate,
+    required this.discount,
+    required this.taxable,
+    required this.total,
+  });
 }
 
 Future<void> saveSale({

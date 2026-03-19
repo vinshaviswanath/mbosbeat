@@ -436,14 +436,14 @@ class _OrderBookingAddItemScreenState extends State<OrderBookingAddItemScreen> {
                         ],
                       ),
                       CustomButton(
-                        color: transactionProvider.selectedItemIds.isEmpty
+                        color: transactionProvider.selectedOrderItems.isEmpty
                             ? ColorResources.ashGray
                             : null,
                         buttonText: transactionProvider.selectedItemCount
                             .toString(),
                         isborderEnable: false,
                         onTap: () {
-                          if (transactionProvider.selectedItemIds.isNotEmpty) {
+                          if (transactionProvider.selectedOrderItems.isNotEmpty) {
                             Navigator.of(context).pop();
                           } else {}
                         },

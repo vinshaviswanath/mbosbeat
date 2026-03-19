@@ -4,6 +4,8 @@ import 'package:mpos_beat/data/data_sources/user/party_MasterSync/party_MasterSy
 import 'package:mpos_beat/data/local_db/app_db.dart';
 import 'package:mpos_beat/data/models/product.dart';
 import 'package:mpos_beat/presentation/views/transactions/purchase/widgets/discount_alert_widget.dart';
+import 'package:mpos_beat/presentation/views/transactions/sales/sales_screen.dart';
+import 'package:mpos_beat/presentation/views/transactions/sales_return/sales_return.dart';
 import 'package:mpos_beat/presentation/views/transactions/transaction_order_booking/transaction_order_booking_screen.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -160,7 +162,7 @@ class CustomerTransactionProvider extends ChangeNotifier {
   // =========================================================
 
   /// Returns selected item IDs.
-  Set<int> get selectedItemIds => _selectedItems;
+ // Set<int> get selectedItemIds => _selectedItems;
 
   /// Returns currently selected index.
   int? get selectedIndex => _selectedIndex;
@@ -341,7 +343,7 @@ class CustomerTransactionProvider extends ChangeNotifier {
 
     return [...selectedItems, ...pageItems];
   }
-
+//insert order item
   List<SelectedOrderItem> get selectedOrderItems {
     final list = <SelectedOrderItem>[];
 
@@ -386,7 +388,90 @@ class CustomerTransactionProvider extends ChangeNotifier {
 
     return list;
   }
+//insert salesreturn
+List<SelectedReturnItem> get selectedReturnItems {
+  final list = <SelectedReturnItem>[];
 
+  for (final itemId in _selectedItems) {
+    final item = _selectedItemObjects[itemId];
+    if (item == null) continue;
+
+    final qty = _itemQty[itemId] ?? 0;
+    final discount = _itemDiscount[itemId] ?? 0;
+
+    final rate = item.rate;
+    final taxPercent = item.taxPercent;
+
+    final base = rate * qty;
+
+    double discounted = base;
+    final type = _discountType[itemId];
+
+    if (type == DiscountType.percentage) {
+      discounted -= base * discount / 100;
+    } else if (type == DiscountType.amount) {
+      discounted -= discount;
+    }
+
+    final tax = discounted * taxPercent / 100;
+    final finalAmount = discounted + tax;
+
+    list.add(
+      SelectedReturnItem(
+        item: item,
+        qty: qty,
+        rate: rate,
+        discount: discount,
+        taxable: discounted,
+        total: finalAmount,
+      ),
+    );
+  }
+
+  return list;
+}
+//insert salesdetails
+List<SelectedTxnItem> get selectedSalesItems {
+  final list = <SelectedTxnItem>[];
+
+  for (final itemId in _selectedItems) {
+    final item = _selectedItemObjects[itemId];
+    if (item == null) continue;
+
+    final qty = _itemQty[itemId] ?? 0;
+    final discount = _itemDiscount[itemId] ?? 0;
+
+    final rate = item.rate;
+    final taxPercent = item.taxPercent;
+
+    final base = qty * rate;
+
+    double discounted = base;
+    final type = _discountType[itemId];
+
+    if (type == DiscountType.percentage) {
+      discounted -= base * discount / 100;
+    } else if (type == DiscountType.amount) {
+      discounted -= discount;
+    }
+
+    final tax = discounted * taxPercent / 100;
+    final total = discounted + tax;
+
+    list.add(
+      SelectedTxnItem(
+        item: item,
+        qty: qty,
+        rate: rate,
+        discount: discount,
+        taxable: discounted,
+        total: total,
+      ),
+    );
+  }
+
+  return list;
+}
   // ===================== ITEM SOURCE =====================
 
   void setProducts(List<Product> products) {
