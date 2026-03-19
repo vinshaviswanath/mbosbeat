@@ -1,7 +1,7 @@
 
 import 'package:drift/drift.dart';
 
-class PurchaseMasterTable extends Table {
+class PurchaseReturnMasterTable extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   IntColumn get custid => integer().nullable()();
