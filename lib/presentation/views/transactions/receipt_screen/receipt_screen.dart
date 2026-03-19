@@ -580,12 +580,14 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
                               amount:
                                   double.tryParse(amountController.text) ?? 0.0,
                               paymentMode: selected,
-                              chequeNo: int.tryParse(chequeNoController.text),
+                              chequeNo: chequeNoController.text,
                               chequeDate: chequeDateController.text,
                               bankName: bankNameController.text,
                               branchName: branchNameController.text,
                               narration: narrationController.text,
                               advance: advanceAmount.toInt(),
+                              lattitude: widget.data.party.latitude ?? 0.0,
+                              longitude: widget.data.party.longitude ?? 0.0,
                             );
                             setState(() {
                               selected = null;
@@ -626,54 +628,83 @@ Future<void> saveReceipt({
   int? receiptNo,
   required double amount,
   String? paymentMode,
-  int? chequeNo,
+  String? chequeNo,
   String? chequeDate,
   String? bankName,
   String? branchName,
   String? narration,
   int? advance,
+  required double lattitude,
+  required double longitude,
 }) async {
   if (amount <= 0) {
     print("Invalid receipt amount");
     return;
   }
-
+  final now = DateTime.now();
+  final formattedDate = DateFormat('yyyy-MM-dd').format(now);
   await db.transaction(() async {
     /// 1️⃣ INSERT RECEIPT MASTER
     final receiptId = await db
-        .into(db.receiptEntryTable)
+        .into(db.receiptMasterTable)
         .insert(
-          ReceiptEntryTableCompanion.insert(
-            mid: const Value(null),
+          ReceiptMasterTableCompanion.insert(
             companyId: Value(companyId),
-            receiptNo: Value(receiptNo),
+
+            vchNo: Value(receiptNo?.toString()),
+            vchNumber: Value(receiptNo?.toString()),
+
+            vchdate: Value(formattedDate),
+
+            partyId: Value(ledgerId),
+            partyName: Value(ledgerName),
+
             amount: Value(amount),
-            paymentMode: Value(paymentMode),
-            chequeNo: Value(chequeNo),
-            chequeDate: chequeDate != null && chequeDate.isNotEmpty
-                ? Value(chequeDate)
+            discount: Value(0.0),
+            receivedAmt: Value(amount),
+
+            advance: Value((advance ?? 0).toDouble()),
+
+            recMode: Value(paymentMode),
+
+            chequeNo: chequeNo != null && chequeNo.isNotEmpty
+                ? Value(chequeNo)
                 : const Value.absent(),
-            bankname: Value(bankName),
-            branchname: Value(branchName),
+            chequeDate: Value(formattedDate),
+
+            bankName: Value(bankName),
+            branchName: Value(branchName),
+
             narration: narration != null && narration.isNotEmpty
                 ? Value(narration)
                 : const Value.absent(),
-            advance: Value(advance),
+
+            latitude: Value(lattitude),
+            longitude: Value(longitude),
+            accuracy: const Value(0),
+
+            createdOn: Value(formattedDate),
+            updatedOn: Value(formattedDate),
+
+            status: const Value(0),
           ),
         );
 
     print("Inserted Receipt ID: $receiptId");
 
     /// 2️⃣ INSERT LEDGER ENTRY
+    /// 
     await db
-        .into(db.receiptEntryLedgerTable)
+    
+        .into(db.receiptDetailsTable)
         .insert(
-          ReceiptEntryLedgerTableCompanion.insert(
-            mid: Value(receiptId),
-            companyId: Value(companyId),
-            ledger: Value(ledgerName),
-            balance: Value(amount),
-            receiptdate: Value(DateFormat('yyyy-MM-dd').format(DateTime.now())),
+          ReceiptDetailsTableCompanion.insert(
+            vchId: receiptId,
+            billName: Value(""),
+            billDate: Value(now),
+            billAmount: Value(amount),
+            balanceAmt: Value(0),
+            paidAmount: Value(0),
           ),
         );
   });
@@ -682,16 +713,16 @@ Future<void> saveReceipt({
 }
 
 Future<void> printSavedReceiptData(AppDb db) async {
-  final receipts = await db.select(db.receiptEntryTable).get();
-  final ledger = await db.select(db.receiptEntryLedgerTable).get();
+  final master = await db.select(db.receiptMasterTable).get();
+  final details = await db.select(db.receiptDetailsTable).get();
 
   print("==== RECEIPT MASTER ====");
-  for (var r in receipts) {
+  for (var r in master) {
     print(r.toJson());
   }
 
   print("==== RECEIPT LEDGER ====");
-  for (var l in ledger) {
+  for (var l in details) {
     print(l.toJson());
   }
 }

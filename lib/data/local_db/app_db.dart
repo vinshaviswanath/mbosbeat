@@ -127,7 +127,7 @@ part 'app_db.g.dart';
     SaleReturnDetailsTable,
     SaleReturnLedgerDetailsTable,
     ReceiptMasterTable,
-    ReceiptEntryLedgerTable,
+    ReceiptDetailsTable,
     VoucherControlTable,
     SaleAddressTable,
   ],
@@ -153,7 +153,7 @@ class AppDb extends _$AppDb {
   AppDb() : super(_openConnection());
 
   @override
-  int get schemaVersion => 36;
+  int get schemaVersion => 37;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -264,10 +264,10 @@ class AppDb extends _$AppDb {
         await m.createTable(saleReturnLedgerDetailsTable);
       }
 
-      if (from < 28) {
-        await m.createTable(receiptEntryTable);
-        await m.createTable(receiptEntryLedgerTable);
-      }
+      // if (from < 28) {
+      //   await m.createTable(receiptEntryTable);
+      //   await m.createTable(receiptEntryLedgerTable);
+      // }
       if (from < 29) {
         await m.createTable(voucherControlTable);
 
@@ -407,6 +407,10 @@ class AppDb extends _$AppDb {
         await m.createTable(saleOrderLedgerDetailsTable);
 
         await m.createTable(saleAddressTable);
+      }
+      if (from < 37) {
+        await m.createTable(receiptMasterTable);
+        await m.createTable(receiptDetailsTable);
       }
     },
   );

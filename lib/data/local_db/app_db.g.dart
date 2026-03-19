@@ -28316,12 +28316,12 @@ class SaleReturnLedgerDetailsTableCompanion
   }
 }
 
-class $ReceiptEntryTableTable extends ReceiptMasterTable
-    with TableInfo<$ReceiptEntryTableTable, ReceiptEntryTableData> {
+class $ReceiptMasterTableTable extends ReceiptMasterTable
+    with TableInfo<$ReceiptMasterTableTable, ReceiptMasterTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $ReceiptEntryTableTable(this.attachedDatabase, [this._alias]);
+  $ReceiptMasterTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -28335,10 +28335,10 @@ class $ReceiptEntryTableTable extends ReceiptMasterTable
       'PRIMARY KEY AUTOINCREMENT',
     ),
   );
-  static const VerificationMeta _midMeta = const VerificationMeta('mid');
+  static const VerificationMeta _custIdMeta = const VerificationMeta('custId');
   @override
-  late final GeneratedColumn<int> mid = GeneratedColumn<int>(
-    'mid',
+  late final GeneratedColumn<int> custId = GeneratedColumn<int>(
+    'cust_id',
     aliasedName,
     true,
     type: DriftSqlType.int,
@@ -28355,15 +28355,97 @@ class $ReceiptEntryTableTable extends ReceiptMasterTable
     type: DriftSqlType.int,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _receiptNoMeta = const VerificationMeta(
-    'receiptNo',
-  );
+  static const VerificationMeta _tripIdMeta = const VerificationMeta('tripId');
   @override
-  late final GeneratedColumn<int> receiptNo = GeneratedColumn<int>(
-    'receipt_no',
+  late final GeneratedColumn<int> tripId = GeneratedColumn<int>(
+    'trip_id',
     aliasedName,
     true,
     type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _visitIdMeta = const VerificationMeta(
+    'visitId',
+  );
+  @override
+  late final GeneratedColumn<int> visitId = GeneratedColumn<int>(
+    'visit_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<int> userId = GeneratedColumn<int>(
+    'user_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _vchSeriesMeta = const VerificationMeta(
+    'vchSeries',
+  );
+  @override
+  late final GeneratedColumn<int> vchSeries = GeneratedColumn<int>(
+    'vch_series',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _vchNoMeta = const VerificationMeta('vchNo');
+  @override
+  late final GeneratedColumn<String> vchNo = GeneratedColumn<String>(
+    'vch_no',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _vchNumberMeta = const VerificationMeta(
+    'vchNumber',
+  );
+  @override
+  late final GeneratedColumn<String> vchNumber = GeneratedColumn<String>(
+    'vch_number',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _vchdateMeta = const VerificationMeta(
+    'vchdate',
+  );
+  @override
+  late final GeneratedColumn<String> vchdate = GeneratedColumn<String>(
+    'vchdate',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _partyIdMeta = const VerificationMeta(
+    'partyId',
+  );
+  @override
+  late final GeneratedColumn<int> partyId = GeneratedColumn<int>(
+    'party_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _partyNameMeta = const VerificationMeta(
+    'partyName',
+  );
+  @override
+  late final GeneratedColumn<String> partyName = GeneratedColumn<String>(
+    'party_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
   static const VerificationMeta _amountMeta = const VerificationMeta('amount');
@@ -28371,16 +28453,75 @@ class $ReceiptEntryTableTable extends ReceiptMasterTable
   late final GeneratedColumn<double> amount = GeneratedColumn<double>(
     'amount',
     aliasedName,
-    true,
+    false,
     type: DriftSqlType.double,
     requiredDuringInsert: false,
+    defaultValue: const Constant(0),
   );
-  static const VerificationMeta _paymentModeMeta = const VerificationMeta(
-    'paymentMode',
+  static const VerificationMeta _discountMeta = const VerificationMeta(
+    'discount',
   );
   @override
-  late final GeneratedColumn<String> paymentMode = GeneratedColumn<String>(
-    'payment_mode',
+  late final GeneratedColumn<double> discount = GeneratedColumn<double>(
+    'discount',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _receivedAmtMeta = const VerificationMeta(
+    'receivedAmt',
+  );
+  @override
+  late final GeneratedColumn<double> receivedAmt = GeneratedColumn<double>(
+    'received_amt',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _advanceMeta = const VerificationMeta(
+    'advance',
+  );
+  @override
+  late final GeneratedColumn<double> advance = GeneratedColumn<double>(
+    'advance',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _recModeMeta = const VerificationMeta(
+    'recMode',
+  );
+  @override
+  late final GeneratedColumn<String> recMode = GeneratedColumn<String>(
+    'rec_mode',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _accountIdMeta = const VerificationMeta(
+    'accountId',
+  );
+  @override
+  late final GeneratedColumn<int> accountId = GeneratedColumn<int>(
+    'account_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _accountNameMeta = const VerificationMeta(
+    'accountName',
+  );
+  @override
+  late final GeneratedColumn<String> accountName = GeneratedColumn<String>(
+    'account_name',
     aliasedName,
     true,
     type: DriftSqlType.string,
@@ -28390,11 +28531,11 @@ class $ReceiptEntryTableTable extends ReceiptMasterTable
     'chequeNo',
   );
   @override
-  late final GeneratedColumn<int> chequeNo = GeneratedColumn<int>(
+  late final GeneratedColumn<String> chequeNo = GeneratedColumn<String>(
     'cheque_no',
     aliasedName,
     true,
-    type: DriftSqlType.int,
+    type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
   static const VerificationMeta _chequeDateMeta = const VerificationMeta(
@@ -28408,23 +28549,32 @@ class $ReceiptEntryTableTable extends ReceiptMasterTable
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _banknameMeta = const VerificationMeta(
-    'bankname',
+  static const VerificationMeta _bankNameMeta = const VerificationMeta(
+    'bankName',
   );
   @override
-  late final GeneratedColumn<String> bankname = GeneratedColumn<String>(
-    'bankname',
+  late final GeneratedColumn<String> bankName = GeneratedColumn<String>(
+    'bank_name',
     aliasedName,
     true,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _branchnameMeta = const VerificationMeta(
-    'branchname',
+  static const VerificationMeta _branchNameMeta = const VerificationMeta(
+    'branchName',
   );
   @override
-  late final GeneratedColumn<String> branchname = GeneratedColumn<String>(
-    'branchname',
+  late final GeneratedColumn<String> branchName = GeneratedColumn<String>(
+    'branch_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _refNoMeta = const VerificationMeta('refNo');
+  @override
+  late final GeneratedColumn<String> refNo = GeneratedColumn<String>(
+    'ref_no',
     aliasedName,
     true,
     type: DriftSqlType.string,
@@ -28441,12 +28591,68 @@ class $ReceiptEntryTableTable extends ReceiptMasterTable
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _advanceMeta = const VerificationMeta(
-    'advance',
+  static const VerificationMeta _latitudeMeta = const VerificationMeta(
+    'latitude',
   );
   @override
-  late final GeneratedColumn<int> advance = GeneratedColumn<int>(
-    'advance',
+  late final GeneratedColumn<double> latitude = GeneratedColumn<double>(
+    'latitude',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _longitudeMeta = const VerificationMeta(
+    'longitude',
+  );
+  @override
+  late final GeneratedColumn<double> longitude = GeneratedColumn<double>(
+    'longitude',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _accuracyMeta = const VerificationMeta(
+    'accuracy',
+  );
+  @override
+  late final GeneratedColumn<double> accuracy = GeneratedColumn<double>(
+    'accuracy',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _createdOnMeta = const VerificationMeta(
+    'createdOn',
+  );
+  @override
+  late final GeneratedColumn<String> createdOn = GeneratedColumn<String>(
+    'created_on',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _updatedOnMeta = const VerificationMeta(
+    'updatedOn',
+  );
+  @override
+  late final GeneratedColumn<String> updatedOn = GeneratedColumn<String>(
+    'updated_on',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _statusMeta = const VerificationMeta('status');
+  @override
+  late final GeneratedColumn<int> status = GeneratedColumn<int>(
+    'status',
     aliasedName,
     true,
     type: DriftSqlType.int,
@@ -28455,26 +28661,45 @@ class $ReceiptEntryTableTable extends ReceiptMasterTable
   @override
   List<GeneratedColumn> get $columns => [
     id,
-    mid,
+    custId,
     companyId,
-    receiptNo,
+    tripId,
+    visitId,
+    userId,
+    vchSeries,
+    vchNo,
+    vchNumber,
+    vchdate,
+    partyId,
+    partyName,
     amount,
-    paymentMode,
+    discount,
+    receivedAmt,
+    advance,
+    recMode,
+    accountId,
+    accountName,
     chequeNo,
     chequeDate,
-    bankname,
-    branchname,
+    bankName,
+    branchName,
+    refNo,
     narration,
-    advance,
+    latitude,
+    longitude,
+    accuracy,
+    createdOn,
+    updatedOn,
+    status,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'receipt_entry_table';
+  static const String $name = 'receipt_master_table';
   @override
   VerificationContext validateIntegrity(
-    Insertable<ReceiptEntryTableData> instance, {
+    Insertable<ReceiptMasterTableData> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -28482,10 +28707,10 @@ class $ReceiptEntryTableTable extends ReceiptMasterTable
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('mid')) {
+    if (data.containsKey('cust_id')) {
       context.handle(
-        _midMeta,
-        mid.isAcceptableOrUnknown(data['mid']!, _midMeta),
+        _custIdMeta,
+        custId.isAcceptableOrUnknown(data['cust_id']!, _custIdMeta),
       );
     }
     if (data.containsKey('company_id')) {
@@ -28494,10 +28719,58 @@ class $ReceiptEntryTableTable extends ReceiptMasterTable
         companyId.isAcceptableOrUnknown(data['company_id']!, _companyIdMeta),
       );
     }
-    if (data.containsKey('receipt_no')) {
+    if (data.containsKey('trip_id')) {
       context.handle(
-        _receiptNoMeta,
-        receiptNo.isAcceptableOrUnknown(data['receipt_no']!, _receiptNoMeta),
+        _tripIdMeta,
+        tripId.isAcceptableOrUnknown(data['trip_id']!, _tripIdMeta),
+      );
+    }
+    if (data.containsKey('visit_id')) {
+      context.handle(
+        _visitIdMeta,
+        visitId.isAcceptableOrUnknown(data['visit_id']!, _visitIdMeta),
+      );
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(
+        _userIdMeta,
+        userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta),
+      );
+    }
+    if (data.containsKey('vch_series')) {
+      context.handle(
+        _vchSeriesMeta,
+        vchSeries.isAcceptableOrUnknown(data['vch_series']!, _vchSeriesMeta),
+      );
+    }
+    if (data.containsKey('vch_no')) {
+      context.handle(
+        _vchNoMeta,
+        vchNo.isAcceptableOrUnknown(data['vch_no']!, _vchNoMeta),
+      );
+    }
+    if (data.containsKey('vch_number')) {
+      context.handle(
+        _vchNumberMeta,
+        vchNumber.isAcceptableOrUnknown(data['vch_number']!, _vchNumberMeta),
+      );
+    }
+    if (data.containsKey('vchdate')) {
+      context.handle(
+        _vchdateMeta,
+        vchdate.isAcceptableOrUnknown(data['vchdate']!, _vchdateMeta),
+      );
+    }
+    if (data.containsKey('party_id')) {
+      context.handle(
+        _partyIdMeta,
+        partyId.isAcceptableOrUnknown(data['party_id']!, _partyIdMeta),
+      );
+    }
+    if (data.containsKey('party_name')) {
+      context.handle(
+        _partyNameMeta,
+        partyName.isAcceptableOrUnknown(data['party_name']!, _partyNameMeta),
       );
     }
     if (data.containsKey('amount')) {
@@ -28506,12 +28779,45 @@ class $ReceiptEntryTableTable extends ReceiptMasterTable
         amount.isAcceptableOrUnknown(data['amount']!, _amountMeta),
       );
     }
-    if (data.containsKey('payment_mode')) {
+    if (data.containsKey('discount')) {
       context.handle(
-        _paymentModeMeta,
-        paymentMode.isAcceptableOrUnknown(
-          data['payment_mode']!,
-          _paymentModeMeta,
+        _discountMeta,
+        discount.isAcceptableOrUnknown(data['discount']!, _discountMeta),
+      );
+    }
+    if (data.containsKey('received_amt')) {
+      context.handle(
+        _receivedAmtMeta,
+        receivedAmt.isAcceptableOrUnknown(
+          data['received_amt']!,
+          _receivedAmtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('advance')) {
+      context.handle(
+        _advanceMeta,
+        advance.isAcceptableOrUnknown(data['advance']!, _advanceMeta),
+      );
+    }
+    if (data.containsKey('rec_mode')) {
+      context.handle(
+        _recModeMeta,
+        recMode.isAcceptableOrUnknown(data['rec_mode']!, _recModeMeta),
+      );
+    }
+    if (data.containsKey('account_id')) {
+      context.handle(
+        _accountIdMeta,
+        accountId.isAcceptableOrUnknown(data['account_id']!, _accountIdMeta),
+      );
+    }
+    if (data.containsKey('account_name')) {
+      context.handle(
+        _accountNameMeta,
+        accountName.isAcceptableOrUnknown(
+          data['account_name']!,
+          _accountNameMeta,
         ),
       );
     }
@@ -28527,16 +28833,22 @@ class $ReceiptEntryTableTable extends ReceiptMasterTable
         chequeDate.isAcceptableOrUnknown(data['cheque_date']!, _chequeDateMeta),
       );
     }
-    if (data.containsKey('bankname')) {
+    if (data.containsKey('bank_name')) {
       context.handle(
-        _banknameMeta,
-        bankname.isAcceptableOrUnknown(data['bankname']!, _banknameMeta),
+        _bankNameMeta,
+        bankName.isAcceptableOrUnknown(data['bank_name']!, _bankNameMeta),
       );
     }
-    if (data.containsKey('branchname')) {
+    if (data.containsKey('branch_name')) {
       context.handle(
-        _branchnameMeta,
-        branchname.isAcceptableOrUnknown(data['branchname']!, _branchnameMeta),
+        _branchNameMeta,
+        branchName.isAcceptableOrUnknown(data['branch_name']!, _branchNameMeta),
+      );
+    }
+    if (data.containsKey('ref_no')) {
+      context.handle(
+        _refNoMeta,
+        refNo.isAcceptableOrUnknown(data['ref_no']!, _refNoMeta),
       );
     }
     if (data.containsKey('narration')) {
@@ -28545,10 +28857,40 @@ class $ReceiptEntryTableTable extends ReceiptMasterTable
         narration.isAcceptableOrUnknown(data['narration']!, _narrationMeta),
       );
     }
-    if (data.containsKey('advance')) {
+    if (data.containsKey('latitude')) {
       context.handle(
-        _advanceMeta,
-        advance.isAcceptableOrUnknown(data['advance']!, _advanceMeta),
+        _latitudeMeta,
+        latitude.isAcceptableOrUnknown(data['latitude']!, _latitudeMeta),
+      );
+    }
+    if (data.containsKey('longitude')) {
+      context.handle(
+        _longitudeMeta,
+        longitude.isAcceptableOrUnknown(data['longitude']!, _longitudeMeta),
+      );
+    }
+    if (data.containsKey('accuracy')) {
+      context.handle(
+        _accuracyMeta,
+        accuracy.isAcceptableOrUnknown(data['accuracy']!, _accuracyMeta),
+      );
+    }
+    if (data.containsKey('created_on')) {
+      context.handle(
+        _createdOnMeta,
+        createdOn.isAcceptableOrUnknown(data['created_on']!, _createdOnMeta),
+      );
+    }
+    if (data.containsKey('updated_on')) {
+      context.handle(
+        _updatedOnMeta,
+        updatedOn.isAcceptableOrUnknown(data['updated_on']!, _updatedOnMeta),
+      );
+    }
+    if (data.containsKey('status')) {
+      context.handle(
+        _statusMeta,
+        status.isAcceptableOrUnknown(data['status']!, _statusMeta),
       );
     }
     return context;
@@ -28557,189 +28899,410 @@ class $ReceiptEntryTableTable extends ReceiptMasterTable
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  ReceiptEntryTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  ReceiptMasterTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ReceiptEntryTableData(
+    return ReceiptMasterTableData(
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}id'],
       )!,
-      mid: attachedDatabase.typeMapping.read(
+      custId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
-        data['${effectivePrefix}mid'],
+        data['${effectivePrefix}cust_id'],
       ),
       companyId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}company_id'],
       ),
-      receiptNo: attachedDatabase.typeMapping.read(
+      tripId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
-        data['${effectivePrefix}receipt_no'],
+        data['${effectivePrefix}trip_id'],
+      ),
+      visitId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}visit_id'],
+      ),
+      userId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}user_id'],
+      ),
+      vchSeries: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}vch_series'],
+      ),
+      vchNo: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}vch_no'],
+      ),
+      vchNumber: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}vch_number'],
+      ),
+      vchdate: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}vchdate'],
+      ),
+      partyId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}party_id'],
+      ),
+      partyName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}party_name'],
       ),
       amount: attachedDatabase.typeMapping.read(
         DriftSqlType.double,
         data['${effectivePrefix}amount'],
-      ),
-      paymentMode: attachedDatabase.typeMapping.read(
+      )!,
+      discount: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}discount'],
+      )!,
+      receivedAmt: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}received_amt'],
+      )!,
+      advance: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}advance'],
+      )!,
+      recMode: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}payment_mode'],
+        data['${effectivePrefix}rec_mode'],
+      ),
+      accountId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}account_id'],
+      ),
+      accountName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}account_name'],
       ),
       chequeNo: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
+        DriftSqlType.string,
         data['${effectivePrefix}cheque_no'],
       ),
       chequeDate: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}cheque_date'],
       ),
-      bankname: attachedDatabase.typeMapping.read(
+      bankName: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}bankname'],
+        data['${effectivePrefix}bank_name'],
       ),
-      branchname: attachedDatabase.typeMapping.read(
+      branchName: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}branchname'],
+        data['${effectivePrefix}branch_name'],
+      ),
+      refNo: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}ref_no'],
       ),
       narration: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}narration'],
       ),
-      advance: attachedDatabase.typeMapping.read(
+      latitude: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}latitude'],
+      )!,
+      longitude: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}longitude'],
+      )!,
+      accuracy: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}accuracy'],
+      )!,
+      createdOn: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_on'],
+      ),
+      updatedOn: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_on'],
+      ),
+      status: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
-        data['${effectivePrefix}advance'],
+        data['${effectivePrefix}status'],
       ),
     );
   }
 
   @override
-  $ReceiptEntryTableTable createAlias(String alias) {
-    return $ReceiptEntryTableTable(attachedDatabase, alias);
+  $ReceiptMasterTableTable createAlias(String alias) {
+    return $ReceiptMasterTableTable(attachedDatabase, alias);
   }
 }
 
-class ReceiptEntryTableData extends DataClass
-    implements Insertable<ReceiptEntryTableData> {
+class ReceiptMasterTableData extends DataClass
+    implements Insertable<ReceiptMasterTableData> {
   final int id;
-  final int? mid;
+  final int? custId;
   final int? companyId;
-  final int? receiptNo;
-  final double? amount;
-  final String? paymentMode;
-  final int? chequeNo;
+  final int? tripId;
+  final int? visitId;
+  final int? userId;
+  final int? vchSeries;
+  final String? vchNo;
+  final String? vchNumber;
+  final String? vchdate;
+  final int? partyId;
+  final String? partyName;
+  final double amount;
+  final double discount;
+  final double receivedAmt;
+  final double advance;
+  final String? recMode;
+  final int? accountId;
+  final String? accountName;
+  final String? chequeNo;
   final String? chequeDate;
-  final String? bankname;
-  final String? branchname;
+  final String? bankName;
+  final String? branchName;
+  final String? refNo;
   final String? narration;
-  final int? advance;
-  const ReceiptEntryTableData({
+  final double latitude;
+  final double longitude;
+  final double accuracy;
+  final String? createdOn;
+  final String? updatedOn;
+  final int? status;
+  const ReceiptMasterTableData({
     required this.id,
-    this.mid,
+    this.custId,
     this.companyId,
-    this.receiptNo,
-    this.amount,
-    this.paymentMode,
+    this.tripId,
+    this.visitId,
+    this.userId,
+    this.vchSeries,
+    this.vchNo,
+    this.vchNumber,
+    this.vchdate,
+    this.partyId,
+    this.partyName,
+    required this.amount,
+    required this.discount,
+    required this.receivedAmt,
+    required this.advance,
+    this.recMode,
+    this.accountId,
+    this.accountName,
     this.chequeNo,
     this.chequeDate,
-    this.bankname,
-    this.branchname,
+    this.bankName,
+    this.branchName,
+    this.refNo,
     this.narration,
-    this.advance,
+    required this.latitude,
+    required this.longitude,
+    required this.accuracy,
+    this.createdOn,
+    this.updatedOn,
+    this.status,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    if (!nullToAbsent || mid != null) {
-      map['mid'] = Variable<int>(mid);
+    if (!nullToAbsent || custId != null) {
+      map['cust_id'] = Variable<int>(custId);
     }
     if (!nullToAbsent || companyId != null) {
       map['company_id'] = Variable<int>(companyId);
     }
-    if (!nullToAbsent || receiptNo != null) {
-      map['receipt_no'] = Variable<int>(receiptNo);
+    if (!nullToAbsent || tripId != null) {
+      map['trip_id'] = Variable<int>(tripId);
     }
-    if (!nullToAbsent || amount != null) {
-      map['amount'] = Variable<double>(amount);
+    if (!nullToAbsent || visitId != null) {
+      map['visit_id'] = Variable<int>(visitId);
     }
-    if (!nullToAbsent || paymentMode != null) {
-      map['payment_mode'] = Variable<String>(paymentMode);
+    if (!nullToAbsent || userId != null) {
+      map['user_id'] = Variable<int>(userId);
+    }
+    if (!nullToAbsent || vchSeries != null) {
+      map['vch_series'] = Variable<int>(vchSeries);
+    }
+    if (!nullToAbsent || vchNo != null) {
+      map['vch_no'] = Variable<String>(vchNo);
+    }
+    if (!nullToAbsent || vchNumber != null) {
+      map['vch_number'] = Variable<String>(vchNumber);
+    }
+    if (!nullToAbsent || vchdate != null) {
+      map['vchdate'] = Variable<String>(vchdate);
+    }
+    if (!nullToAbsent || partyId != null) {
+      map['party_id'] = Variable<int>(partyId);
+    }
+    if (!nullToAbsent || partyName != null) {
+      map['party_name'] = Variable<String>(partyName);
+    }
+    map['amount'] = Variable<double>(amount);
+    map['discount'] = Variable<double>(discount);
+    map['received_amt'] = Variable<double>(receivedAmt);
+    map['advance'] = Variable<double>(advance);
+    if (!nullToAbsent || recMode != null) {
+      map['rec_mode'] = Variable<String>(recMode);
+    }
+    if (!nullToAbsent || accountId != null) {
+      map['account_id'] = Variable<int>(accountId);
+    }
+    if (!nullToAbsent || accountName != null) {
+      map['account_name'] = Variable<String>(accountName);
     }
     if (!nullToAbsent || chequeNo != null) {
-      map['cheque_no'] = Variable<int>(chequeNo);
+      map['cheque_no'] = Variable<String>(chequeNo);
     }
     if (!nullToAbsent || chequeDate != null) {
       map['cheque_date'] = Variable<String>(chequeDate);
     }
-    if (!nullToAbsent || bankname != null) {
-      map['bankname'] = Variable<String>(bankname);
+    if (!nullToAbsent || bankName != null) {
+      map['bank_name'] = Variable<String>(bankName);
     }
-    if (!nullToAbsent || branchname != null) {
-      map['branchname'] = Variable<String>(branchname);
+    if (!nullToAbsent || branchName != null) {
+      map['branch_name'] = Variable<String>(branchName);
+    }
+    if (!nullToAbsent || refNo != null) {
+      map['ref_no'] = Variable<String>(refNo);
     }
     if (!nullToAbsent || narration != null) {
       map['narration'] = Variable<String>(narration);
     }
-    if (!nullToAbsent || advance != null) {
-      map['advance'] = Variable<int>(advance);
+    map['latitude'] = Variable<double>(latitude);
+    map['longitude'] = Variable<double>(longitude);
+    map['accuracy'] = Variable<double>(accuracy);
+    if (!nullToAbsent || createdOn != null) {
+      map['created_on'] = Variable<String>(createdOn);
+    }
+    if (!nullToAbsent || updatedOn != null) {
+      map['updated_on'] = Variable<String>(updatedOn);
+    }
+    if (!nullToAbsent || status != null) {
+      map['status'] = Variable<int>(status);
     }
     return map;
   }
 
-  ReceiptEntryTableCompanion toCompanion(bool nullToAbsent) {
-    return ReceiptEntryTableCompanion(
+  ReceiptMasterTableCompanion toCompanion(bool nullToAbsent) {
+    return ReceiptMasterTableCompanion(
       id: Value(id),
-      mid: mid == null && nullToAbsent ? const Value.absent() : Value(mid),
+      custId: custId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(custId),
       companyId: companyId == null && nullToAbsent
           ? const Value.absent()
           : Value(companyId),
-      receiptNo: receiptNo == null && nullToAbsent
+      tripId: tripId == null && nullToAbsent
           ? const Value.absent()
-          : Value(receiptNo),
-      amount: amount == null && nullToAbsent
+          : Value(tripId),
+      visitId: visitId == null && nullToAbsent
           ? const Value.absent()
-          : Value(amount),
-      paymentMode: paymentMode == null && nullToAbsent
+          : Value(visitId),
+      userId: userId == null && nullToAbsent
           ? const Value.absent()
-          : Value(paymentMode),
+          : Value(userId),
+      vchSeries: vchSeries == null && nullToAbsent
+          ? const Value.absent()
+          : Value(vchSeries),
+      vchNo: vchNo == null && nullToAbsent
+          ? const Value.absent()
+          : Value(vchNo),
+      vchNumber: vchNumber == null && nullToAbsent
+          ? const Value.absent()
+          : Value(vchNumber),
+      vchdate: vchdate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(vchdate),
+      partyId: partyId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(partyId),
+      partyName: partyName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(partyName),
+      amount: Value(amount),
+      discount: Value(discount),
+      receivedAmt: Value(receivedAmt),
+      advance: Value(advance),
+      recMode: recMode == null && nullToAbsent
+          ? const Value.absent()
+          : Value(recMode),
+      accountId: accountId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(accountId),
+      accountName: accountName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(accountName),
       chequeNo: chequeNo == null && nullToAbsent
           ? const Value.absent()
           : Value(chequeNo),
       chequeDate: chequeDate == null && nullToAbsent
           ? const Value.absent()
           : Value(chequeDate),
-      bankname: bankname == null && nullToAbsent
+      bankName: bankName == null && nullToAbsent
           ? const Value.absent()
-          : Value(bankname),
-      branchname: branchname == null && nullToAbsent
+          : Value(bankName),
+      branchName: branchName == null && nullToAbsent
           ? const Value.absent()
-          : Value(branchname),
+          : Value(branchName),
+      refNo: refNo == null && nullToAbsent
+          ? const Value.absent()
+          : Value(refNo),
       narration: narration == null && nullToAbsent
           ? const Value.absent()
           : Value(narration),
-      advance: advance == null && nullToAbsent
+      latitude: Value(latitude),
+      longitude: Value(longitude),
+      accuracy: Value(accuracy),
+      createdOn: createdOn == null && nullToAbsent
           ? const Value.absent()
-          : Value(advance),
+          : Value(createdOn),
+      updatedOn: updatedOn == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedOn),
+      status: status == null && nullToAbsent
+          ? const Value.absent()
+          : Value(status),
     );
   }
 
-  factory ReceiptEntryTableData.fromJson(
+  factory ReceiptMasterTableData.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ReceiptEntryTableData(
+    return ReceiptMasterTableData(
       id: serializer.fromJson<int>(json['id']),
-      mid: serializer.fromJson<int?>(json['mid']),
+      custId: serializer.fromJson<int?>(json['custId']),
       companyId: serializer.fromJson<int?>(json['companyId']),
-      receiptNo: serializer.fromJson<int?>(json['receiptNo']),
-      amount: serializer.fromJson<double?>(json['amount']),
-      paymentMode: serializer.fromJson<String?>(json['paymentMode']),
-      chequeNo: serializer.fromJson<int?>(json['chequeNo']),
+      tripId: serializer.fromJson<int?>(json['tripId']),
+      visitId: serializer.fromJson<int?>(json['visitId']),
+      userId: serializer.fromJson<int?>(json['userId']),
+      vchSeries: serializer.fromJson<int?>(json['vchSeries']),
+      vchNo: serializer.fromJson<String?>(json['vchNo']),
+      vchNumber: serializer.fromJson<String?>(json['vchNumber']),
+      vchdate: serializer.fromJson<String?>(json['vchdate']),
+      partyId: serializer.fromJson<int?>(json['partyId']),
+      partyName: serializer.fromJson<String?>(json['partyName']),
+      amount: serializer.fromJson<double>(json['amount']),
+      discount: serializer.fromJson<double>(json['discount']),
+      receivedAmt: serializer.fromJson<double>(json['receivedAmt']),
+      advance: serializer.fromJson<double>(json['advance']),
+      recMode: serializer.fromJson<String?>(json['recMode']),
+      accountId: serializer.fromJson<int?>(json['accountId']),
+      accountName: serializer.fromJson<String?>(json['accountName']),
+      chequeNo: serializer.fromJson<String?>(json['chequeNo']),
       chequeDate: serializer.fromJson<String?>(json['chequeDate']),
-      bankname: serializer.fromJson<String?>(json['bankname']),
-      branchname: serializer.fromJson<String?>(json['branchname']),
+      bankName: serializer.fromJson<String?>(json['bankName']),
+      branchName: serializer.fromJson<String?>(json['branchName']),
+      refNo: serializer.fromJson<String?>(json['refNo']),
       narration: serializer.fromJson<String?>(json['narration']),
-      advance: serializer.fromJson<int?>(json['advance']),
+      latitude: serializer.fromJson<double>(json['latitude']),
+      longitude: serializer.fromJson<double>(json['longitude']),
+      accuracy: serializer.fromJson<double>(json['accuracy']),
+      createdOn: serializer.fromJson<String?>(json['createdOn']),
+      updatedOn: serializer.fromJson<String?>(json['updatedOn']),
+      status: serializer.fromJson<int?>(json['status']),
     );
   }
   @override
@@ -28747,221 +29310,489 @@ class ReceiptEntryTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'mid': serializer.toJson<int?>(mid),
+      'custId': serializer.toJson<int?>(custId),
       'companyId': serializer.toJson<int?>(companyId),
-      'receiptNo': serializer.toJson<int?>(receiptNo),
-      'amount': serializer.toJson<double?>(amount),
-      'paymentMode': serializer.toJson<String?>(paymentMode),
-      'chequeNo': serializer.toJson<int?>(chequeNo),
+      'tripId': serializer.toJson<int?>(tripId),
+      'visitId': serializer.toJson<int?>(visitId),
+      'userId': serializer.toJson<int?>(userId),
+      'vchSeries': serializer.toJson<int?>(vchSeries),
+      'vchNo': serializer.toJson<String?>(vchNo),
+      'vchNumber': serializer.toJson<String?>(vchNumber),
+      'vchdate': serializer.toJson<String?>(vchdate),
+      'partyId': serializer.toJson<int?>(partyId),
+      'partyName': serializer.toJson<String?>(partyName),
+      'amount': serializer.toJson<double>(amount),
+      'discount': serializer.toJson<double>(discount),
+      'receivedAmt': serializer.toJson<double>(receivedAmt),
+      'advance': serializer.toJson<double>(advance),
+      'recMode': serializer.toJson<String?>(recMode),
+      'accountId': serializer.toJson<int?>(accountId),
+      'accountName': serializer.toJson<String?>(accountName),
+      'chequeNo': serializer.toJson<String?>(chequeNo),
       'chequeDate': serializer.toJson<String?>(chequeDate),
-      'bankname': serializer.toJson<String?>(bankname),
-      'branchname': serializer.toJson<String?>(branchname),
+      'bankName': serializer.toJson<String?>(bankName),
+      'branchName': serializer.toJson<String?>(branchName),
+      'refNo': serializer.toJson<String?>(refNo),
       'narration': serializer.toJson<String?>(narration),
-      'advance': serializer.toJson<int?>(advance),
+      'latitude': serializer.toJson<double>(latitude),
+      'longitude': serializer.toJson<double>(longitude),
+      'accuracy': serializer.toJson<double>(accuracy),
+      'createdOn': serializer.toJson<String?>(createdOn),
+      'updatedOn': serializer.toJson<String?>(updatedOn),
+      'status': serializer.toJson<int?>(status),
     };
   }
 
-  ReceiptEntryTableData copyWith({
+  ReceiptMasterTableData copyWith({
     int? id,
-    Value<int?> mid = const Value.absent(),
+    Value<int?> custId = const Value.absent(),
     Value<int?> companyId = const Value.absent(),
-    Value<int?> receiptNo = const Value.absent(),
-    Value<double?> amount = const Value.absent(),
-    Value<String?> paymentMode = const Value.absent(),
-    Value<int?> chequeNo = const Value.absent(),
+    Value<int?> tripId = const Value.absent(),
+    Value<int?> visitId = const Value.absent(),
+    Value<int?> userId = const Value.absent(),
+    Value<int?> vchSeries = const Value.absent(),
+    Value<String?> vchNo = const Value.absent(),
+    Value<String?> vchNumber = const Value.absent(),
+    Value<String?> vchdate = const Value.absent(),
+    Value<int?> partyId = const Value.absent(),
+    Value<String?> partyName = const Value.absent(),
+    double? amount,
+    double? discount,
+    double? receivedAmt,
+    double? advance,
+    Value<String?> recMode = const Value.absent(),
+    Value<int?> accountId = const Value.absent(),
+    Value<String?> accountName = const Value.absent(),
+    Value<String?> chequeNo = const Value.absent(),
     Value<String?> chequeDate = const Value.absent(),
-    Value<String?> bankname = const Value.absent(),
-    Value<String?> branchname = const Value.absent(),
+    Value<String?> bankName = const Value.absent(),
+    Value<String?> branchName = const Value.absent(),
+    Value<String?> refNo = const Value.absent(),
     Value<String?> narration = const Value.absent(),
-    Value<int?> advance = const Value.absent(),
-  }) => ReceiptEntryTableData(
+    double? latitude,
+    double? longitude,
+    double? accuracy,
+    Value<String?> createdOn = const Value.absent(),
+    Value<String?> updatedOn = const Value.absent(),
+    Value<int?> status = const Value.absent(),
+  }) => ReceiptMasterTableData(
     id: id ?? this.id,
-    mid: mid.present ? mid.value : this.mid,
+    custId: custId.present ? custId.value : this.custId,
     companyId: companyId.present ? companyId.value : this.companyId,
-    receiptNo: receiptNo.present ? receiptNo.value : this.receiptNo,
-    amount: amount.present ? amount.value : this.amount,
-    paymentMode: paymentMode.present ? paymentMode.value : this.paymentMode,
+    tripId: tripId.present ? tripId.value : this.tripId,
+    visitId: visitId.present ? visitId.value : this.visitId,
+    userId: userId.present ? userId.value : this.userId,
+    vchSeries: vchSeries.present ? vchSeries.value : this.vchSeries,
+    vchNo: vchNo.present ? vchNo.value : this.vchNo,
+    vchNumber: vchNumber.present ? vchNumber.value : this.vchNumber,
+    vchdate: vchdate.present ? vchdate.value : this.vchdate,
+    partyId: partyId.present ? partyId.value : this.partyId,
+    partyName: partyName.present ? partyName.value : this.partyName,
+    amount: amount ?? this.amount,
+    discount: discount ?? this.discount,
+    receivedAmt: receivedAmt ?? this.receivedAmt,
+    advance: advance ?? this.advance,
+    recMode: recMode.present ? recMode.value : this.recMode,
+    accountId: accountId.present ? accountId.value : this.accountId,
+    accountName: accountName.present ? accountName.value : this.accountName,
     chequeNo: chequeNo.present ? chequeNo.value : this.chequeNo,
     chequeDate: chequeDate.present ? chequeDate.value : this.chequeDate,
-    bankname: bankname.present ? bankname.value : this.bankname,
-    branchname: branchname.present ? branchname.value : this.branchname,
+    bankName: bankName.present ? bankName.value : this.bankName,
+    branchName: branchName.present ? branchName.value : this.branchName,
+    refNo: refNo.present ? refNo.value : this.refNo,
     narration: narration.present ? narration.value : this.narration,
-    advance: advance.present ? advance.value : this.advance,
+    latitude: latitude ?? this.latitude,
+    longitude: longitude ?? this.longitude,
+    accuracy: accuracy ?? this.accuracy,
+    createdOn: createdOn.present ? createdOn.value : this.createdOn,
+    updatedOn: updatedOn.present ? updatedOn.value : this.updatedOn,
+    status: status.present ? status.value : this.status,
   );
-  ReceiptEntryTableData copyWithCompanion(ReceiptEntryTableCompanion data) {
-    return ReceiptEntryTableData(
+  ReceiptMasterTableData copyWithCompanion(ReceiptMasterTableCompanion data) {
+    return ReceiptMasterTableData(
       id: data.id.present ? data.id.value : this.id,
-      mid: data.mid.present ? data.mid.value : this.mid,
+      custId: data.custId.present ? data.custId.value : this.custId,
       companyId: data.companyId.present ? data.companyId.value : this.companyId,
-      receiptNo: data.receiptNo.present ? data.receiptNo.value : this.receiptNo,
+      tripId: data.tripId.present ? data.tripId.value : this.tripId,
+      visitId: data.visitId.present ? data.visitId.value : this.visitId,
+      userId: data.userId.present ? data.userId.value : this.userId,
+      vchSeries: data.vchSeries.present ? data.vchSeries.value : this.vchSeries,
+      vchNo: data.vchNo.present ? data.vchNo.value : this.vchNo,
+      vchNumber: data.vchNumber.present ? data.vchNumber.value : this.vchNumber,
+      vchdate: data.vchdate.present ? data.vchdate.value : this.vchdate,
+      partyId: data.partyId.present ? data.partyId.value : this.partyId,
+      partyName: data.partyName.present ? data.partyName.value : this.partyName,
       amount: data.amount.present ? data.amount.value : this.amount,
-      paymentMode: data.paymentMode.present
-          ? data.paymentMode.value
-          : this.paymentMode,
+      discount: data.discount.present ? data.discount.value : this.discount,
+      receivedAmt: data.receivedAmt.present
+          ? data.receivedAmt.value
+          : this.receivedAmt,
+      advance: data.advance.present ? data.advance.value : this.advance,
+      recMode: data.recMode.present ? data.recMode.value : this.recMode,
+      accountId: data.accountId.present ? data.accountId.value : this.accountId,
+      accountName: data.accountName.present
+          ? data.accountName.value
+          : this.accountName,
       chequeNo: data.chequeNo.present ? data.chequeNo.value : this.chequeNo,
       chequeDate: data.chequeDate.present
           ? data.chequeDate.value
           : this.chequeDate,
-      bankname: data.bankname.present ? data.bankname.value : this.bankname,
-      branchname: data.branchname.present
-          ? data.branchname.value
-          : this.branchname,
+      bankName: data.bankName.present ? data.bankName.value : this.bankName,
+      branchName: data.branchName.present
+          ? data.branchName.value
+          : this.branchName,
+      refNo: data.refNo.present ? data.refNo.value : this.refNo,
       narration: data.narration.present ? data.narration.value : this.narration,
-      advance: data.advance.present ? data.advance.value : this.advance,
+      latitude: data.latitude.present ? data.latitude.value : this.latitude,
+      longitude: data.longitude.present ? data.longitude.value : this.longitude,
+      accuracy: data.accuracy.present ? data.accuracy.value : this.accuracy,
+      createdOn: data.createdOn.present ? data.createdOn.value : this.createdOn,
+      updatedOn: data.updatedOn.present ? data.updatedOn.value : this.updatedOn,
+      status: data.status.present ? data.status.value : this.status,
     );
   }
 
   @override
   String toString() {
-    return (StringBuffer('ReceiptEntryTableData(')
+    return (StringBuffer('ReceiptMasterTableData(')
           ..write('id: $id, ')
-          ..write('mid: $mid, ')
+          ..write('custId: $custId, ')
           ..write('companyId: $companyId, ')
-          ..write('receiptNo: $receiptNo, ')
+          ..write('tripId: $tripId, ')
+          ..write('visitId: $visitId, ')
+          ..write('userId: $userId, ')
+          ..write('vchSeries: $vchSeries, ')
+          ..write('vchNo: $vchNo, ')
+          ..write('vchNumber: $vchNumber, ')
+          ..write('vchdate: $vchdate, ')
+          ..write('partyId: $partyId, ')
+          ..write('partyName: $partyName, ')
           ..write('amount: $amount, ')
-          ..write('paymentMode: $paymentMode, ')
+          ..write('discount: $discount, ')
+          ..write('receivedAmt: $receivedAmt, ')
+          ..write('advance: $advance, ')
+          ..write('recMode: $recMode, ')
+          ..write('accountId: $accountId, ')
+          ..write('accountName: $accountName, ')
           ..write('chequeNo: $chequeNo, ')
           ..write('chequeDate: $chequeDate, ')
-          ..write('bankname: $bankname, ')
-          ..write('branchname: $branchname, ')
+          ..write('bankName: $bankName, ')
+          ..write('branchName: $branchName, ')
+          ..write('refNo: $refNo, ')
           ..write('narration: $narration, ')
-          ..write('advance: $advance')
+          ..write('latitude: $latitude, ')
+          ..write('longitude: $longitude, ')
+          ..write('accuracy: $accuracy, ')
+          ..write('createdOn: $createdOn, ')
+          ..write('updatedOn: $updatedOn, ')
+          ..write('status: $status')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(
+  int get hashCode => Object.hashAll([
     id,
-    mid,
+    custId,
     companyId,
-    receiptNo,
+    tripId,
+    visitId,
+    userId,
+    vchSeries,
+    vchNo,
+    vchNumber,
+    vchdate,
+    partyId,
+    partyName,
     amount,
-    paymentMode,
+    discount,
+    receivedAmt,
+    advance,
+    recMode,
+    accountId,
+    accountName,
     chequeNo,
     chequeDate,
-    bankname,
-    branchname,
+    bankName,
+    branchName,
+    refNo,
     narration,
-    advance,
-  );
+    latitude,
+    longitude,
+    accuracy,
+    createdOn,
+    updatedOn,
+    status,
+  ]);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is ReceiptEntryTableData &&
+      (other is ReceiptMasterTableData &&
           other.id == this.id &&
-          other.mid == this.mid &&
+          other.custId == this.custId &&
           other.companyId == this.companyId &&
-          other.receiptNo == this.receiptNo &&
+          other.tripId == this.tripId &&
+          other.visitId == this.visitId &&
+          other.userId == this.userId &&
+          other.vchSeries == this.vchSeries &&
+          other.vchNo == this.vchNo &&
+          other.vchNumber == this.vchNumber &&
+          other.vchdate == this.vchdate &&
+          other.partyId == this.partyId &&
+          other.partyName == this.partyName &&
           other.amount == this.amount &&
-          other.paymentMode == this.paymentMode &&
+          other.discount == this.discount &&
+          other.receivedAmt == this.receivedAmt &&
+          other.advance == this.advance &&
+          other.recMode == this.recMode &&
+          other.accountId == this.accountId &&
+          other.accountName == this.accountName &&
           other.chequeNo == this.chequeNo &&
           other.chequeDate == this.chequeDate &&
-          other.bankname == this.bankname &&
-          other.branchname == this.branchname &&
+          other.bankName == this.bankName &&
+          other.branchName == this.branchName &&
+          other.refNo == this.refNo &&
           other.narration == this.narration &&
-          other.advance == this.advance);
+          other.latitude == this.latitude &&
+          other.longitude == this.longitude &&
+          other.accuracy == this.accuracy &&
+          other.createdOn == this.createdOn &&
+          other.updatedOn == this.updatedOn &&
+          other.status == this.status);
 }
 
-class ReceiptEntryTableCompanion
-    extends UpdateCompanion<ReceiptEntryTableData> {
+class ReceiptMasterTableCompanion
+    extends UpdateCompanion<ReceiptMasterTableData> {
   final Value<int> id;
-  final Value<int?> mid;
+  final Value<int?> custId;
   final Value<int?> companyId;
-  final Value<int?> receiptNo;
-  final Value<double?> amount;
-  final Value<String?> paymentMode;
-  final Value<int?> chequeNo;
+  final Value<int?> tripId;
+  final Value<int?> visitId;
+  final Value<int?> userId;
+  final Value<int?> vchSeries;
+  final Value<String?> vchNo;
+  final Value<String?> vchNumber;
+  final Value<String?> vchdate;
+  final Value<int?> partyId;
+  final Value<String?> partyName;
+  final Value<double> amount;
+  final Value<double> discount;
+  final Value<double> receivedAmt;
+  final Value<double> advance;
+  final Value<String?> recMode;
+  final Value<int?> accountId;
+  final Value<String?> accountName;
+  final Value<String?> chequeNo;
   final Value<String?> chequeDate;
-  final Value<String?> bankname;
-  final Value<String?> branchname;
+  final Value<String?> bankName;
+  final Value<String?> branchName;
+  final Value<String?> refNo;
   final Value<String?> narration;
-  final Value<int?> advance;
-  const ReceiptEntryTableCompanion({
+  final Value<double> latitude;
+  final Value<double> longitude;
+  final Value<double> accuracy;
+  final Value<String?> createdOn;
+  final Value<String?> updatedOn;
+  final Value<int?> status;
+  const ReceiptMasterTableCompanion({
     this.id = const Value.absent(),
-    this.mid = const Value.absent(),
+    this.custId = const Value.absent(),
     this.companyId = const Value.absent(),
-    this.receiptNo = const Value.absent(),
+    this.tripId = const Value.absent(),
+    this.visitId = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.vchSeries = const Value.absent(),
+    this.vchNo = const Value.absent(),
+    this.vchNumber = const Value.absent(),
+    this.vchdate = const Value.absent(),
+    this.partyId = const Value.absent(),
+    this.partyName = const Value.absent(),
     this.amount = const Value.absent(),
-    this.paymentMode = const Value.absent(),
+    this.discount = const Value.absent(),
+    this.receivedAmt = const Value.absent(),
+    this.advance = const Value.absent(),
+    this.recMode = const Value.absent(),
+    this.accountId = const Value.absent(),
+    this.accountName = const Value.absent(),
     this.chequeNo = const Value.absent(),
     this.chequeDate = const Value.absent(),
-    this.bankname = const Value.absent(),
-    this.branchname = const Value.absent(),
+    this.bankName = const Value.absent(),
+    this.branchName = const Value.absent(),
+    this.refNo = const Value.absent(),
     this.narration = const Value.absent(),
-    this.advance = const Value.absent(),
+    this.latitude = const Value.absent(),
+    this.longitude = const Value.absent(),
+    this.accuracy = const Value.absent(),
+    this.createdOn = const Value.absent(),
+    this.updatedOn = const Value.absent(),
+    this.status = const Value.absent(),
   });
-  ReceiptEntryTableCompanion.insert({
+  ReceiptMasterTableCompanion.insert({
     this.id = const Value.absent(),
-    this.mid = const Value.absent(),
+    this.custId = const Value.absent(),
     this.companyId = const Value.absent(),
-    this.receiptNo = const Value.absent(),
+    this.tripId = const Value.absent(),
+    this.visitId = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.vchSeries = const Value.absent(),
+    this.vchNo = const Value.absent(),
+    this.vchNumber = const Value.absent(),
+    this.vchdate = const Value.absent(),
+    this.partyId = const Value.absent(),
+    this.partyName = const Value.absent(),
     this.amount = const Value.absent(),
-    this.paymentMode = const Value.absent(),
+    this.discount = const Value.absent(),
+    this.receivedAmt = const Value.absent(),
+    this.advance = const Value.absent(),
+    this.recMode = const Value.absent(),
+    this.accountId = const Value.absent(),
+    this.accountName = const Value.absent(),
     this.chequeNo = const Value.absent(),
     this.chequeDate = const Value.absent(),
-    this.bankname = const Value.absent(),
-    this.branchname = const Value.absent(),
+    this.bankName = const Value.absent(),
+    this.branchName = const Value.absent(),
+    this.refNo = const Value.absent(),
     this.narration = const Value.absent(),
-    this.advance = const Value.absent(),
+    this.latitude = const Value.absent(),
+    this.longitude = const Value.absent(),
+    this.accuracy = const Value.absent(),
+    this.createdOn = const Value.absent(),
+    this.updatedOn = const Value.absent(),
+    this.status = const Value.absent(),
   });
-  static Insertable<ReceiptEntryTableData> custom({
+  static Insertable<ReceiptMasterTableData> custom({
     Expression<int>? id,
-    Expression<int>? mid,
+    Expression<int>? custId,
     Expression<int>? companyId,
-    Expression<int>? receiptNo,
+    Expression<int>? tripId,
+    Expression<int>? visitId,
+    Expression<int>? userId,
+    Expression<int>? vchSeries,
+    Expression<String>? vchNo,
+    Expression<String>? vchNumber,
+    Expression<String>? vchdate,
+    Expression<int>? partyId,
+    Expression<String>? partyName,
     Expression<double>? amount,
-    Expression<String>? paymentMode,
-    Expression<int>? chequeNo,
+    Expression<double>? discount,
+    Expression<double>? receivedAmt,
+    Expression<double>? advance,
+    Expression<String>? recMode,
+    Expression<int>? accountId,
+    Expression<String>? accountName,
+    Expression<String>? chequeNo,
     Expression<String>? chequeDate,
-    Expression<String>? bankname,
-    Expression<String>? branchname,
+    Expression<String>? bankName,
+    Expression<String>? branchName,
+    Expression<String>? refNo,
     Expression<String>? narration,
-    Expression<int>? advance,
+    Expression<double>? latitude,
+    Expression<double>? longitude,
+    Expression<double>? accuracy,
+    Expression<String>? createdOn,
+    Expression<String>? updatedOn,
+    Expression<int>? status,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (mid != null) 'mid': mid,
+      if (custId != null) 'cust_id': custId,
       if (companyId != null) 'company_id': companyId,
-      if (receiptNo != null) 'receipt_no': receiptNo,
+      if (tripId != null) 'trip_id': tripId,
+      if (visitId != null) 'visit_id': visitId,
+      if (userId != null) 'user_id': userId,
+      if (vchSeries != null) 'vch_series': vchSeries,
+      if (vchNo != null) 'vch_no': vchNo,
+      if (vchNumber != null) 'vch_number': vchNumber,
+      if (vchdate != null) 'vchdate': vchdate,
+      if (partyId != null) 'party_id': partyId,
+      if (partyName != null) 'party_name': partyName,
       if (amount != null) 'amount': amount,
-      if (paymentMode != null) 'payment_mode': paymentMode,
+      if (discount != null) 'discount': discount,
+      if (receivedAmt != null) 'received_amt': receivedAmt,
+      if (advance != null) 'advance': advance,
+      if (recMode != null) 'rec_mode': recMode,
+      if (accountId != null) 'account_id': accountId,
+      if (accountName != null) 'account_name': accountName,
       if (chequeNo != null) 'cheque_no': chequeNo,
       if (chequeDate != null) 'cheque_date': chequeDate,
-      if (bankname != null) 'bankname': bankname,
-      if (branchname != null) 'branchname': branchname,
+      if (bankName != null) 'bank_name': bankName,
+      if (branchName != null) 'branch_name': branchName,
+      if (refNo != null) 'ref_no': refNo,
       if (narration != null) 'narration': narration,
-      if (advance != null) 'advance': advance,
+      if (latitude != null) 'latitude': latitude,
+      if (longitude != null) 'longitude': longitude,
+      if (accuracy != null) 'accuracy': accuracy,
+      if (createdOn != null) 'created_on': createdOn,
+      if (updatedOn != null) 'updated_on': updatedOn,
+      if (status != null) 'status': status,
     });
   }
 
-  ReceiptEntryTableCompanion copyWith({
+  ReceiptMasterTableCompanion copyWith({
     Value<int>? id,
-    Value<int?>? mid,
+    Value<int?>? custId,
     Value<int?>? companyId,
-    Value<int?>? receiptNo,
-    Value<double?>? amount,
-    Value<String?>? paymentMode,
-    Value<int?>? chequeNo,
+    Value<int?>? tripId,
+    Value<int?>? visitId,
+    Value<int?>? userId,
+    Value<int?>? vchSeries,
+    Value<String?>? vchNo,
+    Value<String?>? vchNumber,
+    Value<String?>? vchdate,
+    Value<int?>? partyId,
+    Value<String?>? partyName,
+    Value<double>? amount,
+    Value<double>? discount,
+    Value<double>? receivedAmt,
+    Value<double>? advance,
+    Value<String?>? recMode,
+    Value<int?>? accountId,
+    Value<String?>? accountName,
+    Value<String?>? chequeNo,
     Value<String?>? chequeDate,
-    Value<String?>? bankname,
-    Value<String?>? branchname,
+    Value<String?>? bankName,
+    Value<String?>? branchName,
+    Value<String?>? refNo,
     Value<String?>? narration,
-    Value<int?>? advance,
+    Value<double>? latitude,
+    Value<double>? longitude,
+    Value<double>? accuracy,
+    Value<String?>? createdOn,
+    Value<String?>? updatedOn,
+    Value<int?>? status,
   }) {
-    return ReceiptEntryTableCompanion(
+    return ReceiptMasterTableCompanion(
       id: id ?? this.id,
-      mid: mid ?? this.mid,
+      custId: custId ?? this.custId,
       companyId: companyId ?? this.companyId,
-      receiptNo: receiptNo ?? this.receiptNo,
+      tripId: tripId ?? this.tripId,
+      visitId: visitId ?? this.visitId,
+      userId: userId ?? this.userId,
+      vchSeries: vchSeries ?? this.vchSeries,
+      vchNo: vchNo ?? this.vchNo,
+      vchNumber: vchNumber ?? this.vchNumber,
+      vchdate: vchdate ?? this.vchdate,
+      partyId: partyId ?? this.partyId,
+      partyName: partyName ?? this.partyName,
       amount: amount ?? this.amount,
-      paymentMode: paymentMode ?? this.paymentMode,
+      discount: discount ?? this.discount,
+      receivedAmt: receivedAmt ?? this.receivedAmt,
+      advance: advance ?? this.advance,
+      recMode: recMode ?? this.recMode,
+      accountId: accountId ?? this.accountId,
+      accountName: accountName ?? this.accountName,
       chequeNo: chequeNo ?? this.chequeNo,
       chequeDate: chequeDate ?? this.chequeDate,
-      bankname: bankname ?? this.bankname,
-      branchname: branchname ?? this.branchname,
+      bankName: bankName ?? this.bankName,
+      branchName: branchName ?? this.branchName,
+      refNo: refNo ?? this.refNo,
       narration: narration ?? this.narration,
-      advance: advance ?? this.advance,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
+      accuracy: accuracy ?? this.accuracy,
+      createdOn: createdOn ?? this.createdOn,
+      updatedOn: updatedOn ?? this.updatedOn,
+      status: status ?? this.status,
     );
   }
 
@@ -28971,68 +29802,144 @@ class ReceiptEntryTableCompanion
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
-    if (mid.present) {
-      map['mid'] = Variable<int>(mid.value);
+    if (custId.present) {
+      map['cust_id'] = Variable<int>(custId.value);
     }
     if (companyId.present) {
       map['company_id'] = Variable<int>(companyId.value);
     }
-    if (receiptNo.present) {
-      map['receipt_no'] = Variable<int>(receiptNo.value);
+    if (tripId.present) {
+      map['trip_id'] = Variable<int>(tripId.value);
+    }
+    if (visitId.present) {
+      map['visit_id'] = Variable<int>(visitId.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<int>(userId.value);
+    }
+    if (vchSeries.present) {
+      map['vch_series'] = Variable<int>(vchSeries.value);
+    }
+    if (vchNo.present) {
+      map['vch_no'] = Variable<String>(vchNo.value);
+    }
+    if (vchNumber.present) {
+      map['vch_number'] = Variable<String>(vchNumber.value);
+    }
+    if (vchdate.present) {
+      map['vchdate'] = Variable<String>(vchdate.value);
+    }
+    if (partyId.present) {
+      map['party_id'] = Variable<int>(partyId.value);
+    }
+    if (partyName.present) {
+      map['party_name'] = Variable<String>(partyName.value);
     }
     if (amount.present) {
       map['amount'] = Variable<double>(amount.value);
     }
-    if (paymentMode.present) {
-      map['payment_mode'] = Variable<String>(paymentMode.value);
+    if (discount.present) {
+      map['discount'] = Variable<double>(discount.value);
+    }
+    if (receivedAmt.present) {
+      map['received_amt'] = Variable<double>(receivedAmt.value);
+    }
+    if (advance.present) {
+      map['advance'] = Variable<double>(advance.value);
+    }
+    if (recMode.present) {
+      map['rec_mode'] = Variable<String>(recMode.value);
+    }
+    if (accountId.present) {
+      map['account_id'] = Variable<int>(accountId.value);
+    }
+    if (accountName.present) {
+      map['account_name'] = Variable<String>(accountName.value);
     }
     if (chequeNo.present) {
-      map['cheque_no'] = Variable<int>(chequeNo.value);
+      map['cheque_no'] = Variable<String>(chequeNo.value);
     }
     if (chequeDate.present) {
       map['cheque_date'] = Variable<String>(chequeDate.value);
     }
-    if (bankname.present) {
-      map['bankname'] = Variable<String>(bankname.value);
+    if (bankName.present) {
+      map['bank_name'] = Variable<String>(bankName.value);
     }
-    if (branchname.present) {
-      map['branchname'] = Variable<String>(branchname.value);
+    if (branchName.present) {
+      map['branch_name'] = Variable<String>(branchName.value);
+    }
+    if (refNo.present) {
+      map['ref_no'] = Variable<String>(refNo.value);
     }
     if (narration.present) {
       map['narration'] = Variable<String>(narration.value);
     }
-    if (advance.present) {
-      map['advance'] = Variable<int>(advance.value);
+    if (latitude.present) {
+      map['latitude'] = Variable<double>(latitude.value);
+    }
+    if (longitude.present) {
+      map['longitude'] = Variable<double>(longitude.value);
+    }
+    if (accuracy.present) {
+      map['accuracy'] = Variable<double>(accuracy.value);
+    }
+    if (createdOn.present) {
+      map['created_on'] = Variable<String>(createdOn.value);
+    }
+    if (updatedOn.present) {
+      map['updated_on'] = Variable<String>(updatedOn.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<int>(status.value);
     }
     return map;
   }
 
   @override
   String toString() {
-    return (StringBuffer('ReceiptEntryTableCompanion(')
+    return (StringBuffer('ReceiptMasterTableCompanion(')
           ..write('id: $id, ')
-          ..write('mid: $mid, ')
+          ..write('custId: $custId, ')
           ..write('companyId: $companyId, ')
-          ..write('receiptNo: $receiptNo, ')
+          ..write('tripId: $tripId, ')
+          ..write('visitId: $visitId, ')
+          ..write('userId: $userId, ')
+          ..write('vchSeries: $vchSeries, ')
+          ..write('vchNo: $vchNo, ')
+          ..write('vchNumber: $vchNumber, ')
+          ..write('vchdate: $vchdate, ')
+          ..write('partyId: $partyId, ')
+          ..write('partyName: $partyName, ')
           ..write('amount: $amount, ')
-          ..write('paymentMode: $paymentMode, ')
+          ..write('discount: $discount, ')
+          ..write('receivedAmt: $receivedAmt, ')
+          ..write('advance: $advance, ')
+          ..write('recMode: $recMode, ')
+          ..write('accountId: $accountId, ')
+          ..write('accountName: $accountName, ')
           ..write('chequeNo: $chequeNo, ')
           ..write('chequeDate: $chequeDate, ')
-          ..write('bankname: $bankname, ')
-          ..write('branchname: $branchname, ')
+          ..write('bankName: $bankName, ')
+          ..write('branchName: $branchName, ')
+          ..write('refNo: $refNo, ')
           ..write('narration: $narration, ')
-          ..write('advance: $advance')
+          ..write('latitude: $latitude, ')
+          ..write('longitude: $longitude, ')
+          ..write('accuracy: $accuracy, ')
+          ..write('createdOn: $createdOn, ')
+          ..write('updatedOn: $updatedOn, ')
+          ..write('status: $status')
           ..write(')'))
         .toString();
   }
 }
 
-class $ReceiptEntryLedgerTableTable extends ReceiptEntryLedgerTable
-    with TableInfo<$ReceiptEntryLedgerTableTable, ReceiptEntryLedgerTableData> {
+class $ReceiptDetailsTableTable extends ReceiptDetailsTable
+    with TableInfo<$ReceiptDetailsTableTable, ReceiptDetailsTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $ReceiptEntryLedgerTableTable(this.attachedDatabase, [this._alias]);
+  $ReceiptDetailsTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -29046,74 +29953,103 @@ class $ReceiptEntryLedgerTableTable extends ReceiptEntryLedgerTable
       'PRIMARY KEY AUTOINCREMENT',
     ),
   );
-  static const VerificationMeta _midMeta = const VerificationMeta('mid');
+  static const VerificationMeta _vchIdMeta = const VerificationMeta('vchId');
   @override
-  late final GeneratedColumn<int> mid = GeneratedColumn<int>(
-    'mid',
+  late final GeneratedColumn<int> vchId = GeneratedColumn<int>(
+    'vch_id',
     aliasedName,
-    true,
+    false,
     type: DriftSqlType.int,
-    requiredDuringInsert: false,
+    requiredDuringInsert: true,
   );
-  static const VerificationMeta _companyIdMeta = const VerificationMeta(
-    'companyId',
+  static const VerificationMeta _androidIdMeta = const VerificationMeta(
+    'androidId',
   );
   @override
-  late final GeneratedColumn<int> companyId = GeneratedColumn<int>(
-    'company_id',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _ledgerMeta = const VerificationMeta('ledger');
-  @override
-  late final GeneratedColumn<String> ledger = GeneratedColumn<String>(
-    'ledger',
+  late final GeneratedColumn<String> androidId = GeneratedColumn<String>(
+    'android_id',
     aliasedName,
     true,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _balanceMeta = const VerificationMeta(
-    'balance',
+  static const VerificationMeta _billNameMeta = const VerificationMeta(
+    'billName',
   );
   @override
-  late final GeneratedColumn<double> balance = GeneratedColumn<double>(
-    'balance',
+  late final GeneratedColumn<String> billName = GeneratedColumn<String>(
+    'bill_name',
     aliasedName,
     true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _billDateMeta = const VerificationMeta(
+    'billDate',
+  );
+  @override
+  late final GeneratedColumn<DateTime> billDate = GeneratedColumn<DateTime>(
+    'bill_date',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _billAmountMeta = const VerificationMeta(
+    'billAmount',
+  );
+  @override
+  late final GeneratedColumn<double> billAmount = GeneratedColumn<double>(
+    'bill_amount',
+    aliasedName,
+    false,
     type: DriftSqlType.double,
     requiredDuringInsert: false,
+    defaultValue: const Constant(0),
   );
-  static const VerificationMeta _receiptdateMeta = const VerificationMeta(
-    'receiptdate',
+  static const VerificationMeta _balanceAmtMeta = const VerificationMeta(
+    'balanceAmt',
   );
   @override
-  late final GeneratedColumn<String> receiptdate = GeneratedColumn<String>(
-    'receiptdate',
+  late final GeneratedColumn<double> balanceAmt = GeneratedColumn<double>(
+    'balance_amt',
     aliasedName,
-    true,
-    type: DriftSqlType.string,
+    false,
+    type: DriftSqlType.double,
     requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _paidAmountMeta = const VerificationMeta(
+    'paidAmount',
+  );
+  @override
+  late final GeneratedColumn<double> paidAmount = GeneratedColumn<double>(
+    'paid_amount',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
   );
   @override
   List<GeneratedColumn> get $columns => [
     id,
-    mid,
-    companyId,
-    ledger,
-    balance,
-    receiptdate,
+    vchId,
+    androidId,
+    billName,
+    billDate,
+    billAmount,
+    balanceAmt,
+    paidAmount,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'receipt_entry_ledger_table';
+  static const String $name = 'receipt_details_table';
   @override
   VerificationContext validateIntegrity(
-    Insertable<ReceiptEntryLedgerTableData> instance, {
+    Insertable<ReceiptDetailsTableData> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -29121,37 +30057,48 @@ class $ReceiptEntryLedgerTableTable extends ReceiptEntryLedgerTable
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('mid')) {
+    if (data.containsKey('vch_id')) {
       context.handle(
-        _midMeta,
-        mid.isAcceptableOrUnknown(data['mid']!, _midMeta),
+        _vchIdMeta,
+        vchId.isAcceptableOrUnknown(data['vch_id']!, _vchIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_vchIdMeta);
+    }
+    if (data.containsKey('android_id')) {
+      context.handle(
+        _androidIdMeta,
+        androidId.isAcceptableOrUnknown(data['android_id']!, _androidIdMeta),
       );
     }
-    if (data.containsKey('company_id')) {
+    if (data.containsKey('bill_name')) {
       context.handle(
-        _companyIdMeta,
-        companyId.isAcceptableOrUnknown(data['company_id']!, _companyIdMeta),
+        _billNameMeta,
+        billName.isAcceptableOrUnknown(data['bill_name']!, _billNameMeta),
       );
     }
-    if (data.containsKey('ledger')) {
+    if (data.containsKey('bill_date')) {
       context.handle(
-        _ledgerMeta,
-        ledger.isAcceptableOrUnknown(data['ledger']!, _ledgerMeta),
+        _billDateMeta,
+        billDate.isAcceptableOrUnknown(data['bill_date']!, _billDateMeta),
       );
     }
-    if (data.containsKey('balance')) {
+    if (data.containsKey('bill_amount')) {
       context.handle(
-        _balanceMeta,
-        balance.isAcceptableOrUnknown(data['balance']!, _balanceMeta),
+        _billAmountMeta,
+        billAmount.isAcceptableOrUnknown(data['bill_amount']!, _billAmountMeta),
       );
     }
-    if (data.containsKey('receiptdate')) {
+    if (data.containsKey('balance_amt')) {
       context.handle(
-        _receiptdateMeta,
-        receiptdate.isAcceptableOrUnknown(
-          data['receiptdate']!,
-          _receiptdateMeta,
-        ),
+        _balanceAmtMeta,
+        balanceAmt.isAcceptableOrUnknown(data['balance_amt']!, _balanceAmtMeta),
+      );
+    }
+    if (data.containsKey('paid_amount')) {
+      context.handle(
+        _paidAmountMeta,
+        paidAmount.isAcceptableOrUnknown(data['paid_amount']!, _paidAmountMeta),
       );
     }
     return context;
@@ -29160,114 +30107,126 @@ class $ReceiptEntryLedgerTableTable extends ReceiptEntryLedgerTable
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  ReceiptEntryLedgerTableData map(
+  ReceiptDetailsTableData map(
     Map<String, dynamic> data, {
     String? tablePrefix,
   }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ReceiptEntryLedgerTableData(
+    return ReceiptDetailsTableData(
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}id'],
       )!,
-      mid: attachedDatabase.typeMapping.read(
+      vchId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
-        data['${effectivePrefix}mid'],
-      ),
-      companyId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}company_id'],
-      ),
-      ledger: attachedDatabase.typeMapping.read(
+        data['${effectivePrefix}vch_id'],
+      )!,
+      androidId: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}ledger'],
+        data['${effectivePrefix}android_id'],
       ),
-      balance: attachedDatabase.typeMapping.read(
+      billName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}bill_name'],
+      ),
+      billDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}bill_date'],
+      ),
+      billAmount: attachedDatabase.typeMapping.read(
         DriftSqlType.double,
-        data['${effectivePrefix}balance'],
-      ),
-      receiptdate: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}receiptdate'],
-      ),
+        data['${effectivePrefix}bill_amount'],
+      )!,
+      balanceAmt: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}balance_amt'],
+      )!,
+      paidAmount: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}paid_amount'],
+      )!,
     );
   }
 
   @override
-  $ReceiptEntryLedgerTableTable createAlias(String alias) {
-    return $ReceiptEntryLedgerTableTable(attachedDatabase, alias);
+  $ReceiptDetailsTableTable createAlias(String alias) {
+    return $ReceiptDetailsTableTable(attachedDatabase, alias);
   }
 }
 
-class ReceiptEntryLedgerTableData extends DataClass
-    implements Insertable<ReceiptEntryLedgerTableData> {
+class ReceiptDetailsTableData extends DataClass
+    implements Insertable<ReceiptDetailsTableData> {
   final int id;
-  final int? mid;
-  final int? companyId;
-  final String? ledger;
-  final double? balance;
-  final String? receiptdate;
-  const ReceiptEntryLedgerTableData({
+  final int vchId;
+  final String? androidId;
+  final String? billName;
+  final DateTime? billDate;
+  final double billAmount;
+  final double balanceAmt;
+  final double paidAmount;
+  const ReceiptDetailsTableData({
     required this.id,
-    this.mid,
-    this.companyId,
-    this.ledger,
-    this.balance,
-    this.receiptdate,
+    required this.vchId,
+    this.androidId,
+    this.billName,
+    this.billDate,
+    required this.billAmount,
+    required this.balanceAmt,
+    required this.paidAmount,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    if (!nullToAbsent || mid != null) {
-      map['mid'] = Variable<int>(mid);
+    map['vch_id'] = Variable<int>(vchId);
+    if (!nullToAbsent || androidId != null) {
+      map['android_id'] = Variable<String>(androidId);
     }
-    if (!nullToAbsent || companyId != null) {
-      map['company_id'] = Variable<int>(companyId);
+    if (!nullToAbsent || billName != null) {
+      map['bill_name'] = Variable<String>(billName);
     }
-    if (!nullToAbsent || ledger != null) {
-      map['ledger'] = Variable<String>(ledger);
+    if (!nullToAbsent || billDate != null) {
+      map['bill_date'] = Variable<DateTime>(billDate);
     }
-    if (!nullToAbsent || balance != null) {
-      map['balance'] = Variable<double>(balance);
-    }
-    if (!nullToAbsent || receiptdate != null) {
-      map['receiptdate'] = Variable<String>(receiptdate);
-    }
+    map['bill_amount'] = Variable<double>(billAmount);
+    map['balance_amt'] = Variable<double>(balanceAmt);
+    map['paid_amount'] = Variable<double>(paidAmount);
     return map;
   }
 
-  ReceiptEntryLedgerTableCompanion toCompanion(bool nullToAbsent) {
-    return ReceiptEntryLedgerTableCompanion(
+  ReceiptDetailsTableCompanion toCompanion(bool nullToAbsent) {
+    return ReceiptDetailsTableCompanion(
       id: Value(id),
-      mid: mid == null && nullToAbsent ? const Value.absent() : Value(mid),
-      companyId: companyId == null && nullToAbsent
+      vchId: Value(vchId),
+      androidId: androidId == null && nullToAbsent
           ? const Value.absent()
-          : Value(companyId),
-      ledger: ledger == null && nullToAbsent
+          : Value(androidId),
+      billName: billName == null && nullToAbsent
           ? const Value.absent()
-          : Value(ledger),
-      balance: balance == null && nullToAbsent
+          : Value(billName),
+      billDate: billDate == null && nullToAbsent
           ? const Value.absent()
-          : Value(balance),
-      receiptdate: receiptdate == null && nullToAbsent
-          ? const Value.absent()
-          : Value(receiptdate),
+          : Value(billDate),
+      billAmount: Value(billAmount),
+      balanceAmt: Value(balanceAmt),
+      paidAmount: Value(paidAmount),
     );
   }
 
-  factory ReceiptEntryLedgerTableData.fromJson(
+  factory ReceiptDetailsTableData.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ReceiptEntryLedgerTableData(
+    return ReceiptDetailsTableData(
       id: serializer.fromJson<int>(json['id']),
-      mid: serializer.fromJson<int?>(json['mid']),
-      companyId: serializer.fromJson<int?>(json['companyId']),
-      ledger: serializer.fromJson<String?>(json['ledger']),
-      balance: serializer.fromJson<double?>(json['balance']),
-      receiptdate: serializer.fromJson<String?>(json['receiptdate']),
+      vchId: serializer.fromJson<int>(json['vchId']),
+      androidId: serializer.fromJson<String?>(json['androidId']),
+      billName: serializer.fromJson<String?>(json['billName']),
+      billDate: serializer.fromJson<DateTime?>(json['billDate']),
+      billAmount: serializer.fromJson<double>(json['billAmount']),
+      balanceAmt: serializer.fromJson<double>(json['balanceAmt']),
+      paidAmount: serializer.fromJson<double>(json['paidAmount']),
     );
   }
   @override
@@ -29275,129 +30234,165 @@ class ReceiptEntryLedgerTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'mid': serializer.toJson<int?>(mid),
-      'companyId': serializer.toJson<int?>(companyId),
-      'ledger': serializer.toJson<String?>(ledger),
-      'balance': serializer.toJson<double?>(balance),
-      'receiptdate': serializer.toJson<String?>(receiptdate),
+      'vchId': serializer.toJson<int>(vchId),
+      'androidId': serializer.toJson<String?>(androidId),
+      'billName': serializer.toJson<String?>(billName),
+      'billDate': serializer.toJson<DateTime?>(billDate),
+      'billAmount': serializer.toJson<double>(billAmount),
+      'balanceAmt': serializer.toJson<double>(balanceAmt),
+      'paidAmount': serializer.toJson<double>(paidAmount),
     };
   }
 
-  ReceiptEntryLedgerTableData copyWith({
+  ReceiptDetailsTableData copyWith({
     int? id,
-    Value<int?> mid = const Value.absent(),
-    Value<int?> companyId = const Value.absent(),
-    Value<String?> ledger = const Value.absent(),
-    Value<double?> balance = const Value.absent(),
-    Value<String?> receiptdate = const Value.absent(),
-  }) => ReceiptEntryLedgerTableData(
+    int? vchId,
+    Value<String?> androidId = const Value.absent(),
+    Value<String?> billName = const Value.absent(),
+    Value<DateTime?> billDate = const Value.absent(),
+    double? billAmount,
+    double? balanceAmt,
+    double? paidAmount,
+  }) => ReceiptDetailsTableData(
     id: id ?? this.id,
-    mid: mid.present ? mid.value : this.mid,
-    companyId: companyId.present ? companyId.value : this.companyId,
-    ledger: ledger.present ? ledger.value : this.ledger,
-    balance: balance.present ? balance.value : this.balance,
-    receiptdate: receiptdate.present ? receiptdate.value : this.receiptdate,
+    vchId: vchId ?? this.vchId,
+    androidId: androidId.present ? androidId.value : this.androidId,
+    billName: billName.present ? billName.value : this.billName,
+    billDate: billDate.present ? billDate.value : this.billDate,
+    billAmount: billAmount ?? this.billAmount,
+    balanceAmt: balanceAmt ?? this.balanceAmt,
+    paidAmount: paidAmount ?? this.paidAmount,
   );
-  ReceiptEntryLedgerTableData copyWithCompanion(
-    ReceiptEntryLedgerTableCompanion data,
-  ) {
-    return ReceiptEntryLedgerTableData(
+  ReceiptDetailsTableData copyWithCompanion(ReceiptDetailsTableCompanion data) {
+    return ReceiptDetailsTableData(
       id: data.id.present ? data.id.value : this.id,
-      mid: data.mid.present ? data.mid.value : this.mid,
-      companyId: data.companyId.present ? data.companyId.value : this.companyId,
-      ledger: data.ledger.present ? data.ledger.value : this.ledger,
-      balance: data.balance.present ? data.balance.value : this.balance,
-      receiptdate: data.receiptdate.present
-          ? data.receiptdate.value
-          : this.receiptdate,
+      vchId: data.vchId.present ? data.vchId.value : this.vchId,
+      androidId: data.androidId.present ? data.androidId.value : this.androidId,
+      billName: data.billName.present ? data.billName.value : this.billName,
+      billDate: data.billDate.present ? data.billDate.value : this.billDate,
+      billAmount: data.billAmount.present
+          ? data.billAmount.value
+          : this.billAmount,
+      balanceAmt: data.balanceAmt.present
+          ? data.balanceAmt.value
+          : this.balanceAmt,
+      paidAmount: data.paidAmount.present
+          ? data.paidAmount.value
+          : this.paidAmount,
     );
   }
 
   @override
   String toString() {
-    return (StringBuffer('ReceiptEntryLedgerTableData(')
+    return (StringBuffer('ReceiptDetailsTableData(')
           ..write('id: $id, ')
-          ..write('mid: $mid, ')
-          ..write('companyId: $companyId, ')
-          ..write('ledger: $ledger, ')
-          ..write('balance: $balance, ')
-          ..write('receiptdate: $receiptdate')
+          ..write('vchId: $vchId, ')
+          ..write('androidId: $androidId, ')
+          ..write('billName: $billName, ')
+          ..write('billDate: $billDate, ')
+          ..write('billAmount: $billAmount, ')
+          ..write('balanceAmt: $balanceAmt, ')
+          ..write('paidAmount: $paidAmount')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, mid, companyId, ledger, balance, receiptdate);
+  int get hashCode => Object.hash(
+    id,
+    vchId,
+    androidId,
+    billName,
+    billDate,
+    billAmount,
+    balanceAmt,
+    paidAmount,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is ReceiptEntryLedgerTableData &&
+      (other is ReceiptDetailsTableData &&
           other.id == this.id &&
-          other.mid == this.mid &&
-          other.companyId == this.companyId &&
-          other.ledger == this.ledger &&
-          other.balance == this.balance &&
-          other.receiptdate == this.receiptdate);
+          other.vchId == this.vchId &&
+          other.androidId == this.androidId &&
+          other.billName == this.billName &&
+          other.billDate == this.billDate &&
+          other.billAmount == this.billAmount &&
+          other.balanceAmt == this.balanceAmt &&
+          other.paidAmount == this.paidAmount);
 }
 
-class ReceiptEntryLedgerTableCompanion
-    extends UpdateCompanion<ReceiptEntryLedgerTableData> {
+class ReceiptDetailsTableCompanion
+    extends UpdateCompanion<ReceiptDetailsTableData> {
   final Value<int> id;
-  final Value<int?> mid;
-  final Value<int?> companyId;
-  final Value<String?> ledger;
-  final Value<double?> balance;
-  final Value<String?> receiptdate;
-  const ReceiptEntryLedgerTableCompanion({
+  final Value<int> vchId;
+  final Value<String?> androidId;
+  final Value<String?> billName;
+  final Value<DateTime?> billDate;
+  final Value<double> billAmount;
+  final Value<double> balanceAmt;
+  final Value<double> paidAmount;
+  const ReceiptDetailsTableCompanion({
     this.id = const Value.absent(),
-    this.mid = const Value.absent(),
-    this.companyId = const Value.absent(),
-    this.ledger = const Value.absent(),
-    this.balance = const Value.absent(),
-    this.receiptdate = const Value.absent(),
+    this.vchId = const Value.absent(),
+    this.androidId = const Value.absent(),
+    this.billName = const Value.absent(),
+    this.billDate = const Value.absent(),
+    this.billAmount = const Value.absent(),
+    this.balanceAmt = const Value.absent(),
+    this.paidAmount = const Value.absent(),
   });
-  ReceiptEntryLedgerTableCompanion.insert({
+  ReceiptDetailsTableCompanion.insert({
     this.id = const Value.absent(),
-    this.mid = const Value.absent(),
-    this.companyId = const Value.absent(),
-    this.ledger = const Value.absent(),
-    this.balance = const Value.absent(),
-    this.receiptdate = const Value.absent(),
-  });
-  static Insertable<ReceiptEntryLedgerTableData> custom({
+    required int vchId,
+    this.androidId = const Value.absent(),
+    this.billName = const Value.absent(),
+    this.billDate = const Value.absent(),
+    this.billAmount = const Value.absent(),
+    this.balanceAmt = const Value.absent(),
+    this.paidAmount = const Value.absent(),
+  }) : vchId = Value(vchId);
+  static Insertable<ReceiptDetailsTableData> custom({
     Expression<int>? id,
-    Expression<int>? mid,
-    Expression<int>? companyId,
-    Expression<String>? ledger,
-    Expression<double>? balance,
-    Expression<String>? receiptdate,
+    Expression<int>? vchId,
+    Expression<String>? androidId,
+    Expression<String>? billName,
+    Expression<DateTime>? billDate,
+    Expression<double>? billAmount,
+    Expression<double>? balanceAmt,
+    Expression<double>? paidAmount,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (mid != null) 'mid': mid,
-      if (companyId != null) 'company_id': companyId,
-      if (ledger != null) 'ledger': ledger,
-      if (balance != null) 'balance': balance,
-      if (receiptdate != null) 'receiptdate': receiptdate,
+      if (vchId != null) 'vch_id': vchId,
+      if (androidId != null) 'android_id': androidId,
+      if (billName != null) 'bill_name': billName,
+      if (billDate != null) 'bill_date': billDate,
+      if (billAmount != null) 'bill_amount': billAmount,
+      if (balanceAmt != null) 'balance_amt': balanceAmt,
+      if (paidAmount != null) 'paid_amount': paidAmount,
     });
   }
 
-  ReceiptEntryLedgerTableCompanion copyWith({
+  ReceiptDetailsTableCompanion copyWith({
     Value<int>? id,
-    Value<int?>? mid,
-    Value<int?>? companyId,
-    Value<String?>? ledger,
-    Value<double?>? balance,
-    Value<String?>? receiptdate,
+    Value<int>? vchId,
+    Value<String?>? androidId,
+    Value<String?>? billName,
+    Value<DateTime?>? billDate,
+    Value<double>? billAmount,
+    Value<double>? balanceAmt,
+    Value<double>? paidAmount,
   }) {
-    return ReceiptEntryLedgerTableCompanion(
+    return ReceiptDetailsTableCompanion(
       id: id ?? this.id,
-      mid: mid ?? this.mid,
-      companyId: companyId ?? this.companyId,
-      ledger: ledger ?? this.ledger,
-      balance: balance ?? this.balance,
-      receiptdate: receiptdate ?? this.receiptdate,
+      vchId: vchId ?? this.vchId,
+      androidId: androidId ?? this.androidId,
+      billName: billName ?? this.billName,
+      billDate: billDate ?? this.billDate,
+      billAmount: billAmount ?? this.billAmount,
+      balanceAmt: balanceAmt ?? this.balanceAmt,
+      paidAmount: paidAmount ?? this.paidAmount,
     );
   }
 
@@ -29407,33 +30402,41 @@ class ReceiptEntryLedgerTableCompanion
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
-    if (mid.present) {
-      map['mid'] = Variable<int>(mid.value);
+    if (vchId.present) {
+      map['vch_id'] = Variable<int>(vchId.value);
     }
-    if (companyId.present) {
-      map['company_id'] = Variable<int>(companyId.value);
+    if (androidId.present) {
+      map['android_id'] = Variable<String>(androidId.value);
     }
-    if (ledger.present) {
-      map['ledger'] = Variable<String>(ledger.value);
+    if (billName.present) {
+      map['bill_name'] = Variable<String>(billName.value);
     }
-    if (balance.present) {
-      map['balance'] = Variable<double>(balance.value);
+    if (billDate.present) {
+      map['bill_date'] = Variable<DateTime>(billDate.value);
     }
-    if (receiptdate.present) {
-      map['receiptdate'] = Variable<String>(receiptdate.value);
+    if (billAmount.present) {
+      map['bill_amount'] = Variable<double>(billAmount.value);
+    }
+    if (balanceAmt.present) {
+      map['balance_amt'] = Variable<double>(balanceAmt.value);
+    }
+    if (paidAmount.present) {
+      map['paid_amount'] = Variable<double>(paidAmount.value);
     }
     return map;
   }
 
   @override
   String toString() {
-    return (StringBuffer('ReceiptEntryLedgerTableCompanion(')
+    return (StringBuffer('ReceiptDetailsTableCompanion(')
           ..write('id: $id, ')
-          ..write('mid: $mid, ')
-          ..write('companyId: $companyId, ')
-          ..write('ledger: $ledger, ')
-          ..write('balance: $balance, ')
-          ..write('receiptdate: $receiptdate')
+          ..write('vchId: $vchId, ')
+          ..write('androidId: $androidId, ')
+          ..write('billName: $billName, ')
+          ..write('billDate: $billDate, ')
+          ..write('billAmount: $billAmount, ')
+          ..write('balanceAmt: $balanceAmt, ')
+          ..write('paidAmount: $paidAmount')
           ..write(')'))
         .toString();
   }
@@ -30701,10 +31704,10 @@ abstract class _$AppDb extends GeneratedDatabase {
       $SaleReturnDetailsTableTable(this);
   late final $SaleReturnLedgerDetailsTableTable saleReturnLedgerDetailsTable =
       $SaleReturnLedgerDetailsTableTable(this);
-  late final $ReceiptEntryTableTable receiptEntryTable =
-      $ReceiptEntryTableTable(this);
-  late final $ReceiptEntryLedgerTableTable receiptEntryLedgerTable =
-      $ReceiptEntryLedgerTableTable(this);
+  late final $ReceiptMasterTableTable receiptMasterTable =
+      $ReceiptMasterTableTable(this);
+  late final $ReceiptDetailsTableTable receiptDetailsTable =
+      $ReceiptDetailsTableTable(this);
   late final $VoucherControlTableTable voucherControlTable =
       $VoucherControlTableTable(this);
   late final $SaleAddressTableTable saleAddressTable = $SaleAddressTableTable(
@@ -30766,8 +31769,8 @@ abstract class _$AppDb extends GeneratedDatabase {
     saleReturnMasterTable,
     saleReturnDetailsTable,
     saleReturnLedgerDetailsTable,
-    receiptEntryTable,
-    receiptEntryLedgerTable,
+    receiptMasterTable,
+    receiptDetailsTable,
     voucherControlTable,
     saleAddressTable,
   ];
@@ -43478,40 +44481,78 @@ typedef $$SaleReturnLedgerDetailsTableTableProcessedTableManager =
       SaleReturnLedgerDetailsTableData,
       PrefetchHooks Function()
     >;
-typedef $$ReceiptEntryTableTableCreateCompanionBuilder =
-    ReceiptEntryTableCompanion Function({
+typedef $$ReceiptMasterTableTableCreateCompanionBuilder =
+    ReceiptMasterTableCompanion Function({
       Value<int> id,
-      Value<int?> mid,
+      Value<int?> custId,
       Value<int?> companyId,
-      Value<int?> receiptNo,
-      Value<double?> amount,
-      Value<String?> paymentMode,
-      Value<int?> chequeNo,
+      Value<int?> tripId,
+      Value<int?> visitId,
+      Value<int?> userId,
+      Value<int?> vchSeries,
+      Value<String?> vchNo,
+      Value<String?> vchNumber,
+      Value<String?> vchdate,
+      Value<int?> partyId,
+      Value<String?> partyName,
+      Value<double> amount,
+      Value<double> discount,
+      Value<double> receivedAmt,
+      Value<double> advance,
+      Value<String?> recMode,
+      Value<int?> accountId,
+      Value<String?> accountName,
+      Value<String?> chequeNo,
       Value<String?> chequeDate,
-      Value<String?> bankname,
-      Value<String?> branchname,
+      Value<String?> bankName,
+      Value<String?> branchName,
+      Value<String?> refNo,
       Value<String?> narration,
-      Value<int?> advance,
+      Value<double> latitude,
+      Value<double> longitude,
+      Value<double> accuracy,
+      Value<String?> createdOn,
+      Value<String?> updatedOn,
+      Value<int?> status,
     });
-typedef $$ReceiptEntryTableTableUpdateCompanionBuilder =
-    ReceiptEntryTableCompanion Function({
+typedef $$ReceiptMasterTableTableUpdateCompanionBuilder =
+    ReceiptMasterTableCompanion Function({
       Value<int> id,
-      Value<int?> mid,
+      Value<int?> custId,
       Value<int?> companyId,
-      Value<int?> receiptNo,
-      Value<double?> amount,
-      Value<String?> paymentMode,
-      Value<int?> chequeNo,
+      Value<int?> tripId,
+      Value<int?> visitId,
+      Value<int?> userId,
+      Value<int?> vchSeries,
+      Value<String?> vchNo,
+      Value<String?> vchNumber,
+      Value<String?> vchdate,
+      Value<int?> partyId,
+      Value<String?> partyName,
+      Value<double> amount,
+      Value<double> discount,
+      Value<double> receivedAmt,
+      Value<double> advance,
+      Value<String?> recMode,
+      Value<int?> accountId,
+      Value<String?> accountName,
+      Value<String?> chequeNo,
       Value<String?> chequeDate,
-      Value<String?> bankname,
-      Value<String?> branchname,
+      Value<String?> bankName,
+      Value<String?> branchName,
+      Value<String?> refNo,
       Value<String?> narration,
-      Value<int?> advance,
+      Value<double> latitude,
+      Value<double> longitude,
+      Value<double> accuracy,
+      Value<String?> createdOn,
+      Value<String?> updatedOn,
+      Value<int?> status,
     });
 
-class $$ReceiptEntryTableTableFilterComposer
-    extends Composer<_$AppDb, $ReceiptEntryTableTable> {
-  $$ReceiptEntryTableTableFilterComposer({
+class $$ReceiptMasterTableTableFilterComposer
+    extends Composer<_$AppDb, $ReceiptMasterTableTable> {
+  $$ReceiptMasterTableTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -43523,8 +44564,8 @@ class $$ReceiptEntryTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get mid => $composableBuilder(
-    column: $table.mid,
+  ColumnFilters<int> get custId => $composableBuilder(
+    column: $table.custId,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -43533,8 +44574,48 @@ class $$ReceiptEntryTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get receiptNo => $composableBuilder(
-    column: $table.receiptNo,
+  ColumnFilters<int> get tripId => $composableBuilder(
+    column: $table.tripId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get visitId => $composableBuilder(
+    column: $table.visitId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get userId => $composableBuilder(
+    column: $table.userId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get vchSeries => $composableBuilder(
+    column: $table.vchSeries,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get vchNo => $composableBuilder(
+    column: $table.vchNo,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get vchNumber => $composableBuilder(
+    column: $table.vchNumber,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get vchdate => $composableBuilder(
+    column: $table.vchdate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get partyId => $composableBuilder(
+    column: $table.partyId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get partyName => $composableBuilder(
+    column: $table.partyName,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -43543,12 +44624,37 @@ class $$ReceiptEntryTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get paymentMode => $composableBuilder(
-    column: $table.paymentMode,
+  ColumnFilters<double> get discount => $composableBuilder(
+    column: $table.discount,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get chequeNo => $composableBuilder(
+  ColumnFilters<double> get receivedAmt => $composableBuilder(
+    column: $table.receivedAmt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get advance => $composableBuilder(
+    column: $table.advance,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get recMode => $composableBuilder(
+    column: $table.recMode,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get accountId => $composableBuilder(
+    column: $table.accountId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get accountName => $composableBuilder(
+    column: $table.accountName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get chequeNo => $composableBuilder(
     column: $table.chequeNo,
     builder: (column) => ColumnFilters(column),
   );
@@ -43558,13 +44664,18 @@ class $$ReceiptEntryTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get bankname => $composableBuilder(
-    column: $table.bankname,
+  ColumnFilters<String> get bankName => $composableBuilder(
+    column: $table.bankName,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get branchname => $composableBuilder(
-    column: $table.branchname,
+  ColumnFilters<String> get branchName => $composableBuilder(
+    column: $table.branchName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get refNo => $composableBuilder(
+    column: $table.refNo,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -43573,15 +44684,40 @@ class $$ReceiptEntryTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get advance => $composableBuilder(
-    column: $table.advance,
+  ColumnFilters<double> get latitude => $composableBuilder(
+    column: $table.latitude,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get longitude => $composableBuilder(
+    column: $table.longitude,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get accuracy => $composableBuilder(
+    column: $table.accuracy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdOn => $composableBuilder(
+    column: $table.createdOn,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedOn => $composableBuilder(
+    column: $table.updatedOn,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get status => $composableBuilder(
+    column: $table.status,
     builder: (column) => ColumnFilters(column),
   );
 }
 
-class $$ReceiptEntryTableTableOrderingComposer
-    extends Composer<_$AppDb, $ReceiptEntryTableTable> {
-  $$ReceiptEntryTableTableOrderingComposer({
+class $$ReceiptMasterTableTableOrderingComposer
+    extends Composer<_$AppDb, $ReceiptMasterTableTable> {
+  $$ReceiptMasterTableTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -43593,8 +44729,8 @@ class $$ReceiptEntryTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get mid => $composableBuilder(
-    column: $table.mid,
+  ColumnOrderings<int> get custId => $composableBuilder(
+    column: $table.custId,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -43603,8 +44739,48 @@ class $$ReceiptEntryTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get receiptNo => $composableBuilder(
-    column: $table.receiptNo,
+  ColumnOrderings<int> get tripId => $composableBuilder(
+    column: $table.tripId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get visitId => $composableBuilder(
+    column: $table.visitId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get userId => $composableBuilder(
+    column: $table.userId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get vchSeries => $composableBuilder(
+    column: $table.vchSeries,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get vchNo => $composableBuilder(
+    column: $table.vchNo,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get vchNumber => $composableBuilder(
+    column: $table.vchNumber,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get vchdate => $composableBuilder(
+    column: $table.vchdate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get partyId => $composableBuilder(
+    column: $table.partyId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get partyName => $composableBuilder(
+    column: $table.partyName,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -43613,12 +44789,37 @@ class $$ReceiptEntryTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get paymentMode => $composableBuilder(
-    column: $table.paymentMode,
+  ColumnOrderings<double> get discount => $composableBuilder(
+    column: $table.discount,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get chequeNo => $composableBuilder(
+  ColumnOrderings<double> get receivedAmt => $composableBuilder(
+    column: $table.receivedAmt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get advance => $composableBuilder(
+    column: $table.advance,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get recMode => $composableBuilder(
+    column: $table.recMode,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get accountId => $composableBuilder(
+    column: $table.accountId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get accountName => $composableBuilder(
+    column: $table.accountName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get chequeNo => $composableBuilder(
     column: $table.chequeNo,
     builder: (column) => ColumnOrderings(column),
   );
@@ -43628,13 +44829,18 @@ class $$ReceiptEntryTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get bankname => $composableBuilder(
-    column: $table.bankname,
+  ColumnOrderings<String> get bankName => $composableBuilder(
+    column: $table.bankName,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get branchname => $composableBuilder(
-    column: $table.branchname,
+  ColumnOrderings<String> get branchName => $composableBuilder(
+    column: $table.branchName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get refNo => $composableBuilder(
+    column: $table.refNo,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -43643,15 +44849,40 @@ class $$ReceiptEntryTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get advance => $composableBuilder(
-    column: $table.advance,
+  ColumnOrderings<double> get latitude => $composableBuilder(
+    column: $table.latitude,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get longitude => $composableBuilder(
+    column: $table.longitude,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get accuracy => $composableBuilder(
+    column: $table.accuracy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdOn => $composableBuilder(
+    column: $table.createdOn,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedOn => $composableBuilder(
+    column: $table.updatedOn,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get status => $composableBuilder(
+    column: $table.status,
     builder: (column) => ColumnOrderings(column),
   );
 }
 
-class $$ReceiptEntryTableTableAnnotationComposer
-    extends Composer<_$AppDb, $ReceiptEntryTableTable> {
-  $$ReceiptEntryTableTableAnnotationComposer({
+class $$ReceiptMasterTableTableAnnotationComposer
+    extends Composer<_$AppDb, $ReceiptMasterTableTable> {
+  $$ReceiptMasterTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -43661,24 +44892,65 @@ class $$ReceiptEntryTableTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<int> get mid =>
-      $composableBuilder(column: $table.mid, builder: (column) => column);
+  GeneratedColumn<int> get custId =>
+      $composableBuilder(column: $table.custId, builder: (column) => column);
 
   GeneratedColumn<int> get companyId =>
       $composableBuilder(column: $table.companyId, builder: (column) => column);
 
-  GeneratedColumn<int> get receiptNo =>
-      $composableBuilder(column: $table.receiptNo, builder: (column) => column);
+  GeneratedColumn<int> get tripId =>
+      $composableBuilder(column: $table.tripId, builder: (column) => column);
+
+  GeneratedColumn<int> get visitId =>
+      $composableBuilder(column: $table.visitId, builder: (column) => column);
+
+  GeneratedColumn<int> get userId =>
+      $composableBuilder(column: $table.userId, builder: (column) => column);
+
+  GeneratedColumn<int> get vchSeries =>
+      $composableBuilder(column: $table.vchSeries, builder: (column) => column);
+
+  GeneratedColumn<String> get vchNo =>
+      $composableBuilder(column: $table.vchNo, builder: (column) => column);
+
+  GeneratedColumn<String> get vchNumber =>
+      $composableBuilder(column: $table.vchNumber, builder: (column) => column);
+
+  GeneratedColumn<String> get vchdate =>
+      $composableBuilder(column: $table.vchdate, builder: (column) => column);
+
+  GeneratedColumn<int> get partyId =>
+      $composableBuilder(column: $table.partyId, builder: (column) => column);
+
+  GeneratedColumn<String> get partyName =>
+      $composableBuilder(column: $table.partyName, builder: (column) => column);
 
   GeneratedColumn<double> get amount =>
       $composableBuilder(column: $table.amount, builder: (column) => column);
 
-  GeneratedColumn<String> get paymentMode => $composableBuilder(
-    column: $table.paymentMode,
+  GeneratedColumn<double> get discount =>
+      $composableBuilder(column: $table.discount, builder: (column) => column);
+
+  GeneratedColumn<double> get receivedAmt => $composableBuilder(
+    column: $table.receivedAmt,
     builder: (column) => column,
   );
 
-  GeneratedColumn<int> get chequeNo =>
+  GeneratedColumn<double> get advance =>
+      $composableBuilder(column: $table.advance, builder: (column) => column);
+
+  GeneratedColumn<String> get recMode =>
+      $composableBuilder(column: $table.recMode, builder: (column) => column);
+
+  GeneratedColumn<int> get accountId =>
+      $composableBuilder(column: $table.accountId, builder: (column) => column);
+
+  GeneratedColumn<String> get accountName => $composableBuilder(
+    column: $table.accountName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get chequeNo =>
       $composableBuilder(column: $table.chequeNo, builder: (column) => column);
 
   GeneratedColumn<String> get chequeDate => $composableBuilder(
@@ -43686,114 +44958,208 @@ class $$ReceiptEntryTableTableAnnotationComposer
     builder: (column) => column,
   );
 
-  GeneratedColumn<String> get bankname =>
-      $composableBuilder(column: $table.bankname, builder: (column) => column);
+  GeneratedColumn<String> get bankName =>
+      $composableBuilder(column: $table.bankName, builder: (column) => column);
 
-  GeneratedColumn<String> get branchname => $composableBuilder(
-    column: $table.branchname,
+  GeneratedColumn<String> get branchName => $composableBuilder(
+    column: $table.branchName,
     builder: (column) => column,
   );
+
+  GeneratedColumn<String> get refNo =>
+      $composableBuilder(column: $table.refNo, builder: (column) => column);
 
   GeneratedColumn<String> get narration =>
       $composableBuilder(column: $table.narration, builder: (column) => column);
 
-  GeneratedColumn<int> get advance =>
-      $composableBuilder(column: $table.advance, builder: (column) => column);
+  GeneratedColumn<double> get latitude =>
+      $composableBuilder(column: $table.latitude, builder: (column) => column);
+
+  GeneratedColumn<double> get longitude =>
+      $composableBuilder(column: $table.longitude, builder: (column) => column);
+
+  GeneratedColumn<double> get accuracy =>
+      $composableBuilder(column: $table.accuracy, builder: (column) => column);
+
+  GeneratedColumn<String> get createdOn =>
+      $composableBuilder(column: $table.createdOn, builder: (column) => column);
+
+  GeneratedColumn<String> get updatedOn =>
+      $composableBuilder(column: $table.updatedOn, builder: (column) => column);
+
+  GeneratedColumn<int> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
 }
 
-class $$ReceiptEntryTableTableTableManager
+class $$ReceiptMasterTableTableTableManager
     extends
         RootTableManager<
           _$AppDb,
-          $ReceiptEntryTableTable,
-          ReceiptEntryTableData,
-          $$ReceiptEntryTableTableFilterComposer,
-          $$ReceiptEntryTableTableOrderingComposer,
-          $$ReceiptEntryTableTableAnnotationComposer,
-          $$ReceiptEntryTableTableCreateCompanionBuilder,
-          $$ReceiptEntryTableTableUpdateCompanionBuilder,
+          $ReceiptMasterTableTable,
+          ReceiptMasterTableData,
+          $$ReceiptMasterTableTableFilterComposer,
+          $$ReceiptMasterTableTableOrderingComposer,
+          $$ReceiptMasterTableTableAnnotationComposer,
+          $$ReceiptMasterTableTableCreateCompanionBuilder,
+          $$ReceiptMasterTableTableUpdateCompanionBuilder,
           (
-            ReceiptEntryTableData,
+            ReceiptMasterTableData,
             BaseReferences<
               _$AppDb,
-              $ReceiptEntryTableTable,
-              ReceiptEntryTableData
+              $ReceiptMasterTableTable,
+              ReceiptMasterTableData
             >,
           ),
-          ReceiptEntryTableData,
+          ReceiptMasterTableData,
           PrefetchHooks Function()
         > {
-  $$ReceiptEntryTableTableTableManager(
+  $$ReceiptMasterTableTableTableManager(
     _$AppDb db,
-    $ReceiptEntryTableTable table,
+    $ReceiptMasterTableTable table,
   ) : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$ReceiptEntryTableTableFilterComposer($db: db, $table: table),
+              $$ReceiptMasterTableTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$ReceiptEntryTableTableOrderingComposer($db: db, $table: table),
+              $$ReceiptMasterTableTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$ReceiptEntryTableTableAnnotationComposer(
+              $$ReceiptMasterTableTableAnnotationComposer(
                 $db: db,
                 $table: table,
               ),
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                Value<int?> mid = const Value.absent(),
+                Value<int?> custId = const Value.absent(),
                 Value<int?> companyId = const Value.absent(),
-                Value<int?> receiptNo = const Value.absent(),
-                Value<double?> amount = const Value.absent(),
-                Value<String?> paymentMode = const Value.absent(),
-                Value<int?> chequeNo = const Value.absent(),
+                Value<int?> tripId = const Value.absent(),
+                Value<int?> visitId = const Value.absent(),
+                Value<int?> userId = const Value.absent(),
+                Value<int?> vchSeries = const Value.absent(),
+                Value<String?> vchNo = const Value.absent(),
+                Value<String?> vchNumber = const Value.absent(),
+                Value<String?> vchdate = const Value.absent(),
+                Value<int?> partyId = const Value.absent(),
+                Value<String?> partyName = const Value.absent(),
+                Value<double> amount = const Value.absent(),
+                Value<double> discount = const Value.absent(),
+                Value<double> receivedAmt = const Value.absent(),
+                Value<double> advance = const Value.absent(),
+                Value<String?> recMode = const Value.absent(),
+                Value<int?> accountId = const Value.absent(),
+                Value<String?> accountName = const Value.absent(),
+                Value<String?> chequeNo = const Value.absent(),
                 Value<String?> chequeDate = const Value.absent(),
-                Value<String?> bankname = const Value.absent(),
-                Value<String?> branchname = const Value.absent(),
+                Value<String?> bankName = const Value.absent(),
+                Value<String?> branchName = const Value.absent(),
+                Value<String?> refNo = const Value.absent(),
                 Value<String?> narration = const Value.absent(),
-                Value<int?> advance = const Value.absent(),
-              }) => ReceiptEntryTableCompanion(
+                Value<double> latitude = const Value.absent(),
+                Value<double> longitude = const Value.absent(),
+                Value<double> accuracy = const Value.absent(),
+                Value<String?> createdOn = const Value.absent(),
+                Value<String?> updatedOn = const Value.absent(),
+                Value<int?> status = const Value.absent(),
+              }) => ReceiptMasterTableCompanion(
                 id: id,
-                mid: mid,
+                custId: custId,
                 companyId: companyId,
-                receiptNo: receiptNo,
+                tripId: tripId,
+                visitId: visitId,
+                userId: userId,
+                vchSeries: vchSeries,
+                vchNo: vchNo,
+                vchNumber: vchNumber,
+                vchdate: vchdate,
+                partyId: partyId,
+                partyName: partyName,
                 amount: amount,
-                paymentMode: paymentMode,
+                discount: discount,
+                receivedAmt: receivedAmt,
+                advance: advance,
+                recMode: recMode,
+                accountId: accountId,
+                accountName: accountName,
                 chequeNo: chequeNo,
                 chequeDate: chequeDate,
-                bankname: bankname,
-                branchname: branchname,
+                bankName: bankName,
+                branchName: branchName,
+                refNo: refNo,
                 narration: narration,
-                advance: advance,
+                latitude: latitude,
+                longitude: longitude,
+                accuracy: accuracy,
+                createdOn: createdOn,
+                updatedOn: updatedOn,
+                status: status,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                Value<int?> mid = const Value.absent(),
+                Value<int?> custId = const Value.absent(),
                 Value<int?> companyId = const Value.absent(),
-                Value<int?> receiptNo = const Value.absent(),
-                Value<double?> amount = const Value.absent(),
-                Value<String?> paymentMode = const Value.absent(),
-                Value<int?> chequeNo = const Value.absent(),
+                Value<int?> tripId = const Value.absent(),
+                Value<int?> visitId = const Value.absent(),
+                Value<int?> userId = const Value.absent(),
+                Value<int?> vchSeries = const Value.absent(),
+                Value<String?> vchNo = const Value.absent(),
+                Value<String?> vchNumber = const Value.absent(),
+                Value<String?> vchdate = const Value.absent(),
+                Value<int?> partyId = const Value.absent(),
+                Value<String?> partyName = const Value.absent(),
+                Value<double> amount = const Value.absent(),
+                Value<double> discount = const Value.absent(),
+                Value<double> receivedAmt = const Value.absent(),
+                Value<double> advance = const Value.absent(),
+                Value<String?> recMode = const Value.absent(),
+                Value<int?> accountId = const Value.absent(),
+                Value<String?> accountName = const Value.absent(),
+                Value<String?> chequeNo = const Value.absent(),
                 Value<String?> chequeDate = const Value.absent(),
-                Value<String?> bankname = const Value.absent(),
-                Value<String?> branchname = const Value.absent(),
+                Value<String?> bankName = const Value.absent(),
+                Value<String?> branchName = const Value.absent(),
+                Value<String?> refNo = const Value.absent(),
                 Value<String?> narration = const Value.absent(),
-                Value<int?> advance = const Value.absent(),
-              }) => ReceiptEntryTableCompanion.insert(
+                Value<double> latitude = const Value.absent(),
+                Value<double> longitude = const Value.absent(),
+                Value<double> accuracy = const Value.absent(),
+                Value<String?> createdOn = const Value.absent(),
+                Value<String?> updatedOn = const Value.absent(),
+                Value<int?> status = const Value.absent(),
+              }) => ReceiptMasterTableCompanion.insert(
                 id: id,
-                mid: mid,
+                custId: custId,
                 companyId: companyId,
-                receiptNo: receiptNo,
+                tripId: tripId,
+                visitId: visitId,
+                userId: userId,
+                vchSeries: vchSeries,
+                vchNo: vchNo,
+                vchNumber: vchNumber,
+                vchdate: vchdate,
+                partyId: partyId,
+                partyName: partyName,
                 amount: amount,
-                paymentMode: paymentMode,
+                discount: discount,
+                receivedAmt: receivedAmt,
+                advance: advance,
+                recMode: recMode,
+                accountId: accountId,
+                accountName: accountName,
                 chequeNo: chequeNo,
                 chequeDate: chequeDate,
-                bankname: bankname,
-                branchname: branchname,
+                bankName: bankName,
+                branchName: branchName,
+                refNo: refNo,
                 narration: narration,
-                advance: advance,
+                latitude: latitude,
+                longitude: longitude,
+                accuracy: accuracy,
+                createdOn: createdOn,
+                updatedOn: updatedOn,
+                status: status,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
@@ -43803,45 +45169,53 @@ class $$ReceiptEntryTableTableTableManager
       );
 }
 
-typedef $$ReceiptEntryTableTableProcessedTableManager =
+typedef $$ReceiptMasterTableTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDb,
-      $ReceiptEntryTableTable,
-      ReceiptEntryTableData,
-      $$ReceiptEntryTableTableFilterComposer,
-      $$ReceiptEntryTableTableOrderingComposer,
-      $$ReceiptEntryTableTableAnnotationComposer,
-      $$ReceiptEntryTableTableCreateCompanionBuilder,
-      $$ReceiptEntryTableTableUpdateCompanionBuilder,
+      $ReceiptMasterTableTable,
+      ReceiptMasterTableData,
+      $$ReceiptMasterTableTableFilterComposer,
+      $$ReceiptMasterTableTableOrderingComposer,
+      $$ReceiptMasterTableTableAnnotationComposer,
+      $$ReceiptMasterTableTableCreateCompanionBuilder,
+      $$ReceiptMasterTableTableUpdateCompanionBuilder,
       (
-        ReceiptEntryTableData,
-        BaseReferences<_$AppDb, $ReceiptEntryTableTable, ReceiptEntryTableData>,
+        ReceiptMasterTableData,
+        BaseReferences<
+          _$AppDb,
+          $ReceiptMasterTableTable,
+          ReceiptMasterTableData
+        >,
       ),
-      ReceiptEntryTableData,
+      ReceiptMasterTableData,
       PrefetchHooks Function()
     >;
-typedef $$ReceiptEntryLedgerTableTableCreateCompanionBuilder =
-    ReceiptEntryLedgerTableCompanion Function({
+typedef $$ReceiptDetailsTableTableCreateCompanionBuilder =
+    ReceiptDetailsTableCompanion Function({
       Value<int> id,
-      Value<int?> mid,
-      Value<int?> companyId,
-      Value<String?> ledger,
-      Value<double?> balance,
-      Value<String?> receiptdate,
+      required int vchId,
+      Value<String?> androidId,
+      Value<String?> billName,
+      Value<DateTime?> billDate,
+      Value<double> billAmount,
+      Value<double> balanceAmt,
+      Value<double> paidAmount,
     });
-typedef $$ReceiptEntryLedgerTableTableUpdateCompanionBuilder =
-    ReceiptEntryLedgerTableCompanion Function({
+typedef $$ReceiptDetailsTableTableUpdateCompanionBuilder =
+    ReceiptDetailsTableCompanion Function({
       Value<int> id,
-      Value<int?> mid,
-      Value<int?> companyId,
-      Value<String?> ledger,
-      Value<double?> balance,
-      Value<String?> receiptdate,
+      Value<int> vchId,
+      Value<String?> androidId,
+      Value<String?> billName,
+      Value<DateTime?> billDate,
+      Value<double> billAmount,
+      Value<double> balanceAmt,
+      Value<double> paidAmount,
     });
 
-class $$ReceiptEntryLedgerTableTableFilterComposer
-    extends Composer<_$AppDb, $ReceiptEntryLedgerTableTable> {
-  $$ReceiptEntryLedgerTableTableFilterComposer({
+class $$ReceiptDetailsTableTableFilterComposer
+    extends Composer<_$AppDb, $ReceiptDetailsTableTable> {
+  $$ReceiptDetailsTableTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -43853,35 +45227,45 @@ class $$ReceiptEntryLedgerTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get mid => $composableBuilder(
-    column: $table.mid,
+  ColumnFilters<int> get vchId => $composableBuilder(
+    column: $table.vchId,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get companyId => $composableBuilder(
-    column: $table.companyId,
+  ColumnFilters<String> get androidId => $composableBuilder(
+    column: $table.androidId,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get ledger => $composableBuilder(
-    column: $table.ledger,
+  ColumnFilters<String> get billName => $composableBuilder(
+    column: $table.billName,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<double> get balance => $composableBuilder(
-    column: $table.balance,
+  ColumnFilters<DateTime> get billDate => $composableBuilder(
+    column: $table.billDate,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get receiptdate => $composableBuilder(
-    column: $table.receiptdate,
+  ColumnFilters<double> get billAmount => $composableBuilder(
+    column: $table.billAmount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get balanceAmt => $composableBuilder(
+    column: $table.balanceAmt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get paidAmount => $composableBuilder(
+    column: $table.paidAmount,
     builder: (column) => ColumnFilters(column),
   );
 }
 
-class $$ReceiptEntryLedgerTableTableOrderingComposer
-    extends Composer<_$AppDb, $ReceiptEntryLedgerTableTable> {
-  $$ReceiptEntryLedgerTableTableOrderingComposer({
+class $$ReceiptDetailsTableTableOrderingComposer
+    extends Composer<_$AppDb, $ReceiptDetailsTableTable> {
+  $$ReceiptDetailsTableTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -43893,35 +45277,45 @@ class $$ReceiptEntryLedgerTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get mid => $composableBuilder(
-    column: $table.mid,
+  ColumnOrderings<int> get vchId => $composableBuilder(
+    column: $table.vchId,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get companyId => $composableBuilder(
-    column: $table.companyId,
+  ColumnOrderings<String> get androidId => $composableBuilder(
+    column: $table.androidId,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get ledger => $composableBuilder(
-    column: $table.ledger,
+  ColumnOrderings<String> get billName => $composableBuilder(
+    column: $table.billName,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<double> get balance => $composableBuilder(
-    column: $table.balance,
+  ColumnOrderings<DateTime> get billDate => $composableBuilder(
+    column: $table.billDate,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get receiptdate => $composableBuilder(
-    column: $table.receiptdate,
+  ColumnOrderings<double> get billAmount => $composableBuilder(
+    column: $table.billAmount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get balanceAmt => $composableBuilder(
+    column: $table.balanceAmt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get paidAmount => $composableBuilder(
+    column: $table.paidAmount,
     builder: (column) => ColumnOrderings(column),
   );
 }
 
-class $$ReceiptEntryLedgerTableTableAnnotationComposer
-    extends Composer<_$AppDb, $ReceiptEntryLedgerTableTable> {
-  $$ReceiptEntryLedgerTableTableAnnotationComposer({
+class $$ReceiptDetailsTableTableAnnotationComposer
+    extends Composer<_$AppDb, $ReceiptDetailsTableTable> {
+  $$ReceiptDetailsTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -43931,99 +45325,114 @@ class $$ReceiptEntryLedgerTableTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<int> get mid =>
-      $composableBuilder(column: $table.mid, builder: (column) => column);
+  GeneratedColumn<int> get vchId =>
+      $composableBuilder(column: $table.vchId, builder: (column) => column);
 
-  GeneratedColumn<int> get companyId =>
-      $composableBuilder(column: $table.companyId, builder: (column) => column);
+  GeneratedColumn<String> get androidId =>
+      $composableBuilder(column: $table.androidId, builder: (column) => column);
 
-  GeneratedColumn<String> get ledger =>
-      $composableBuilder(column: $table.ledger, builder: (column) => column);
+  GeneratedColumn<String> get billName =>
+      $composableBuilder(column: $table.billName, builder: (column) => column);
 
-  GeneratedColumn<double> get balance =>
-      $composableBuilder(column: $table.balance, builder: (column) => column);
+  GeneratedColumn<DateTime> get billDate =>
+      $composableBuilder(column: $table.billDate, builder: (column) => column);
 
-  GeneratedColumn<String> get receiptdate => $composableBuilder(
-    column: $table.receiptdate,
+  GeneratedColumn<double> get billAmount => $composableBuilder(
+    column: $table.billAmount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get balanceAmt => $composableBuilder(
+    column: $table.balanceAmt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get paidAmount => $composableBuilder(
+    column: $table.paidAmount,
     builder: (column) => column,
   );
 }
 
-class $$ReceiptEntryLedgerTableTableTableManager
+class $$ReceiptDetailsTableTableTableManager
     extends
         RootTableManager<
           _$AppDb,
-          $ReceiptEntryLedgerTableTable,
-          ReceiptEntryLedgerTableData,
-          $$ReceiptEntryLedgerTableTableFilterComposer,
-          $$ReceiptEntryLedgerTableTableOrderingComposer,
-          $$ReceiptEntryLedgerTableTableAnnotationComposer,
-          $$ReceiptEntryLedgerTableTableCreateCompanionBuilder,
-          $$ReceiptEntryLedgerTableTableUpdateCompanionBuilder,
+          $ReceiptDetailsTableTable,
+          ReceiptDetailsTableData,
+          $$ReceiptDetailsTableTableFilterComposer,
+          $$ReceiptDetailsTableTableOrderingComposer,
+          $$ReceiptDetailsTableTableAnnotationComposer,
+          $$ReceiptDetailsTableTableCreateCompanionBuilder,
+          $$ReceiptDetailsTableTableUpdateCompanionBuilder,
           (
-            ReceiptEntryLedgerTableData,
+            ReceiptDetailsTableData,
             BaseReferences<
               _$AppDb,
-              $ReceiptEntryLedgerTableTable,
-              ReceiptEntryLedgerTableData
+              $ReceiptDetailsTableTable,
+              ReceiptDetailsTableData
             >,
           ),
-          ReceiptEntryLedgerTableData,
+          ReceiptDetailsTableData,
           PrefetchHooks Function()
         > {
-  $$ReceiptEntryLedgerTableTableTableManager(
+  $$ReceiptDetailsTableTableTableManager(
     _$AppDb db,
-    $ReceiptEntryLedgerTableTable table,
+    $ReceiptDetailsTableTable table,
   ) : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$ReceiptEntryLedgerTableTableFilterComposer(
-                $db: db,
-                $table: table,
-              ),
+              $$ReceiptDetailsTableTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$ReceiptEntryLedgerTableTableOrderingComposer(
+              $$ReceiptDetailsTableTableOrderingComposer(
                 $db: db,
                 $table: table,
               ),
           createComputedFieldComposer: () =>
-              $$ReceiptEntryLedgerTableTableAnnotationComposer(
+              $$ReceiptDetailsTableTableAnnotationComposer(
                 $db: db,
                 $table: table,
               ),
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                Value<int?> mid = const Value.absent(),
-                Value<int?> companyId = const Value.absent(),
-                Value<String?> ledger = const Value.absent(),
-                Value<double?> balance = const Value.absent(),
-                Value<String?> receiptdate = const Value.absent(),
-              }) => ReceiptEntryLedgerTableCompanion(
+                Value<int> vchId = const Value.absent(),
+                Value<String?> androidId = const Value.absent(),
+                Value<String?> billName = const Value.absent(),
+                Value<DateTime?> billDate = const Value.absent(),
+                Value<double> billAmount = const Value.absent(),
+                Value<double> balanceAmt = const Value.absent(),
+                Value<double> paidAmount = const Value.absent(),
+              }) => ReceiptDetailsTableCompanion(
                 id: id,
-                mid: mid,
-                companyId: companyId,
-                ledger: ledger,
-                balance: balance,
-                receiptdate: receiptdate,
+                vchId: vchId,
+                androidId: androidId,
+                billName: billName,
+                billDate: billDate,
+                billAmount: billAmount,
+                balanceAmt: balanceAmt,
+                paidAmount: paidAmount,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                Value<int?> mid = const Value.absent(),
-                Value<int?> companyId = const Value.absent(),
-                Value<String?> ledger = const Value.absent(),
-                Value<double?> balance = const Value.absent(),
-                Value<String?> receiptdate = const Value.absent(),
-              }) => ReceiptEntryLedgerTableCompanion.insert(
+                required int vchId,
+                Value<String?> androidId = const Value.absent(),
+                Value<String?> billName = const Value.absent(),
+                Value<DateTime?> billDate = const Value.absent(),
+                Value<double> billAmount = const Value.absent(),
+                Value<double> balanceAmt = const Value.absent(),
+                Value<double> paidAmount = const Value.absent(),
+              }) => ReceiptDetailsTableCompanion.insert(
                 id: id,
-                mid: mid,
-                companyId: companyId,
-                ledger: ledger,
-                balance: balance,
-                receiptdate: receiptdate,
+                vchId: vchId,
+                androidId: androidId,
+                billName: billName,
+                billDate: billDate,
+                billAmount: billAmount,
+                balanceAmt: balanceAmt,
+                paidAmount: paidAmount,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
@@ -44033,25 +45442,25 @@ class $$ReceiptEntryLedgerTableTableTableManager
       );
 }
 
-typedef $$ReceiptEntryLedgerTableTableProcessedTableManager =
+typedef $$ReceiptDetailsTableTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDb,
-      $ReceiptEntryLedgerTableTable,
-      ReceiptEntryLedgerTableData,
-      $$ReceiptEntryLedgerTableTableFilterComposer,
-      $$ReceiptEntryLedgerTableTableOrderingComposer,
-      $$ReceiptEntryLedgerTableTableAnnotationComposer,
-      $$ReceiptEntryLedgerTableTableCreateCompanionBuilder,
-      $$ReceiptEntryLedgerTableTableUpdateCompanionBuilder,
+      $ReceiptDetailsTableTable,
+      ReceiptDetailsTableData,
+      $$ReceiptDetailsTableTableFilterComposer,
+      $$ReceiptDetailsTableTableOrderingComposer,
+      $$ReceiptDetailsTableTableAnnotationComposer,
+      $$ReceiptDetailsTableTableCreateCompanionBuilder,
+      $$ReceiptDetailsTableTableUpdateCompanionBuilder,
       (
-        ReceiptEntryLedgerTableData,
+        ReceiptDetailsTableData,
         BaseReferences<
           _$AppDb,
-          $ReceiptEntryLedgerTableTable,
-          ReceiptEntryLedgerTableData
+          $ReceiptDetailsTableTable,
+          ReceiptDetailsTableData
         >,
       ),
-      ReceiptEntryLedgerTableData,
+      ReceiptDetailsTableData,
       PrefetchHooks Function()
     >;
 typedef $$VoucherControlTableTableCreateCompanionBuilder =
@@ -44729,13 +46138,10 @@ class $AppDbManager {
         _db,
         _db.saleReturnLedgerDetailsTable,
       );
-  $$ReceiptEntryTableTableTableManager get receiptEntryTable =>
-      $$ReceiptEntryTableTableTableManager(_db, _db.receiptEntryTable);
-  $$ReceiptEntryLedgerTableTableTableManager get receiptEntryLedgerTable =>
-      $$ReceiptEntryLedgerTableTableTableManager(
-        _db,
-        _db.receiptEntryLedgerTable,
-      );
+  $$ReceiptMasterTableTableTableManager get receiptMasterTable =>
+      $$ReceiptMasterTableTableTableManager(_db, _db.receiptMasterTable);
+  $$ReceiptDetailsTableTableTableManager get receiptDetailsTable =>
+      $$ReceiptDetailsTableTableTableManager(_db, _db.receiptDetailsTable);
   $$VoucherControlTableTableTableManager get voucherControlTable =>
       $$VoucherControlTableTableTableManager(_db, _db.voucherControlTable);
   $$SaleAddressTableTableTableManager get saleAddressTable =>
