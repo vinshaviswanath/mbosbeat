@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mpos_beat/core/di/injection.dart';
-import 'package:mpos_beat/core/network/network_provider.dart';
 import 'package:mpos_beat/core/utils/app_details.dart';
 import 'package:mpos_beat/core/utils/enums.dart';
 import 'package:mpos_beat/core/utils/imports.dart';
