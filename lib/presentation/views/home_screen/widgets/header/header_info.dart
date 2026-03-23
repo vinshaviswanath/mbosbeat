@@ -4,9 +4,7 @@ import 'package:mpos_beat/presentation/logic/user_provider.dart';
 import 'package:mpos_beat/presentation/views/home_screen/widgets/header/day_toggle_button.dart';
 import 'package:mpos_beat/presentation/views/home_screen/widgets/header/header_state.dart';
 import 'package:mpos_beat/presentation/views/home_screen/widgets/header/route_toggle_button.dart';
-import 'package:mpos_beat/presentation/views/home_screen/widgets/home_shimmer.dart';
 import 'package:mpos_beat/presentation/views/home_screen/widgets/trip_start_appbar_shimmer.dart';
-import 'package:mpos_beat/presentation/views/home_screen/widgets/tripstart_shimmer.dart';
 
 class HeaderInfo extends StatelessWidget {
   final Company company;
