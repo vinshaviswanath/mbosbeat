@@ -127,7 +127,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
             selectedCompany?.address1,
             selectedCompany?.address2,
             selectedCompany?.address3,
-         
           ];
 
           // Remove null or empty values
@@ -1066,7 +1065,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                         ),
                                                         w4,
                                                         Text(
-                                                          "${selectedCompany?.integrationType}",
+                                                          "${selectedCompany.integrationType}",
                                                           style: context
                                                               .textStyle
                                                               .s10
