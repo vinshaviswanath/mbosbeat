@@ -1021,8 +1021,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                             ),
                                           ),
                                           h16,
-                                          if (selectedCompany
-                                                  ?.integrationType ==
+                                          if (selectedCompany.integrationType ==
                                               'Stand Alone') ...[
                                             GestureDetector(
                                               onTap: () {
